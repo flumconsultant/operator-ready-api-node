@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><script src="./ds-base.js"></script><link rel="icon" href="../../assets/logo/favicon.svg" />
+<style>[data-deep]{position:relative;isolation:isolate}[data-deep]::before{content:"";position:absolute;inset:0;background-image:var(--pattern-circuit-grid);background-size:96px 96px;opacity:var(--pattern-opacity-subtle);z-index:-1;pointer-events:none}[data-deep]::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 55% at 84% 6%,rgba(0,255,136,.14) 0%,rgba(0,255,136,.04) 40%,rgba(10,14,39,0) 72%);z-index:-1;pointer-events:none}[data-lift]{transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .35s ease,box-shadow .35s ease}[data-lift]:hover{transform:translateY(-5px);border-color:var(--green-line);box-shadow:0 22px 60px -28px rgba(0,0,0,.55)}@media (min-width:901px){[data-cols]>h2:first-child{position:sticky;top:112px}}@media (prefers-reduced-motion:no-preference){[data-cols]>[data-reveal]:nth-child(2){animation-delay:.07s}[data-cols]>[data-reveal]:nth-child(3){animation-delay:.14s}[data-cols]>[data-reveal]:nth-child(4){animation-delay:.21s}[data-cols]>[data-reveal]:nth-child(5){animation-delay:.28s}}@keyframes omreveal{from{opacity:1;transform:translateY(9px)}to{opacity:1;transform:none}}@media (prefers-reduced-motion:no-preference){[data-reveal]{animation:omreveal .7s ease-out both}}body{margin:0;background:var(--off-white)}*{box-sizing:border-box}input,select,textarea{font:var(--type-body);font-size:var(--text-body-lg);color:var(--text-heading);background:var(--white);border:1px solid var(--border-strong);border-radius:2px;padding:14px 16px;width:100%;min-height:48px}input:focus,select:focus,textarea:focus{outline:2px solid var(--electric-green);outline-offset:2px;border-color:var(--electric-green)}label{display:block;font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}@media (max-width:900px){[data-cols]{grid-template-columns:1fr!important}}</style>
+</helmet>
+<div style="font:var(--type-body);color:var(--text-body);background:var(--off-white);padding-top:72px">
+<dc-import name="SiteHeaderEs" hint-size="100%,76px"></dc-import>
+
+<section style="position:relative;overflow:hidden;background:var(--navy-900);padding:var(--space-12) var(--gutter-page)"><img src="../../assets/images/01-neural-network.png" alt="" style="position:absolute;inset:-6% 0;width:100%;height:112%;object-fit:cover;object-position:center right;opacity:.85" /><div style="position:absolute;inset:0;background:linear-gradient(95deg,var(--deep-navy) 0%,rgba(10,14,39,.88) 34%,rgba(10,14,39,.3) 78%,rgba(10,14,39,.5) 100%)"></div>
+<div style="position:absolute;top:0;right:0;width:46%;height:100%;background-image:var(--pattern-scattered-nodes);background-size:180px 180px;opacity:var(--pattern-opacity);-webkit-mask-image:linear-gradient(to left,#000 18%,transparent 92%);mask-image:linear-gradient(to left,#000 18%,transparent 92%);pointer-events:none"></div><div style="position:absolute;inset:0;background:var(--gradient-environment);pointer-events:none"></div>
+<div style="position:relative;max-width:var(--maxw-content);margin:0 auto">
+<p style="margin:0;font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--electric-green)">Your next operating model starts with a question</p>
+<h1 style="margin:var(--space-6) 0 0;font:var(--type-hero);font-size:clamp(36px,4.4vw,68px);letter-spacing:var(--track-hero);color:var(--white);max-width:22ch">¿En qué necesita convertirse tu empresa después?</h1>
+<p style="margin:var(--space-6) 0 0;font:var(--type-lead);color:var(--slate-100);max-width:56ch">Cuéntanos el business outcome, la capability o el workflow que necesitas transformar. Responderemos con la conversación adecuada.</p>
+</div>
+</section>
+
+<section style="background:var(--off-white);padding:var(--space-12) var(--gutter-page) var(--space-13)">
+<div style="max-width:var(--maxw-content);margin:0 auto;display:grid;grid-template-columns:1.25fr .75fr;gap:var(--space-11);align-items:start" data-cols>
+
+<div>
+<sc-if value="{{ pending }}" hint-placeholder-val="{{ true }}">
+<form onSubmit="{{ submit }}" style="display:flex;flex-direction:column;gap:var(--space-6)">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6)" data-cols>
+<div><label for="nombre">Nombre</label><input id="nombre" name="nombre" type="text" required="required" autoComplete="name" /></div>
+<div><label for="email">Email corporativo</label><input id="email" name="email" type="email" required="required" autoComplete="email" /></div>
+<div><label for="empresa">Empresa</label><input id="empresa" name="empresa" type="text" required="required" autoComplete="organization" /></div>
+<div><label for="rol">Rol</label><input id="rol" name="rol" type="text" required="required" /></div>
+</div>
+<div><label for="cambio">¿Qué necesita cambiar?</label><textarea id="cambio" name="cambio" rows="5" required="required" style="min-height:140px;resize:vertical"></textarea></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6)" data-cols>
+<div><label for="etapa">Etapa actual</label><select id="etapa" name="etapa"><option>Definiendo la estrategia</option><option>Priorizando oportunidades</option><option>Diseñando el operating model</option><option>Construyendo una capability</option><option>Escalando una solución existente</option></select></div>
+<div><label for="timeline">Timeline (opcional)</label><input id="timeline" name="timeline" type="text" placeholder="Por ejemplo: este trimestre" /></div>
+</div>
+<p style="margin:0;font:var(--type-body);color:var(--text-muted);max-width:62ch">Usamos esta información únicamente para preparar la conversación. No la compartimos con terceros y no te inscribimos en ninguna secuencia comercial.</p>
+<div>
+<button type="submit" style="display:inline-flex;align-items:center;min-height:52px;padding:0 var(--space-7);border:0;border-radius:var(--radius-pill);background:var(--electric-green);color:var(--deep-navy);font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;cursor:pointer" style-hover="background:var(--neon-green)">Iniciemos la conversación</button>
+</div>
+</form>
+</sc-if>
+<sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+<div role="status" aria-live="polite" style="background:var(--white);border:1px solid var(--border-hairline);border-top:2px solid var(--electric-green);padding:var(--space-9)">
+<h2 style="margin:0;font:var(--type-h2);letter-spacing:var(--track-heading);color:var(--text-heading);max-width:24ch">Gracias.</h2>
+<p style="margin:var(--space-5) 0 0;font:var(--type-lead);color:var(--text-body);max-width:56ch">Revisaremos el contexto y responderemos con la conversación adecuada, no con una secuencia comercial automatizada.</p>
+<a href="./WebsiteEs.dc.html" style="display:inline-flex;align-items:center;margin:var(--space-7) 0 0;min-height:44px;font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--text-accent);text-decoration:none;border-bottom:1px solid var(--border-strong)">Volver al inicio →</a>
+</div>
+</sc-if>
+</div>
+
+<aside style="border-top:2px solid var(--deep-navy);padding-top:var(--space-6)">
+<h2 style="margin:0;font:var(--type-h3);color:var(--text-heading)">Qué ocurre después</h2>
+<ol style="margin:var(--space-5) 0 0;padding:0 0 0 var(--space-5);display:flex;flex-direction:column;gap:var(--space-4)">
+<li style="font:var(--type-body);color:var(--text-body)">Leemos tu contexto y lo mapeamos a las etapas BECOME.</li>
+<li style="font:var(--type-body);color:var(--text-body)">Proponemos una conversación de 30 minutos centrada en el business outcome y las restricciones actuales.</li>
+<li style="font:var(--type-body);color:var(--text-body)">Definimos juntos si Discovery o Build &amp; Embed es el primer paso adecuado.</li>
+</ol>
+<p style="margin:var(--space-8) 0 0;padding-top:var(--space-6);border-top:1px solid var(--border-hairline);font:var(--type-body);color:var(--text-muted)">También puedes escribir a <a href="mailto:hello@become.company" style="color:var(--text-accent);text-decoration:none">hello@become.company</a></p>
+</aside>
+
+</div>
+</section>
+
+<dc-import name="SiteFooterEs" hint-size="100%,360px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { sent: false };
+  renderVals() {
+    return {
+      pending: !this.state.sent,
+      submitted: this.state.sent,
+      submit: (e) => { e.preventDefault(); this.setState({ sent: true }); window.scrollTo({ top: 0, behavior: "smooth" }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

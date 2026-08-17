@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><script src="./ds-base.js"></script><link rel="icon" href="../../assets/logo/favicon.svg" />
+<style>[data-deep]{position:relative;isolation:isolate}[data-deep]::before{content:"";position:absolute;inset:0;background-image:var(--pattern-circuit-grid);background-size:96px 96px;opacity:var(--pattern-opacity-subtle);z-index:-1;pointer-events:none}[data-deep]::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 55% at 84% 6%,rgba(0,255,136,.14) 0%,rgba(0,255,136,.04) 40%,rgba(10,14,39,0) 72%);z-index:-1;pointer-events:none}[data-lift]{transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .35s ease,box-shadow .35s ease}[data-lift]:hover{transform:translateY(-5px);border-color:var(--green-line);box-shadow:0 22px 60px -28px rgba(0,0,0,.55)}@media (min-width:901px){[data-cols]>h2:first-child{position:sticky;top:112px}}@media (prefers-reduced-motion:no-preference){[data-cols]>[data-reveal]:nth-child(2){animation-delay:.07s}[data-cols]>[data-reveal]:nth-child(3){animation-delay:.14s}[data-cols]>[data-reveal]:nth-child(4){animation-delay:.21s}[data-cols]>[data-reveal]:nth-child(5){animation-delay:.28s}}@keyframes omreveal{from{opacity:1;transform:translateY(9px)}to{opacity:1;transform:none}}@media (prefers-reduced-motion:no-preference){[data-reveal]{animation:omreveal .7s ease-out both}}body{margin:0;background:var(--off-white)}*{box-sizing:border-box}a:focus-visible{outline:2px solid var(--electric-green);outline-offset:3px}@media (max-width:900px){[data-cols]{grid-template-columns:1fr!important}}</style>
+</helmet>
+<div style="font:var(--type-body);color:var(--text-body);background:var(--off-white);padding-top:72px">
+<dc-import name="SiteHeaderEs" hint-size="100%,76px"></dc-import>
+
+<section style="position:relative;overflow:hidden;background:var(--navy-900);padding:var(--space-13) var(--gutter-page)"><img src="../../assets/images/47-global-ops.png" alt="" style="position:absolute;inset:-6% 0;width:100%;height:112%;object-fit:cover;object-position:center right;opacity:.85" /><div style="position:absolute;inset:0;background:linear-gradient(95deg,var(--deep-navy) 0%,rgba(10,14,39,.88) 34%,rgba(10,14,39,.3) 78%,rgba(10,14,39,.5) 100%)"></div>
+<div style="position:absolute;top:0;right:0;width:46%;height:100%;background-image:var(--pattern-scattered-nodes);background-size:180px 180px;opacity:var(--pattern-opacity);-webkit-mask-image:linear-gradient(to left,#000 18%,transparent 92%);mask-image:linear-gradient(to left,#000 18%,transparent 92%);pointer-events:none"></div><div style="position:absolute;inset:0;background:var(--gradient-environment);pointer-events:none"></div>
+<div style="position:relative;max-width:var(--maxw-content);margin:0 auto">
+<p style="margin:0;font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--electric-green)">Trabajo y evidencia</p>
+<h1 data-reveal style="margin:var(--space-6) 0 0;font:var(--type-hero);font-size:clamp(40px,5.2vw,80px);letter-spacing:var(--track-hero);color:var(--white);max-width:18ch">THE WORK WE ARE BUILT TO DO</h1>
+<p style="margin:var(--space-7) 0 0;font:var(--type-lead);color:var(--slate-100);max-width:58ch">Tres transformation scenarios que describen cómo trabajamos. Son escenarios, no casos de clientes. Publicaremos resultados medidos cuando existan casos aprobados.</p>
+</div>
+</section>
+
+<section style="background:var(--off-white);padding:var(--space-12) var(--gutter-page)">
+<div style="max-width:var(--maxw-content);margin:0 auto;display:flex;flex-direction:column;gap:var(--space-11)">
+
+<article data-reveal style="display:grid;grid-template-columns:.7fr 1.3fr;gap:var(--space-9);padding-top:var(--space-7);border-top:2px solid var(--deep-navy)" data-cols>
+<div><p style="margin:0;font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--text-muted)">Escenario 01</p><h2 style="margin:var(--space-4) 0 0;font:var(--type-h1);font-size:var(--text-h2);letter-spacing:var(--track-heading);color:var(--text-heading);display:flex;align-items:center;gap:var(--space-4)"><img src="../../assets/icons/decision.png" alt="" style="width:40px;height:40px;display:block" />Decision intelligence</h2></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-7)" data-cols>
+<div><p style="margin:0;font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--text-accent)">Enterprise tension</p><p style="margin:var(--space-3) 0 0;font:var(--type-body);color:var(--text-body)">Una decisión de alto valor depende de información fragmentada y coordinación manual entre áreas.</p></div>
+<div><p style="margin:0;font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--text-accent)">Qué cambia dentro</p><p style="margin:var(--space-3) 0 0;font:var(--type-body);color:var(--text-body)">Shared context, decision rights explícitos y rutas de excepción definidas.</p></div>
+<div><p style="margin:0;font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--text-accent)">Capability habilitada</p><p style="margin:var(--space-3) 0 0;font:var(--type-body);color:var(--text-body)">Un decision system con recomendación contextual y trazabilidad.</p></div>
+<div><p style="margin:0;font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--text-accent)">Cómo se mediría</p><p style="margin:var(--space-3) 0 0;font:var(--type-body);color:var(--text-body)">Tiempo de decisión, consistencia, tasa de excepciones y calidad del resultado frente al baseline.</p></div>
+</div>
+</article>
+
+<article data-reveal style="display:grid;grid-template-columns:.7fr 1.3fr;gap:var(--space-9);padding-top:var(--space-7);border-top:2px solid var(--deep-navy)" data-cols>
+<div><p style="margin:0;font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--text-muted)">Escenario 02</p><h2 style="margin:var(--space-4) 0 0;font:var(--type-h1);font-size:var(--text-h2);letter-spacing:var(--track-heading);color:var(--text-heading);display:flex;align-items:center;gap:var(--space-4)"><img src="../../assets/icons/automation.png" alt="" style="width:40px;height:40px;display:block" />Agentic operations</h2></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-7)" data-cols>
+<div><p style="margin:0;font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--text-accent)">Enterprise tension</p><p style="margin:var(--space-3) 0 0;font:var(--type-body);color:var(--text-body)">Un workflow end-to-end acumula reprocesos, traspasos y tiempos de espera.</p></div>
+<div><p style="margin:0;font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--text-accent)">Qué cambia dentro</p><p style="margin:var(--space-3) 0 0;font:var(--type-body);color:var(--text-body)">Orquestación entre personas y agents, con human-in-the-loop model y controles operativos.</p></div>
+<div><p style="margin:0;font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--text-accent)">Capability habilitada</p><p style="margin:var(--space-3) 0 0;font:var(--type-body);color:var(--text-body)">Un agentic workflow supervisado, observable y con owner interno.</p></div>
+<div><p style="margin:0;font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--text-accent)">Cómo se mediría</p><p style="margin:var(--space-3) 0 0;font:var(--type-body);color:var(--text-body)">Lead time, capacidad por persona, tasa de error y cumplimiento de controles.</p></div>
+</div>
+</article>
+
+<article data-reveal style="display:grid;grid-template-columns:.7fr 1.3fr;gap:var(--space-9);padding-top:var(--space-7);border-top:2px solid var(--deep-navy)" data-cols>
+<div><p style="margin:0;font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--text-muted)">Escenario 03</p><h2 style="margin:var(--space-4) 0 0;font:var(--type-h1);font-size:var(--text-h2);letter-spacing:var(--track-heading);color:var(--text-heading);display:flex;align-items:center;gap:var(--space-4)"><img src="../../assets/icons/products-inside.png" alt="" style="width:40px;height:40px;display:block" />AI-native product</h2></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-7)" data-cols>
+<div><p style="margin:0;font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--text-accent)">Enterprise tension</p><p style="margin:var(--space-3) 0 0;font:var(--type-body);color:var(--text-body)">La propuesta de valor al cliente no aprovecha el conocimiento que la empresa ya tiene.</p></div>
+<div><p style="margin:0;font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--text-accent)">Qué cambia dentro</p><p style="margin:var(--space-3) 0 0;font:var(--type-body);color:var(--text-body)">Data and knowledge layer, ownership de producto y ciclo de mejora continua.</p></div>
+<div><p style="margin:0;font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--text-accent)">Capability habilitada</p><p style="margin:var(--space-3) 0 0;font:var(--type-body);color:var(--text-body)">Una product capability inteligente para clientes o colaboradores.</p></div>
+<div><p style="margin:0;font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--text-accent)">Cómo se mediría</p><p style="margin:var(--space-3) 0 0;font:var(--type-body);color:var(--text-body)">Adopción, retención, ingreso incremental y coste de servicio.</p></div>
+</div>
+</article>
+
+</div>
+</section>
+
+<section data-deep style="background:var(--navy-900);padding:var(--space-12) var(--gutter-page)">
+<div style="max-width:var(--maxw-content);margin:0 auto">
+<h2 style="margin:0;font:var(--type-h2);letter-spacing:var(--track-heading);color:var(--white);max-width:24ch">Cómo publicaremos los casos</h2>
+<p style="margin:var(--space-5) 0 0;font:var(--type-body);font-size:var(--text-body-lg);color:var(--slate-200);max-width:62ch">Cuando un cliente aprueba la publicación, el caso sigue siempre la misma secuencia y muestra baseline, intervención, resultado, periodo y atribución.</p>
+<div style="margin:var(--space-8) 0 0;display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border-hairline-dark)" data-cols>
+<div style="background:var(--navy-900);padding:var(--space-6)"><div style="display:flex;align-items:center;gap:var(--space-4)"><img src="../../assets/icons/people-inside-white.png" alt="" style="width:40px;height:40px;display:block" /><span style="font:var(--type-mono);color:var(--electric-green)">01</span></div><p style="margin:var(--space-3) 0 0;font:var(--type-body);color:var(--slate-100)">What was</p></div>
+<div style="background:var(--navy-900);padding:var(--space-6)"><div style="display:flex;align-items:center;gap:var(--space-4)"><img src="../../assets/icons/data-inside-white.png" alt="" style="width:40px;height:40px;display:block" /><span style="font:var(--type-mono);color:var(--electric-green)">02</span></div><p style="margin:var(--space-3) 0 0;font:var(--type-body);color:var(--slate-100)">What changed inside</p></div>
+<div style="background:var(--navy-900);padding:var(--space-6)"><div style="display:flex;align-items:center;gap:var(--space-4)"><img src="../../assets/icons/agents-inside-white.png" alt="" style="width:40px;height:40px;display:block" /><span style="font:var(--type-mono);color:var(--electric-green)">03</span></div><p style="margin:var(--space-3) 0 0;font:var(--type-body);color:var(--slate-100)">What became possible</p></div>
+<div style="background:var(--navy-900);padding:var(--space-6)"><div style="display:flex;align-items:center;gap:var(--space-4)"><img src="../../assets/icons/operations-inside-white.png" alt="" style="width:40px;height:40px;display:block" /><span style="font:var(--type-mono);color:var(--electric-green)">04</span></div><p style="margin:var(--space-3) 0 0;font:var(--type-body);color:var(--slate-100)">Business outcome</p></div>
+<div style="background:var(--navy-900);padding:var(--space-6)"><p style="margin:0;font:var(--type-mono);color:var(--electric-green)">05</p><p style="margin:var(--space-3) 0 0;font:var(--type-body);color:var(--slate-100)">Capability retained</p></div>
+</div>
+<p style="margin:var(--space-7) 0 0;font:var(--type-body);color:var(--slate-300)">[EVIDENCIA REQUERIDA] Los casos con resultados medidos se publicarán solo con aprobación del cliente.</p>
+<a href="./PaginaContacto.dc.html" style="display:inline-flex;align-items:center;margin:var(--space-9) 0 0;min-height:52px;padding:0 var(--space-7);border-radius:var(--radius-pill);background:var(--electric-green);color:var(--deep-navy);font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;text-decoration:none" style-hover="background:var(--neon-green)">Inicia tu Discovery</a>
+</div>
+</section>
+
+<dc-import name="SiteFooterEs" hint-size="100%,360px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
