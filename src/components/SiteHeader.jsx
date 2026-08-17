@@ -41,7 +41,9 @@ export default function SiteHeader() {
               <span style={{ color: "var(--white)" }}>
                 ES
               </span>
+              {' '}
               /
+              {' '}
               <a href="../website-en/WebsiteEn.dc.html" style={{ color: "var(--slate-300)", textDecoration: "none" }} className="hv-dc7f3e7">
                 EN
               </a>
@@ -100,7 +102,9 @@ export default function SiteHeader() {
             <span style={{ color: "var(--white)" }}>
               ES
             </span>
+            {' '}
             /
+            {' '}
             <a href="../website-en/WebsiteEn.dc.html" style={{ color: "var(--slate-300)", textDecoration: "none" }}>
               EN
             </a>

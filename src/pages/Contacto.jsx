@@ -16,9 +16,9 @@ export default function Contacto() {
 
   return (
     <>
-      <div style={{ font: "var(--type-body)", color: "var(--text-body)", background: "var(--off-white)", paddingTop: "72px" }}>
+      <div data-page-root="" style={{ font: "var(--type-body)", color: "var(--text-body)", background: "var(--off-white)", paddingTop: "72px" }}>
         <SiteHeader />
-        <section style={{ position: "relative", overflow: "hidden", background: "var(--navy-900)", padding: "var(--space-12) var(--gutter-page)" }}>
+        <section data-dark-image="" style={{ position: "relative", overflow: "hidden", background: "var(--navy-900)", padding: "var(--space-12) var(--gutter-page)" }}>
           <img fetchPriority="high" decoding="async" src="/images/01-neural-network.webp" alt="" style={{ position: "absolute", inset: "-6% 0", width: "100%", height: "112%", objectFit: "cover", objectPosition: "center right", opacity: ".85" }} />
           <div style={{ position: "absolute", inset: "0", background: "linear-gradient(95deg,var(--deep-navy) 0%,rgba(10,14,39,.88) 34%,rgba(10,14,39,.3) 78%,rgba(10,14,39,.5) 100%)" }} />
           <div style={{ position: "absolute", top: "0", right: "0", width: "46%", height: "100%", backgroundImage: "var(--pattern-scattered-nodes)", backgroundSize: "180px 180px", opacity: "var(--pattern-opacity)", WebkitMaskImage: "linear-gradient(to left,#000 18%,transparent 92%)", maskImage: "linear-gradient(to left,#000 18%,transparent 92%)", pointerEvents: "none" }} />
@@ -147,6 +147,7 @@ export default function Contacto() {
               </ol>
               <p style={{ margin: "var(--space-8) 0 0", paddingTop: "var(--space-6)", borderTop: "1px solid var(--border-hairline)", font: "var(--type-body)", color: "var(--text-muted)" }}>
                 También puedes escribir a
+                {' '}
                 <a href="mailto:hello@become.company" style={{ color: "var(--text-accent)", textDecoration: "none" }}>
                   hello@become.company
                 </a>

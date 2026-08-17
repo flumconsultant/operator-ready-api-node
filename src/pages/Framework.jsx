@@ -8,9 +8,9 @@ import SiteHeader from '../components/SiteHeader.jsx';
 export default function Framework() {
   return (
     <>
-      <div style={{ font: "var(--type-body)", color: "var(--text-body)", background: "var(--off-white)", paddingTop: "72px" }}>
+      <div data-page-root="" style={{ font: "var(--type-body)", color: "var(--text-body)", background: "var(--off-white)", paddingTop: "72px" }}>
         <SiteHeader />
-        <section style={{ position: "relative", overflow: "hidden", background: "var(--navy-900)", padding: "var(--space-13) var(--gutter-page)" }}>
+        <section data-dark-image="" style={{ position: "relative", overflow: "hidden", background: "var(--navy-900)", padding: "var(--space-13) var(--gutter-page)" }}>
           <img fetchPriority="high" decoding="async" src="/images/01-neural-network.webp" alt="" style={{ position: "absolute", inset: "-6% 0", width: "100%", height: "112%", objectFit: "cover", objectPosition: "center right", opacity: ".85" }} />
           <div style={{ position: "absolute", inset: "0", background: "linear-gradient(95deg,var(--deep-navy) 0%,rgba(10,14,39,.88) 34%,rgba(10,14,39,.3) 78%,rgba(10,14,39,.5) 100%)" }} />
           <div style={{ position: "absolute", top: "0", right: "0", width: "46%", height: "100%", backgroundImage: "var(--pattern-scattered-nodes)", backgroundSize: "180px 180px", opacity: "var(--pattern-opacity)", WebkitMaskImage: "linear-gradient(to left,#000 18%,transparent 92%)", maskImage: "linear-gradient(to left,#000 18%,transparent 92%)", pointerEvents: "none" }} />
@@ -42,7 +42,7 @@ export default function Framework() {
             </Reveal>
           </div>
         </section>
-        <section data-deep="" style={{ background: "var(--navy-900)", padding: "var(--space-13) var(--gutter-page)" }}>
+        <section data-dark-plain="" data-deep="" style={{ background: "var(--navy-900)", padding: "var(--space-13) var(--gutter-page)" }}>
           <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto" }}>
             <h2 style={{ margin: "0", font: "var(--type-h1)", letterSpacing: "var(--track-display)", color: "var(--white)", maxWidth: "20ch" }}>
               Las seis etapas
@@ -338,7 +338,7 @@ export default function Framework() {
             </div>
           </div>
         </section>
-        <section id="herramientas" style={{ background: "var(--navy-900)", padding: "var(--space-13) var(--gutter-page)" }}>
+        <section data-dark-plain="" id="herramientas" style={{ background: "var(--navy-900)", padding: "var(--space-13) var(--gutter-page)" }}>
           <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto" }}>
             <Reveal as="h2" style={{ margin: "0", font: "var(--type-h1)", letterSpacing: "var(--track-display)", color: "var(--white)", maxWidth: "20ch" }}>
               Proprietary tools
@@ -424,7 +424,7 @@ export default function Framework() {
             </Reveal>
           </div>
         </section>
-        <section data-deep="" style={{ background: "var(--navy-950)", padding: "var(--space-13) var(--gutter-page)" }}>
+        <section data-dark-plain="" data-deep="" style={{ background: "var(--navy-950)", padding: "var(--space-13) var(--gutter-page)" }}>
           <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto" }}>
             <h2 style={{ margin: "0", font: "var(--type-h1)", letterSpacing: "var(--track-display)", color: "var(--white)", maxWidth: "22ch" }}>
               Aplica el framework a tu empresa.

@@ -91,13 +91,31 @@ function toRoute(href) {
 
 const esc = (s) => s.replace(/([{}])/g, '{"$1"}');
 
+/* ¿este subárbol pinta una FOTO DE FONDO propia? Los iconos dentro de tarjetas
+   son <img> también, así que no basta con buscar la etiqueta: la marca de un
+   fondo es ir en position:absolute y recortar con object-fit:cover. */
+function hasImage(node) {
+  if (node.nodeName === 'img') {
+    const st = (node.attrs || []).find((a) => a.name === 'style')?.value || '';
+    return /position:\s*absolute/.test(st) && /object-fit:\s*cover/.test(st);
+  }
+  return (node.childNodes || []).some(hasImage);
+}
+
 function serialize(node, ctx, indent) {
   const pad = '  '.repeat(indent);
 
   if (node.nodeName === '#text') {
     const t = node.value;
+    /* Un nodo de texto en blanco con salto de línea es sangría del artboard y
+       se tira; sin salto es un espacio real entre elementos en línea. */
     if (!t.trim()) return t.includes('\n') ? '' : (t ? `${pad}{' '}\n` : '');
-    return pad + esc(t.trim()) + '\n';
+    /* El espacio pegado al borde del texto también cuenta: "escríbenos a <a>…"
+       perdía el espacio y salía "escríbenos ahello@become.company". JSX colapsa
+       el salto de línea, así que hay que emitirlo explícito. */
+    const lead = /^[ \t]/.test(t) && !/^\s*\n/.test(t) ? `${pad}{' '}\n` : '';
+    const tail = /[ \t]$/.test(t) && !/\n\s*$/.test(t) ? `${pad}{' '}\n` : '';
+    return lead + pad + esc(t.trim()) + '\n' + tail;
   }
   if (node.nodeName === '#comment') return '';
 
@@ -129,6 +147,22 @@ function serialize(node, ctx, indent) {
   const props = [];
   let isReveal = false;
   let name = tag;
+
+  /* El nodo 3D vive fijo detrás de la home y solo se ve a través de las
+     secciones oscuras. Se marcan aquí, en la conversión, para que sobrevivan a
+     cada regeneración; distinguir las que ya llevan una foto de fondo importa,
+     porque esas no se abren: perderíamos la imagen. */
+  if (tag === 'section' && /var\(--navy-9|var\(--deep-navy\)/.test(attrs.style || '')) {
+    props.push(hasImage(node) ? 'data-dark-image=""' : 'data-dark-plain=""');
+  }
+
+  /* El contenedor raíz de cada página pinta el off-white. Se marca para poder
+     apagarlo cuando el nodo está activo: si no, tapa la capa 3D y las secciones
+     oscuras abiertas dejan ver blanco en vez del nodo. */
+  if (ctx.isPage && indent === 3 && !ctx.rootSeen) {
+    ctx.rootSeen = true;
+    props.push('data-page-root=""');
+  }
 
   /* data-reveal -> componente Reveal (framer-motion), conservando la etiqueta. */
   if ('data-reveal' in attrs) {
@@ -195,7 +229,7 @@ function convert(file, compName, isPage) {
   })(doc);
   if (!xdc) throw new Error('sin <x-dc>: ' + file);
 
-  const ctx = { imports: new Set(), vals: new Set(), needsLink: false };
+  const ctx = { imports: new Set(), vals: new Set(), needsLink: false, isPage, rootSeen: false };
   let jsx = xdc.childNodes.map((c) => serialize(c, ctx, 3)).join('');
 
   /* Rutas de assets: la app sirve assets/ como publicDir, así que /images/... */

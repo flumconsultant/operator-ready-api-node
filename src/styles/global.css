@@ -116,3 +116,30 @@ label {
   color: var(--text-muted);
   margin-bottom: 8px;
 }
+
+/* ---------------------------------------------------------------------------
+   Nodo de IA (solo home)
+
+   La capa 3D va fija en z-index -1. Para que se vea hay que abrir lo que tiene
+   delante: html y body dejan de pintar fondo, y las secciones oscuras se
+   vuelven transparentes — el navy lo pinta ahora la propia capa.
+
+   Todo cuelga de :root[data-ai-node="on"], que AiNodeStage solo pone cuando el
+   contexto WebGL existe. Sin esa marca, nada de esto aplica y la home se ve
+   igual que antes.
+--------------------------------------------------------------------------- */
+:root[data-ai-node="on"],
+:root[data-ai-node="on"] body,
+:root[data-ai-node="on"] [data-page-root] { background: transparent !important; }
+
+:root[data-ai-node="on"] [data-dark-plain],
+:root[data-ai-node="on"] [data-dark-image] { background: transparent !important; }
+
+/* Las secciones que traían foto de fondo la apagan: el nodo ocupa su sitio.
+   La <img> se queda en el DOM a propósito — es exactamente el fallback que se
+   ve si WebGL no está disponible. El degradado de legibilidad que va encima no
+   se toca: es lo que mantiene el texto leíble sobre el nodo. */
+:root[data-ai-node="on"] [data-dark-image] > img { opacity: 0 !important; }
+
+/* La retícula de circuito de [data-deep] competía con las aristas del nodo. */
+:root[data-ai-node="on"] [data-deep]::before { opacity: calc(var(--pattern-opacity-subtle) * .45); }

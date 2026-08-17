@@ -70,7 +70,9 @@ export default function SiteFooter() {
             <span style={{ color: "var(--slate-200)" }}>
               ES
             </span>
+            {' '}
             /
+            {' '}
             <a href="../website-en/WebsiteEn.dc.html" style={{ color: "var(--slate-400)", textDecoration: "none" }}>
               EN
             </a>
