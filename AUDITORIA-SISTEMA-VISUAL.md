@@ -35,19 +35,23 @@ Todos los pares efectivamente usados en la maqueta pasan AA. La mayoría pasa AA
 | `slate-400` / `navy-950` | 5.01:1 | AA | Labels del footer |
 | `slate-400` / `navy-900` | 4.73:1 | AA | Labels "Escenario"/"Output" |
 
-### Trampa latente: `--text-faint` en tema claro
+### ~~Trampa latente: `--text-faint` en tema claro~~ — RESUELTO
 
-`--text-faint:var(--slate-400)` da **3.83:1 sobre `--off-white`** — por debajo del
-mínimo AA de 4.5:1.
+`--text-faint:var(--slate-400)` daba **3.83:1 sobre `--off-white`** — por debajo
+del mínimo AA de 4.5:1. No rompía nada todavía (el token estaba declarado pero sin
+uso, y los 22 usos de `slate-400` caían todos sobre navy), pero estaba armado para
+fallar en cuanto alguien lo usara en una sección clara.
 
-Hoy no rompe nada: `--text-faint` está declarado pero **no se usa en ningún
-artboard**, y los 22 usos de `slate-400` caen todos sobre superficies navy, donde
-sí cumple. Pero está armado para fallar en cuanto alguien lo use en una sección
-clara.
+**Resuelto:** se añadió `--slate-450:#626E82` al ramp y `--text-faint` apunta ahí
+en `:root`. Da **4.92:1 sobre off-white**, con margen sobre AA.
 
-**Fix sugerido:** en el bloque `:root` (claro), apuntar `--text-faint` a
-`--slate-500` (7.18:1) y dejar `slate-400` como color exclusivo de superficies
-oscuras. El bloque `[data-theme="dark"]` ya lo hace bien.
+Se descartó apuntar a `--slate-500` (7.18:1, la sugerencia original) porque
+`--text-muted` ya es `slate-500`: los dos tokens habrían colapsado en el mismo
+color y el tema claro habría perdido su escalón terciario. Con `slate-450` la
+jerarquía queda en tres pasos reales — body 15.57:1 / muted 7.18:1 / faint 4.92:1.
+
+`slate-400` queda documentado en el ramp como color exclusivo de superficies
+oscuras. El bloque `[data-theme="dark"]` ya lo hacía bien y no se tocó.
 
 ### Margen ajustado en labels de 11px
 
@@ -56,30 +60,48 @@ tracking. Cumple AA, pero el margen es de 0.23 puntos. En pantallas de bajo
 brillo o proyección esos labels van a costar. Subir a `slate-300` (7.98:1) no
 cambia la jerarquía visual y da aire.
 
-## Peso de assets
+## ~~Peso de assets~~ — RESUELTO
 
-Este es el problema real de la maqueta.
+Era el problema real de la maqueta. Una home de 4.7 MB solo en imágenes tardaba
+~8 s en 4G promedio: para una consultora que le vende reinvención operativa a
+comités ejecutivos, esa primera impresión trabajaba en contra del mensaje.
 
-| Qué | Peso |
-|---|---:|
-| Imágenes solo en la home | **4.7 MB** |
-| `assets/` completo | 21 MB |
-| `01-neural-network.png` (hero home) | 2.2 MB |
-| `icon-navy.png` | 3.0 MB |
-| `icon-official.png` | 2.4 MB |
-| `brand-guidelines.png` | 2.5 MB |
+| Qué | Antes | Ahora |
+|---|---:|---:|
+| **Imágenes de la home** | **4.7 MB** | **473 KB** (−90%) |
+| 8 fotos hero (PNG → WebP q82) | 10.0 MB | 349 KB (−96%) |
+| `01-neural-network` (hero home) | 2.2 MB | 96 KB |
+| Wordmarks blanco + navy | 1.2 MB | 103 KB |
+| 78 iconos (WebP sin pérdida) | 2.1 MB | 1.15 MB (−46%) |
+| `assets/` completo | 21 MB | 11 MB |
 
-Una home de 4.7 MB solo en imágenes tarda ~8 s en 4G promedio. Para una consultora
-que le vende reinvención operativa a comités ejecutivos, esa primera impresión
-trabaja en contra del mensaje.
+Las 8 fotos y los wordmarks se convirtieron a WebP calidad 82, ancho máximo
+1920px (solo los wordmarks necesitaban reescalado; las fotos ya venían a 1600px o
+menos). PSNR medido: 42.1 dB en `45-executive`, 38.8 dB en `01-neural-network` —
+sin diferencia perceptible en comparación lado a lado. Los 78 iconos se
+convirtieron a WebP sin pérdida. Los PNG reemplazados se borraron; siguen en el
+historial de git si hiciera falta recuperarlos.
 
-Los iconos están bien (~50 KB cada uno). El daño está en las 8 fotos hero y en
-tres archivos de marca sobredimensionados.
+Además: `loading="lazy"` en todas las imágenes bajo el pliegue y
+`fetchpriority="high"` en el hero de cada artboard, para que el peso restante no
+compita con el primer render.
 
-**Fix:** convertir las 8 fotos a WebP con calidad 82 y ancho máximo 1920px, y los
-iconos de marca a SVG donde exista el vectorial (ya hay `icon-navy.svg`,
-`icon-white.svg`, `icon-mono-*.svg`). Reducción esperada: 85–90% sin pérdida
-visible. La home bajaría de 4.7 MB a ~500 KB.
+**Peso por artboard hoy:** home 473 KB · Framework 264 KB · Trabajo 180 KB ·
+Nosotros 118 KB · Thinking 117 KB · Contacto 97 KB · Discovery 69 KB ·
+BuildEmbed 68 KB.
+
+### Pendiente en assets
+
+- **Masters de marca sin optimizar** — `icon-navy.png` (3.0 MB),
+  `brand-guidelines.png` (2.5 MB), `icon-official.png` (2.4 MB), `icon-white.png`
+  y `wordmark-reference.png`. No los referencia ningún artboard, así que no pesan
+  en la carga: son los originales de marca y se dejaron intactos a propósito. Son
+  los 11 MB que quedan en `assets/`.
+- **5 referencias rotas, previas a esta limpieza** —
+  `02-data-streams.png`, `05-geometric-grid.png`, `48-ai-interface.png`,
+  `49-journey.png` y `logo/isotype-negative.svg` se referencian en los artboards
+  pero no existen en `assets/`. Decidir si se producen o se sustituyen por
+  imágenes existentes: es decisión de contenido, no de sistema.
 
 ## Arquitectura de tokens
 

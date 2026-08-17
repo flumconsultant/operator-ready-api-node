@@ -3162,7 +3162,7 @@ function ClosingSlide({
       gridTemplateRows: "1fr auto"
     }
   }, /*#__PURE__*/React.createElement("img", {
-    src: "../assets/images/50-next-gen.png",
+    src: "../assets/images/50-next-gen.webp",
     alt: "",
     style: {
       position: "absolute",
@@ -3813,7 +3813,7 @@ function TitleSlide({
       alignContent: "space-between"
     }
   }, /*#__PURE__*/React.createElement("img", {
-    src: "../assets/images/42-future-forward.png",
+    src: "../assets/images/42-future-forward.webp",
     alt: "",
     style: {
       position: "absolute",
@@ -5371,7 +5371,7 @@ function Hero({
       borderBottom: "1px solid var(--border-hairline-dark)"
     }
   }, /*#__PURE__*/React.createElement("img", {
-    src: "../../assets/images/01-neural-network.png",
+    src: "../../assets/images/01-neural-network.webp",
     alt: "",
     style: {
       position: "absolute",

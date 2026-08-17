@@ -27,11 +27,14 @@
 --pale-200:#E2E8F0; /* @kind color */
 --pale-300:#CBD5E0; /* @kind color */
 
-/* ---- Text greys. On navy only slate-100/200/300 are legal for text. ---- */
+/* ---- Text greys. On navy only slate-100/200/300 are legal para texto.
+   Sobre off-white solo slate-450/500. slate-400 es exclusivo de superficies
+   oscuras: sobre off-white da 3.83:1 y no llega a AA. ---- */
 --slate-100:#E2E8F0; /* @kind color */
 --slate-200:#C3CEDD; /* @kind color */
 --slate-300:#9BA9BF; /* @kind color */
 --slate-400:#718096; /* @kind color */
+--slate-450:#626E82; /* @kind color */ /* 4.92:1 sobre off-white — el escalón terciario del tema claro */
 --slate-500:#4A5568; /* @kind color */
 
 /* ---- Green washes ---- */
@@ -47,7 +50,7 @@
 --text-heading:var(--deep-navy); /* @kind color */
 --text-body:var(--navy-700); /* @kind color */
 --text-muted:var(--slate-500); /* @kind color */
---text-faint:var(--slate-400); /* @kind color */
+--text-faint:var(--slate-450); /* @kind color */ /* 4.92:1 sobre off-white. Antes slate-400 = 3.83:1, por debajo de AA */
 --text-accent:#0F7A46; /* @kind color */
 --text-on-accent:var(--deep-navy); /* @kind color */
 --border-hairline:var(--pale-200); /* @kind color */
