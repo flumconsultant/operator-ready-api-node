@@ -1,0 +1,118 @@
+/* Fuentes auto-alojadas en vez del @import a Google Fonts de tokens/fonts.css:
+   quita una petición a un tercero del camino crítico de render. Los tokens
+   tipográficos (familias, escalas, tracking) siguen viniendo de tokens/. */
+@import url("./fonts.css");
+
+/* Sistema de tokens — la fuente de verdad sigue siendo tokens/*.css */
+@import url("../../tokens/colors.css");
+@import url("../../tokens/typography.css");
+@import url("../../tokens/spacing.css");
+@import url("../../tokens/radius.css");
+@import url("../../tokens/effects.css");
+@import url("../../tokens/patterns.css");
+@import url("../../tokens/motion.css");
+@import url("../../tokens/base.css");
+
+/* :hover extraídos de los atributos style-hover de los artboards */
+@import url("./hover.generated.css");
+
+/* ---------------------------------------------------------------------------
+   Lo que en los artboards Durable vivía duplicado en el <helmet> de cada uno.
+   Aquí va una sola vez.
+--------------------------------------------------------------------------- */
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--off-white); }
+::selection { background: var(--green-tint-strong); }
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--electric-green);
+  outline-offset: 3px;
+}
+
+/* Al imprimir no hay scroll: los reveals que nunca entraron en viewport
+   quedarían en opacity:0. framer-motion escribe estilo inline, de ahí !important. */
+@media print {
+  [data-reveal-el] { opacity: 1 !important; transform: none !important; }
+}
+
+/* Fondo profundo: retícula de circuito + luz verde ambiental */
+[data-deep] { position: relative; isolation: isolate; }
+[data-deep]::before {
+  content: ""; position: absolute; inset: 0;
+  background-image: var(--pattern-circuit-grid);
+  background-size: 96px 96px;
+  opacity: var(--pattern-opacity-subtle);
+  z-index: -1; pointer-events: none;
+}
+[data-deep]::after {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(60% 55% at 84% 6%, rgba(0,255,136,.14) 0%, rgba(0,255,136,.04) 40%, rgba(10,14,39,0) 72%);
+  z-index: -1; pointer-events: none;
+}
+
+/* Tarjetas que levantan al hover */
+[data-lift] {
+  transition: transform .35s cubic-bezier(.2,.7,.2,1), border-color .35s ease, box-shadow .35s ease;
+}
+[data-lift]:hover {
+  transform: translateY(-5px);
+  border-color: var(--green-line);
+  box-shadow: 0 22px 60px -28px rgba(0,0,0,.55);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-lift] { transition: none; }
+  [data-lift]:hover { transform: none; }
+}
+
+/* Columna de titular pegajosa en las secciones de dos columnas */
+@media (min-width: 901px) {
+  [data-cols] > h2:first-child { position: sticky; top: 112px; }
+}
+@media (max-width: 900px) {
+  [data-cols] { grid-template-columns: 1fr !important; }
+  [data-hide-sm] { display: none !important; }
+}
+
+/* Cabecera: nav completo en desktop, burger por debajo de 1180px */
+@media (max-width: 1180px) { [data-nav] { display: none !important; } }
+@media (min-width: 1181px) { [data-burger] { display: none !important; } }
+
+/* Por debajo de 720px, el CTA de píldora y el selector ES/EN no caben junto al
+   wordmark: la barra desbordaba y empujaba el burger fuera de pantalla, dejando
+   el menú inalcanzable en móvil. Los dos ya están dentro del overlay. */
+@media (max-width: 720px) {
+  [data-bar-actions] > [data-cta],
+  [data-bar-actions] > [data-lang] { display: none !important; }
+  [data-bar-actions] { margin-left: auto; }
+}
+
+/* Formulario de contacto */
+input, select, textarea {
+  font: var(--type-body);
+  font-size: var(--text-body-lg);
+  color: var(--text-heading);
+  background: var(--white);
+  border: 1px solid var(--border-strong);
+  border-radius: 2px;
+  padding: 14px 16px;
+  width: 100%;
+  min-height: 48px;
+}
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid var(--electric-green);
+  outline-offset: 2px;
+  border-color: var(--electric-green);
+}
+label {
+  display: block;
+  font: var(--type-label);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}

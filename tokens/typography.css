@@ -9,11 +9,14 @@
 --weight-body-medium:500; /* @kind font */
 --weight-mono:400; /* @kind font */
 
+/* Titulares fluidos. El máximo de cada clamp es el valor fijo que tenían antes,
+   así que de ~1180px para arriba nada cambia. Por debajo escalan: a 390px una
+   palabra como "TRANSFORMACIÓN" a 34px desbordaba el ancho de pantalla. */
 --text-hero:clamp(46px,6.4vw,104px); /* @kind font */
---text-display:76px; /* @kind font */
---text-h1:52px; /* @kind font */
---text-h2:34px; /* @kind font */
---text-h3:21px; /* @kind font */
+--text-display:clamp(40px,8.4vw,76px); /* @kind font */
+--text-h1:clamp(32px,5.6vw,52px); /* @kind font */
+--text-h2:clamp(23px,3.6vw,34px); /* @kind font */
+--text-h3:clamp(18px,2.2vw,21px); /* @kind font */
 --text-lead:19px; /* @kind font */
 --text-body-lg:16.5px; /* @kind font */
 --text-body-md:15px; /* @kind font */

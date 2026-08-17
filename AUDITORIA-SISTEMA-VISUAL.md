@@ -97,11 +97,12 @@ BuildEmbed 68 KB.
   y `wordmark-reference.png`. No los referencia ningún artboard, así que no pesan
   en la carga: son los originales de marca y se dejaron intactos a propósito. Son
   los 11 MB que quedan en `assets/`.
-- **5 referencias rotas, previas a esta limpieza** —
+- **5 referencias a assets inexistentes en `_ds_bundle.js`** —
   `02-data-streams.png`, `05-geometric-grid.png`, `48-ai-interface.png`,
-  `49-journey.png` y `logo/isotype-negative.svg` se referencian en los artboards
-  pero no existen en `assets/`. Decidir si se producen o se sustituyen por
-  imágenes existentes: es decisión de contenido, no de sistema.
+  `49-journey.png` y `logo/isotype-negative.svg`. Están en el bundle del design
+  system, no en los artboards: ningún artboard las pinta, así que no hay imágenes
+  rotas en pantalla. Es un catálogo desactualizado, no un bug visual. La app React
+  no las arrastra — todas sus referencias a assets resuelven.
 
 ## Arquitectura de tokens
 
