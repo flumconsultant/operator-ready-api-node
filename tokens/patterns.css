@@ -1,0 +1,29 @@
+:root{
+/* ---- PATTERN LIBRARY ----
+   Backgrounds for AI-native transformation. Keep them at 5-20% opacity over a
+   navy base; green accents inside a pattern stay at 20% maximum. Never at full
+   opacity, never over body copy, never two patterns in one frame. ---- */
+
+/* Geometric */
+--pattern-circuit-grid:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cg fill='none' stroke='%2300FF88' stroke-width='1'%3E%3Cpath d='M0 32h96M0 64h96M32 0v96M64 0v96'/%3E%3C/g%3E%3Cg fill='%2300FF88'%3E%3Ccircle cx='32' cy='32' r='2.5'/%3E%3Ccircle cx='64' cy='64' r='2.5'/%3E%3C/g%3E%3C/svg%3E"); /* @kind other */
+--pattern-hexagon-grid:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='96'%3E%3Cg fill='none' stroke='%2300FF88' stroke-width='1'%3E%3Cpath d='M28 0l24 14v28L28 56 4 42V14z'/%3E%3Cpath d='M28 48l24 14v28L28 104 4 90V62z'/%3E%3C/g%3E%3C/svg%3E"); /* @kind other */
+--pattern-micro-grid:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpath d='M0 0h16v16H0z' fill='none' stroke='%23E2E8F0' stroke-width='.5'/%3E%3C/svg%3E"); /* @kind other */
+
+/* Dot matrices */
+--pattern-dot-grid:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Ccircle cx='2' cy='2' r='1.6' fill='%2300FF88'/%3E%3C/svg%3E"); /* @kind other */
+--pattern-particle-field:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cg fill='%2300FF88'%3E%3Ccircle cx='12' cy='22' r='1.8'/%3E%3Ccircle cx='58' cy='9' r='1.1'/%3E%3Ccircle cx='104' cy='34' r='2.1'/%3E%3Ccircle cx='31' cy='68' r='1.3'/%3E%3Ccircle cx='86' cy='79' r='1.7'/%3E%3Ccircle cx='128' cy='104' r='1.2'/%3E%3Ccircle cx='19' cy='118' r='2'/%3E%3Ccircle cx='66' cy='131' r='1.4'/%3E%3Ccircle cx='113' cy='56' r='1'/%3E%3C/g%3E%3C/svg%3E"); /* @kind other */
+--pattern-scattered-nodes:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cg stroke='%2300FF88' stroke-width='.7' fill='none'%3E%3Cpath d='M24 30L82 62 148 26M82 62l-38 76 84 22M82 62l72 58'/%3E%3C/g%3E%3Cg fill='%2300FF88'%3E%3Ccircle cx='24' cy='30' r='3'/%3E%3Ccircle cx='82' cy='62' r='3.6'/%3E%3Ccircle cx='148' cy='26' r='2.6'/%3E%3Ccircle cx='44' cy='138' r='3'/%3E%3Ccircle cx='128' cy='160' r='2.6'/%3E%3Ccircle cx='154' cy='120' r='3'/%3E%3C/g%3E%3C/svg%3E"); /* @kind other */
+
+/* Line systems */
+--pattern-parallel-lines:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Cpath d='M0 11.5h12' stroke='%2300FF88' stroke-width='1'/%3E%3C/svg%3E"); /* @kind other */
+--pattern-wave:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='44'%3E%3Cg fill='none' stroke='%2300FF88' stroke-width='1.2'%3E%3Cpath d='M0 22C26 4 54 4 80 22s54 18 80 0'/%3E%3Cpath d='M0 34C26 16 54 16 80 34s54 18 80 0' opacity='.6'/%3E%3C/g%3E%3C/svg%3E"); /* @kind other */
+--pattern-angular-lines:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg stroke='%2300FF88' stroke-width='1' fill='none'%3E%3Cpath d='M-20 60L60 -20M0 120L120 0M60 140L140 60'/%3E%3C/g%3E%3C/svg%3E"); /* @kind other */
+
+/* Textures */
+--pattern-noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"); /* @kind other */
+
+/* Opacity band the guidelines allow */
+--pattern-opacity:.10; /* @kind other */
+--pattern-opacity-strong:.20; /* @kind other */
+--pattern-opacity-subtle:.05; /* @kind other */
+}
