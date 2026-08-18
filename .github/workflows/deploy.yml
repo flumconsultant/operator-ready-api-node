@@ -160,27 +160,17 @@ jobs:
           # haya en el disco es peor que un valor fijo y explícito.
           DESTINO="${FTP_DIR:-.}"
 
-          # Dónde aterrizamos, en el registro y en claro. Sin esto, un
-          # despliegue que sube los archivos a la carpeta equivocada sale en
-          # verde exactamente igual que uno correcto: el fallo más caro de
-          # diagnosticar es el que no deja rastro.
-          #
-          # No se usa 'pwd': lftp lo imprime en forma de URL, con el usuario y
-          # el servidor dentro, así que GitHub lo tapa entero con *** por
-          # contener un secreto y la ruta no se llega a leer. Lo que sí
-          # identifica la carpeta sin nombrarla es su contenido, el de la
-          # carpeta de encima y si hay un public_html colgando.
-          CONEXION="set ftp:ssl-force true; set ssl:verify-certificate $VERIFICAR; open -u '$FTP_USER','$FTP_PASSWORD' '$FTP_HOST';"
-          echo "── Dónde estamos en el FTP ──"
-          echo "· Aquí dentro:"
-          lftp -c "$CONEXION cls -1" 2>&1 | sed 's/^/    /' || echo "    (no se pudo listar)"
-          echo "· Un nivel por encima (..):"
-          lftp -c "$CONEXION cls -1 .." 2>&1 | sed 's/^/    /' || echo "    (no se pudo listar)"
-          echo "· Dentro de public_html, si existe:"
-          lftp -c "$CONEXION cls -1 public_html" 2>&1 | sed 's/^/    /' || echo "    (no existe)"
-          echo "─────────────────────────────"
           echo "Subiendo a: $DESTINO"
 
+          # Todo en UNA sola conexión, incluido el listado de la carpeta.
+          #
+          # Antes el listado se sacaba con tres invocaciones de lftp aparte,
+          # antes de subir. Con eso el despliegue pasaba de abrir una conexión
+          # a abrir cuatro seguidas, y este hosting compartido limita las
+          # conexiones seguidas de una forma particularmente mala: no las
+          # rechaza con un error, las deja colgadas. El despliegue se quedaba
+          # parado seis minutos hasta agotar el tiempo. El diagnóstico no vale
+          # lo que cuesta si es el propio diagnóstico quien rompe el proceso.
           lftp -c "
             set ftp:ssl-force true;
             set ftp:ssl-protect-data true;
@@ -188,6 +178,13 @@ jobs:
             set net:max-retries 3;
             set net:timeout 20;
             open -u '$FTP_USER','$FTP_PASSWORD' '$FTP_HOST';
+
+            # Qué hay en la carpeta donde vamos a escribir. Sirve para saber
+            # que es la carpeta correcta y no otra: un despliegue que escribe
+            # donde el servidor no publica sale en verde igual que uno bueno.
+            echo '── Contenido de la carpeta destino, antes de subir ──';
+            cls -1;
+            echo '────────────────────────────────────────────────────';
 
             # 1. El bundle con hash va con --delete: esa carpeta es solo nuestra,
             #    y sin borrar acumularía todos los bundles de todos los despliegues
