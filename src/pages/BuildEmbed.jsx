@@ -2,6 +2,8 @@ import React from 'react';
 import SiteHeader from '../components/SiteHeader.jsx';
 import SiteFooter from '../components/SiteFooter.jsx';
 import Reveal from '../components/Reveal.jsx';
+import { Ico } from '../components/icons.jsx';
+import { Banner } from '../components/Media.jsx';
 import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, Cols, Card, IndexRow } from '../components/ui.jsx';
 
 /**
@@ -13,10 +15,10 @@ import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, C
  */
 
 const BUILDABLE = [
-  ['AI-native workflow', 'Un proceso end-to-end rediseñado con personas y agents trabajando juntos.'],
-  ['Agent o copilot', 'Una capability con límites de autonomía, integración y accountability explícitos.'],
-  ['Decision system', 'El flujo de información y la decisión de alto valor que lo consume.'],
-  ['AI-native product', 'Una experiencia nueva para clientes o colaboradores, con su operación detrás.'],
+  ['flow', 'AI-native workflow', 'Un proceso end-to-end rediseñado con personas y agents trabajando juntos.'],
+  ['agents', 'Agent o copilot', 'Una capability con límites de autonomía, integración y accountability explícitos.'],
+  ['decision', 'Decision system', 'El flujo de información y la decisión de alto valor que lo consume.'],
+  ['product', 'AI-native product', 'Una experiencia nueva para clientes o colaboradores, con su operación detrás.'],
 ];
 
 const STAGES = [
@@ -34,10 +36,10 @@ const DELIVERABLES = [
 ];
 
 const CONTROLS = [
-  ['Autonomy boundaries', 'Qué decide el sistema y qué conserva siempre una persona.'],
-  ['Exception paths', 'Qué ocurre con lo que no encaja, y quién es responsable de resolverlo.'],
-  ['Quality criteria', 'Cómo se sabe que una salida es aceptable antes de que llegue al cliente.'],
-  ['Permissions y trazabilidad', 'Quién puede hacer qué, y cómo se reconstruye una decisión después.'],
+  ['risk', 'Autonomy boundaries', 'Qué decide el sistema y qué conserva siempre una persona.'],
+  ['flow', 'Exception paths', 'Qué ocurre con lo que no encaja, y quién es responsable de resolverlo.'],
+  ['quality', 'Quality criteria', 'Cómo se sabe que una salida es aceptable antes de que llegue al cliente.'],
+  ['balance', 'Permissions y trazabilidad', 'Quién puede hacer qué, y cómo se reconstruye una decisión después.'],
 ];
 
 const TOOLS = [
@@ -82,14 +84,21 @@ export default function BuildEmbed() {
         <Kicker dark>Qué puede construirse</Kicker>
         <Headline dark>Cuatro formas de capability, un mismo estándar.</Headline>
         <Cols min="250px">
-          {BUILDABLE.map(([name, line]) => (
+          {BUILDABLE.map(([icon, name, line]) => (
             <Card dark key={name}>
+              <Ico name={icon} size={28} style={{ color: 'var(--electric-green)', marginBottom: 'var(--space-5)' }} />
               <h3 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--white)' }}>{name}</h3>
               <Body dark style={{ marginTop: 'var(--space-4)' }}>{line}</Body>
             </Card>
           ))}
         </Cols>
       </Section>
+
+      <Banner src="/images/42-future-forward.webp" alt="" height="clamp(200px, 28vw, 320px)">
+        <Reveal as="p" style={{ margin: 0, maxWidth: '26ch', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h1)', lineHeight: 'var(--leading-heading)', letterSpacing: 'var(--track-display)', color: 'var(--white)' }}>
+          Del blueprint a la operación.
+        </Reveal>
+      </Banner>
 
       <Section band="light">
         <Kicker>El recorrido</Kicker>
@@ -128,8 +137,9 @@ export default function BuildEmbed() {
           encajan. Esas cuatro decisiones se toman antes de escribir la primera línea.
         </Lead>
         <Cols min="250px">
-          {CONTROLS.map(([name, line]) => (
+          {CONTROLS.map(([icon, name, line]) => (
             <Reveal as="div" key={name} style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
+              <Ico name={icon} size={28} style={{ color: 'var(--electric-green)', marginBottom: 'var(--space-5)' }} />
               <h3 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--white)' }}>{name}</h3>
               <Body dark style={{ marginTop: 'var(--space-4)' }}>{line}</Body>
             </Reveal>

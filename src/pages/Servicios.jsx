@@ -3,6 +3,8 @@ import SiteHeader from '../components/SiteHeader.jsx';
 import SiteFooter from '../components/SiteFooter.jsx';
 import Reveal from '../components/Reveal.jsx';
 import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, Card, Cols } from '../components/ui.jsx';
+import { Ico, IcoBadge } from '../components/icons.jsx';
+import { Banner } from '../components/Media.jsx';
 
 /**
  * Landing de servicios.
@@ -15,12 +17,12 @@ import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, C
  */
 
 const JOURNEY = [
-  { n: '00', step: 'Enable', who: 'BECOME NOW™', q: '¿Sabe el equipo trabajar con IA hoy?', out: 'Capacidades aplicadas, workflows y activos reutilizables.' },
-  { n: '01', step: 'Define', who: 'AI-Native Transformation Discovery', q: '¿Dónde está el valor y qué debe cambiar?', out: 'Ambition, diagnostic y priority choices.' },
-  { n: '02', step: 'Design', who: 'Punto de conexión', q: '¿Cómo debe operar el modelo futuro?', out: 'Target operating model y transformation blueprint.' },
-  { n: '03', step: 'Build', who: 'Build & Embed Sprint', q: '¿Qué capability debe existir y cómo funcionará?', out: 'Workflow, agent, copilot, product o decision system.' },
-  { n: '04', step: 'Embed', who: 'Build & Embed Sprint', q: '¿Cómo se incorpora con adopción y control?', out: 'Ownership, human-in-the-loop, controls y scorecard.' },
-  { n: '05', step: 'Scale', who: 'Evolución posterior', q: '¿Está lista para expandirse?', out: 'Scale decision y evolution backlog.' },
+  { n: '00', icon: 'capability', step: 'Enable', who: 'BECOME NOW™', q: '¿Sabe el equipo trabajar con IA hoy?', out: 'Capacidades aplicadas, workflows y activos reutilizables.' },
+  { n: '01', icon: 'decision', step: 'Define', who: 'AI-Native Transformation Discovery', q: '¿Dónde está el valor y qué debe cambiar?', out: 'Ambition, diagnostic y priority choices.' },
+  { n: '02', icon: 'layers', step: 'Design', who: 'Punto de conexión', q: '¿Cómo debe operar el modelo futuro?', out: 'Target operating model y transformation blueprint.' },
+  { n: '03', icon: 'build', step: 'Build', who: 'Build & Embed Sprint', q: '¿Qué capability debe existir y cómo funcionará?', out: 'Workflow, agent, copilot, product o decision system.' },
+  { n: '04', icon: 'embed', step: 'Embed', who: 'Build & Embed Sprint', q: '¿Cómo se incorpora con adopción y control?', out: 'Ownership, human-in-the-loop, controls y scorecard.' },
+  { n: '05', icon: 'scale', step: 'Scale', who: 'Evolución posterior', q: '¿Está lista para expandirse?', out: 'Scale decision y evolution backlog.' },
 ];
 
 const COMPARE = [
@@ -62,14 +64,15 @@ export default function Servicios() {
               data-cols
               style={{
                 display: 'grid',
-                gridTemplateColumns: '72px minmax(0,1fr) minmax(0,1.1fr) minmax(0,1.1fr)',
+                gridTemplateColumns: '34px 52px minmax(0,1fr) minmax(0,1.1fr) minmax(0,1.1fr)',
                 gap: 'var(--space-6)',
                 padding: 'var(--space-6) 0',
                 borderTop: '1px solid var(--border-hairline)',
                 alignItems: 'start',
               }}
             >
-              <span style={{ font: 'var(--type-mono)', color: 'var(--text-accent)' }}>{j.n}</span>
+              <Ico name={j.icon} size={26} style={{ color: 'var(--text-accent)', marginTop: 2 }} />
+              <span style={{ font: 'var(--type-mono)', color: 'var(--text-faint)' }}>{j.n}</span>
               <div>
                 <h3 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)' }}>
                   {j.step}
@@ -83,12 +86,21 @@ export default function Servicios() {
         </div>
       </Section>
 
+      <Banner src="/images/47-global-ops.webp" alt="" height="clamp(220px, 30vw, 340px)">
+        <Reveal as="p" style={{ margin: 0, maxWidth: '26ch', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h1)', lineHeight: 'var(--leading-heading)', letterSpacing: 'var(--track-display)', color: 'var(--white)' }}>
+          Un eje. Tres formas de entrar en él.
+        </Reveal>
+      </Banner>
+
       <Section band="dark">
         <Kicker dark>Our offer</Kicker>
         <Headline dark>Capacita el presente. Diseña lo que sigue. Construye desde dentro.</Headline>
         <Cols min="280px">
           <Card dark>
-            <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--electric-green)' }}>Aplícalo desde mañana</p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
+              <Ico name="capability" size={24} style={{ color: 'var(--electric-green)' }} />
+              <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--electric-green)' }}>Aplícalo desde mañana</p>
+            </div>
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--white)' }}>
               BECOME NOW™
             </h3>
@@ -99,7 +111,10 @@ export default function Servicios() {
             <TextCTA to="/es/servicios/become-now" dark>Explora BECOME NOW™</TextCTA>
           </Card>
           <Card dark>
-            <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--electric-green)' }}>8–12 semanas</p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
+              <Ico name="decision" size={24} style={{ color: 'var(--electric-green)' }} />
+              <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--electric-green)' }}>8–12 semanas</p>
+            </div>
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--white)' }}>
               AI-Native Transformation Discovery
             </h3>
@@ -110,7 +125,10 @@ export default function Servicios() {
             <TextCTA to="/es/servicios/transformation-discovery" dark>Explora Discovery</TextCTA>
           </Card>
           <Card dark>
-            <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--electric-green)' }}>8–12 semanas por capability</p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
+              <Ico name="build" size={24} style={{ color: 'var(--electric-green)' }} />
+              <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--electric-green)' }}>8–12 semanas por capability</p>
+            </div>
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--white)' }}>
               Build &amp; Embed Sprint
             </h3>
@@ -157,22 +175,28 @@ export default function Servicios() {
         <Headline>En una frase.</Headline>
         <Cols min="260px">
           <Card>
-            <Body style={{ marginTop: 0, color: 'var(--text-body)' }}>
+            <IcoBadge name="decision" />
+            <Body style={{ color: 'var(--text-body)' }}>
               Si buscas <strong>definir dirección, priorizar inversiones o diseñar el
               operating model</strong>, necesitas AI-Native Transformation Discovery.
             </Body>
+            <TextCTA to="/es/servicios/transformation-discovery">Ir a Discovery</TextCTA>
           </Card>
           <Card>
-            <Body style={{ marginTop: 0, color: 'var(--text-body)' }}>
+            <IcoBadge name="build" />
+            <Body style={{ color: 'var(--text-body)' }}>
               Si ya sabes <strong>qué capability construir</strong> y necesitas llevarla
               a la operación, necesitas Build &amp; Embed Sprint.
             </Body>
+            <TextCTA to="/es/servicios/build-and-embed">Ir a Build &amp; Embed</TextCTA>
           </Card>
           <Card>
-            <Body style={{ marginTop: 0, color: 'var(--text-body)' }}>
+            <IcoBadge name="signpost" />
+            <Body style={{ color: 'var(--text-body)' }}>
               Si tienes una oportunidad pero <strong>no un blueprint validado</strong>,
               evaluamos un short readiness gate antes de recomendar Build &amp; Embed.
             </Body>
+            <TextCTA to="/es/contacto">Hablemos del gate</TextCTA>
           </Card>
         </Cols>
       </Section>
@@ -180,8 +204,9 @@ export default function Servicios() {
       <Section band="darker" pad="var(--space-13)">
         <Kicker dark>Your next operating model starts with a question</Kicker>
         <Headline dark>No empieces por el servicio. Empieza por la decisión que necesitas tomar.</Headline>
-        <div style={{ marginTop: 'var(--space-8)' }}>
+        <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
           <PrimaryCTA to="/es/contacto">Cuéntanos qué debe cambiar</PrimaryCTA>
+          <GhostCTA to="/es/casos-de-uso" dark>Empieza por tu pregunta</GhostCTA>
         </div>
       </Section>
 

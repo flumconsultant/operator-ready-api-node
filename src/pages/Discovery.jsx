@@ -2,6 +2,8 @@ import React from 'react';
 import SiteHeader from '../components/SiteHeader.jsx';
 import SiteFooter from '../components/SiteFooter.jsx';
 import Reveal from '../components/Reveal.jsx';
+import { Ico } from '../components/icons.jsx';
+import { Banner } from '../components/Media.jsx';
 import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, Cols, Card, IndexRow } from '../components/ui.jsx';
 
 /**
@@ -90,12 +92,21 @@ export default function Discovery() {
         <Cols min="240px">
           {FIT.map((f, i) => (
             <Reveal as="div" key={f} style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
-              <span style={{ font: 'var(--type-mono)', color: 'var(--electric-green)' }}>{String(i + 1).padStart(2, '0')}</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
+                <Ico name="yes" size={22} style={{ color: 'var(--electric-green)' }} />
+                <span style={{ font: 'var(--type-mono)', color: 'var(--electric-green)' }}>{String(i + 1).padStart(2, '0')}</span>
+              </div>
               <Body dark style={{ marginTop: 'var(--space-4)' }}>{f}</Body>
             </Reveal>
           ))}
         </Cols>
       </Section>
+
+      <Banner src="/images/46-strategy-session.webp" alt="" height="clamp(200px, 28vw, 320px)">
+        <Reveal as="p" style={{ margin: 0, maxWidth: '24ch', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h1)', lineHeight: 'var(--leading-heading)', letterSpacing: 'var(--track-display)', color: 'var(--white)' }}>
+          Primero la dirección. Después la inversión.
+        </Reveal>
+      </Banner>
 
       {/* 3 — Etapas B–E–C–O */}
       <Section band="light">

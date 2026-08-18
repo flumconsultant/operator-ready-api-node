@@ -5,6 +5,8 @@ import SiteFooter from '../components/SiteFooter.jsx';
 import Reveal from '../components/Reveal.jsx';
 import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, Cols, Card, IndexRow } from '../components/ui.jsx';
 import BecomeNowForm from '../components/BecomeNowForm.jsx';
+import { Ico } from '../components/icons.jsx';
+import { Banner } from '../components/Media.jsx';
 import {
   TAGLINE, PROMISE, SITUATIONS, EXISTING_MATERIAL, SESSION_ZERO, SESSION_ZERO_OUTPUTS,
   SESSION_FLOW, FORMATS, IS_IS_NOT, INDICATORS, GENERAL_DELIVERABLES, FAQ, PROGRAM_GROUPS, PROGRAMS,
@@ -51,15 +53,10 @@ export default function BecomeNow() {
         <Kicker>The adoption gap</Kicker>
         <Headline>Tener acceso a la IA no significa saber trabajar con ella.</Headline>
         <Lead>
-          Muchas empresas ya cuentan con ChatGPT, Claude o Gemini, pero su uso sigue
-          siendo individual, superficial y difícil de medir. Cada persona experimenta
-          por su cuenta, los aprendizajes no se comparten y los resultados dependen
-          de prompts improvisados.
+          Muchas empresas ya tienen ChatGPT, Claude o Gemini, pero el uso es
+          individual y difícil de medir. El problema no son las herramientas: es que
+          nadie las ha convertido en una forma común de trabajar.
         </Lead>
-        <Body>
-          El problema no es la falta de herramientas. Es la falta de un método para
-          convertirlas en una forma común de trabajar.
-        </Body>
 
         <Cols min="260px">
           {SITUATIONS.map((s) => (
@@ -79,15 +76,10 @@ export default function BecomeNow() {
         <Kicker dark>Built around your work</Kicker>
         <Headline dark>Primero entendemos cómo trabajan. Después diseñamos la capacitación.</Headline>
         <Lead dark>
-          Todo programa comienza con una sesión de entendimiento. Antes de definir la
-          malla conocemos el área, revisamos sus procesos, identificamos sus cuellos
-          de botella y entendemos qué documentos, datos, reportes y herramientas
-          utiliza hoy.
+          Antes de definir la malla conocemos el área, sus procesos, sus cuellos de
+          botella y las herramientas que usa hoy. De ahí salen los casos, asistentes
+          y workflows que se trabajan en las sesiones.
         </Lead>
-        <Body dark>
-          A partir de ese entendimiento construimos los casos, ejercicios, asistentes,
-          agents y workflows que se trabajarán durante las sesiones.
-        </Body>
 
         <div style={{ marginTop: 'var(--space-11)' }}>
           <p style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--electric-green)' }}>
@@ -99,7 +91,10 @@ export default function BecomeNow() {
                 padding: '8px 14px', border: '1px solid var(--border-hairline-dark)',
                 borderRadius: 'var(--radius-pill)', font: 'var(--type-body)',
                 fontSize: 'var(--text-body-sm)', color: 'var(--slate-200)',
-              }}>{m}</span>
+                display: 'inline-flex', alignItems: 'center', gap: 8,
+              }}>
+                <Ico name="doc" size={16} style={{ color: 'var(--electric-green)' }} />{m}
+              </span>
             ))}
           </div>
           <Body dark style={{ marginTop: 'var(--space-6)' }}>
@@ -108,6 +103,13 @@ export default function BecomeNow() {
           </Body>
         </div>
       </Section>
+
+      {/* Respiro visual antes del bloque más largo de la página */}
+      <Banner src="/images/17-team-collab.webp" alt="" height="clamp(220px, 32vw, 360px)">
+        <Reveal as="p" style={{ margin: 0, maxWidth: '24ch', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h1)', lineHeight: 'var(--leading-heading)', letterSpacing: 'var(--track-display)', color: 'var(--white)' }}>
+          La capacitación entra al proceso real.
+        </Reveal>
+      </Banner>
 
       {/* Sesión 0 — antes que cualquier malla */}
       <Section band="sunken" id="sesion-0">
@@ -187,13 +189,17 @@ export default function BecomeNow() {
               <ul style={{ listStyle: 'none', margin: 'var(--space-6) 0 0', padding: 0, display: 'grid', gap: 'var(--space-3)' }}>
                 {f.items.map((it) => (
                   <li key={it} style={{ display: 'flex', gap: 'var(--space-4)', font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: 'var(--text-body)' }}>
-                    <span aria-hidden="true" style={{ color: 'var(--text-accent)' }}>—</span>{it}
+                    <Ico name="yes" size={18} style={{ color: 'var(--text-accent)', marginTop: 2 }} />{it}
                   </li>
                 ))}
               </ul>
             </Card>
           ))}
         </Cols>
+        <div style={{ marginTop: 'var(--space-10)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
+          <PrimaryCTA href="#disena-tu-programa">Diseña el tuyo</PrimaryCTA>
+          <GhostCTA to="#programas">Ver los programas por área</GhostCTA>
+        </div>
       </Section>
 
       {/* Catálogo — al final, y como rutas de referencia */}
@@ -224,6 +230,9 @@ export default function BecomeNow() {
             </div>
           ))}
         </div>
+        <div style={{ marginTop: 'var(--space-10)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
+          <PrimaryCTA href="#disena-tu-programa">¿No ves tu área? Cuéntanosla</PrimaryCTA>
+        </div>
       </Section>
 
       {/* Qué es y qué no es */}
@@ -234,15 +243,31 @@ export default function BecomeNow() {
           <table style={{ width: '100%', minWidth: 640, borderCollapse: 'collapse', textAlign: 'left' }}>
             <thead>
               <tr>
-                <th scope="col" style={{ ...th, color: 'var(--text-accent)' }}>Sí es</th>
-                <th scope="col" style={{ ...th, color: 'var(--text-faint)' }}>No es</th>
+                <th scope="col" style={{ ...th, color: 'var(--text-accent)' }}>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                    <Ico name="yes" size={18} /> Sí es
+                  </span>
+                </th>
+                <th scope="col" style={{ ...th, color: 'var(--text-muted)' }}>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                    <Ico name="no" size={18} /> No es
+                  </span>
+                </th>
               </tr>
             </thead>
             <tbody>
               {IS_IS_NOT.map(([yes, no]) => (
                 <tr key={yes}>
-                  <td style={{ ...td, color: 'var(--text-heading)' }}>{yes}</td>
-                  <td style={{ ...td, color: 'var(--text-muted)' }}>{no}</td>
+                  <td style={{ ...td, color: 'var(--text-heading)' }}>
+                    <span style={{ display: 'flex', gap: 10 }}>
+                      <Ico name="yes" size={18} style={{ color: 'var(--text-accent)', marginTop: 3 }} />{yes}
+                    </span>
+                  </td>
+                  <td style={{ ...td, color: 'var(--text-muted)' }}>
+                    <span style={{ display: 'flex', gap: 10 }}>
+                      <Ico name="no" size={18} style={{ color: 'var(--text-faint)', marginTop: 3 }} />{no}
+                    </span>
+                  </td>
                 </tr>
               ))}
             </tbody>

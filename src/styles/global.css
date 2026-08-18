@@ -267,3 +267,10 @@ label {
 .faq-item[open] summary::after { content: "−"; }
 .faq-item summary:hover { color: var(--text-accent); }
 @media (prefers-reduced-motion: reduce) { .faq-item summary::after { transition: none; } }
+
+/* Carril del formulario: el recorrido acompaña a la pregunta activa mientras se
+   baja por ella. Apilado en móvil no tiene sentido pegarlo — quedaría encima de
+   la propia pregunta. */
+@media (min-width: 901px) {
+  [data-form-rail] { position: sticky; top: 96px; }
+}

@@ -1,27 +1,29 @@
 import React from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { Check, ArrowRight, ArrowLeft, PaperPlaneTilt } from '@phosphor-icons/react';
 
 /**
- * Formulario conversacional: una pregunta por pantalla.
+ * Formulario conversacional con el recorrido a la vista.
  *
  * Lo usan el contacto general y BECOME NOW™. La diferencia entre los dos es el
  * esquema que recibe, no el componente — dos implementaciones del mismo patrón
  * se habrían separado a la primera corrección.
  *
- * Por qué una pregunta por pantalla: el formulario largo de esta web pide diez
- * datos, y diez campos a la vez leen como un trámite. De uno en uno leen como
- * una conversación, que es exactamente lo que el sitio dice que va a pasar
- * después de enviarlo.
+ * Se responde una pregunta cada vez, pero el recorrido entero está en pantalla:
+ * a la izquierda se ven las diez preguntas, cuáles están contestadas, con qué, y
+ * cuántas quedan. Es la corrección al formulario por pasos clásico, que esconde
+ * el final y por eso se abandona: quien no sabe cuánto falta asume que falta
+ * mucho. Con el recorrido visible la pregunta deja de ser "¿en qué me estoy
+ * metiendo?" y pasa a ser "me quedan tres".
  *
- * ---- Lo que este patrón hace mal, y cómo se compensa ----
+ * El carril no es decorativo: cada fila contestada es un botón que devuelve a
+ * esa pregunta. Corregir un dato no obliga a retroceder paso a paso.
  *
- * Un formulario por pasos es peor que uno normal para varias personas: quien
- * usa lector de pantalla pierde la vista de conjunto, quien quiere revisar
- * antes de enviar tiene que retroceder diez veces, y quien rellena con el
- * gestor de contraseñas se queda a medias. Por eso:
+ * ---- Lo que este patrón sigue haciendo mal, y cómo se compensa ----
  *
  *   · Hay un interruptor a "ver todo el formulario" siempre visible, y la
  *     elección se recuerda. No es una opción escondida: es el mismo formulario.
+ *     Quien usa lector de pantalla o gestor de contraseñas lo necesita.
  *   · Cada cambio de paso se anuncia por aria-live.
  *   · Enter avanza, salvo en un campo de texto largo, donde Enter escribe un
  *     salto de línea y es Ctrl+Enter quien avanza.
@@ -58,6 +60,7 @@ export default function ConversationalForm({
   const [values, setValues] = React.useState(() =>
     Object.fromEntries(fields.map((f) => [f.name, f.type === 'multi' ? [] : (f.default ?? '')]))
   );
+  const [reached, setReached] = React.useState(0);
   const [error, setError] = React.useState(null);
   const [sent, setSent] = React.useState(false);
   const inputRef = React.useRef(null);
@@ -99,9 +102,18 @@ export default function ConversationalForm({
       return;
     }
     setError(null);
-    setStep((s) => Math.min(s + 1, total));
+    setStep((s) => {
+      const n = Math.min(s + 1, total);
+      setReached((r) => Math.max(r, n));
+      return n;
+    });
   };
   const back = () => { setError(null); setStep((s) => Math.max(s - 1, 0)); };
+  const jump = (i) => {
+    if (i > reached) return;   // no se salta por delante: la validación es por paso
+    setError(null);
+    setStep(i);
+  };
 
   const submit = (e) => {
     e?.preventDefault();
@@ -171,102 +183,198 @@ export default function ConversationalForm({
   }
 
   /* ---------------- modo conversación ---------------- */
+  const answered = fields.filter((f) => isFilled(f, values[f.name])).length;
   const pct = Math.round((Math.min(step, total) / total) * 100);
+  const left = total - answered;
 
   return (
-    <form onSubmit={(e) => e.preventDefault()} style={{ maxWidth: 760, ...shell }} aria-label={formName}>
+    <form onSubmit={(e) => e.preventDefault()} style={{ ...shell }} aria-label={formName}>
       <ModeToggle mode={mode} onChange={changeMode} c={c} />
 
-      {/* Progreso */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-5)' }}>
-        <div style={{ flex: 1, height: 2, background: c.rule, borderRadius: 2, overflow: 'hidden' }}>
-          <motion.div
-            animate={{ width: `${pct}%` }}
-            transition={reduced ? { duration: 0 } : { duration: 0.4, ease: EASE }}
-            style={{ height: '100%', background: 'var(--electric-green)' }}
-          />
-        </div>
-        <span style={{ font: 'var(--type-mono)', fontSize: 'var(--text-micro)', color: c.faint, whiteSpace: 'nowrap' }}>
-          {Math.min(step + 1, total)} / {total}
-        </span>
-      </div>
+      <div
+        data-cols
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'minmax(0, 260px) minmax(0, 1fr)',
+          gap: 'var(--space-9)',
+          alignItems: 'start',
+        }}
+      >
+        {/* ---- el recorrido, entero y a la vista ---- */}
+        <nav data-form-rail aria-label="Recorrido del formulario">
+          <p style={{ margin: 0, font: 'var(--type-mono)', fontSize: 'var(--text-micro)', letterSpacing: 'var(--track-mono)', color: c.faint }}>
+            {answered} de {total} respondidas
+            {left > 0 && ` · quedan ${left}`}
+          </p>
+          <div style={{ marginTop: 'var(--space-4)', height: 2, background: c.rule, borderRadius: 2, overflow: 'hidden' }}>
+            <motion.div
+              animate={{ width: `${pct}%` }}
+              transition={reduced ? { duration: 0 } : { duration: 0.4, ease: EASE }}
+              style={{ height: '100%', background: 'var(--electric-green)' }}
+            />
+          </div>
 
-      {/* Anuncio para lectores de pantalla */}
-      <p aria-live="polite" className="sr-only">
-        {isReview ? 'Resumen antes de enviar' : `Pregunta ${step + 1} de ${total}: ${current.label}`}
-      </p>
+          <ol style={{ listStyle: 'none', margin: 'var(--space-6) 0 0', padding: 0, display: 'grid' }}>
+            {fields.map((f, i) => {
+              const done = isFilled(f, values[f.name]);
+              const here = i === step;
+              const open = i <= reached;
+              const answer = Array.isArray(values[f.name]) ? values[f.name].join(', ') : values[f.name];
+              return (
+                <li key={f.name}>
+                  <button
+                    type="button"
+                    onClick={() => jump(i)}
+                    disabled={!open}
+                    aria-current={here ? 'step' : undefined}
+                    style={{
+                      ...c.railRow,
+                      cursor: open ? 'pointer' : 'default',
+                      opacity: open ? 1 : 0.55,
+                      color: here ? c.text : c.faint,
+                    }}
+                  >
+                    <span
+                      aria-hidden="true"
+                      style={{
+                        ...c.railDot,
+                        borderColor: done || here ? 'var(--electric-green)' : c.border,
+                        background: done ? 'var(--electric-green)' : 'transparent',
+                        color: done ? 'var(--deep-navy)' : here ? 'var(--electric-green)' : c.faint,
+                      }}
+                    >
+                      {done ? <Check size={12} weight="bold" /> : String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span style={{ minWidth: 0 }}>
+                      <span style={{ display: 'block', font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', fontWeight: here ? 600 : 400 }}>
+                        {f.short || f.label}
+                      </span>
+                      {done && !here && (
+                        <span style={{ display: 'block', font: 'var(--type-body)', fontSize: 'var(--text-micro)', color: c.faint, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          {answer}
+                        </span>
+                      )}
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+            <li>
+              <button
+                type="button"
+                onClick={() => jump(total)}
+                disabled={reached < total}
+                aria-current={isReview ? 'step' : undefined}
+                style={{
+                  ...c.railRow,
+                  cursor: reached >= total ? 'pointer' : 'default',
+                  opacity: reached >= total ? 1 : 0.55,
+                  color: isReview ? c.text : c.faint,
+                }}
+              >
+                <span aria-hidden="true" style={{ ...c.railDot, borderColor: isReview ? 'var(--electric-green)' : c.border, color: isReview ? 'var(--electric-green)' : c.faint }}>
+                  <PaperPlaneTilt size={12} weight="bold" />
+                </span>
+                <span style={{ font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', fontWeight: isReview ? 600 : 400 }}>
+                  Revisar y enviar
+                </span>
+              </button>
+            </li>
+          </ol>
+        </nav>
 
-      <div style={{ minHeight: 260, marginTop: 'var(--space-8)' }}>
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={isReview ? 'review' : current.name}
-            initial={reduced ? false : { opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduced ? { opacity: 0 } : { opacity: 0, y: -14 }}
-            transition={reduced ? { duration: 0 } : { duration: 0.32, ease: EASE }}
-          >
-            {isReview ? (
-              <>
-                <p style={c.question}>¿Lo revisamos antes de enviar?</p>
-                <dl style={{ margin: 'var(--space-7) 0 0', display: 'grid', gap: 'var(--space-4)' }}>
-                  {fields.map((f, i) => (
-                    <div key={f.name} style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1.4fr) auto', gap: 'var(--space-5)', alignItems: 'baseline', paddingTop: 'var(--space-4)', borderTop: `1px solid ${c.rule}` }}>
-                      <dt style={{ ...c.label, margin: 0 }}>{f.label}</dt>
-                      <dd style={{ margin: 0, font: 'var(--type-body)', color: c.text }}>
-                        {Array.isArray(values[f.name])
-                          ? (values[f.name].join(', ') || '—')
-                          : (values[f.name] || '—')}
-                      </dd>
-                      <button type="button" onClick={() => setStep(i)} style={c.editBtn}>Editar</button>
+        {/* ---- la pregunta activa ---- */}
+        <div>
+          {/* Anuncio para lectores de pantalla */}
+          <p aria-live="polite" className="sr-only">
+            {isReview ? 'Resumen antes de enviar' : `Pregunta ${step + 1} de ${total}: ${current.label}`}
+          </p>
+
+          <div style={{ minHeight: 180 }}>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={isReview ? 'review' : current.name}
+                initial={reduced ? false : { opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={reduced ? { opacity: 0 } : { opacity: 0, y: -14 }}
+                transition={reduced ? { duration: 0 } : { duration: 0.32, ease: EASE }}
+              >
+                {isReview ? (
+                  <>
+                    <p style={c.question}>¿Lo revisamos antes de enviar?</p>
+                    <dl style={{ margin: 'var(--space-7) 0 0', display: 'grid', gap: 'var(--space-4)' }}>
+                      {fields.map((f, i) => (
+                        <div key={f.name} style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1.4fr) auto', gap: 'var(--space-5)', alignItems: 'baseline', paddingTop: 'var(--space-4)', borderTop: `1px solid ${c.rule}` }}>
+                          <dt style={{ ...c.label, margin: 0 }}>{f.short || f.label}</dt>
+                          <dd style={{ margin: 0, font: 'var(--type-body)', color: c.text }}>
+                            {Array.isArray(values[f.name])
+                              ? (values[f.name].join(', ') || '—')
+                              : (values[f.name] || '—')}
+                          </dd>
+                          <button type="button" onClick={() => setStep(i)} style={c.editBtn}>Editar</button>
+                        </div>
+                      ))}
+                    </dl>
+                  </>
+                ) : (
+                  <>
+                    <p style={c.question}>
+                      <span style={{ color: 'var(--electric-green)', font: 'var(--type-mono)', fontSize: 'var(--text-body-md)', marginRight: 12 }}>
+                        {String(step + 1).padStart(2, '0')}
+                      </span>
+                      {current.label}
+                      {!current.required && <span style={{ color: c.faint, fontSize: 'var(--text-body-md)' }}> · opcional</span>}
+                    </p>
+                    {current.help && <p style={{ ...c.help, marginTop: 'var(--space-4)' }}>{current.help}</p>}
+                    <div style={{ marginTop: 'var(--space-6)' }}>
+                      <Field
+                        f={current}
+                        value={values[current.name]}
+                        onChange={(v) => { set(current.name, v); if (error) setError(null); }}
+                        onEnter={next}
+                        inputRef={inputRef}
+                        c={c}
+                        big
+                      />
                     </div>
-                  ))}
-                </dl>
-              </>
-            ) : (
-              <>
-                <p style={c.question}>
-                  <span style={{ color: 'var(--electric-green)', font: 'var(--type-mono)', fontSize: 'var(--text-body-md)', marginRight: 12 }}>
-                    {String(step + 1).padStart(2, '0')}
-                  </span>
-                  {current.label}
-                  {!current.required && <span style={{ color: c.faint, fontSize: 'var(--text-body-md)' }}> · opcional</span>}
-                </p>
-                {current.help && <p style={{ ...c.help, marginTop: 'var(--space-4)' }}>{current.help}</p>}
-                <div style={{ marginTop: 'var(--space-6)' }}>
-                  <Field
-                    f={current}
-                    value={values[current.name]}
-                    onChange={(v) => { set(current.name, v); if (error) setError(null); }}
-                    onEnter={next}
-                    inputRef={inputRef}
-                    c={c}
-                    big
-                  />
-                </div>
-              </>
+                  </>
+                )}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {error && <p role="alert" style={c.error}>{error}</p>}
+
+          <div style={{ marginTop: 'var(--space-7)', display: 'flex', alignItems: 'center', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
+            {step > 0 && (
+              <button type="button" onClick={back} style={{ ...c.ghostBtn, gap: 8 }}>
+                <ArrowLeft size={16} aria-hidden="true" /> Atrás
+              </button>
             )}
-          </motion.div>
-        </AnimatePresence>
-      </div>
+            {isReview ? (
+              <button type="button" onClick={submit} className="cta-primary" style={{ ...c.submit, gap: 10 }}>
+                {submitLabel} <PaperPlaneTilt size={16} weight="bold" aria-hidden="true" />
+              </button>
+            ) : (
+              <button type="button" onClick={next} className="cta-primary" style={{ ...c.submit, gap: 10 }}>
+                {step === total - 1 ? 'Revisar' : 'Siguiente'} <ArrowRight size={16} weight="bold" aria-hidden="true" />
+              </button>
+            )}
+            {!isReview && (
+              <span style={{ font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: c.faint }}>
+                {current.type === 'textarea' ? 'Ctrl + Enter para continuar' : 'Enter para continuar'}
+              </span>
+            )}
+          </div>
 
-      {error && <p role="alert" style={c.error}>{error}</p>}
-
-      <div style={{ marginTop: 'var(--space-7)', display: 'flex', alignItems: 'center', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
-        {step > 0 && (
-          <button type="button" onClick={back} style={c.ghostBtn}>Atrás</button>
-        )}
-        {isReview ? (
-          <button type="button" onClick={submit} className="cta-primary" style={c.submit}>{submitLabel}</button>
-        ) : (
-          <button type="button" onClick={next} className="cta-primary" style={c.submit}>
-            {step === total - 1 ? 'Revisar' : 'Siguiente'}
-          </button>
-        )}
-        {!isReview && (
-          <span style={{ font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: c.faint }}>
-            {current.type === 'textarea' ? 'Ctrl + Enter para continuar' : 'Enter para continuar'}
-          </span>
-        )}
+          <p style={{ ...c.help, marginTop: 'var(--space-7)', maxWidth: '54ch' }}>
+            Tarda menos de dos minutos. Usaremos lo que escribas solo para preparar
+            la respuesta; no te suscribimos a nada. ¿Prefieres escribir directamente?{' '}
+            <a href="mailto:hello@become.company" style={{ color: dark ? 'var(--electric-green)' : 'var(--text-accent)' }}>
+              hello@become.company
+            </a>
+          </p>
+        </div>
       </div>
     </form>
   );
@@ -424,6 +532,17 @@ function colors(dark) {
       minHeight: 52, padding: '0 var(--space-6)', borderRadius: 'var(--radius-pill)',
       background: 'transparent', border: `1px solid ${border}`, color: text, cursor: 'pointer',
       font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase',
+    },
+    railRow: {
+      display: 'grid', gridTemplateColumns: '26px minmax(0,1fr)', gap: 12,
+      alignItems: 'start', width: '100%', textAlign: 'left',
+      background: 'transparent', border: 0, borderLeft: '1px solid transparent',
+      padding: '10px 0', minHeight: 44,
+    },
+    railDot: {
+      display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+      width: 26, height: 26, borderRadius: '50%', border: '1px solid',
+      font: 'var(--type-mono)', fontSize: 'var(--text-micro)', lineHeight: 1,
     },
     editBtn: {
       background: 'transparent', border: 0, padding: 4, cursor: 'pointer',

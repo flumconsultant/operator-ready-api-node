@@ -2,6 +2,8 @@ import React from 'react';
 import SiteHeader from '../components/SiteHeader.jsx';
 import SiteFooter from '../components/SiteFooter.jsx';
 import Reveal from '../components/Reveal.jsx';
+import { Ico } from '../components/icons.jsx';
+import { Split } from '../components/Media.jsx';
 import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, TextCTA, Cols, IndexRow } from '../components/ui.jsx';
 
 /**
@@ -69,11 +71,12 @@ export default function Nosotros() {
         </Lead>
         <Cols min="240px">
           {[
-            ['Categoría', 'AI-native transformation company.'],
-            ['Promesa', 'Become what comes next.'],
-            ['Filosofía', 'The transformation happens inside.'],
-          ].map(([label, value]) => (
+            ['work', 'Categoría', 'AI-native transformation company.'],
+            ['target', 'Promesa', 'Become what comes next.'],
+            ['idea', 'Filosofía', 'The transformation happens inside.'],
+          ].map(([icon, label, value]) => (
             <Reveal as="div" key={label} style={{ borderTop: '1px solid var(--border-strong)', paddingTop: 'var(--space-5)' }}>
+              <Ico name={icon} size={26} style={{ color: 'var(--text-accent)', marginBottom: 'var(--space-5)' }} />
               <p style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--text-muted)' }}>{label}</p>
               <p style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)' }}>{value}</p>
             </Reveal>
@@ -117,15 +120,19 @@ export default function Nosotros() {
       <Section band="light">
         <Kicker>Nuestra creencia</Kicker>
         <Headline>La transformación no se instala. Se construye dentro.</Headline>
-        <Lead>
-          Los pilotos aislados no cambian una empresa. El cambio ocurre cuando se
-          rediseñan workflows, roles, decision rights, data, controls, skills y
-          measures como un solo operating system.
-        </Lead>
-        <Body>
-          Por eso construimos con los equipos del cliente y transferimos ownership
-          desde el inicio.
-        </Body>
+        <div style={{ marginTop: 'var(--space-10)' }}>
+          <Split src="/images/17-team-collab.webp" alt="Equipo del cliente trabajando junto al equipo de BECOME" flip>
+            <Lead>
+              Los pilotos aislados no cambian una empresa. El cambio ocurre cuando se
+              rediseñan workflows, roles, decision rights, data, controls, skills y
+              measures como un solo operating system.
+            </Lead>
+            <Body>
+              Por eso construimos con los equipos del cliente y transferimos ownership
+              desde el inicio.
+            </Body>
+          </Split>
+        </div>
       </Section>
 
       {/* 06 — ADN */}

@@ -3,6 +3,7 @@ import SiteHeader from '../components/SiteHeader.jsx';
 import SiteFooter from '../components/SiteFooter.jsx';
 import Reveal from '../components/Reveal.jsx';
 import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, IndexRow } from '../components/ui.jsx';
+import { Banner } from '../components/Media.jsx';
 import { USE_CASES } from '../site.js';
 import { ORIENTATION } from '../content/use-cases.js';
 
@@ -37,6 +38,7 @@ export default function CasosDeUso() {
             <IndexRow
               key={c.slug}
               to={c.to}
+              icon={c.icon}
               num={String(i + 1).padStart(2, '0')}
               term={c.q}
               def={c.line}
@@ -44,6 +46,12 @@ export default function CasosDeUso() {
           ))}
         </div>
       </Section>
+
+      <Banner src="/images/19-tech-workspace.webp" alt="" height="clamp(200px, 28vw, 320px)">
+        <Reveal as="p" style={{ margin: 0, maxWidth: '24ch', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h1)', lineHeight: 'var(--leading-heading)', letterSpacing: 'var(--track-display)', color: 'var(--white)' }}>
+          Del síntoma a la decisión.
+        </Reveal>
+      </Banner>
 
       {/* El mapa de orientación: síntoma → necesidad real → engagement. Es lo
           que evita que la elección dependa de intuición comercial. */}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Reveal from './Reveal.jsx';
+import { Ico } from './icons.jsx';
 
 /**
  * Las piezas con las que se arman las páginas nuevas.
@@ -233,10 +234,15 @@ export const Card = ({ children, dark, style, ...rest }) => (
 
 /* Índice editorial: filas con regla, no una parrilla de tarjetas iguales.
    El documento lo pide explícitamente para las herramientas y las preguntas. */
-export const IndexRow = ({ to, term, def, dark, num }) => {
+export const IndexRow = ({ to, term, def, dark, num, icon }) => {
   const inner = (
     <>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-4)' }}>
+        {icon && (
+          <span style={{ alignSelf: 'start', color: dark ? 'var(--electric-green)' : 'var(--text-accent)' }}>
+            <Ico name={icon} size={26} />
+          </span>
+        )}
         {num && (
           <span style={{ font: 'var(--type-mono)', color: dark ? 'var(--slate-400)' : 'var(--text-faint)' }}>
             {num}

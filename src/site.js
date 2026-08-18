@@ -52,31 +52,37 @@ export const SERVICES = [
 export const USE_CASES = [
   {
     slug: 'por-donde-empezar-con-ia',
+    icon: 'signpost',
     q: '¿No sabes por dónde empezar con IA?',
     line: 'Define la ambición, encuentra los value pools y prioriza el primer movimiento.',
   },
   {
     slug: 'pilotos-que-no-escalan',
+    icon: 'scale',
     q: '¿Tienes pilotos que no escalan?',
     line: 'Identifica qué falta en workflow, ownership, data, controls y operating model.',
   },
   {
     slug: 'redisenar-workflow-critico',
+    icon: 'flow',
     q: '¿Necesitas rediseñar un workflow crítico?',
     line: 'Replantea personas, agents, decisiones, datos, excepciones y métricas end-to-end.',
   },
   {
     slug: 'construir-agent-o-copilot',
+    icon: 'agents',
     q: '¿Quieres construir un agent o copilot?',
     line: 'Convierte una oportunidad priorizada en una capability segura, adoptada y medible.',
   },
   {
     slug: 'experiencia-ai-native',
+    icon: 'product',
     q: '¿Quieres crear una experiencia AI-native?',
     line: 'Diseña y construye un product o experience que cree nuevo valor para clientes o equipos.',
   },
   {
     slug: 'demostrar-valor-en-90-dias',
+    icon: 'time',
     q: '¿Necesitas demostrar valor en 90 días?',
     line: 'Delimita una capability viable, implementa en entorno real y mide outcomes.',
   },
