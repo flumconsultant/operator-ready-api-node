@@ -74,9 +74,8 @@ export default function BuildEmbed() {
           modelo: falla que se construyó al lado del trabajo real en vez de dentro.
         </Lead>
         <Body>
-          Nadie es dueño del resultado cuando termina el proyecto, el proceso siguió
-          igual, los datos y las integraciones dependen de trabajo manual y no existe
-          una medida contra la que decidir si aquello merece escalarse.
+          Al terminar el proyecto nadie es dueño del resultado, el proceso sigue
+          igual y no hay una medida contra la que decidir si merece escalarse.
         </Body>
       </Section>
 

@@ -191,10 +191,8 @@ export default function Nosotros() {
           partners.
         </Body>
         <Body dark>
-          No inventamos integrantes, cargos, certificaciones ni años de experiencia
-          para que el layout quede lleno. Un equipo ficticio en una página de una
-          consultora de transformación es exactamente el tipo de detalle que un
-          comité ejecutivo verifica.
+          No inventamos integrantes ni cargos para llenar el layout. Un equipo
+          ficticio es exactamente el detalle que un comité ejecutivo verifica.
         </Body>
         <TextCTA to="/es/contacto" dark>Habla con nosotros</TextCTA>
       </Section>

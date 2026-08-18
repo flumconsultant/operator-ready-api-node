@@ -74,10 +74,9 @@ export default function Discovery() {
         <Kicker>El problema</Kicker>
         <Headline>Actividad de IA sin dirección empresarial.</Headline>
         <Lead>
-          La mayoría de las empresas no tienen un problema de tecnología: tienen
-          muchas iniciativas y ninguna tesis. Cada área propone sus casos, tecnología
-          recibe demandas sin un criterio único de valor y el comité ejecutivo no
-          comparte una ambición que ordene las decisiones.
+          No es un problema de tecnología: son muchas iniciativas y ninguna tesis.
+          Sin una ambición compartida, cada área propone sus casos y nadie tiene un
+          criterio único de valor.
         </Lead>
         <Body>
           El resultado es previsible: más pilotos, más gasto y la misma pregunta sin

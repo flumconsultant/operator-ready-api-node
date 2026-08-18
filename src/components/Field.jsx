@@ -187,7 +187,9 @@ function drawCorridor(ctx, w, h, blocks, t, depth, c) {
     ctx.fillStyle = rgba(c.green, a * 1.3);
     for (let k = -7; k <= 7; k++) {
       const [vx, vy] = P(k * 0.16, 0.5, z);
-      ctx.beginPath(); ctx.arc(vx, vy, Math.max(0.8, 2.2 / Math.max(z, 0.2)), 0, Math.PI * 2); ctx.fill();
+      /* Tope al radio: sin él los vértices cercanos crecían hasta 11 px y en
+         móvil se comían la retícula que están ahí para marcar. */
+      ctx.beginPath(); ctx.arc(vx, vy, Math.min(3.4, Math.max(0.8, 2.2 / Math.max(z, 0.2))), 0, Math.PI * 2); ctx.fill();
     }
   }
 
@@ -410,7 +412,7 @@ function seeded(seed) {
   };
 }
 
-export default function Field({ variant = 'plexus', seed = 7, className, style }) {
+export default function Field({ variant = 'plexus', seed = 7, depthRef, className, style }) {
   const reduced = useReducedMotion();
   const hostRef = React.useRef(null);
   const canvasRef = React.useRef(null);
@@ -444,6 +446,10 @@ export default function Field({ variant = 'plexus', seed = 7, className, style }
        convierte el scroll en avance de cámara. */
     let depth = 0;
     const readDepth = () => {
+      /* Si el contenedor es sticky su rect no se mueve con el scroll, así que
+         el avance tiene que venir de fuera. Ahí el padre pasa un ref y manda
+         él. */
+      if (depthRef) { depth = depthRef.current || 0; return; }
       const r = host.getBoundingClientRect();
       const span = window.innerHeight + r.height;
       depth = Math.min(1, Math.max(0, (window.innerHeight - r.top) / span));
@@ -483,7 +489,7 @@ export default function Field({ variant = 'plexus', seed = 7, className, style }
     ro.observe(host);
 
     return () => { cancelAnimationFrame(raf); io.disconnect(); ro.disconnect(); };
-  }, [variant, seed, reduced]);
+  }, [variant, seed, reduced, depthRef]);
 
   return (
     <div

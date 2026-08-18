@@ -63,8 +63,8 @@ export default function Contacto() {
         <Kicker dark>Start a conversation</Kicker>
         <Headline as="h1" dark>¿Qué necesita cambiar dentro de tu empresa?</Headline>
         <Lead dark>
-          Cuéntanos el business outcome, la capability o el workflow que necesitas
-          transformar. Te responderemos con el punto de partida adecuado.
+          El business outcome, la capability o el workflow. Respondemos con el punto
+          de partida adecuado, no con una secuencia comercial.
         </Lead>
       </Section>
 

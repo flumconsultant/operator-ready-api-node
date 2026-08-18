@@ -7,7 +7,8 @@ import {
   PrimaryCTA, GhostCTA, TextCTA, Cols, Card, IndexRow,
 } from '../components/ui.jsx';
 import { Ico, IcoBadge } from '../components/icons.jsx';
-import { Figure, Banner, Split } from '../components/Media.jsx';
+import { Figure, Split } from '../components/Media.jsx';
+import ScrollStage from '../components/ScrollStage.jsx';
 import StateTransition from '../components/StateTransition.jsx';
 import { USE_CASES } from '../site.js';
 
@@ -77,16 +78,6 @@ const DOMAINS = [
   ['Data, inside.', 'Contexto y conocimiento convertidos en decisiones y acción.', '/icons/data-inside-white.webp'],
   ['Agents, inside.', 'Copilots y agents incorporados en workflows reales, con supervisión humana definida.', '/icons/agents-inside-white.webp'],
   ['Operations, inside.', 'Procesos, governance y performance rediseñados para crear valor a escala.', '/icons/operations-inside-white.webp'],
-];
-
-const TOOLS = [
-  ['library', 'Business Ambition Canvas™', 'Alinear al equipo ejecutivo alrededor de outcomes y strategic choices.'],
-  ['balance', 'Inside Readiness Index™', 'Evaluar madurez en People, Data, Agents y Operations.'],
-  ['map', 'AI-Native Value Map™', 'Priorizar oportunidades por valor, feasibility, velocidad y riesgo.'],
-  ['layers', 'Inside Target State Canvas™', 'Definir el target operating model y transformation blueprint.'],
-  ['flow', 'Agentic Workflow Blueprint™', 'Diseñar roles, agents, datos, decisiones, excepciones y controles.'],
-  ['measure', 'Embed Scorecard™', 'Medir uso, confianza, performance, control y valor.'],
-  ['scale', 'Scale Readiness Gate™', 'Decidir si iterar, integrar, escalar o detener.'],
 ];
 
 const OUTCOMES = [
@@ -175,30 +166,23 @@ export default function Home() {
         </Cols>
       </Section>
 
-      {/* Respiro visual entre dos bloques densos: la imagen ancha lleva el mismo
-          parallax que el nodo, de modo que el plano fotográfico no queda quieto. */}
-      <Banner variant="plexus" seed={11}>
-        <Reveal
-          as="p"
-          style={{
-            margin: 0, maxWidth: '20ch',
-            fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)',
-            fontSize: 'var(--text-h1)', lineHeight: 'var(--leading-heading)',
-            letterSpacing: 'var(--track-display)', color: 'var(--white)',
-          }}
-        >
-          The next company is already inside yours.
-        </Reveal>
-      </Banner>
+      {/* El tramo inmersivo: aquí el scroll deja de mover la página y mueve la
+          cámara. Va justo después de "qué hacemos" a propósito — es el punto en
+          el que alguien ya sabe qué vendemos y hay que enseñarle por qué. */}
+      <ScrollStage
+        variant="corridor"
+        seed={13}
+        steps={[
+          { kicker: 'Hoy', title: 'La empresa que ya tienes.', line: 'Iniciativas de IA sueltas, pilotos que no escalan y decisiones que siguen tardando lo mismo.' },
+          { kicker: 'Dentro', title: 'El sistema que la mueve.', line: 'Personas, datos, agents y operaciones. Cambiar la empresa es cambiar los cuatro a la vez.' },
+          { kicker: 'Después', title: 'La empresa en la que se convierte.', line: 'Una capability propia, gobernada y medida, que sigue evolucionando sin nosotros delante.' },
+        ]}
+      />
 
       {/* 03 — Nuestro propósito. Declaración breve, no sección institucional. */}
       <Section band="light" id="proposito">
         <Kicker>Our purpose</Kicker>
         <Headline>Hacer de la IA una capability de la empresa, no una colección de iniciativas.</Headline>
-        <Lead>
-          Conectamos ambición, personas, datos, agents y operaciones para que la IA
-          cambie cómo la organización decide, trabaja y crea valor.
-        </Lead>
 
         {/* La C y la O de BECOME como los dos estados de la misma empresa. La
             marca explicándose a sí misma, no un adorno. */}
@@ -237,39 +221,30 @@ export default function Home() {
       <Section band="darker" nodeState={2}>
         <Kicker dark>El recorrido</Kicker>
         <Headline dark>Seis etapas. Un camino de la ambición al valor.</Headline>
-        <div style={{ marginTop: 'var(--space-10)' }}>
-          {STAGES.map(([letter, name, work], i) => (
-            <Reveal
-              as="div"
-              key={name}
-              data-cols
-              className="row-hit"
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '56px minmax(0,1fr) minmax(0,1.4fr)',
-                gap: 'var(--space-6)',
-                padding: 'var(--space-5) 0',
-                borderTop: '1px solid var(--border-hairline-dark)',
-                alignItems: 'baseline',
-              }}
-            >
-              <span
-                aria-hidden="true"
-                className="stage-letter"
-                style={{ fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--electric-green)' }}
-              >
+        {/* Tira compacta: la descripción de cada etapa vive en /framework. En la
+            home estaba entera, y era el bloque que más pantallas costaba a
+            cambio de decir lo mismo dos veces. */}
+        <ol style={{ listStyle: 'none', margin: 'var(--space-10) 0 0', padding: 0, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 'var(--space-6)' }}>
+          {STAGES.map(([letter, name], i) => (
+            <Reveal as="li" key={name} className="row-hit" style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
+              <span aria-hidden="true" className="stage-letter" style={{ fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h1)', lineHeight: 1, color: 'var(--electric-green)' }}>
                 {letter}
               </span>
-              <h3 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--white)' }}>
+              <p style={{ margin: 'var(--space-4) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: 'var(--white)' }}>
                 <span className="sr-only">{`Etapa ${i + 1}: `}</span>{name}
-              </h3>
-              <p style={{ margin: 0, font: 'var(--type-body)', color: 'var(--slate-200)' }}>{work}</p>
+              </p>
             </Reveal>
           ))}
-        </div>
-        <div style={{ marginTop: 'var(--space-9)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
-          <GhostCTA to="/es/framework" dark>Cómo funciona cada etapa</GhostCTA>
-          <PrimaryCTA to="/es/contacto">Empieza por la tuya</PrimaryCTA>
+        </ol>
+        {/* Las siete herramientas propias eran una sección entera que solo
+            anunciaba la de /framework. Aquí caben en una línea. */}
+        <Body dark style={{ marginTop: 'var(--space-9)' }}>
+          Cada etapa se apoya en una herramienta propia que desbloquea una decisión
+          concreta: readiness, valor, diseño, adopción y escala.
+        </Body>
+        <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
+          <GhostCTA to="/es/framework" dark>Ver el framework y sus herramientas</GhostCTA>
+          <PrimaryCTA to="/es/contacto">Empieza por tu etapa</PrimaryCTA>
         </div>
       </Section>
 
@@ -337,47 +312,13 @@ export default function Home() {
       <Section band="sunken">
         <Kicker>Start with your question</Kicker>
         <Headline>¿Qué necesitas transformar ahora?</Headline>
-        <Lead>
-          No necesitas conocer el nombre de la solución. Empieza por la situación que
-          hoy está bloqueando valor.
-        </Lead>
+        <Lead>Empieza por la situación, no por el nombre de la solución.</Lead>
         <div style={{ marginTop: 'var(--space-10)' }}>
           {USE_CASES.map((c, i) => (
             <IndexRow key={c.slug} icon={c.icon} to={c.to} num={String(i + 1).padStart(2, '0')} term={c.q} def={c.line} />
           ))}
         </div>
         <TextCTA to="/es/casos-de-uso">Encuentra tu punto de partida</TextCTA>
-      </Section>
-
-      {/* 07 — Proprietary tools. Índice editorial: la decisión que habilita cada
-          herramienta, nunca la fórmula. */}
-      <Section band="light">
-        <Kicker>Built to make transformation concrete</Kicker>
-        <Headline>La estrategia se vuelve útil cuando guía una decisión.</Headline>
-        <div style={{ marginTop: 'var(--space-10)' }}>
-          {TOOLS.map(([icon, tool, decision]) => (
-            <Reveal
-              as="div"
-              key={tool}
-              data-cols
-              className="row-hit"
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '34px minmax(0,1fr) minmax(0,1fr)',
-                gap: 'var(--space-6)',
-                alignItems: 'start',
-                padding: 'var(--space-6) 0',
-                borderTop: '1px solid var(--border-hairline)',
-              }}
-            >
-              <Ico name={icon} size={26} style={{ color: 'var(--text-accent)', marginTop: 2 }} />
-              <h3 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', lineHeight: 1.26, color: 'var(--text-heading)' }}>
-                {tool}
-              </h3>
-              <p style={{ margin: 0, font: 'var(--type-body)', color: 'var(--text-muted)', maxWidth: '46ch' }}>{decision}</p>
-            </Reveal>
-          ))}
-        </div>
       </Section>
 
       {/* 08 — Outcomes. Sistema de medición, no métricas inventadas. */}
@@ -394,9 +335,8 @@ export default function Home() {
           ))}
         </Cols>
         <Body dark style={{ marginTop: 'var(--space-9)' }}>
-          Todavía no publicamos cifras de cliente. Cuando existan casos aprobados
-          mostraremos baseline, intervención, resultado y atribución; hasta entonces
-          explicamos el mecanismo de medición, que es lo verificable.
+          Todavía no publicamos cifras de cliente. Cuando las haya irán con baseline
+          y atribución.
         </Body>
       </Section>
 
@@ -406,7 +346,7 @@ export default function Home() {
         <Kicker>Por qué BECOME</Kicker>
         <Headline>Strategy that builds. Technology that embeds. Capability that stays.</Headline>
         <div style={{ marginTop: 'var(--space-10)' }}>
-          <Split src="/images/45-executive.webp" alt="Conversación ejecutiva sobre el modelo operativo" ratio="4 / 5">
+          <Split src="/images/45-executive.webp" alt="Conversación ejecutiva sobre el modelo operativo" ratio="4 / 3">
             <div style={{ display: 'grid', gap: 'var(--space-7)' }}>
               {PRINCIPLES.map(([icon, name, line]) => (
                 <Reveal as="div" key={name} style={{ display: 'grid', gridTemplateColumns: '44px minmax(0,1fr)', gap: 'var(--space-5)', alignItems: 'start', borderTop: '1px solid var(--border-strong)', paddingTop: 'var(--space-5)' }}>
@@ -431,8 +371,7 @@ export default function Home() {
         <Kicker dark>The work we are built to do</Kicker>
         <Headline dark>Tres transformaciones que sabemos conducir.</Headline>
         <Body dark style={{ marginTop: 'var(--space-6)' }}>
-          Son escenarios, no casos de cliente. Cuando haya trabajo aprobado que
-          contar, lo contaremos con baseline y atribución.
+          Son escenarios, no casos de cliente.
         </Body>
         <Cols min="260px">
           {SCENARIOS.map(([icon, name, tension, inside, img, alt]) => (
@@ -452,22 +391,16 @@ export default function Home() {
         <TextCTA to="/es/casos-de-uso" dark>Encuentra el escenario que se parece al tuyo</TextCTA>
       </Section>
 
-      {/* 11 — Insights. Máximo tres piezas. */}
+      {/* 11 — Insights. Tres piezas, en índice: como tarjetas ocupaban una
+          pantalla para decir tres frases. */}
       <Section band="light">
         <Kicker>Become insights</Kicker>
         <Headline>Ideas para la empresa que viene después.</Headline>
-        <Cols min="260px">
+        <div style={{ marginTop: 'var(--space-9)' }}>
           {INSIGHTS.map(([icon, title, line]) => (
-            <Card key={title}>
-              <Ico name={icon} size={26} style={{ color: 'var(--text-accent)' }} />
-              <p style={{ margin: 'var(--space-5) 0 0', font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
-                Pilar editorial
-              </p>
-              <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)' }}>{title}</h3>
-              <Body>{line}</Body>
-            </Card>
+            <IndexRow key={title} icon={icon} term={title} def={line} />
           ))}
-        </Cols>
+        </div>
         <TextCTA to="/es/insights">Explora Insights</TextCTA>
       </Section>
 

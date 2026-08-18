@@ -8,7 +8,7 @@ import BecomeNowForm from '../components/BecomeNowForm.jsx';
 import { Ico } from '../components/icons.jsx';
 import { Banner } from '../components/Media.jsx';
 import {
-  TAGLINE, PROMISE, SITUATIONS, EXISTING_MATERIAL, SESSION_ZERO, SESSION_ZERO_OUTPUTS,
+  TAGLINE, SITUATIONS, EXISTING_MATERIAL, SESSION_ZERO,
   SESSION_FLOW, FORMATS, IS_IS_NOT, INDICATORS, GENERAL_DELIVERABLES, FAQ, PROGRAM_GROUPS, PROGRAMS,
 } from '../content/become-now.js';
 
@@ -40,8 +40,8 @@ export default function BecomeNow() {
           <GhostCTA to="#programas" dark>Explora los programas por área</GhostCTA>
         </div>
         <p style={{ margin: 'var(--space-10) 0 0', paddingTop: 'var(--space-6)', borderTop: '1px solid var(--border-hairline-dark)', font: 'var(--type-body)', color: 'var(--slate-300)', maxWidth: '54ch' }}>
-          No enseñamos IA sobre ejemplos genéricos. Construimos la capacitación
-          sobre la realidad de tu empresa.
+          Nada de ejemplos genéricos: la capacitación se construye sobre la realidad
+          de tu empresa.
         </p>
         <p style={{ margin: 'var(--space-8) 0 0', font: 'var(--type-mono)', letterSpacing: 'var(--track-mono)', color: 'var(--electric-green)', textTransform: 'uppercase' }}>
           {TAGLINE}
@@ -53,9 +53,8 @@ export default function BecomeNow() {
         <Kicker>The adoption gap</Kicker>
         <Headline>Tener acceso a la IA no significa saber trabajar con ella.</Headline>
         <Lead>
-          Muchas empresas ya tienen ChatGPT, Claude o Gemini, pero el uso es
-          individual y difícil de medir. El problema no son las herramientas: es que
-          nadie las ha convertido en una forma común de trabajar.
+          El problema no son las herramientas. Es que nadie las ha convertido en
+          una forma común de trabajar.
         </Lead>
 
         <Cols min="260px">
@@ -116,9 +115,7 @@ export default function BecomeNow() {
         <Kicker>Business process understanding session</Kicker>
         <Headline>Ningún programa comienza antes de entender el trabajo que debe mejorar.</Headline>
         <Lead>
-          La Sesión 0 no es una reunión comercial: es donde se decide qué se va a
-          enseñar. Participan el sponsor, el líder del área, representantes de los
-          roles y, cuando hace falta, Tecnología, Data, Security o Compliance.
+          No es una reunión comercial: es donde se decide qué se va a enseñar.
         </Lead>
 
         <div style={{ marginTop: 'var(--space-10)' }}>
@@ -127,20 +124,8 @@ export default function BecomeNow() {
           ))}
         </div>
 
-        <div style={{ marginTop: 'var(--space-10)' }}>
-          <p style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
-            Entregables de la sesión
-          </p>
-          <div style={{ marginTop: 'var(--space-5)', display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)' }}>
-            {SESSION_ZERO_OUTPUTS.map((o) => (
-              <span key={o} style={{
-                padding: '8px 14px', border: '1px solid var(--border-strong)',
-                borderRadius: 'var(--radius-pill)', font: 'var(--type-body)',
-                fontSize: 'var(--text-body-sm)', color: 'var(--text-body)',
-              }}>{o}</span>
-            ))}
-          </div>
-        </div>
+        {/* Los entregables de la Sesión 0 estaban aquí y otra vez abajo como
+            "entregables generales". Se quedan en un sitio. */}
       </Section>
 
       {/* Cómo funciona cada sesión */}
@@ -148,8 +133,7 @@ export default function BecomeNow() {
         <Kicker dark>Cómo funciona cada sesión</Kicker>
         <Headline dark>Seis pasos. El último es el que casi nunca ocurre.</Headline>
         <Lead dark>
-          Cada sesión debe dejar algo funcionando, no solamente algo aprendido. Por
-          eso termina en transferencia: el activo queda documentado para poder usarse
+          Cada sesión termina en transferencia: el activo queda documentado y se usa
           al día siguiente sin nosotros delante.
         </Lead>
         <div style={{ marginTop: 'var(--space-10)' }}>
@@ -176,8 +160,7 @@ export default function BecomeNow() {
         <Kicker>Formatos adaptables</Kicker>
         <Headline>Tres puntos de partida, ninguno cerrado.</Headline>
         <Body>
-          Sesiones, duración, modalidad, herramientas y casos se modifican según la
-          necesidad de la empresa. Lo que no cambia es la sesión previa de
+          Todo se ajusta a la empresa. Lo único que no cambia es la sesión previa de
           entendimiento.
         </Body>
         <Cols min="280px">
@@ -207,29 +190,40 @@ export default function BecomeNow() {
         <Kicker dark>Programas por área</Kicker>
         <Headline dark>Catorce rutas de referencia. Ninguna es el programa final.</Headline>
         <Lead dark>
-          Estas mallas muestran los recorridos más frecuentes por área. El programa
-          que recibe tu empresa se construye después de la Sesión 0 — y puede ser
-          para un área que no esté en esta lista.
+          Recorridos de referencia. El programa real se construye después de la
+          Sesión 0, y puede ser para un área que no esté aquí.
         </Lead>
 
-        <div style={{ marginTop: 'var(--space-11)', display: 'grid', gap: 'var(--space-10)' }}>
+        {/* Rejilla de nombres, no fichas: la descripción de cada programa está
+            en su propia página. Aquí ocupaba cuatro pantallas para decir catorce
+            veces lo mismo con otras palabras. */}
+        <div style={{ marginTop: 'var(--space-11)', display: 'grid', gap: 'var(--space-9)' }}>
           {PROGRAM_GROUPS.map((g) => (
             <div key={g.title}>
               <p style={{ margin: 0, font: 'var(--type-mono)', fontSize: 'var(--text-body-sm)', color: 'var(--electric-green)' }}>{g.title}</p>
-              <div style={{ marginTop: 'var(--space-5)' }}>
+              <ul style={{ listStyle: 'none', margin: 'var(--space-5) 0 0', padding: 0, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: 'var(--space-3)' }}>
                 {g.slugs.map((slug) => (
-                  <IndexRow
-                    key={slug}
-                    dark
-                    to={`/es/servicios/become-now/${slug}`}
-                    term={PROGRAMS[slug].menu.replace('IA aplicada a ', '')}
-                    def={PROGRAMS[slug].body}
-                  />
+                  <li key={slug}>
+                    <Link
+                      to={`/es/servicios/become-now/${slug}`}
+                      className="row-hit"
+                      style={{
+                        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-4)',
+                        minHeight: 56, padding: 'var(--space-4) var(--space-5)',
+                        border: '1px solid var(--border-hairline-dark)', textDecoration: 'none',
+                        font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--white)',
+                      }}
+                    >
+                      {PROGRAMS[slug].menu.replace('IA aplicada a ', '')}
+                      <Ico name="route" size={18} style={{ color: 'var(--electric-green)' }} />
+                    </Link>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           ))}
         </div>
+
         <div style={{ marginTop: 'var(--space-10)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
           <PrimaryCTA href="#disena-tu-programa">¿No ves tu área? Cuéntanosla</PrimaryCTA>
         </div>
@@ -304,25 +298,6 @@ export default function BecomeNow() {
         </div>
       </Section>
 
-      {/* Relación con los otros dos servicios */}
-      <Section band="darker">
-        <Kicker dark>Cómo encaja</Kicker>
-        <Headline dark>Capacita el presente. Diseña lo que sigue. Construye desde dentro.</Headline>
-        <Lead dark>
-          BECOME NOW™ desarrolla las capacidades para el trabajo de hoy. Discovery
-          define en qué debe convertirse la empresa. Build &amp; Embed construye las
-          capabilities que harán posible ese futuro.
-        </Lead>
-        <Body dark>
-          Puede contratarse de forma independiente o integrarse como capa de adoption
-          y capability building dentro de los otros dos.
-        </Body>
-        <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-7)', flexWrap: 'wrap' }}>
-          <TextCTA to="/es/servicios/transformation-discovery" dark>Explora Discovery</TextCTA>
-          <TextCTA to="/es/servicios/build-and-embed" dark>Explora Build &amp; Embed</TextCTA>
-        </div>
-      </Section>
-
       {/* FAQ */}
       <Section band="light">
         <Kicker>Preguntas frecuentes</Kicker>
@@ -339,15 +314,25 @@ export default function BecomeNow() {
 
       {/* Formulario propio */}
       <Section band="dark" id="disena-tu-programa" pad="var(--space-13)">
+        {/* El titular lo pone la propia invitación del formulario: repetirlo
+            aquí era decir dos veces lo mismo con dos tamaños distintos. */}
         <Kicker dark>Built around your work</Kicker>
-        <Headline dark>Cuéntanos cómo trabaja tu equipo hoy.</Headline>
-        <Lead dark>
-          Primero entenderemos sus procesos, herramientas y desafíos. Después
-          construiremos un programa de IA aplicada completamente adaptado a su
-          realidad.
-        </Lead>
-        <div style={{ marginTop: 'var(--space-10)' }}>
+        <div style={{ marginTop: 'var(--space-7)' }}>
           <BecomeNowForm />
+        </div>
+
+        {/* Cómo encaja con los otros dos: era una sección propia justo antes de
+            esta, y las dos terminaban en lo mismo. */}
+        <div style={{ marginTop: 'var(--space-11)', paddingTop: 'var(--space-6)', borderTop: '1px solid var(--border-hairline-dark)' }}>
+          <Body dark style={{ marginTop: 0 }}>
+            NOW™ capacita para el trabajo de hoy. Discovery define en qué debe
+            convertirse la empresa. Build &amp; Embed construye lo que hará posible ese
+            futuro. Puede contratarse solo o integrarse en los otros dos.
+          </Body>
+          <div style={{ marginTop: 'var(--space-6)', display: 'flex', gap: 'var(--space-7)', flexWrap: 'wrap' }}>
+            <TextCTA to="/es/servicios/transformation-discovery" dark>Explora Discovery</TextCTA>
+            <TextCTA to="/es/servicios/build-and-embed" dark>Explora Build &amp; Embed</TextCTA>
+          </div>
         </div>
       </Section>
 

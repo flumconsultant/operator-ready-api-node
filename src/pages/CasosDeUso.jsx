@@ -59,10 +59,8 @@ export default function CasosDeUso() {
         <Kicker dark>Mapa de orientación</Kicker>
         <Headline dark>Del síntoma a la decisión.</Headline>
         <Body dark style={{ marginTop: 'var(--space-6)' }}>
-          Recomendamos Discovery cuando falta estrategia, prioridad o target state;
-          Build &amp; Embed cuando ya existe una capability priorizada y condiciones
-          para construir. Si el caso todavía no está definido, no forzamos el
-          segundo para cumplir un plazo.
+          Discovery cuando falta estrategia o target state. Build &amp; Embed cuando
+          ya hay una capability priorizada y condiciones para construir.
         </Body>
 
         <div style={{ marginTop: 'var(--space-10)', overflowX: 'auto' }}>
