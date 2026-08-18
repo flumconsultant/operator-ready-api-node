@@ -19,7 +19,7 @@ npm run preview    # sirve dist/ para comprobar el build
 | `tokens/*.css` | El sistema de diseño. Fuente de verdad de color, tipografía, espaciado, patrones y motion. |
 | `src/pages/` | Una página por ruta, generadas desde los artboards. |
 | `src/components/` | Cabecera, pie, `Reveal` y `RouteLoader`. |
-| `src/components/ai-node/` | El nodo 3D de la home: los cinco estados en `states.js`, el canvas en `AiNode.jsx`, la capa y la carga diferida en `AiNodeStage.jsx`. |
+| `src/components/ai-node/` | El nodo 3D de la home: los cinco estados en `states.js`, el recorrido de cámara en `camera-path.js`, el canvas en `AiNode.jsx`, la capa y la carga diferida en `AiNodeStage.jsx`. |
 | `src/styles/global.css` | Lo que en los artboards vivía repetido en el `<helmet>` de cada uno. |
 | `assets/` | Imágenes, iconos, logo y fuentes. Vite lo sirve como `publicDir`, así que las rutas son `/images/…`, `/icons/…`, `/logo/…`, `/fonts/…`. |
 | `templates/website-es/` | Los artboards Durable originales. Siguen siendo el origen de la migración. |
@@ -64,8 +64,21 @@ propósito — las claras tapan la capa 3D.
 bandas de color de cada sección (los tokens anotados en `data-band`) y el nodo
 encima. Por eso el nodo no se interrumpe al cruzar una sección clara — lo que
 cambia es el suelo, y con él la tinta: verde sobre navy, navy sobre claro, y
-mucho más tenue en claro para no ensuciar el texto. La cámara también se mueve
-entre estados: retrocede al dispersarse, entra en el cierre.
+mucho más tenue en claro para no ensuciar el texto. **La cámara hace un plano secuencia** sobre el documento entero (`camera-path.js`,
+diez planos interpolados con Catmull-Rom): picados, contrapicados, tres cuartos
+por los dos lados, horizonte inclinado y focal de 50 a 76 mm. Va sobre el
+progreso de la página, no sobre los estados de forma, así que hay cambio de
+plano en todas las secciones.
+
+La cámara **no entra** en la nube principal: se probó y a esa distancia una
+partícula ocupa media pantalla y el texto deja de leerse. La sensación de
+viajar por dentro la da una segunda capa de polvo que sí envuelve a la cámara y
+se recoloca por delante cuando queda atrás — un volumen aparentemente infinito
+con 900 motas.
+
+Las transiciones entre formas van escalonadas por partícula y en arco, no en
+línea recta: la forma se deshace y se recompone en vez de deslizarse como un
+bloque.
 
 Para que se vea, `:root[data-ai-node="on"]` deja transparentes html, body, el
 contenedor de página y todas las secciones (ver `global.css`). Esa marca solo la pone `AiNodeStage` **cuando el contexto WebGL

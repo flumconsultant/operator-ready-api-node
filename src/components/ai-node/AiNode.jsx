@@ -21,6 +21,7 @@ import {
   WebGLRenderer,
 } from 'three';
 import { buildStates, buildEdges, STATE_COUNT } from './states.js';
+import { sampleCamera, makeShot, pathSpeed } from './camera-path.js';
 
 /**
  * El nodo de IA: una red de partículas en WebGL, fija detrás de la home, que
@@ -77,41 +78,71 @@ const VERT = /* glsl */ `
   uniform float uTime;
   uniform float uSize;
   uniform float uDrift;
+  uniform float uStagger;   // qué parte de la transición ocupa el escalonado
+  uniform float uBulge;     // cuánto se arquea la trayectoria
+  uniform float uStreak;    // rastro: alarga los puntos en las pasadas rápidas
   varying float vDepth;
   varying float vSeed;
+  varying float vNear;
 
   void main() {
-    // smoothstep en vez de lineal: las formas se asientan en vez de deslizarse
-    float m = smoothstep(0.0, 1.0, uMix);
-    vec3 p = mix(posA, posB, m);
+    /* Escalonado por partícula. Con todas moviéndose a la vez el cambio se lee
+       como un bloque que se desliza; desfasadas, la forma se deshace y se
+       recompone, que es lo que hay que contar. */
+    float d = seed * uStagger;
+    float m = smoothstep(d, d + (1.0 - uStagger), uMix);
+
+    /* Trayectoria en arco, no en línea recta: cada partícula sale de su sitio
+       por un lado distinto y entra al siguiente por otro. */
+    vec3 straight = mix(posA, posB, m);
+    vec3 dir = posB - posA;
+    vec3 perp = normalize(cross(dir, vec3(0.30, 0.87, 0.39)) + vec3(1e-4));
+    float arc = sin(m * 3.14159265) * uBulge * (0.35 + seed * 1.3);
+    vec3 p = straight + perp * arc;
 
     // respiración: nunca queda del todo quieto, ni siquiera sin scroll
     float w = uTime * 0.35 + seed * 6.2831;
     p += vec3(sin(w), cos(w * 0.9), sin(w * 1.3)) * uDrift;
 
     vec4 mv = modelViewMatrix * vec4(p, 1.0);
-    vDepth = clamp((mv.z + 14.0) / 22.0, 0.0, 1.0);
+    float dist = -mv.z;
+
+    /* vNear marca las partículas que pasan pegadas a la cámara. Sin esto, al
+       atravesar la nube, una sola partícula puede ocupar media pantalla. */
+    vNear = smoothstep(7.0, 2.2, dist);
+    vDepth = clamp((dist - 1.0) / 24.0, 0.0, 1.0);
+    vDepth = 1.0 - vDepth;                 // 1 = cerca, 0 = lejos
     vSeed = seed;
+
     gl_Position = projectionMatrix * mv;
-    gl_PointSize = uSize * (0.6 + seed * 0.8) * (14.0 / -mv.z);
+
+    /* El techo de 11 px es lo que impide que una partícula cercana se coma la
+       pantalla. Sin él, en las pasadas escoradas el texto deja de leerse. */
+    float size = uSize * (0.6 + seed * 0.8) * (14.0 / max(dist, 2.2));
+    gl_PointSize = clamp(size * (1.0 + uStreak * 0.6), 0.0, 7.0);
   }
 `;
 
 const FRAG = /* glsl */ `
-  precision mediump float;
+  precision highp float;
   uniform vec3 uGreen;
   uniform vec3 uIce;
   uniform vec3 uInkLight;
   uniform float uOpacity;
+  uniform float uStreak;
   varying float vDepth;
   varying float vSeed;
+  varying float vNear;
   ${BANDS_GLSL}
 
   void main() {
     vec2 d = gl_PointCoord - vec2(0.5);
+    /* En las pasadas rápidas el punto se estira en horizontal: un rastro corto
+       basta para que la velocidad se sienta sin ensuciar la imagen. */
+    d.x /= (1.0 + uStreak * 1.2);
     float r = dot(d, d);
     if (r > 0.25) discard;
-    float alpha = smoothstep(0.25, 0.0, r);
+    float alpha = smoothstep(0.25, 0.01, r);
 
     vec3 bcol; float light;
     bandAt(gl_FragCoord.y / uResolution.y, bcol, light);
@@ -124,7 +155,12 @@ const FRAG = /* glsl */ `
     /* Sobre navy hace falta más cuerpo que con la mezcla aditiva anterior: el
        alfa normal no acumula brillo donde las partículas se solapan. Sobre
        claro, al revés — con poco basta y de más ensuciaría el texto. */
-    float a = alpha * uOpacity * (0.42 + vDepth * 0.72) * mix(1.25, 0.30, light);
+    float a = alpha * uOpacity * (0.42 + vDepth * 0.72) * mix(1.25, 0.17, light);
+
+    /* Lo que pasa muy cerca se desvanece en vez de taparlo todo: es lo que hace
+       que cruzar el campo se lea como profundidad y no como un borrón. */
+    a *= (1.0 - vNear * 0.92);
+
     gl_FragColor = vec4(col, clamp(a, 0.0, 1.0));
     #include <colorspace_fragment>
   }
@@ -145,7 +181,7 @@ const LINE_VERT = /* glsl */ `
 `;
 
 const LINE_FRAG = /* glsl */ `
-  precision mediump float;
+  precision highp float;
   uniform vec3 uGreen;
   uniform vec3 uInkLight;
   uniform float uOpacity;
@@ -156,7 +192,68 @@ const LINE_FRAG = /* glsl */ `
     vec3 bcol; float light;
     bandAt(gl_FragCoord.y / uResolution.y, bcol, light);
     vec3 col = mix(uGreen, uInkLight, light);
-    gl_FragColor = vec4(col, uOpacity * (0.15 + vDepth * 0.85) * mix(1.0, 0.34, light));
+    gl_FragColor = vec4(col, uOpacity * (0.15 + vDepth * 0.85) * mix(1.0, 0.22, light));
+    #include <colorspace_fragment>
+  }
+`;
+
+/* ---- Capa de polvo ----
+   Un volumen grande de motas que envuelve a la cámara y se recoloca por delante
+   cuando queda atrás (un cubo con módulo, no una nube finita). Es lo que da la
+   sensación de estar viajando dentro de algo: el nodo se mira, el polvo se
+   atraviesa. Va detrás del nodo en el orden de dibujado y con un alfa mínimo,
+   así que aporta profundidad sin disputarle el primer plano al texto. */
+const DUST_VERT = /* glsl */ `
+  attribute float dseed;
+  uniform vec3 uCam;
+  uniform float uSpan;      // arista del volumen que envuelve a la cámara
+  uniform float uTime;
+  uniform float uStreak;
+  varying float vFade;
+
+  void main() {
+    vec3 p = position;
+
+    /* Deriva lenta propia, para que no parezca un decorado rígido */
+    p.y += sin(uTime * 0.15 + dseed * 6.2831) * 0.6;
+
+    /* Envolver alrededor de la cámara: la mota que queda atrás reaparece
+       delante. Con esto bastan 700 motas para un campo aparentemente infinito. */
+    vec3 rel = p - uCam;
+    rel = mod(rel + uSpan * 0.5, uSpan) - uSpan * 0.5;
+
+    vec4 mv = viewMatrix * vec4(uCam + rel, 1.0);
+    float dist = -mv.z;
+
+    /* Se apaga cerca (no molestar) y lejos (no ensuciar el horizonte) */
+    vFade = smoothstep(1.5, 7.0, dist) * (1.0 - smoothstep(uSpan * 0.30, uSpan * 0.5, dist));
+
+    gl_Position = projectionMatrix * mv;
+    gl_PointSize = clamp((1.4 + dseed * 1.6) * (26.0 / max(dist, 2.0)) * (1.0 + uStreak * 0.8), 0.0, 5.0);
+  }
+`;
+
+const DUST_FRAG = /* glsl */ `
+  precision highp float;
+  uniform vec3 uGreen;
+  uniform vec3 uInkLight;
+  uniform float uOpacity;
+  uniform float uStreak;
+  varying float vFade;
+  ${BANDS_GLSL}
+
+  void main() {
+    vec2 d = gl_PointCoord - vec2(0.5);
+    d.x /= (1.0 + uStreak * 1.0);       // rastro corto en las pasadas rápidas
+    float r = dot(d, d);
+    if (r > 0.25) discard;
+    float soft = smoothstep(0.25, 0.02, r);   // sin esto, a 4 px se ve cuadrado
+
+    vec3 bcol; float light;
+    bandAt(gl_FragCoord.y / uResolution.y, bcol, light);
+    vec3 col = mix(uGreen, uInkLight, light);
+
+    gl_FragColor = vec4(col, soft * vFade * uOpacity * mix(0.30, 0.07, light));
     #include <colorspace_fragment>
   }
 `;
@@ -165,7 +262,7 @@ const BG_VERT = /* glsl */ `
   void main() { gl_Position = vec4(position.xy, 0.0, 1.0); }
 `;
 const BG_FRAG = /* glsl */ `
-  precision mediump float;
+  precision highp float;
   ${BANDS_GLSL}
   void main() {
     vec3 col; float light;
@@ -174,17 +271,6 @@ const BG_FRAG = /* glsl */ `
     #include <colorspace_fragment>
   }
 `;
-
-/* Encuadre por estado. El nodo no solo cambia de forma: la cámara se mueve con
-   él —retrocede cuando se dispersa, entra en el cierre— y eso es lo que hace
-   que el recorrido se lea como un plano secuencia y no como cinco diapositivas. */
-const SHOTS = [
-  { z: 15.5, y: 0.0, tilt: 0.00 },   // núcleo
-  { z: 19.5, y: 0.4, tilt: 0.05 },   // disperso: la cámara retrocede
-  { z: 14.6, y: 0.0, tilt: -0.03 },  // cuatro clústeres, de frente
-  { z: 16.2, y: 0.8, tilt: 0.06 },   // espina de seis, algo desde arriba
-  { z: 12.4, y: 0.0, tilt: -0.02 },  // converge: la cámara entra
-];
 
 export default function AiNode({ onReady }) {
   const hostRef = React.useRef(null);
@@ -216,8 +302,11 @@ export default function AiNode({ onReady }) {
     renderer.domElement.style.display = 'block';
 
     const scene = new Scene();
-    const camera = new PerspectiveCamera(52, host.clientWidth / host.clientHeight, 0.1, 100);
-    camera.position.set(0, 0, SHOTS[0].z);
+    const camera = new PerspectiveCamera(52, host.clientWidth / host.clientHeight, 0.1, 120);
+    const shot = makeShot();
+    const lookAt = new Vector3();
+    sampleCamera(0, shot);
+    camera.position.set(shot.pos[0], shot.pos[1], shot.pos[2]);
 
     /* ---- uniforms de banda, compartidos por fondo, puntos y aristas ---- */
     const bandU = {
@@ -266,8 +355,11 @@ export default function AiNode({ onReady }) {
       ...bandU,
       uMix: { value: 0 },
       uTime: { value: 0 },
-      uSize: { value: coarse ? 3.0 : 3.6 },
+      uSize: { value: coarse ? 2.4 : 2.9 },
       uDrift: { value: reduced ? 0 : 0.09 },
+      uStagger: { value: reduced ? 0 : 0.55 },
+      uBulge: { value: reduced ? 0 : 1.35 },
+      uStreak: { value: 0 },
       uOpacity: { value: 0 },                    // entra con un fundido
       uGreen: { value: new Color('#00FF88') },
       uIce: { value: new Color('#E0F7FF') },
@@ -322,6 +414,49 @@ export default function AiNode({ onReady }) {
       depthWrite: false,
       blending: NormalBlending,
     }));
+
+    /* ---- polvo ---- */
+    const DUST = coarse ? 380 : 900;
+    const SPAN = 46;
+    const dustGeo = new BufferGeometry();
+    const dpos = new Float32Array(DUST * 3);
+    const dseed = new Float32Array(DUST);
+    {
+      let a = 0x1f123bb5;
+      const rnd = () => { a ^= a << 13; a ^= a >>> 17; a ^= a << 5; return ((a >>> 0) / 4294967296); };
+      for (let i = 0; i < DUST; i++) {
+        dpos[i * 3] = (rnd() - 0.5) * SPAN;
+        dpos[i * 3 + 1] = (rnd() - 0.5) * SPAN;
+        dpos[i * 3 + 2] = (rnd() - 0.5) * SPAN;
+        dseed[i] = rnd();
+      }
+    }
+    dustGeo.setAttribute('position', new BufferAttribute(dpos, 3));
+    dustGeo.setAttribute('dseed', new BufferAttribute(dseed, 1));
+    dustGeo.boundingSphere = new Sphere(new Vector3(), SPAN);
+
+    const dustUniforms = {
+      ...bandU,
+      uCam: { value: new Vector3() },
+      uSpan: { value: SPAN },
+      uTime: { value: 0 },
+      uStreak: { value: 0 },
+      uOpacity: { value: 0 },
+      uGreen: { value: uniforms.uGreen.value },
+      uInkLight: { value: uniforms.uInkLight.value },
+    };
+    const dust = new Points(dustGeo, new ShaderMaterial({
+      vertexShader: DUST_VERT,
+      fragmentShader: DUST_FRAG,
+      uniforms: dustUniforms,
+      transparent: true,
+      depthWrite: false,
+      depthTest: false,
+      blending: NormalBlending,
+    }));
+    dust.frustumCulled = false;
+    dust.renderOrder = -1;                     // siempre por detrás del nodo
+    scene.add(dust);
 
     /* Puntos y aristas van juntos: comparten encuadre y rotación. */
     const group = new Group();
@@ -388,8 +523,10 @@ export default function AiNode({ onReady }) {
       lAttrB.needsUpdate = true;
     };
 
-    let targetMix = 0, targetSpin = 0, lineTarget = 0.3;
+    let targetMix = 0, targetSpin = 0, lineTarget = 0.3, targetDoc = 0;
     const readScroll = () => {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      targetDoc = maxScroll > 0 ? Math.min(Math.max(window.scrollY / maxScroll, 0), 1) : 0;
       if (anchors.length < 2) { loadPair(0); return; }
       const eye = window.scrollY + window.innerHeight / 2;
 
@@ -424,7 +561,7 @@ export default function AiNode({ onReady }) {
 
     /* ---- bucle ---- */
     let raf = 0, t0 = performance.now(), mix = 0, spin = 0, visible = true;
-    let entry = 0, fade = 1;
+    let entry = 0, fade = 1, docT = 0, streak = 0;
     const offsetX = coarse ? 0 : 3.4;
 
     const tick = (now) => {
@@ -446,22 +583,42 @@ export default function AiNode({ onReady }) {
 
       const st = spin * (STATE_COUNT - 1);
 
-      /* Giro contenido: las formas con significado se leen casi de frente. */
-      group.rotation.y = spin * 0.34 - 0.14 + mouse.x * 0.05;
-      group.rotation.x = Math.sin(spin * Math.PI) * 0.05 + mouse.y * 0.03;
+      /* Giro contenido del propio nodo: la cámara ya aporta el ángulo, así que
+         el objeto solo necesita respirar. Girar los dos era mareante. */
+      group.rotation.y = spin * 0.22 - 0.09 + mouse.x * 0.04;
+      group.rotation.x = Math.sin(spin * Math.PI) * 0.04 + mouse.y * 0.025;
       /* Se aparta del titular solo en el hero; en cuanto adopta una forma que
          significa algo, se centra para cuadrar con el contenido. */
       group.position.x = offsetX * (1 - Math.min(mix + pair, 1));
 
-      /* Encuadre: interpolación suave entre los planos de SHOTS */
-      const si = Math.min(Math.floor(st), SHOTS.length - 2);
-      const sf = Math.min(Math.max(st - si, 0), 1);
-      const e = sf * sf * (3 - 2 * sf);
-      const A = SHOTS[si], B = SHOTS[si + 1];
-      camera.position.z = A.z + (B.z - A.z) * e;
-      camera.position.y = A.y + (B.y - A.y) * e + mouse.y * 0.25;
-      camera.position.x = mouse.x * 0.35;
-      camera.rotation.z = A.tilt + (B.tilt - A.tilt) * e;
+      /* ---- Recorrido de cámara ----
+         Va sobre el progreso del documento entero, no sobre los estados de
+         forma: así hay cambio de plano en todas las secciones, también en las
+         que no tienen una forma anclada. */
+      docT += (targetDoc - docT) * k;
+      sampleCamera(docT, shot);
+      camera.position.set(
+        shot.pos[0] + mouse.x * 0.5,
+        shot.pos[1] + mouse.y * 0.35,
+        shot.pos[2],
+      );
+      lookAt.set(shot.look[0], shot.look[1], shot.look[2]);
+      camera.lookAt(lookAt);
+      camera.rotateZ(shot.roll);
+      if (Math.abs(camera.fov - shot.fov) > 0.01) {
+        camera.fov = shot.fov;
+        camera.updateProjectionMatrix();
+      }
+
+      /* El rastro solo aparece cuando la cámara corre de verdad. Se normaliza
+         contra la velocidad máxima del recorrido para que no dependa de cuánto
+         mide la página. */
+      const speedTarget = reduced ? 0 : Math.min(pathSpeed(docT) / 260, 0.25);
+      streak += (speedTarget - streak) * k * 0.7;
+      uniforms.uStreak.value = streak;
+      dustUniforms.uStreak.value = streak;
+      dustUniforms.uTime.value = uniforms.uTime.value;
+      dustUniforms.uCam.value.copy(camera.position);
 
       /* Presencia: manda en el hero, se retira donde la página se llena de
          texto, y vuelve a subir en el cierre, que es otra vez una sola frase. */
@@ -470,6 +627,9 @@ export default function AiNode({ onReady }) {
       entry = Math.min(entry + dt * 1.1, 1);
       uniforms.uOpacity.value = entry * fade;
       lineUniforms.uOpacity.value = lineTarget * entry * fade;
+      /* El polvo baja menos que el nodo donde hay texto: es lo que mantiene la
+         continuidad del viaje incluso en las secciones más densas. */
+      dustUniforms.uOpacity.value = entry * (0.55 + fade * 0.45);
 
       syncBands();
       bandU.uResolution.value.set(host.clientWidth, host.clientHeight);
@@ -522,6 +682,8 @@ export default function AiNode({ onReady }) {
       window.removeEventListener('resize', onResize);
       document.removeEventListener('visibilitychange', onVisibility);
       geo.dispose();
+      dustGeo.dispose();
+      dust.material.dispose();
       lineGeo.dispose();
       bgMesh.geometry.dispose();
       bgMat.dispose();
