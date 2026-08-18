@@ -10,7 +10,7 @@ export default function Trabajo() {
     <>
       <div data-page-root="" style={{ font: "var(--type-body)", color: "var(--text-body)", background: "var(--off-white)", paddingTop: "72px" }}>
         <SiteHeader />
-        <section data-dark-image="" style={{ position: "relative", overflow: "hidden", background: "var(--navy-900)", padding: "var(--space-13) var(--gutter-page)" }}>
+        <section data-band="--navy-900" data-bg-image="" style={{ position: "relative", overflow: "hidden", background: "var(--navy-900)", padding: "var(--space-13) var(--gutter-page)" }}>
           <img fetchPriority="high" decoding="async" src="/images/47-global-ops.webp" alt="" style={{ position: "absolute", inset: "-6% 0", width: "100%", height: "112%", objectFit: "cover", objectPosition: "center right", opacity: ".85" }} />
           <div style={{ position: "absolute", inset: "0", background: "linear-gradient(95deg,var(--deep-navy) 0%,rgba(10,14,39,.88) 34%,rgba(10,14,39,.3) 78%,rgba(10,14,39,.5) 100%)" }} />
           <div style={{ position: "absolute", top: "0", right: "0", width: "46%", height: "100%", backgroundImage: "var(--pattern-scattered-nodes)", backgroundSize: "180px 180px", opacity: "var(--pattern-opacity)", WebkitMaskImage: "linear-gradient(to left,#000 18%,transparent 92%)", maskImage: "linear-gradient(to left,#000 18%,transparent 92%)", pointerEvents: "none" }} />
@@ -27,7 +27,7 @@ export default function Trabajo() {
             </p>
           </div>
         </section>
-        <section style={{ background: "var(--off-white)", padding: "var(--space-12) var(--gutter-page)" }}>
+        <section data-band="--off-white" style={{ background: "var(--off-white)", padding: "var(--space-12) var(--gutter-page)" }}>
           <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto", display: "flex", flexDirection: "column", gap: "var(--space-11)" }}>
             <Reveal as="article" style={{ display: "grid", gridTemplateColumns: ".7fr 1.3fr", gap: "var(--space-9)", paddingTop: "var(--space-7)", borderTop: "2px solid var(--deep-navy)" }} data-cols="">
               <div>
@@ -166,7 +166,7 @@ export default function Trabajo() {
             </Reveal>
           </div>
         </section>
-        <section data-dark-plain="" data-deep="" style={{ background: "var(--navy-900)", padding: "var(--space-12) var(--gutter-page)" }}>
+        <section data-band="--navy-900" data-deep="" style={{ background: "var(--navy-900)", padding: "var(--space-12) var(--gutter-page)" }}>
           <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto" }}>
             <h2 style={{ margin: "0", font: "var(--type-h2)", letterSpacing: "var(--track-heading)", color: "var(--white)", maxWidth: "24ch" }}>
               Cómo publicaremos los casos

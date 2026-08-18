@@ -120,9 +120,12 @@ label {
 /* ---------------------------------------------------------------------------
    Nodo de IA (solo home)
 
-   La capa 3D va fija en z-index -1. Para que se vea hay que abrir lo que tiene
-   delante: html y body dejan de pintar fondo, y las secciones oscuras se
-   vuelven transparentes — el navy lo pinta ahora la propia capa.
+   La capa 3D va fija en z-index -1 y pinta el fondo de la página entera: las
+   bandas de color de cada sección más las partículas encima. Para que se vea,
+   todo lo que tiene delante deja de pintar fondo — html, body, el contenedor
+   de página y las propias secciones, claras y oscuras por igual. Esa es la
+   diferencia con la primera versión, donde las secciones claras tapaban el
+   nodo y lo partían en tres trozos.
 
    Todo cuelga de :root[data-ai-node="on"], que AiNodeStage solo pone cuando el
    contexto WebGL existe. Sin esa marca, nada de esto aplica y la home se ve
@@ -130,16 +133,39 @@ label {
 --------------------------------------------------------------------------- */
 :root[data-ai-node="on"],
 :root[data-ai-node="on"] body,
-:root[data-ai-node="on"] [data-page-root] { background: transparent !important; }
-
-:root[data-ai-node="on"] [data-dark-plain],
-:root[data-ai-node="on"] [data-dark-image] { background: transparent !important; }
+:root[data-ai-node="on"] [data-page-root],
+:root[data-ai-node="on"] [data-band] { background: transparent !important; }
 
 /* Las secciones que traían foto de fondo la apagan: el nodo ocupa su sitio.
    La <img> se queda en el DOM a propósito — es exactamente el fallback que se
    ve si WebGL no está disponible. El degradado de legibilidad que va encima no
    se toca: es lo que mantiene el texto leíble sobre el nodo. */
-:root[data-ai-node="on"] [data-dark-image] > img { opacity: 0 !important; }
+:root[data-ai-node="on"] [data-bg-image] > img { opacity: 0 !important; }
 
 /* La retícula de circuito de [data-deep] competía con las aristas del nodo. */
 :root[data-ai-node="on"] [data-deep]::before { opacity: calc(var(--pattern-opacity-subtle) * .45); }
+
+/* ---------------------------------------------------------------------------
+   Cabecera que se retira al bajar
+--------------------------------------------------------------------------- */
+[data-header] {
+  transition: transform .42s cubic-bezier(.22,.61,.36,1), opacity .26s ease;
+  will-change: transform;
+}
+:root[data-header-hidden] [data-header] {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+/* Al volver, la barra entra con su propio fundido: el mismo recorrido, pero
+   la opacidad sube antes que el desplazamiento para que no se vea "empujar". */
+:root:not([data-header-hidden]) [data-header] {
+  transition: transform .5s cubic-bezier(.16,.84,.28,1), opacity .22s ease .04s;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-header] { transition: none; }
+  :root[data-header-hidden] [data-header] { transform: none; opacity: 1; }
+}
+
+/* El halo verde de [data-deep] estaba calculado para caer sobre un navy sólido.
+   Con la sección transparente cae sobre el canvas y se acumula: se atenúa. */
+:root[data-ai-node="on"] [data-deep]::after { opacity: .45; }

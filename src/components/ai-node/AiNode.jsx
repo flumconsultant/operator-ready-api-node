@@ -1,19 +1,22 @@
 import React from 'react';
-/* Importación nominal, no `import * as THREE`: así rollup se lleva solo lo
-   que se usa y el chunk de three baja de forma apreciable. */
+/* Importación nominal, no `import * as THREE`: rollup se lleva solo lo usado. */
 import {
-  AdditiveBlending,
   BufferAttribute,
   BufferGeometry,
   Color,
   DynamicDrawUsage,
   Group,
   LineSegments,
+  Mesh,
+  NormalBlending,
+  OrthographicCamera,
   PerspectiveCamera,
+  PlaneGeometry,
   Points,
   Scene,
   ShaderMaterial,
   Sphere,
+  Vector2,
   Vector3,
   WebGLRenderer,
 } from 'three';
@@ -21,31 +24,59 @@ import { buildStates, buildEdges, STATE_COUNT } from './states.js';
 
 /**
  * El nodo de IA: una red de partículas en WebGL, fija detrás de la home, que
- * va cambiando de forma según por dónde vas leyendo. Los cinco estados están
- * en states.js.
+ * va cambiando de forma según por dónde vas leyendo. Los estados y su
+ * correspondencia con las secciones están en states.js.
  *
  * Three.js en crudo, sin react-three-fiber: aquí hay un único objeto imperativo
- * y ningún árbol de componentes que reconciliar, así que el reconciler solo
- * añadiría ~18 KB y una capa de indirección. La app sigue siendo React; esto es
- * un canvas dentro de un efecto.
+ * y ningún árbol de componentes que reconciliar.
  *
- * El componente se carga en diferido (ver AiNodeStage) y solo marca
- * data-ai-node="on" cuando el contexto WebGL existe de verdad. Hasta entonces
- * —y para siempre, si el dispositivo no puede— la home se ve exactamente como
- * antes.
+ * ---- Por qué el canvas pinta también el fondo de la página ----
+ *
+ * La primera versión solo se veía en las secciones oscuras: las claras, opacas,
+ * lo tapaban, y el nodo desaparecía a mitad de recorrido. Ahora el canvas pinta
+ * las bandas de color de todas las secciones —los tokens que llevan anotados en
+ * data-band— y dibuja las partículas encima. El nodo ya no se interrumpe: lo
+ * que cambia es el suelo, y con él la tinta, verde sobre navy y navy sobre
+ * claro. En claro además pesa mucho menos, para no ensuciar el texto.
+ *
+ * Nada de esto se activa hasta que el contexto WebGL existe de verdad; ver
+ * AiNodeStage.
  */
 
-const GREEN = new Color('#00FF88');
-const ICE = new Color('#E0F7FF');
+const MAX_BANDS = 12;
+
+/* El bloque de bandas se comparte entre fondo, puntos y aristas: los tres
+   tienen que estar de acuerdo sobre dónde empieza el claro. */
+const BANDS_GLSL = /* glsl */ `
+  uniform vec2 uResolution;
+  uniform float uBandTop[${MAX_BANDS}];
+  uniform float uBandBot[${MAX_BANDS}];
+  uniform vec3 uBandCol[${MAX_BANDS}];
+  uniform float uBandLight[${MAX_BANDS}];
+  uniform int uBandN;
+  uniform vec3 uGround;
+
+  void bandAt(float y, out vec3 col, out float light) {
+    col = uGround;
+    light = 0.0;
+    for (int i = 0; i < ${MAX_BANDS}; i++) {
+      if (i >= uBandN) break;
+      if (y <= uBandTop[i] && y > uBandBot[i]) {
+        col = uBandCol[i];
+        light = uBandLight[i];
+      }
+    }
+  }
+`;
 
 const VERT = /* glsl */ `
   attribute vec3 posA;
   attribute vec3 posB;
   attribute float seed;
-  uniform float uMix;        // 0..1 entre el estado A y el B
+  uniform float uMix;
   uniform float uTime;
   uniform float uSize;
-  uniform float uDrift;      // cuánta vida propia tiene la nube
+  uniform float uDrift;
   varying float vDepth;
   varying float vSeed;
 
@@ -62,8 +93,6 @@ const VERT = /* glsl */ `
     vDepth = clamp((mv.z + 14.0) / 22.0, 0.0, 1.0);
     vSeed = seed;
     gl_Position = projectionMatrix * mv;
-    // el divisor fija el tamaño en pantalla: a z~15 esto da puntos de 2-4 px,
-    // que es lo que hace que se lea como red y no como niebla
     gl_PointSize = uSize * (0.6 + seed * 0.8) * (14.0 / -mv.z);
   }
 `;
@@ -72,22 +101,32 @@ const FRAG = /* glsl */ `
   precision mediump float;
   uniform vec3 uGreen;
   uniform vec3 uIce;
+  uniform vec3 uInkLight;
   uniform float uOpacity;
   varying float vDepth;
   varying float vSeed;
+  ${BANDS_GLSL}
 
   void main() {
-    // sprite redondo suave, sin textura
     vec2 d = gl_PointCoord - vec2(0.5);
     float r = dot(d, d);
     if (r > 0.25) discard;
     float alpha = smoothstep(0.25, 0.0, r);
 
-    // verde dominante; el hielo solo asoma en las partículas más cercanas, como
-    // un reflejo. Mezclar a partes iguales lo volvía gris.
+    vec3 bcol; float light;
+    bandAt(gl_FragCoord.y / uResolution.y, bcol, light);
+
+    // Sobre navy: verde, con el hielo asomando en las partículas cercanas.
+    // Sobre claro: tinta navy. El mismo nodo, leído sobre otro papel.
     float ice = pow(clamp(vDepth, 0.0, 1.0), 3.0) * 0.6 * (0.4 + vSeed * 0.6);
-    vec3 col = mix(uGreen, uIce, ice);
-    gl_FragColor = vec4(col, alpha * uOpacity * (0.35 + vDepth * 0.65));
+    vec3 col = mix(mix(uGreen, uIce, ice), uInkLight, light);
+
+    /* Sobre navy hace falta más cuerpo que con la mezcla aditiva anterior: el
+       alfa normal no acumula brillo donde las partículas se solapan. Sobre
+       claro, al revés — con poco basta y de más ensuciaría el texto. */
+    float a = alpha * uOpacity * (0.42 + vDepth * 0.72) * mix(1.25, 0.30, light);
+    gl_FragColor = vec4(col, clamp(a, 0.0, 1.0));
+    #include <colorspace_fragment>
   }
 `;
 
@@ -108,12 +147,44 @@ const LINE_VERT = /* glsl */ `
 const LINE_FRAG = /* glsl */ `
   precision mediump float;
   uniform vec3 uGreen;
+  uniform vec3 uInkLight;
   uniform float uOpacity;
   varying float vDepth;
+  ${BANDS_GLSL}
+
   void main() {
-    gl_FragColor = vec4(uGreen, uOpacity * (0.15 + vDepth * 0.85));
+    vec3 bcol; float light;
+    bandAt(gl_FragCoord.y / uResolution.y, bcol, light);
+    vec3 col = mix(uGreen, uInkLight, light);
+    gl_FragColor = vec4(col, uOpacity * (0.15 + vDepth * 0.85) * mix(1.0, 0.34, light));
+    #include <colorspace_fragment>
   }
 `;
+
+const BG_VERT = /* glsl */ `
+  void main() { gl_Position = vec4(position.xy, 0.0, 1.0); }
+`;
+const BG_FRAG = /* glsl */ `
+  precision mediump float;
+  ${BANDS_GLSL}
+  void main() {
+    vec3 col; float light;
+    bandAt(gl_FragCoord.y / uResolution.y, col, light);
+    gl_FragColor = vec4(col, 1.0);
+    #include <colorspace_fragment>
+  }
+`;
+
+/* Encuadre por estado. El nodo no solo cambia de forma: la cámara se mueve con
+   él —retrocede cuando se dispersa, entra en el cierre— y eso es lo que hace
+   que el recorrido se lea como un plano secuencia y no como cinco diapositivas. */
+const SHOTS = [
+  { z: 15.5, y: 0.0, tilt: 0.00 },   // núcleo
+  { z: 19.5, y: 0.4, tilt: 0.05 },   // disperso: la cámara retrocede
+  { z: 14.6, y: 0.0, tilt: -0.03 },  // cuatro clústeres, de frente
+  { z: 16.2, y: 0.8, tilt: 0.06 },   // espina de seis, algo desde arriba
+  { z: 12.4, y: 0.0, tilt: -0.02 },  // converge: la cámara entra
+];
 
 export default function AiNode({ onReady }) {
   const hostRef = React.useRef(null);
@@ -125,15 +196,14 @@ export default function AiNode({ onReady }) {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const coarse = window.matchMedia('(max-width: 900px), (pointer: coarse)').matches;
 
-    /* Móvil: menos partículas, menos aristas, menos píxeles. Mismo efecto,
-       una fracción del coste — es la versión simplificada, no otra pieza. */
+    /* Móvil: menos partículas, menos aristas, menos píxeles. */
     const COUNT = coarse ? 900 : 2600;
     const EDGES = coarse ? 90 : 260;
     const MAX_DPR = coarse ? 1.5 : 2;
 
     let renderer;
     try {
-      renderer = new WebGLRenderer({ antialias: !coarse, alpha: true, powerPreference: 'low-power' });
+      renderer = new WebGLRenderer({ antialias: !coarse, powerPreference: 'low-power' });
     } catch {
       return;                                   // sin WebGL: la home se queda como estaba
     }
@@ -141,15 +211,40 @@ export default function AiNode({ onReady }) {
 
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, MAX_DPR));
     renderer.setSize(host.clientWidth, host.clientHeight);
-    renderer.setClearColor(0x000000, 0);
+    renderer.autoClear = false;
     host.appendChild(renderer.domElement);
     renderer.domElement.style.display = 'block';
 
     const scene = new Scene();
     const camera = new PerspectiveCamera(52, host.clientWidth / host.clientHeight, 0.1, 100);
-    camera.position.set(0, 0, 15.5);
+    camera.position.set(0, 0, SHOTS[0].z);
 
-    /* --- geometría --- */
+    /* ---- uniforms de banda, compartidos por fondo, puntos y aristas ---- */
+    const bandU = {
+      uResolution: { value: new Vector2(1, 1) },
+      uBandTop: { value: new Array(MAX_BANDS).fill(0) },
+      uBandBot: { value: new Array(MAX_BANDS).fill(0) },
+      uBandCol: { value: Array.from({ length: MAX_BANDS }, () => new Color(0x05070f)) },
+      uBandLight: { value: new Array(MAX_BANDS).fill(0) },
+      uBandN: { value: 0 },
+      uGround: { value: new Color(0x05070f) },
+    };
+
+    /* ---- fondo: reproduce las bandas de color de las secciones ---- */
+    const bgScene = new Scene();
+    const bgCam = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    const bgMat = new ShaderMaterial({
+      vertexShader: BG_VERT,
+      fragmentShader: BG_FRAG,
+      uniforms: bandU,
+      depthTest: false,
+      depthWrite: false,
+    });
+    const bgMesh = new Mesh(new PlaneGeometry(2, 2), bgMat);
+    bgMesh.frustumCulled = false;
+    bgScene.add(bgMesh);
+
+    /* ---- geometría de partículas ---- */
     const states = buildStates(COUNT);
     const stateOffset = (s) => states.subarray(s * COUNT * 3, (s + 1) * COUNT * 3);
 
@@ -161,20 +256,22 @@ export default function AiNode({ onReady }) {
     const posB = new BufferAttribute(new Float32Array(stateOffset(1)), 3);
     posA.setUsage(DynamicDrawUsage);
     posB.setUsage(DynamicDrawUsage);
-    geo.setAttribute('position', posA);          // three necesita 'position' para el frustum
+    geo.setAttribute('position', posA);          // three necesita 'position'
     geo.setAttribute('posA', posA);
     geo.setAttribute('posB', posB);
     geo.setAttribute('seed', new BufferAttribute(seeds, 1));
     geo.boundingSphere = new Sphere(new Vector3(), 30);
 
     const uniforms = {
+      ...bandU,
       uMix: { value: 0 },
       uTime: { value: 0 },
       uSize: { value: coarse ? 3.0 : 3.6 },
       uDrift: { value: reduced ? 0 : 0.09 },
       uOpacity: { value: 0 },                    // entra con un fundido
-      uGreen: { value: GREEN },
-      uIce: { value: ICE },
+      uGreen: { value: new Color('#00FF88') },
+      uIce: { value: new Color('#E0F7FF') },
+      uInkLight: { value: new Color('#0A0E27') },
     };
 
     const points = new Points(geo, new ShaderMaterial({
@@ -183,10 +280,10 @@ export default function AiNode({ onReady }) {
       uniforms,
       transparent: true,
       depthWrite: false,
-      blending: AdditiveBlending,
+      blending: NormalBlending,
     }));
 
-    /* --- aristas --- */
+    /* ---- aristas ---- */
     const edges = buildEdges(COUNT, EDGES);
     const lineGeo = new BufferGeometry();
     const lA = new Float32Array(EDGES * 2 * 3);
@@ -211,9 +308,11 @@ export default function AiNode({ onReady }) {
     lineGeo.boundingSphere = new Sphere(new Vector3(), 30);
 
     const lineUniforms = {
+      ...bandU,
       uMix: uniforms.uMix,
       uOpacity: { value: 0 },
-      uGreen: { value: GREEN },
+      uGreen: { value: uniforms.uGreen.value },
+      uInkLight: { value: uniforms.uInkLight.value },
     };
     const lines = new LineSegments(lineGeo, new ShaderMaterial({
       vertexShader: LINE_VERT,
@@ -221,40 +320,51 @@ export default function AiNode({ onReady }) {
       uniforms: lineUniforms,
       transparent: true,
       depthWrite: false,
-      blending: AdditiveBlending,
+      blending: NormalBlending,
     }));
 
-    /* Puntos y aristas van juntos en un grupo: comparten rotación y encuadre.
-       En escritorio el nodo se desplaza a la derecha para no pelearse con el
-       titular; en móvil se centra, porque ahí el texto va debajo. */
+    /* Puntos y aristas van juntos: comparten encuadre y rotación. */
     const group = new Group();
     group.add(points);
     group.add(lines);
-    group.position.x = coarse ? 0 : 3.4;   // se recalcula por estado en el bucle
     group.scale.setScalar(coarse ? 0.9 : 1.15);
     scene.add(group);
 
-    /* --- estado del scroll --- */
-    let pair = -1;                               // qué par de estados hay cargado
-    const loadPair = (i) => {
-      if (i === pair) return;
-      pair = i;
-      posA.array.set(stateOffset(i));
-      posB.array.set(stateOffset(Math.min(i + 1, STATE_COUNT - 1)));
-      posA.needsUpdate = true;
-      posB.needsUpdate = true;
-      writeEdges(lA, stateOffset(i));
-      writeEdges(lB, stateOffset(Math.min(i + 1, STATE_COUNT - 1)));
-      lAttrA.needsUpdate = true;
-      lAttrB.needsUpdate = true;
+    /* ---- bandas: leer del DOM lo que pintaba cada sección ---- */
+    const css = getComputedStyle(document.documentElement);
+    const tokenColor = new Map();
+    const colorOf = (token) => {
+      if (!tokenColor.has(token)) {
+        tokenColor.set(token, new Color(css.getPropertyValue(token).trim() || '#05070F'));
+      }
+      return tokenColor.get(token);
+    };
+    let bandEls = [];
+
+    const syncBands = () => {
+      const H = window.innerHeight;
+      let n = 0;
+      for (const el of bandEls) {
+        if (n >= MAX_BANDS) break;
+        const r = el.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > H) continue;              // fuera de pantalla
+        /* gl_FragCoord.y cuenta desde abajo; el DOM, desde arriba */
+        bandU.uBandTop.value[n] = 1 - r.top / H;
+        bandU.uBandBot.value[n] = 1 - r.bottom / H;
+        const c = colorOf(el.dataset.band);
+        bandU.uBandCol.value[n].copy(c);
+        /* la luminancia decide la tinta de las partículas sobre esa banda */
+        bandU.uBandLight.value[n] =
+          c.r * 0.2126 + c.g * 0.7152 + c.b * 0.0722 > 0.35 ? 1 : 0;
+        n++;
+      }
+      bandU.uBandN.value = n;
     };
 
-    /* Anclas: la posición en el documento donde cada estado está "cuajado".
-       Vienen del artboard (data-node-state), no de porcentajes de scroll: si
-       mañana crece una sección, el nodo sigue cuadrando con el texto sin tocar
-       una línea de esto. */
+    /* ---- anclas de estado ---- */
     let anchors = [];
     const measure = () => {
+      bandEls = [...document.querySelectorAll('[data-band]')];
       anchors = [...document.querySelectorAll('[data-node-state]')]
         .map((el) => {
           const r = el.getBoundingClientRect();
@@ -263,12 +373,26 @@ export default function AiNode({ onReady }) {
         .sort((a, b) => a.state - b.state);
     };
 
+    let pair = -1;
+    const loadPair = (i) => {
+      if (i === pair) return;
+      pair = i;
+      const j = Math.min(i + 1, STATE_COUNT - 1);
+      posA.array.set(stateOffset(i));
+      posB.array.set(stateOffset(j));
+      posA.needsUpdate = true;
+      posB.needsUpdate = true;
+      writeEdges(lA, stateOffset(i));
+      writeEdges(lB, stateOffset(j));
+      lAttrA.needsUpdate = true;
+      lAttrB.needsUpdate = true;
+    };
+
     let targetMix = 0, targetSpin = 0, lineTarget = 0.3;
     const readScroll = () => {
       if (anchors.length < 2) { loadPair(0); return; }
       const eye = window.scrollY + window.innerHeight / 2;
 
-      /* posición continua dentro de la escala de estados */
       let t;
       if (eye <= anchors[0].mid) t = anchors[0].state;
       else if (eye >= anchors[anchors.length - 1].mid) t = anchors[anchors.length - 1].state;
@@ -291,50 +415,70 @@ export default function AiNode({ onReady }) {
       lineTarget = 0.3 * (1 - dispersion * 0.88);
     };
 
-    /* --- bucle --- */
+    /* ---- paralaje de ratón, muy contenido ---- */
+    const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+    const onPointer = (e) => {
+      mouse.tx = (e.clientX / window.innerWidth - 0.5) * 2;
+      mouse.ty = (e.clientY / window.innerHeight - 0.5) * 2;
+    };
+
+    /* ---- bucle ---- */
     let raf = 0, t0 = performance.now(), mix = 0, spin = 0, visible = true;
     let entry = 0, fade = 1;
     const offsetX = coarse ? 0 : 3.4;
+
     const tick = (now) => {
       raf = requestAnimationFrame(tick);
       if (!visible) return;
       const dt = Math.min((now - t0) / 1000, 0.05);
       t0 = now;
 
-      /* suavizado exponencial: el scroll del ratón llega a saltos y sin esto
-         el morph se ve escalonado */
+      /* suavizado exponencial: el scroll llega a saltos y sin esto el morph se
+         ve escalonado */
       const k = 1 - Math.pow(0.001, dt);
       mix += (targetMix - mix) * k;
       spin += (targetSpin - spin) * k;
+      mouse.x += (mouse.tx - mouse.x) * k * 0.5;
+      mouse.y += (mouse.ty - mouse.y) * k * 0.5;
 
       uniforms.uMix.value = mix;
-      uniforms.uTime.value = reduced ? 0 : (now - 0) / 1000;
-      entry = Math.min(entry + dt * 1.1, 1);          // fundido de entrada
+      uniforms.uTime.value = reduced ? 0 : now / 1000;
+
+      const st = spin * (STATE_COUNT - 1);
+
+      /* Giro contenido: las formas con significado se leen casi de frente. */
+      group.rotation.y = spin * 0.34 - 0.14 + mouse.x * 0.05;
+      group.rotation.x = Math.sin(spin * Math.PI) * 0.05 + mouse.y * 0.03;
+      /* Se aparta del titular solo en el hero; en cuanto adopta una forma que
+         significa algo, se centra para cuadrar con el contenido. */
+      group.position.x = offsetX * (1 - Math.min(mix + pair, 1));
+
+      /* Encuadre: interpolación suave entre los planos de SHOTS */
+      const si = Math.min(Math.floor(st), SHOTS.length - 2);
+      const sf = Math.min(Math.max(st - si, 0), 1);
+      const e = sf * sf * (3 - 2 * sf);
+      const A = SHOTS[si], B = SHOTS[si + 1];
+      camera.position.z = A.z + (B.z - A.z) * e;
+      camera.position.y = A.y + (B.y - A.y) * e + mouse.y * 0.25;
+      camera.position.x = mouse.x * 0.35;
+      camera.rotation.z = A.tilt + (B.tilt - A.tilt) * e;
+
+      /* Presencia: manda en el hero, se retira donde la página se llena de
+         texto, y vuelve a subir en el cierre, que es otra vez una sola frase. */
+      fade = st <= 1 ? 1 : st <= 3 ? 1 - ((st - 1) / 2) * 0.58 : 0.42 + (st - 3) * 0.46;
+
+      entry = Math.min(entry + dt * 1.1, 1);
       uniforms.uOpacity.value = entry * fade;
       lineUniforms.uOpacity.value = lineTarget * entry * fade;
 
-      /* Giro contenido: las formas con significado (los cuatro clústeres, la
-         espina de seis) tienen que leerse casi de frente. Girar más las
-         convertía en un borrón diagonal. */
-      group.rotation.y = spin * 0.34 - 0.14;
-      group.rotation.x = Math.sin(spin * Math.PI) * 0.05;
+      syncBands();
+      bandU.uResolution.value.set(host.clientWidth, host.clientHeight);
 
-      /* El nodo se aparta del titular solo en el hero; en cuanto adopta una
-         forma que significa algo, se centra para cuadrar con el contenido. */
-      group.position.x = offsetX * (1 - Math.min(mix + pair, 1));
-
-      /* La presencia no es una rampa, es una curva: manda en el hero, se retira
-         donde la página se llena de texto (clústeres y framework) y vuelve a
-         subir en el cierre, que es otra vez una sola frase. */
-      const st = spin * (STATE_COUNT - 1);
-      fade = st <= 1 ? 1
-        : st <= 3 ? 1 - ((st - 1) / 2) * 0.58
-        : 0.42 + ((st - 3) / 1) * 0.46;
-
+      renderer.clear();
+      renderer.render(bgScene, bgCam);
       renderer.render(scene, camera);
 
-      /* Sin movimiento que animar, el bucle se apaga en cuanto termina el
-         fundido: cero trabajo de GPU el resto de la visita. */
+      /* Sin movimiento que animar, el bucle se apaga en cuanto entra. */
       if (reduced && entry >= 1) cancelAnimationFrame(raf);
     };
 
@@ -351,22 +495,18 @@ export default function AiNode({ onReady }) {
     measure();
     readScroll();
 
-    /* prefers-reduced-motion: el nodo se queda quieto en su primer estado. El
-       morph al hacer scroll es movimiento no esencial, que es exactamente lo
-       que pide evitar quien activa esa preferencia. Sigue estando —textura de
-       fondo, no coreografía. */
-    if (reduced) {
-      targetMix = 0;
-      loadPair(0);
-      lineTarget = 0.3;
-    }
+    /* prefers-reduced-motion: el nodo se queda quieto en su primer estado. */
+    if (reduced) { targetMix = 0; loadPair(0); lineTarget = 0.3; }
 
     /* Las imágenes en carga diferida cambian la altura de la página según
        entran; sin volver a medir, las anclas se desfasan del contenido. */
     const ro = new ResizeObserver(() => { measure(); readScroll(); });
     ro.observe(document.body);
 
-    if (!reduced) window.addEventListener('scroll', readScroll, { passive: true });
+    if (!reduced) {
+      window.addEventListener('scroll', readScroll, { passive: true });
+      if (!coarse) window.addEventListener('pointermove', onPointer, { passive: true });
+    }
     window.addEventListener('resize', onResize);
     document.addEventListener('visibilitychange', onVisibility);
     raf = requestAnimationFrame(tick);
@@ -375,11 +515,16 @@ export default function AiNode({ onReady }) {
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
-      if (!reduced) window.removeEventListener('scroll', readScroll);
+      if (!reduced) {
+        window.removeEventListener('scroll', readScroll);
+        window.removeEventListener('pointermove', onPointer);
+      }
       window.removeEventListener('resize', onResize);
       document.removeEventListener('visibilitychange', onVisibility);
       geo.dispose();
       lineGeo.dispose();
+      bgMesh.geometry.dispose();
+      bgMat.dispose();
       points.material.dispose();
       lines.material.dispose();
       renderer.dispose();

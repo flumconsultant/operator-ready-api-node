@@ -10,7 +10,7 @@ export default function Home() {
     <>
       <div data-page-root="" style={{ font: "var(--type-body)", color: "var(--text-body)", background: "var(--off-white)", paddingTop: "72px" }}>
         <SiteHeader />
-        <section data-dark-image="" data-node-state="0" style={{ position: "relative", overflow: "hidden", background: "var(--navy-900)", padding: "var(--space-14) var(--gutter-page) var(--space-13)" }}>
+        <section data-band="--navy-900" data-bg-image="" data-node-state="0" style={{ position: "relative", overflow: "hidden", background: "var(--navy-900)", padding: "var(--space-14) var(--gutter-page) var(--space-13)" }}>
           <img fetchPriority="high" decoding="async" src="/images/01-neural-network.webp" alt="" style={{ position: "absolute", inset: "-6% 0", width: "100%", height: "112%", objectFit: "cover", objectPosition: "center right", opacity: ".85" }} />
           <div style={{ position: "absolute", inset: "0", background: "linear-gradient(95deg,var(--deep-navy) 0%,rgba(10,14,39,.88) 34%,rgba(10,14,39,.3) 78%,rgba(10,14,39,.5) 100%)" }} />
           <div style={{ position: "absolute", top: "0", right: "0", width: "46%", height: "100%", backgroundImage: "var(--pattern-scattered-nodes)", backgroundSize: "180px 180px", opacity: "var(--pattern-opacity)", WebkitMaskImage: "linear-gradient(to left,#000 18%,transparent 92%)", maskImage: "linear-gradient(to left,#000 18%,transparent 92%)", pointerEvents: "none" }} />
@@ -56,7 +56,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section data-node-state="1" style={{ background: "var(--off-white)", padding: "var(--space-13) var(--gutter-page)" }}>
+        <section data-band="--off-white" data-node-state="1" style={{ background: "var(--off-white)", padding: "var(--space-13) var(--gutter-page)" }}>
           <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto", display: "grid", gridTemplateColumns: ".9fr 1.1fr", gap: "var(--space-11)" }} data-cols="">
             <div>
               <p style={{ margin: "0", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--text-accent)" }}>
@@ -102,7 +102,7 @@ export default function Home() {
             </Reveal>
           </div>
         </section>
-        <section data-dark-plain="" data-node-state="2" id="que-transformamos" data-deep="" style={{ position: "relative", background: "var(--navy-900)", padding: "var(--space-13) var(--gutter-page)" }}>
+        <section data-band="--navy-900" data-node-state="2" id="que-transformamos" data-deep="" style={{ position: "relative", background: "var(--navy-900)", padding: "var(--space-13) var(--gutter-page)" }}>
           <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto" }}>
             <p style={{ margin: "0", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--electric-green)" }}>
               The inside system
@@ -191,7 +191,7 @@ export default function Home() {
             </Link>
           </div>
         </section>
-        <section id="propuesta" style={{ background: "var(--off-white)", padding: "var(--space-13) var(--gutter-page)" }}>
+        <section data-band="--off-white" id="propuesta" style={{ background: "var(--off-white)", padding: "var(--space-13) var(--gutter-page)" }}>
           <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto" }}>
             <p style={{ margin: "0", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--text-accent)" }}>
               From ambition to embedded capability
@@ -277,7 +277,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section data-dark-plain="" data-node-state="3" data-deep="" style={{ background: "var(--navy-900)", padding: "var(--space-13) var(--gutter-page)" }}>
+        <section data-band="--navy-900" data-node-state="3" data-deep="" style={{ background: "var(--navy-900)", padding: "var(--space-13) var(--gutter-page)" }}>
           <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto" }}>
             <p style={{ margin: "0", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--electric-green)" }}>
               The BECOME™ transformation framework
@@ -443,7 +443,7 @@ export default function Home() {
             </Link>
           </div>
         </section>
-        <section data-dark-plain="" data-deep="" style={{ background: "var(--navy-900)", borderTop: "1px solid var(--border-hairline-dark)", padding: "var(--space-11) var(--gutter-page)" }}>
+        <section data-band="--navy-900" data-deep="" style={{ background: "var(--navy-900)", borderTop: "1px solid var(--border-hairline-dark)", padding: "var(--space-11) var(--gutter-page)" }}>
           <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "var(--space-8)", justifyContent: "space-between" }}>
             <div>
               <p style={{ margin: "0", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--electric-green)" }}>
@@ -463,7 +463,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section style={{ background: "var(--off-white)", padding: "var(--space-13) var(--gutter-page)" }}>
+        <section data-band="--off-white" style={{ background: "var(--off-white)", padding: "var(--space-13) var(--gutter-page)" }}>
           <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto", display: "grid", gridTemplateColumns: ".85fr 1.15fr", gap: "var(--space-11)" }} data-cols="">
             <div>
               <p style={{ margin: "0", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--text-accent)" }}>
@@ -539,7 +539,7 @@ export default function Home() {
             </Reveal>
           </div>
         </section>
-        <section style={{ background: "var(--pale-100)", padding: "var(--space-13) var(--gutter-page)" }}>
+        <section data-band="--pale-100" style={{ background: "var(--pale-100)", padding: "var(--space-13) var(--gutter-page)" }}>
           <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto" }}>
             <p style={{ margin: "0", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--text-accent)" }}>
               Value, made visible
@@ -609,7 +609,7 @@ export default function Home() {
             </p>
           </div>
         </section>
-        <section style={{ background: "var(--off-white)", padding: "var(--space-13) var(--gutter-page)" }}>
+        <section data-band="--off-white" style={{ background: "var(--off-white)", padding: "var(--space-13) var(--gutter-page)" }}>
           <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto" }}>
             <Reveal as="h2" style={{ margin: "0", font: "var(--type-h1)", letterSpacing: "var(--track-display)", color: "var(--text-heading)", maxWidth: "24ch" }}>
               Strategy that builds. Technology that embeds. Capability that stays.
@@ -648,7 +648,7 @@ export default function Home() {
             </p>
           </div>
         </section>
-        <section data-dark-plain="" data-deep="" style={{ background: "var(--navy-900)", padding: "var(--space-13) var(--gutter-page)" }}>
+        <section data-band="--navy-900" data-deep="" style={{ background: "var(--navy-900)", padding: "var(--space-13) var(--gutter-page)" }}>
           <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto" }}>
             <Reveal as="h2" style={{ margin: "0", font: "var(--type-h1)", letterSpacing: "var(--track-display)", color: "var(--white)", maxWidth: "20ch" }}>
               THE WORK WE ARE BUILT TO DO
@@ -708,7 +708,7 @@ export default function Home() {
             </Link>
           </div>
         </section>
-        <section style={{ background: "var(--off-white)", padding: "var(--space-13) var(--gutter-page)" }}>
+        <section data-band="--off-white" style={{ background: "var(--off-white)", padding: "var(--space-13) var(--gutter-page)" }}>
           <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto" }}>
             <p style={{ margin: "0", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--text-accent)" }}>
               BECOME thinking
@@ -762,7 +762,7 @@ export default function Home() {
             </Link>
           </div>
         </section>
-        <section data-dark-image="" data-node-state="4" style={{ position: "relative", overflow: "hidden", background: "var(--navy-950)", padding: "var(--space-14) var(--gutter-page)" }}>
+        <section data-band="--navy-950" data-bg-image="" data-node-state="4" style={{ position: "relative", overflow: "hidden", background: "var(--navy-950)", padding: "var(--space-14) var(--gutter-page)" }}>
           <img loading="lazy" decoding="async" src="/images/50-next-gen.webp" alt="" style={{ position: "absolute", inset: "-6% 0", width: "100%", height: "112%", objectFit: "cover", objectPosition: "center right", opacity: ".85" }} />
           <div style={{ position: "absolute", inset: "0", background: "linear-gradient(95deg,var(--navy-950) 0%,rgba(5,7,15,.9) 32%,rgba(5,7,15,.3) 78%,rgba(5,7,15,.5) 100%)" }} />
           <div style={{ position: "absolute", top: "0", right: "0", width: "46%", height: "100%", backgroundImage: "var(--pattern-scattered-nodes)", backgroundSize: "180px 180px", opacity: "var(--pattern-opacity)", WebkitMaskImage: "linear-gradient(to left,#000 18%,transparent 92%)", maskImage: "linear-gradient(to left,#000 18%,transparent 92%)", pointerEvents: "none" }} />

@@ -10,7 +10,7 @@ export default function Discovery() {
     <>
       <div data-page-root="" style={{ font: "var(--type-body)", color: "var(--text-body)", background: "var(--off-white)", paddingTop: "72px" }}>
         <SiteHeader />
-        <section data-dark-image="" style={{ position: "relative", overflow: "hidden", background: "var(--navy-900)", padding: "var(--space-13) var(--gutter-page)" }}>
+        <section data-band="--navy-900" data-bg-image="" style={{ position: "relative", overflow: "hidden", background: "var(--navy-900)", padding: "var(--space-13) var(--gutter-page)" }}>
           <img fetchPriority="high" decoding="async" src="/images/46-strategy-session.webp" alt="" style={{ position: "absolute", inset: "-6% 0", width: "100%", height: "112%", objectFit: "cover", objectPosition: "center right", opacity: ".85" }} />
           <div style={{ position: "absolute", inset: "0", background: "linear-gradient(95deg,var(--deep-navy) 0%,rgba(10,14,39,.88) 34%,rgba(10,14,39,.3) 78%,rgba(10,14,39,.5) 100%)" }} />
           <div style={{ position: "absolute", top: "0", right: "0", width: "46%", height: "100%", backgroundImage: "var(--pattern-scattered-nodes)", backgroundSize: "180px 180px", opacity: "var(--pattern-opacity)", WebkitMaskImage: "linear-gradient(to left,#000 18%,transparent 92%)", maskImage: "linear-gradient(to left,#000 18%,transparent 92%)", pointerEvents: "none" }} />
@@ -30,7 +30,7 @@ export default function Discovery() {
             </Link>
           </div>
         </section>
-        <section style={{ background: "var(--off-white)", padding: "var(--space-12) var(--gutter-page)" }}>
+        <section data-band="--off-white" style={{ background: "var(--off-white)", padding: "var(--space-12) var(--gutter-page)" }}>
           <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto", display: "grid", gridTemplateColumns: ".8fr 1.2fr", gap: "var(--space-11)" }} data-cols="">
             <div>
               <p style={{ margin: "0", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--text-accent)" }}>
@@ -67,7 +67,7 @@ export default function Discovery() {
             </Reveal>
           </div>
         </section>
-        <section data-dark-plain="" data-deep="" style={{ background: "var(--navy-900)", padding: "var(--space-13) var(--gutter-page)" }}>
+        <section data-band="--navy-900" data-deep="" style={{ background: "var(--navy-900)", padding: "var(--space-13) var(--gutter-page)" }}>
           <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto" }}>
             <p style={{ margin: "0", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--electric-green)" }}>
               Etapas B · E · C · O
@@ -143,7 +143,7 @@ export default function Discovery() {
             </div>
           </div>
         </section>
-        <section style={{ background: "var(--off-white)", padding: "var(--space-12) var(--gutter-page)" }}>
+        <section data-band="--off-white" style={{ background: "var(--off-white)", padding: "var(--space-12) var(--gutter-page)" }}>
           <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-11)" }} data-cols="">
             <Reveal as="div">
               <h2 style={{ margin: "0", font: "var(--type-h2)", letterSpacing: "var(--track-heading)", color: "var(--text-heading)" }}>
@@ -191,7 +191,7 @@ export default function Discovery() {
             </Reveal>
           </div>
         </section>
-        <section style={{ background: "var(--pale-100)", padding: "var(--space-12) var(--gutter-page)" }}>
+        <section data-band="--pale-100" style={{ background: "var(--pale-100)", padding: "var(--space-12) var(--gutter-page)" }}>
           <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto" }}>
             <h2 style={{ margin: "0", font: "var(--type-h2)", letterSpacing: "var(--track-heading)", color: "var(--text-heading)", maxWidth: "24ch" }}>
               Decisiones que pueden tomarse al final
@@ -245,7 +245,7 @@ export default function Discovery() {
             </p>
           </div>
         </section>
-        <section data-dark-plain="" data-deep="" style={{ background: "var(--navy-950)", padding: "var(--space-13) var(--gutter-page)" }}>
+        <section data-band="--navy-950" data-deep="" style={{ background: "var(--navy-950)", padding: "var(--space-13) var(--gutter-page)" }}>
           <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto" }}>
             <h2 style={{ margin: "0", font: "var(--type-h1)", letterSpacing: "var(--track-display)", color: "var(--white)", maxWidth: "20ch" }}>
               Encuentra el punto correcto para comenzar.

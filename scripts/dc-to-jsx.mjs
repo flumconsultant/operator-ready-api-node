@@ -152,8 +152,13 @@ function serialize(node, ctx, indent) {
      secciones oscuras. Se marcan aquí, en la conversión, para que sobrevivan a
      cada regeneración; distinguir las que ya llevan una foto de fondo importa,
      porque esas no se abren: perderíamos la imagen. */
-  if (tag === 'section' && /var\(--navy-9|var\(--deep-navy\)/.test(attrs.style || '')) {
-    props.push(hasImage(node) ? 'data-dark-image=""' : 'data-dark-plain=""');
+  if (tag === 'section') {
+    /* La capa 3D pinta el fondo de todas las secciones, claras y oscuras, para
+       que el nodo no desaparezca a mitad de página. Se anota aquí el token de
+       color que pintaba cada una; el canvas lo reproduce banda a banda. */
+    const band = /background:\s*var\((--[a-z0-9-]+)\)/.exec(attrs.style || '');
+    if (band) props.push(`data-band="${band[1]}"`);
+    if (hasImage(node)) props.push('data-bg-image=""');
   }
 
   /* El contenedor raíz de cada página pinta el off-white. Se marca para poder
@@ -261,6 +266,37 @@ const LOGIC = {
     document.body.style.overflow = open ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [open]);
+
+  /* La barra se retira al bajar y vuelve al subir. Devolver espacio de pantalla
+     mientras se lee, y tener el menú a un gesto de distancia al querer salir. */
+  const [hidden, setHidden] = React.useState(false);
+  React.useEffect(() => {
+    let last = window.scrollY;
+    let queued = false;
+    const onScroll = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => {
+        queued = false;
+        const y = window.scrollY;
+        const dy = y - last;
+        /* Umbral de 6px: sin él, el rebote del trackpad y el movimiento de un
+           dedo tembloroso hacen parpadear la barra. */
+        if (Math.abs(dy) < 6) return;
+        last = y;
+        setHidden(dy > 0 && y > 140);
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  /* Con el menú móvil abierto la barra no se esconde nunca: el botón de cerrar
+     vive dentro del overlay, pero el gesto de scroll no debe moverla. */
+  React.useEffect(() => {
+    document.documentElement.toggleAttribute('data-header-hidden', hidden && !open);
+  }, [hidden, open]);
+  React.useEffect(() => () => document.documentElement.removeAttribute('data-header-hidden'), []);
 
 `,
   Contacto: `  const [sent, setSent] = React.useState(false);

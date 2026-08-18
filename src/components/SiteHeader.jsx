@@ -12,6 +12,37 @@ export default function SiteHeader() {
     return () => { document.body.style.overflow = ''; };
   }, [open]);
 
+  /* La barra se retira al bajar y vuelve al subir. Devolver espacio de pantalla
+     mientras se lee, y tener el menú a un gesto de distancia al querer salir. */
+  const [hidden, setHidden] = React.useState(false);
+  React.useEffect(() => {
+    let last = window.scrollY;
+    let queued = false;
+    const onScroll = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => {
+        queued = false;
+        const y = window.scrollY;
+        const dy = y - last;
+        /* Umbral de 6px: sin él, el rebote del trackpad y el movimiento de un
+           dedo tembloroso hacen parpadear la barra. */
+        if (Math.abs(dy) < 6) return;
+        last = y;
+        setHidden(dy > 0 && y > 140);
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  /* Con el menú móvil abierto la barra no se esconde nunca: el botón de cerrar
+     vive dentro del overlay, pero el gesto de scroll no debe moverla. */
+  React.useEffect(() => {
+    document.documentElement.toggleAttribute('data-header-hidden', hidden && !open);
+  }, [hidden, open]);
+  React.useEffect(() => () => document.documentElement.removeAttribute('data-header-hidden'), []);
+
   return (
     <>
       <header data-header="" style={{ position: "fixed", top: "0", left: "0", right: "0", zIndex: "50", background: "rgba(8,11,30,.94)", backdropFilter: "blur(16px)", borderBottom: "1px solid var(--border-hairline-dark)", boxShadow: "0 18px 44px -34px rgba(0,0,0,.9)" }}>

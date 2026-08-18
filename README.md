@@ -18,7 +18,7 @@ npm run preview    # sirve dist/ para comprobar el build
 |---|---|
 | `tokens/*.css` | El sistema de diseño. Fuente de verdad de color, tipografía, espaciado, patrones y motion. |
 | `src/pages/` | Una página por ruta, generadas desde los artboards. |
-| `src/components/` | Cabecera, pie y `Reveal`. |
+| `src/components/` | Cabecera, pie, `Reveal` y `RouteLoader`. |
 | `src/components/ai-node/` | El nodo 3D de la home: los cinco estados en `states.js`, el canvas en `AiNode.jsx`, la capa y la carga diferida en `AiNodeStage.jsx`. |
 | `src/styles/global.css` | Lo que en los artboards vivía repetido en el `<helmet>` de cada uno. |
 | `assets/` | Imágenes, iconos, logo y fuentes. Vite lo sirve como `publicDir`, así que las rutas son `/images/…`, `/icons/…`, `/logo/…`, `/fonts/…`. |
@@ -60,14 +60,35 @@ artboard, no a porcentajes de scroll: si mañana crece una sección, el nodo
 sigue cuadrando con el texto. Las cinco anclas caen en secciones navy a
 propósito — las claras tapan la capa 3D.
 
-Para que se vea, `:root[data-ai-node="on"]` abre los fondos oscuros (ver
-`global.css`). Esa marca solo la pone `AiNodeStage` **cuando el contexto WebGL
+**El canvas pinta el fondo de la página entera**, no solo las partículas: las
+bandas de color de cada sección (los tokens anotados en `data-band`) y el nodo
+encima. Por eso el nodo no se interrumpe al cruzar una sección clara — lo que
+cambia es el suelo, y con él la tinta: verde sobre navy, navy sobre claro, y
+mucho más tenue en claro para no ensuciar el texto. La cámara también se mueve
+entre estados: retrocede al dispersarse, entra en el cierre.
+
+Para que se vea, `:root[data-ai-node="on"]` deja transparentes html, body, el
+contenedor de página y todas las secciones (ver `global.css`). Esa marca solo la pone `AiNodeStage` **cuando el contexto WebGL
 existe de verdad**, así que sin WebGL, sin el chunk o con
 `prefers-reduced-motion`, la home se ve exactamente como antes: fondos navy
 sólidos y la foto del hero.
 
 `three.js` son 132 KB gzip en su propio chunk, que solo se descarga en la home
 y solo cuando el navegador está ocioso. La carga inicial de la home no cambia.
+
+## Cabecera y carga de rutas
+
+La barra se retira al bajar y vuelve al subir, con un umbral de 6px para que el
+rebote del trackpad no la haga parpadear. Nunca se esconde con el menú móvil
+abierto. El estado vive en `data-header-hidden` sobre `<html>`; la transición,
+en `global.css`.
+
+`RouteLoader` es lo que se ve mientras se descarga el chunk de una página:
+el isotipo de Become con su barra verde barriendo. Aparece con 180 ms de
+retraso, así que en una conexión normal no llega a verse — solo cuando la
+espera es real. El `<Suspense>` lleva `key={pathname}` a propósito: React 19
+trata la navegación como una transición y mantendría la pantalla anterior en
+vez de mostrar el fallback.
 
 ## API
 
