@@ -1,265 +1,219 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Reveal from '../components/Reveal.jsx';
-import SiteFooter from '../components/SiteFooter.jsx';
 import SiteHeader from '../components/SiteHeader.jsx';
+import SiteFooter from '../components/SiteFooter.jsx';
+import Reveal from '../components/Reveal.jsx';
+import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, Cols, Card, IndexRow } from '../components/ui.jsx';
 
-/* Migrado de templates/website-es/PaginaDiscovery.dc.html por scripts/dc-to-jsx.mjs */
+/**
+ * AI-Native Transformation Discovery (§8 del documento).
+ *
+ * La secuencia de la página es la del documento y empieza por el problema, no
+ * por el servicio: quien llega aquí ya sabe que quiere hablar con alguien, lo
+ * que necesita es reconocer que su situación es la que este engagement resuelve.
+ */
+
+const STAGES = [
+  ['B', 'Business Ambition', 'Define en qué debe convertirse la empresa y qué outcomes importan.', 'AI-native ambition y tesis estratégica.'],
+  ['E', 'Enterprise Discovery', 'Comprende cómo funciona hoy y qué limita el cambio.', 'Enterprise diagnostic y readiness.'],
+  ['C', 'Capability Choices', 'Prioriza dónde la IA puede crear valor diferencial.', 'Value pools y portafolio priorizado.'],
+  ['O', 'Operating Model Design', 'Diseña el sistema futuro de People, Data, Agents y Operations.', 'Target operating model y blueprint.'],
+];
+
+const DELIVERABLES = [
+  'AI-native ambition y tesis estratégica.',
+  'Enterprise diagnostic e Inside Readiness Index.',
+  'Value pools y portafolio priorizado de capabilities.',
+  'Target operating model.',
+  'Transformation blueprint, business case y roadmap.',
+];
+
+const TOOLS = [
+  ['Business Ambition Canvas™', 'Alinear al equipo ejecutivo alrededor de outcomes y strategic choices.'],
+  ['Inside Readiness Index™', 'Evaluar madurez en People, Data, Agents y Operations.'],
+  ['AI-Native Value Map™', 'Priorizar oportunidades por valor, feasibility, velocidad y riesgo.'],
+  ['Inside Target State Canvas™', 'Definir el target operating model y transformation blueprint.'],
+];
+
+const FIT = [
+  'Existe executive sponsorship.',
+  'Hay iniciativas de IA sin coherencia empresarial.',
+  'Un dominio de negocio necesita reinvención.',
+  'El liderazgo necesita portfolio, target state o roadmap.',
+  'La empresa involucrará a líderes de negocio, tecnología, datos y People.',
+];
+
+const DECISIONS = [
+  'Dónde la IA puede crear valor empresarial diferencial.',
+  'Qué debe cambiar dentro para que ese valor sea posible.',
+  'Qué capability construir primero y con qué criterios.',
+  'Qué inversión, secuencia y governance sostienen el plan.',
+];
+
 export default function Discovery() {
   return (
-    <>
-      <div data-page-root="" style={{ font: "var(--type-body)", color: "var(--text-body)", background: "var(--off-white)", paddingTop: "72px" }}>
-        <SiteHeader />
-        <section data-band="--navy-900" data-bg-image="" style={{ position: "relative", overflow: "hidden", background: "var(--navy-900)", padding: "var(--space-13) var(--gutter-page)" }}>
-          <img fetchPriority="high" decoding="async" src="/images/46-strategy-session.webp" alt="" style={{ position: "absolute", inset: "-6% 0", width: "100%", height: "112%", objectFit: "cover", objectPosition: "center right", opacity: ".85" }} />
-          <div style={{ position: "absolute", inset: "0", background: "linear-gradient(95deg,var(--deep-navy) 0%,rgba(10,14,39,.88) 34%,rgba(10,14,39,.3) 78%,rgba(10,14,39,.5) 100%)" }} />
-          <div style={{ position: "absolute", top: "0", right: "0", width: "46%", height: "100%", backgroundImage: "var(--pattern-scattered-nodes)", backgroundSize: "180px 180px", opacity: "var(--pattern-opacity)", WebkitMaskImage: "linear-gradient(to left,#000 18%,transparent 92%)", maskImage: "linear-gradient(to left,#000 18%,transparent 92%)", pointerEvents: "none" }} />
-          <div style={{ position: "absolute", inset: "0", background: "var(--gradient-environment)", pointerEvents: "none" }} />
-          <div style={{ position: "relative", maxWidth: "var(--maxw-content)", margin: "0 auto" }}>
-            <p style={{ margin: "0", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--electric-green)" }}>
-              BECOME Discover™
-            </p>
-            <Reveal as="h1" style={{ margin: "var(--space-6) 0 0", font: "var(--type-hero)", fontSize: "clamp(40px,5.2vw,80px)", letterSpacing: "var(--track-hero)", color: "var(--white)", maxWidth: "20ch" }}>
-              Define en qué debe convertirse tu empresa después.
+    <div data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
+      <SiteHeader />
+
+      <Section band="dark" pad="var(--space-12)">
+        <Kicker dark>BECOME Discover™</Kicker>
+        <Headline as="h1" dark>Define en qué debe convertirse tu empresa después.</Headline>
+        <Lead dark>
+          Un engagement corporativo de 8–12 semanas que conecta AI-native strategy,
+          enterprise diagnosis, value prioritization y operating-model design.
+        </Lead>
+        <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
+          <PrimaryCTA to="/es/contacto">Conversemos sobre Discovery</PrimaryCTA>
+          <GhostCTA to="/es/servicios" dark>Ver los dos servicios</GhostCTA>
+        </div>
+      </Section>
+
+      {/* 1 — El problema, antes que el servicio */}
+      <Section band="light">
+        <Kicker>El problema</Kicker>
+        <Headline>Actividad de IA sin dirección empresarial.</Headline>
+        <Lead>
+          La mayoría de las empresas no tienen un problema de tecnología: tienen
+          muchas iniciativas y ninguna tesis. Cada área propone sus casos, tecnología
+          recibe demandas sin un criterio único de valor y el comité ejecutivo no
+          comparte una ambición que ordene las decisiones.
+        </Lead>
+        <Body>
+          El resultado es previsible: más pilotos, más gasto y la misma pregunta sin
+          responder sobre dónde está el valor.
+        </Body>
+      </Section>
+
+      {/* 2 — Para quién */}
+      <Section band="dark">
+        <Kicker dark>Para quién es</Kicker>
+        <Headline dark>Cinco condiciones que hacen que Discovery sea el paso correcto.</Headline>
+        <Cols min="240px">
+          {FIT.map((f, i) => (
+            <Reveal as="div" key={f} style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
+              <span style={{ font: 'var(--type-mono)', color: 'var(--electric-green)' }}>{String(i + 1).padStart(2, '0')}</span>
+              <Body dark style={{ marginTop: 'var(--space-4)' }}>{f}</Body>
             </Reveal>
-            <p style={{ margin: "var(--space-7) 0 0", font: "var(--type-lead)", color: "var(--slate-100)", maxWidth: "56ch" }}>
-              Un engagement corporativo de 8–12 semanas que conecta AI-native strategy, enterprise diagnosis, value prioritization y operating-model design.
-            </p>
-            <Link to="/es/contacto" style={{ display: "inline-flex", alignItems: "center", margin: "var(--space-9) 0 0", minHeight: "52px", padding: "0 var(--space-7)", borderRadius: "var(--radius-pill)", background: "var(--electric-green)", color: "var(--deep-navy)", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", textDecoration: "none" }} className="hv-a750771">
-              Conversemos sobre Discovery
-            </Link>
-          </div>
-        </section>
-        <section data-band="--off-white" style={{ background: "var(--off-white)", padding: "var(--space-12) var(--gutter-page)" }}>
-          <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto", display: "grid", gridTemplateColumns: ".8fr 1.2fr", gap: "var(--space-11)" }} data-cols="">
-            <div>
-              <p style={{ margin: "0", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--text-accent)" }}>
-                El problema
+          ))}
+        </Cols>
+      </Section>
+
+      {/* 3 — Etapas B–E–C–O */}
+      <Section band="light">
+        <Kicker>El recorrido</Kicker>
+        <Headline>Discovery cubre B–E–C–O del framework.</Headline>
+        <Body>
+          Las dos últimas etapas —Make &amp; Embed y Expand &amp; Evolve— son el
+          territorio de Build &amp; Embed. Operating Model Design es el punto de
+          transición visible entre los dos servicios.
+        </Body>
+        <div style={{ marginTop: 'var(--space-10)' }}>
+          {STAGES.map(([letter, name, work, out]) => (
+            <Reveal
+              as="div" key={name} data-cols
+              style={{
+                display: 'grid', gridTemplateColumns: '56px minmax(0,1fr) minmax(0,1.2fr) minmax(0,1fr)',
+                gap: 'var(--space-6)', padding: 'var(--space-6) 0',
+                borderTop: '1px solid var(--border-hairline)', alignItems: 'baseline',
+              }}
+            >
+              <span aria-hidden="true" style={{ fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-accent)' }}>{letter}</span>
+              <h3 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)' }}>{name}</h3>
+              <p style={{ margin: 0, font: 'var(--type-body)', color: 'var(--text-body)' }}>{work}</p>
+              <p style={{ margin: 0, font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: 'var(--text-muted)' }}>
+                <span style={{ color: 'var(--text-accent)' }}>Output: </span>{out}
               </p>
-              <h2 style={{ margin: "var(--space-4) 0 0", font: "var(--type-h2)", letterSpacing: "var(--track-heading)", color: "var(--text-heading)", maxWidth: "16ch" }}>
-                Actividad de IA sin dirección empresarial.
-              </h2>
-            </div>
-            <Reveal as="div">
-              <p style={{ margin: "0", font: "var(--type-lead)", color: "var(--text-body)", maxWidth: "62ch" }}>
-                Existen pilotos, asistentes y automatizaciones, pero no una ambición compartida, un portafolio priorizado ni un operating model que sostenga el cambio. Cada función avanza a su ritmo y el valor no llega a la cuenta de resultados.
-              </p>
-              <h3 style={{ margin: "var(--space-9) 0 0", font: "var(--type-h3)", color: "var(--text-heading)" }}>
-                Para quién es el engagement
-              </h3>
-              <ul style={{ margin: "var(--space-5) 0 0", padding: "0", listStyle: "none", display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
-                <li style={{ font: "var(--type-body)", color: "var(--text-muted)", borderTop: "1px solid var(--border-hairline)", paddingTop: "var(--space-3)" }}>
-                  Existe executive sponsorship.
-                </li>
-                <li style={{ font: "var(--type-body)", color: "var(--text-muted)", borderTop: "1px solid var(--border-hairline)", paddingTop: "var(--space-3)" }}>
-                  Hay iniciativas de IA sin coherencia empresarial.
-                </li>
-                <li style={{ font: "var(--type-body)", color: "var(--text-muted)", borderTop: "1px solid var(--border-hairline)", paddingTop: "var(--space-3)" }}>
-                  Un dominio de negocio necesita reinvención.
-                </li>
-                <li style={{ font: "var(--type-body)", color: "var(--text-muted)", borderTop: "1px solid var(--border-hairline)", paddingTop: "var(--space-3)" }}>
-                  El liderazgo necesita portfolio, target state o roadmap.
-                </li>
-                <li style={{ font: "var(--type-body)", color: "var(--text-muted)", borderTop: "1px solid var(--border-hairline)", paddingTop: "var(--space-3)" }}>
-                  La empresa involucrará a líderes de negocio, tecnología, datos y People.
-                </li>
-              </ul>
             </Reveal>
-          </div>
-        </section>
-        <section data-band="--navy-900" data-deep="" style={{ background: "var(--navy-900)", padding: "var(--space-13) var(--gutter-page)" }}>
-          <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto" }}>
-            <p style={{ margin: "0", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--electric-green)" }}>
-              Etapas B · E · C · O
-            </p>
-            <Reveal as="h2" style={{ margin: "var(--space-5) 0 0", font: "var(--type-h1)", letterSpacing: "var(--track-display)", color: "var(--white)", maxWidth: "20ch" }}>
-              Cuatro etapas, un blueprint ejecutable.
-            </Reveal>
-            <div style={{ margin: "var(--space-10) 0 0", display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "1px", background: "var(--border-hairline-dark)" }} data-cols="">
-              <Reveal as="div" style={{ background: "var(--navy-900)", padding: "var(--space-7) var(--space-6)" }}>
-                <span style={{ position: "relative", display: "flex", alignItems: "center", gap: "var(--space-4)", color: "var(--electric-green)" }}>
-                  <span style={{ position: "relative", display: "grid", placeItems: "center", width: "52px", height: "52px", flex: "none", border: "1px solid var(--green-line)", background: "linear-gradient(var(--green-tint),var(--green-tint)),var(--navy-900)" }}>
-                    <img loading="lazy" decoding="async" src="/icons/strategy-white.webp" alt="" style={{ width: "26px", height: "26px", display: "block" }} />
-                  </span>
-                  <span style={{ font: "var(--weight-display-strong) 40px/1 var(--font-display)", letterSpacing: "var(--track-hero)", color: "var(--electric-green)" }}>
-                    B
-                  </span>
-                </span>
-                <h3 style={{ margin: "var(--space-5) 0 0", font: "var(--type-h3)", color: "var(--white)" }}>
-                  Business Ambition
-                </h3>
-                <p style={{ margin: "var(--space-3) 0 0", font: "var(--type-body)", color: "var(--slate-200)" }}>
-                  Alineación ejecutiva sobre outcomes y strategic choices.
-                </p>
-              </Reveal>
-              <Reveal as="div" style={{ background: "var(--navy-900)", padding: "var(--space-7) var(--space-6)" }}>
-                <span style={{ position: "relative", display: "flex", alignItems: "center", gap: "var(--space-4)", color: "var(--electric-green)" }}>
-                  <span style={{ position: "relative", display: "grid", placeItems: "center", width: "52px", height: "52px", flex: "none", border: "1px solid var(--green-line)", background: "linear-gradient(var(--green-tint),var(--green-tint)),var(--navy-900)" }}>
-                    <img loading="lazy" decoding="async" src="/icons/discover-white.webp" alt="" style={{ width: "26px", height: "26px", display: "block" }} />
-                  </span>
-                  <span style={{ font: "var(--weight-display-strong) 40px/1 var(--font-display)", letterSpacing: "var(--track-hero)", color: "var(--electric-green)" }}>
-                    E
-                  </span>
-                </span>
-                <h3 style={{ margin: "var(--space-5) 0 0", font: "var(--type-h3)", color: "var(--white)" }}>
-                  Enterprise Discovery
-                </h3>
-                <p style={{ margin: "var(--space-3) 0 0", font: "var(--type-body)", color: "var(--slate-200)" }}>
-                  Diagnóstico de workflows, datos, decisiones y readiness.
-                </p>
-              </Reveal>
-              <Reveal as="div" style={{ background: "var(--navy-900)", padding: "var(--space-7) var(--space-6)" }}>
-                <span style={{ position: "relative", display: "flex", alignItems: "center", gap: "var(--space-4)", color: "var(--electric-green)" }}>
-                  <span style={{ position: "relative", display: "grid", placeItems: "center", width: "52px", height: "52px", flex: "none", border: "1px solid var(--green-line)", background: "linear-gradient(var(--green-tint),var(--green-tint)),var(--navy-900)" }}>
-                    <img loading="lazy" decoding="async" src="/icons/decision-white.webp" alt="" style={{ width: "26px", height: "26px", display: "block" }} />
-                  </span>
-                  <span style={{ font: "var(--weight-display-strong) 40px/1 var(--font-display)", letterSpacing: "var(--track-hero)", color: "var(--electric-green)" }}>
-                    C
-                  </span>
-                </span>
-                <h3 style={{ margin: "var(--space-5) 0 0", font: "var(--type-h3)", color: "var(--white)" }}>
-                  Capability Choices
-                </h3>
-                <p style={{ margin: "var(--space-3) 0 0", font: "var(--type-body)", color: "var(--slate-200)" }}>
-                  Value pools priorizados por valor, feasibility, velocidad y riesgo.
-                </p>
-              </Reveal>
-              <Reveal as="div" style={{ background: "var(--navy-900)", padding: "var(--space-7) var(--space-6)" }}>
-                <span style={{ position: "relative", display: "flex", alignItems: "center", gap: "var(--space-4)", color: "var(--electric-green)" }}>
-                  <span style={{ position: "relative", display: "grid", placeItems: "center", width: "52px", height: "52px", flex: "none", border: "1px solid var(--green-line)", background: "linear-gradient(var(--green-tint),var(--green-tint)),var(--navy-900)" }}>
-                    <img loading="lazy" decoding="async" src="/icons/design-white.webp" alt="" style={{ width: "26px", height: "26px", display: "block" }} />
-                  </span>
-                  <span style={{ font: "var(--weight-display-strong) 40px/1 var(--font-display)", letterSpacing: "var(--track-hero)", color: "var(--electric-green)" }}>
-                    O
-                  </span>
-                </span>
-                <h3 style={{ margin: "var(--space-5) 0 0", font: "var(--type-h3)", color: "var(--white)" }}>
-                  Operating Model Design
-                </h3>
-                <p style={{ margin: "var(--space-3) 0 0", font: "var(--type-body)", color: "var(--slate-200)" }}>
-                  Target operating model, blueprint, business case y roadmap.
-                </p>
-              </Reveal>
+          ))}
+        </div>
+      </Section>
+
+      {/* 4 y 5 — participación ejecutiva y herramientas */}
+      <Section band="sunken">
+        <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1.2fr)', gap: 'var(--space-9)' }}>
+          <Reveal as="div">
+            <Kicker>Working model</Kicker>
+            <Headline>Se hace con tu equipo, no sobre tu equipo.</Headline>
+            <Body>
+              Un accountable lead por engagement y un client team integrado desde la
+              primera semana. Las decisiones y los riesgos se hacen visibles a medida
+              que aparecen, no en la presentación final.
+            </Body>
+            <Body>
+              La participación ejecutiva no es opcional: sin las personas que deciden
+              en la sala, el output es un documento, no una dirección.
+            </Body>
+          </Reveal>
+          <Reveal as="div">
+            <Kicker>Proprietary tools</Kicker>
+            <div style={{ marginTop: 'var(--space-6)' }}>
+              {TOOLS.map(([t, d]) => <IndexRow key={t} term={t} def={d} />)}
             </div>
-          </div>
-        </section>
-        <section data-band="--off-white" style={{ background: "var(--off-white)", padding: "var(--space-12) var(--gutter-page)" }}>
-          <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-11)" }} data-cols="">
-            <Reveal as="div">
-              <h2 style={{ margin: "0", font: "var(--type-h2)", letterSpacing: "var(--track-heading)", color: "var(--text-heading)" }}>
-                Actividades y participación ejecutiva
-              </h2>
-              <ul style={{ margin: "var(--space-6) 0 0", padding: "0", listStyle: "none", display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
-                <li style={{ font: "var(--type-body)", fontSize: "var(--text-body-lg)", color: "var(--text-body)" }}>
-                  Sesiones de ambition con el equipo ejecutivo.
+          </Reveal>
+        </div>
+      </Section>
+
+      {/* 6 y 7 — entregables y decisiones */}
+      <Section band="dark">
+        <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 'var(--space-9)' }}>
+          <Reveal as="div">
+            <Kicker dark>Entregables</Kicker>
+            <Headline dark>Qué queda al terminar.</Headline>
+            <ul style={{ listStyle: 'none', margin: 'var(--space-8) 0 0', padding: 0, display: 'grid', gap: 'var(--space-4)' }}>
+              {DELIVERABLES.map((d) => (
+                <li key={d} style={{ display: 'flex', gap: 'var(--space-4)', paddingTop: 'var(--space-4)', borderTop: '1px solid var(--border-hairline-dark)' }}>
+                  <span aria-hidden="true" style={{ color: 'var(--electric-green)', font: 'var(--type-mono)' }}>—</span>
+                  <span style={{ font: 'var(--type-body)', color: 'var(--slate-100)' }}>{d}</span>
                 </li>
-                <li style={{ font: "var(--type-body)", fontSize: "var(--text-body-lg)", color: "var(--text-body)" }}>
-                  Entrevistas y observación de workflows críticos.
+              ))}
+            </ul>
+          </Reveal>
+          <Reveal as="div">
+            <Kicker dark>Decisiones que puedes tomar</Kicker>
+            <Headline dark>Cuatro preguntas, respondidas con criterio explícito.</Headline>
+            <ul style={{ listStyle: 'none', margin: 'var(--space-8) 0 0', padding: 0, display: 'grid', gap: 'var(--space-4)' }}>
+              {DECISIONS.map((d) => (
+                <li key={d} style={{ display: 'flex', gap: 'var(--space-4)', paddingTop: 'var(--space-4)', borderTop: '1px solid var(--border-hairline-dark)' }}>
+                  <span aria-hidden="true" style={{ color: 'var(--electric-green)', font: 'var(--type-mono)' }}>?</span>
+                  <span style={{ font: 'var(--type-body)', color: 'var(--slate-100)' }}>{d}</span>
                 </li>
-                <li style={{ font: "var(--type-body)", fontSize: "var(--text-body-lg)", color: "var(--text-body)" }}>
-                  Evaluación de datos, arquitectura, controles y skills.
-                </li>
-                <li style={{ font: "var(--type-body)", fontSize: "var(--text-body-lg)", color: "var(--text-body)" }}>
-                  Workshops de priorización de value pools.
-                </li>
-                <li style={{ font: "var(--type-body)", fontSize: "var(--text-body-lg)", color: "var(--text-body)" }}>
-                  Diseño del target operating model con los owners reales.
-                </li>
-              </ul>
-            </Reveal>
-            <Reveal as="div">
-              <h2 style={{ margin: "0", font: "var(--type-h2)", letterSpacing: "var(--track-heading)", color: "var(--text-heading)" }}>
-                Entregables
-              </h2>
-              <ul style={{ margin: "var(--space-6) 0 0", padding: "0", listStyle: "none", display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
-                <li style={{ font: "var(--type-body)", fontSize: "var(--text-body-lg)", color: "var(--text-body)", borderTop: "1px solid var(--border-hairline)", paddingTop: "var(--space-3)" }}>
-                  AI-native ambition y tesis estratégica
-                </li>
-                <li style={{ font: "var(--type-body)", fontSize: "var(--text-body-lg)", color: "var(--text-body)", borderTop: "1px solid var(--border-hairline)", paddingTop: "var(--space-3)" }}>
-                  Enterprise diagnostic e Inside Readiness Index™
-                </li>
-                <li style={{ font: "var(--type-body)", fontSize: "var(--text-body-lg)", color: "var(--text-body)", borderTop: "1px solid var(--border-hairline)", paddingTop: "var(--space-3)" }}>
-                  Value pools y portafolio priorizado de capabilities
-                </li>
-                <li style={{ font: "var(--type-body)", fontSize: "var(--text-body-lg)", color: "var(--text-body)", borderTop: "1px solid var(--border-hairline)", paddingTop: "var(--space-3)" }}>
-                  Target operating model
-                </li>
-                <li style={{ font: "var(--type-body)", fontSize: "var(--text-body-lg)", color: "var(--text-body)", borderTop: "1px solid var(--border-hairline)", paddingTop: "var(--space-3)" }}>
-                  Transformation blueprint, business case y roadmap
-                </li>
-              </ul>
-            </Reveal>
-          </div>
-        </section>
-        <section data-band="--pale-100" style={{ background: "var(--pale-100)", padding: "var(--space-12) var(--gutter-page)" }}>
-          <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto" }}>
-            <h2 style={{ margin: "0", font: "var(--type-h2)", letterSpacing: "var(--track-heading)", color: "var(--text-heading)", maxWidth: "24ch" }}>
-              Decisiones que pueden tomarse al final
-            </h2>
-            <div style={{ margin: "var(--space-8) 0 0", display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "var(--space-8)" }} data-cols="">
-              <Reveal as="div" style={{ borderTop: "2px solid var(--electric-green)", paddingTop: "var(--space-5)" }}>
-                <h3 style={{ margin: "0", font: "var(--type-h3)", color: "var(--text-heading)" }}>
-                  Dónde crear valor
-                </h3>
-                <p style={{ margin: "var(--space-3) 0 0", font: "var(--type-body)", color: "var(--text-muted)" }}>
-                  Qué value pools se atacan primero y con qué secuencia.
-                </p>
-              </Reveal>
-              <Reveal as="div" style={{ borderTop: "2px solid var(--electric-green)", paddingTop: "var(--space-5)" }}>
-                <h3 style={{ margin: "0", font: "var(--type-h3)", color: "var(--text-heading)" }}>
-                  Qué cambia dentro
-                </h3>
-                <p style={{ margin: "var(--space-3) 0 0", font: "var(--type-body)", color: "var(--text-muted)" }}>
-                  Qué roles, decisiones, datos y controles se rediseñan.
-                </p>
-              </Reveal>
-              <Reveal as="div" style={{ borderTop: "2px solid var(--electric-green)", paddingTop: "var(--space-5)" }}>
-                <h3 style={{ margin: "0", font: "var(--type-h3)", color: "var(--text-heading)" }}>
-                  Qué construir primero
-                </h3>
-                <p style={{ margin: "var(--space-3) 0 0", font: "var(--type-body)", color: "var(--text-muted)" }}>
-                  Qué capability entra al primer Build & Embed Sprint.
-                </p>
-              </Reveal>
-            </div>
-            <div style={{ margin: "var(--space-10) 0 0", padding: "var(--space-8)", background: "var(--white)", border: "1px solid var(--border-hairline)", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-8)" }} data-cols="">
-              <div>
-                <p style={{ margin: "0", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--text-muted)" }}>
-                  Timeline
-                </p>
-                <p style={{ margin: "var(--space-3) 0 0", font: "var(--type-body)", fontSize: "var(--text-body-lg)", color: "var(--text-body)" }}>
-                  8–12 semanas, con checkpoints ejecutivos cada dos semanas.
-                </p>
-              </div>
-              <div>
-                <p style={{ margin: "0", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--text-muted)" }}>
-                  Working model
-                </p>
-                <p style={{ margin: "var(--space-3) 0 0", font: "var(--type-body)", fontSize: "var(--text-body-lg)", color: "var(--text-body)" }}>
-                  Equipo mixto BECOME y cliente. Build with, not for.
-                </p>
-              </div>
-            </div>
-            <p style={{ margin: "var(--space-9) 0 0", font: "var(--weight-display) var(--text-h3)/1.4 var(--font-display)", color: "var(--text-heading)", maxWidth: "60ch" }}>
-              Al terminar Discovery, el liderazgo sabe dónde la IA puede crear valor, qué debe cambiar dentro de la empresa y qué capability debe construir primero.
-            </p>
-          </div>
-        </section>
-        <section data-band="--navy-950" data-deep="" style={{ background: "var(--navy-950)", padding: "var(--space-13) var(--gutter-page)" }}>
-          <div style={{ maxWidth: "var(--maxw-content)", margin: "0 auto" }}>
-            <h2 style={{ margin: "0", font: "var(--type-h1)", letterSpacing: "var(--track-display)", color: "var(--white)", maxWidth: "20ch" }}>
-              Encuentra el punto correcto para comenzar.
-            </h2>
-            <p style={{ margin: "var(--space-6) 0 0", font: "var(--type-lead)", color: "var(--slate-100)", maxWidth: "52ch" }}>
-              Cuéntanos qué necesita cambiar en el negocio. Determinaremos si Discovery es el primer paso adecuado.
-            </p>
-            <Link to="/es/contacto" style={{ display: "inline-flex", alignItems: "center", margin: "var(--space-8) 0 0", minHeight: "52px", padding: "0 var(--space-7)", borderRadius: "var(--radius-pill)", background: "var(--electric-green)", color: "var(--deep-navy)", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", textDecoration: "none" }} className="hv-a750771">
-              Inicia tu Discovery
-            </Link>
-          </div>
-        </section>
-        <SiteFooter />
-      </div>
-    </>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
+      </Section>
+
+      {/* 8 — promesa final */}
+      <Section band="light">
+        <Reveal as="p" style={{ margin: 0, font: 'var(--type-lead)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)', maxWidth: '52ch' }}>
+          Al terminar Discovery, el liderazgo sabe dónde la IA puede crear valor, qué
+          debe cambiar dentro de la empresa y qué capability debe construir primero.
+        </Reveal>
+        <Cols min="260px">
+          <Card>
+            <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>Duración</p>
+            <Body style={{ marginTop: 'var(--space-4)' }}>8–12 semanas, según alcance y disponibilidad ejecutiva.</Body>
+          </Card>
+          <Card>
+            <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>Siguiente paso</p>
+            <Body style={{ marginTop: 'var(--space-4)' }}>Build &amp; Embed del primer caso priorizado.</Body>
+            <TextCTA to="/es/servicios/build-and-embed">Explora Build &amp; Embed</TextCTA>
+          </Card>
+        </Cols>
+      </Section>
+
+      <Section band="darker" pad="var(--space-13)">
+        <Kicker dark>Encuentra el punto correcto para comenzar</Kicker>
+        <Headline dark>Cuéntanos qué necesita cambiar en el negocio.</Headline>
+        <Lead dark>
+          Determinaremos si Discovery es el primer paso adecuado. Si no lo es, te lo
+          diremos.
+        </Lead>
+        <div style={{ marginTop: 'var(--space-8)' }}>
+          <PrimaryCTA to="/es/contacto">Inicia tu Discovery</PrimaryCTA>
+        </div>
+      </Section>
+
+      <SiteFooter />
+    </div>
   );
 }

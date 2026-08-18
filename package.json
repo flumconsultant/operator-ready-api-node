@@ -6,7 +6,6 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "migrate:dc": "node scripts/dc-to-jsx.mjs",
     "start": "node index.js"
   },
   "dependencies": {

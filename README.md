@@ -19,43 +19,37 @@ npm run preview    # sirve dist/ para comprobar el build
 | `tokens/*.css` | El sistema de diseño. Fuente de verdad de color, tipografía, espaciado, patrones y motion. |
 | `src/site.js` | El mapa del sitio: rutas, menú y pie. Una sola fuente para los tres. |
 | `src/routes.jsx` | Las rutas del router, con redirecciones desde la maqueta anterior. |
-| `src/pages/` | Una página por ruta. Las nuevas están escritas a mano; las que quedan de la primera maqueta se siguen generando desde los artboards. |
+| `src/pages/` | Una página por ruta, todas escritas a mano. |
 | `src/content/` | Contenido separado del componente — hoy, las seis páginas de casos de uso. |
 | `src/components/` | Cabecera, pie, `Reveal` y `RouteLoader`. |
 | `src/components/ai-node/` | El nodo 3D de la home: los cinco estados en `states.js`, el recorrido de cámara en `camera-path.js`, el canvas en `AiNode.jsx`, la capa y la carga diferida en `AiNodeStage.jsx`. |
 | `src/styles/global.css` | Lo que en los artboards vivía repetido en el `<helmet>` de cada uno. |
 | `assets/` | Imágenes, iconos, logo y fuentes. Vite lo sirve como `publicDir`, así que las rutas son `/images/…`, `/icons/…`, `/logo/…`, `/fonts/…`. |
-| `templates/website-es/` | Los artboards Durable originales. Siguen siendo el origen de la migración. |
+| `templates/website-es/` | Los artboards Durable originales. Ya no se usan; se conservan como referencia. |
 
-### Estado de la migración al documento de estrategia
+### Estado frente al documento de estrategia
 
-La arquitectura del documento v2.0 está montada: menú de cinco entradas con dos
-desplegables, rutas `/es/…`, footer de cinco columnas y la home con su journey
-canónico. Lo que todavía arrastra copy de la primera maqueta:
+La arquitectura y el copy del documento v2.0 están implementados en español:
+menú de cinco entradas con dos desplegables, veinte rutas `/es/…`, footer de
+cinco columnas, la home con su journey canónico y las doce páginas escritas.
 
-| Ruta | Estado |
+Lo que queda pendiente, y por qué:
+
+| Pendiente | Motivo |
 |---|---|
-| `/es/framework` · `/es/nosotros` · `/es/insights` · `/es/contacto` | Artboard migrado, en su URL definitiva. Copy pendiente. |
-| `/es/servicios/transformation-discovery` · `/es/servicios/build-and-embed` | Igual. |
-| `/es/privacidad` · `/es/terminos` | Estructura lista, texto legal pendiente de asesoría. |
+| Texto de Privacidad y Términos | Lo redacta asesoría legal. Las páginas existen y lo dicen. |
+| Biografías del equipo (Nosotros) | No se inventan personas, cargos ni partnerships. |
+| Artículos de Insights | La página está lista; todavía no hay nada publicado y se dice. |
+| Destino del formulario de contacto | No hay backend. La confirmación avisa de que el mensaje no ha salido. |
 | Versión inglesa | Sin empezar. |
 
-### La migración desde Durable
+### La maqueta original
 
-`npm run migrate:dc` regenera `src/pages/` y `src/components/` desde
-`templates/website-es/*.dc.html`. Convierte el formato Durable a JSX: `style=""`
-a objetos de estilo, `style-hover` a una hoja de `:hover` generada, `sc-if` a
-condicionales, `dc-import` a componentes, `data-reveal` al componente `Reveal`,
-y los enlaces `./PaginaX.dc.html` a rutas del router.
-
-Esto significa que **los ficheros de `src/pages/` y `src/components/` no se
-editan a mano**: se sobreescriben en cada regeneración. Mientras los artboards
-sigan siendo el origen, los cambios de maquetación van ahí. Lo que sí es código
-propio y editable: `src/App.jsx`, `src/main.jsx`, `src/components/Reveal.jsx`,
-`src/styles/` y los tokens.
-
-Cuando los artboards se retiren, se borra el script y `src/` pasa a ser el
-origen. Ese es el final previsto de la migración, no un estado permanente.
+`templates/website-es/` son los artboards Durable de los que salió la primera
+versión. Ya no se usan: todas las páginas están escritas a mano. Se conservan
+como referencia de diseño y como historial de dónde vino esto. El conversor
+`scripts/dc-to-jsx.mjs` se retiró al quedarse sin trabajo — si necesitas
+recuperarlo, está en el historial de git.
 
 ## El nodo 3D de la home
 

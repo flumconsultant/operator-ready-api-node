@@ -8,25 +8,20 @@ import { LEGACY_REDIRECTS } from './site.js';
  * deja describir con la tabla de un artboard por página.
  *
  * Cada ruta en su propio chunk: la home no descarga las otras páginas.
- *
- * Las páginas marcadas «pendiente fase 4» siguen siendo los artboards migrados
- * de la primera maqueta. Funcionan y están en su URL definitiva, pero su copy
- * todavía no es el del documento.
+
  */
 
 const Home = lazy(() => import('./pages/Home.jsx'));
-const Servicios = lazy(() => import('./pages/Servicios.jsx'));
-const CasosDeUso = lazy(() => import('./pages/CasosDeUso.jsx'));
-const UseCase = lazy(() => import('./pages/UseCase.jsx'));
-const Legal = lazy(() => import('./pages/Legal.jsx'));
-
-/* pendiente fase 4 — artboards migrados, en su URL definitiva */
 const Framework = lazy(() => import('./pages/Framework.jsx'));
 const Discovery = lazy(() => import('./pages/Discovery.jsx'));
 const BuildEmbed = lazy(() => import('./pages/BuildEmbed.jsx'));
 const Nosotros = lazy(() => import('./pages/Nosotros.jsx'));
-const Thinking = lazy(() => import('./pages/Thinking.jsx'));
+const Insights = lazy(() => import('./pages/Insights.jsx'));
 const Contacto = lazy(() => import('./pages/Contacto.jsx'));
+const Servicios = lazy(() => import('./pages/Servicios.jsx'));
+const CasosDeUso = lazy(() => import('./pages/CasosDeUso.jsx'));
+const UseCase = lazy(() => import('./pages/UseCase.jsx'));
+const Legal = lazy(() => import('./pages/Legal.jsx'));
 
 export const routes = [
   { path: '/es', element: <Home /> },
@@ -41,7 +36,7 @@ export const routes = [
   { path: '/es/casos-de-uso', element: <CasosDeUso /> },
   { path: '/es/casos-de-uso/:slug', element: <UseCase /> },
 
-  { path: '/es/insights', element: <Thinking /> },
+  { path: '/es/insights', element: <Insights /> },
   { path: '/es/contacto', element: <Contacto /> },
 
   { path: '/es/privacidad', element: <Legal page="privacidad" /> },

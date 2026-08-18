@@ -13,9 +13,6 @@
 @import url("../../tokens/motion.css");
 @import url("../../tokens/base.css");
 
-/* :hover extraídos de los atributos style-hover de los artboards */
-@import url("./hover.generated.css");
-
 /* ---------------------------------------------------------------------------
    Lo que en los artboards Durable vivía duplicado en el <helmet> de cada uno.
    Aquí va una sola vez.
