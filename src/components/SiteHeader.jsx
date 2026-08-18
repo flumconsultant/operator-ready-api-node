@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { NAV, CONTACT, HOME } from '../site.js';
+import * as es from '../site.js';
+import * as en from '../site.en.js';
 
 /**
  * Cabecera del sitio en español.
@@ -50,6 +51,11 @@ function Chevron({ open }) {
 
 export default function SiteHeader() {
   const { pathname } = useLocation();
+  /* Mismo criterio que en el pie: el prefijo /en decide el idioma, y
+     cualquier otra ruta se trata como español. */
+  const lang = pathname.startsWith('/en') ? 'en' : 'es';
+  const t = lang === 'en' ? en : es;
+  const other = lang === 'en' ? { code: 'ES', to: '/es' } : { code: 'EN', to: '/en' };
   const [open, setOpen] = React.useState(false);        // menú móvil
   const [drop, setDrop] = React.useState(null);         // índice del desplegable abierto
   const [acc, setAcc] = React.useState(null);           // acordeón móvil abierto
@@ -125,7 +131,7 @@ export default function SiteHeader() {
   React.useEffect(() => () => document.documentElement.removeAttribute('data-header-hidden'), []);
 
   const Logo = ({ size = 23 }) => (
-    <Link to={HOME} aria-label="BECOME — Inicio" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44 }}>
+    <Link to={t.HOME} aria-label={lang === 'en' ? 'BECOME — Home' : 'BECOME — Inicio'} style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44 }}>
       <img src="/logo/wordmark-white.webp" alt="" style={{ height: size, width: 'auto', display: 'block' }} />
     </Link>
   );
@@ -138,10 +144,12 @@ export default function SiteHeader() {
   const Lang = () => (
     <span style={{ font: 'var(--type-label)', letterSpacing: 'var(--track-label)', color: 'var(--slate-300)', whiteSpace: 'nowrap' }}>
       {/* Cada opción con su propia área de 24×24: como texto suelto, "EN"
-          medía 18×14 y era un objetivo por debajo del mínimo. */}
-      <span style={{ ...langItem, color: 'var(--white)' }}>ES</span>
+          medía 18×14 y era un objetivo por debajo del mínimo. Va a la home del
+          otro idioma, no a la traducción de la página actual — la mayoría de
+          páginas todavía no tienen su versión en inglés. */}
+      <span style={{ ...langItem, color: 'var(--white)' }}>{lang === 'en' ? 'EN' : 'ES'}</span>
       {' / '}
-      <a href="/en" style={{ ...langItem, color: 'var(--slate-300)', textDecoration: 'none' }} className="hv-lang">EN</a>
+      <Link to={other.to} style={{ ...langItem, color: 'var(--slate-300)', textDecoration: 'none' }} className="hv-lang">{other.code}</Link>
     </span>
   );
 
@@ -151,7 +159,7 @@ export default function SiteHeader() {
           contenido con teclado obliga a recorrer los cinco elementos del menú,
           sus dos desplegables y el CTA, en cada página. Solo aparece al recibir
           el foco. */}
-      <a href="#contenido" data-skip-link className="skip-link">Saltar al contenido</a>
+      <a href={lang === 'en' ? '#content' : '#contenido'} data-skip-link className="skip-link">{lang === 'en' ? 'Skip to content' : 'Saltar al contenido'}</a>
 
       <header
         data-header
@@ -174,7 +182,7 @@ export default function SiteHeader() {
           <Logo />
 
           <nav data-nav aria-label="Principal" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-6)', marginLeft: 'auto' }}>
-            {NAV.map((item, i) =>
+            {t.NAV.map((item, i) =>
               item.items ? (
                 /* Dos controles, no uno. El label es un enlace a la landing de
                    la sección y el chevrón es el botón que despliega. Con un
@@ -347,7 +355,7 @@ export default function SiteHeader() {
             <span data-lang><Lang /></span>
             <Link
               data-cta
-              to={CONTACT.to}
+              to={t.CONTACT.to}
               style={{
                 display: 'inline-flex', alignItems: 'center', minHeight: 44, padding: '0 var(--space-6)',
                 borderRadius: 'var(--radius-pill)', background: 'var(--electric-green)', color: 'var(--deep-navy)',
@@ -356,12 +364,12 @@ export default function SiteHeader() {
               }}
               className="cta-primary"
             >
-              {CONTACT.label}
+              {t.CONTACT.label}
             </Link>
             <button
               data-burger
               type="button"
-              aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
+              aria-label={open ? (lang === 'en' ? 'Close menu' : 'Cerrar menú') : (lang === 'en' ? 'Open menu' : 'Abrir menú')}
               aria-expanded={open}
               onClick={() => setOpen((o) => !o)}
               style={{
@@ -403,7 +411,7 @@ export default function SiteHeader() {
           </div>
 
           <nav aria-label="Principal (móvil)" style={{ marginTop: 'var(--space-9)', display: 'flex', flexDirection: 'column' }}>
-            {NAV.map((item, i) =>
+            {t.NAV.map((item, i) =>
               item.items ? (
                 <div key={item.label} style={{ borderBottom: '1px solid var(--border-hairline-dark)' }}>
                   <button
@@ -499,7 +507,7 @@ export default function SiteHeader() {
           </nav>
 
           <Link
-            to={CONTACT.to}
+            to={t.CONTACT.to}
             style={{
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginTop: 'var(--space-9)',
               minHeight: 52, padding: '0 var(--space-7)', borderRadius: 'var(--radius-pill)',
@@ -507,7 +515,7 @@ export default function SiteHeader() {
               letterSpacing: 'var(--track-label)', textTransform: 'uppercase', textDecoration: 'none',
             }}
           >
-            {CONTACT.label}
+            {t.CONTACT.label}
           </Link>
 
           <span style={{ marginTop: 'var(--space-8)' }}><Lang /></span>

@@ -1,9 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { FOOTER, HOME } from '../site.js';
+import { Link, useLocation } from 'react-router-dom';
+import * as es from '../site.js';
+import * as en from '../site.en.js';
 
 /**
- * Pie del sitio en español.
+ * Pie del sitio. Bilingüe: detecta el idioma por el prefijo de la ruta
+ * (/es/... o /en/...) y elige el mapa correspondiente. No hay un tercer
+ * estado — cualquier ruta que no empiece por /en se trata como español,
+ * que es también lo que hace el comodín del enrutador.
  *
  * Hace de mapa completo para que la cabecera no tenga que serlo: cinco
  * columnas con todo lo que existe, incluidas las seis preguntas de casos de uso
@@ -14,6 +18,11 @@ import { FOOTER, HOME } from '../site.js';
  * navega con lector de pantalla.
  */
 export default function SiteFooter() {
+  const { pathname } = useLocation();
+  const lang = pathname.startsWith('/en') ? 'en' : 'es';
+  const t = lang === 'en' ? en : es;
+  const other = lang === 'en' ? { code: 'ES', to: '/es' } : { code: 'EN', to: '/en' };
+
   return (
     <footer
       data-band="--navy-950"
@@ -29,16 +38,17 @@ export default function SiteFooter() {
           }}
         >
           <div>
-            <Link to={HOME} aria-label="BECOME — Inicio" style={{ display: 'inline-flex', minHeight: 44, alignItems: 'center' }}>
+            <Link to={t.HOME} aria-label={lang === "en" ? "BECOME — Home" : "BECOME — Inicio"} style={{ display: 'inline-flex', minHeight: 44, alignItems: 'center' }}>
               <img src="/logo/wordmark-white.webp" alt="" style={{ height: 26, width: 'auto', display: 'block' }} />
             </Link>
             <p style={{ margin: 'var(--space-5) 0 0', font: 'var(--type-body)', color: 'var(--slate-300)', maxWidth: '30ch' }}>
-              AI-native transformation company. Rediseñamos cómo las empresas operan,
-              deciden y crean valor alrededor de la IA.
+              {lang === 'en'
+                ? 'AI-native transformation company. We redesign how companies operate, decide and create value around AI.'
+                : 'AI-native transformation company. Rediseñamos cómo las empresas operan, deciden y crean valor alrededor de la IA.'}
             </p>
           </div>
 
-          {FOOTER.map((col) => (
+          {t.FOOTER.map((col) => (
             <nav key={col.title} aria-label={col.title}>
               <p
                 style={{
@@ -74,10 +84,14 @@ export default function SiteFooter() {
           <span style={{ font: 'var(--type-label)', letterSpacing: 'var(--track-label)', color: 'var(--slate-400)' }}>
             © {new Date().getFullYear()} BECOME
           </span>
+          {/* El conmutador va a la home del otro idioma, no a una traducción
+              página a página: la mayoría de páginas todavía no tienen su
+              versión en inglés, y mapear cada una exigiría una tabla que se
+              queda obsoleta en cuanto se añade una página. */}
           <span style={{ font: 'var(--type-label)', letterSpacing: 'var(--track-label)', color: 'var(--slate-300)' }}>
-            <span style={{ ...langItem, color: 'var(--white)' }}>ES</span>
+            <span style={{ ...langItem, color: 'var(--white)' }}>{lang === 'en' ? 'EN' : 'ES'}</span>
             {' / '}
-            <a href="/en" style={{ ...langItem, color: 'var(--slate-300)', textDecoration: 'none' }} className="hv-lang">EN</a>
+            <Link to={other.to} style={{ ...langItem, color: 'var(--slate-300)', textDecoration: 'none' }} className="hv-lang">{other.code}</Link>
           </span>
         </div>
       </div>

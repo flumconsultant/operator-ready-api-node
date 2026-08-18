@@ -1,5 +1,5 @@
 import React, { lazy } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useLocation, Navigate } from 'react-router-dom';
 import { LEGACY_REDIRECTS } from './site.js';
 
 /**
@@ -12,6 +12,7 @@ import { LEGACY_REDIRECTS } from './site.js';
  */
 
 const Home = lazy(() => import('./pages/Home.jsx'));
+const HomeEN = lazy(() => import('./pages/en/Home.jsx'));
 const Framework = lazy(() => import('./pages/Framework.jsx'));
 const Discovery = lazy(() => import('./pages/Discovery.jsx'));
 const BuildEmbed = lazy(() => import('./pages/BuildEmbed.jsx'));
@@ -25,8 +26,20 @@ const CasosDeUso = lazy(() => import('./pages/CasosDeUso.jsx'));
 const UseCase = lazy(() => import('./pages/UseCase.jsx'));
 const Legal = lazy(() => import('./pages/Legal.jsx'));
 
+/* Comodín consciente del idioma: una ruta /en/lo-que-sea que no existe todavía
+   vuelve a la home en inglés, no a la española. El comodín plano de antes
+   mandaba cualquier ruta no reconocida a /es sin mirar el prefijo — correcto
+   mientras solo existía español, pero en cuanto hay una segunda home eso
+   significa que alguien que elige inglés y cae en una página aún no traducida
+   se encuentra de vuelta en español sin explicación. */
+function NotFound() {
+  const { pathname } = useLocation();
+  return <Navigate to={pathname.startsWith('/en') ? '/en' : '/es'} replace />;
+}
+
 export const routes = [
   { path: '/es', element: <Home /> },
+  { path: '/en', element: <HomeEN /> },
 
   { path: '/es/servicios', element: <Servicios /> },
   { path: '/es/servicios/become-now', element: <BecomeNow /> },
@@ -52,6 +65,6 @@ export const routes = [
     element: <Navigate to={to} replace />,
   })),
 
-  /* Cualquier otra cosa vuelve a la home del idioma */
-  { path: '*', element: <Navigate to="/es" replace /> },
+  /* Cualquier otra cosa vuelve a la home del idioma que corresponda */
+  { path: '*', element: <NotFound /> },
 ];
