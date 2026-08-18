@@ -41,18 +41,36 @@ En la misma pantalla, otros **dos secretos** más. Son los que permiten que lo
 que alguien escriba en el formulario del sitio llegue a una bandeja de entrada:
 
 - `MAIL_USER` — la dirección completa del buzón desde el que se envía, por
-  ejemplo `hello@meetbecome.com`. Tiene que ser una cuenta de correo real
-  creada en hPanel → **Correos**, no un alias ni un reenvío.
+  ejemplo `formularios@meetbecome.com`. Tiene que ser una cuenta de correo
+  real creada en hPanel → **Correos**, no un alias ni un reenvío: necesita
+  poder autenticarse contra el servidor de salida.
 - `MAIL_PASSWORD` — la contraseña de ese buzón.
 
-Opcionalmente, tres **variables** (pestaña *Variables*, no *Secrets*) si algo
-se sale de lo normal. Sin ellas se usan estos valores:
+Y tres **variables** (pestaña *Variables*, no *Secrets*). Sin ellas se usan
+estos valores:
 
 | Variable | Por defecto | Para qué |
 |---|---|---|
 | `MAIL_HOST` | `smtp.hostinger.com` | El servidor de salida, si el correo no está en Hostinger |
 | `MAIL_PORT` | `465` | El puerto de SMTP con TLS |
-| `MAIL_TO` | el mismo `MAIL_USER` | Si los avisos deben llegar a otra dirección distinta de la que envía |
+| `MAIL_TO` | el mismo `MAIL_USER` | La bandeja donde se leen los avisos |
+
+**Usa dos direcciones distintas: una que envía y otra que recibe.** Es la
+diferencia entre que los avisos lleguen a la bandeja o a spam.
+
+Al principio ambas eran `hello@meetbecome.com` y los mensajes acababan en
+spam. Un correo cuyo remitente y destinatario son la misma dirección es
+exactamente el patrón que usa el fraude para fingir que escribe desde dentro
+de la empresa, y los filtros lo tratan en consecuencia.
+
+La dirección del remitente **tiene que estar en el dominio del sitio** —si no,
+el SPF y la firma DKIM no cuadran y el problema es mucho peor— pero no tiene
+por qué ser la misma que lee los mensajes:
+
+- `MAIL_USER` = `formularios@meetbecome.com` — un buzón dedicado a enviar
+- `MAIL_TO` = `hello@meetbecome.com` — donde se leen
+
+Evita nombres tipo `noreply@`: algunos filtros los penalizan.
 
 En cada despliegue, estos valores se escriben en `api/config.php` dentro del
 servidor. Ese archivo **no está en el repositorio** y no se puede leer desde
