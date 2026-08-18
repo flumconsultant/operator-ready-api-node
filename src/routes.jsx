@@ -13,6 +13,10 @@ import { LEGACY_REDIRECTS } from './site.js';
 
 const Home = lazy(() => import('./pages/Home.jsx'));
 const HomeEN = lazy(() => import('./pages/en/Home.jsx'));
+const ServiciosEN = lazy(() => import('./pages/en/Servicios.jsx'));
+const DiscoveryEN = lazy(() => import('./pages/en/Discovery.jsx'));
+const BuildEmbedEN = lazy(() => import('./pages/en/BuildEmbed.jsx'));
+const FrameworkEN = lazy(() => import('./pages/en/Framework.jsx'));
 const Framework = lazy(() => import('./pages/Framework.jsx'));
 const Discovery = lazy(() => import('./pages/Discovery.jsx'));
 const BuildEmbed = lazy(() => import('./pages/BuildEmbed.jsx'));
@@ -40,6 +44,11 @@ function NotFound() {
 export const routes = [
   { path: '/es', element: <Home /> },
   { path: '/en', element: <HomeEN /> },
+
+  { path: '/en/services', element: <ServiciosEN /> },
+  { path: '/en/services/transformation-discovery', element: <DiscoveryEN /> },
+  { path: '/en/services/build-and-embed', element: <BuildEmbedEN /> },
+  { path: '/en/framework', element: <FrameworkEN /> },
 
   { path: '/es/servicios', element: <Servicios /> },
   { path: '/es/servicios/become-now', element: <BecomeNow /> },

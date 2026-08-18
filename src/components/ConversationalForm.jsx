@@ -50,15 +50,107 @@ import BackdropField from './Field.jsx';
 const EASE = [0.2, 0.7, 0.2, 1];
 const MODE_KEY = 'become:form-mode';
 
+/* Todo el texto de interfaz del formulario, en los dos idiomas. Los campos en
+   sí (label, help, options) los define quien usa el componente — esto es solo
+   el chrome que el componente pone alrededor: botones, avisos, el carril. */
+const STRINGS = {
+  es: {
+    required: 'Este campo es obligatorio.',
+    emailInvalid: 'Revisa el email: falta algo.',
+    underConstruction: (email) => (
+      <>
+        Mientras el sitio está en construcción este formulario no está conectado a
+        ningún destino, así que tu mensaje no ha salido del navegador. Escríbenos a{' '}
+        <a href={`mailto:${email}`} style={{ color: 'inherit' }}>{email}</a>{' '}
+        y lo leemos hoy.
+      </>
+    ),
+    privacyNote: 'Usaremos estos datos únicamente para responder y preparar la conversación adecuada. No te suscribimos a nada ni compartimos la información.',
+    railLabel: 'Recorrido del formulario',
+    answeredOf: (a, t) => `${a} de ${t} respondidas`,
+    left: (n) => ` · quedan ${n}`,
+    questionAria: (i, label) => `Pregunta ${i}: ${label}`,
+    answeredSuffix: ' (respondida)',
+    reviewAndSend: 'Revisar y enviar',
+    srSummary: 'Resumen antes de enviar',
+    srQuestion: (i, total, label) => `Pregunta ${i} de ${total}: ${label}`,
+    reviewQuestion: '¿Lo revisamos antes de enviar?',
+    edit: 'Editar',
+    optional: ' · opcional',
+    back: 'Atrás',
+    review: 'Revisar',
+    next: 'Siguiente',
+    enterTextarea: 'Ctrl + Enter para continuar',
+    enterDefault: 'Enter para continuar',
+    footerNote: (email) => (
+      <>
+        Tarda menos de dos minutos. Usaremos lo que escribas solo para preparar
+        la respuesta; no te suscribimos a nada. ¿Prefieres escribir directamente?{' '}
+        <a href={`mailto:${email}`} style={{ color: 'inherit' }}>{email}</a>
+      </>
+    ),
+    modeSteps: 'Una pregunta a la vez',
+    modeAll: 'Ver todo el formulario',
+    confirmClose: 'Tienes respuestas sin enviar. ¿Cerrar de todas formas?',
+    closeForm: 'Cerrar el formulario',
+    close: 'Cerrar',
+    startDefault: 'Empezar',
+    hint: (n) => `${n} preguntas · menos de dos minutos · sin compromiso`,
+  },
+  en: {
+    required: 'This field is required.',
+    emailInvalid: 'Check the email — something’s missing.',
+    underConstruction: (email) => (
+      <>
+        While the site is in progress, this form isn’t connected to anything —
+        your message never left the browser. Email us at{' '}
+        <a href={`mailto:${email}`} style={{ color: 'inherit' }}>{email}</a>{' '}
+        and we’ll read it today.
+      </>
+    ),
+    privacyNote: 'We’ll use this information only to respond and prepare the right conversation. We won’t subscribe you to anything or share it.',
+    railLabel: 'Form journey',
+    answeredOf: (a, t) => `${a} of ${t} answered`,
+    left: (n) => ` · ${n} left`,
+    questionAria: (i, label) => `Question ${i}: ${label}`,
+    answeredSuffix: ' (answered)',
+    reviewAndSend: 'Review and send',
+    srSummary: 'Summary before sending',
+    srQuestion: (i, total, label) => `Question ${i} of ${total}: ${label}`,
+    reviewQuestion: 'Want to review it before sending?',
+    edit: 'Edit',
+    optional: ' · optional',
+    back: 'Back',
+    review: 'Review',
+    next: 'Next',
+    enterTextarea: 'Ctrl + Enter to continue',
+    enterDefault: 'Enter to continue',
+    footerNote: (email) => (
+      <>
+        Takes under two minutes. We’ll only use what you write to prepare the
+        response — no subscriptions. Prefer to email us directly?{' '}
+        <a href={`mailto:${email}`} style={{ color: 'inherit' }}>{email}</a>
+      </>
+    ),
+    modeSteps: 'One question at a time',
+    modeAll: 'See the whole form',
+    confirmClose: 'You have unsent answers. Close anyway?',
+    closeForm: 'Close the form',
+    close: 'Close',
+    startDefault: 'Start',
+    hint: (n) => `${n} questions · under two minutes · no commitment`,
+  },
+};
+
 const isFilled = (f, v) => {
   if (f.type === 'multi') return Array.isArray(v) && v.length > 0;
   return typeof v === 'string' ? v.trim().length > 0 : Boolean(v);
 };
 
-const validate = (f, v) => {
-  if (f.required && !isFilled(f, v)) return 'Este campo es obligatorio.';
+const validate = (f, v, t) => {
+  if (f.required && !isFilled(f, v)) return t.required;
   if (f.type === 'email' && v && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim())) {
-    return 'Revisa el email: falta algo.';
+    return t.emailInvalid;
   }
   return null;
 };
@@ -71,7 +163,9 @@ function Conversation({
   formName,
   bare = false,
   onDirty,
+  lang = 'es',
 }) {
+  const t = STRINGS[lang];
   const reduced = useReducedMotion();
   const [mode, setMode] = React.useState('steps');
   const [step, setStep] = React.useState(0);
@@ -119,7 +213,7 @@ function Conversation({
   }, [values, fields, onDirty]);
 
   const next = () => {
-    const err = validate(current, values[current.name]);
+    const err = validate(current, values[current.name], t);
     if (err) {
       setError(err);
       /* El foco vuelve al campo: si se queda en el botón, lo siguiente que
@@ -143,9 +237,9 @@ function Conversation({
 
   const submit = (e) => {
     e?.preventDefault();
-    const firstBad = fields.findIndex((f) => validate(f, values[f.name]));
+    const firstBad = fields.findIndex((f) => validate(f, values[f.name], t));
     if (firstBad >= 0) {
-      setError(validate(fields[firstBad], values[fields[firstBad].name]));
+      setError(validate(fields[firstBad], values[fields[firstBad].name], t));
       if (mode === 'steps') setStep(firstBad);
       return;
     }
@@ -159,12 +253,7 @@ function Conversation({
           {confirmation}
         </p>
         <p style={{ margin: 'var(--space-6) 0 0', font: 'var(--type-body)', color: dark ? 'var(--slate-300)' : 'var(--text-muted)' }}>
-          Mientras el sitio está en construcción este formulario no está conectado a
-          ningún destino, así que tu mensaje no ha salido del navegador. Escríbenos a{' '}
-          <a href="mailto:hello@meetbecome.com" style={{ color: dark ? 'var(--electric-green)' : 'var(--text-accent)' }}>
-            hello@meetbecome.com
-          </a>{' '}
-          y lo leemos hoy.
+          {t.underConstruction('hello@meetbecome.com')}
         </p>
       </div>
     );
@@ -188,7 +277,7 @@ function Conversation({
   if (mode === 'all') {
     return (
       <form onSubmit={submit} style={{ maxWidth: 880, ...shell }} aria-label={formName}>
-        <ModeToggle mode={mode} onChange={changeMode} c={c} />
+        <ModeToggle mode={mode} onChange={changeMode} c={c} t={t} />
         <div data-cols style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-6)' }}>
           {fields.map((f) => (
             <div key={f.name} style={{ gridColumn: f.wide ? '1 / -1' : 'auto' }}>
@@ -200,8 +289,7 @@ function Conversation({
         </div>
         {error && <p role="alert" style={c.error}>{error}</p>}
         <p style={{ ...c.help, marginTop: 'var(--space-6)', maxWidth: '58ch' }}>
-          Usaremos estos datos únicamente para responder y preparar la conversación
-          adecuada. No te suscribimos a nada ni compartimos la información.
+          {t.privacyNote}
         </p>
         <button type="submit" className="cta-primary" style={c.submit}>{submitLabel}</button>
       </form>
@@ -215,7 +303,7 @@ function Conversation({
 
   return (
     <form onSubmit={(e) => e.preventDefault()} style={{ ...shell }} aria-label={formName}>
-      <ModeToggle mode={mode} onChange={changeMode} c={c} />
+      <ModeToggle mode={mode} onChange={changeMode} c={c} t={t} />
 
       <div
         data-cols
@@ -227,10 +315,10 @@ function Conversation({
         }}
       >
         {/* ---- el recorrido, entero y a la vista ---- */}
-        <nav data-form-rail aria-label="Recorrido del formulario">
+        <nav data-form-rail aria-label={t.railLabel}>
           <p style={{ margin: 0, font: 'var(--type-mono)', fontSize: 'var(--text-micro)', letterSpacing: 'var(--track-mono)', color: c.faint }}>
-            {answered} de {total} respondidas
-            {left > 0 && ` · quedan ${left}`}
+            {t.answeredOf(answered, total)}
+            {left > 0 && t.left(left)}
           </p>
           <div style={{ marginTop: 'var(--space-4)', height: 2, background: c.rule, borderRadius: 2, overflow: 'hidden' }}>
             <motion.div
@@ -254,7 +342,7 @@ function Conversation({
                     type="button"
                     onClick={() => jump(i)}
                     disabled={!open}
-                    aria-label={`Pregunta ${i + 1}: ${f.short || f.label}${done ? ' (respondida)' : ''}`}
+                    aria-label={`${t.questionAria(i + 1, f.short || f.label)}${done ? t.answeredSuffix : ''}`}
                     aria-current={here ? 'step' : undefined}
                     style={{
                       width: 34, height: 34, minHeight: 34, padding: 0, borderRadius: '50%',
@@ -335,7 +423,7 @@ function Conversation({
                   <PaperPlaneTilt size={12} weight="bold" />
                 </span>
                 <span style={{ font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', fontWeight: isReview ? 600 : 400 }}>
-                  Revisar y enviar
+                  {t.reviewAndSend}
                 </span>
               </button>
             </li>
@@ -346,7 +434,7 @@ function Conversation({
         <div>
           {/* Anuncio para lectores de pantalla */}
           <p aria-live="polite" className="sr-only">
-            {isReview ? 'Resumen antes de enviar' : `Pregunta ${step + 1} de ${total}: ${current.label}`}
+            {isReview ? t.srSummary : t.srQuestion(step + 1, total, current.label)}
           </p>
 
           <div style={{ minHeight: 180 }}>
@@ -360,7 +448,7 @@ function Conversation({
               >
                 {isReview ? (
                   <>
-                    <p style={c.question}>¿Lo revisamos antes de enviar?</p>
+                    <p style={c.question}>{t.reviewQuestion}</p>
                     <dl style={{ margin: 'var(--space-7) 0 0', display: 'grid', gap: 'var(--space-4)' }}>
                       {fields.map((f, i) => (
                         <div key={f.name} style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1.4fr) auto', gap: 'var(--space-5)', alignItems: 'baseline', paddingTop: 'var(--space-4)', borderTop: `1px solid ${c.rule}` }}>
@@ -370,7 +458,7 @@ function Conversation({
                               ? (values[f.name].join(', ') || '—')
                               : (values[f.name] || '—')}
                           </dd>
-                          <button type="button" onClick={() => setStep(i)} style={c.editBtn}>Editar</button>
+                          <button type="button" onClick={() => setStep(i)} style={c.editBtn}>{t.edit}</button>
                         </div>
                       ))}
                     </dl>
@@ -382,7 +470,7 @@ function Conversation({
                         {String(step + 1).padStart(2, '0')}
                       </span>
                       {current.label}
-                      {!current.required && <span style={{ color: c.faint, fontSize: 'var(--text-body-md)' }}> · opcional</span>}
+                      {!current.required && <span style={{ color: c.faint, fontSize: 'var(--text-body-md)' }}>{t.optional}</span>}
                     </p>
                     {current.help && <p style={{ ...c.help, marginTop: 'var(--space-4)' }}>{current.help}</p>}
                     <div style={{ marginTop: 'var(--space-6)' }}>
@@ -407,7 +495,7 @@ function Conversation({
           <div style={{ marginTop: 'var(--space-7)', display: 'flex', alignItems: 'center', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
             {step > 0 && (
               <button type="button" onClick={back} style={{ ...c.ghostBtn, gap: 8 }}>
-                <ArrowLeft size={16} aria-hidden="true" /> Atrás
+                <ArrowLeft size={16} aria-hidden="true" /> {t.back}
               </button>
             )}
             {isReview ? (
@@ -416,22 +504,18 @@ function Conversation({
               </button>
             ) : (
               <button type="button" onClick={next} className="cta-primary" style={{ ...c.submit, gap: 10 }}>
-                {step === total - 1 ? 'Revisar' : 'Siguiente'} <ArrowRight size={16} weight="bold" aria-hidden="true" />
+                {step === total - 1 ? t.review : t.next} <ArrowRight size={16} weight="bold" aria-hidden="true" />
               </button>
             )}
             {!isReview && (
               <span style={{ font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: c.faint }}>
-                {current.type === 'textarea' ? 'Ctrl + Enter para continuar' : 'Enter para continuar'}
+                {current.type === 'textarea' ? t.enterTextarea : t.enterDefault}
               </span>
             )}
           </div>
 
           <p style={{ ...c.help, marginTop: 'var(--space-7)', maxWidth: '54ch' }}>
-            Tarda menos de dos minutos. Usaremos lo que escribas solo para preparar
-            la respuesta; no te suscribimos a nada. ¿Prefieres escribir directamente?{' '}
-            <a href="mailto:hello@meetbecome.com" style={{ color: dark ? 'var(--electric-green)' : 'var(--text-accent)' }}>
-              hello@meetbecome.com
-            </a>
+            {t.footerNote('hello@meetbecome.com')}
           </p>
         </div>
       </div>
@@ -441,10 +525,10 @@ function Conversation({
 
 /* ---------------- piezas ---------------- */
 
-function ModeToggle({ mode, onChange, c }) {
+function ModeToggle({ mode, onChange, c, t }) {
   return (
     <div style={{ display: 'flex', gap: 'var(--space-4)', marginBottom: 'var(--space-7)' }}>
-      {[['steps', 'Una pregunta a la vez'], ['all', 'Ver todo el formulario']].map(([v, label]) => (
+      {[['steps', t.modeSteps], ['all', t.modeAll]].map(([v, label]) => (
         <button
           key={v}
           type="button"
@@ -620,7 +704,7 @@ function colors(dark, stage) {
  * dato. Un formulario que no declara su longitud la declara igualmente — a
  * mitad de camino, y para entonces ya es un motivo para abandonar.
  */
-function Launcher({ dark, title, lead, count, launchLabel, onOpen, btnRef }) {
+function Launcher({ dark, title, lead, count, launchLabel, onOpen, btnRef, t }) {
   const c = colors(dark);
   return (
     <div style={{ maxWidth: '46ch' }}>
@@ -631,7 +715,7 @@ function Launcher({ dark, title, lead, count, launchLabel, onOpen, btnRef }) {
 
       <p style={{ margin: 'var(--space-7) 0 0', display: 'inline-flex', alignItems: 'center', gap: 10, font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: c.faint }}>
         <Clock size={18} aria-hidden="true" />
-        {count} preguntas · menos de dos minutos · sin compromiso
+        {t.hint(count)}
       </p>
 
       <div style={{ marginTop: 'var(--space-7)' }}>
@@ -645,8 +729,10 @@ function Launcher({ dark, title, lead, count, launchLabel, onOpen, btnRef }) {
 
 export default function ConversationalForm({
   fields, submitLabel, confirmation, dark = true, formName,
-  title, lead, launchLabel = 'Empezar',
+  title, lead, launchLabel, lang = 'es',
 }) {
+  const t = STRINGS[lang];
+  const resolvedLaunchLabel = launchLabel ?? t.startDefault;
   const reduced = useReducedMotion();
   const [open, setOpen] = React.useState(false);
   const [dirty, setDirty] = React.useState(false);
@@ -654,9 +740,9 @@ export default function ConversationalForm({
   const stageRef = React.useRef(null);
 
   const close = React.useCallback(() => {
-    if (dirty && !window.confirm('Tienes respuestas sin enviar. ¿Cerrar de todas formas?')) return;
+    if (dirty && !window.confirm(t.confirmClose)) return;
     setOpen(false);
-  }, [dirty]);
+  }, [dirty, t]);
 
   /* Mientras el escenario está abierto: sin scroll detrás, Esc cierra y el
      tabulador no se escapa a la página que hay debajo. */
@@ -687,9 +773,10 @@ export default function ConversationalForm({
       title={title}
       lead={lead}
       count={fields.length}
-      launchLabel={launchLabel}
+      launchLabel={resolvedLaunchLabel}
       onOpen={() => setOpen(true)}
       btnRef={btnRef}
+      t={t}
     />
   );
 
@@ -726,7 +813,7 @@ export default function ConversationalForm({
         <button
           type="button"
           onClick={close}
-          aria-label="Cerrar el formulario"
+          aria-label={t.closeForm}
           style={{
             display: 'inline-flex', alignItems: 'center', gap: 8, minHeight: 44, padding: '0 var(--space-5)',
             background: 'transparent', border: '1px solid var(--border-strong-dark)', borderRadius: 'var(--radius-pill)',
@@ -734,7 +821,7 @@ export default function ConversationalForm({
             font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase',
           }}
         >
-          <X size={16} weight="bold" aria-hidden="true" /> Cerrar
+          <X size={16} weight="bold" aria-hidden="true" /> {t.close}
         </button>
       </header>
 
@@ -755,6 +842,7 @@ export default function ConversationalForm({
             formName={formName}
             bare
             onDirty={setDirty}
+            lang={lang}
           />
         </motion.div>
       </div>
