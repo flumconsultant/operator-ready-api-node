@@ -191,15 +191,33 @@ $cuerpo .= ($lang === 'en' ? 'Sent: ' : 'Enviado: ') . gmdate('Y-m-d H:i:s') . "
 $de   = limpiar_cabecera((string) $config['user']);
 $para = limpiar_cabecera((string) $config['to']);
 
+/* Quien escribe da nombre al remitente, aunque la dirección siga siendo la
+   del dominio —tiene que serlo para que el SPF y la firma DKIM cuadren—.
+   Sin esto, la bandeja se llena de mensajes idénticos de "BECOME" a BECOME,
+   que es justo el patrón que un filtro antispam mira con lupa. */
+$quien = '';
+foreach ($respuestas as $r) {
+    if (is_array($r) && isset($r['label'], $r['value'])
+        && is_string($r['value']) && trim($r['value']) !== ''
+        && preg_match('/^(nombre|name)$/i', trim((string) $r['label']))) {
+        $quien = limpiar_cabecera(mb_substr(trim($r['value']), 0, 60));
+        break;
+    }
+}
+$rotulo = $quien === ''
+    ? 'BECOME'
+    : asunto_mime($quien . ($lang === 'en' ? ' via the website' : ' desde la web'));
+
 $cabeceras = [
-    'From: BECOME <' . $de . '>',
+    'From: ' . $rotulo . ' <' . $de . '>',
     'To: <' . $para . '>',
     'Subject: ' . asunto_mime($asunto),
     'Date: ' . gmdate('D, d M Y H:i:s') . ' +0000',
     'Message-ID: <' . bin2hex(random_bytes(12)) . '@' . substr(strrchr($de, '@') ?: '@localhost', 1) . '>',
     'MIME-Version: 1.0',
     'Content-Type: text/plain; charset=UTF-8',
-    'Content-Transfer-Encoding: base64',
+    'Content-Transfer-Encoding: quoted-printable',
+    'X-Mailer: formulario meetbecome.com',
 ];
 /* Responder al aviso escribe a quien rellenó el formulario, no a nosotros
    mismos: sin esto hay que copiar la dirección a mano en cada respuesta. */
@@ -207,11 +225,30 @@ if ($replyTo !== '') {
     $cabeceras[] = 'Reply-To: <' . limpiar_cabecera($replyTo) . '>';
 }
 
-/* El cuerpo va en base64: así ninguna línea supera los 76 caracteres que
-   admite SMTP y ninguna empieza por un punto, que es la marca de fin de
-   mensaje y habría que escapar aparte. */
-$mensaje = implode("\r\n", $cabeceras) . "\r\n\r\n"
-         . chunk_split(base64_encode($cuerpo), 76, "\r\n");
+/* El cuerpo va en quoted-printable, no en base64.
+ *
+ * Base64 era más cómodo —ninguna línea larga, ningún punto al principio que
+ * escapar— y resultó ser un error de entrega: codificar en base64 un texto
+ * que es texto plano es una señal clásica de correo basura, porque esconde
+ * el contenido de los filtros, y los filtros la penalizan por eso. El
+ * formulario funcionaba y los mensajes acababan en spam.
+ *
+ * Quoted-printable es lo que usa el correo legítimo con acentos: deja el
+ * texto legible, escapa solo lo que hace falta y parte las líneas largas.
+ *
+ * Se codifica línea a línea porque quoted_printable_encode() trata su
+ * entrada como binaria: si se le pasa el texto entero convierte cada salto
+ * de línea en '=0A' y el mensaje queda como un solo párrafo enorme. */
+$cuerpoQP = implode("\r\n", array_map(
+    'quoted_printable_encode',
+    preg_split('/\R/u', $cuerpo)
+));
+
+/* Una línea que empieza por un punto marca el fin del mensaje en SMTP. Se
+   duplica, y el servidor del otro lado vuelve a dejarla en uno solo. */
+$cuerpoQP = preg_replace('/^\./m', '..', $cuerpoQP);
+
+$mensaje = implode("\r\n", $cabeceras) . "\r\n\r\n" . $cuerpoQP;
 
 /* ------------------------------------------------------------------ SMTP */
 
