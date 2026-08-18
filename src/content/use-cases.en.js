@@ -40,7 +40,7 @@ export const USE_CASE_CONTENT = {
     problem:
       'The pilot doesn’t fail because of the model. It fails because it was built alongside the real work instead of inside it: no one owns the result, the process stayed the same, and there’s no measure to decide against.',
     value:
-      'We assess the pilot as part of a People, Data, Agents and Operations system; decide whether it should stop, be redesigned or become a capability; then build the conditions for adoption and scale.',
+      'We assess the pilot as part of a People, Data, Agents, Products and Operations system; decide whether it should stop, be redesigned or become a capability; then build the conditions for adoption and scale.',
     tools: ['Inside Readiness Index™', 'Agentic Workflow Blueprint™', 'Embed Scorecard™', 'Scale Readiness Gate™'],
     result: 'An informed decision and, where warranted, a capability ready to operate.',
     engagement: 'Discovery → Build & Embed',

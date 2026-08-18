@@ -19,12 +19,13 @@ const DOMAINS = [
   ['People, inside.', 'Leadership, roles, skills and adoption designed for people working alongside AI.', '/icons/people-inside-white.webp'],
   ['Data, inside.', 'Context and knowledge turned into decisions and action.', '/icons/data-inside-white.webp'],
   ['Agents, inside.', 'Copilots and agents embedded in real workflows, with defined human oversight.', '/icons/agents-inside-white.webp'],
+  ['Products, inside.', 'Propositions, experiences and differentiation built on what AI makes possible.', '/icons/products-inside-white.webp'],
   ['Operations, inside.', 'Processes, governance and performance redesigned to create value at scale.', '/icons/operations-inside-white.webp'],
 ];
 
 const TOOLS = [
   ['Business Ambition Canvas™', 'Align the executive team around outcomes and strategic choices.'],
-  ['Inside Readiness Index™', 'Assess maturity across People, Data, Agents and Operations.'],
+  ['Inside Readiness Index™', 'Assess maturity across People, Data, Agents, Products and Operations.'],
   ['AI-Native Value Map™', 'Prioritize opportunities by value, feasibility, speed and risk.'],
   ['Inside Target State Canvas™', 'Define the target operating model and transformation blueprint.'],
   ['Agentic Workflow Blueprint™', 'Design roles, agents, data, decisions, exceptions and controls.'],

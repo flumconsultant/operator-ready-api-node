@@ -9,7 +9,7 @@ import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, TextCTA, Cols, Card,
  *
  * El riesgo de esta página es convertir el framework en seis letras decorativas.
  * Se evita de dos maneras: cada etapa dice qué trabajo hace y qué output
- * produce, y los cuatro dominios aparecen atravesando las seis etapas en lugar
+ * produce, y los cinco dominios aparecen atravesando las seis etapas en lugar
  * de como una lista aparte.
  */
 
@@ -26,12 +26,13 @@ const DOMAINS = [
   ['People, inside.', 'Liderazgo, roles, skills y adopción diseñados para el trabajo entre personas e IA.', '/icons/people-inside-white.webp'],
   ['Data, inside.', 'Contexto y conocimiento convertidos en decisiones y acción.', '/icons/data-inside-white.webp'],
   ['Agents, inside.', 'Copilots y agents incorporados en workflows reales, con supervisión humana definida.', '/icons/agents-inside-white.webp'],
+  ['Products, inside.', 'Propuestas, experiencias y diferenciación construidas sobre lo que la IA hace posible.', '/icons/products-inside-white.webp'],
   ['Operations, inside.', 'Procesos, governance y performance rediseñados para crear valor a escala.', '/icons/operations-inside-white.webp'],
 ];
 
 const TOOLS = [
   ['Business Ambition Canvas™', 'Alinear al equipo ejecutivo alrededor de outcomes y strategic choices.'],
-  ['Inside Readiness Index™', 'Evaluar madurez en People, Data, Agents y Operations.'],
+  ['Inside Readiness Index™', 'Evaluar madurez en People, Data, Agents, Products y Operations.'],
   ['AI-Native Value Map™', 'Priorizar oportunidades por valor, feasibility, velocidad y riesgo.'],
   ['Inside Target State Canvas™', 'Definir el target operating model y transformation blueprint.'],
   ['Agentic Workflow Blueprint™', 'Diseñar roles, agents, datos, decisiones, excepciones y controles.'],
@@ -102,7 +103,7 @@ export default function Framework() {
         </div>
       </Section>
 
-      {/* Los cuatro dominios atraviesan las seis etapas: esa es la tesis */}
+      {/* Los cinco dominios atraviesan las seis etapas: esa es la tesis */}
       <Section band="darker">
         <Kicker dark>En todas las etapas</Kicker>
         <Headline dark>Cuatro sistemas que se transforman a la vez.</Headline>

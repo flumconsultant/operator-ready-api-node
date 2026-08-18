@@ -94,13 +94,13 @@ export default function UseCase() {
         </Cols>
       </Section>
 
-      {/* Qué cambia dentro: los cuatro sistemas, que son la tesis de la casa */}
+      {/* Qué cambia dentro: los cinco sistemas, que son la tesis de la casa */}
       <Section band="darker">
         <Kicker dark>Qué cambia dentro</Kicker>
-        <Headline dark>People, Data, Agents y Operations.</Headline>
+        <Headline dark>People, Data, Agents, Products y Operations.</Headline>
         <Body dark style={{ marginTop: 'var(--space-6)' }}>
-          Ninguna de estas situaciones se resuelve en una sola de las cuatro capas.
-          Por eso el trabajo cruza las cuatro: si una queda fuera, el cambio no
+          Ninguna de estas situaciones se resuelve en una sola de las cinco capas.
+          Por eso el trabajo cruza las cinco: si una queda fuera, el cambio no
           sobrevive al primer trimestre.
         </Body>
         <TextCTA to="/es/framework" dark>Explora el BECOME Framework</TextCTA>

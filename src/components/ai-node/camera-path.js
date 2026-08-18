@@ -35,7 +35,7 @@ export const WAYPOINTS = [
   /* 0.35 — contrapicado desde abajo, casi a ras del campo */
   { at: 0.35, pos: [-3.0, -6.4, 9.0], look: [0.4, 0.8, 0], roll: -0.18, fov: 66 },
 
-  /* 0.46 — de frente y cerca sobre los cuatro sistemas */
+  /* 0.46 — de frente y cerca sobre los cinco sistemas */
   { at: 0.46, pos: [0.0, 0.6, 11.2], look: [0, 0.2, 0], roll: 0.03, fov: 52 },
 
   /* 0.57 — rodea por la derecha, tres cuartos */

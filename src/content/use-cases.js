@@ -48,7 +48,7 @@ export const USE_CASE_CONTENT = {
     problem:
       'El piloto no falla por el modelo. Falla porque se construyó al lado del trabajo real en vez de dentro: nadie es dueño del resultado, el proceso siguió igual y no hay medida contra la que decidir.',
     value:
-      'Evaluamos el piloto como parte de un sistema de People, Data, Agents y Operations; decidimos si debe detenerse, rediseñarse o convertirse en capability; luego construimos las condiciones de adopción y escala.',
+      'Evaluamos el piloto como parte de un sistema de People, Data, Agents, Products y Operations; decidimos si debe detenerse, rediseñarse o convertirse en capability; luego construimos las condiciones de adopción y escala.',
     tools: ['Inside Readiness Index™', 'Agentic Workflow Blueprint™', 'Embed Scorecard™', 'Scale Readiness Gate™'],
     result: 'Una decisión informada y, cuando corresponde, una capability preparada para operar.',
     engagement: 'Discovery → Build & Embed',

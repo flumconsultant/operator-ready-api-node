@@ -12,7 +12,7 @@ const STAGES = [
   ['B', 'Business Ambition', 'Defines what the company must become and which outcomes matter.', 'AI-native ambition and strategic thesis.'],
   ['E', 'Enterprise Discovery', 'Understands how it works today and what limits change.', 'Enterprise diagnostic and readiness.'],
   ['C', 'Capability Choices', 'Prioritizes where AI can create differential value.', 'Value pools and prioritized portfolio.'],
-  ['O', 'Operating Model Design', 'Designs the future system of People, Data, Agents and Operations.', 'Target operating model and blueprint.'],
+  ['O', 'Operating Model Design', 'Designs the future system of People, Data, Agents, Products and Operations.', 'Target operating model and blueprint.'],
 ];
 
 const DELIVERABLES = [
@@ -25,7 +25,7 @@ const DELIVERABLES = [
 
 const TOOLS = [
   ['Business Ambition Canvas™', 'Align the executive team around outcomes and strategic choices.'],
-  ['Inside Readiness Index™', 'Assess maturity across People, Data, Agents and Operations.'],
+  ['Inside Readiness Index™', 'Assess maturity across People, Data, Agents, Products and Operations.'],
   ['AI-Native Value Map™', 'Prioritize opportunities by value, feasibility, speed and risk.'],
   ['Inside Target State Canvas™', 'Define the target operating model and transformation blueprint.'],
 ];

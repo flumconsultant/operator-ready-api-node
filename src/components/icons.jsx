@@ -25,7 +25,7 @@ import {
  */
 
 const REGISTRY = {
-  /* Los cuatro sistemas */
+  /* Los cinco sistemas */
   people: UsersThree,
   data: Database,
   agents: Robot,

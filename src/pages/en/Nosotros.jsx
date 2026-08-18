@@ -79,8 +79,8 @@ export default function Nosotros() {
         <Lead dark>
           We turn AI into an internal capability to operate better, decide with
           more intelligence and create new forms of value. Transformation matters
-          when it gets installed in the people, the data, the agents and the
-          operations of the company.
+          when it gets installed in the people, the data, the agents, the products
+          and the operations of the company.
         </Lead>
 
         <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 'var(--space-9)', marginTop: 'var(--space-11)' }}>
@@ -96,7 +96,7 @@ export default function Nosotros() {
             <p style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--electric-green)' }}>Our mission</p>
             <Body dark style={{ marginTop: 'var(--space-5)' }}>
               Turn business ambitions into embedded AI-native capabilities,
-              connecting Strategy, People, Data, Agents and Operations from
+              connecting Strategy, People, Data, Agents, Products and Operations from
               defining the value through adoption and scale.
             </Body>
           </Reveal>

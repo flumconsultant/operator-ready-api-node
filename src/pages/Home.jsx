@@ -72,12 +72,13 @@ const STAGES = [
   ['E', 'Expand & Evolve', 'Mide, gobierna, transfiere y escala.'],
 ];
 
-/* Los cuatro sistemas conservan su pictograma de marca: son un set propio y con
+/* Los cinco sistemas conservan su pictograma de marca: son un set propio y con
    nombre, no iconografía de interfaz. El resto de la web usa Phosphor. */
 const DOMAINS = [
   ['People, inside.', 'Liderazgo, roles, skills y adopción diseñados para el trabajo entre personas e IA.', '/icons/people-inside-white.webp'],
   ['Data, inside.', 'Contexto y conocimiento convertidos en decisiones y acción.', '/icons/data-inside-white.webp'],
   ['Agents, inside.', 'Copilots y agents incorporados en workflows reales, con supervisión humana definida.', '/icons/agents-inside-white.webp'],
+  ['Products, inside.', 'Propuestas, experiencias y diferenciación construidas sobre lo que la IA hace posible.', '/icons/products-inside-white.webp'],
   ['Operations, inside.', 'Procesos, governance y performance rediseñados para crear valor a escala.', '/icons/operations-inside-white.webp'],
 ];
 
@@ -194,13 +195,13 @@ export default function Home() {
         <TextCTA to="/es/nosotros">Conoce BECOME</TextCTA>
       </Section>
 
-      {/* 04 — Cómo lo hacemos. Los cuatro dominios como un sistema, no como
-          cuatro feature cards; y las seis etapas como recorrido, no seis cards. */}
+      {/* 04 — Cómo lo hacemos. Los cinco dominios como un sistema, no como
+          cinco feature cards; y las seis etapas como recorrido, no seis cards. */}
       <Section band="dark" nodeState={1}>
         <Kicker dark>How we become</Kicker>
         <Headline dark>No añadimos IA desde fuera. Rediseñamos la empresa desde dentro.</Headline>
         <Lead dark>
-          En cada etapa transformamos los cuatro sistemas que deciden si la IA es un
+          En cada etapa transformamos los cinco sistemas que deciden si la IA es un
           experimento o una capability de la empresa.
         </Lead>
 

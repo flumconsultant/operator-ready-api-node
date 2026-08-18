@@ -61,6 +61,7 @@ const DOMAINS = [
   ['People, inside.', 'Leadership, roles, skills and adoption designed for people working alongside AI.', '/icons/people-inside-white.webp'],
   ['Data, inside.', 'Context and knowledge turned into decisions and action.', '/icons/data-inside-white.webp'],
   ['Agents, inside.', 'Copilots and agents embedded in real workflows, with defined human oversight.', '/icons/agents-inside-white.webp'],
+  ['Products, inside.', 'Propositions, experiences and differentiation built on what AI makes possible.', '/icons/products-inside-white.webp'],
   ['Operations, inside.', 'Processes, governance and performance redesigned to create value at scale.', '/icons/operations-inside-white.webp'],
 ];
 
@@ -172,7 +173,7 @@ export default function Home() {
         <Kicker dark>How we become</Kicker>
         <Headline dark>We don’t bolt AI on from outside. We redesign the enterprise from within.</Headline>
         <Lead dark>
-          At every stage we transform the four systems that decide whether AI stays
+          At every stage we transform the five systems that decide whether AI stays
           an experiment or becomes a capability of the enterprise.
         </Lead>
 

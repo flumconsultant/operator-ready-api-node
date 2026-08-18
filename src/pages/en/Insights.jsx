@@ -6,7 +6,7 @@ import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, IndexRow } from '../
 const PILLARS = [
   ['The AI-native enterprise', 'Strategy, ambition and enterprise design. What sets an AI-native company apart from a company that just uses AI.'],
   ['Agentic work', 'Workflows, roles, agents and human accountability. How work changes when part of it is done by a system.'],
-  ['Operating-model reinvention', 'People, Data, Agents and Operations. The design decisions that determine where value accumulates.'],
+  ['Operating-model reinvention', 'People, Data, Agents, Products and Operations. The design decisions that determine where value accumulates.'],
   ['Value and adoption', 'Measurement, trust, change and capability transfer. Why adoption is a design problem, not a communication one.'],
   ['Responsible scale', 'Governance, controls, risk and scale readiness. When to scale and, above all, when not to.'],
 ];

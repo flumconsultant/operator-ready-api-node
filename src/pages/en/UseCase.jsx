@@ -86,10 +86,10 @@ export default function UseCase() {
 
       <Section band="darker">
         <Kicker dark>What changes inside</Kicker>
-        <Headline dark>People, Data, Agents and Operations.</Headline>
+        <Headline dark>People, Data, Agents, Products and Operations.</Headline>
         <Body dark style={{ marginTop: 'var(--space-6)' }}>
-          None of these situations gets solved in just one of the four layers.
-          That’s why the work crosses all four: if one is left out, the change
+          None of these situations gets solved in just one of the five layers.
+          That’s why the work crosses all five: if one is left out, the change
           doesn’t survive the first quarter.
         </Body>
         <TextCTA to="/en/framework" dark>Explore the BECOME Framework</TextCTA>

@@ -91,8 +91,8 @@ export default function Nosotros() {
         <Lead dark>
           Hacemos de la IA una capability interna para operar mejor, decidir con
           mayor inteligencia y crear nuevas formas de valor. La transformación
-          importa cuando queda instalada en las personas, los datos, los agents y
-          las operaciones de la empresa.
+          importa cuando queda instalada en las personas, los datos, los agents, los
+          productos y las operaciones de la empresa.
         </Lead>
 
         <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 'var(--space-9)', marginTop: 'var(--space-11)' }}>
@@ -109,7 +109,7 @@ export default function Nosotros() {
             <p style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--electric-green)' }}>Nuestra misión</p>
             <Body dark style={{ marginTop: 'var(--space-5)' }}>
               Convertir ambiciones empresariales en AI-native capabilities
-              incorporadas, conectando strategy, People, Data, Agents y Operations
+              incorporadas, conectando strategy, People, Data, Agents, Products y Operations
               desde la definición del valor hasta la adopción y la escala.
             </Body>
           </Reveal>
