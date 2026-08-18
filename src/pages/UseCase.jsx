@@ -25,7 +25,7 @@ export default function UseCase() {
   const others = USE_CASES.filter((u) => u.slug !== slug).slice(0, 3);
 
   return (
-    <div data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
+    <main id="contenido" data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
       <SiteHeader />
 
       <Section band="dark" pad="var(--space-12)">
@@ -137,6 +137,6 @@ export default function UseCase() {
       </Section>
 
       <SiteFooter />
-    </div>
+    </main>
   );
 }

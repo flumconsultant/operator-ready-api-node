@@ -29,7 +29,37 @@ import { useReducedMotion } from 'framer-motion';
  * existiendo, deja de moverse.
  */
 
-const DPR_CAP = 1.5;
+/* 2 y no 1.5: con 1.5 las aristas de un píxel se reparten entre dos y todo el
+   pasillo se veía blando. El bucle solo corre para la banda visible, así que el
+   coste extra se paga una vez. */
+const DPR_CAP = 2;
+
+/**
+ * Trama de ruido para romper el bandeado.
+ *
+ * Un degradado radial sobre navy casi negro recorre muy pocos valores de color,
+ * y el navegador los redondea a anillos concéntricos visibles. Un grano de ±2
+ * niveles rompe el redondeo y el degradado vuelve a leerse continuo. Es el mismo
+ * truco que usa el cine para los fundidos a negro.
+ *
+ * Se genera una sola vez y se reutiliza como patrón en todas las bandas.
+ */
+let noisePattern = null;
+function noise(ctx) {
+  if (noisePattern) return noisePattern;
+  const tile = document.createElement('canvas');
+  tile.width = tile.height = 96;
+  const tctx = tile.getContext('2d');
+  const img = tctx.createImageData(96, 96);
+  for (let i = 0; i < img.data.length; i += 4) {
+    const v = Math.random() * 255;
+    img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
+    img.data[i + 3] = 9;   // ~3,5% — visible para el degradado, invisible para el ojo
+  }
+  tctx.putImageData(img, 0, 0);
+  noisePattern = ctx.createPattern(tile, 'repeat');
+  return noisePattern;
+}
 
 /* Los colores salen de las variables del documento, no de literales: si la
    paleta cambia en tokens/, estas bandas cambian con ella. */
@@ -144,12 +174,13 @@ function drawPlexus(ctx, w, h, pts, t, depth, c) {
 function makeCorridor(rnd) {
   /* Bloques a ambos lados del pasillo. El hueco central se respeta siempre:
      es por donde entra la mirada, y donde va el titular. */
-  return Array.from({ length: 26 }, (_, i) => ({
+  return Array.from({ length: 24 }, (_, i) => ({
     side: i % 2 ? 1 : -1,
-    off: 0.28 + rnd() * 0.5,
-    w: 0.1 + rnd() * 0.16,
-    h: 0.2 + rnd() * 0.62,
-    z: (i / 26) + rnd() * 0.03,
+    off: 0.3 + rnd() * 0.5,
+    w: 0.12 + rnd() * 0.18,
+    d: 0.18 + rnd() * 0.34,     // fondo del bloque: lo que lo convierte en caja
+    h: 0.22 + rnd() * 0.66,
+    z: (i / 24) + rnd() * 0.03,
   }));
 }
 
@@ -163,10 +194,12 @@ function drawCorridor(ctx, w, h, blocks, t, depth, c) {
   };
   const travel = (depth * 4 + t * 0.06) % 1;
 
-  ctx.lineWidth = 1;
+  ctx.lineCap = 'butt';
+  ctx.lineJoin = 'miter';
 
   /* Suelo: líneas de fuga y travesaños que se acercan */
-  ctx.strokeStyle = rgba(c.green, 0.34);
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = rgba(c.green, 0.3);
   for (let i = -7; i <= 7; i++) {
     const x = i * 0.16;
     const [ax, ay] = P(x, 0.5, 0.06);
@@ -178,50 +211,92 @@ function drawCorridor(ctx, w, h, blocks, t, depth, c) {
     if (z < 0.06) continue;
     const a = Math.max(0, 0.6 - z * 0.16);
     if (a < 0.01) continue;
+    ctx.lineWidth = clamp(1.6 / Math.max(z, 0.25), 0.9, 2.2);
     ctx.strokeStyle = rgba(c.green, a);
     const [ax, ay] = P(-1.2, 0.5, z);
     const [bx, by] = P(1.2, 0.5, z);
     ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.stroke();
     /* Vértices de la retícula: la referencia los tiene, y son los que hacen
        legible la velocidad al pasar el suelo por debajo. */
-    ctx.fillStyle = rgba(c.green, a * 1.3);
+    ctx.fillStyle = rgba(c.green, Math.min(1, a * 1.3));
     for (let k = -7; k <= 7; k++) {
       const [vx, vy] = P(k * 0.16, 0.5, z);
-      /* Tope al radio: sin él los vértices cercanos crecían hasta 11 px y en
-         móvil se comían la retícula que están ahí para marcar. */
-      ctx.beginPath(); ctx.arc(vx, vy, Math.min(3.4, Math.max(0.8, 2.2 / Math.max(z, 0.2))), 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(vx, vy, clamp(2.2 / Math.max(z, 0.2), 0.8, 3.4), 0, Math.PI * 2); ctx.fill();
     }
   }
 
-  /* Bloques: solo aristas, como en la referencia — el volumen se sugiere */
-  for (const b of blocks) {
-    const z = ((b.z - travel) * 3.2 + 3.2) % 3.2 + 0.12;
-    const a = Math.max(0, 0.78 - z * 0.2);
-    if (a < 0.015) continue;
-    ctx.strokeStyle = rgba(c.green, a);
+  /* Bloques como cajas de verdad. Antes eran un `rect` a una sola profundidad:
+     rectángulos planos flotando de canto, que es exactamente lo que se veía mal.
+     Ahora se proyectan las ocho esquinas y se dibujan las doce aristas, así que
+     el bloque tiene fondo y se lee como volumen. */
+  const ordered = blocks
+    .map((b) => ({ b, z: ((b.z - travel) * 3.2 + 3.2) % 3.2 + 0.14 }))
+    .sort((p, q) => q.z - p.z);   // de lejos a cerca: lo cercano tapa a lo lejano
+
+  for (const { b, z } of ordered) {
+    const zf = z + b.d;
+    const a = Math.max(0, 0.8 - z * 0.2);
+    if (a < 0.02) continue;
+
     const x0 = b.side * b.off;
     const x1 = x0 + b.side * b.w;
-    const [ax, ay] = P(x0, 0.5, z);
-    const [bx, by] = P(x1, 0.5, z);
-    const [, ty] = P(x0, 0.5 - b.h, z);
-    ctx.beginPath();
-    ctx.rect(Math.min(ax, bx), ty, Math.abs(bx - ax), ay - ty);
-    ctx.stroke();
-    /* Vértices marcados: es lo que da la lectura de "wireframe" y no de caja */
+    const yb = 0.5;
+    const yt = 0.5 - b.h;
+
+    /* n = cara cercana, f = cara lejana; el orden de las esquinas es el mismo
+       en las dos para poder unirlas por índice. */
+    const near = [[x0, yt], [x1, yt], [x1, yb], [x0, yb]].map(([x, y]) => P(x, y, z));
+    const far = [[x0, yt], [x1, yt], [x1, yb], [x0, yb]].map(([x, y]) => P(x, y, zf));
+
+    ctx.lineWidth = clamp(2.1 / Math.max(z, 0.3), 0.9, 2.4);
+
+    ctx.strokeStyle = rgba(c.green, a * 0.42);   // la cara del fondo, más apagada
+    ring(ctx, far);
+    ctx.strokeStyle = rgba(c.green, a * 0.55);   // las aristas que unen las dos caras
+    for (let i = 0; i < 4; i++) {
+      ctx.beginPath(); ctx.moveTo(near[i][0], near[i][1]); ctx.lineTo(far[i][0], far[i][1]); ctx.stroke();
+    }
+    ctx.strokeStyle = rgba(c.green, a);          // la cara de delante manda
+    ring(ctx, near);
+
     ctx.fillStyle = rgba(c.green, a);
-    for (const [vx, vy] of [[ax, ay], [bx, by], [ax, ty], [bx, ty]]) {
-      ctx.beginPath(); ctx.arc(vx, vy, 1.4, 0, Math.PI * 2); ctx.fill();
+    for (const [vx, vy] of near) {
+      ctx.beginPath(); ctx.arc(vx, vy, clamp(1.9 / Math.max(z, 0.4), 1, 2.6), 0, Math.PI * 2); ctx.fill();
     }
   }
 
-  /* Punto de fuga: el destino, encendido */
-  const g = ctx.createRadialGradient(cx, hz, 0, cx, hz, w * 0.075);
-  g.addColorStop(0, rgba(c.ice, 1));
-  g.addColorStop(0.06, rgba(c.green, 0.72));
-  g.addColorStop(0.3, rgba(c.green, 0.16));
-  g.addColorStop(1, rgba(c.green, 0));
+  /* Punto de fuga. Dos capas en vez de un degradado largo: el halo ancho a muy
+     baja opacidad y el núcleo pequeño y brillante. Un solo degradado de radio
+     grande sobre navy casi negro escalona en anillos visibles. */
+  glow(ctx, cx, hz, w * 0.16, [[0, rgba(c.green, 0.22)], [0.45, rgba(c.green, 0.05)], [1, rgba(c.green, 0)]]);
+  glow(ctx, cx, hz, w * 0.03, [[0, rgba(c.ice, 0.95)], [0.25, rgba(c.green, 0.6)], [1, rgba(c.green, 0)]]);
+}
+
+/* Contorno cerrado de cuatro esquinas ya proyectadas */
+function ring(ctx, pts) {
+  ctx.beginPath();
+  pts.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
+  ctx.closePath();
+  ctx.stroke();
+}
+
+function glow(ctx, x, y, r, stops) {
+  const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+  stops.forEach(([o, col]) => g.addColorStop(o, col));
   ctx.fillStyle = g;
-  ctx.beginPath(); ctx.arc(cx, hz, w * 0.075, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+}
+
+const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+
+function grain(ctx, w, h) {
+  const p = noise(ctx);
+  if (!p) return;
+  ctx.save();
+  ctx.globalCompositeOperation = 'overlay';
+  ctx.fillStyle = p;
+  ctx.fillRect(0, 0, w, h);
+  ctx.restore();
 }
 
 function makeStreams(rnd) {
@@ -461,15 +536,21 @@ export default function Field({ variant = 'plexus', seed = 7, depthRef, classNam
       ctx.fillStyle = c.bg;
       ctx.fillRect(0, 0, w, h);
       draw(ctx, w, h, items, t, depth, c);
+      grain(ctx, w, h);
+    };
+
+    const still = () => {
+      ctx.fillStyle = c.bg;
+      ctx.fillRect(0, 0, w, h);
+      draw(ctx, w, h, items, 0, 0.5, c);
+      grain(ctx, w, h);
     };
 
     if (reduced) {
       /* Un fotograma en el punto medio: la banda se ve, no se mueve */
       depth = 0.5;
-      ctx.fillStyle = c.bg;
-      ctx.fillRect(0, 0, w, h);
-      draw(ctx, w, h, items, 0, 0.5, c);
-      const ro = new ResizeObserver(() => { resize(); ctx.fillStyle = c.bg; ctx.fillRect(0, 0, w, h); draw(ctx, w, h, items, 0, 0.5, c); });
+      still();
+      const ro = new ResizeObserver(() => { resize(); still(); });
       ro.observe(host);
       return () => ro.disconnect();
     }

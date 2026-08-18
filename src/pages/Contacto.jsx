@@ -56,7 +56,7 @@ const NEXT = [
 
 export default function Contacto() {
   return (
-    <div data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
+    <main id="contenido" data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
       <SiteHeader />
 
       <Section band="dark" pad="var(--space-12)">
@@ -104,12 +104,12 @@ export default function Contacto() {
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, font: 'var(--type-body)', color: 'var(--text-muted)' }}>
             <Ico name="chat" size={20} style={{ color: 'var(--text-accent)' }} />
             O escríbenos a{' '}
-            <a href="mailto:hello@meetbecome.com" style={{ color: 'var(--text-accent)' }}>hello@meetbecome.com</a>
+            <a href="mailto:hello@meetbecome.com" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 24, color: 'var(--text-accent)' }}>hello@meetbecome.com</a>
           </span>
         </div>
       </Section>
 
       <SiteFooter />
-    </div>
+    </main>
   );
 }

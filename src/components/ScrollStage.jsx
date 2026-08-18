@@ -106,7 +106,11 @@ function Relay({ step, index, count, progress }) {
      rangos a una animación del navegador, y esa API rechaza un desplazamiento
      fuera de [0,1] o fuera de orden: el primer y el último mensaje, que se
      salían por los extremos, tiraban la página entera al montarla. */
-  const stops = clampStops([a - w * 0.28, a + w * 0.2, b - w * 0.2, b + w * 0.14]);
+  /* Ventanas de relevo cortas. Con las anteriores el mensaje entrante pasaba
+     un tramo largo entre 0,1 y 0,2 de opacidad y con desenfoque: no se leía,
+     pero se veía — un borrón detrás del titular activo. Un fundido nunca debe
+     quedarse ahí. */
+  const stops = clampStops([a - w * 0.13, a + w * 0.05, b - w * 0.16, b + w * 0.02]);
 
   /* Los extremos no se desvanecen. El primer mensaje tiene que estar legible en
      el instante en que la sección se fija —si entra desde cero, quien llega ve
@@ -124,9 +128,9 @@ function Relay({ step, index, count, progress }) {
   const presence = React.useCallback((v) => {
     const [s0, s1, s2, s3] = stops;
     if (v <= s0) return first ? 1 : 0;
-    if (v < s1) return first ? 1 : (v - s0) / (s1 - s0);
+    if (v < s1) return first ? 1 : cut((v - s0) / (s1 - s0));
     if (v <= s2) return 1;
-    if (v < s3) return last ? 1 : 1 - (v - s2) / (s3 - s2);
+    if (v < s3) return last ? 1 : cut(1 - (v - s2) / (s3 - s2));
     return last ? 1 : 0;
   }, [stops[0], stops[1], stops[2], stops[3], first, last]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -153,6 +157,9 @@ function Relay({ step, index, count, progress }) {
     </motion.div>
   );
 }
+
+/* Por debajo de 0,12 no hay nada: o el mensaje se lee o no está. */
+const cut = (v) => (v < 0.12 ? 0 : v);
 
 /* Recorta a [0,1] y garantiza que cada parada supere a la anterior; un rango de
    entrada plano o descendente rompe tanto la interpolación como la API de

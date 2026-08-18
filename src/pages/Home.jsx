@@ -108,7 +108,7 @@ const INSIGHTS = [
 
 export default function Home() {
   return (
-    <div data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
+    <main id="contenido" data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
       <SiteHeader />
 
       {/* 01 — Hero. Comprensible sin animación; el CTA es usable desde el primer
@@ -303,7 +303,7 @@ export default function Home() {
         </Cols>
 
         <div style={{ marginTop: 'var(--space-10)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
-          <GhostCTA to="/es/servicios">Compara los tres</GhostCTA>
+          <GhostCTA to="/es/servicios#comparacion">Compara los tres</GhostCTA>
           <PrimaryCTA to="/es/contacto">Cuéntanos qué debe cambiar</PrimaryCTA>
         </div>
       </Section>
@@ -346,7 +346,7 @@ export default function Home() {
         <Kicker>Por qué BECOME</Kicker>
         <Headline>Strategy that builds. Technology that embeds. Capability that stays.</Headline>
         <div style={{ marginTop: 'var(--space-10)' }}>
-          <Split src="/images/45-executive.webp" alt="Conversación ejecutiva sobre el modelo operativo" ratio="4 / 3">
+          <Split src="/images/45-executive.webp" alt="Conversación ejecutiva sobre el modelo operativo" ratio="1 / 1">
             <div style={{ display: 'grid', gap: 'var(--space-7)' }}>
               {PRINCIPLES.map(([icon, name, line]) => (
                 <Reveal as="div" key={name} style={{ display: 'grid', gridTemplateColumns: '44px minmax(0,1fr)', gap: 'var(--space-5)', alignItems: 'start', borderTop: '1px solid var(--border-strong)', paddingTop: 'var(--space-5)' }}>
@@ -419,12 +419,12 @@ export default function Home() {
         <p style={{ margin: 'var(--space-7) 0 0', display: 'inline-flex', alignItems: 'center', gap: 10, font: 'var(--type-body)', color: 'var(--slate-200)' }}>
           <Ico name="chat" size={20} style={{ color: 'var(--electric-green)' }} />
           O escríbenos a{' '}
-          <a href="mailto:hello@meetbecome.com" style={{ color: 'var(--electric-green)' }}>hello@meetbecome.com</a>
+          <a href="mailto:hello@meetbecome.com" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 24, color: 'var(--electric-green)' }}>hello@meetbecome.com</a>
         </p>
       </Section>
 
       <SiteFooter />
-    </div>
+    </main>
   );
 }
 

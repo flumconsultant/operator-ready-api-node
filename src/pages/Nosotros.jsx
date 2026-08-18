@@ -17,21 +17,21 @@ import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, TextCTA, Cols, Index
  */
 
 const DNA = [
-  ['Business-first', 'Comenzamos por el outcome y la decisión empresarial, no por la herramienta.'],
-  ['AI-native', 'Diseñamos modelos de trabajo que incorporan inteligencia desde su origen.'],
-  ['Systems-minded', 'Conectamos estrategia, personas, datos, agents, operaciones y governance.'],
-  ['Builder', 'Convertimos direction y blueprint en capabilities que funcionan.'],
-  ['Human-accountable', 'La IA amplía la capacidad; las personas mantienen dirección, supervisión y responsabilidad.'],
-  ['Embedded', 'Trabajamos con el equipo del cliente para que la capability permanezca y evolucione.'],
+  ['target', 'Business-first', 'Comenzamos por el outcome y la decisión empresarial, no por la herramienta.'],
+  ['native', 'AI-native', 'Diseñamos modelos de trabajo que incorporan inteligencia desde su origen.'],
+  ['system', 'Systems-minded', 'Conectamos estrategia, personas, datos, agents, operaciones y governance.'],
+  ['build', 'Builder', 'Convertimos direction y blueprint en capabilities que funcionan.'],
+  ['accountable', 'Human-accountable', 'La IA amplía la capacidad; las personas mantienen dirección, supervisión y responsabilidad.'],
+  ['embed', 'Embedded', 'Trabajamos con el equipo del cliente para que la capability permanezca y evolucione.'],
 ];
 
 const CULTURE = [
-  ['Think in outcomes', 'Preguntamos qué decisión, comportamiento o business result debe cambiar antes de hablar de tecnología.'],
-  ['Go inside the system', 'Buscamos la causa en el operating model, no una solución superficial al síntoma.'],
-  ['Build with, not for', 'Diseñamos y construimos junto a quienes operarán la capability.'],
-  ['Stay curious, stay precise', 'Exploramos posibilidades sin confundir exploración con evidencia.'],
-  ['Earn trust', 'Hacemos visibles límites, riesgos, assumptions, controls y decisiones.'],
-  ['Leave capability behind', 'El trabajo debe aumentar la autonomía del cliente, no su dependencia de BECOME.'],
+  ['outcome', 'Think in outcomes', 'Preguntamos qué decisión, comportamiento o business result debe cambiar antes de hablar de tecnología.'],
+  ['inspect', 'Go inside the system', 'Buscamos la causa en el operating model, no una solución superficial al síntoma.'],
+  ['together', 'Build with, not for', 'Diseñamos y construimos junto a quienes operarán la capability.'],
+  ['idea', 'Stay curious, stay precise', 'Exploramos posibilidades sin confundir exploración con evidencia.'],
+  ['trust', 'Earn trust', 'Hacemos visibles límites, riesgos, assumptions, controls y decisiones.'],
+  ['capability', 'Leave capability behind', 'El trabajo debe aumentar la autonomía del cliente, no su dependencia de BECOME.'],
 ];
 
 const DELIVERY = [
@@ -45,7 +45,7 @@ const DELIVERY = [
 
 export default function Nosotros() {
   return (
-    <div data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
+    <main id="contenido" data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
       <SiteHeader />
 
       <Section band="dark" pad="var(--space-12)">
@@ -116,23 +116,31 @@ export default function Nosotros() {
         </div>
       </Section>
 
-      {/* 05 — creencia */}
+      {/* 05 — creencia.
+          El titular vive dentro de la columna de texto, no encima del bloque.
+          La altura de una fila la fija la imagen; con solo dos párrafos al lado,
+          el texto quedaba flotando en el centro de una fila mucho más alta y la
+          sección se leía medio vacía. Con el titular dentro, las dos columnas
+          miden casi lo mismo y el aire vuelve a ser intencionado. */}
       <Section band="light">
-        <Kicker>Nuestra creencia</Kicker>
-        <Headline>La transformación no se instala. Se construye dentro.</Headline>
-        <div style={{ marginTop: 'var(--space-10)' }}>
-          <Split src="/images/17-team-collab.webp" alt="Equipo del cliente trabajando junto al equipo de BECOME" flip>
-            <Lead>
-              Los pilotos aislados no cambian una empresa. El cambio ocurre cuando se
-              rediseñan workflows, roles, decision rights, data, controls, skills y
-              measures como un solo operating system.
-            </Lead>
-            <Body>
-              Por eso construimos con los equipos del cliente y transferimos ownership
-              desde el inicio.
-            </Body>
-          </Split>
-        </div>
+        <Split
+          src="/images/17-team-collab.webp"
+          alt="Equipo del cliente trabajando junto al equipo de BECOME"
+          ratio="1 / 1"
+          media="0.78fr"
+        >
+          <Kicker>Nuestra creencia</Kicker>
+          <Headline>La transformación no se instala. Se construye dentro.</Headline>
+          <Lead>
+            Los pilotos aislados no cambian una empresa. El cambio ocurre cuando se
+            rediseñan workflows, roles, decision rights, data, controls, skills y
+            measures como un solo operating system.
+          </Lead>
+          <Body>
+            Por eso construimos con los equipos del cliente y transferimos ownership
+            desde el inicio.
+          </Body>
+        </Split>
       </Section>
 
       {/* 06 — ADN */}
@@ -140,7 +148,7 @@ export default function Nosotros() {
         <Kicker>Nuestro ADN</Kicker>
         <Headline>Seis rasgos, y cómo se notan en el trabajo.</Headline>
         <div style={{ marginTop: 'var(--space-10)' }}>
-          {DNA.map(([trait, how]) => <IndexRow key={trait} term={trait} def={how} />)}
+          {DNA.map(([icon, trait, how]) => <IndexRow key={trait} icon={icon} term={trait} def={how} />)}
         </div>
       </Section>
 
@@ -148,9 +156,12 @@ export default function Nosotros() {
       <Section band="darker">
         <Kicker dark>Nuestra cultura</Kicker>
         <Headline dark>Comportamientos observables, no adjetivos aspiracionales.</Headline>
-        <Cols min="260px">
-          {CULTURE.map(([name, line]) => (
-            <Reveal as="div" key={name} style={{ borderTop: '1px solid var(--border-hairline-dark)', paddingTop: 'var(--space-5)' }}>
+        {/* 300px fuerza tres columnas: con 260 caben cuatro y los seis
+            comportamientos quedaban en 4 + 2, con la segunda fila medio vacía. */}
+        <Cols min="300px">
+          {CULTURE.map(([icon, name, line]) => (
+            <Reveal as="div" key={name} style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
+              <Ico name={icon} size={28} style={{ color: 'var(--electric-green)', marginBottom: 'var(--space-5)' }} />
               <h3 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--white)' }}>{name}</h3>
               <Body dark style={{ marginTop: 'var(--space-4)' }}>{line}</Body>
             </Reveal>
@@ -206,6 +217,6 @@ export default function Nosotros() {
       </Section>
 
       <SiteFooter />
-    </div>
+    </main>
   );
 }

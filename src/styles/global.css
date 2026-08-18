@@ -285,3 +285,28 @@ label {
 @media (min-width: 901px) {
   [data-rail-dots] { display: none !important; }
 }
+
+/* Enlace de salto al contenido. Fuera de pantalla mientras nadie lo enfoca, y
+   por encima de la cabecera fija cuando aparece — si quedara por debajo, el
+   único elemento que existe para ayudar al teclado sería el único tapado. */
+.skip-link {
+  position: fixed;
+  top: 0; left: var(--gutter-page);
+  z-index: var(--z-modal);
+  transform: translateY(-140%);
+  display: inline-flex; align-items: center;
+  min-height: 44px; padding: 0 var(--space-6);
+  background: var(--electric-green);
+  color: var(--deep-navy);
+  font: var(--type-label);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  transition: transform .18s ease;
+}
+.skip-link:focus-visible { transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) { .skip-link { transition: none; } }
+
+/* El ancla no debe quedar debajo de la cabecera fija al saltar a ella */
+[id] { scroll-margin-top: 88px; }

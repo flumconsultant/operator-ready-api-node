@@ -126,7 +126,9 @@ export default function StateTransition({ dark = true }) {
         }}
       >
         <span style={{ textAlign: 'left' }}>Current state (C)</span>
-        <span aria-hidden="true" style={{ color: 'var(--electric-green)' }}>→</span>
+        {/* El verde puro sobre el fondo claro da 1,28:1. El token de acento ya
+            resuelve el verde legible de cada tema; el literal no. */}
+        <span aria-hidden="true" style={{ color: dark ? 'var(--electric-green)' : 'var(--text-accent)' }}>→</span>
         <span style={{ textAlign: 'right' }}>Future state (O)</span>
       </figcaption>
     </figure>

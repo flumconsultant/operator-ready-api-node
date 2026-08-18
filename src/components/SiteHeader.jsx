@@ -130,16 +130,29 @@ export default function SiteHeader() {
     </Link>
   );
 
+  const langItem = {
+    display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+    minWidth: 24, minHeight: 24,
+  };
+
   const Lang = () => (
     <span style={{ font: 'var(--type-label)', letterSpacing: 'var(--track-label)', color: 'var(--slate-300)', whiteSpace: 'nowrap' }}>
-      <span style={{ color: 'var(--white)' }}>ES</span>
+      {/* Cada opción con su propia área de 24×24: como texto suelto, "EN"
+          medía 18×14 y era un objetivo por debajo del mínimo. */}
+      <span style={{ ...langItem, color: 'var(--white)' }}>ES</span>
       {' / '}
-      <a href="/en" style={{ color: 'var(--slate-300)', textDecoration: 'none' }} className="hv-lang">EN</a>
+      <a href="/en" style={{ ...langItem, color: 'var(--slate-300)', textDecoration: 'none' }} className="hv-lang">EN</a>
     </span>
   );
 
   return (
     <>
+      {/* Enlace de salto: el primer tabulador de cada página. Sin él, llegar al
+          contenido con teclado obliga a recorrer los cinco elementos del menú,
+          sus dos desplegables y el CTA, en cada página. Solo aparece al recibir
+          el foco. */}
+      <a href="#contenido" data-skip-link className="skip-link">Saltar al contenido</a>
+
       <header
         data-header
         style={{
@@ -190,7 +203,9 @@ export default function SiteHeader() {
                     aria-label={`${drop === i ? 'Cerrar' : 'Desplegar'} ${item.label}`}
                     onClick={() => setDrop((d) => (d === i ? null : i))}
                     style={{
-                      ...linkStyle, padding: '12px 4px',
+                      /* 9 px de aire a cada lado: con 4 el botón medía 18 de
+                         ancho, por debajo del mínimo de 24 de WCAG 2.2. */
+                      ...linkStyle, padding: '12px 9px', minWidth: 28,
                       color: drop === i ? 'var(--electric-green)' : 'var(--slate-300)',
                     }}
                     className="hv-nav"

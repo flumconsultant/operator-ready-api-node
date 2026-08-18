@@ -53,7 +53,7 @@ const DECISIONS = [
 
 export default function Discovery() {
   return (
-    <div data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
+    <main id="contenido" data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
       <SiteHeader />
 
       <Section band="dark" pad="var(--space-12)">
@@ -224,6 +224,6 @@ export default function Discovery() {
       </Section>
 
       <SiteFooter />
-    </div>
+    </main>
   );
 }

@@ -144,13 +144,17 @@ export function Banner({ variant = 'plexus', seed = 7, children, height = 'clamp
  * Bloque de imagen + contenido. `flip` pone la imagen a la derecha; alternarlos
  * es lo que da ritmo a una página larga.
  */
-export function Split({ src, alt, ratio = '4 / 5', flip = false, children }) {
+export function Split({ src, alt, ratio = '4 / 5', media = '1fr', flip = false, children }) {
+  /* `media` y `ratio` van juntos y no por gusto: la altura de la fila la fija la
+     imagen, así que una imagen vertical al lado de tres líneas de texto deja un
+     hueco vertical enorme y la sección se lee vacía. Cuando el texto es corto,
+     la imagen tiene que ser apaisada y su columna más estrecha. */
   return (
     <div
       data-cols
       style={{
         display: 'grid',
-        gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.1fr)',
+        gridTemplateColumns: `minmax(0, ${media}) minmax(0, 1.1fr)`,
         gap: 'var(--space-10)',
         alignItems: 'center',
         direction: flip ? 'rtl' : 'ltr',

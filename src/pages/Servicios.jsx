@@ -36,7 +36,7 @@ const COMPARE = [
 
 export default function Servicios() {
   return (
-    <div data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
+    <main id="contenido" data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
       <SiteHeader />
 
       <Section band="dark" pad="var(--space-12)">
@@ -145,7 +145,7 @@ export default function Servicios() {
         </Body>
       </Section>
 
-      <Section band="light">
+      <Section band="light" id="comparacion">
         <Kicker>Comparación</Kicker>
         <Headline>Cuál necesitas y por qué.</Headline>
         <div style={{ marginTop: 'var(--space-10)', overflowX: 'auto' }}>
@@ -170,7 +170,7 @@ export default function Servicios() {
         </div>
       </Section>
 
-      <Section band="sunken">
+      <Section band="sunken" id="cual-necesito">
         <Kicker>Selector de fit</Kicker>
         <Headline>En una frase.</Headline>
         <Cols min="260px">
@@ -211,7 +211,7 @@ export default function Servicios() {
       </Section>
 
       <SiteFooter />
-    </div>
+    </main>
   );
 }
 

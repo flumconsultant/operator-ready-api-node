@@ -48,7 +48,7 @@ const GOVERNANCE = [
 
 export default function Framework() {
   return (
-    <div data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
+    <main id="contenido" data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
       <SiteHeader />
 
       <Section band="dark" pad="var(--space-12)">
@@ -183,6 +183,6 @@ export default function Framework() {
       </Section>
 
       <SiteFooter />
-    </div>
+    </main>
   );
 }

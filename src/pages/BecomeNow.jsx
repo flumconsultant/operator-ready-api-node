@@ -25,7 +25,7 @@ import {
  */
 export default function BecomeNow() {
   return (
-    <div data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
+    <main id="contenido" data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
       <SiteHeader />
 
       <Section band="dark" pad="var(--space-12)">
@@ -149,7 +149,7 @@ export default function BecomeNow() {
                 {i + 1}
               </span>
               <h3 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--white)' }}>{t}</h3>
-              <p style={{ margin: 0, font: 'var(--type-body)', color: 'var(--slate-200)' }}>{d}</p>
+              <p style={{ margin: 0, font: 'var(--type-body)', color: 'var(--slate-200)', maxWidth: '62ch' }}>{d}</p>
             </Reveal>
           ))}
         </div>
@@ -337,7 +337,7 @@ export default function BecomeNow() {
       </Section>
 
       <SiteFooter />
-    </div>
+    </main>
   );
 }
 

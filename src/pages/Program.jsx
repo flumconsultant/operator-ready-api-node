@@ -21,7 +21,7 @@ export default function Program() {
   const others = PROGRAM_LIST.filter((x) => x.slug !== slug).slice(0, 3);
 
   return (
-    <div data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
+    <main id="contenido" data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
       <SiteHeader />
 
       <Section band="dark" pad="var(--space-12)">
@@ -117,7 +117,7 @@ export default function Program() {
               <h3 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)' }}>
                 <span className="sr-only">{`Sesión ${i + 1}: `}</span>{topic}
               </h3>
-              <p style={{ margin: 0, font: 'var(--type-body)', color: 'var(--text-muted)' }}>
+              <p style={{ margin: 0, font: 'var(--type-body)', color: 'var(--text-muted)', maxWidth: '62ch' }}>
                 <span style={{ color: 'var(--text-accent)' }}>Queda instalado: </span>{capability}
               </p>
             </Reveal>
@@ -225,6 +225,6 @@ export default function Program() {
       </Section>
 
       <SiteFooter />
-    </div>
+    </main>
   );
 }

@@ -8,6 +8,7 @@ import {
   ChatCircleText, CalendarCheck, Signpost,
   Books, MapTrifold, Scales, ChartLineUp, Stack, Clock,
   CheckCircle, XCircle, FileText, Briefcase, Lightbulb, Path,
+  Cpu, TreeStructure, UserFocus, Crosshair, MagnifyingGlass, Certificate,
 } from '@phosphor-icons/react';
 
 /**
@@ -72,6 +73,14 @@ const REGISTRY = {
   work: Briefcase,
   idea: Lightbulb,
   route: Path,
+
+  /* ADN y cultura */
+  native: Cpu,
+  system: TreeStructure,
+  accountable: UserFocus,
+  outcome: Crosshair,
+  inspect: MagnifyingGlass,
+  trust: Certificate,
 };
 
 export function Ico({ name, size = 26, color = 'currentColor', weight = 'light', style }) {
