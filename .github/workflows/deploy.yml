@@ -53,6 +53,7 @@ jobs:
         run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
 
       - name: Subir a public_html
+        timeout-minutes: 6
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USER: ${{ secrets.FTP_USER }}
@@ -95,6 +96,13 @@ jobs:
             echo "::warning::Verificación del certificado desactivada. El tráfico sigue cifrado, pero no se comprueba que el servidor sea quien dice ser."
             VERIFICAR=false
           fi
+          # Se imprime tal cual, para no depender de activar el modo de
+          # depuración de GitHub y leer líneas ##[debug]: si esto dice
+          # "(vacía)", la variable FTP_TLS_RELAJADO no está llegando — lo más
+          # probable es que se haya guardado como Secret en vez de Variable,
+          # que son dos pestañas distintas en la misma pantalla y es fácil
+          # confundirlas.
+          echo "FTP_TLS_RELAJADO recibido: '${TLS_RELAJADO:-(vacía)}'  → verificación de certificado: $([ "$VERIFICAR" = true ] && echo activada || echo desactivada)"
 
           # ¿Dónde hay que dejar los archivos?
           #
@@ -125,13 +133,13 @@ jobs:
             # 1. El bundle con hash va con --delete: esa carpeta es solo nuestra,
             #    y sin borrar acumularía todos los bundles de todos los despliegues
             #    para siempre.
-            mirror --reverse --delete --parallel=4 --verbose dist/assets/ $DESTINO/assets/;
+            mirror --reverse --delete --parallel=2 --verbose dist/assets/ $DESTINO/assets/;
 
             # 2. El resto va SIN --delete, a propósito. Si hubiera algo más en
             #    public_html —un archivo de verificación de dominio, un correo,
             #    cualquier cosa puesta a mano— borrarlo desde aquí sería
             #    destruir trabajo que este repositorio no conoce.
-            mirror --reverse --parallel=4 --verbose --exclude-glob assets/* dist/ $DESTINO/;
+            mirror --reverse --parallel=2 --verbose --exclude-glob assets/* dist/ $DESTINO/;
           "
 
       - name: Resumen
