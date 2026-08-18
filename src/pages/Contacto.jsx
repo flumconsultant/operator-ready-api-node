@@ -123,7 +123,7 @@ export default function Contacto() {
                   <p style={{ margin: "var(--space-5) 0 0", font: "var(--type-lead)", color: "var(--text-body)", maxWidth: "56ch" }}>
                     Revisaremos el contexto y responderemos con la conversación adecuada, no con una secuencia comercial automatizada.
                   </p>
-                  <Link to="/" style={{ display: "inline-flex", alignItems: "center", margin: "var(--space-7) 0 0", minHeight: "44px", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--text-accent)", textDecoration: "none", borderBottom: "1px solid var(--border-strong)" }}>
+                  <Link to="/es" style={{ display: "inline-flex", alignItems: "center", margin: "var(--space-7) 0 0", minHeight: "44px", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--text-accent)", textDecoration: "none", borderBottom: "1px solid var(--border-strong)" }}>
                     Volver al inicio →
                   </Link>
                 </div>

@@ -231,7 +231,7 @@ export default function Trabajo() {
             <p style={{ margin: "var(--space-7) 0 0", font: "var(--type-body)", color: "var(--slate-300)" }}>
               [EVIDENCIA REQUERIDA] Los casos con resultados medidos se publicarán solo con aprobación del cliente.
             </p>
-            <Link to="/contacto" style={{ display: "inline-flex", alignItems: "center", margin: "var(--space-9) 0 0", minHeight: "52px", padding: "0 var(--space-7)", borderRadius: "var(--radius-pill)", background: "var(--electric-green)", color: "var(--deep-navy)", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", textDecoration: "none" }} className="hv-a750771">
+            <Link to="/es/contacto" style={{ display: "inline-flex", alignItems: "center", margin: "var(--space-9) 0 0", minHeight: "52px", padding: "0 var(--space-7)", borderRadius: "var(--radius-pill)", background: "var(--electric-green)", color: "var(--deep-navy)", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", textDecoration: "none" }} className="hv-a750771">
               Inicia tu Discovery
             </Link>
           </div>

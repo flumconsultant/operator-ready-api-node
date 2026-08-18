@@ -17,14 +17,30 @@ npm run preview    # sirve dist/ para comprobar el build
 | Carpeta | Qué hay |
 |---|---|
 | `tokens/*.css` | El sistema de diseño. Fuente de verdad de color, tipografía, espaciado, patrones y motion. |
-| `src/pages/` | Una página por ruta, generadas desde los artboards. |
+| `src/site.js` | El mapa del sitio: rutas, menú y pie. Una sola fuente para los tres. |
+| `src/routes.jsx` | Las rutas del router, con redirecciones desde la maqueta anterior. |
+| `src/pages/` | Una página por ruta. Las nuevas están escritas a mano; las que quedan de la primera maqueta se siguen generando desde los artboards. |
+| `src/content/` | Contenido separado del componente — hoy, las seis páginas de casos de uso. |
 | `src/components/` | Cabecera, pie, `Reveal` y `RouteLoader`. |
 | `src/components/ai-node/` | El nodo 3D de la home: los cinco estados en `states.js`, el recorrido de cámara en `camera-path.js`, el canvas en `AiNode.jsx`, la capa y la carga diferida en `AiNodeStage.jsx`. |
 | `src/styles/global.css` | Lo que en los artboards vivía repetido en el `<helmet>` de cada uno. |
 | `assets/` | Imágenes, iconos, logo y fuentes. Vite lo sirve como `publicDir`, así que las rutas son `/images/…`, `/icons/…`, `/logo/…`, `/fonts/…`. |
 | `templates/website-es/` | Los artboards Durable originales. Siguen siendo el origen de la migración. |
 
-### La migración
+### Estado de la migración al documento de estrategia
+
+La arquitectura del documento v2.0 está montada: menú de cinco entradas con dos
+desplegables, rutas `/es/…`, footer de cinco columnas y la home con su journey
+canónico. Lo que todavía arrastra copy de la primera maqueta:
+
+| Ruta | Estado |
+|---|---|
+| `/es/framework` · `/es/nosotros` · `/es/insights` · `/es/contacto` | Artboard migrado, en su URL definitiva. Copy pendiente. |
+| `/es/servicios/transformation-discovery` · `/es/servicios/build-and-embed` | Igual. |
+| `/es/privacidad` · `/es/terminos` | Estructura lista, texto legal pendiente de asesoría. |
+| Versión inglesa | Sin empezar. |
+
+### La migración desde Durable
 
 `npm run migrate:dc` regenera `src/pages/` y `src/components/` desde
 `templates/website-es/*.dc.html`. Convierte el formato Durable a JSX: `style=""`

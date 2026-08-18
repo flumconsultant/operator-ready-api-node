@@ -25,7 +25,7 @@ export default function Discovery() {
             <p style={{ margin: "var(--space-7) 0 0", font: "var(--type-lead)", color: "var(--slate-100)", maxWidth: "56ch" }}>
               Un engagement corporativo de 8–12 semanas que conecta AI-native strategy, enterprise diagnosis, value prioritization y operating-model design.
             </p>
-            <Link to="/contacto" style={{ display: "inline-flex", alignItems: "center", margin: "var(--space-9) 0 0", minHeight: "52px", padding: "0 var(--space-7)", borderRadius: "var(--radius-pill)", background: "var(--electric-green)", color: "var(--deep-navy)", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", textDecoration: "none" }} className="hv-a750771">
+            <Link to="/es/contacto" style={{ display: "inline-flex", alignItems: "center", margin: "var(--space-9) 0 0", minHeight: "52px", padding: "0 var(--space-7)", borderRadius: "var(--radius-pill)", background: "var(--electric-green)", color: "var(--deep-navy)", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", textDecoration: "none" }} className="hv-a750771">
               Conversemos sobre Discovery
             </Link>
           </div>
@@ -253,7 +253,7 @@ export default function Discovery() {
             <p style={{ margin: "var(--space-6) 0 0", font: "var(--type-lead)", color: "var(--slate-100)", maxWidth: "52ch" }}>
               Cuéntanos qué necesita cambiar en el negocio. Determinaremos si Discovery es el primer paso adecuado.
             </p>
-            <Link to="/contacto" style={{ display: "inline-flex", alignItems: "center", margin: "var(--space-8) 0 0", minHeight: "52px", padding: "0 var(--space-7)", borderRadius: "var(--radius-pill)", background: "var(--electric-green)", color: "var(--deep-navy)", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", textDecoration: "none" }} className="hv-a750771">
+            <Link to="/es/contacto" style={{ display: "inline-flex", alignItems: "center", margin: "var(--space-8) 0 0", minHeight: "52px", padding: "0 var(--space-7)", borderRadius: "var(--radius-pill)", background: "var(--electric-green)", color: "var(--deep-navy)", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", textDecoration: "none" }} className="hv-a750771">
               Inicia tu Discovery
             </Link>
           </div>

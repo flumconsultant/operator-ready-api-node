@@ -317,7 +317,7 @@ export default function Framework() {
                 <p style={{ margin: "var(--space-4) 0 0", font: "var(--type-body)", color: "var(--text-body)" }}>
                   Define la ambición, diagnostica la empresa, prioriza el valor y diseña el target operating model.
                 </p>
-                <Link to="/discovery" style={{ display: "inline-flex", alignItems: "center", margin: "var(--space-6) 0 0", minHeight: "44px", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--text-accent)", textDecoration: "none", borderBottom: "1px solid var(--border-strong)" }}>
+                <Link to="/es/servicios/transformation-discovery" style={{ display: "inline-flex", alignItems: "center", margin: "var(--space-6) 0 0", minHeight: "44px", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--text-accent)", textDecoration: "none", borderBottom: "1px solid var(--border-strong)" }}>
                   Conversemos sobre Discovery →
                 </Link>
               </Reveal>
@@ -331,7 +331,7 @@ export default function Framework() {
                 <p style={{ margin: "var(--space-4) 0 0", font: "var(--type-body)", color: "var(--text-body)" }}>
                   Valida el operating model, construye la capability prioritaria y la incorpora con adopción y medición.
                 </p>
-                <Link to="/build-embed" style={{ display: "inline-flex", alignItems: "center", margin: "var(--space-6) 0 0", minHeight: "44px", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--text-accent)", textDecoration: "none", borderBottom: "1px solid var(--border-strong)" }}>
+                <Link to="/es/servicios/build-and-embed" style={{ display: "inline-flex", alignItems: "center", margin: "var(--space-6) 0 0", minHeight: "44px", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--text-accent)", textDecoration: "none", borderBottom: "1px solid var(--border-strong)" }}>
                   Conversemos sobre Build & Embed →
                 </Link>
               </Reveal>
@@ -429,7 +429,7 @@ export default function Framework() {
             <h2 style={{ margin: "0", font: "var(--type-h1)", letterSpacing: "var(--track-display)", color: "var(--white)", maxWidth: "22ch" }}>
               Aplica el framework a tu empresa.
             </h2>
-            <Link to="/contacto" style={{ display: "inline-flex", alignItems: "center", margin: "var(--space-8) 0 0", minHeight: "52px", padding: "0 var(--space-7)", borderRadius: "var(--radius-pill)", background: "var(--electric-green)", color: "var(--deep-navy)", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", textDecoration: "none" }} className="hv-a750771">
+            <Link to="/es/contacto" style={{ display: "inline-flex", alignItems: "center", margin: "var(--space-8) 0 0", minHeight: "52px", padding: "0 var(--space-7)", borderRadius: "var(--radius-pill)", background: "var(--electric-green)", color: "var(--deep-navy)", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", textDecoration: "none" }} className="hv-a750771">
               Inicia tu Discovery
             </Link>
           </div>

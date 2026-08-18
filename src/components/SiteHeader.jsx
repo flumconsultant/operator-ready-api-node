@@ -1,20 +1,88 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { NAV, CONTACT, HOME } from '../site.js';
 
-/* Migrado de templates/website-es/SiteHeaderEs.dc.html por scripts/dc-to-jsx.mjs */
+/**
+ * Cabecera del sitio en español.
+ *
+ * Escrita a mano, ya no sale del conversor: los desplegables tienen estado,
+ * foco y teclado, y eso no cabía en el formato de los artboards.
+ *
+ * Reglas del documento que aquí son código, no estilo:
+ *
+ *   · La Home no es un ítem. El logotipo es el único acceso, con nombre
+ *     accesible "BECOME — Inicio".
+ *   · Los desplegables abren con click, teclado y foco. El hover es refuerzo,
+ *     nunca el único mecanismo — un menú que solo responde a hover no existe
+ *     para quien navega con teclado ni en una tableta.
+ *   · Solo uno abierto a la vez.
+ *   · Escape cierra y devuelve el foco al trigger que lo abrió.
+ *   · En móvil son acordeones dentro del menú a pantalla completa; el hover no
+ *     participa.
+ */
+
+const linkStyle = {
+  font: 'var(--type-body)',
+  color: 'var(--slate-200)',
+  textDecoration: 'none',
+  padding: '12px 0',
+  whiteSpace: 'nowrap',
+  border: 0,
+  background: 'transparent',
+  cursor: 'pointer',
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '6px',
+};
+
+function Chevron({ open }) {
+  return (
+    <svg
+      width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"
+      style={{ transition: 'transform .2s ease', transform: open ? 'rotate(180deg)' : 'none' }}
+    >
+      <path d="M2 4.5L6 8.5L10 4.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export default function SiteHeader() {
-  const [open, setOpen] = React.useState(false);
-  const toggle = () => setOpen((o) => !o);
   const { pathname } = useLocation();
-  React.useEffect(() => { setOpen(false); }, [pathname]);
+  const [open, setOpen] = React.useState(false);        // menú móvil
+  const [drop, setDrop] = React.useState(null);         // índice del desplegable abierto
+  const [acc, setAcc] = React.useState(null);           // acordeón móvil abierto
+  const [hidden, setHidden] = React.useState(false);
+  const triggers = React.useRef([]);
+  const barRef = React.useRef(null);
+
+  /* Navegar cierra todo */
+  React.useEffect(() => { setOpen(false); setDrop(null); setAcc(null); }, [pathname]);
+
   React.useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [open]);
 
-  /* La barra se retira al bajar y vuelve al subir. Devolver espacio de pantalla
-     mientras se lee, y tener el menú a un gesto de distancia al querer salir. */
-  const [hidden, setHidden] = React.useState(false);
+  /* Escape cierra y devuelve el foco a quien abrió */
+  React.useEffect(() => {
+    const onKey = (e) => {
+      if (e.key !== 'Escape') return;
+      if (drop !== null) { const i = drop; setDrop(null); triggers.current[i]?.focus(); }
+      else if (open) setOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [drop, open]);
+
+  /* Un click fuera de la barra cierra el desplegable */
+  React.useEffect(() => {
+    if (drop === null) return;
+    const onDown = (e) => { if (!barRef.current?.contains(e.target)) setDrop(null); };
+    document.addEventListener('pointerdown', onDown);
+    return () => document.removeEventListener('pointerdown', onDown);
+  }, [drop]);
+
+  /* La barra se retira al bajar y vuelve al subir */
   React.useEffect(() => {
     let last = window.scrollY;
     let queued = false;
@@ -25,9 +93,7 @@ export default function SiteHeader() {
         queued = false;
         const y = window.scrollY;
         const dy = y - last;
-        /* Umbral de 6px: sin él, el rebote del trackpad y el movimiento de un
-           dedo tembloroso hacen parpadear la barra. */
-        if (Math.abs(dy) < 6) return;
+        if (Math.abs(dy) < 6) return;     // umbral: el rebote del trackpad no cuenta
         last = y;
         setHidden(dy > 0 && y > 140);
       });
@@ -36,112 +102,264 @@ export default function SiteHeader() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  /* Con el menú móvil abierto la barra no se esconde nunca: el botón de cerrar
-     vive dentro del overlay, pero el gesto de scroll no debe moverla. */
   React.useEffect(() => {
-    document.documentElement.toggleAttribute('data-header-hidden', hidden && !open);
-  }, [hidden, open]);
+    const hide = hidden && !open && drop === null;
+    document.documentElement.toggleAttribute('data-header-hidden', hide);
+  }, [hidden, open, drop]);
   React.useEffect(() => () => document.documentElement.removeAttribute('data-header-hidden'), []);
+
+  const Logo = ({ size = 23 }) => (
+    <Link to={HOME} aria-label="BECOME — Inicio" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44 }}>
+      <img src="/logo/wordmark-white.webp" alt="" style={{ height: size, width: 'auto', display: 'block' }} />
+    </Link>
+  );
+
+  const Lang = () => (
+    <span style={{ font: 'var(--type-label)', letterSpacing: 'var(--track-label)', color: 'var(--slate-300)', whiteSpace: 'nowrap' }}>
+      <span style={{ color: 'var(--white)' }}>ES</span>
+      {' / '}
+      <a href="/en" style={{ color: 'var(--slate-300)', textDecoration: 'none' }} className="hv-lang">EN</a>
+    </span>
+  );
 
   return (
     <>
-      <header data-header="" style={{ position: "fixed", top: "0", left: "0", right: "0", zIndex: "50", background: "rgba(8,11,30,.94)", backdropFilter: "blur(16px)", borderBottom: "1px solid var(--border-hairline-dark)", boxShadow: "0 18px 44px -34px rgba(0,0,0,.9)" }}>
-        <div data-bar="" style={{ maxWidth: "var(--maxw-content)", margin: "0 auto", minHeight: "72px", paddingTop: "14px", paddingBottom: "14px", paddingLeft: "var(--gutter-page)", paddingRight: "var(--gutter-page)", display: "flex", alignItems: "center", gap: "var(--space-8)", flexWrap: "nowrap" }}>
-          <Link to="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
-            <img src="/logo/wordmark-white.webp" alt="BECOME" style={{ height: "23px", width: "auto", display: "block" }} />
-          </Link>
-          <nav data-nav="" style={{ display: "flex", alignItems: "center", gap: "var(--space-6)", marginLeft: "auto", flexWrap: "nowrap" }}>
-            <Link to="/#propuesta" style={{ font: "var(--type-body)", color: "var(--slate-200)", textDecoration: "none", padding: "12px 0", whiteSpace: "nowrap", borderBottom: "1px solid transparent" }} className="hv-cc518c6">
-              Propuesta de valor
-            </Link>
-            <Link to="/como-trabajamos" style={{ font: "var(--type-body)", color: "var(--slate-200)", textDecoration: "none", padding: "12px 0", whiteSpace: "nowrap", borderBottom: "1px solid transparent" }} className="hv-cc518c6">
-              Cómo trabajamos
-            </Link>
-            <Link to="/casos" style={{ font: "var(--type-body)", color: "var(--slate-200)", textDecoration: "none", padding: "12px 0", whiteSpace: "nowrap", borderBottom: "1px solid transparent" }} className="hv-cc518c6">
-              Casos
-            </Link>
-            <Link to="/insights" style={{ font: "var(--type-body)", color: "var(--slate-200)", textDecoration: "none", padding: "12px 0", whiteSpace: "nowrap", borderBottom: "1px solid transparent" }} className="hv-cc518c6">
-              Insights
-            </Link>
-            <Link to="/nosotros" style={{ font: "var(--type-body)", color: "var(--slate-200)", textDecoration: "none", padding: "12px 0", whiteSpace: "nowrap", borderBottom: "1px solid transparent" }} className="hv-cc518c6">
-              Sobre nosotros
-            </Link>
+      <header
+        data-header
+        style={{
+          position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
+          background: 'rgba(8,11,30,.94)', backdropFilter: 'blur(16px)',
+          borderBottom: '1px solid var(--border-hairline-dark)',
+          boxShadow: '0 18px 44px -34px rgba(0,0,0,.9)',
+        }}
+      >
+        <div
+          ref={barRef}
+          data-bar
+          style={{
+            maxWidth: 'var(--maxw-content)', margin: '0 auto', minHeight: 72,
+            padding: '14px var(--gutter-page)', display: 'flex', alignItems: 'center',
+            gap: 'var(--space-8)', flexWrap: 'nowrap',
+          }}
+        >
+          <Logo />
+
+          <nav data-nav aria-label="Principal" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-6)', marginLeft: 'auto' }}>
+            {NAV.map((item, i) =>
+              item.items ? (
+                /* Dos controles, no uno. El label es un enlace a la landing de
+                   la sección y el chevrón es el botón que despliega. Con un
+                   único botón que alterna, hover y click se pisan: el puntero
+                   abre el panel al llegar y el click inmediato lo cierra, que
+                   es exactamente lo que hace cualquiera. Separarlos también
+                   deja el panel accesible por teclado sin secuestrar Enter. */
+                <div
+                  key={item.label}
+                  style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 2 }}
+                  onPointerEnter={() => window.matchMedia('(hover: hover)').matches && setDrop(i)}
+                  onPointerLeave={() => window.matchMedia('(hover: hover)').matches && setDrop((d) => (d === i ? null : d))}
+                >
+                  <Link
+                    to={item.to}
+                    style={{ ...linkStyle, color: drop === i ? 'var(--electric-green)' : 'var(--slate-200)' }}
+                    className="hv-nav"
+                  >
+                    {item.label}
+                  </Link>
+                  <button
+                    type="button"
+                    ref={(el) => { triggers.current[i] = el; }}
+                    aria-expanded={drop === i}
+                    aria-controls={`drop-${i}`}
+                    aria-label={`${drop === i ? 'Cerrar' : 'Desplegar'} ${item.label}`}
+                    onClick={() => setDrop((d) => (d === i ? null : i))}
+                    style={{
+                      ...linkStyle, padding: '12px 4px',
+                      color: drop === i ? 'var(--electric-green)' : 'var(--slate-300)',
+                    }}
+                    className="hv-nav"
+                  >
+                    <Chevron open={drop === i} />
+                  </button>
+
+                  {drop === i && (
+                    <div
+                      id={`drop-${i}`}
+                      style={{
+                        position: 'absolute', top: 'calc(100% + 14px)', left: item.wide ? 'auto' : 0,
+                        right: item.wide ? 0 : 'auto',
+                        width: item.wide ? 'min(680px, 74vw)' : 'min(420px, 74vw)',
+                        background: 'var(--navy-950)',
+                        border: '1px solid var(--border-hairline-dark)',
+                        boxShadow: '0 40px 80px -40px rgba(0,0,0,.9)',
+                        padding: 'var(--space-6)',
+                      }}
+                    >
+                      {item.heading && (
+                        <p style={{ margin: '0 0 var(--space-5)', font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--slate-400)' }}>
+                          {item.heading}
+                        </p>
+                      )}
+                      <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gridTemplateColumns: item.wide ? '1fr 1fr' : '1fr', gap: 'var(--space-5)' }}>
+                        {item.items.map((sub) => (
+                          <li key={sub.to}>
+                            <Link to={sub.to} style={{ display: 'block', textDecoration: 'none' }} className="drop-item">
+                              <span style={{ display: 'block', font: 'var(--type-body)', color: 'var(--white)' }}>{sub.label}</span>
+                              <span style={{ display: 'block', marginTop: 6, font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: 'var(--slate-300)' }}>{sub.line}</span>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                      {item.more && (
+                        <Link
+                          to={item.more.to}
+                          style={{
+                            display: 'inline-block', marginTop: 'var(--space-6)', paddingTop: 'var(--space-5)',
+                            borderTop: '1px solid var(--border-hairline-dark)', width: '100%',
+                            font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase',
+                            color: 'var(--electric-green)', textDecoration: 'none',
+                          }}
+                        >
+                          {item.more.label} →
+                        </Link>
+                      )}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link key={item.label} to={item.to} style={linkStyle} className="hv-nav">{item.label}</Link>
+              )
+            )}
           </nav>
-          <div data-bar-actions="" style={{ display: "flex", alignItems: "center", gap: "var(--space-5)" }}>
-            <span data-lang="" style={{ font: "var(--type-label)", letterSpacing: "var(--track-label)", color: "var(--slate-300)", whiteSpace: "nowrap" }}>
-              <span style={{ color: "var(--white)" }}>
-                ES
-              </span>
-              {' '}
-              /
-              {' '}
-              <a href="../website-en/WebsiteEn.dc.html" style={{ color: "var(--slate-300)", textDecoration: "none" }} className="hv-dc7f3e7">
-                EN
-              </a>
-            </span>
-            <Link data-cta="" to="/contacto" style={{ display: "inline-flex", alignItems: "center", minHeight: "44px", padding: "0 var(--space-6)", borderRadius: "var(--radius-pill)", background: "var(--electric-green)", color: "var(--deep-navy)", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", textDecoration: "none", whiteSpace: "nowrap" }} className="hv-a750771">
-              Inicia tu Discovery
+
+          <div data-bar-actions style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-5)', marginLeft: 'auto' }}>
+            <span data-lang><Lang /></span>
+            <Link
+              data-cta
+              to={CONTACT.to}
+              style={{
+                display: 'inline-flex', alignItems: 'center', minHeight: 44, padding: '0 var(--space-6)',
+                borderRadius: 'var(--radius-pill)', background: 'var(--electric-green)', color: 'var(--deep-navy)',
+                font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase',
+                textDecoration: 'none', whiteSpace: 'nowrap',
+              }}
+              className="cta-primary"
+            >
+              {CONTACT.label}
             </Link>
-            <button data-burger="" type="button" aria-label="Abrir menú" onClick={toggle} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "44px", height: "44px", border: "1px solid var(--border-strong-dark)", borderRadius: "2px", background: "transparent", color: "var(--white)", cursor: "pointer" }}>
+            <button
+              data-burger
+              type="button"
+              aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
+              aria-expanded={open}
+              onClick={() => setOpen((o) => !o)}
+              style={{
+                display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 44, height: 44,
+                border: '1px solid var(--border-strong-dark)', borderRadius: 2, background: 'transparent',
+                color: 'var(--white)', cursor: 'pointer',
+              }}
+            >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
-                <path d="M3 6h18M3 12h18M3 18h18" />
+                <path d={open ? 'M6 6l12 12M18 6L6 18' : 'M3 6h18M3 12h18M3 18h18'} />
               </svg>
             </button>
           </div>
         </div>
       </header>
+
+      {/* ---- menú móvil: editorial, a pantalla completa, con acordeones ---- */}
       {open && (
-        <>
-        <div style={{ position: "fixed", inset: "0", zIndex: "60", background: "var(--navy-950)", padding: "var(--space-6) var(--gutter-page)", display: "flex", flexDirection: "column", overflow: "auto" }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <img src="/logo/wordmark-white.webp" alt="BECOME" style={{ height: "23px", width: "auto", display: "block" }} />
-            <button type="button" aria-label="Cerrar menú" onClick={toggle} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "44px", height: "44px", border: "1px solid var(--border-strong-dark)", borderRadius: "2px", background: "transparent", color: "var(--white)", cursor: "pointer" }}>
+        <div
+          style={{
+            position: 'fixed', inset: 0, zIndex: 60, background: 'var(--navy-950)',
+            padding: 'var(--space-6) var(--gutter-page)', display: 'flex', flexDirection: 'column', overflow: 'auto',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Logo />
+            <button
+              type="button" aria-label="Cerrar menú" onClick={() => setOpen(false)}
+              style={{
+                display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 44, height: 44,
+                border: '1px solid var(--border-strong-dark)', borderRadius: 2, background: 'transparent',
+                color: 'var(--white)', cursor: 'pointer',
+              }}
+            >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
                 <path d="M6 6l12 12M18 6L6 18" />
               </svg>
             </button>
           </div>
-          <nav style={{ marginTop: "var(--space-10)", display: "flex", flexDirection: "column", gap: "var(--space-5)" }}>
-            <Link to="/#propuesta" style={{ font: "var(--type-h2)", letterSpacing: "var(--track-heading)", color: "var(--white)", textDecoration: "none" }}>
-              Propuesta de valor
-            </Link>
-            <Link to="/como-trabajamos" style={{ font: "var(--type-h2)", letterSpacing: "var(--track-heading)", color: "var(--white)", textDecoration: "none" }}>
-              Cómo trabajamos
-            </Link>
-            <Link to="/casos" style={{ font: "var(--type-h2)", letterSpacing: "var(--track-heading)", color: "var(--white)", textDecoration: "none" }}>
-              Casos
-            </Link>
-            <Link to="/insights" style={{ font: "var(--type-h2)", letterSpacing: "var(--track-heading)", color: "var(--white)", textDecoration: "none" }}>
-              Insights
-            </Link>
-            <Link to="/nosotros" style={{ font: "var(--type-h2)", letterSpacing: "var(--track-heading)", color: "var(--white)", textDecoration: "none" }}>
-              Sobre nosotros
-            </Link>
+
+          <nav aria-label="Principal (móvil)" style={{ marginTop: 'var(--space-9)', display: 'flex', flexDirection: 'column' }}>
+            {NAV.map((item, i) =>
+              item.items ? (
+                <div key={item.label} style={{ borderBottom: '1px solid var(--border-hairline-dark)' }}>
+                  <button
+                    type="button"
+                    aria-expanded={acc === i}
+                    aria-controls={`acc-${i}`}
+                    onClick={() => setAcc((a) => (a === i ? null : i))}
+                    style={{
+                      width: '100%', minHeight: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                      background: 'transparent', border: 0, cursor: 'pointer', padding: 'var(--space-4) 0',
+                      fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)',
+                      fontSize: 'var(--text-h2)', letterSpacing: 'var(--track-heading)', color: 'var(--white)',
+                    }}
+                  >
+                    {item.label}
+                    <Chevron open={acc === i} />
+                  </button>
+                  {acc === i && (
+                    <ul id={`acc-${i}`} style={{ listStyle: 'none', margin: 0, padding: '0 0 var(--space-6)', display: 'grid', gap: 'var(--space-5)' }}>
+                      {item.items.map((sub) => (
+                        <li key={sub.to}>
+                          <Link to={sub.to} style={{ display: 'block', minHeight: 44, textDecoration: 'none', font: 'var(--type-body)', color: 'var(--slate-200)' }}>
+                            {sub.label}
+                          </Link>
+                        </li>
+                      ))}
+                      {item.more && (
+                        <li>
+                          <Link to={item.more.to} style={{ font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--electric-green)', textDecoration: 'none' }}>
+                            {item.more.label} →
+                          </Link>
+                        </li>
+                      )}
+                    </ul>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  key={item.label}
+                  to={item.to}
+                  style={{
+                    minHeight: 56, display: 'flex', alignItems: 'center', textDecoration: 'none',
+                    borderBottom: '1px solid var(--border-hairline-dark)',
+                    fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)',
+                    fontSize: 'var(--text-h2)', letterSpacing: 'var(--track-heading)', color: 'var(--white)',
+                  }}
+                >
+                  {item.label}
+                </Link>
+              )
+            )}
           </nav>
-          <div style={{ marginTop: "var(--space-9)", paddingTop: "var(--space-6)", borderTop: "1px solid var(--border-hairline-dark)", display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
-            <Link to="/discovery" style={{ font: "var(--type-body)", color: "var(--slate-200)", textDecoration: "none" }}>
-              AI-Native Transformation Discovery
-            </Link>
-            <Link to="/build-embed" style={{ font: "var(--type-body)", color: "var(--slate-200)", textDecoration: "none" }}>
-              Build & Embed Sprint
-            </Link>
-          </div>
-          <Link to="/contacto" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", marginTop: "var(--space-9)", minHeight: "52px", padding: "0 var(--space-7)", borderRadius: "var(--radius-pill)", background: "var(--electric-green)", color: "var(--deep-navy)", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", textDecoration: "none" }}>
-            Inicia tu Discovery
+
+          <Link
+            to={CONTACT.to}
+            style={{
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginTop: 'var(--space-9)',
+              minHeight: 52, padding: '0 var(--space-7)', borderRadius: 'var(--radius-pill)',
+              background: 'var(--electric-green)', color: 'var(--deep-navy)', font: 'var(--type-label)',
+              letterSpacing: 'var(--track-label)', textTransform: 'uppercase', textDecoration: 'none',
+            }}
+          >
+            {CONTACT.label}
           </Link>
-          <span style={{ marginTop: "var(--space-8)", font: "var(--type-label)", letterSpacing: "var(--track-label)", color: "var(--slate-300)" }}>
-            <span style={{ color: "var(--white)" }}>
-              ES
-            </span>
-            {' '}
-            /
-            {' '}
-            <a href="../website-en/WebsiteEn.dc.html" style={{ color: "var(--slate-300)", textDecoration: "none" }}>
-              EN
-            </a>
-          </span>
+
+          <span style={{ marginTop: 'var(--space-8)' }}><Lang /></span>
         </div>
-        </>
       )}
     </>
   );

@@ -17,18 +17,29 @@ const SRC = 'templates/website-es';
 const OUT_PAGES = 'src/pages';
 const OUT_COMPONENTS = 'src/components';
 
-/* Artboard -> componente React + ruta del router. */
+/* Artboard -> componente React + ruta del router.
+   Las rutas viven ahora en src/routes.jsx, escrito a mano: la arquitectura del
+   documento (§5) tiene desplegables, subrutas y redirecciones que no se dejan
+   describir con un artboard por página. Aquí solo queda la correspondencia
+   necesaria para reescribir los enlaces internos de los artboards viejos. */
 const PAGES = {
-  'WebsiteEs': { comp: 'Home', route: '/' },
-  'PaginaFramework': { comp: 'Framework', route: '/como-trabajamos' },
-  'PaginaDiscovery': { comp: 'Discovery', route: '/discovery' },
-  'PaginaBuildEmbed': { comp: 'BuildEmbed', route: '/build-embed' },
-  'PaginaTrabajo': { comp: 'Trabajo', route: '/casos' },
-  'PaginaThinking': { comp: 'Thinking', route: '/insights' },
-  'PaginaNosotros': { comp: 'Nosotros', route: '/nosotros' },
-  'PaginaContacto': { comp: 'Contacto', route: '/contacto' },
+  'WebsiteEs': { comp: 'HomeLegacy', route: '/es' },
+  'PaginaFramework': { comp: 'Framework', route: '/es/framework' },
+  'PaginaDiscovery': { comp: 'Discovery', route: '/es/servicios/transformation-discovery' },
+  'PaginaBuildEmbed': { comp: 'BuildEmbed', route: '/es/servicios/build-and-embed' },
+  'PaginaTrabajo': { comp: 'Trabajo', route: '/es/casos-de-uso' },
+  'PaginaThinking': { comp: 'Thinking', route: '/es/insights' },
+  'PaginaNosotros': { comp: 'Nosotros', route: '/es/nosotros' },
+  'PaginaContacto': { comp: 'Contacto', route: '/es/contacto' },
 };
+
+/* Nombre del componente al que resuelve cada <dc-import>. */
 const COMPONENTS = { 'SiteHeaderEs': 'SiteHeader', 'SiteFooterEs': 'SiteFooter' };
+
+/* La cabecera y el pie ya NO se generan: se reescribieron a mano porque los
+   desplegables necesitan estado, foco y teclado, y eso no cabe en un artboard.
+   Siguen resolviéndose por nombre en dc-import, pero el conversor no los toca. */
+const GENERATED_COMPONENTS = {};
 
 /* Atributos HTML que en JSX cambian de nombre. */
 const ATTR_MAP = {
@@ -256,49 +267,9 @@ function convert(file, compName, isPage) {
   return { compName, vals: [...ctx.vals] };
 }
 
-/* El estado que en Durable vivía en `class Component extends DCLogic`. */
+/* El estado que en Durable vivía en `class Component extends DCLogic`.
+   Solo queda el formulario de contacto: la cabecera ya no se genera. */
 const LOGIC = {
-  SiteHeader: `  const [open, setOpen] = React.useState(false);
-  const toggle = () => setOpen((o) => !o);
-  const { pathname } = useLocation();
-  React.useEffect(() => { setOpen(false); }, [pathname]);
-  React.useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [open]);
-
-  /* La barra se retira al bajar y vuelve al subir. Devolver espacio de pantalla
-     mientras se lee, y tener el menú a un gesto de distancia al querer salir. */
-  const [hidden, setHidden] = React.useState(false);
-  React.useEffect(() => {
-    let last = window.scrollY;
-    let queued = false;
-    const onScroll = () => {
-      if (queued) return;
-      queued = true;
-      requestAnimationFrame(() => {
-        queued = false;
-        const y = window.scrollY;
-        const dy = y - last;
-        /* Umbral de 6px: sin él, el rebote del trackpad y el movimiento de un
-           dedo tembloroso hacen parpadear la barra. */
-        if (Math.abs(dy) < 6) return;
-        last = y;
-        setHidden(dy > 0 && y > 140);
-      });
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  /* Con el menú móvil abierto la barra no se esconde nunca: el botón de cerrar
-     vive dentro del overlay, pero el gesto de scroll no debe moverla. */
-  React.useEffect(() => {
-    document.documentElement.toggleAttribute('data-header-hidden', hidden && !open);
-  }, [hidden, open]);
-  React.useEffect(() => () => document.documentElement.removeAttribute('data-header-hidden'), []);
-
-`,
   Contacto: `  const [sent, setSent] = React.useState(false);
   const pending = !sent;
   const submitted = sent;
@@ -314,16 +285,8 @@ const LOGIC = {
 /* ---- ejecutar ---- */
 fs.mkdirSync(OUT_COMPONENTS, { recursive: true });
 const done = [];
-for (const [file, name] of Object.entries(COMPONENTS)) done.push(convert(file + '.dc.html', name, false));
+for (const [file, name] of Object.entries(GENERATED_COMPONENTS)) done.push(convert(file + '.dc.html', name, false));
 for (const [file, { comp }] of Object.entries(PAGES)) done.push(convert(file + '.dc.html', comp, true));
-
-/* SiteHeader usa useLocation para cerrar el menú al navegar. */
-{
-  const p = path.join(OUT_COMPONENTS, 'SiteHeader.jsx');
-  let s = fs.readFileSync(p, 'utf8');
-  s = s.replace("import { Link } from 'react-router-dom';", "import { Link, useLocation } from 'react-router-dom';");
-  fs.writeFileSync(p, s);
-}
 
 /* Hoja de estilos generada con los :hover que venían en style-hover. */
 const css = [...hoverRules.entries()]
@@ -331,14 +294,4 @@ const css = [...hoverRules.entries()]
   .join('\n');
 fs.writeFileSync('src/styles/hover.generated.css', `/* Generado por scripts/dc-to-jsx.mjs desde los atributos style-hover. No editar a mano. */\n${css}\n`);
 
-/* Rutas del router. */
-const routes = Object.entries(PAGES).map(([, v]) => v);
-/* Cada ruta en su propio chunk: la home no descarga las otras siete páginas. */
-fs.writeFileSync('src/routes.generated.jsx',
-  `/* Generado por scripts/dc-to-jsx.mjs. No editar a mano. */\nimport { lazy } from 'react';\n\n` +
-  routes.map((r) => `const ${r.comp} = lazy(() => import('./pages/${r.comp}.jsx'));`).join('\n') +
-  `\n\nexport const routes = [\n` +
-  routes.map((r) => `  { path: '${r.route}', element: <${r.comp} /> },`).join('\n') +
-  `\n];\n`);
-
-console.log(`${done.length} componentes · ${hoverRules.size} reglas :hover · ${routes.length} rutas`);
+console.log(`${done.length} páginas · ${hoverRules.size} reglas :hover`);

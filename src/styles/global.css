@@ -169,3 +169,27 @@ label {
 /* El halo verde de [data-deep] estaba calculado para caer sobre un navy sólido.
    Con la sección transparente cae sobre el canvas y se acumula: se atenúa. */
 :root[data-ai-node="on"] [data-deep]::after { opacity: .45; }
+
+/* ---------------------------------------------------------------------------
+   Navegación y piezas nuevas
+--------------------------------------------------------------------------- */
+.hv-nav:hover { color: var(--electric-green); }
+.hv-foot:hover { color: var(--electric-green); }
+.hv-lang:hover { color: var(--electric-green); }
+.cta-primary:hover { background: var(--neon-green); }
+.cta-ghost:hover { border-color: var(--green-line); color: var(--electric-green); }
+.cta-text:hover { color: var(--accent-hover); border-color: var(--green-line); }
+.drop-item { padding: var(--space-4); margin: calc(var(--space-4) * -1); border-radius: 2px; }
+.drop-item:hover { background: rgba(0,255,136,.07); }
+.index-row:hover { border-color: var(--green-line); }
+.index-row:hover h3 { color: var(--text-accent); }
+:root[data-ai-node="on"] .index-row:hover h3 { color: var(--text-accent); }
+
+/* Solo para lectores de pantalla: el número de etapa del framework */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* El header fijo tapa el destino de un ancla si no se compensa */
+[id] { scroll-margin-top: 96px; }

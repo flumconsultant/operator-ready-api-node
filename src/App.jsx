@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { routes } from './routes.generated.jsx';
+import { routes } from './routes.jsx';
 import AiNodeStage from './components/ai-node/AiNodeStage.jsx';
 import RouteLoader from './components/RouteLoader.jsx';
 
@@ -25,7 +25,7 @@ export default function App() {
       <ScrollToTop />
       {/* El nodo solo vive en la home: es su narrativa la que coreografía los
           cinco estados. En el resto de rutas ni se descarga. */}
-      {pathname === '/' && <AiNodeStage />}
+      {pathname === '/es' && <AiNodeStage />}
       {/* La clave por ruta es lo que hace visible el fallback. React 19 trata
           la navegación como una transición y, por defecto, mantiene la pantalla
           anterior en vez de mostrar el Suspense: sin remontar el límite, el

@@ -1,84 +1,93 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FOOTER, HOME } from '../site.js';
 
-/* Migrado de templates/website-es/SiteFooterEs.dc.html por scripts/dc-to-jsx.mjs */
+/**
+ * Pie del sitio en español.
+ *
+ * Hace de mapa completo para que la cabecera no tenga que serlo: cinco
+ * columnas con todo lo que existe, incluidas las seis preguntas de casos de uso
+ * y el framework, que a propósito no están en el menú principal.
+ *
+ * El logotipo también lleva a la Home. No hay un enlace de texto "Inicio": el
+ * documento lo prohíbe explícitamente y duplicarlo solo añade ruido para quien
+ * navega con lector de pantalla.
+ */
 export default function SiteFooter() {
   return (
-    <>
-      <footer style={{ background: "var(--navy-950)", borderTop: "1px solid var(--border-hairline-dark)", padding: "var(--space-11) var(--gutter-page) var(--space-8)" }}>
-        <div data-cols="" style={{ maxWidth: "var(--maxw-content)", margin: "0 auto", display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr 1fr", gap: "var(--space-9)" }}>
+    <footer
+      data-band="--navy-950"
+      style={{ background: 'var(--navy-950)', padding: 'var(--space-12) var(--gutter-page) var(--space-8)' }}
+    >
+      <div style={{ maxWidth: 'var(--maxw-content)', margin: '0 auto' }}>
+        <div
+          data-cols
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'minmax(0, 1.3fr) repeat(4, minmax(0, 1fr))',
+            gap: 'var(--space-9)',
+          }}
+        >
           <div>
-            <img src="/logo/wordmark-white.webp" alt="BECOME" style={{ height: "26px", width: "auto", display: "block" }} />
-            <p style={{ margin: "var(--space-4) 0 0", font: "var(--type-label)", letterSpacing: "var(--track-descriptor)", textTransform: "uppercase", color: "var(--slate-300)" }}>
-              AI-native transformation company
-            </p>
-            <p style={{ margin: "var(--space-6) 0 0", font: "var(--type-body)", color: "var(--slate-300)", maxWidth: "34ch" }}>
-              The next company is already inside yours.
+            <Link to={HOME} aria-label="BECOME — Inicio" style={{ display: 'inline-flex', minHeight: 44, alignItems: 'center' }}>
+              <img src="/logo/wordmark-white.webp" alt="" style={{ height: 26, width: 'auto', display: 'block' }} />
+            </Link>
+            <p style={{ margin: 'var(--space-5) 0 0', font: 'var(--type-body)', color: 'var(--slate-300)', maxWidth: '30ch' }}>
+              AI-native transformation company. Rediseñamos cómo las empresas operan,
+              deciden y crean valor alrededor de la IA.
             </p>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
-            <p style={{ margin: "0", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--slate-400)" }}>
-              Servicios
-            </p>
-            <Link to="/discovery" style={{ font: "var(--type-body)", color: "var(--slate-200)", textDecoration: "none" }}>
-              AI-Native Transformation Discovery
-            </Link>
-            <Link to="/build-embed" style={{ font: "var(--type-body)", color: "var(--slate-200)", textDecoration: "none" }}>
-              Build & Embed Sprint
-            </Link>
-            <Link to="/como-trabajamos" style={{ font: "var(--type-body)", color: "var(--slate-200)", textDecoration: "none" }}>
-              BECOME™ Framework
-            </Link>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
-            <p style={{ margin: "0", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--slate-400)" }}>
-              Compañía
-            </p>
-            <Link to="/nosotros" style={{ font: "var(--type-body)", color: "var(--slate-200)", textDecoration: "none" }}>
-              Sobre nosotros
-            </Link>
-            <Link to="/casos" style={{ font: "var(--type-body)", color: "var(--slate-200)", textDecoration: "none" }}>
-              Casos
-            </Link>
-            <Link to="/insights" style={{ font: "var(--type-body)", color: "var(--slate-200)", textDecoration: "none" }}>
-              Insights
-            </Link>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
-            <p style={{ margin: "0", font: "var(--type-label)", letterSpacing: "var(--track-label)", textTransform: "uppercase", color: "var(--slate-400)" }}>
-              Contacto
-            </p>
-            <a href="mailto:hello@become.company" style={{ font: "var(--type-body)", color: "var(--slate-200)", textDecoration: "none" }}>
-              hello@become.company
-            </a>
-            <Link to="/contacto" style={{ font: "var(--type-body)", color: "var(--electric-green)", textDecoration: "none" }}>
-              Inicia tu Discovery
-            </Link>
-          </div>
+
+          {FOOTER.map((col) => (
+            <nav key={col.title} aria-label={col.title}>
+              <p
+                style={{
+                  margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)',
+                  textTransform: 'uppercase', color: 'var(--slate-400)',
+                }}
+              >
+                {col.title}
+              </p>
+              <ul style={{ listStyle: 'none', margin: 'var(--space-5) 0 0', padding: 0, display: 'grid', gap: 'var(--space-4)' }}>
+                {col.links.map((l) => (
+                  <li key={l.to || l.href}>
+                    {l.href ? (
+                      <a href={l.href} style={linkStyle} className="hv-foot">{l.label}</a>
+                    ) : (
+                      <Link to={l.to} style={linkStyle} className="hv-foot">{l.label}</Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
         </div>
-        <div style={{ maxWidth: "var(--maxw-content)", margin: "var(--space-9) auto 0", paddingTop: "var(--space-5)", borderTop: "1px solid var(--border-hairline-dark)", display: "flex", gap: "var(--space-6)", alignItems: "center" }}>
-          <span style={{ font: "var(--type-body)", fontSize: "var(--text-body-sm)", color: "var(--slate-400)" }}>
-            © 2026 BECOME
+
+        <div
+          style={{
+            marginTop: 'var(--space-10)', paddingTop: 'var(--space-6)',
+            borderTop: '1px solid var(--border-hairline-dark)',
+            display: 'flex', flexWrap: 'wrap', gap: 'var(--space-5)',
+            alignItems: 'center', justifyContent: 'space-between',
+          }}
+        >
+          <span style={{ font: 'var(--type-label)', letterSpacing: 'var(--track-label)', color: 'var(--slate-400)' }}>
+            © {new Date().getFullYear()} BECOME
           </span>
-          <a href="#" style={{ font: "var(--type-body)", fontSize: "var(--text-body-sm)", color: "var(--slate-400)", textDecoration: "none" }}>
-            Privacidad
-          </a>
-          <a href="#" style={{ font: "var(--type-body)", fontSize: "var(--text-body-sm)", color: "var(--slate-400)", textDecoration: "none" }}>
-            Términos
-          </a>
-          <span style={{ marginLeft: "auto", font: "var(--type-label)", letterSpacing: "var(--track-label)", color: "var(--slate-400)" }}>
-            <span style={{ color: "var(--slate-200)" }}>
-              ES
-            </span>
-            {' '}
-            /
-            {' '}
-            <a href="../website-en/WebsiteEn.dc.html" style={{ color: "var(--slate-400)", textDecoration: "none" }}>
-              EN
-            </a>
+          <span style={{ font: 'var(--type-label)', letterSpacing: 'var(--track-label)', color: 'var(--slate-300)' }}>
+            <span style={{ color: 'var(--white)' }}>ES</span>
+            {' / '}
+            <a href="/en" style={{ color: 'var(--slate-300)', textDecoration: 'none' }} className="hv-lang">EN</a>
           </span>
         </div>
-      </footer>
-    </>
+      </div>
+    </footer>
   );
 }
+
+const linkStyle = {
+  font: 'var(--type-body)',
+  fontSize: 'var(--text-body-md)',
+  color: 'var(--slate-200)',
+  textDecoration: 'none',
+};
