@@ -20,12 +20,18 @@ export const HOME = '/es';
 
 /* ---- servicios ----
    BECOME NOW™ va primero: es el que puede contratarse solo y el que sirve de
-   puerta de entrada. Lleva un tercer nivel — los programas por área. */
+   puerta de entrada. Lleva un tercer nivel — los programas por área.
+
+   Cada nombre lleva detrás, tras un guion, qué es en castellano llano. Los
+   nombres solos —"Applied AI Enablement", "Build & Embed Sprint"— no dicen a
+   nadie de qué se trata: quien llegaba al menú no sabía que el primero es
+   capacitación, y la explicación estaba debajo en letra pequeña, que es
+   justo lo que no se lee. La marca se conserva; el descriptor la traduce. */
 export const SERVICES = [
   {
     to: '/es/servicios/become-now',
-    name: 'BECOME NOW™ — Applied AI Enablement',
-    line: 'Capacitación en ChatGPT, Claude y Gemini aplicada a los procesos reales de tu empresa.',
+    name: 'BECOME NOW™ — Capacitación en IA aplicada',
+    line: 'Programas de ChatGPT, Claude y Gemini sobre los procesos, documentos y casos reales de cada área.',
     heading: 'Programas por área',
     groups: PROGRAM_GROUPS.map((g) => ({
       title: g.title,
@@ -38,13 +44,13 @@ export const SERVICES = [
   },
   {
     to: '/es/servicios/transformation-discovery',
-    name: 'AI-Native Transformation Discovery',
-    line: 'Define la estrategia, prioriza el valor y diseña el operating model.',
+    name: 'Transformation Discovery — Estrategia y modelo operativo',
+    line: 'Dónde está el valor de la IA en tu empresa, qué se hace primero y cómo hay que operar para conseguirlo.',
   },
   {
     to: '/es/servicios/build-and-embed',
-    name: 'Build & Embed Sprint',
-    line: 'Construye e incorpora una capability AI-native en la operación.',
+    name: 'Build & Embed — Construcción e implantación',
+    line: 'Construimos la solución de IA con tu equipo y la dejamos funcionando dentro de la operación diaria.',
   },
 ];
 

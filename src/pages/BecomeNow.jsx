@@ -29,7 +29,7 @@ export default function BecomeNow() {
       <SiteHeader />
 
       <Section band="dark" pad="var(--space-12)">
-        <Kicker dark>BECOME NOW™ — Applied AI Enablement</Kicker>
+        <Kicker dark>BECOME NOW™ — Capacitación en IA aplicada</Kicker>
         <Headline as="h1" dark>Capacita a tu empresa para trabajar mejor con IA, hoy.</Headline>
         <Lead dark>
           Programas in company en ChatGPT, Claude y Gemini, diseñados alrededor de

@@ -55,10 +55,11 @@ export default function BuildEmbed() {
 
       <Section band="dark" pad="var(--space-12)">
         <Kicker dark>BECOME Embed™</Kicker>
-        <Headline as="h1" dark>Construye la capability. Incorpora el cambio.</Headline>
+        <Headline as="h1" dark>Construye la solución. Incorpora el cambio.</Headline>
         <Lead dark>
-          Un sprint de 8–12 semanas que convierte un transformation blueprint
-          prioritario en una AI-native capability dentro de la operación.
+          De ocho a doce semanas para construir una solución de IA priorizada y
+          dejarla funcionando dentro de la operación, con el equipo que va a
+          usarla todos los días.
         </Lead>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
           <PrimaryCTA to="/es/contacto">Conversemos sobre Build &amp; Embed</PrimaryCTA>

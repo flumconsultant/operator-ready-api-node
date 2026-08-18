@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { routes } from './routes.jsx';
 import AiNodeStage from './components/ai-node/AiNodeStage.jsx';
 import RouteLoader from './components/RouteLoader.jsx';
+import { PAGES, SITE } from './seo-meta.js';
 
 /**
  * Cada navegación empieza arriba; los anclas (#comparacion) van a su sección.
@@ -44,12 +45,70 @@ function ScrollToAnchor() {
   return null;
 }
 
+/**
+ * Mantiene título, descripción y canonical al día al navegar.
+ *
+ * El servidor entrega la cabecera correcta de cada ruta (la genera
+ * scripts/seo.mjs), pero eso solo ocurre al cargar la página desde cero. Al
+ * moverse por el sitio no hay recarga: sin esto, la pestaña del navegador se
+ * queda con el título de la primera página que se abrió, y el historial se
+ * llena de entradas que se llaman todas igual.
+ *
+ * Solo conoce las rutas fijas. En las de programa y caso de uso el titular lo
+ * pone la propia página, así que se lee del h1 ya renderizado en vez de
+ * duplicar aquí cuarenta títulos que envejecerían por su cuenta.
+ */
+function DocumentHead() {
+  const { pathname } = useLocation();
+
+  React.useEffect(() => {
+    const fija = PAGES[pathname];
+    const lang = pathname.startsWith('/en') ? 'en' : 'es';
+    document.documentElement.lang = lang;
+
+    const meta = (sel, attr, valor) => {
+      const el = document.head.querySelector(sel);
+      if (el && valor) el.setAttribute(attr, valor);
+    };
+    const canonical = document.head.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.setAttribute('href', SITE + pathname);
+
+    if (fija) {
+      document.title = fija[0];
+      meta('meta[name="description"]', 'content', fija[1]);
+      meta('meta[property="og:title"]', 'content', fija[0]);
+      meta('meta[property="og:description"]', 'content', fija[1]);
+      meta('meta[property="og:url"]', 'content', SITE + pathname);
+      return undefined;
+    }
+
+    /* Ruta con parámetro: el h1 llega con el chunk de la página, que puede
+       tardar. Se busca durante un segundo y se deja de buscar en cuanto
+       aparece, igual que hace el salto al ancla. */
+    let raf;
+    const limite = performance.now() + 1000;
+    const buscar = () => {
+      const h1 = document.querySelector('main h1');
+      if (h1 && h1.textContent.trim()) {
+        document.title = `${h1.textContent.trim()} | BECOME`;
+        return;
+      }
+      if (performance.now() < limite) raf = requestAnimationFrame(buscar);
+    };
+    raf = requestAnimationFrame(buscar);
+    return () => cancelAnimationFrame(raf);
+  }, [pathname]);
+
+  return null;
+}
+
 export default function App() {
   const { pathname } = useLocation();
 
   return (
     <>
       <ScrollToAnchor />
+      <DocumentHead />
       {/* El nodo vive en todo el sitio. En la home las formas van ancladas a
           secciones concretas; en el resto de páginas el mismo journey se
           reparte sobre el documento. Lo que no cambia es la historia. */}

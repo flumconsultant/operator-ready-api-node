@@ -1,5 +1,6 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Check, ArrowRight, ArrowLeft, PaperPlaneTilt, X, Clock } from '@phosphor-icons/react';
 import BackdropField from './Field.jsx';
@@ -328,8 +329,14 @@ function Conversation({
     /* La confirmación solo aparece si el correo salió de verdad. Darla por
        buena sin comprobarlo es peor que un error visible: quien escribe se
        va convencido de que le van a responder. */
-    if (fallo) setSendError(fallo);
-    else setSent(true);
+    if (fallo) {
+      setSendError(fallo);
+    } else {
+      setSent(true);
+      /* Enviado deja de ser "sin guardar": si no, salir de la capa pedía
+         confirmación para descartar unas respuestas que ya están enviadas. */
+      onDirty?.(false);
+    }
   };
 
   /* El señuelo antispam. Fuera de la vista y fuera del orden de tabulación,
@@ -856,10 +863,15 @@ export default function ConversationalForm({
   const btnRef = React.useRef(null);
   const stageRef = React.useRef(null);
 
+  /* Salir de la capa ocurre por dos sitios —el botón de cerrar y el logo— y
+     los dos tienen que avisar si hay respuestas escritas sin enviar. */
+  const puedeSalir = React.useCallback(
+    () => !dirty || window.confirm(t.confirmClose),
+    [dirty, t]
+  );
   const close = React.useCallback(() => {
-    if (dirty && !window.confirm(t.confirmClose)) return;
-    setOpen(false);
-  }, [dirty, t]);
+    if (puedeSalir()) setOpen(false);
+  }, [puedeSalir]);
 
   /* Mientras el escenario está abierto: sin scroll detrás, Esc cierra y el
      tabulador no se escapa a la página que hay debajo. */
@@ -926,7 +938,21 @@ export default function ConversationalForm({
           borderBottom: '1px solid var(--border-hairline-dark)',
         }}
       >
-        <img src="/logo/wordmark-white.webp" alt="BECOME" width="104" height="18" style={{ height: 18, width: 'auto', display: 'block' }} />
+        {/* Enlace, no una imagen suelta: en el resto del sitio el logo lleva a
+            la home, y dentro de esta capa era lo único que no respondía. Al
+            salir por aquí hay que cerrar la capa además de navegar, o el
+            escenario se queda montado sobre la página nueva. */}
+        <Link
+          to={lang === 'en' ? '/en' : '/es'}
+          aria-label={lang === 'en' ? 'BECOME — Home' : 'BECOME — Inicio'}
+          onClick={(e) => {
+            if (!puedeSalir()) { e.preventDefault(); return; }
+            setOpen(false);
+          }}
+          style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44 }}
+        >
+          <img src="/logo/wordmark-white.webp" alt="BECOME" width="104" height="18" style={{ height: 18, width: 'auto', display: 'block' }} />
+        </Link>
         <button
           type="button"
           onClick={close}

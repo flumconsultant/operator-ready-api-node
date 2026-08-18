@@ -40,11 +40,11 @@ export default function Servicios() {
       <SiteHeader />
 
       <Section band="dark" pad="var(--space-12)">
-        <Kicker dark>Our services</Kicker>
+        <Kicker dark>Nuestros servicios</Kicker>
         <Headline as="h1" dark>De la capacidad de hoy a la empresa que viene.</Headline>
         <Lead dark>
-          Tres engagements conectan applied AI enablement, AI-native strategy,
-          operating-model design, building, adoption y scale.
+          Tres formas de empezar: capacitar a tu equipo, definir la estrategia
+          o construir la solución. Se contratan por separado o en secuencia.
         </Lead>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
           <PrimaryCTA to="/es/casos-de-uso">Encuentra tu punto de partida</PrimaryCTA>
@@ -54,7 +54,7 @@ export default function Servicios() {
 
       {/* El journey primero: los servicios se entienden como tramos de un eje */}
       <Section band="light">
-        <Kicker>El journey</Kicker>
+        <Kicker>El recorrido</Kicker>
         <Headline>Un solo eje. Tres engagements que lo recorren.</Headline>
         <div style={{ marginTop: 'var(--space-10)' }}>
           {JOURNEY.map((j) => (
@@ -104,6 +104,7 @@ export default function Servicios() {
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--white)' }}>
               BECOME NOW™
             </h3>
+            <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--electric-green)' }}>Capacitación en IA aplicada</p>
             <Body dark style={{ marginTop: 'var(--space-5)' }}>
               Capacitación in company en ChatGPT, Claude y Gemini, construida sobre los
               procesos, documentos y desafíos reales de cada área.
@@ -118,6 +119,7 @@ export default function Servicios() {
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--white)' }}>
               AI-Native Transformation Discovery
             </h3>
+            <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--electric-green)' }}>Estrategia y modelo operativo</p>
             <Body dark style={{ marginTop: 'var(--space-5)' }}>
               Alinea la ambición. Diagnostica la empresa. Identifica el valor. Diseña
               el operating model y el roadmap necesarios para avanzar.
@@ -132,6 +134,7 @@ export default function Servicios() {
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--white)' }}>
               Build &amp; Embed Sprint
             </h3>
+            <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--electric-green)' }}>Construcción e implantación</p>
             <Body dark style={{ marginTop: 'var(--space-5)' }}>
               Diseña, construye e incorpora un AI-native workflow, agent o product
               dentro de la operación, con adopción, controles y medición desde el inicio.
@@ -153,8 +156,8 @@ export default function Servicios() {
             <thead>
               <tr>
                 <th scope="col" style={{ ...th, width: '18%' }} />
-                <th scope="col" style={th}>AI-Native Transformation Discovery</th>
-                <th scope="col" style={th}>Build &amp; Embed Sprint</th>
+                <th scope="col" style={th}>Transformation Discovery<span style={{ display: 'block', marginTop: 4, font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', textTransform: 'none', letterSpacing: 'normal', color: 'var(--text-muted)' }}>Estrategia y modelo operativo</span></th>
+                <th scope="col" style={th}>Build &amp; Embed<span style={{ display: 'block', marginTop: 4, font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', textTransform: 'none', letterSpacing: 'normal', color: 'var(--text-muted)' }}>Construcción e implantación</span></th>
               </tr>
             </thead>
             <tbody>
@@ -171,7 +174,7 @@ export default function Servicios() {
       </Section>
 
       <Section band="sunken" id="cual-necesito">
-        <Kicker>Selector de fit</Kicker>
+        <Kicker>¿Cuál necesito?</Kicker>
         <Headline>En una frase.</Headline>
         <Cols min="260px">
           <Card>

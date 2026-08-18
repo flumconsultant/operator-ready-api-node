@@ -60,8 +60,9 @@ export default function Discovery() {
         <Kicker dark>BECOME Discover™</Kicker>
         <Headline as="h1" dark>Define en qué debe convertirse tu empresa después.</Headline>
         <Lead dark>
-          Un engagement corporativo de 8–12 semanas que conecta AI-native strategy,
-          enterprise diagnosis, value prioritization y operating-model design.
+          De ocho a doce semanas para responder tres preguntas: dónde está el
+          valor de la IA en tu negocio, qué se hace primero y cómo tiene que
+          operar la empresa para sostenerlo.
         </Lead>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
           <PrimaryCTA to="/es/contacto">Conversemos sobre Discovery</PrimaryCTA>

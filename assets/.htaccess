@@ -40,7 +40,22 @@
   RewriteRule ^$ /es [L,R=301]
 
   # ───────────────────────────────────────────────────────────────────────────
-  # 2. Reescritura de la SPA
+  # 2. La cabecera propia de cada ruta
+  # ───────────────────────────────────────────────────────────────────────────
+  # Al compilar se genera un _pages/<ruta>.html por página, idéntico al
+  # index.html salvo en la cabecera: su título, su descripción, su canonical,
+  # sus hreflang y sus datos estructurados. Sin esto, las 44 URLs del sitio
+  # comparten los metadatos de la home y en los resultados de búsqueda todas
+  # dicen llamarse igual.
+  #
+  # La regla es aditiva: solo actúa si el archivo existe. Si faltara, la
+  # petición sigue cayendo en la regla de la SPA de abajo y el sitio funciona
+  # exactamente igual que antes — peor posicionado, pero nunca roto.
+  RewriteCond %{DOCUMENT_ROOT}/_pages%{REQUEST_URI}.html -f
+  RewriteRule ^(.+)$ /_pages/$1.html [L]
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # 3. Reescritura de la SPA
   # ───────────────────────────────────────────────────────────────────────────
   # Si el archivo o la carpeta existen de verdad, se sirven tal cual. Cualquier
   # otra cosa la resuelve el enrutador de React dentro de index.html.
