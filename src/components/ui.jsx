@@ -19,6 +19,16 @@ import { Ico } from './icons.jsx';
 
 /* ---------- superficies ---------- */
 
+/* Dos intensidades de velo, y la elección importa. `strong` es para un fondo
+   que puede iluminarse mucho en cualquier punto —el gradiente— y ahí el velo es
+   lo único que garantiza el contraste. `soft` es para un fondo que ya es oscuro
+   y cuyo interés está en verse: con el velo fuerte encima, la retícula
+   desaparecía justo en la mitad donde está el texto, que es donde uno mira. */
+const SCRIMS = {
+  strong: 'linear-gradient(100deg, rgba(5,7,15,.92) 0%, rgba(5,7,15,.72) 38%, rgba(5,7,15,.28) 72%, rgba(5,7,15,.12) 100%)',
+  soft: 'linear-gradient(100deg, rgba(5,7,15,.72) 0%, rgba(5,7,15,.34) 46%, rgba(5,7,15,0) 78%)',
+};
+
 const BANDS = {
   dark: { token: '--navy-900', color: 'var(--navy-900)', deep: true },
   darker: { token: '--navy-950', color: 'var(--navy-950)', deep: true },
@@ -32,6 +42,7 @@ export function Section({
   nodeState,
   pad = 'var(--space-13)',
   backdrop,
+  scrim = 'strong',
   children,
   ...rest
 }) {
@@ -57,12 +68,12 @@ export function Section({
           suelo garantizado el contraste del texto dependería de dónde caiga la
           mancha clara en ese instante. Con el velo, el peor caso sigue pasando
           AA. */}
-      {backdrop && (
+      {backdrop && scrim && (
         <span
           aria-hidden="true"
           style={{
             position: 'absolute', inset: 0, pointerEvents: 'none',
-            background: 'linear-gradient(100deg, rgba(5,7,15,.92) 0%, rgba(5,7,15,.72) 38%, rgba(5,7,15,.28) 72%, rgba(5,7,15,.12) 100%)',
+            background: SCRIMS[scrim] || SCRIMS.strong,
           }}
         />
       )}

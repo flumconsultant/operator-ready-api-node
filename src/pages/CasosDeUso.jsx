@@ -24,7 +24,7 @@ export default function CasosDeUso() {
       {/* La retícula reacciona al puntero, así que va en la página donde hay
           que elegir entre seis opciones: el fondo confirma que esto responde a
           ti. Debajo de un párrafo largo sería ruido moviéndose. */}
-      <Section band="dark" pad="var(--space-13)" backdrop={<KineticGrid />}>
+      <Section band="dark" pad="var(--space-13)" backdrop={<KineticGrid />} scrim="soft">
         <Kicker dark>Start with your question</Kicker>
         <Headline as="h1" dark>No busques una solución. Empieza por lo que debe cambiar.</Headline>
         <Lead dark>

@@ -77,6 +77,16 @@ export default function KineticGrid({ style }) {
     const OFF = { x: -99999, y: -99999 };
     let mouse = { ...OFF };
     let target = { ...OFF };
+
+    /* Deriva de cortesía.
+       Una retícula que solo reacciona al puntero es invisible hasta que alguien
+       adivina que tiene que mover el ratón por encima — y en una web nadie lo
+       adivina: llega, mira el titular, y baja. Así que hasta el primer gesto la
+       zona de influencia se pasea sola en una elipse lenta, que es la manera de
+       decir "esto responde" sin escribirlo. Al primer movimiento real del
+       puntero la deriva se apaga para siempre en esta visita: ya no hace falta
+       explicar nada y dos focos a la vez serían ruido. */
+    let drifting = true;
     let ripples = [];
     let w = 0, h = 0, dpr = 1;
     let raf = 0, running = false, idleFrames = 0;
@@ -153,7 +163,7 @@ export default function KineticGrid({ style }) {
 
       const seg = (a, b) => {
         const t = smooth((a.p + b.p) / 2);
-        ctx.strokeStyle = mix(LINE, ACTIVE, t, 0.15, 0.9);
+        ctx.strokeStyle = mix(LINE, ACTIVE, t, 0.22, 0.9);
         ctx.lineWidth = lerp(0.8, 1.5, t);
         ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
       };
@@ -173,7 +183,7 @@ export default function KineticGrid({ style }) {
             ctx.fillStyle = g;
             ctx.beginPath(); ctx.arc(p.x, p.y, gr, 0, Math.PI * 2); ctx.fill();
           }
-          ctx.fillStyle = mix(LINE, ACTIVE, t, 0.24, 1);
+          ctx.fillStyle = mix(LINE, ACTIVE, t, 0.34, 1);
           ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI * 2); ctx.fill();
         }
       }
@@ -193,6 +203,14 @@ export default function KineticGrid({ style }) {
     }
 
     const loop = (now) => {
+      if (drifting) {
+        const t = now / 1000;
+        target = {
+          x: w * (0.5 + Math.cos(t * 0.42) * 0.3),
+          y: h * (0.5 + Math.sin(t * 0.31) * 0.34),
+        };
+        if (mouse.x === OFF.x) mouse = { ...target };   // sin barrido inicial
+      }
       mouse.x = lerp(mouse.x, target.x, LERP);
       mouse.y = lerp(mouse.y, target.y, LERP);
       draw(now);
@@ -200,7 +218,7 @@ export default function KineticGrid({ style }) {
       /* Nada que animar: puntero fuera, deformación ya asentada y sin ondas.
          Repintar aquí sería gastar la GPU en redibujar el mismo dibujo. */
       const settled = Math.abs(mouse.x - target.x) < 0.5 && Math.abs(mouse.y - target.y) < 0.5;
-      if (settled && target.x === OFF.x && ripples.length === 0) idleFrames++;
+      if (!drifting && settled && target.x === OFF.x && ripples.length === 0) idleFrames++;
       else idleFrames = 0;
       if (idleFrames > 4) { running = false; return; }
 
@@ -224,6 +242,7 @@ export default function KineticGrid({ style }) {
     };
     const onMove = (e) => {
       const p = local(e);
+      drifting = false;
       target = p.inside ? { x: p.x, y: p.y } : { ...OFF };
       wake();
     };
@@ -231,6 +250,7 @@ export default function KineticGrid({ style }) {
     const onDown = (e) => {
       const p = local(e);
       if (!p.inside) return;
+      drifting = false;
       ripples.push({ x: p.x, y: p.y, radius: 0, opacity: 1, born: performance.now() });
       if (ripples.length > 6) ripples.shift();   // tope: una ola por clic, no cien
       wake();
@@ -243,7 +263,7 @@ export default function KineticGrid({ style }) {
 
     const io = new IntersectionObserver(([e]) => {
       if (e.isIntersecting) wake();
-      else { running = false; cancelAnimationFrame(raf); target = { ...OFF }; mouse = { ...OFF }; }
+      else { running = false; cancelAnimationFrame(raf); if (!drifting) { target = { ...OFF }; mouse = { ...OFF }; } }
     }, { rootMargin: '100px' });
     io.observe(host);
 
