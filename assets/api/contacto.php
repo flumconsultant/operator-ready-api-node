@@ -40,11 +40,23 @@ function responder(int $code, array $data): never {
     exit;
 }
 
-/** Lo que se registra para nosotros nunca se le cuenta a quien envía: un
- *  error de SMTP en pantalla es información sobre la infraestructura. */
-function fallar(string $interno): never {
-    error_log('[contacto] ' . $interno);
-    responder(500, ['ok' => false, 'error' => 'send_failed']);
+/**
+ * Registra el fallo y responde sin contar de más.
+ *
+ * La distinción importa: al navegador solo va la etapa en la que se rompió
+ * —'auth', 'conexion', 'config'—, que no dice nada de la infraestructura pero
+ * señala el problema en un segundo. El motivo completo que devuelve el
+ * servidor de correo se guarda en errores.log, que está fuera del alcance de
+ * la web (lo bloquea .htaccess) y se abre desde el gestor de archivos.
+ *
+ * Sin este registro, un fallo de envío es un 500 mudo: el sitio queda
+ * aparentemente bien y los mensajes desaparecen sin dejar rastro.
+ */
+function fallar(string $interno, string $etapa = 'smtp'): never {
+    $linea = sprintf("[%s] %s: %s\n", gmdate('Y-m-d H:i:s'), $etapa, $interno);
+    @file_put_contents(__DIR__ . '/errores.log', $linea, FILE_APPEND | LOCK_EX);
+    error_log('[contacto] ' . $etapa . ': ' . $interno);
+    responder(500, ['ok' => false, 'error' => 'send_failed', 'stage' => $etapa]);
 }
 
 /** Un valor que va en una cabecera no puede traer saltos de línea: ahí es
@@ -115,7 +127,7 @@ if (count($previos) >= RATE_LIMIT_MAX) {
 $config = require __DIR__ . '/config.php';
 foreach (['host', 'port', 'user', 'password', 'to'] as $k) {
     if (empty($config[$k])) {
-        fallar("falta la clave '$k' en config.php");
+        fallar("falta la clave '$k' en config.php", 'config');
     }
 }
 
@@ -186,13 +198,13 @@ function smtp_leer($fp): string {
 function smtp_orden($fp, ?string $orden, array $esperado, string $etiqueta): string {
     if ($orden !== null) {
         if (fwrite($fp, $orden . "\r\n") === false) {
-            fallar("no se pudo escribir en el socket ($etiqueta)");
+            fallar("no se pudo escribir en el socket", $etiqueta);
         }
     }
     $res = smtp_leer($fp);
     $codigo = (int) substr($res, 0, 3);
     if (!in_array($codigo, $esperado, true)) {
-        fallar("$etiqueta devolvió: " . trim($res));
+        fallar('el servidor respondió: ' . trim($res), $etiqueta);
     }
     return $res;
 }
@@ -215,18 +227,18 @@ $fp = @stream_socket_client(
     $destino, $errno, $errstr, 20, STREAM_CLIENT_CONNECT, $contexto
 );
 if (!$fp) {
-    fallar("no se pudo conectar a {$config['host']}: $errstr ($errno)");
+    fallar("no se pudo conectar a {$config['host']}:{$config['port']} — $errstr ($errno)", 'conexion');
 }
 stream_set_timeout($fp, 20);
 
 smtp_orden($fp, null, [220], 'saludo');
-smtp_orden($fp, 'EHLO ' . (substr(strrchr($de, '@') ?: '@localhost', 1)), [250], 'EHLO');
-smtp_orden($fp, 'AUTH LOGIN', [334], 'AUTH LOGIN');
-smtp_orden($fp, base64_encode((string) $config['user']), [334], 'usuario');
-smtp_orden($fp, base64_encode((string) $config['password']), [235], 'contraseña');
-smtp_orden($fp, 'MAIL FROM:<' . $de . '>', [250], 'MAIL FROM');
-smtp_orden($fp, 'RCPT TO:<' . $para . '>', [250, 251], 'RCPT TO');
-smtp_orden($fp, 'DATA', [354], 'DATA');
+smtp_orden($fp, 'EHLO ' . (substr(strrchr($de, '@') ?: '@localhost', 1)), [250], 'ehlo');
+smtp_orden($fp, 'AUTH LOGIN', [334], 'auth');
+smtp_orden($fp, base64_encode((string) $config['user']), [334], 'auth-usuario');
+smtp_orden($fp, base64_encode((string) $config['password']), [235], 'auth-clave');
+smtp_orden($fp, 'MAIL FROM:<' . $de . '>', [250], 'remitente');
+smtp_orden($fp, 'RCPT TO:<' . $para . '>', [250, 251], 'destinatario');
+smtp_orden($fp, 'DATA', [354], 'datos');
 smtp_orden($fp, $mensaje . "\r\n.", [250], 'cuerpo');
 @fwrite($fp, "QUIT\r\n");
 @fclose($fp);

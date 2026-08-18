@@ -188,17 +188,23 @@ async function enviar({ fields, values, formId, lang, honeypot }) {
     /* Sin red, o el servidor no responde */
     return 'send';
   }
-  if (res.status === 429) return 'rate';
-  if (!res.ok) return 'send';
+  if (res.status === 429) return { kind: 'rate' };
+
+  /* La etapa la manda el servidor cuando el envío falla ('auth', 'conexion'…).
+     No dice nada de la infraestructura, pero convierte "no funciona" en un
+     dato accionable sin tener que abrir las herramientas del navegador. */
+  let etapa = null;
+  try { etapa = (await res.clone().json())?.stage ?? null; } catch { /* sin JSON */ }
+  if (!res.ok) return { kind: 'send', stage: etapa };
 
   /* Un 200 con HTML en vez de JSON significa que el servidor devolvió una
      página en lugar de ejecutar el PHP: sin esto, un endpoint mal desplegado
      se leería como un envío correcto y los mensajes se perderían en silencio. */
   try {
     const data = await res.json();
-    return data && data.ok === true ? null : 'send';
+    return data && data.ok === true ? null : { kind: 'send', stage: etapa };
   } catch {
-    return 'send';
+    return { kind: 'send', stage: null };
   }
 }
 
@@ -352,7 +358,12 @@ function Conversation({
 
   const avisoEnvio = sendError ? (
     <p role="alert" style={c.error}>
-      {sendError === 'rate' ? t.errorRate : t.errorSend('hello@meetbecome.com')}
+      {sendError.kind === 'rate' ? t.errorRate : t.errorSend('hello@meetbecome.com')}
+      {sendError.stage && (
+        <span style={{ display: 'block', marginTop: 6, font: 'var(--type-mono)', fontSize: 'var(--text-micro)', opacity: 0.7 }}>
+          ref: {sendError.stage}
+        </span>
+      )}
     </p>
   ) : null;
 

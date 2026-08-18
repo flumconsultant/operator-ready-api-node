@@ -7,5 +7,11 @@
   Require all denied
 </Files>
 
+# El registro de fallos de envío puede contener lo que responde el servidor de
+# correo. Se lee desde el gestor de archivos de hPanel, nunca desde la web.
+<FilesMatch "\.log$">
+  Require all denied
+</FilesMatch>
+
 # Tampoco hay nada que listar en esta carpeta
 Options -Indexes
