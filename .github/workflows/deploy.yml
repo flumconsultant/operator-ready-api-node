@@ -106,21 +106,29 @@ jobs:
 
           # ¿Dónde hay que dejar los archivos?
           #
-          # Depende de cómo se creara la cuenta FTP en hPanel, y es la trampa
-          # más fácil de pisar: si la cuenta apunta a la raíz de la cuenta, el
-          # sitio va dentro de public_html; si apunta directamente a
-          # public_html, entonces ya estamos dentro y subir a "public_html"
-          # crearía public_html/public_html y el sitio no aparecería por ningún
-          # lado. En vez de pedirle a nadie que lo adivine, se comprueba.
-          DESTINO="${FTP_DIR:-}"
-          if [ -z "$DESTINO" ]; then
-            if lftp -c "set ftp:ssl-force true; set ssl:verify-certificate $VERIFICAR; open -u '$FTP_USER','$FTP_PASSWORD' '$FTP_HOST'; cd public_html" 2>/dev/null; then
-              DESTINO="public_html"
-            else
-              DESTINO="."
-            fi
-          fi
+          # La cuenta FTP de este sitio está limitada a la carpeta del dominio
+          # (el usuario es del tipo 'uXXXXXXX.meetbecome.com'), así que al
+          # conectar ya estamos DENTRO de public_html: el destino es ".".
+          #
+          # Antes esto se detectaba solo, probando si existía una carpeta
+          # llamada public_html. Fue un error y costó caro: en cuanto por
+          # cualquier motivo apareció un public_html dentro de public_html, la
+          # prueba pasó a dar "sí" y los despliegues empezaron a dejar el sitio
+          # en public_html/public_html — una carpeta que el servidor no publica.
+          # Desde fuera el despliegue salía en verde y el sitio se quedaba
+          # congelado en la versión anterior, que es el peor fallo posible:
+          # silencioso. Una detección que puede acertar o fallar según lo que
+          # haya en el disco es peor que un valor fijo y explícito.
+          DESTINO="${FTP_DIR:-.}"
           echo "Subiendo a: $DESTINO"
+
+          # Red de seguridad contra ese mismo fallo: si vuelve a aparecer un
+          # public_html anidado, se avisa en el registro en vez de dejarlo
+          # pasar. No detiene el despliegue —el destino ya es fijo— pero deja
+          # constancia de que hay una carpeta duplicada que hay que limpiar.
+          if lftp -c "set ftp:ssl-force true; set ssl:verify-certificate $VERIFICAR; open -u '$FTP_USER','$FTP_PASSWORD' '$FTP_HOST'; cd public_html" 2>/dev/null; then
+            echo "::warning::Hay una carpeta 'public_html' dentro de la raíz del FTP. El servidor no la publica: son archivos duplicados de un despliegue antiguo y conviene borrarla desde el Administrador de archivos de hPanel."
+          fi
 
           lftp -c "
             set ftp:ssl-force true;
