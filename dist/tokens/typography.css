@@ -1,0 +1,49 @@
+:root{
+--font-display:"Inter",system-ui,sans-serif; /* @kind font */
+--font-body:"Inter",system-ui,sans-serif; /* @kind font */
+--font-mono:"JetBrains Mono",ui-monospace,monospace; /* @kind font */
+
+--weight-display:600; /* @kind font */
+--weight-display-strong:700; /* @kind font */
+--weight-body:400; /* @kind font */
+--weight-body-medium:500; /* @kind font */
+--weight-mono:400; /* @kind font */
+
+--text-hero:clamp(46px,6.4vw,104px); /* @kind font */
+--text-display:76px; /* @kind font */
+--text-h1:52px; /* @kind font */
+--text-h2:34px; /* @kind font */
+--text-h3:21px; /* @kind font */
+--text-lead:19px; /* @kind font */
+--text-body-lg:16.5px; /* @kind font */
+--text-body-md:15px; /* @kind font */
+--text-body-sm:13px; /* @kind font */
+--text-label:11px; /* @kind font */
+--text-micro:10px; /* @kind font */
+
+--leading-tight:.96; /* @kind font */
+--leading-heading:1.08; /* @kind font */
+--leading-body:1.55; /* @kind font */
+--leading-loose:1.65; /* @kind font */
+
+/* Tight tracking on display, as specified for the wordmark. */
+--track-hero:-.03em; /* @kind font */
+--track-display:-.022em; /* @kind font */
+--track-heading:-.014em; /* @kind font */
+--track-body:-.002em; /* @kind font */
+--track-label:.14em; /* @kind font */
+--track-mono:0em; /* @kind font */
+/* The descriptor line under the wordmark — very wide, per section 2 */
+--track-descriptor:.34em; /* @kind font */
+--track-wordmark:-.02em; /* @kind font */
+
+--type-hero:var(--weight-display) var(--text-hero)/var(--leading-tight) var(--font-display); /* @kind font */
+--type-h1:var(--weight-display) var(--text-h1)/var(--leading-heading) var(--font-display); /* @kind font */
+--type-h2:var(--weight-display) var(--text-h2)/var(--leading-heading) var(--font-display); /* @kind font */
+--type-h3:var(--weight-display-strong) var(--text-h3)/1.26 var(--font-display); /* @kind font */
+--type-body:var(--weight-body) var(--text-body-md)/var(--leading-body) var(--font-body); /* @kind font */
+--type-lead:var(--weight-body) var(--text-lead)/var(--leading-loose) var(--font-body); /* @kind font */
+--type-label:var(--weight-display) var(--text-label)/1.2 var(--font-display); /* @kind font */
+--type-mono:var(--weight-mono) var(--text-body-sm)/1.5 var(--font-mono); /* @kind font */
+--type-stat:var(--weight-display) 48px/1 var(--font-display); /* @kind font */
+}

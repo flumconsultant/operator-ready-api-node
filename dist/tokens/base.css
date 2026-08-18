@@ -1,0 +1,15 @@
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg-page);color:var(--text-body);font:var(--type-body);letter-spacing:var(--track-body);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:var(--weight-display);color:var(--text-heading);margin:0}
+h1{font-size:var(--text-h1);line-height:var(--leading-heading);letter-spacing:var(--track-display)}
+h2{font-size:var(--text-h2);line-height:var(--leading-heading);letter-spacing:var(--track-display)}
+h3{font-size:var(--text-h3);line-height:1.26;letter-spacing:var(--track-heading);font-weight:var(--weight-display-strong)}
+p{margin:0;text-wrap:pretty}
+a{color:var(--text-accent);text-decoration:none;transition:var(--transition-hover)}
+a:hover{color:var(--accent-hover);text-decoration:underline;text-underline-offset:3px}
+.b-label{font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--text-faint)}
+.b-mono{font:var(--type-mono)}
+.b-rule{height:1px;background:var(--border-hairline)}
+.b-grid{background-image:var(--grid-overlay-both)}
+.b-glow-text{text-shadow:var(--glow-text)}
+::selection{background:var(--electric-green);color:var(--deep-navy)}

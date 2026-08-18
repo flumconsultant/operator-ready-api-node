@@ -1,0 +1,15 @@
+:root{
+--space-0:0px;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;
+--space-6:24px;--space-7:32px;--space-8:40px;--space-9:48px;--space-10:64px;--space-11:80px;
+--space-12:96px;--space-13:120px;--space-14:160px;
+--gutter-page:clamp(24px,5vw,80px); /* @kind spacing */
+--maxw-prose:60ch; /* @kind other */
+--maxw-content:1280px; /* @kind spacing */
+--grid-gap:24px; /* @kind spacing */
+--grid-gap-hair:1px; /* @kind spacing */
+--section-pad-y:var(--space-12); /* @kind spacing */
+/* Logo clearspace = one x, where x is the wordmark's cap height / icon stem */
+--logo-clearspace:1em; /* @kind spacing */
+--logo-min-wordmark:120px; /* @kind spacing */
+--logo-min-icon:32px; /* @kind spacing */
+}

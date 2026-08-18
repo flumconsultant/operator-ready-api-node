@@ -1,0 +1,28 @@
+:root{
+--shadow-none:none;
+--shadow-card:0 1px 2px rgba(10,14,39,.05);
+--shadow-raised:0 2px 4px rgba(10,14,39,.06),0 14px 36px rgba(10,14,39,.10);
+--shadow-inset-hair:inset 0 0 0 1px var(--border-hairline);
+
+/* ---- GLOW & ENERGY (section 13). Dark backgrounds only.
+   Opacity 20-40%, blur 20-40px. Premium, not gaming — never red, never orange,
+   never a second glow in the same frame. ---- */
+--glow-text:0 0 24px rgba(0,255,136,.32); /* @kind other */
+--glow-icon:0 0 20px rgba(0,255,136,.30); /* @kind other */
+--glow-button:0 0 28px rgba(0,255,136,.34); /* @kind other */
+--glow-button-hover:0 0 36px rgba(0,255,136,.42); /* @kind other */
+--glow-pulse:0 0 40px rgba(0,255,136,.24); /* @kind other */
+--glow-soft:0 0 80px rgba(0,255,136,.18); /* @kind other */
+--glow-drop:drop-shadow(0 0 20px rgba(0,255,136,.32)); /* @kind other */
+
+--ring-focus:0 0 0 2px var(--bg-page),0 0 0 4px var(--electric-green);
+--blur-glass:saturate(120%) blur(18px); /* @kind other */
+--surface-glass:rgba(247,250,252,.78); /* @kind color */
+--surface-glass-dark:rgba(10,14,39,.72); /* @kind color */
+
+/* Technical grid — thin, cool, used sparingly on navy */
+--grid-line:rgba(226,232,240,.07); /* @kind color */
+--grid-step:48px; /* @kind spacing */
+--grid-overlay:repeating-linear-gradient(90deg,var(--grid-line) 0 1px,transparent 1px var(--grid-step)); /* @kind color */
+--grid-overlay-both:repeating-linear-gradient(90deg,var(--grid-line) 0 1px,transparent 1px var(--grid-step)),repeating-linear-gradient(180deg,var(--grid-line) 0 1px,transparent 1px var(--grid-step)); /* @kind color */
+}

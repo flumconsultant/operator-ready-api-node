@@ -1,0 +1,85 @@
+:root{
+/* ---- PRIMARY (section 7). Usage ratio is a rule, not a suggestion:
+   navy 60% · green 20% · ice blue 10% · charcoal 10% ---- */
+--deep-navy:#0A0E27; /* @kind color */
+--electric-green:#00FF88; /* @kind color */
+--ice-blue:#E0F7FF; /* @kind color */
+--charcoal:#2D3748; /* @kind color */
+
+/* ---- SUPPORTING ---- */
+--dark-slate:#1A202C; /* @kind color */
+--neon-green:#00FFAA; /* @kind color */
+--soft-white:#F7FAFC; /* @kind color */
+
+/* ---- Navy ramp — every dark surface comes from here ---- */
+--navy-950:#05070F; /* @kind color */
+--navy-900:#0A0E27; /* @kind color */
+--navy-850:#0E1330; /* @kind color */
+--navy-800:#141A3A; /* @kind color */
+--navy-700:#1A202C; /* @kind color */
+--navy-600:#2D3748; /* @kind color */
+--navy-500:#3D4A63; /* @kind color */
+
+/* ---- Light ramp ---- */
+--white:#FFFFFF; /* @kind color */
+--off-white:#F7FAFC; /* @kind color */
+--pale-100:#EDF2F7; /* @kind color */
+--pale-200:#E2E8F0; /* @kind color */
+--pale-300:#CBD5E0; /* @kind color */
+
+/* ---- Text greys. On navy only slate-100/200/300 are legal for text. ---- */
+--slate-100:#E2E8F0; /* @kind color */
+--slate-200:#C3CEDD; /* @kind color */
+--slate-300:#9BA9BF; /* @kind color */
+--slate-400:#718096; /* @kind color */
+--slate-500:#4A5568; /* @kind color */
+
+/* ---- Green washes ---- */
+--green-tint:rgba(0,255,136,.12); /* @kind color */
+--green-tint-strong:rgba(0,255,136,.22); /* @kind color */
+--green-line:rgba(0,255,136,.38); /* @kind color */
+
+/* ---- Semantic — light context (default) ---- */
+--bg-page:var(--off-white); /* @kind color */
+--bg-sunken:var(--pale-100); /* @kind color */
+--surface-card:var(--white); /* @kind color */
+--surface-inverse:var(--navy-900); /* @kind color */
+--text-heading:var(--deep-navy); /* @kind color */
+--text-body:var(--navy-700); /* @kind color */
+--text-muted:var(--slate-500); /* @kind color */
+--text-faint:var(--slate-400); /* @kind color */
+--text-accent:#0F7A46; /* @kind color */
+--text-on-accent:var(--deep-navy); /* @kind color */
+--border-hairline:var(--pale-200); /* @kind color */
+--border-strong:var(--pale-300); /* @kind color */
+--accent:var(--electric-green); /* @kind color */
+--accent-hover:var(--neon-green); /* @kind color */
+--focus-ring:var(--electric-green); /* @kind color */
+
+/* Dark-surface hairlines — a navy island can sit on a light page */
+--border-hairline-dark:rgba(226,232,240,.14); /* @kind color */
+--border-strong-dark:rgba(226,232,240,.28); /* @kind color */
+
+/* ---- GRADIENT SYSTEM (section 8) — on dark backgrounds ---- */
+--gradient-transformation:linear-gradient(90deg,#0A0E27 0%,#00FF88 100%); /* @kind color */
+--gradient-energy:linear-gradient(90deg,#00FF88 0%,#00FFAA 100%); /* @kind color */
+--gradient-future:linear-gradient(90deg,#E0F7FF 0%,#00FF88 100%); /* @kind color */
+--gradient-transformation-diag:linear-gradient(135deg,#0A0E27 0%,#00FF88 100%); /* @kind color */
+--gradient-protect-dark:linear-gradient(180deg,rgba(10,14,39,0) 0%,rgba(10,14,39,.86) 66%,#0A0E27 100%); /* @kind color */
+--gradient-protect-light:linear-gradient(180deg,rgba(247,250,252,0) 0%,rgba(247,250,252,.9) 70%,#F7FAFC 100%); /* @kind color */
+/* Environmental green light — the "futuristic environment" ground */
+--gradient-environment:radial-gradient(70% 90% at 50% 108%,rgba(0,255,136,.30) 0%,rgba(0,255,136,.07) 42%,rgba(10,14,39,0) 72%); /* @kind color */
+}
+[data-theme="dark"],.become-dark{
+--bg-page:var(--navy-900); /* @kind color */
+--bg-sunken:var(--navy-950); /* @kind color */
+--surface-card:var(--navy-850); /* @kind color */
+--surface-inverse:var(--off-white); /* @kind color */
+--text-heading:var(--white); /* @kind color */
+--text-body:var(--slate-100); /* @kind color */
+--text-muted:var(--slate-200); /* @kind color */
+--text-faint:var(--slate-300); /* @kind color */
+--text-accent:var(--electric-green); /* @kind color */
+--border-hairline:var(--border-hairline-dark); /* @kind color */
+--border-strong:var(--border-strong-dark); /* @kind color */
+}
