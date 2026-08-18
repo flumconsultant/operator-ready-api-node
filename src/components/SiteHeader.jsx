@@ -54,6 +54,18 @@ export default function SiteHeader() {
   const [hidden, setHidden] = React.useState(false);
   const triggers = React.useRef([]);
   const barRef = React.useRef(null);
+  const closeTimer = React.useRef(0);
+
+  /* El panel se cerraba en cuanto el puntero salía del trigger, así que al
+     bajar hacia las opciones desaparecía antes de llegar. Dos arreglos: el
+     panel arranca pegado al trigger (sin hueco que cruzar) y el cierre lleva
+     un retardo corto que se cancela si el puntero entra en el panel. */
+  const openDrop = (i) => { clearTimeout(closeTimer.current); setDrop(i); };
+  const closeDropSoon = () => {
+    clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => setDrop(null), 220);
+  };
+  React.useEffect(() => () => clearTimeout(closeTimer.current), []);
 
   /* Navegar cierra todo */
   React.useEffect(() => { setOpen(false); setDrop(null); setAcc(null); }, [pathname]);
@@ -156,8 +168,8 @@ export default function SiteHeader() {
                 <div
                   key={item.label}
                   style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 2 }}
-                  onPointerEnter={() => window.matchMedia('(hover: hover)').matches && setDrop(i)}
-                  onPointerLeave={() => window.matchMedia('(hover: hover)').matches && setDrop((d) => (d === i ? null : d))}
+                  onPointerEnter={() => window.matchMedia('(hover: hover)').matches && openDrop(i)}
+                  onPointerLeave={() => window.matchMedia('(hover: hover)').matches && closeDropSoon()}
                 >
                   <Link
                     to={item.to}
@@ -185,16 +197,24 @@ export default function SiteHeader() {
                   {drop === i && (
                     <div
                       id={`drop-${i}`}
+                      onPointerEnter={() => openDrop(i)}
+                      onPointerLeave={closeDropSoon}
+                      className="drop-panel"
                       style={{
-                        position: 'absolute', top: 'calc(100% + 14px)', left: item.wide ? 'auto' : 0,
+                        position: 'absolute', top: '100%', left: item.wide ? 'auto' : 0,
                         right: item.wide ? 0 : 'auto',
-                        width: item.wide ? 'min(680px, 74vw)' : 'min(420px, 74vw)',
+                        /* el padding superior hace de puente: no hay hueco muerto
+                           entre el trigger y el panel */
+                        paddingTop: 14,
+                        width: item.wide ? 'min(680px, 74vw)' : 'min(440px, 74vw)',
+                      }}
+                    >
+                      <div style={{
                         background: 'var(--navy-950)',
                         border: '1px solid var(--border-hairline-dark)',
                         boxShadow: '0 40px 80px -40px rgba(0,0,0,.9)',
                         padding: 'var(--space-6)',
-                      }}
-                    >
+                      }}>
                       {item.heading && (
                         <p style={{ margin: '0 0 var(--space-5)', font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--slate-400)' }}>
                           {item.heading}
@@ -223,6 +243,7 @@ export default function SiteHeader() {
                           {item.more.label} →
                         </Link>
                       )}
+                      </div>
                     </div>
                   )}
                 </div>

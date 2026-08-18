@@ -527,18 +527,25 @@ export default function AiNode({ onReady }) {
     const readScroll = () => {
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       targetDoc = maxScroll > 0 ? Math.min(Math.max(window.scrollY / maxScroll, 0), 1) : 0;
-      if (anchors.length < 2) { loadPair(0); return; }
-      const eye = window.scrollY + window.innerHeight / 2;
 
       let t;
-      if (eye <= anchors[0].mid) t = anchors[0].state;
-      else if (eye >= anchors[anchors.length - 1].mid) t = anchors[anchors.length - 1].state;
-      else {
-        let k = 0;
-        while (k < anchors.length - 2 && eye > anchors[k + 1].mid) k++;
-        const span = anchors[k + 1].mid - anchors[k].mid || 1;
-        const f = (eye - anchors[k].mid) / span;
-        t = anchors[k].state + f * (anchors[k + 1].state - anchors[k].state);
+      if (anchors.length < 2) {
+        /* Página sin anclas: el journey se reparte sobre el documento entero.
+           Así el nodo cuenta la misma historia —núcleo, dispersión, cuatro
+           sistemas, seis etapas, convergencia— en cualquier página, no solo en
+           la home. */
+        t = targetDoc * (STATE_COUNT - 1);
+      } else {
+        const eye = window.scrollY + window.innerHeight / 2;
+        if (eye <= anchors[0].mid) t = anchors[0].state;
+        else if (eye >= anchors[anchors.length - 1].mid) t = anchors[anchors.length - 1].state;
+        else {
+          let k = 0;
+          while (k < anchors.length - 2 && eye > anchors[k + 1].mid) k++;
+          const span = anchors[k + 1].mid - anchors[k].mid || 1;
+          const f = (eye - anchors[k].mid) / span;
+          t = anchors[k].state + f * (anchors[k + 1].state - anchors[k].state);
+        }
       }
 
       const i = Math.min(Math.max(Math.floor(t), 0), STATE_COUNT - 2);
@@ -622,14 +629,21 @@ export default function AiNode({ onReady }) {
 
       /* Presencia: manda en el hero, se retira donde la página se llena de
          texto, y vuelve a subir en el cierre, que es otra vez una sola frase. */
-      fade = st <= 1 ? 1 : st <= 3 ? 1 - ((st - 1) / 2) * 0.58 : 0.42 + (st - 3) * 0.46;
+      /* Solo el hero aguanta el nodo a plena intensidad: ahí hay seis palabras.
+         En cuanto empieza el texto corrido baja a un tercio — "How we become"
+         era ilegible con el nodo al 100%. Sube otra vez en el cierre, que
+         vuelve a ser una sola frase. */
+      fade = st <= 0.4 ? 1
+        : st <= 1 ? 1 - ((st - 0.4) / 0.6) * 0.68
+        : st <= 3 ? 0.32 - ((st - 1) / 2) * 0.08
+        : 0.24 + (st - 3) * 0.46;
 
       entry = Math.min(entry + dt * 1.1, 1);
       uniforms.uOpacity.value = entry * fade;
       lineUniforms.uOpacity.value = lineTarget * entry * fade;
       /* El polvo baja menos que el nodo donde hay texto: es lo que mantiene la
          continuidad del viaje incluso en las secciones más densas. */
-      dustUniforms.uOpacity.value = entry * (0.55 + fade * 0.45);
+      dustUniforms.uOpacity.value = entry * (0.30 + fade * 0.55);
 
       syncBands();
       bandU.uResolution.value.set(host.clientWidth, host.clientHeight);

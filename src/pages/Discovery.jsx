@@ -109,14 +109,14 @@ export default function Discovery() {
         <div style={{ marginTop: 'var(--space-10)' }}>
           {STAGES.map(([letter, name, work, out]) => (
             <Reveal
-              as="div" key={name} data-cols
+              as="div" key={name} data-cols className="row-hit"
               style={{
                 display: 'grid', gridTemplateColumns: '56px minmax(0,1fr) minmax(0,1.2fr) minmax(0,1fr)',
                 gap: 'var(--space-6)', padding: 'var(--space-6) 0',
                 borderTop: '1px solid var(--border-hairline)', alignItems: 'baseline',
               }}
             >
-              <span aria-hidden="true" style={{ fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-accent)' }}>{letter}</span>
+              <span aria-hidden="true" className="stage-letter" style={{ fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-accent)' }}>{letter}</span>
               <h3 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)' }}>{name}</h3>
               <p style={{ margin: 0, font: 'var(--type-body)', color: 'var(--text-body)' }}>{work}</p>
               <p style={{ margin: 0, font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: 'var(--text-muted)' }}>

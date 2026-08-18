@@ -81,14 +81,14 @@ export default function Framework() {
         <div style={{ marginTop: 'var(--space-10)' }}>
           {STAGES.map(([letter, name, work, out, service], i) => (
             <Reveal
-              as="div" key={name + i} data-cols
+              as="div" key={name + i} data-cols className="row-hit"
               style={{
                 display: 'grid', gridTemplateColumns: '56px minmax(0,1fr) minmax(0,1.2fr) minmax(0,0.9fr) minmax(0,0.7fr)',
                 gap: 'var(--space-6)', padding: 'var(--space-6) 0',
                 borderTop: '1px solid var(--border-hairline-dark)', alignItems: 'baseline',
               }}
             >
-              <span aria-hidden="true" style={{ fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--electric-green)' }}>{letter}</span>
+              <span aria-hidden="true" className="stage-letter" style={{ fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--electric-green)' }}>{letter}</span>
               <h3 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--white)' }}>
                 <span className="sr-only">{`Etapa ${i + 1}: `}</span>{name}
               </h3>
@@ -113,7 +113,7 @@ export default function Framework() {
         </Lead>
         <Cols min="230px">
           {DOMAINS.map(([name, line, icon]) => (
-            <Reveal as="div" key={name} style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
+            <Reveal as="div" key={name} className="icon-hit row-hit" style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
               <img src={icon} alt="" loading="lazy" decoding="async" style={{ width: 34, height: 34, display: 'block' }} />
               <h3 style={{ margin: 'var(--space-5) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--white)' }}>{name}</h3>
               <Body dark style={{ marginTop: 'var(--space-4)' }}>{line}</Body>

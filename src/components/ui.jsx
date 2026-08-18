@@ -280,6 +280,6 @@ export const IndexRow = ({ to, term, def, dark, num }) => {
   };
 
   return to
-    ? <Reveal as={Link} to={to} data-cols style={style} className="index-row">{inner}</Reveal>
-    : <Reveal as="div" data-cols style={style}>{inner}</Reveal>;
+    ? <Reveal as={Link} to={to} data-cols style={style} className="index-row row-hit">{inner}</Reveal>
+    : <Reveal as="div" data-cols style={style} className="row-hit">{inner}</Reveal>;
 };

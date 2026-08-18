@@ -6,6 +6,7 @@ import {
   Section, Kicker, Headline, Lead, Body,
   PrimaryCTA, GhostCTA, TextCTA, Cols, Card, IndexRow,
 } from '../components/ui.jsx';
+import StateTransition from '../components/StateTransition.jsx';
 import { USE_CASES } from '../site.js';
 
 /**
@@ -128,6 +129,13 @@ export default function Home() {
         <Reveal as="p" style={{ margin: 'var(--space-8) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', letterSpacing: 'var(--track-display)', color: 'var(--text-heading)', maxWidth: '24ch' }}>
           The next company is already inside yours.
         </Reveal>
+
+        {/* La C y la O de BECOME como los dos estados de la misma empresa. La
+            marca explicándose a sí misma, no un adorno. */}
+        <div style={{ marginTop: 'var(--space-12)', display: 'grid', justifyItems: 'center' }}>
+          <StateTransition dark={false} />
+        </div>
+
         <TextCTA to="/es/nosotros">Conoce BECOME</TextCTA>
       </Section>
 
@@ -145,7 +153,7 @@ export default function Home() {
 
         <Cols min="230px" style={{ marginTop: 'var(--space-11)' }}>
           {DOMAINS.map(([name, line, icon]) => (
-            <Reveal as="div" key={name} style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
+            <Reveal as="div" key={name} className="icon-hit row-hit" style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
               <img src={icon} alt="" loading="lazy" decoding="async" style={{ width: 34, height: 34, display: 'block' }} />
               <h3 style={{ margin: 'var(--space-5) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--white)' }}>
                 {name}
@@ -167,6 +175,7 @@ export default function Home() {
               as="div"
               key={name}
               data-cols
+              className="row-hit"
               style={{
                 display: 'grid',
                 gridTemplateColumns: '56px minmax(0,1fr) minmax(0,1.4fr)',
@@ -178,6 +187,7 @@ export default function Home() {
             >
               <span
                 aria-hidden="true"
+                className="stage-letter"
                 style={{ fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--electric-green)' }}
               >
                 {letter}

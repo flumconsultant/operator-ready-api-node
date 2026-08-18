@@ -23,9 +23,10 @@ export default function App() {
   return (
     <>
       <ScrollToTop />
-      {/* El nodo solo vive en la home: es su narrativa la que coreografía los
-          cinco estados. En el resto de rutas ni se descarga. */}
-      {pathname === '/es' && <AiNodeStage />}
+      {/* El nodo vive en todo el sitio. En la home las formas van ancladas a
+          secciones concretas; en el resto de páginas el mismo journey se
+          reparte sobre el documento. Lo que no cambia es la historia. */}
+      <AiNodeStage key={pathname} />
       {/* La clave por ruta es lo que hace visible el fallback. React 19 trata
           la navegación como una transición y, por defecto, mantiene la pantalla
           anterior en vez de mostrar el Suspense: sin remontar el límite, el

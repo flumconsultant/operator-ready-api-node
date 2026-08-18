@@ -190,3 +190,49 @@ label {
 
 /* El header fijo tapa el destino de un ancla si no se compensa */
 [id] { scroll-margin-top: 96px; }
+
+/* ---------------------------------------------------------------------------
+   Estados de hover
+   Todo lo que se puede pulsar tiene que decirlo antes de que lo pulses.
+--------------------------------------------------------------------------- */
+
+/* El panel del desplegable: el padding superior hace de puente, así que el
+   puntero puede bajar del trigger a las opciones sin cruzar un hueco muerto. */
+.drop-panel { animation: dropIn .18s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes dropIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .drop-panel { animation: none; } }
+
+.drop-item { transition: background .18s ease, transform .18s ease; }
+.drop-item:hover,
+.drop-item:focus-visible { background: rgba(0,255,136,.10); transform: translateX(3px); }
+.drop-item:hover span:first-child { color: var(--electric-green); }
+
+/* Iconos: se iluminan y suben un pelo al pasar por encima */
+.icon-hit { transition: transform .3s cubic-bezier(.2,.7,.2,1), filter .3s ease; }
+.icon-hit img { display: block; transition: inherit; }
+.icon-hit:hover img,
+.icon-hit:focus-within img {
+  transform: translateY(-3px) scale(1.06);
+  filter: drop-shadow(0 0 10px rgba(0,255,136,.55));
+}
+
+/* Filas del índice editorial y etapas del framework */
+.row-hit { transition: border-color .3s ease, background .3s ease, padding-left .3s cubic-bezier(.2,.7,.2,1); }
+.row-hit:hover,
+.row-hit:focus-within {
+  border-color: var(--green-line) !important;
+  background: rgba(0,255,136,.045);
+  padding-left: var(--space-4);
+}
+.row-hit:hover h3 { color: var(--text-accent); }
+[data-band="--navy-900"] .row-hit:hover h3,
+[data-band="--navy-950"] .row-hit:hover h3 { color: var(--electric-green); }
+
+/* La letra de cada etapa BECOME crece al pasar por su fila */
+.row-hit .stage-letter { transition: transform .3s cubic-bezier(.2,.7,.2,1), text-shadow .3s ease; }
+.row-hit:hover .stage-letter { transform: scale(1.18); text-shadow: 0 0 18px rgba(0,255,136,.45); }
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-hit, .icon-hit img, .row-hit, .row-hit .stage-letter, .drop-item { transition: none; }
+  .icon-hit:hover img, .row-hit:hover, .row-hit:hover .stage-letter, .drop-item:hover { transform: none; }
+}
