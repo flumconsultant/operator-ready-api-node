@@ -186,8 +186,13 @@ jobs:
             exit 0
           fi
 
-          # La cadena al final evita que responda una copia guardada del CDN.
-          REMOTO_HTML=$(curl -fsS --max-time 30 "https://meetbecome.com/?nocache=${GITHUB_SHA}" || true)
+          # -L es obligatorio: la raíz responde 301 hacia /es, y sin seguir la
+          # redirección curl devuelve un cuerpo vacío y la comprobación se
+          # queda sin nada que mirar. La cadena del final evita que conteste
+          # una copia guardada del CDN.
+          REMOTO_HTML=$(curl -fsSL --max-time 30 \
+            -A 'despliegue-become/1.0' \
+            "https://meetbecome.com/?nocache=${GITHUB_SHA}" || true)
           REMOTO=$(printf '%s' "$REMOTO_HTML" | grep -o 'assets/index-[A-Za-z0-9_-]*\.js' | sed -n 1p || true)
 
           echo "Bundle recién compilado : $LOCAL"
