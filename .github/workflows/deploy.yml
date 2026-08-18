@@ -120,15 +120,21 @@ jobs:
           # silencioso. Una detección que puede acertar o fallar según lo que
           # haya en el disco es peor que un valor fijo y explícito.
           DESTINO="${FTP_DIR:-.}"
-          echo "Subiendo a: $DESTINO"
 
-          # Red de seguridad contra ese mismo fallo: si vuelve a aparecer un
-          # public_html anidado, se avisa en el registro en vez de dejarlo
-          # pasar. No detiene el despliegue —el destino ya es fijo— pero deja
-          # constancia de que hay una carpeta duplicada que hay que limpiar.
-          if lftp -c "set ftp:ssl-force true; set ssl:verify-certificate $VERIFICAR; open -u '$FTP_USER','$FTP_PASSWORD' '$FTP_HOST'; cd public_html" 2>/dev/null; then
-            echo "::warning::Hay una carpeta 'public_html' dentro de la raíz del FTP. El servidor no la publica: son archivos duplicados de un despliegue antiguo y conviene borrarla desde el Administrador de archivos de hPanel."
-          fi
+          # Dónde aterrizamos, en el registro y en claro. Sin esto, un
+          # despliegue que sube los archivos a la carpeta equivocada sale en
+          # verde exactamente igual que uno correcto: el fallo más caro de
+          # diagnosticar es el que no deja rastro.
+          echo "── Dónde estamos en el FTP ──"
+          lftp -c "
+            set ftp:ssl-force true;
+            set ssl:verify-certificate $VERIFICAR;
+            open -u '$FTP_USER','$FTP_PASSWORD' '$FTP_HOST';
+            echo '· Carpeta al conectar:'; pwd;
+            echo '· Contenido:'; cls -1;
+          " || echo "(no se pudo listar)"
+          echo "─────────────────────────────"
+          echo "Subiendo a: $DESTINO"
 
           lftp -c "
             set ftp:ssl-force true;
@@ -149,6 +155,41 @@ jobs:
             #    destruir trabajo que este repositorio no conoce.
             mirror --reverse --parallel=2 --verbose --exclude-glob assets/* dist/ $DESTINO/;
           "
+
+      - name: Comprobar que lo subido es lo que se publica
+        # Un despliegue que sube los archivos a una carpeta que el servidor no
+        # publica termina en verde igual que uno correcto, y el sitio se queda
+        # congelado en la versión anterior sin que nada lo avise. Pasó, y costó
+        # varias horas encontrarlo. La única comprobación que lo detecta es
+        # pedirle la página al dominio de verdad, por HTTP, y ver si responde
+        # con lo que se acaba de subir.
+        run: |
+          set -uo pipefail
+
+          # El nombre del bundle lleva un hash del contenido: si el sitio
+          # publicado apunta a otro archivo, está sirviendo otra versión.
+          LOCAL=$(grep -o 'assets/index-[A-Za-z0-9_-]*\.js' dist/index.html | head -1)
+          if [ -z "$LOCAL" ]; then
+            echo "::warning::No se pudo leer el nombre del bundle en dist/index.html; se omite la comprobación."
+            exit 0
+          fi
+
+          # La cadena al final evita que responda una copia guardada del CDN.
+          REMOTO_HTML=$(curl -fsS --max-time 30 "https://meetbecome.com/?nocache=${GITHUB_SHA}" || true)
+          REMOTO=$(printf '%s' "$REMOTO_HTML" | grep -o 'assets/index-[A-Za-z0-9_-]*\.js' | head -1)
+
+          echo "Bundle recién compilado : $LOCAL"
+          echo "Bundle que sirve el sitio: ${REMOTO:-(no se pudo leer)}"
+
+          if [ -z "$REMOTO" ]; then
+            echo "::warning::No se pudo leer https://meetbecome.com para comprobarlo. Revisa el sitio a mano."
+            exit 0
+          fi
+          if [ "$LOCAL" != "$REMOTO" ]; then
+            echo "::error::El sitio publicado NO es el que se acaba de subir. Los archivos han ido a parar a una carpeta que el servidor no publica. Revisa arriba, en '── Dónde estamos en el FTP ──', cuál es la carpeta real, y ponla en la variable FTP_DIR del repositorio (Settings → Secrets and variables → Actions → pestaña Variables)."
+            exit 1
+          fi
+          echo "El sitio publicado es esta versión."
 
       - name: Resumen
         run: |
