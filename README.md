@@ -42,7 +42,7 @@ Lo que queda pendiente, y por qué:
 | Texto de Privacidad y Términos | Lo redacta asesoría legal. Las páginas existen y lo dicen. |
 | Biografías del equipo (Nosotros) | No se inventan personas, cargos ni partnerships. |
 | Artículos de Insights | La página está lista; todavía no hay nada publicado y se dice. |
-| Destino del formulario de contacto | No hay backend. La confirmación avisa de que el mensaje no ha salido. |
+| Destino de los formularios | No hay backend. La confirmación avisa de que el mensaje no ha salido. |
 | Versión inglesa | Sin empezar. |
 
 ### La maqueta original
@@ -100,6 +100,19 @@ sólidos y la foto del hero.
 
 `three.js` son 132 KB gzip en su propio chunk, que solo se descarga en la home
 y solo cuando el navegador está ocioso. La carga inicial de la home no cambia.
+
+## Formularios
+
+Los dos formularios —contacto general y BECOME NOW™— comparten
+`ConversationalForm`: una pregunta por pantalla, con progreso, resumen editable
+antes de enviar y Enter para avanzar (Ctrl+Enter en los campos de texto largo).
+La diferencia entre ambos es el esquema de campos que reciben, no el
+componente.
+
+El patrón por pasos es peor que un formulario normal para varias personas, así
+que lleva compensaciones: un interruptor visible a «ver todo el formulario» que
+recuerda la elección, anuncio del paso por `aria-live`, foco que vuelve al campo
+al fallar la validación, y un resumen final en vez de un botón a ciegas.
 
 ## Cabecera y carga de rutas
 
