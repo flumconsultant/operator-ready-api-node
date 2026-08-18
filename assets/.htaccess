@@ -1,0 +1,107 @@
+# Configuración del servidor para meetbecome.com (Hostinger, LiteSpeed/Apache).
+#
+# Este archivo vive en assets/ porque Vite copia esa carpeta tal cual a dist/,
+# que es lo que se sube a public_html. Si se pusiera en la raíz del repositorio
+# no llegaría nunca al servidor.
+#
+# Lo que hay aquí, y por qué:
+#
+#   1. El sitio es una SPA: el servidor solo tiene index.html. Sin la regla de
+#      reescritura, entrar directo a /es/servicios o recargar esa página da un
+#      404 del servidor, porque ese archivo no existe en disco. Es el fallo
+#      número uno al publicar una SPA y no se ve en local, donde el servidor de
+#      desarrollo ya hace esto por su cuenta.
+#   2. Un solo dominio canónico. Sin esto el sitio existe en cuatro direcciones
+#      —con y sin https, con y sin www— y Google las trata como cuatro sitios
+#      distintos compitiendo entre ellos.
+#   3. Caducidad de caché distinta según el archivo. Los del bundle llevan un
+#      hash en el nombre, así que pueden cachearse un año sin riesgo: si cambian,
+#      cambia el nombre. index.html no lleva hash y no puede cachearse nunca, o
+#      los visitantes se quedan clavados en la versión vieja.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 1. Dominio canónico y HTTPS
+# ─────────────────────────────────────────────────────────────────────────────
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Sin cifrar → cifrado
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # www → sin www
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+  # La raíz no tiene página propia: el sitio empieza en /es. La redirección la
+  # hace el servidor y no React para que los buscadores vean un 301 de verdad
+  # en vez de una página vacía que se redirige sola con JavaScript.
+  RewriteRule ^$ /es [L,R=301]
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # 2. Reescritura de la SPA
+  # ───────────────────────────────────────────────────────────────────────────
+  # Si el archivo o la carpeta existen de verdad, se sirven tal cual. Cualquier
+  # otra cosa la resuelve el enrutador de React dentro de index.html.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 3. Caché
+# ─────────────────────────────────────────────────────────────────────────────
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # Bundle con hash en el nombre: un año, y sin revalidar
+  <FilesMatch "\.(js|css)$">
+    ExpiresDefault "access plus 1 year"
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # Imágenes, iconos y tipografías: no llevan hash, así que una semana y a
+  # revalidar. Si se cachearan un año, cambiar un icono obligaría a renombrarlo.
+  <FilesMatch "\.(webp|png|jpg|jpeg|svg|woff2|woff|ico)$">
+    ExpiresDefault "access plus 1 week"
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+
+  # index.html nunca se cachea: es lo único que sabe qué bundle toca cargar.
+  <FilesMatch "^index\.html$">
+    ExpiresDefault "access plus 0 seconds"
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 4. Compresión
+# ─────────────────────────────────────────────────────────────────────────────
+# LiteSpeed suele traerla activada; esto la garantiza si no lo está. El bundle
+# principal pasa de 260 KB a 84 KB comprimido.
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 5. Cabeceras de seguridad
+# ─────────────────────────────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+  # El navegador respeta el tipo declarado y no adivina por el contenido
+  Header set X-Content-Type-Options "nosniff"
+  # Nadie puede meter el sitio dentro de un iframe suyo
+  Header set X-Frame-Options "SAMEORIGIN"
+  # Al salir a otro dominio se manda el origen, no la URL completa
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  # Sin uso de cámara, micrófono ni ubicación
+  Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>
+# Falta deliberadamente una Content-Security-Policy: mal escrita rompe el sitio
+# en silencio, y escribirla bien exige inventariar antes todo lo que carga la
+# página. Es el siguiente paso, no este.
+
+# El listado de carpetas queda desactivado
+Options -Indexes

@@ -1,0 +1,99 @@
+# Compila el sitio y lo sube a Hostinger en cada push.
+#
+# Por qué lftp y no una acción de terceros del marketplace: una acción de
+# despliegue recibe las credenciales FTP del sitio en producción. lftp está en
+# los repositorios de Ubuntu, el comando que se ejecuta está escrito aquí a la
+# vista, y no hay una tercera parte que pueda cambiar lo que hace bajo el mismo
+# número de versión.
+
+name: Desplegar a Hostinger
+
+on:
+  push:
+    branches:
+      - main
+      - claude/become-brand-image-kw83bw
+  # Permite lanzarlo a mano desde la pestaña Actions sin tocar el código
+  workflow_dispatch:
+
+# Dos despliegues a la vez dejarían public_html a medias entre dos versiones.
+# Se encolan, y no se cancela el que ya está subiendo archivos.
+concurrency:
+  group: despliegue-produccion
+  cancel-in-progress: false
+
+jobs:
+  desplegar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Compilar
+        run: npm run build
+
+      - name: Comprobar que el build es publicable
+        # Barato, y detecta el fallo más caro: subir un dist/ sin .htaccess deja
+        # todas las rutas menos la home devolviendo 404, y desde fuera parece
+        # que el sitio entero se ha roto.
+        run: |
+          for f in dist/index.html dist/.htaccess dist/sitemap.xml dist/robots.txt; do
+            [ -s "$f" ] || { echo "Falta o está vacío: $f"; exit 1; }
+          done
+          echo "dist/ listo — $(du -sh dist | cut -f1)"
+
+      - name: Instalar lftp
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
+      - name: Subir a public_html
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          # Variable opcional del repositorio. Ver la nota de abajo.
+          TLS_RELAJADO: ${{ vars.FTP_TLS_RELAJADO }}
+        run: |
+          set -euo pipefail
+
+          # FTPS obligatorio: sin esto lftp negociaría FTP en claro y la
+          # contraseña del hosting viajaría legible por la red.
+          VERIFICAR=true
+          if [ "${TLS_RELAJADO:-}" = "true" ]; then
+            echo "::warning::Verificación del certificado desactivada. El tráfico sigue cifrado, pero no se comprueba que el servidor sea quien dice ser."
+            VERIFICAR=false
+          fi
+
+          lftp -c "
+            set ftp:ssl-force true;
+            set ftp:ssl-protect-data true;
+            set ssl:verify-certificate $VERIFICAR;
+            set net:max-retries 3;
+            set net:timeout 20;
+            open -u '$FTP_USER','$FTP_PASSWORD' '$FTP_HOST';
+
+            # 1. El bundle con hash va con --delete: esa carpeta es solo nuestra,
+            #    y sin borrar acumularía todos los bundles de todos los despliegues
+            #    para siempre.
+            mirror --reverse --delete --parallel=4 --verbose dist/assets/ public_html/assets/;
+
+            # 2. El resto va SIN --delete, a propósito. Si hubiera algo más en
+            #    public_html —un archivo de verificación de dominio, un correo,
+            #    cualquier cosa puesta a mano— borrarlo desde aquí sería
+            #    destruir trabajo que este repositorio no conoce.
+            mirror --reverse --parallel=4 --verbose --exclude-glob assets/* dist/ public_html/;
+          "
+
+      - name: Resumen
+        run: |
+          echo "### Desplegado a producción" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Commit: \`${GITHUB_SHA::7}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Sitio: https://meetbecome.com" >> $GITHUB_STEP_SUMMARY
+          echo "- Páginas en el sitemap: $(grep -c '<loc>' dist/sitemap.xml)" >> $GITHUB_STEP_SUMMARY
