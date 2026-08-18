@@ -39,12 +39,51 @@ jobs:
       - name: Compilar
         run: npm run build
 
+      - name: Preparar las credenciales del correo
+        # La contraseña del buzón no puede estar en el repositorio, y el
+        # hosting compartido no tiene forma de leer variables de entorno desde
+        # PHP. El punto intermedio es este: el archivo de configuración se
+        # escribe aquí, en cada despliegue, a partir de los secretos.
+        #
+        # Va en base64 y no como literales PHP para no tener que escapar nada:
+        # una contraseña con una comilla o una barra invertida —perfectamente
+        # normal— rompería el archivo generado, y el fallo aparecería en
+        # producción y no aquí.
+        env:
+          MAIL_USER: ${{ secrets.MAIL_USER }}
+          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+          MAIL_HOST: ${{ vars.MAIL_HOST }}
+          MAIL_PORT: ${{ vars.MAIL_PORT }}
+          MAIL_TO: ${{ vars.MAIL_TO }}
+        run: |
+          set -euo pipefail
+          if [ -z "${MAIL_USER:-}" ] || [ -z "${MAIL_PASSWORD:-}" ]; then
+            echo "::error::Faltan los secretos MAIL_USER y/o MAIL_PASSWORD (Settings → Secrets and variables → Actions → pestaña Secrets). Sin ellos el formulario del sitio no puede enviar correo."
+            exit 1
+          fi
+          mkdir -p dist/api
+          python3 - <<'PY' > dist/api/config.php
+          import base64, json, os
+          cfg = {
+              'host':     os.environ.get('MAIL_HOST')  or 'smtp.hostinger.com',
+              'port':     int(os.environ.get('MAIL_PORT') or 465),
+              'user':     os.environ['MAIL_USER'],
+              'password': os.environ['MAIL_PASSWORD'],
+              'to':       os.environ.get('MAIL_TO') or os.environ['MAIL_USER'],
+          }
+          blob = base64.b64encode(json.dumps(cfg).encode()).decode()
+          print("<?php return json_decode(base64_decode('%s'), true);" % blob)
+          PY
+          php -l dist/api/config.php >/dev/null 2>&1 || true
+          echo "config.php generado ($(wc -c < dist/api/config.php) bytes) — destino: ${MAIL_TO:-$MAIL_USER}"
+
       - name: Comprobar que el build es publicable
         # Barato, y detecta el fallo más caro: subir un dist/ sin .htaccess deja
         # todas las rutas menos la home devolviendo 404, y desde fuera parece
         # que el sitio entero se ha roto.
         run: |
-          for f in dist/index.html dist/.htaccess dist/sitemap.xml dist/robots.txt; do
+          for f in dist/index.html dist/.htaccess dist/sitemap.xml dist/robots.txt \
+                   dist/api/contacto.php dist/api/config.php; do
             [ -s "$f" ] || { echo "Falta o está vacío: $f"; exit 1; }
           done
           echo "dist/ listo — $(du -sh dist | cut -f1)"

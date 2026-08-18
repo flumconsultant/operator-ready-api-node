@@ -78,6 +78,7 @@ export default function Contacto() {
           submitLabel="Iniciemos la conversación"
           confirmation="Gracias. Revisaremos el contexto y responderemos con la conversación adecuada, no con una secuencia comercial automatizada."
           dark={false}
+          formId="contacto"
         />
       </Section>
 

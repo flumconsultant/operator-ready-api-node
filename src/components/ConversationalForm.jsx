@@ -57,14 +57,22 @@ const STRINGS = {
   es: {
     required: 'Este campo es obligatorio.',
     emailInvalid: 'Revisa el email: falta algo.',
-    underConstruction: (email) => (
+    recibido: (email) => (
       <>
-        Mientras el sitio está en construcción este formulario no está conectado a
-        ningún destino, así que tu mensaje no ha salido del navegador. Escríbenos a{' '}
-        <a href={`mailto:${email}`} style={{ color: 'inherit' }}>{email}</a>{' '}
-        y lo leemos hoy.
+        Lo hemos recibido y te responderemos a la dirección que nos has dejado.
+        Si prefieres escribirnos directamente, estamos en{' '}
+        <a href={`mailto:${email}`} style={{ color: 'inherit' }}>{email}</a>.
       </>
     ),
+    sending: 'Enviando…',
+    errorSend: (email) => (
+      <>
+        No hemos podido enviarlo. Vuelve a intentarlo en un momento, o
+        escríbenos a <a href={`mailto:${email}`} style={{ color: 'inherit' }}>{email}</a>{' '}
+        y lo leemos igual.
+      </>
+    ),
+    errorRate: 'Has enviado varios mensajes seguidos. Espera un momento antes de volver a intentarlo.',
     privacyNote: 'Usaremos estos datos únicamente para responder y preparar la conversación adecuada. No te suscribimos a nada ni compartimos la información.',
     railLabel: 'Recorrido del formulario',
     answeredOf: (a, t) => `${a} de ${t} respondidas`,
@@ -100,14 +108,22 @@ const STRINGS = {
   en: {
     required: 'This field is required.',
     emailInvalid: 'Check the email — something’s missing.',
-    underConstruction: (email) => (
+    recibido: (email) => (
       <>
-        While the site is in progress, this form isn’t connected to anything —
-        your message never left the browser. Email us at{' '}
-        <a href={`mailto:${email}`} style={{ color: 'inherit' }}>{email}</a>{' '}
-        and we’ll read it today.
+        We’ve got it, and we’ll reply to the address you left us. If you’d
+        rather write to us directly, we’re at{' '}
+        <a href={`mailto:${email}`} style={{ color: 'inherit' }}>{email}</a>.
       </>
     ),
+    sending: 'Sending…',
+    errorSend: (email) => (
+      <>
+        We couldn’t send it. Try again in a moment, or email us at{' '}
+        <a href={`mailto:${email}`} style={{ color: 'inherit' }}>{email}</a>{' '}
+        and we’ll read it just the same.
+      </>
+    ),
+    errorRate: 'You’ve sent several messages in a row. Give it a moment before trying again.',
     privacyNote: 'We’ll use this information only to respond and prepare the right conversation. We won’t subscribe you to anything or share it.',
     railLabel: 'Form journey',
     answeredOf: (a, t) => `${a} of ${t} answered`,
@@ -142,6 +158,50 @@ const STRINGS = {
   },
 };
 
+/* El endpoint vive en el propio hosting (assets/api/contacto.php). Es una
+   ruta relativa a propósito: así funciona igual en meetbecome.com y en
+   cualquier entorno de prueba, sin configurar dominios por ambiente. */
+const ENDPOINT = '/api/contacto.php';
+
+/** Envía el formulario. Devuelve null si fue bien, o la clave del error. */
+async function enviar({ fields, values, formId, lang, honeypot }) {
+  const emailField = fields.find((f) => f.type === 'email');
+  const payload = {
+    form: formId,
+    lang,
+    website: honeypot,          // el señuelo: si viene relleno, es un robot
+    replyTo: emailField ? String(values[emailField.name] || '').trim() : '',
+    answers: fields.map((f) => ({
+      label: f.short || f.label,
+      value: values[f.name],
+    })),
+  };
+
+  let res;
+  try {
+    res = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+  } catch {
+    /* Sin red, o el servidor no responde */
+    return 'send';
+  }
+  if (res.status === 429) return 'rate';
+  if (!res.ok) return 'send';
+
+  /* Un 200 con HTML en vez de JSON significa que el servidor devolvió una
+     página en lugar de ejecutar el PHP: sin esto, un endpoint mal desplegado
+     se leería como un envío correcto y los mensajes se perderían en silencio. */
+  try {
+    const data = await res.json();
+    return data && data.ok === true ? null : 'send';
+  } catch {
+    return 'send';
+  }
+}
+
 const isFilled = (f, v) => {
   if (f.type === 'multi') return Array.isArray(v) && v.length > 0;
   return typeof v === 'string' ? v.trim().length > 0 : Boolean(v);
@@ -164,9 +224,13 @@ function Conversation({
   bare = false,
   onDirty,
   lang = 'es',
+  formId = 'contacto',
 }) {
   const t = STRINGS[lang];
   const reduced = useReducedMotion();
+  const [sending, setSending] = React.useState(false);
+  const [sendError, setSendError] = React.useState(null);
+  const honeypotRef = React.useRef(null);
   const [mode, setMode] = React.useState('steps');
   const [step, setStep] = React.useState(0);
   const [values, setValues] = React.useState(() =>
@@ -235,16 +299,41 @@ function Conversation({
     setStep(i);
   };
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e?.preventDefault();
+    if (sending) return;   // doble clic: un mensaje, no dos
+
     const firstBad = fields.findIndex((f) => validate(f, values[f.name], t));
     if (firstBad >= 0) {
       setError(validate(fields[firstBad], values[fields[firstBad].name], t));
       if (mode === 'steps') setStep(firstBad);
       return;
     }
-    setSent(true);
+
+    setError(null);
+    setSendError(null);
+    setSending(true);
+    const fallo = await enviar({
+      fields, values, formId, lang,
+      honeypot: honeypotRef.current?.value || '',
+    });
+    setSending(false);
+
+    /* La confirmación solo aparece si el correo salió de verdad. Darla por
+       buena sin comprobarlo es peor que un error visible: quien escribe se
+       va convencido de que le van a responder. */
+    if (fallo) setSendError(fallo);
+    else setSent(true);
   };
+
+  /* El señuelo antispam. Fuera de la vista y fuera del orden de tabulación,
+     pero sin display:none: hay robots que descartan lo que está oculto así. */
+  const honeypot = (
+    <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>
+      <label htmlFor={`website-${formId}`}>No rellenar</label>
+      <input id={`website-${formId}`} ref={honeypotRef} type="text" name="website" tabIndex={-1} autoComplete="off" defaultValue="" />
+    </div>
+  );
 
   if (sent) {
     return (
@@ -253,13 +342,19 @@ function Conversation({
           {confirmation}
         </p>
         <p style={{ margin: 'var(--space-6) 0 0', font: 'var(--type-body)', color: dark ? 'var(--slate-300)' : 'var(--text-muted)' }}>
-          {t.underConstruction('hello@meetbecome.com')}
+          {t.recibido('hello@meetbecome.com')}
         </p>
       </div>
     );
   }
 
   const c = colors(dark, bare);
+
+  const avisoEnvio = sendError ? (
+    <p role="alert" style={c.error}>
+      {sendError === 'rate' ? t.errorRate : t.errorSend('hello@meetbecome.com')}
+    </p>
+  ) : null;
 
   /* Sobre navy el formulario cae encima del nodo, y un campo vacío sobre
      partículas en movimiento es ilegible. Se le da suelo propio: no es una
@@ -287,11 +382,15 @@ function Conversation({
             </div>
           ))}
         </div>
+        {honeypot}
         {error && <p role="alert" style={c.error}>{error}</p>}
+        {avisoEnvio}
         <p style={{ ...c.help, marginTop: 'var(--space-6)', maxWidth: '58ch' }}>
           {t.privacyNote}
         </p>
-        <button type="submit" className="cta-primary" style={c.submit}>{submitLabel}</button>
+        <button type="submit" className="cta-primary" style={c.submit} disabled={sending} aria-busy={sending}>
+          {sending ? t.sending : submitLabel}
+        </button>
       </form>
     );
   }
@@ -490,17 +589,24 @@ function Conversation({
             </AnimatePresence>
           </div>
 
+          {honeypot}
           {error && <p role="alert" style={c.error}>{error}</p>}
+          {avisoEnvio}
 
           <div style={{ marginTop: 'var(--space-7)', display: 'flex', alignItems: 'center', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
             {step > 0 && (
-              <button type="button" onClick={back} style={{ ...c.ghostBtn, gap: 8 }}>
+              <button type="button" onClick={back} disabled={sending} style={{ ...c.ghostBtn, gap: 8 }}>
                 <ArrowLeft size={16} aria-hidden="true" /> {t.back}
               </button>
             )}
             {isReview ? (
-              <button type="button" onClick={submit} className="cta-primary" style={{ ...c.submit, gap: 10 }}>
-                {submitLabel} <PaperPlaneTilt size={16} weight="bold" aria-hidden="true" />
+              <button
+                type="button" onClick={submit} className="cta-primary"
+                disabled={sending} aria-busy={sending}
+                style={{ ...c.submit, gap: 10, opacity: sending ? 0.7 : 1 }}
+              >
+                {sending ? t.sending : submitLabel}
+                {!sending && <PaperPlaneTilt size={16} weight="bold" aria-hidden="true" />}
               </button>
             ) : (
               <button type="button" onClick={next} className="cta-primary" style={{ ...c.submit, gap: 10 }}>
@@ -729,7 +835,7 @@ function Launcher({ dark, title, lead, count, launchLabel, onOpen, btnRef, t }) 
 
 export default function ConversationalForm({
   fields, submitLabel, confirmation, dark = true, formName,
-  title, lead, launchLabel, lang = 'es',
+  title, lead, launchLabel, lang = 'es', formId = 'contacto',
 }) {
   const t = STRINGS[lang];
   const resolvedLaunchLabel = launchLabel ?? t.startDefault;
@@ -843,6 +949,7 @@ export default function ConversationalForm({
             bare
             onDirty={setDirty}
             lang={lang}
+            formId={formId}
           />
         </motion.div>
       </div>

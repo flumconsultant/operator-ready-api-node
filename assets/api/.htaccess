@@ -1,0 +1,11 @@
+# config.php lo genera el despliegue y contiene la contraseña del correo.
+# PHP no lo devolvería como texto —lo ejecuta y no imprime nada— pero eso
+# depende de que PHP siga activo: si algún día se desactiva en el hosting,
+# el servidor pasaría a servir el archivo tal cual, con la contraseña dentro.
+# Esta regla lo impide en los dos casos.
+<Files "config.php">
+  Require all denied
+</Files>
+
+# Tampoco hay nada que listar en esta carpeta
+Options -Indexes

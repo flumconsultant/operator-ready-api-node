@@ -35,6 +35,35 @@ repository secret**. Tres secretos, con estos nombres exactos:
 Son secretos, no variables: GitHub los cifra y los oculta en los registros.
 Nunca van dentro de un archivo del repositorio.
 
+### 2b. Las credenciales del correo del formulario
+
+En la misma pantalla, otros **dos secretos** más. Son los que permiten que lo
+que alguien escriba en el formulario del sitio llegue a una bandeja de entrada:
+
+- `MAIL_USER` — la dirección completa del buzón desde el que se envía, por
+  ejemplo `hello@meetbecome.com`. Tiene que ser una cuenta de correo real
+  creada en hPanel → **Correos**, no un alias ni un reenvío.
+- `MAIL_PASSWORD` — la contraseña de ese buzón.
+
+Opcionalmente, tres **variables** (pestaña *Variables*, no *Secrets*) si algo
+se sale de lo normal. Sin ellas se usan estos valores:
+
+| Variable | Por defecto | Para qué |
+|---|---|---|
+| `MAIL_HOST` | `smtp.hostinger.com` | El servidor de salida, si el correo no está en Hostinger |
+| `MAIL_PORT` | `465` | El puerto de SMTP con TLS |
+| `MAIL_TO` | el mismo `MAIL_USER` | Si los avisos deben llegar a otra dirección distinta de la que envía |
+
+En cada despliegue, estos valores se escriben en `api/config.php` dentro del
+servidor. Ese archivo **no está en el repositorio** y no se puede leer desde
+fuera: PHP lo ejecuta en vez de mostrarlo, y además hay una regla en
+`api/.htaccess` que bloquea el acceso directo por si algún día PHP se
+desactivara.
+
+Si cambias la contraseña del buzón, actualiza el secreto y vuelve a lanzar el
+despliegue: hasta que no se despliegue de nuevo, el servidor sigue con la
+contraseña anterior y el formulario deja de enviar.
+
 ### 3. Apuntar el dominio
 
 hPanel → **Dominios**. `meetbecome.com` tiene que apuntar a este hosting y con

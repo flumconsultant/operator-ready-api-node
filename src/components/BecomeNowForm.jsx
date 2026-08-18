@@ -98,6 +98,7 @@ export default function BecomeNowForm({ lang = 'es' }) {
       confirmation={c.confirmation}
       dark
       lang={lang}
+      formId="become-now"
     />
   );
 }
