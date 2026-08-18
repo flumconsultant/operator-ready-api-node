@@ -169,29 +169,38 @@ jobs:
 
           echo "Subiendo a: $DESTINO"
 
-          # Todo en UNA sola conexión, incluido el listado de la carpeta.
+          # Una conexión, y nada que no sea subir archivos.
           #
-          # Antes el listado se sacaba con tres invocaciones de lftp aparte,
-          # antes de subir. Con eso el despliegue pasaba de abrir una conexión
-          # a abrir cuatro seguidas, y este hosting compartido limita las
-          # conexiones seguidas de una forma particularmente mala: no las
-          # rechaza con un error, las deja colgadas. El despliegue se quedaba
-          # parado seis minutos hasta agotar el tiempo. El diagnóstico no vale
-          # lo que cuesta si es el propio diagnóstico quien rompe el proceso.
+          # Este paso ha tenido dos versiones peores, las dos por querer dejar
+          # constancia de en qué carpeta aterrizaba:
+          #
+          #   · Tres invocaciones de lftp aparte para listar. Cuatro conexiones
+          #     seguidas donde antes había una, y este hosting compartido no
+          #     rechaza el exceso: lo deja colgado. Seis minutos hasta agotar
+          #     el tiempo límite.
+          #   · Un 'cls' dentro de la misma sesión. Parecía gratis y no lo era:
+          #     en FTP un listado abre un canal de datos propio, y con la
+          #     cuenta limitada ese canal extra se queda sin reintentos y
+          #     tumba la sesión entera antes de subir un solo archivo.
+          #
+          # La carpeta de destino ya no hace falta comprobarla aquí: el paso
+          # siguiente le pide la página al dominio de verdad, que es la única
+          # prueba que de verdad importa. Un diagnóstico que rompe el proceso
+          # que vigila es peor que no tener diagnóstico.
           lftp -c "
             set ftp:ssl-force true;
             set ftp:ssl-protect-data true;
             set ssl:verify-certificate $VERIFICAR;
-            set net:max-retries 3;
             set net:timeout 20;
-            open -u '$FTP_USER','$FTP_PASSWORD' '$FTP_HOST';
 
-            # Qué hay en la carpeta donde vamos a escribir. Sirve para saber
-            # que es la carpeta correcta y no otra: un despliegue que escribe
-            # donde el servidor no publica sale en verde igual que uno bueno.
-            echo '── Contenido de la carpeta destino, antes de subir ──';
-            cls -1;
-            echo '────────────────────────────────────────────────────';
+            # Margen para el estrangulamiento del hosting compartido: cuando
+            # rechaza una conexión por exceso, suele aceptarla unos segundos
+            # después. Con 3 reintentos inmediatos el despliegue se rendía.
+            set net:max-retries 6;
+            set net:reconnect-interval-base 5;
+            set net:reconnect-interval-multiplier 1.5;
+
+            open -u '$FTP_USER','$FTP_PASSWORD' '$FTP_HOST';
 
             # 1. El bundle con hash va con --delete: esa carpeta es solo nuestra,
             #    y sin borrar acumularía todos los bundles de todos los despliegues
