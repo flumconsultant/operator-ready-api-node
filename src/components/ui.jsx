@@ -31,6 +31,7 @@ export function Section({
   id,
   nodeState,
   pad = 'var(--space-13)',
+  backdrop,
   children,
   ...rest
 }) {
@@ -48,7 +49,26 @@ export function Section({
       }}
       {...rest}
     >
-      <div style={{ maxWidth: 'var(--maxw-content)', margin: '0 auto' }}>{children}</div>
+      {/* Fondo vivo opcional. Va detrás y pinta su propio navy, así que sustituye
+          al nodo 3D en esa banda en vez de superponerse: dos capas de partículas
+          a la vez no leen como profundidad, leen como suciedad. */}
+      {backdrop}
+      {/* Velo sobre el fondo vivo. No es estética: el fondo se mueve, y sin un
+          suelo garantizado el contraste del texto dependería de dónde caiga la
+          mancha clara en ese instante. Con el velo, el peor caso sigue pasando
+          AA. */}
+      {backdrop && (
+        <span
+          aria-hidden="true"
+          style={{
+            position: 'absolute', inset: 0, pointerEvents: 'none',
+            background: 'linear-gradient(100deg, rgba(5,7,15,.92) 0%, rgba(5,7,15,.72) 38%, rgba(5,7,15,.28) 72%, rgba(5,7,15,.12) 100%)',
+          }}
+        />
+      )}
+      <div style={{ position: 'relative', maxWidth: 'var(--maxw-content)', margin: '0 auto' }}>
+        {children}
+      </div>
     </section>
   );
 }
@@ -178,6 +198,10 @@ export const TextCTA = ({ to, children, dark }) => (
 
 /* ---------- rejillas ---------- */
 
+/* La rejilla numera a sus hijos para que entren escalonados. Se inyecta aquí y
+   no en cada página porque el índice es una propiedad de la posición en la
+   rejilla, no del contenido: pedirlo a mano en veinte sitios garantiza que
+   alguno se olvide y esa tarjeta entre a destiempo. */
 export const Cols = ({ children, min = '260px', gap = 'var(--space-8)', style }) => (
   <div
     data-cols
@@ -189,7 +213,10 @@ export const Cols = ({ children, min = '260px', gap = 'var(--space-8)', style })
       ...style,
     }}
   >
-    {children}
+    {React.Children.map(children, (child, i) =>
+      React.isValidElement(child) && typeof child.type !== 'string'
+        ? React.cloneElement(child, { index: child.props.index ?? i })
+        : child)}
   </div>
 );
 
@@ -216,9 +243,10 @@ export const SectionHead = ({ kicker, headline, lead, dark, id }) => (
 
 /* ---------- tarjeta ---------- */
 
-export const Card = ({ children, dark, style, ...rest }) => (
+export const Card = ({ children, dark, style, index = 0, ...rest }) => (
   <Reveal
     as="article"
+    index={index}
     data-lift=""
     style={{
       padding: 'var(--space-7)',
@@ -234,7 +262,7 @@ export const Card = ({ children, dark, style, ...rest }) => (
 
 /* Índice editorial: filas con regla, no una parrilla de tarjetas iguales.
    El documento lo pide explícitamente para las herramientas y las preguntas. */
-export const IndexRow = ({ to, term, def, dark, num, icon }) => {
+export const IndexRow = ({ to, term, def, dark, num, icon, index = 0 }) => {
   const inner = (
     <>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-4)' }}>
@@ -286,6 +314,6 @@ export const IndexRow = ({ to, term, def, dark, num, icon }) => {
   };
 
   return to
-    ? <Reveal as={Link} to={to} data-cols style={style} className="index-row row-hit">{inner}</Reveal>
-    : <Reveal as="div" data-cols style={style} className="row-hit">{inner}</Reveal>;
+    ? <Reveal as={Link} index={index} to={to} data-cols style={style} className="index-row row-hit">{inner}</Reveal>
+    : <Reveal as="div" index={index} data-cols style={style} className="row-hit">{inner}</Reveal>;
 };

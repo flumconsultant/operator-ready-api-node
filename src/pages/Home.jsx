@@ -9,6 +9,7 @@ import {
 import { Ico, IcoBadge } from '../components/icons.jsx';
 import { Figure, Split } from '../components/Media.jsx';
 import ScrollStage from '../components/ScrollStage.jsx';
+import GradientField from '../components/GradientField.jsx';
 import StateTransition from '../components/StateTransition.jsx';
 import { USE_CASES } from '../site.js';
 
@@ -315,7 +316,7 @@ export default function Home() {
         <Lead>Empieza por la situación, no por el nombre de la solución.</Lead>
         <div style={{ marginTop: 'var(--space-10)' }}>
           {USE_CASES.map((c, i) => (
-            <IndexRow key={c.slug} icon={c.icon} to={c.to} num={String(i + 1).padStart(2, '0')} term={c.q} def={c.line} />
+            <IndexRow key={c.slug} index={i} icon={c.icon} to={c.to} num={String(i + 1).padStart(2, '0')} term={c.q} def={c.line} />
           ))}
         </div>
         <TextCTA to="/es/casos-de-uso">Encuentra tu punto de partida</TextCTA>
@@ -397,15 +398,19 @@ export default function Home() {
         <Kicker>Become insights</Kicker>
         <Headline>Ideas para la empresa que viene después.</Headline>
         <div style={{ marginTop: 'var(--space-9)' }}>
-          {INSIGHTS.map(([icon, title, line]) => (
-            <IndexRow key={title} icon={icon} term={title} def={line} />
+          {INSIGHTS.map(([icon, title, line], i) => (
+            <IndexRow key={title} index={i} icon={icon} term={title} def={line} />
           ))}
         </div>
         <TextCTA to="/es/insights">Explora Insights</TextCTA>
       </Section>
 
-      {/* 12 — Conversión final. */}
-      <Section band="darker" pad="var(--space-14)">
+      {/* 12 — Conversión final.
+          El gradiente vivo va aquí y no en el hero: el hero ya es del nodo de
+          partículas, y dos sistemas animados en la misma pantalla se anulan. En
+          el cierre, en cambio, una mezcla que no para de transformarse es
+          literalmente lo que dice el titular. */}
+      <Section band="darker" pad="var(--space-14)" backdrop={<GradientField speed={1.6} />}>
         <Kicker dark>Your next operating model starts with a question</Kicker>
         <Headline dark>¿En qué debe convertirse tu empresa después?</Headline>
         <Lead dark>

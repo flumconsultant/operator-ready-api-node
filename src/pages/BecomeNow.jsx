@@ -120,7 +120,7 @@ export default function BecomeNow() {
 
         <div style={{ marginTop: 'var(--space-10)' }}>
           {SESSION_ZERO.map(([t, d], i) => (
-            <IndexRow key={t} num={String(i + 1).padStart(2, '0')} term={t} def={d} />
+            <IndexRow key={t} index={i} num={String(i + 1).padStart(2, '0')} term={t} def={d} />
           ))}
         </div>
 
@@ -276,7 +276,7 @@ export default function BecomeNow() {
             <Kicker>Indicadores</Kicker>
             <Headline>Cómo se mide que sirvió.</Headline>
             <div style={{ marginTop: 'var(--space-8)' }}>
-              {INDICATORS.map(([t, d]) => <IndexRow key={t} term={t} def={d} />)}
+              {INDICATORS.map(([t, d], i) => <IndexRow key={t} index={i} term={t} def={d} />)}
             </div>
             <Body style={{ marginTop: 'var(--space-6)' }}>
               No publicamos porcentajes de productividad sin haber establecido un

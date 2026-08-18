@@ -157,7 +157,7 @@ export default function Framework() {
           herramienta no es su fórmula: es qué decisión permite tomar.
         </Body>
         <div style={{ marginTop: 'var(--space-10)' }}>
-          {TOOLS.map(([t, d]) => <IndexRow key={t} term={t} def={d} />)}
+          {TOOLS.map(([t, d], i) => <IndexRow key={t} index={i} term={t} def={d} />)}
         </div>
       </Section>
 

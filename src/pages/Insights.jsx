@@ -73,7 +73,7 @@ export default function Insights() {
         </Lead>
         <div style={{ marginTop: 'var(--space-10)' }}>
           {PILLARS.map(([name, line], i) => (
-            <IndexRow key={name} dark num={String(i + 1).padStart(2, '0')} term={name} def={line} />
+            <IndexRow key={name} index={i} dark num={String(i + 1).padStart(2, '0')} term={name} def={line} />
           ))}
         </div>
       </Section>
@@ -82,7 +82,7 @@ export default function Insights() {
         <Kicker>Formatos</Kicker>
         <Headline>Cada idea tiene su forma.</Headline>
         <div style={{ marginTop: 'var(--space-10)' }}>
-          {FORMATS.map(([name, line]) => <IndexRow key={name} term={name} def={line} />)}
+          {FORMATS.map(([name, line], i) => <IndexRow key={name} index={i} term={name} def={line} />)}
         </div>
       </Section>
 

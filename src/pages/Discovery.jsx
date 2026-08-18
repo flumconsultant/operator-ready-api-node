@@ -156,7 +156,7 @@ export default function Discovery() {
           <Reveal as="div">
             <Kicker>Proprietary tools</Kicker>
             <div style={{ marginTop: 'var(--space-6)' }}>
-              {TOOLS.map(([t, d]) => <IndexRow key={t} term={t} def={d} />)}
+              {TOOLS.map(([t, d], i) => <IndexRow key={t} index={i} term={t} def={d} />)}
             </div>
           </Reveal>
         </div>

@@ -4,6 +4,7 @@ import SiteFooter from '../components/SiteFooter.jsx';
 import Reveal from '../components/Reveal.jsx';
 import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, IndexRow } from '../components/ui.jsx';
 import { Banner } from '../components/Media.jsx';
+import KineticGrid from '../components/KineticGrid.jsx';
 import { USE_CASES } from '../site.js';
 import { ORIENTATION } from '../content/use-cases.js';
 
@@ -20,7 +21,10 @@ export default function CasosDeUso() {
     <main id="contenido" data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
       <SiteHeader />
 
-      <Section band="dark" pad="var(--space-12)">
+      {/* La retícula reacciona al puntero, así que va en la página donde hay
+          que elegir entre seis opciones: el fondo confirma que esto responde a
+          ti. Debajo de un párrafo largo sería ruido moviéndose. */}
+      <Section band="dark" pad="var(--space-13)" backdrop={<KineticGrid />}>
         <Kicker dark>Start with your question</Kicker>
         <Headline as="h1" dark>No busques una solución. Empieza por lo que debe cambiar.</Headline>
         <Lead dark>
@@ -38,6 +42,7 @@ export default function CasosDeUso() {
             <IndexRow
               key={c.slug}
               to={c.to}
+              index={i}
               icon={c.icon}
               num={String(i + 1).padStart(2, '0')}
               term={c.q}

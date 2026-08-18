@@ -148,7 +148,7 @@ export default function Nosotros() {
         <Kicker>Nuestro ADN</Kicker>
         <Headline>Seis rasgos, y cómo se notan en el trabajo.</Headline>
         <div style={{ marginTop: 'var(--space-10)' }}>
-          {DNA.map(([icon, trait, how]) => <IndexRow key={trait} icon={icon} term={trait} def={how} />)}
+          {DNA.map(([icon, trait, how], i) => <IndexRow key={trait} index={i} icon={icon} term={trait} def={how} />)}
         </div>
       </Section>
 
