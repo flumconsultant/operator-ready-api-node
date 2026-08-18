@@ -35,6 +35,8 @@ const linkStyle = {
   gap: '6px',
 };
 
+const slugOf = (to) => to.split('/').filter(Boolean).pop();
+
 function Chevron({ open }) {
   return (
     <svg
@@ -51,6 +53,7 @@ export default function SiteHeader() {
   const [open, setOpen] = React.useState(false);        // menú móvil
   const [drop, setDrop] = React.useState(null);         // índice del desplegable abierto
   const [acc, setAcc] = React.useState(null);           // acordeón móvil abierto
+  const [sub, setSub] = React.useState(null);           // tercer nivel abierto (BECOME NOW™)
   const [hidden, setHidden] = React.useState(false);
   const triggers = React.useRef([]);
   const barRef = React.useRef(null);
@@ -61,6 +64,7 @@ export default function SiteHeader() {
      panel arranca pegado al trigger (sin hueco que cruzar) y el cierre lleva
      un retardo corto que se cancela si el puntero entra en el panel. */
   const openDrop = (i) => { clearTimeout(closeTimer.current); setDrop(i); };
+  React.useEffect(() => { if (drop === null) setSub(null); }, [drop]);
   const closeDropSoon = () => {
     clearTimeout(closeTimer.current);
     closeTimer.current = setTimeout(() => setDrop(null), 220);
@@ -68,7 +72,7 @@ export default function SiteHeader() {
   React.useEffect(() => () => clearTimeout(closeTimer.current), []);
 
   /* Navegar cierra todo */
-  React.useEffect(() => { setOpen(false); setDrop(null); setAcc(null); }, [pathname]);
+  React.useEffect(() => { setOpen(false); setDrop(null); setAcc(null); setSub(null); }, [pathname]);
 
   React.useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
@@ -206,7 +210,13 @@ export default function SiteHeader() {
                         /* el padding superior hace de puente: no hay hueco muerto
                            entre el trigger y el panel */
                         paddingTop: 14,
-                        width: item.wide ? 'min(680px, 74vw)' : 'min(440px, 74vw)',
+                        /* Al abrir el tercer nivel el panel se ensancha y los
+                           programas ocupan una columna DENTRO. Sacándolos a un
+                           panel flotante a la derecha se salían de la pantalla:
+                           el menú está a media barra y no hay 620 px libres. */
+                        width: item.wide
+                          ? 'min(680px, 74vw)'
+                          : sub ? 'min(940px, 90vw)' : 'min(440px, 74vw)',
                       }}
                     >
                       <div style={{
@@ -220,16 +230,81 @@ export default function SiteHeader() {
                           {item.heading}
                         </p>
                       )}
-                      <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gridTemplateColumns: item.wide ? '1fr 1fr' : '1fr', gap: 'var(--space-5)' }}>
-                        {item.items.map((sub) => (
-                          <li key={sub.to}>
-                            <Link to={sub.to} style={{ display: 'block', textDecoration: 'none' }} className="drop-item">
-                              <span style={{ display: 'block', font: 'var(--type-body)', color: 'var(--white)' }}>{sub.label}</span>
-                              <span style={{ display: 'block', marginTop: 6, font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: 'var(--slate-300)' }}>{sub.line}</span>
-                            </Link>
+                      <div style={{ display: 'grid', gridTemplateColumns: (!item.wide && sub) ? 'minmax(0, 320px) minmax(0, 1fr)' : '1fr', gap: 'var(--space-7)' }}>
+                      <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gridTemplateColumns: item.wide ? '1fr 1fr' : '1fr', gap: 'var(--space-5)', alignContent: 'start' }}>
+                        {item.items.map((opt) => (
+                          <li key={opt.to} style={{ position: 'relative' }}>
+                            <div
+                              style={{ display: 'flex', alignItems: 'flex-start', gap: 4 }}
+                              onPointerEnter={() => opt.groups && window.matchMedia('(hover: hover)').matches && setSub(opt.to)}
+                            >
+                              <Link to={opt.to} style={{ display: 'block', flex: 1, textDecoration: 'none' }} className="drop-item">
+                                <span style={{ display: 'block', font: 'var(--type-body)', color: 'var(--white)' }}>{opt.label}</span>
+                                <span style={{ display: 'block', marginTop: 6, font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: 'var(--slate-300)' }}>{opt.line}</span>
+                              </Link>
+                              {/* Indicador de que hay un nivel más: sin él nadie
+                                  descubriría los catorce programas. */}
+                              {opt.groups && (
+                                <button
+                                  type="button"
+                                  aria-expanded={sub === opt.to}
+                                  aria-controls={`sub-${slugOf(opt.to)}`}
+                                  aria-label={`${sub === opt.to ? 'Cerrar' : 'Desplegar'} programas por área`}
+                                  onClick={() => setSub((v) => (v === opt.to ? null : opt.to))}
+                                  style={{
+                                    border: 0, background: 'transparent', cursor: 'pointer', padding: 8,
+                                    color: sub === opt.to ? 'var(--electric-green)' : 'var(--slate-300)',
+                                    transform: 'rotate(-90deg)',
+                                  }}
+                                  className="hv-nav"
+                                >
+                                  <Chevron open={sub === opt.to} />
+                                </button>
+                              )}
+                            </div>
+
                           </li>
                         ))}
                       </ul>
+
+                      {/* Columna del tercer nivel */}
+                      {!item.wide && sub && (() => {
+                        const opt = item.items.find((o) => o.to === sub);
+                        if (!opt?.groups) return null;
+                        return (
+                          <div id={`sub-${slugOf(opt.to)}`} className="drop-panel" style={{ borderLeft: '1px solid var(--border-hairline-dark)', paddingLeft: 'var(--space-7)' }}>
+                            <p style={{ margin: '0 0 var(--space-5)', font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--slate-400)' }}>
+                              {opt.heading}
+                            </p>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 'var(--space-6)' }}>
+                              {opt.groups.map((g) => (
+                                <div key={g.title}>
+                                  <p style={{ margin: 0, font: 'var(--type-mono)', fontSize: 'var(--text-micro)', color: 'var(--electric-green)' }}>{g.title}</p>
+                                  <ul style={{ listStyle: 'none', margin: 'var(--space-4) 0 0', padding: 0, display: 'grid', gap: 'var(--space-3)' }}>
+                                    {g.items.map((pr) => (
+                                      <li key={pr.to}>
+                                        <Link to={pr.to} className="hv-nav" style={{ font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: 'var(--slate-200)', textDecoration: 'none' }}>
+                                          {pr.label.replace('IA aplicada a ', '')}
+                                        </Link>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              ))}
+                            </div>
+                            <Link to={opt.more.to} style={{
+                              display: 'inline-block', marginTop: 'var(--space-6)', paddingTop: 'var(--space-5)',
+                              borderTop: '1px solid var(--border-hairline-dark)', width: '100%',
+                              font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase',
+                              color: 'var(--electric-green)', textDecoration: 'none',
+                            }}>
+                              {opt.more.label} →
+                            </Link>
+                          </div>
+                        );
+                      })()}
+                      </div>
+
                       {item.more && (
                         <Link
                           to={item.more.to}
@@ -333,11 +408,52 @@ export default function SiteHeader() {
                   </button>
                   {acc === i && (
                     <ul id={`acc-${i}`} style={{ listStyle: 'none', margin: 0, padding: '0 0 var(--space-6)', display: 'grid', gap: 'var(--space-5)' }}>
-                      {item.items.map((sub) => (
-                        <li key={sub.to}>
-                          <Link to={sub.to} style={{ display: 'block', minHeight: 44, textDecoration: 'none', font: 'var(--type-body)', color: 'var(--slate-200)' }}>
-                            {sub.label}
+                      {item.items.map((opt) => (
+                        <li key={opt.to}>
+                          <Link to={opt.to} style={{ display: 'block', minHeight: 44, textDecoration: 'none', font: 'var(--type-body)', color: 'var(--slate-200)' }}>
+                            {opt.label}
                           </Link>
+                          {/* En móvil el tercer nivel es otro acordeón, nunca hover */}
+                          {opt.groups && (
+                            <>
+                              <button
+                                type="button"
+                                aria-expanded={sub === opt.to}
+                                aria-controls={`msub-${slugOf(opt.to)}`}
+                                onClick={() => setSub((v) => (v === opt.to ? null : opt.to))}
+                                style={{
+                                  minHeight: 44, display: 'inline-flex', alignItems: 'center', gap: 8,
+                                  background: 'transparent', border: 0, padding: 0, cursor: 'pointer',
+                                  font: 'var(--type-label)', letterSpacing: 'var(--track-label)',
+                                  textTransform: 'uppercase', color: 'var(--electric-green)',
+                                }}
+                              >
+                                {opt.heading}
+                                <Chevron open={sub === opt.to} />
+                              </button>
+                              {sub === opt.to && (
+                                <div id={`msub-${slugOf(opt.to)}`} style={{ display: 'grid', gap: 'var(--space-5)', padding: '0 0 var(--space-5)' }}>
+                                  {opt.groups.map((g) => (
+                                    <div key={g.title}>
+                                      <p style={{ margin: 0, font: 'var(--type-mono)', fontSize: 'var(--text-micro)', color: 'var(--slate-400)' }}>{g.title}</p>
+                                      <ul style={{ listStyle: 'none', margin: 'var(--space-3) 0 0', padding: 0, display: 'grid', gap: 'var(--space-3)' }}>
+                                        {g.items.map((pr) => (
+                                          <li key={pr.to}>
+                                            <Link to={pr.to} style={{ display: 'block', minHeight: 40, textDecoration: 'none', font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: 'var(--slate-200)' }}>
+                                              {pr.label.replace('IA aplicada a ', '')}
+                                            </Link>
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  ))}
+                                  <Link to={opt.more.to} style={{ font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--electric-green)', textDecoration: 'none' }}>
+                                    {opt.more.label} →
+                                  </Link>
+                                </div>
+                              )}
+                            </>
+                          )}
                         </li>
                       ))}
                       {item.more && (

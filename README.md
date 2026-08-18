@@ -20,7 +20,7 @@ npm run preview    # sirve dist/ para comprobar el build
 | `src/site.js` | El mapa del sitio: rutas, menú y pie. Una sola fuente para los tres. |
 | `src/routes.jsx` | Las rutas del router, con redirecciones desde la maqueta anterior. |
 | `src/pages/` | Una página por ruta, todas escritas a mano. |
-| `src/content/` | Contenido separado del componente — hoy, las seis páginas de casos de uso. |
+| `src/content/` | Contenido separado del componente: las seis páginas de casos de uso y los catorce programas de BECOME NOW™. |
 | `src/components/` | Cabecera, pie, `Reveal` y `RouteLoader`. |
 | `src/components/ai-node/` | El nodo 3D de la home: los cinco estados en `states.js`, el recorrido de cámara en `camera-path.js`, el canvas en `AiNode.jsx`, la capa y la carga diferida en `AiNodeStage.jsx`. |
 | `src/styles/global.css` | Lo que en los artboards vivía repetido en el `<helmet>` de cada uno. |
@@ -29,9 +29,11 @@ npm run preview    # sirve dist/ para comprobar el build
 
 ### Estado frente al documento de estrategia
 
-La arquitectura y el copy del documento v2.0 están implementados en español:
-menú de cinco entradas con dos desplegables, veinte rutas `/es/…`, footer de
-cinco columnas, la home con su journey canónico y las doce páginas escritas.
+La arquitectura y el copy del documento v2.0 están implementados en español,
+más el tercer servicio (BECOME NOW™): menú de cinco entradas con dos
+desplegables —uno de ellos con un tercer nivel de catorce programas—, 35 rutas
+`/es/…`, footer de seis columnas, la home con su journey canónico y todas las
+páginas escritas.
 
 Lo que queda pendiente, y por qué:
 

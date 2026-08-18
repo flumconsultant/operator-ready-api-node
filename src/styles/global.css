@@ -236,3 +236,34 @@ label {
   .icon-hit, .icon-hit img, .row-hit, .row-hit .stage-letter, .drop-item { transition: none; }
   .icon-hit:hover img, .row-hit:hover, .row-hit:hover .stage-letter, .drop-item:hover { transform: none; }
 }
+
+/* Preguntas frecuentes: <details> nativo, con el estilo de la casa */
+.faq-item {
+  border-top: 1px solid var(--border-hairline);
+  padding: var(--space-5) 0;
+}
+.faq-item summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-5);
+  font-family: var(--font-display);
+  font-weight: var(--weight-display-strong);
+  font-size: var(--text-h3);
+  line-height: 1.26;
+  color: var(--text-heading);
+  transition: color .2s ease;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: "+";
+  font: var(--type-mono);
+  font-size: var(--text-h3);
+  color: var(--text-accent);
+  transition: transform .25s cubic-bezier(.2,.7,.2,1);
+}
+.faq-item[open] summary::after { content: "−"; }
+.faq-item summary:hover { color: var(--text-accent); }
+@media (prefers-reduced-motion: reduce) { .faq-item summary::after { transition: none; } }

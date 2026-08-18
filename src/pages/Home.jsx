@@ -201,26 +201,44 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* 04 — Qué hacemos. Dos capítulos conectados, no dos cards. */}
+      {/* 04 — Qué hacemos. Tres servicios encadenados, no tres cards sueltas. */}
       <Section band="light">
         <Kicker>Our offer</Kicker>
-        <Headline>Dos servicios. Un journey de transformación.</Headline>
+        <Headline>Capacita el presente. Diseña lo que sigue. Construye desde dentro.</Headline>
         <Lead>
-          Empezamos por definir en qué debe convertirse la empresa y avanzamos hasta
-          incorporar una capability que funciona dentro de la operación.
+          Tres servicios conectan las capacidades que tu empresa necesita hoy con la
+          transformación que necesita para el futuro.
         </Lead>
 
         <Reveal as="p" style={{ margin: 'var(--space-9) 0 0', font: 'var(--type-mono)', letterSpacing: 'var(--track-mono)', color: 'var(--text-accent)' }}>
-          DEFINE → DESIGN → BUILD → EMBED → SCALE
+          ENABLE → DEFINE → DESIGN → BUILD → EMBED → SCALE
         </Reveal>
 
-        <Cols min="300px">
+        <Cols min="280px">
+          <Card>
+            <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>Aplícalo desde mañana</p>
+            <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-heading)' }}>
+              BECOME NOW™
+            </h3>
+            <Body>
+              Capacitación in company para que cada área aprenda a utilizar ChatGPT,
+              Claude y Gemini sobre sus propios procesos, documentos y desafíos.
+            </Body>
+            <Body style={{ color: 'var(--text-body)' }}>
+              Equipos preparados, workflows reutilizables y capacidades que pueden
+              aplicarse desde el día siguiente.
+            </Body>
+            <TextCTA to="/es/servicios/become-now">Explora BECOME NOW™</TextCTA>
+          </Card>
           <Card>
             <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>8–12 semanas</p>
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-heading)' }}>
               AI-Native Transformation Discovery
             </h3>
-            <Body>Alinea la ambición. Diagnostica la empresa. Identifica el valor. Diseña el operating model y el roadmap necesarios para avanzar.</Body>
+            <Body>
+              Define la AI-native ambition, identifica dónde está el valor y diseña el
+              operating model y el roadmap.
+            </Body>
             <TextCTA to="/es/servicios/transformation-discovery">Explora Discovery</TextCTA>
           </Card>
           <Card>
@@ -228,10 +246,19 @@ export default function Home() {
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-heading)' }}>
               Build &amp; Embed Sprint
             </h3>
-            <Body>Diseña, construye e incorpora un AI-native workflow, agent o product dentro de la operación, con adopción, controles y medición desde el inicio.</Body>
+            <Body>
+              Construye e incorpora una capability AI-native con adopción, controles y
+              medición.
+            </Body>
             <TextCTA to="/es/servicios/build-and-embed">Explora Build &amp; Embed</TextCTA>
           </Card>
         </Cols>
+
+        <Reveal as="p" style={{ margin: 'var(--space-10) 0 0', font: 'var(--type-lead)', color: 'var(--text-heading)', maxWidth: '64ch' }}>
+          BECOME NOW™ desarrolla las capacidades para el trabajo de hoy. Discovery
+          define en qué debe convertirse la empresa. Build &amp; Embed construye las
+          capabilities que harán posible ese futuro.
+        </Reveal>
 
         <TextCTA to="/es/servicios">Explora nuestros servicios</TextCTA>
       </Section>

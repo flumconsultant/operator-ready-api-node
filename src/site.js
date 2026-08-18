@@ -14,10 +14,28 @@
  *     exactamente seis preguntas. No es una lista que crezca sola.
  */
 
+import { PROGRAM_GROUPS, PROGRAMS } from './content/become-now.js';
+
 export const HOME = '/es';
 
-/* ---- servicios ---- */
+/* ---- servicios ----
+   BECOME NOW™ va primero: es el que puede contratarse solo y el que sirve de
+   puerta de entrada. Lleva un tercer nivel — los programas por área. */
 export const SERVICES = [
+  {
+    to: '/es/servicios/become-now',
+    name: 'BECOME NOW™ — Applied AI Enablement',
+    line: 'Capacitación en ChatGPT, Claude y Gemini aplicada a los procesos reales de tu empresa.',
+    heading: 'Programas por área',
+    groups: PROGRAM_GROUPS.map((g) => ({
+      title: g.title,
+      items: g.slugs.map((slug) => ({
+        to: `/es/servicios/become-now/${slug}`,
+        label: PROGRAMS[slug].menu,
+      })),
+    })),
+    more: { to: '/es/servicios/become-now', label: 'Ver todos los programas' },
+  },
   {
     to: '/es/servicios/transformation-discovery',
     name: 'AI-Native Transformation Discovery',
@@ -71,7 +89,11 @@ export const NAV = [
   {
     label: 'Servicios',
     to: '/es/servicios',
-    items: SERVICES.map((s) => ({ to: s.to, label: s.name, line: s.line })),
+    items: SERVICES.map((s) => ({
+      to: s.to, label: s.name, line: s.line,
+      /* Solo BECOME NOW™ trae un nivel más; el indicador visual sale de aquí. */
+      groups: s.groups, heading: s.heading, more: s.more,
+    })),
   },
   { label: 'Nosotros', to: '/es/nosotros' },
   {
@@ -90,6 +112,13 @@ export const CONTACT = { to: '/es/contacto', label: 'Contáctanos' };
 /* ---- pie: el mapa completo, para que la cabecera no tenga que serlo ---- */
 export const FOOTER = [
   { title: 'Servicios', links: SERVICES.map((s) => ({ to: s.to, label: s.name })) },
+  {
+    title: 'BECOME NOW™',
+    links: PROGRAM_GROUPS.flatMap((g) => g.slugs).slice(0, 7).map((slug) => ({
+      to: `/es/servicios/become-now/${slug}`,
+      label: PROGRAMS[slug].menu.replace('IA aplicada a ', ''),
+    })).concat([{ to: '/es/servicios/become-now', label: 'Ver todos los programas' }]),
+  },
   { title: 'Casos de uso', links: USE_CASES.map((c) => ({ to: c.to, label: c.q })) },
   {
     title: 'BECOME',

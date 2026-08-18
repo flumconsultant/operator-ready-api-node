@@ -15,6 +15,7 @@ import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, C
  */
 
 const JOURNEY = [
+  { n: '00', step: 'Enable', who: 'BECOME NOW™', q: '¿Sabe el equipo trabajar con IA hoy?', out: 'Capacidades aplicadas, workflows y activos reutilizables.' },
   { n: '01', step: 'Define', who: 'AI-Native Transformation Discovery', q: '¿Dónde está el valor y qué debe cambiar?', out: 'Ambition, diagnostic y priority choices.' },
   { n: '02', step: 'Design', who: 'Punto de conexión', q: '¿Cómo debe operar el modelo futuro?', out: 'Target operating model y transformation blueprint.' },
   { n: '03', step: 'Build', who: 'Build & Embed Sprint', q: '¿Qué capability debe existir y cómo funcionará?', out: 'Workflow, agent, copilot, product o decision system.' },
@@ -38,10 +39,10 @@ export default function Servicios() {
 
       <Section band="dark" pad="var(--space-12)">
         <Kicker dark>Our services</Kicker>
-        <Headline as="h1" dark>De la ambición a una capability que funciona.</Headline>
+        <Headline as="h1" dark>De la capacidad de hoy a la empresa que viene.</Headline>
         <Lead dark>
-          Dos engagements conectan AI-native strategy, operating-model design,
-          building, adoption y scale.
+          Tres engagements conectan applied AI enablement, AI-native strategy,
+          operating-model design, building, adoption y scale.
         </Lead>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
           <PrimaryCTA to="/es/casos-de-uso">Encuentra tu punto de partida</PrimaryCTA>
@@ -52,7 +53,7 @@ export default function Servicios() {
       {/* El journey primero: los servicios se entienden como tramos de un eje */}
       <Section band="light">
         <Kicker>El journey</Kicker>
-        <Headline>Un solo eje. Dos engagements que lo recorren.</Headline>
+        <Headline>Un solo eje. Tres engagements que lo recorren.</Headline>
         <div style={{ marginTop: 'var(--space-10)' }}>
           {JOURNEY.map((j) => (
             <Reveal
@@ -84,8 +85,19 @@ export default function Servicios() {
 
       <Section band="dark">
         <Kicker dark>Our offer</Kicker>
-        <Headline dark>Dos servicios. Un journey de transformación.</Headline>
-        <Cols min="300px">
+        <Headline dark>Capacita el presente. Diseña lo que sigue. Construye desde dentro.</Headline>
+        <Cols min="280px">
+          <Card dark>
+            <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--electric-green)' }}>Aplícalo desde mañana</p>
+            <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--white)' }}>
+              BECOME NOW™
+            </h3>
+            <Body dark style={{ marginTop: 'var(--space-5)' }}>
+              Capacitación in company en ChatGPT, Claude y Gemini, construida sobre los
+              procesos, documentos y desafíos reales de cada área.
+            </Body>
+            <TextCTA to="/es/servicios/become-now" dark>Explora BECOME NOW™</TextCTA>
+          </Card>
           <Card dark>
             <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--electric-green)' }}>8–12 semanas</p>
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--white)' }}>
@@ -109,6 +121,10 @@ export default function Servicios() {
             <TextCTA to="/es/servicios/build-and-embed" dark>Explora Build &amp; Embed</TextCTA>
           </Card>
         </Cols>
+        <Body dark style={{ marginTop: 'var(--space-9)' }}>
+          BECOME NOW™ puede contratarse solo o integrarse como capa de adoption y
+          capability building dentro de los otros dos.
+        </Body>
       </Section>
 
       <Section band="light">
