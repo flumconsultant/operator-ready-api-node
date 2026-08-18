@@ -125,14 +125,20 @@ jobs:
           # despliegue que sube los archivos a la carpeta equivocada sale en
           # verde exactamente igual que uno correcto: el fallo más caro de
           # diagnosticar es el que no deja rastro.
+          #
+          # No se usa 'pwd': lftp lo imprime en forma de URL, con el usuario y
+          # el servidor dentro, así que GitHub lo tapa entero con *** por
+          # contener un secreto y la ruta no se llega a leer. Lo que sí
+          # identifica la carpeta sin nombrarla es su contenido, el de la
+          # carpeta de encima y si hay un public_html colgando.
+          CONEXION="set ftp:ssl-force true; set ssl:verify-certificate $VERIFICAR; open -u '$FTP_USER','$FTP_PASSWORD' '$FTP_HOST';"
           echo "── Dónde estamos en el FTP ──"
-          lftp -c "
-            set ftp:ssl-force true;
-            set ssl:verify-certificate $VERIFICAR;
-            open -u '$FTP_USER','$FTP_PASSWORD' '$FTP_HOST';
-            echo '· Carpeta al conectar:'; pwd;
-            echo '· Contenido:'; cls -1;
-          " || echo "(no se pudo listar)"
+          echo "· Aquí dentro:"
+          lftp -c "$CONEXION cls -1" 2>&1 | sed 's/^/    /' || echo "    (no se pudo listar)"
+          echo "· Un nivel por encima (..):"
+          lftp -c "$CONEXION cls -1 .." 2>&1 | sed 's/^/    /' || echo "    (no se pudo listar)"
+          echo "· Dentro de public_html, si existe:"
+          lftp -c "$CONEXION cls -1 public_html" 2>&1 | sed 's/^/    /' || echo "    (no existe)"
           echo "─────────────────────────────"
           echo "Subiendo a: $DESTINO"
 
@@ -168,7 +174,13 @@ jobs:
 
           # El nombre del bundle lleva un hash del contenido: si el sitio
           # publicado apunta a otro archivo, está sirviendo otra versión.
-          LOCAL=$(grep -o 'assets/index-[A-Za-z0-9_-]*\.js' dist/index.html | head -1)
+          #
+          # 'sed -n 1p' y no 'head -1': head cierra la tubería en cuanto tiene
+          # su línea, grep muere con SIGPIPE y con pipefail activo eso cuenta
+          # como fallo del paso entero aunque la búsqueda haya ido bien. Pasó
+          # en el primer intento de esta comprobación: abortaba antes de
+          # imprimir nada. sed lee hasta el final, así que no hay tubería rota.
+          LOCAL=$(grep -o 'assets/index-[A-Za-z0-9_-]*\.js' dist/index.html | sed -n 1p || true)
           if [ -z "$LOCAL" ]; then
             echo "::warning::No se pudo leer el nombre del bundle en dist/index.html; se omite la comprobación."
             exit 0
@@ -176,7 +188,7 @@ jobs:
 
           # La cadena al final evita que responda una copia guardada del CDN.
           REMOTO_HTML=$(curl -fsS --max-time 30 "https://meetbecome.com/?nocache=${GITHUB_SHA}" || true)
-          REMOTO=$(printf '%s' "$REMOTO_HTML" | grep -o 'assets/index-[A-Za-z0-9_-]*\.js' | head -1)
+          REMOTO=$(printf '%s' "$REMOTO_HTML" | grep -o 'assets/index-[A-Za-z0-9_-]*\.js' | sed -n 1p || true)
 
           echo "Bundle recién compilado : $LOCAL"
           echo "Bundle que sirve el sitio: ${REMOTO:-(no se pudo leer)}"
