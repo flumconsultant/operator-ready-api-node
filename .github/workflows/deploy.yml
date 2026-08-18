@@ -64,6 +64,30 @@ jobs:
         run: |
           set -euo pipefail
 
+          # Comprobación antes de conectar. El fallo típico aquí no es que
+          # falten los secretos — es que FTP_HOST se guardó con algo que no es
+          # un nombre de servidor puro: un "ftp://" delante, comillas, un
+          # espacio pegado al copiar. lftp entonces intenta resolver ese texto
+          # como si fuera un dominio y responde con un error de red genérico
+          # ("Name or service not known") que no dice nada de esto. Aquí se
+          # detecta antes y se explica en español.
+          FALTA=""
+          [ -z "${FTP_HOST:-}" ] && FALTA="$FALTA FTP_HOST"
+          [ -z "${FTP_USER:-}" ] && FALTA="$FALTA FTP_USER"
+          [ -z "${FTP_PASSWORD:-}" ] && FALTA="$FALTA FTP_PASSWORD"
+          if [ -n "$FALTA" ]; then
+            echo "::error::Falta(n) estos secretos en Settings → Secrets and variables → Actions:$FALTA"
+            exit 1
+          fi
+          if [[ "$FTP_HOST" == *"://"* ]]; then
+            echo "::error::FTP_HOST tiene '://' delante (algo como 'ftp://…'). Debe ser solo el nombre del servidor, por ejemplo 'ftp.meetbecome.com', sin ftp:// ni ftps:// delante."
+            exit 1
+          fi
+          if [[ "$FTP_HOST" == *" "* ]] || [[ "$FTP_HOST" == *"'"* ]] || [[ "$FTP_HOST" == *'"'* ]]; then
+            echo "::error::FTP_HOST tiene un espacio o una comilla dentro. Vuelve a pegarlo en el secreto sin nada alrededor: solo el nombre del servidor."
+            exit 1
+          fi
+
           # FTPS obligatorio: sin esto lftp negociaría FTP en claro y la
           # contraseña del hosting viajaría legible por la red.
           VERIFICAR=true
