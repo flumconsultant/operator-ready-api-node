@@ -59,6 +59,8 @@ jobs:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           # Variable opcional del repositorio. Ver la nota de abajo.
           TLS_RELAJADO: ${{ vars.FTP_TLS_RELAJADO }}
+          # Opcional. Si se deja vacío, se detecta solo (ver abajo).
+          FTP_DIR: ${{ vars.FTP_DIR }}
         run: |
           set -euo pipefail
 
@@ -69,6 +71,24 @@ jobs:
             echo "::warning::Verificación del certificado desactivada. El tráfico sigue cifrado, pero no se comprueba que el servidor sea quien dice ser."
             VERIFICAR=false
           fi
+
+          # ¿Dónde hay que dejar los archivos?
+          #
+          # Depende de cómo se creara la cuenta FTP en hPanel, y es la trampa
+          # más fácil de pisar: si la cuenta apunta a la raíz de la cuenta, el
+          # sitio va dentro de public_html; si apunta directamente a
+          # public_html, entonces ya estamos dentro y subir a "public_html"
+          # crearía public_html/public_html y el sitio no aparecería por ningún
+          # lado. En vez de pedirle a nadie que lo adivine, se comprueba.
+          DESTINO="${FTP_DIR:-}"
+          if [ -z "$DESTINO" ]; then
+            if lftp -c "set ftp:ssl-force true; set ssl:verify-certificate $VERIFICAR; open -u '$FTP_USER','$FTP_PASSWORD' '$FTP_HOST'; cd public_html" 2>/dev/null; then
+              DESTINO="public_html"
+            else
+              DESTINO="."
+            fi
+          fi
+          echo "Subiendo a: $DESTINO"
 
           lftp -c "
             set ftp:ssl-force true;
@@ -81,13 +101,13 @@ jobs:
             # 1. El bundle con hash va con --delete: esa carpeta es solo nuestra,
             #    y sin borrar acumularía todos los bundles de todos los despliegues
             #    para siempre.
-            mirror --reverse --delete --parallel=4 --verbose dist/assets/ public_html/assets/;
+            mirror --reverse --delete --parallel=4 --verbose dist/assets/ $DESTINO/assets/;
 
             # 2. El resto va SIN --delete, a propósito. Si hubiera algo más en
             #    public_html —un archivo de verificación de dominio, un correo,
             #    cualquier cosa puesta a mano— borrarlo desde aquí sería
             #    destruir trabajo que este repositorio no conoce.
-            mirror --reverse --parallel=4 --verbose --exclude-glob assets/* dist/ public_html/;
+            mirror --reverse --parallel=4 --verbose --exclude-glob assets/* dist/ $DESTINO/;
           "
 
       - name: Resumen

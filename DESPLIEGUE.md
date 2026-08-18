@@ -76,6 +76,11 @@ No llegó el `.htaccess`. Está en `assets/.htaccess` y Vite lo copia a `dist/`,
 pero algunos clientes FTP ignoran los archivos ocultos. Compruébalo en hPanel →
 Administrador de archivos, activando "mostrar archivos ocultos".
 
+**El sitio no aparece, pero el despliegue dice que fue bien.**
+Mira en el registro del despliegue la línea `Subiendo a:`. Si dice `public_html`
+y en hPanel ves `public_html/public_html`, la cuenta FTP ya apuntaba dentro.
+Crea una **variable** llamada `FTP_DIR` con valor `.` y vuelve a lanzarlo.
+
 **El despliegue falla con un error de certificado TLS.**
 El certificado FTP de Hostinger puede no validar contra las autoridades del
 runner. Crea una **variable** (no un secreto) llamada `FTP_TLS_RELAJADO` con
