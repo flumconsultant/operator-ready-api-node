@@ -62,7 +62,13 @@ jobs:
             exit 1
           fi
           mkdir -p dist/api
-          python3 - <<'PY' > dist/api/config.php
+          # Testigo de un solo despliegue: autoriza la comprobación de salud
+          # del correo que se hace al final, y caduca en cuanto se despliega
+          # otra vez. No hace falta guardarlo en ningún sitio.
+          MAIL_PING_TOKEN="$(openssl rand -hex 24)"
+          echo "MAIL_PING_TOKEN=$MAIL_PING_TOKEN" >> "$GITHUB_ENV"
+          echo "::add-mask::$MAIL_PING_TOKEN"
+          MAIL_PING_TOKEN="$MAIL_PING_TOKEN" python3 - <<'PY' > dist/api/config.php
           import base64, json, os
           cfg = {
               'host':     os.environ.get('MAIL_HOST')  or 'smtp.hostinger.com',
@@ -70,6 +76,7 @@ jobs:
               'user':     os.environ['MAIL_USER'],
               'password': os.environ['MAIL_PASSWORD'],
               'to':       os.environ.get('MAIL_TO') or os.environ['MAIL_USER'],
+              'token':    os.environ['MAIL_PING_TOKEN'],
           }
           blob = base64.b64encode(json.dumps(cfg).encode()).decode()
           print("<?php return json_decode(base64_decode('%s'), true);" % blob)
@@ -243,6 +250,31 @@ jobs:
             exit 1
           fi
           echo "El sitio publicado es esta versión."
+
+      - name: Comprobar que el correo del formulario funciona
+        # Conecta y se autentica contra el servidor de correo, sin enviar
+        # ningún mensaje. Es lo único que distingue "el formulario está
+        # publicado" de "el formulario sirve para algo": un buzón con la
+        # contraseña caducada deja el sitio impecable por fuera mientras cada
+        # mensaje que alguien escribe se pierde sin que nadie se entere.
+        run: |
+          set -uo pipefail
+          RES=$(curl -sS --max-time 40 -X POST \
+                  -H 'Content-Type: application/json' \
+                  -d "{\"ping\":\"${MAIL_PING_TOKEN}\"}" \
+                  "https://meetbecome.com/api/contacto.php" || true)
+          echo "Respuesta: ${RES:-(sin respuesta)}"
+
+          case "$RES" in
+            *'"ok":true'*)
+              echo "El formulario puede enviar correo." ;;
+            '')
+              echo "::warning::No hubo respuesta de la comprobación. Revisa el formulario a mano." ;;
+            *)
+              ETAPA=$(printf '%s' "$RES" | sed -n 's/.*"stage":"\([^"]*\)".*/\1/p')
+              echo "::error::El formulario NO puede enviar correo. Falló en la etapa: ${ETAPA:-desconocida}. 'auth-clave' = la contraseña de MAIL_PASSWORD no es la del buzón; 'auth-usuario' = la dirección de MAIL_USER no existe; 'conexion' = el servidor no alcanza a MAIL_HOST; 'config' = el despliegue no dejó bien las credenciales. El motivo completo está en public_html/api/errores.log."
+              exit 1 ;;
+          esac
 
       - name: Resumen
         run: |

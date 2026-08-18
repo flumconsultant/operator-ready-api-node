@@ -88,6 +88,37 @@ if (!is_array($in)) {
     responder(400, ['ok' => false, 'error' => 'bad_request']);
 }
 
+/* ---------------------------------------------------- comprobación de salud
+ *
+ * El despliegue llama aquí al terminar para verificar que el camino del
+ * correo funciona: conecta, se autentica y cuelga, sin enviar nada. Así, si
+ * la contraseña del buzón caduca o el servidor deja de responder, el fallo
+ * aparece en el despliegue y no meses después, en forma de mensajes de
+ * clientes que nunca llegaron y que nadie sabe que existieron.
+ *
+ * Va con testigo porque abre una conexión autenticada contra el servidor de
+ * correo: sin él, cualquiera desde fuera podría usar esto para provocar
+ * intentos de acceso repetidos con la cuenta del dominio.
+ */
+if (isset($in['ping'])) {
+    $cfg = require __DIR__ . '/config.php';
+    /* hash_equals y no ==: comparar cadenas secretas carácter a carácter
+       tarda distinto según cuántos coincidan, y ese tiempo se puede medir. */
+    if (empty($cfg['token']) || !is_string($in['ping'])
+        || !hash_equals((string) $cfg['token'], $in['ping'])) {
+        responder(403, ['ok' => false, 'error' => 'forbidden']);
+    }
+    foreach (['host', 'port', 'user', 'password', 'to'] as $k) {
+        if (empty($cfg[$k])) {
+            fallar("falta la clave '$k' en config.php", 'config');
+        }
+    }
+    $ping = smtp_abrir($cfg);
+    @fwrite($ping, "QUIT\r\n");
+    @fclose($ping);
+    responder(200, ['ok' => true, 'stage' => 'listo']);
+}
+
 /* El señuelo: un campo que la persona no ve y por tanto deja vacío, y que un
    robot que rellena todo lo que encuentra sí completa. Se responde 200 a
    propósito — un 400 le enseña al robot que ha sido detectado. */
@@ -209,33 +240,44 @@ function smtp_orden($fp, ?string $orden, array $esperado, string $etiqueta): str
     return $res;
 }
 
-$destino = sprintf('ssl://%s:%d', $config['host'], (int) $config['port']);
+/**
+ * Abre la conexión y se autentica. Es el tramo que comparten el envío real y
+ * la comprobación de salud: si se duplicara, la comprobación acabaría
+ * probando un camino distinto del que usan los mensajes de verdad, que es
+ * exactamente lo que la hace inútil.
+ */
+function smtp_abrir(array $config) {
+    /* La verificación del certificado se deja escrita, aunque coincida con lo
+       que PHP hace por defecto: es la línea que impide que alguien en medio se
+       haga pasar por el servidor de correo y se quede con la contraseña del
+       buzón. Escrita, se ve; heredada del valor por defecto, cambia sin que
+       nadie lo note el día que cambie ese valor o la versión de PHP. */
+    $contexto = stream_context_create(['ssl' => [
+        'verify_peer'       => true,
+        'verify_peer_name'  => true,
+        'allow_self_signed' => false,
+        'SNI_enabled'       => true,
+    ]]);
 
-/* La verificación del certificado se deja escrita, aunque coincida con lo que
-   PHP hace por defecto: es la línea que impide que alguien en medio se haga
-   pasar por el servidor de correo y se quede con la contraseña del buzón.
-   Escrita, se ve; heredada del valor por defecto, cambia sin que nadie lo
-   note el día que cambie el valor por defecto o la versión de PHP. */
-$contexto = stream_context_create(['ssl' => [
-    'verify_peer'       => true,
-    'verify_peer_name'  => true,
-    'allow_self_signed' => false,
-    'SNI_enabled'       => true,
-]]);
+    $fp = @stream_socket_client(
+        sprintf('ssl://%s:%d', $config['host'], (int) $config['port']),
+        $errno, $errstr, 20, STREAM_CLIENT_CONNECT, $contexto
+    );
+    if (!$fp) {
+        fallar("no se pudo conectar a {$config['host']}:{$config['port']} — $errstr ($errno)", 'conexion');
+    }
+    stream_set_timeout($fp, 20);
 
-$fp = @stream_socket_client(
-    $destino, $errno, $errstr, 20, STREAM_CLIENT_CONNECT, $contexto
-);
-if (!$fp) {
-    fallar("no se pudo conectar a {$config['host']}:{$config['port']} — $errstr ($errno)", 'conexion');
+    $dominio = substr(strrchr((string) $config['user'], '@') ?: '@localhost', 1);
+    smtp_orden($fp, null, [220], 'saludo');
+    smtp_orden($fp, 'EHLO ' . $dominio, [250], 'ehlo');
+    smtp_orden($fp, 'AUTH LOGIN', [334], 'auth');
+    smtp_orden($fp, base64_encode((string) $config['user']), [334], 'auth-usuario');
+    smtp_orden($fp, base64_encode((string) $config['password']), [235], 'auth-clave');
+    return $fp;
 }
-stream_set_timeout($fp, 20);
 
-smtp_orden($fp, null, [220], 'saludo');
-smtp_orden($fp, 'EHLO ' . (substr(strrchr($de, '@') ?: '@localhost', 1)), [250], 'ehlo');
-smtp_orden($fp, 'AUTH LOGIN', [334], 'auth');
-smtp_orden($fp, base64_encode((string) $config['user']), [334], 'auth-usuario');
-smtp_orden($fp, base64_encode((string) $config['password']), [235], 'auth-clave');
+$fp = smtp_abrir($config);
 smtp_orden($fp, 'MAIL FROM:<' . $de . '>', [250], 'remitente');
 smtp_orden($fp, 'RCPT TO:<' . $para . '>', [250, 251], 'destinatario');
 smtp_orden($fp, 'DATA', [354], 'datos');
