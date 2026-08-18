@@ -25,9 +25,9 @@ export const USE_CASE_CONTENT = {
     problem:
       'El síntoma es dispersión, pero la causa es que no hay una tesis de empresa que ordene las decisiones. Sin ambición compartida, cada iniciativa compite por presupuesto con el argumento de su propia área y ninguna se mide contra el mismo outcome.',
     value:
-      'Alineamos ambition y outcomes, evaluamos readiness, identificamos value pools, priorizamos capabilities y diseñamos el target operating model y roadmap.',
+      'Alineamos ambition y outcomes, evaluamos readiness, identificamos value pools, priorizamos capacidades y diseñamos el target operating model y roadmap.',
     tools: ['Business Ambition Canvas™', 'Inside Readiness Index™', 'AI-Native Value Map™', 'Inside Target State Canvas™'],
-    result: 'Una estrategia ejecutable y una primera capability elegida con criterios explícitos.',
+    result: 'Una estrategia ejecutable y una primera capacidad elegida con criterios explícitos.',
     engagement: 'Discovery',
     engagementWhy:
       'Falta la capa estratégica: dirección, prioridad y diseño del modelo futuro. Construir antes de eso multiplica el número de pilotos, no el valor.',
@@ -48,13 +48,13 @@ export const USE_CASE_CONTENT = {
     problem:
       'El piloto no falla por el modelo. Falla porque se construyó al lado del trabajo real en vez de dentro: nadie es dueño del resultado, el proceso siguió igual y no hay medida contra la que decidir.',
     value:
-      'Evaluamos el piloto como parte de un sistema de People, Data, Agents, Products y Operations; decidimos si debe detenerse, rediseñarse o convertirse en capability; luego construimos las condiciones de adopción y escala.',
+      'Evaluamos el piloto como parte de un sistema de People, Data, Agents, Products y Operations; decidimos si debe detenerse, rediseñarse o convertirse en capacidad; luego construimos las condiciones de adopción y escala.',
     tools: ['Inside Readiness Index™', 'Agentic Workflow Blueprint™', 'Embed Scorecard™', 'Scale Readiness Gate™'],
-    result: 'Una decisión informada y, cuando corresponde, una capability preparada para operar.',
+    result: 'Una decisión informada y, cuando corresponde, una capacidad preparada para operar.',
     engagement: 'Discovery → Build & Embed',
     engagementWhy:
       'El diagnóstico es estratégico y la solución es operativa. Saltarse el primero suele producir un segundo piloto igual de aislado.',
-    cta: 'Convierte el piloto en capability',
+    cta: 'Convierte el piloto en capacidad',
   },
 
   'redisenar-workflow-critico': {
@@ -71,7 +71,7 @@ export const USE_CASE_CONTENT = {
     problem:
       'Automatizar una tarea dentro de un proceso que no cambia mueve el cuello de botella de sitio. El tiempo se recupera en un paso y se pierde en el siguiente, porque las decisiones, los datos y las excepciones siguen donde estaban.',
     value:
-      'Rediseñamos eventos, decisiones, roles, agent tasks, data, exceptions, human oversight, controls y metrics como un solo workflow; después construimos y validamos la capability prioritaria.',
+      'Rediseñamos eventos, decisiones, roles, agent tasks, data, exceptions, human oversight, controls y metrics como un solo workflow; después construimos y validamos la capacidad prioritaria.',
     tools: ['Inside Target State Canvas™', 'Agentic Workflow Blueprint™', 'Embed Scorecard™'],
     result: 'Un workflow más rápido, consistente, controlado y capaz de aprender.',
     engagement: 'Discovery + Build & Embed',
@@ -83,7 +83,7 @@ export const USE_CASE_CONTENT = {
   'construir-agent-o-copilot': {
     q: '¿Quieres construir un agent o copilot?',
     answer:
-      'Si ya tienes una oportunidad priorizada, necesitas convertirla en una capability con límites de autonomía, integración, adoption y accountability definidos.',
+      'Si ya tienes una oportunidad priorizada, necesitas convertirla en una capacidad con límites de autonomía, integración, adoption y accountability definidos.',
     signals: [
       'El equipo conoce la tarea, pero no el operating model.',
       'No está claro qué decide el agent y qué conserva la persona.',
@@ -99,7 +99,7 @@ export const USE_CASE_CONTENT = {
     engagement: 'Build & Embed',
     engagementWhy:
       'Sujeto a readiness: si la oportunidad aún no tiene blueprint validable, primero pasamos un short readiness gate.',
-    cta: 'Construye la capability',
+    cta: 'Construye la capacidad',
   },
 
   'experiencia-ai-native': {
@@ -117,7 +117,7 @@ export const USE_CASE_CONTENT = {
     value:
       'Conectamos product thesis, user journey, intelligence, data, agent behavior, controls y operational ownership; prototipamos, validamos y construimos el scope que pueda demostrar valor real.',
     tools: ['AI-Native Value Map™', 'Inside Target State Canvas™', 'Agentic Workflow Blueprint™', 'Embed Scorecard™'],
-    result: 'Una product o service capability AI-native validada e incorporable.',
+    result: 'Una product o service capacidad AI-native validada e incorporable.',
     engagement: 'Build & Embed o secuencia completa',
     engagementWhy:
       'Si la tesis de producto todavía está abierta, Discovery la cierra antes de construir.',
@@ -127,7 +127,7 @@ export const USE_CASE_CONTENT = {
   'demostrar-valor-en-90-dias': {
     q: '¿Necesitas demostrar valor en 90 días?',
     answer:
-      'Si necesitas evidencia rápida, necesitas reducir el scope sin reducir la exigencia: una capability viable, un entorno real y outcomes medibles.',
+      'Si necesitas evidencia rápida, necesitas reducir el scope sin reducir la exigencia: una capacidad viable, un entorno real y outcomes medibles.',
     signals: [
       'Existe sponsor y urgencia ejecutiva.',
       'La oportunidad parece clara, pero aún no tiene baseline.',
@@ -155,5 +155,5 @@ export const ORIENTATION = [
   { q: '¿Necesitas rediseñar un workflow crítico?', happens: 'Un proceso lento, fragmentado o intensivo en decisiones.', need: 'End-to-end workflow redesign con roles, agents, data y controls.', rec: 'Discovery + Build & Embed' },
   { q: '¿Quieres construir un agent o copilot?', happens: 'Existe una idea o necesidad funcional, pero falta diseño operativo.', need: 'Blueprint, autonomy boundaries, human-in-the-loop, build y adoption.', rec: 'Build & Embed' },
   { q: '¿Quieres crear una experiencia AI-native?', happens: 'Se busca nuevo valor para clientes o colaboradores.', need: 'Product thesis, experience design, data/agent architecture y validation.', rec: 'Build & Embed o secuencia completa' },
-  { q: '¿Necesitas demostrar valor en 90 días?', happens: 'Hay presión por mostrar outcomes sin caer en otro demo.', need: 'Scope viable, baseline, working capability, adoption y scorecard.', rec: 'Build & Embed' },
+  { q: '¿Necesitas demostrar valor en 90 días?', happens: 'Hay presión por mostrar outcomes sin caer en otro demo.', need: 'Scope viable, baseline, working capacidad, adoption y scorecard.', rec: 'Build & Embed' },
 ];

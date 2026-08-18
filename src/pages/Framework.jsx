@@ -16,9 +16,9 @@ import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, TextCTA, Cols, Card,
 const STAGES = [
   ['B', 'Business Ambition', 'Define en qué debe convertirse la empresa y qué outcomes importan.', 'AI-native ambition y tesis estratégica.', 'Discovery'],
   ['E', 'Enterprise Discovery', 'Comprende cómo funciona hoy y qué limita el cambio.', 'Enterprise diagnostic y readiness.', 'Discovery'],
-  ['C', 'Capability Choices', 'Prioriza dónde la IA puede crear valor diferencial.', 'Value pools y portafolio priorizado.', 'Discovery'],
+  ['C', 'Capacidad Choices', 'Prioriza dónde la IA puede crear valor diferencial.', 'Value pools y portafolio priorizado.', 'Discovery'],
   ['O', 'Operating Model Design', 'Diseña el sistema futuro.', 'Target operating model y blueprint.', 'Punto de transición'],
-  ['M', 'Make & Embed', 'Construye e incorpora la capability.', 'Capability funcionando con controles.', 'Build & Embed'],
+  ['M', 'Make & Embed', 'Construye e incorpora la capacidad.', 'Capacidad funcionando con controles.', 'Build & Embed'],
   ['E', 'Expand & Evolve', 'Mide, gobierna, transfiere y escala.', 'Scorecard y scale decision.', 'Build & Embed'],
 ];
 
@@ -56,7 +56,7 @@ export default function Framework() {
         <Kicker dark>BECOME™ Transformation Framework</Kicker>
         <Headline as="h1" dark>Un sistema para convertirse en una empresa AI-native.</Headline>
         <Lead dark>
-          Seis etapas conectan ambition, discovery, capability choices,
+          Seis etapas conectan ambition, discovery, capacidad choices,
           operating-model design, construcción y escala.
         </Lead>
       </Section>

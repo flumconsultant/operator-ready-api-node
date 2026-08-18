@@ -20,16 +20,16 @@ const JOURNEY = [
   { n: '00', icon: 'capability', step: 'Enable', who: 'BECOME NOW™', q: '¿Sabe el equipo trabajar con IA hoy?', out: 'Capacidades aplicadas, workflows y activos reutilizables.' },
   { n: '01', icon: 'decision', step: 'Define', who: 'AI-Native Transformation Discovery', q: '¿Dónde está el valor y qué debe cambiar?', out: 'Ambition, diagnostic y priority choices.' },
   { n: '02', icon: 'layers', step: 'Design', who: 'Punto de conexión', q: '¿Cómo debe operar el modelo futuro?', out: 'Target operating model y transformation blueprint.' },
-  { n: '03', icon: 'build', step: 'Build', who: 'Build & Embed Sprint', q: '¿Qué capability debe existir y cómo funcionará?', out: 'Workflow, agent, copilot, product o decision system.' },
+  { n: '03', icon: 'build', step: 'Build', who: 'Build & Embed Sprint', q: '¿Qué capacidad debe existir y cómo funcionará?', out: 'Workflow, agent, copilot, product o decision system.' },
   { n: '04', icon: 'embed', step: 'Embed', who: 'Build & Embed Sprint', q: '¿Cómo se incorpora con adopción y control?', out: 'Ownership, human-in-the-loop, controls y scorecard.' },
   { n: '05', icon: 'scale', step: 'Scale', who: 'Evolución posterior', q: '¿Está lista para expandirse?', out: 'Scale decision y evolution backlog.' },
 ];
 
 const COMPARE = [
   ['Úsalo cuando', 'Falta claridad estratégica, priorización o diseño del modelo futuro.', 'Existe una oportunidad priorizada y condiciones para construir.'],
-  ['Duración', '8–12 semanas.', '8–12 semanas por capability.'],
+  ['Duración', '8–12 semanas.', '8–12 semanas por capacidad.'],
   ['Comienza con', 'Ambición, tensión empresarial o dominio a transformar.', 'Blueprint validable, workflow o opportunity priorizada.'],
-  ['Termina con', 'Strategy, portfolio, target state, business case y roadmap.', 'Capability funcionando, adoptada, controlada y medida.'],
+  ['Termina con', 'Strategy, portfolio, target state, business case y roadmap.', 'Capacidad funcionando, adoptada, controlada y medida.'],
   ['Framework', 'B–E–C–O.', 'O–M–E.'],
   ['Siguiente paso', 'Build & Embed del primer caso priorizado.', 'Iterar, integrar, escalar o detener.'],
 ];
@@ -129,7 +129,7 @@ export default function Servicios() {
           <Card dark>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
               <Ico name="build" size={24} style={{ color: 'var(--electric-green)' }} />
-              <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--electric-green)' }}>8–12 semanas por capability</p>
+              <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--electric-green)' }}>8–12 semanas por capacidad</p>
             </div>
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--white)' }}>
               Build &amp; Embed Sprint
@@ -144,7 +144,7 @@ export default function Servicios() {
         </Cols>
         <Body dark style={{ marginTop: 'var(--space-9)' }}>
           BECOME NOW™ puede contratarse solo o integrarse como capa de adoption y
-          capability building dentro de los otros dos.
+          construcción de capacidades dentro de los otros dos.
         </Body>
       </Section>
 
@@ -188,7 +188,7 @@ export default function Servicios() {
           <Card>
             <IcoBadge name="build" />
             <Body style={{ color: 'var(--text-body)' }}>
-              Si ya sabes <strong>qué capability construir</strong> y necesitas llevarla
+              Si ya sabes <strong>qué capacidad construir</strong> y necesitas llevarla
               a la operación, necesitas Build &amp; Embed Sprint.
             </Body>
             <TextCTA to="/es/servicios/build-and-embed">Ir a Build &amp; Embed</TextCTA>

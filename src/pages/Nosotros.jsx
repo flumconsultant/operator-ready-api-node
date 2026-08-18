@@ -20,15 +20,15 @@ const DNA = [
   ['target', 'Business-first', 'Comenzamos por el outcome y la decisión empresarial, no por la herramienta.'],
   ['native', 'AI-native', 'Diseñamos modelos de trabajo que incorporan inteligencia desde su origen.'],
   ['system', 'Systems-minded', 'Conectamos estrategia, personas, datos, agents, operaciones y governance.'],
-  ['build', 'Builder', 'Convertimos direction y blueprint en capabilities que funcionan.'],
+  ['build', 'Builder', 'Convertimos direction y blueprint en capacidades que funcionan.'],
   ['accountable', 'Human-accountable', 'La IA amplía la capacidad; las personas mantienen dirección, supervisión y responsabilidad.'],
-  ['embed', 'Embedded', 'Trabajamos con el equipo del cliente para que la capability permanezca y evolucione.'],
+  ['embed', 'Embedded', 'Trabajamos con el equipo del cliente para que la capacidad permanezca y evolucione.'],
 ];
 
 const CULTURE = [
   ['outcome', 'Think in outcomes', 'Preguntamos qué decisión, comportamiento o business result debe cambiar antes de hablar de tecnología.'],
   ['inspect', 'Go inside the system', 'Buscamos la causa en el operating model, no una solución superficial al síntoma.'],
-  ['together', 'Build with, not for', 'Diseñamos y construimos junto a quienes operarán la capability.'],
+  ['together', 'Build with, not for', 'Diseñamos y construimos junto a quienes operarán la capacidad.'],
   ['idea', 'Stay curious, stay precise', 'Exploramos posibilidades sin confundir exploración con evidencia.'],
   ['trust', 'Earn trust', 'Hacemos visibles límites, riesgos, assumptions, controls y decisiones.'],
   ['capability', 'Leave capability behind', 'El trabajo debe aumentar la autonomía del cliente, no su dependencia de BECOME.'],
@@ -39,7 +39,7 @@ const DELIVERY = [
   'Client team integrado desde el inicio.',
   'Decisiones y riesgos visibles.',
   'Working software o artefactos utilizables, no solo presentaciones.',
-  'Capability transfer incluida en el alcance.',
+  'Transferencia de capacidades incluida en el alcance.',
   'Governance y responsible AI incorporados al delivery.',
 ];
 
@@ -67,7 +67,7 @@ export default function Nosotros() {
         <Lead>
           Ayudamos a las empresas a rediseñar cómo operan, deciden y crean valor
           alrededor de la IA. Trabajamos dentro del negocio para convertir una
-          ambición en una capability propia, gobernable y capaz de evolucionar.
+          ambición en una capacidad propia, gobernable y capaz de evolucionar.
         </Lead>
         <Cols min="240px">
           {[
@@ -89,7 +89,7 @@ export default function Nosotros() {
         <Kicker dark>Nuestro propósito</Kicker>
         <Headline dark>Ayudar a las empresas a convertirse en aquello que el futuro exige.</Headline>
         <Lead dark>
-          Hacemos de la IA una capability interna para operar mejor, decidir con
+          Hacemos de la IA una capacidad interna para operar mejor, decidir con
           mayor inteligencia y crear nuevas formas de valor. La transformación
           importa cuando queda instalada en las personas, los datos, los agents, los
           productos y las operaciones de la empresa.
@@ -108,7 +108,7 @@ export default function Nosotros() {
           <Reveal as="div" style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
             <p style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--electric-green)' }}>Nuestra misión</p>
             <Body dark style={{ marginTop: 'var(--space-5)' }}>
-              Convertir ambiciones empresariales en AI-native capabilities
+              Convertir ambiciones empresariales en capacidades AI-native
               incorporadas, conectando strategy, People, Data, Agents, Products y Operations
               desde la definición del valor hasta la adopción y la escala.
             </Body>
@@ -209,7 +209,7 @@ export default function Nosotros() {
       </Section>
 
       <Section band="darker" pad="var(--space-13)">
-        <Kicker dark>La próxima capability se construye desde dentro</Kicker>
+        <Kicker dark>La próxima capacidad se construye desde dentro</Kicker>
         <Headline dark>Cuéntanos qué necesita cambiar en tu empresa.</Headline>
         <div style={{ marginTop: 'var(--space-8)' }}>
           <PrimaryCTA to="/es/contacto">Contáctanos</PrimaryCTA>

@@ -17,7 +17,7 @@ const PILLARS = [
   ['The AI-native enterprise', 'Estrategia, ambition y enterprise design. Qué distingue a una empresa AI-native de una empresa con IA.'],
   ['Agentic work', 'Workflows, roles, agents y human accountability. Cómo cambia el trabajo cuando parte lo hace un sistema.'],
   ['Operating-model reinvention', 'People, Data, Agents, Products y Operations. Las decisiones de diseño que determinan dónde se acumula el valor.'],
-  ['Value and adoption', 'Measurement, trust, change y capability transfer. Por qué la adopción es un problema de diseño, no de comunicación.'],
+  ['Value and adoption', 'Measurement, trust, change y transferencia de capacidades. Por qué la adopción es un problema de diseño, no de comunicación.'],
   ['Responsible scale', 'Governance, controls, risk y scale readiness. Cuándo escalar y, sobre todo, cuándo no.'],
 ];
 
@@ -88,7 +88,7 @@ export default function Insights() {
 
       <Section band="dark" pad="var(--space-13)">
         <Kicker dark>Become insights</Kicker>
-        <Headline dark>¿Qué idea necesita convertirse en capability?</Headline>
+        <Headline dark>¿Qué idea necesita convertirse en capacidad?</Headline>
         <div style={{ marginTop: 'var(--space-8)' }}>
           <PrimaryCTA to="/es/contacto">Contáctanos</PrimaryCTA>
         </div>

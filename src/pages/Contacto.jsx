@@ -32,7 +32,7 @@ const FIELDS = [
   { name: 'rol', short: 'Rol', label: '¿Cuál es tu rol?', required: true, autoComplete: 'organization-title' },
   {
     name: 'cambio', short: 'Qué debe cambiar', label: '¿Qué necesita cambiar?', type: 'textarea', required: true, wide: true,
-    help: 'El business outcome, la capability o el workflow que necesitas transformar. Sin formalidades.',
+    help: 'El business outcome, la capacidad o el workflow que necesitas transformar. Sin formalidades.',
   },
   {
     name: 'etapa', short: 'Etapa actual', label: '¿En qué etapa estáis hoy?', type: 'select',
@@ -40,7 +40,7 @@ const FIELDS = [
       'Definiendo la estrategia',
       'Priorizando oportunidades',
       'Diseñando el operating model',
-      'Construyendo una capability',
+      'Construyendo una capacidad',
       'Escalando una solución existente',
     ],
     default: 'Definiendo la estrategia',
@@ -63,7 +63,7 @@ export default function Contacto() {
         <Kicker dark>Start a conversation</Kicker>
         <Headline as="h1" dark>¿Qué necesita cambiar dentro de tu empresa?</Headline>
         <Lead dark>
-          El business outcome, la capability o el workflow. Respondemos con el punto
+          El business outcome, la capacidad o el workflow. Respondemos con el punto
           de partida adecuado, no con una secuencia comercial.
         </Lead>
       </Section>

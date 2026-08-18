@@ -29,7 +29,7 @@ export default function CasosDeUso() {
         <Headline as="h1" dark>No busques una solución. Empieza por lo que debe cambiar.</Headline>
         <Lead dark>
           Selecciona la situación que más se parece a la tuya. Te mostraremos qué
-          capability necesitas, qué debe cambiar dentro y cuál es el mejor punto de
+          capacidad necesitas, qué debe cambiar dentro y cuál es el mejor punto de
           partida.
         </Lead>
       </Section>
@@ -65,7 +65,7 @@ export default function CasosDeUso() {
         <Headline dark>Del síntoma a la decisión.</Headline>
         <Body dark style={{ marginTop: 'var(--space-6)' }}>
           Discovery cuando falta estrategia o target state. Build &amp; Embed cuando
-          ya hay una capability priorizada y condiciones para construir.
+          ya hay una capacidad priorizada y condiciones para construir.
         </Body>
 
         <div style={{ marginTop: 'var(--space-10)', overflowX: 'auto' }}>

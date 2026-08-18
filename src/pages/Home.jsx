@@ -66,9 +66,9 @@ const WHAT = [
 const STAGES = [
   ['B', 'Business Ambition', 'Define en qué debe convertirse la empresa y qué outcomes importan.'],
   ['E', 'Enterprise Discovery', 'Comprende cómo funciona hoy y qué limita el cambio.'],
-  ['C', 'Capability Choices', 'Prioriza dónde la IA puede crear valor diferencial.'],
+  ['C', 'Capacidad Choices', 'Prioriza dónde la IA puede crear valor diferencial.'],
   ['O', 'Operating Model Design', 'Diseña el sistema futuro.'],
-  ['M', 'Make & Embed', 'Construye e incorpora la capability.'],
+  ['M', 'Make & Embed', 'Construye e incorpora la capacidad.'],
   ['E', 'Expand & Evolve', 'Mide, gobierna, transfiere y escala.'],
 ];
 
@@ -87,13 +87,13 @@ const OUTCOMES = [
   ['quality', 'Quality', 'Trabajo consistente, menos errores y mejores outcomes.'],
   ['growth', 'Growth', 'Nuevos products, experiences y fuentes de valor.'],
   ['risk', 'Risk', 'Controles, accountability y human oversight claros.'],
-  ['capability', 'Capability', 'Equipos capaces de operar y mejorar el sistema.'],
+  ['capability', 'Capacidad', 'Equipos capaces de operar y mejorar el sistema.'],
 ];
 
 const SCENARIOS = [
   ['decision', 'Decision intelligence', 'Rediseñar una decisión de alto valor y su flujo de información.', 'Contexto compartido, rutas de excepción y decision rights explícitos.', '/images/46-strategy-session.webp', 'Equipo directivo trabajando sobre una decisión'],
   ['flow', 'Agentic operations', 'Incorporar agents en un end-to-end workflow controlado.', 'Orquestación, human-in-the-loop model y controles operativos.', '/images/19-tech-workspace.webp', 'Puesto de trabajo con operaciones asistidas por IA'],
-  ['product', 'AI-native product', 'Crear una nueva capability inteligente para clientes o colaboradores.', 'Data layer, ownership de producto y medición de valor.', '/images/50-next-gen.webp', 'Equipo construyendo un producto AI-native'],
+  ['product', 'AI-native product', 'Crear una nueva capacidad inteligente para clientes o colaboradores.', 'Data layer, ownership de producto y medición de valor.', '/images/50-next-gen.webp', 'Equipo construyendo un producto AI-native'],
 ];
 
 const PRINCIPLES = [
@@ -153,7 +153,7 @@ export default function Home() {
       {/* 02 — Qué hacemos, antes que cualquier método. Tres verbos, tres salidas. */}
       <Section band="light" id="que-hacemos">
         <Kicker>Qué hacemos</Kicker>
-        <Headline>Capacitamos equipos, definimos el cambio y construimos la capability.</Headline>
+        <Headline>Capacitamos equipos, definimos el cambio y construimos la capacidad.</Headline>
         <Cols min="260px">
           {WHAT.map((w) => (
             <Reveal as="div" key={w.label} className="row-hit" style={{ borderTop: '1px solid var(--border-strong)', paddingTop: 'var(--space-5)' }}>
@@ -177,14 +177,14 @@ export default function Home() {
         steps={[
           { kicker: 'Hoy', title: 'La empresa que ya tienes.', line: 'Iniciativas de IA sueltas, pilotos que no escalan y decisiones que siguen tardando lo mismo.' },
           { kicker: 'Dentro', title: 'El sistema que la mueve.', line: 'Personas, datos, agents y operaciones. Cambiar la empresa es cambiar los cuatro a la vez.' },
-          { kicker: 'Después', title: 'La empresa en la que se convierte.', line: 'Una capability propia, gobernada y medida, que sigue evolucionando sin nosotros delante.' },
+          { kicker: 'Después', title: 'La empresa en la que se convierte.', line: 'Una capacidad propia, gobernada y medida, que sigue evolucionando sin nosotros delante.' },
         ]}
       />
 
       {/* 03 — Nuestro propósito. Declaración breve, no sección institucional. */}
       <Section band="light" id="proposito">
         <Kicker>Our purpose</Kicker>
-        <Headline>Hacer de la IA una capability de la empresa, no una colección de iniciativas.</Headline>
+        <Headline>Hacer de la IA una capacidad de la empresa, no una colección de iniciativas.</Headline>
 
         {/* La C y la O de BECOME como los dos estados de la misma empresa. La
             marca explicándose a sí misma, no un adorno. */}
@@ -202,7 +202,7 @@ export default function Home() {
         <Headline dark>No añadimos IA desde fuera. Rediseñamos la empresa desde dentro.</Headline>
         <Lead dark>
           En cada etapa transformamos los cinco sistemas que deciden si la IA es un
-          experimento o una capability de la empresa.
+          experimento o una capacidad de la empresa.
         </Lead>
 
         <Cols min="230px" style={{ marginTop: 'var(--space-11)' }}>
@@ -291,13 +291,13 @@ export default function Home() {
           <Card>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
               <Ico name="build" size={24} style={{ color: 'var(--text-accent)' }} />
-              <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>8–12 semanas por capability</p>
+              <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>8–12 semanas por capacidad</p>
             </div>
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-heading)' }}>
               Build &amp; Embed Sprint
             </h3>
             <Body>
-              Construye e incorpora una capability AI-native con adopción, controles y
+              Construye e incorpora una capacidad AI-native con adopción, controles y
               medición.
             </Body>
             <TextCTA to="/es/servicios/build-and-embed">Explora Build &amp; Embed</TextCTA>
@@ -346,7 +346,7 @@ export default function Home() {
           textual de la página. */}
       <Section band="light">
         <Kicker>Por qué BECOME</Kicker>
-        <Headline>Strategy that builds. Technology that embeds. Capability that stays.</Headline>
+        <Headline>Strategy that builds. Technology that embeds. Capacidad that stays.</Headline>
         <div style={{ marginTop: 'var(--space-10)' }}>
           <Split src="/images/45-executive.webp" alt="Conversación ejecutiva sobre el modelo operativo" ratio="1 / 1">
             <div style={{ display: 'grid', gap: 'var(--space-7)' }}>
@@ -360,7 +360,7 @@ export default function Home() {
                 </Reveal>
               ))}
               <Reveal as="p" style={{ margin: 0, font: 'var(--type-lead)', color: 'var(--text-heading)', maxWidth: '42ch' }}>
-                El trabajo termina cuando la capability pertenece a la empresa.
+                El trabajo termina cuando la capacidad pertenece a la empresa.
               </Reveal>
               <div><GhostCTA to="/es/nosotros">Conoce cómo trabajamos</GhostCTA></div>
             </div>
@@ -415,7 +415,7 @@ export default function Home() {
         <Kicker dark>Your next operating model starts with a question</Kicker>
         <Headline dark>¿En qué debe convertirse tu empresa después?</Headline>
         <Lead dark>
-          Empieza con una conversación sobre el outcome, la capability o el workflow
+          Empieza con una conversación sobre el outcome, la capacidad o el workflow
           que necesitas transformar. Menos de dos minutos para contárnoslo.
         </Lead>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', alignItems: 'center', flexWrap: 'wrap' }}>

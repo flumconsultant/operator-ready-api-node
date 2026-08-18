@@ -17,14 +17,14 @@ import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, C
 const STAGES = [
   ['B', 'Business Ambition', 'Define en qué debe convertirse la empresa y qué outcomes importan.', 'AI-native ambition y tesis estratégica.'],
   ['E', 'Enterprise Discovery', 'Comprende cómo funciona hoy y qué limita el cambio.', 'Enterprise diagnostic y readiness.'],
-  ['C', 'Capability Choices', 'Prioriza dónde la IA puede crear valor diferencial.', 'Value pools y portafolio priorizado.'],
+  ['C', 'Capacidad Choices', 'Prioriza dónde la IA puede crear valor diferencial.', 'Value pools y portafolio priorizado.'],
   ['O', 'Operating Model Design', 'Diseña el sistema futuro de People, Data, Agents, Products y Operations.', 'Target operating model y blueprint.'],
 ];
 
 const DELIVERABLES = [
   'AI-native ambition y tesis estratégica.',
   'Enterprise diagnostic e Inside Readiness Index.',
-  'Value pools y portafolio priorizado de capabilities.',
+  'Value pools y portafolio priorizado de capacidades.',
   'Target operating model.',
   'Transformation blueprint, business case y roadmap.',
 ];
@@ -47,7 +47,7 @@ const FIT = [
 const DECISIONS = [
   'Dónde la IA puede crear valor empresarial diferencial.',
   'Qué debe cambiar dentro para que ese valor sea posible.',
-  'Qué capability construir primero y con qué criterios.',
+  'Qué capacidad construir primero y con qué criterios.',
   'Qué inversión, secuencia y governance sostienen el plan.',
 ];
 
@@ -197,7 +197,7 @@ export default function Discovery() {
       <Section band="light">
         <Reveal as="p" style={{ margin: 0, font: 'var(--type-lead)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)', maxWidth: '52ch' }}>
           Al terminar Discovery, el liderazgo sabe dónde la IA puede crear valor, qué
-          debe cambiar dentro de la empresa y qué capability debe construir primero.
+          debe cambiar dentro de la empresa y qué capacidad debe construir primero.
         </Reveal>
         <Cols min="260px">
           <Card>

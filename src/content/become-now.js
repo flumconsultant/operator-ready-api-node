@@ -12,7 +12,7 @@
  * catálogo de cursos.
  */
 
-export const TAGLINE = 'Learn today. Apply tomorrow. Build capability that stays.';
+export const TAGLINE = 'Learn today. Apply tomorrow. Build capacidad that stays.';
 
 export const PROMISE =
   'Tu empresa no aprende IA con ejemplos genéricos. Aprende aplicándola a lo que necesita resolver hoy.';
@@ -88,7 +88,7 @@ export const PROGRAMS = {
   'marketing-comunicaciones': {
     menu: 'IA aplicada a Marketing y Comunicaciones',
     area: 'Marketing y Comunicaciones',
-    h1: 'Convierte la IA en una capability de investigación, creación y optimización.',
+    h1: 'Convierte la IA en una capacidad de investigación, creación y optimización.',
     body: 'Programa aplicado a insights, estrategia de contenidos, campañas, comunicación corporativa, reputación y medición.',
     who: ['Marketing', 'Brand', 'Communications', 'Content', 'Growth', 'Public Relations', 'Social Media', 'Employee Advocacy'],
     route: [
@@ -344,8 +344,8 @@ export const SESSION_FLOW = [
 ];
 
 export const FORMATS = [
-  { name: 'Programa Esencial', hours: '12 horas lectivas', sessions: '4 sesiones de 3 horas', items: ['Sesión previa de entendimiento', 'Cuatro casos o capabilities', 'Biblioteca inicial de instrucciones', 'Informe final'] },
-  { name: 'Programa Completo', hours: '18 horas lectivas', sessions: '6 sesiones de 3 horas', items: ['Sesión previa de entendimiento', 'Seis casos o capabilities', 'Biblioteca de workflows', 'Protocolos de validación', 'Medición posterior'] },
+  { name: 'Programa Esencial', hours: '12 horas lectivas', sessions: '4 sesiones de 3 horas', items: ['Sesión previa de entendimiento', 'Cuatro casos o capacidades', 'Biblioteca inicial de instrucciones', 'Informe final'] },
+  { name: 'Programa Completo', hours: '18 horas lectivas', sessions: '6 sesiones de 3 horas', items: ['Sesión previa de entendimiento', 'Seis casos o capacidades', 'Biblioteca de workflows', 'Protocolos de validación', 'Medición posterior'] },
   { name: 'Programa Integral', hours: '24 horas lectivas', sessions: '8 sesiones de 3 horas', items: ['Sesión previa de entendimiento', 'Seis sesiones formativas', 'Laboratorio sobre casos reales', 'Consultoría de implementación', 'Plan de adopción para el área'] },
 ];
 
@@ -364,7 +364,7 @@ export const INDICATORS = [
   ['Productividad', 'Tiempo de preparación y de respuesta, reducción de tareas manuales y velocidad para producir un primer output útil.'],
   ['Calidad', 'Consistencia, errores detectados, cumplimiento del formato, retrabajo y nivel de trazabilidad.'],
   ['Confianza', 'Capacidad para verificar resultados, claridad sobre los límites y uso adecuado de la información.'],
-  ['Valor', 'Procesos mejorados, decisiones habilitadas, capabilities instaladas y casos preparados para Build & Embed.'],
+  ['Valor', 'Procesos mejorados, decisiones habilitadas, capacidades instaladas y casos preparados para Build & Embed.'],
 ];
 
 export const GENERAL_DELIVERABLES = [
@@ -381,7 +381,7 @@ export const FAQ = [
   ['¿Necesitamos compartir información confidencial?', 'No necesariamente. La empresa puede trabajar con información real, anonimizada o simulada. El tratamiento se define durante la sesión de entendimiento.'],
   ['¿Es un curso de prompts?', 'No. El prompting es una capacidad habilitadora. El objetivo es construir assistants, agents, workflows y entregables que mejoren el trabajo del área.'],
   ['¿Los participantes necesitan conocimientos técnicos?', 'No. La malla se adapta al nivel de los participantes. Los programas funcionales están diseñados para equipos de negocio.'],
-  ['¿BECOME automatiza los procesos durante la capacitación?', 'El programa estándar se concentra en capability building y configuración dentro de las herramientas autorizadas. Integraciones y desarrollos pueden abordarse después mediante Build & Embed.'],
+  ['¿BECOME automatiza los procesos durante la capacitación?', 'El programa estándar se concentra en construcción de capacidades y configuración dentro de las herramientas autorizadas. Integraciones y desarrollos pueden abordarse después mediante Build & Embed.'],
   ['¿Cuántas personas pueden participar?', 'El tamaño del grupo se define según el nivel de acompañamiento requerido. Se recomiendan cohortes pequeñas cuando cada participante debe construir y validar sus propios workflows.'],
   ['¿Puede crearse un programa para un área que no aparece en el menú?', 'Sí. El catálogo muestra las rutas más frecuentes, pero BECOME puede diseñar programas para cualquier área, rol, industria o proceso específico.'],
   ['¿Qué queda después de la capacitación?', 'Capacidades aplicables, una biblioteca reutilizable, workflows documentados, criterios de validación y recomendaciones de adopción.'],

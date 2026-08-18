@@ -78,7 +78,7 @@ export const USE_CASES = [
     slug: 'construir-agent-o-copilot',
     icon: 'agents',
     q: '¿Quieres construir un agent o copilot?',
-    line: 'Convierte una oportunidad priorizada en una capability segura, adoptada y medible.',
+    line: 'Convierte una oportunidad priorizada en una capacidad segura, adoptada y medible.',
   },
   {
     slug: 'experiencia-ai-native',
@@ -90,7 +90,7 @@ export const USE_CASES = [
     slug: 'demostrar-valor-en-90-dias',
     icon: 'time',
     q: '¿Necesitas demostrar valor en 90 días?',
-    line: 'Delimita una capability viable, implementa en entorno real y mide outcomes.',
+    line: 'Delimita una capacidad viable, implementa en entorno real y mide outcomes.',
   },
 ].map((c) => ({ ...c, to: `/es/casos-de-uso/${c.slug}` }));
 

@@ -9,29 +9,29 @@ import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, C
 /**
  * Build & Embed Sprint (§9 del documento).
  *
- * La página entera gira alrededor de una distinción: prototype no es capability.
+ * La página entera gira alrededor de una distinción: prototype no es capacidad.
  * Por eso adopción, controles y medición aparecen antes que la construcción —
  * son lo que separa una demo de algo que sigue funcionando en marzo.
  */
 
 const BUILDABLE = [
   ['flow', 'AI-native workflow', 'Un proceso end-to-end rediseñado con personas y agents trabajando juntos.'],
-  ['agents', 'Agent o copilot', 'Una capability con límites de autonomía, integración y accountability explícitos.'],
+  ['agents', 'Agent o copilot', 'Una capacidad con límites de autonomía, integración y accountability explícitos.'],
   ['decision', 'Decision system', 'El flujo de información y la decisión de alto valor que lo consume.'],
   ['product', 'AI-native product', 'Una experiencia nueva para clientes o colaboradores, con su operación detrás.'],
 ];
 
 const STAGES = [
   ['O', 'Operating Model Design', 'Valida el blueprint: roles, agents, datos, decisiones, excepciones y controles.', 'Agentic Workflow Blueprint validado.'],
-  ['M', 'Make & Embed', 'Construye, integra y lleva a un entorno real con adopción acompañada.', 'Capability funcionando con ownership.'],
+  ['M', 'Make & Embed', 'Construye, integra y lleva a un entorno real con adopción acompañada.', 'Capacidad funcionando con ownership.'],
   ['E', 'Expand & Evolve', 'Mide, gobierna, transfiere y decide si iterar, integrar, escalar o detener.', 'Scorecard y scale decision.'],
 ];
 
 const DELIVERABLES = [
-  'Workflow y capability blueprint validados.',
+  'Workflow y capacidad blueprint validados.',
   'Agent, product o decision system funcionando.',
   'Human-in-the-loop model y controles operativos.',
-  'Plan de adopción y capability transfer.',
+  'Plan de adopción y transferencia de capacidades.',
   'Scorecard de performance, riesgo y valor.',
 ];
 
@@ -69,7 +69,7 @@ export default function BuildEmbed() {
 
       <Section band="light">
         <Kicker>El problema</Kicker>
-        <Headline>Prototypes que nunca se convierten en operating capability.</Headline>
+        <Headline>Prototypes que nunca se convierten en capacidad operativa.</Headline>
         <Lead>
           El piloto funciona en la demo y desaparece en la operación. No falla el
           modelo: falla que se construyó al lado del trabajo real en vez de dentro.
@@ -82,7 +82,7 @@ export default function BuildEmbed() {
 
       <Section band="dark">
         <Kicker dark>Qué puede construirse</Kicker>
-        <Headline dark>Cuatro formas de capability, un mismo estándar.</Headline>
+        <Headline dark>Cuatro formas de capacidad, un mismo estándar.</Headline>
         <Cols min="250px">
           {BUILDABLE.map(([icon, name, line]) => (
             <Card dark key={name}>
@@ -150,11 +150,11 @@ export default function BuildEmbed() {
       <Section band="sunken">
         <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1.2fr)', gap: 'var(--space-9)' }}>
           <Reveal as="div">
-            <Kicker>Adopción y capability transfer</Kicker>
-            <Headline>El trabajo termina cuando la capability pertenece a la empresa.</Headline>
+            <Kicker>Adopción y transferencia de capacidades</Kicker>
+            <Headline>El trabajo termina cuando la capacidad pertenece a la empresa.</Headline>
             <Body>
               La transferencia no es una sesión de formación al final: el equipo que
-              va a operar la capability participa en su diseño y en su construcción.
+              va a operar la capacidad participa en su diseño y en su construcción.
               Es la diferencia entre heredar algo y recibirlo.
             </Body>
             <TextCTA to="/es/nosotros">Cómo trabajamos</TextCTA>
@@ -180,13 +180,13 @@ export default function BuildEmbed() {
           ))}
         </ul>
         <Reveal as="p" style={{ margin: 'var(--space-10) 0 0', font: 'var(--type-lead)', color: 'var(--white)', maxWidth: '54ch' }}>
-          El sprint termina con una capability funcionando en un entorno real, con
+          El sprint termina con una capacidad funcionando en un entorno real, con
           ownership, controles y medición frente a business outcomes.
         </Reveal>
       </Section>
 
       <Section band="darker" pad="var(--space-13)">
-        <Kicker dark>Pasa del blueprint a una capability incorporada</Kicker>
+        <Kicker dark>Pasa del blueprint a una capacidad incorporada</Kicker>
         <Headline dark>Trae un workflow, decisión o product opportunity prioritario.</Headline>
         <Lead dark>Definiremos el build path correcto — o si todavía falta un paso antes.</Lead>
         <div style={{ marginTop: 'var(--space-8)' }}>

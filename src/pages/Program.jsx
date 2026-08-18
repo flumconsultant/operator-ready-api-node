@@ -97,13 +97,13 @@ export default function Program() {
       {/* La ruta */}
       <Section band={p.processes ? 'sunken' : 'light'}>
         <Kicker>Ruta recomendada</Kicker>
-        <Headline>Seis sesiones. Seis capabilities que quedan instaladas.</Headline>
+        <Headline>Seis sesiones. Seis capacidades que quedan instaladas.</Headline>
         <Body style={{ marginTop: 'var(--space-6)', color: 'var(--text-body)' }}>
           <strong>{PERSONALIZATION_NOTE}</strong>
         </Body>
 
         <div style={{ marginTop: 'var(--space-10)' }}>
-          {p.route.map(([topic, capability], i) => (
+          {p.route.map(([topic, capacidad], i) => (
             <Reveal as="div" key={topic} data-cols className="row-hit"
               style={{
                 display: 'grid', gridTemplateColumns: '64px minmax(0,1fr) minmax(0,1.2fr)',
@@ -118,7 +118,7 @@ export default function Program() {
                 <span className="sr-only">{`Sesión ${i + 1}: `}</span>{topic}
               </h3>
               <p style={{ margin: 0, font: 'var(--type-body)', color: 'var(--text-muted)', maxWidth: '62ch' }}>
-                <span style={{ color: 'var(--text-accent)' }}>Queda instalado: </span>{capability}
+                <span style={{ color: 'var(--text-accent)' }}>Queda instalado: </span>{capacidad}
               </p>
             </Reveal>
           ))}
