@@ -86,7 +86,7 @@ export default function Servicios() {
         </div>
       </Section>
 
-      <Banner src="/images/47-global-ops.webp" alt="" height="clamp(220px, 30vw, 340px)">
+      <Banner variant="corridor" seed={67} height="clamp(280px, 36vw, 440px)">
         <Reveal as="p" style={{ margin: 0, maxWidth: '26ch', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h1)', lineHeight: 'var(--leading-heading)', letterSpacing: 'var(--track-display)', color: 'var(--white)' }}>
           Un eje. Tres formas de entrar en él.
         </Reveal>

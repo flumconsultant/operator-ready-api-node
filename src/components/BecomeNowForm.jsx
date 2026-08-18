@@ -42,6 +42,9 @@ export default function BecomeNowForm() {
   return (
     <ConversationalForm
       formName="Diseñemos la capacitación alrededor de tu empresa"
+      title="Cuéntanos cómo trabaja tu equipo hoy."
+      lead="Diez preguntas, una cada vez, a pantalla completa. Con eso preparamos la sesión de entendimiento."
+      launchLabel="Diseña tu programa"
       fields={FIELDS}
       submitLabel="Solicita una sesión de entendimiento"
       confirmation="Gracias. Revisaremos el contexto y coordinaremos una primera conversación para entender el área antes de diseñar la propuesta."

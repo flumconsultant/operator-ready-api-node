@@ -143,7 +143,7 @@ export default function SiteHeader() {
       <header
         data-header
         style={{
-          position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
+          position: 'fixed', top: 0, left: 0, right: 0, zIndex: 'var(--z-header)',
           background: 'rgba(8,11,30,.94)', backdropFilter: 'blur(16px)',
           borderBottom: '1px solid var(--border-hairline-dark)',
           boxShadow: '0 18px 44px -34px rgba(0,0,0,.9)',
@@ -367,7 +367,7 @@ export default function SiteHeader() {
       {open && (
         <div
           style={{
-            position: 'fixed', inset: 0, zIndex: 60, background: 'var(--navy-950)',
+            position: 'fixed', inset: 0, zIndex: 'var(--z-nav-overlay)', background: 'var(--navy-950)',
             padding: 'var(--space-6) var(--gutter-page)', display: 'flex', flexDirection: 'column', overflow: 'auto',
           }}
         >

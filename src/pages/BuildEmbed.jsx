@@ -94,7 +94,7 @@ export default function BuildEmbed() {
         </Cols>
       </Section>
 
-      <Banner src="/images/42-future-forward.webp" alt="" height="clamp(200px, 28vw, 320px)">
+      <Banner variant="streams" seed={31} height="clamp(260px, 32vw, 380px)">
         <Reveal as="p" style={{ margin: 0, maxWidth: '26ch', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h1)', lineHeight: 'var(--leading-heading)', letterSpacing: 'var(--track-display)', color: 'var(--white)' }}>
           Del blueprint a la operación.
         </Reveal>

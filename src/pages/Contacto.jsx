@@ -71,6 +71,9 @@ export default function Contacto() {
       <Section band="light">
         <ConversationalForm
           formName="Inicia una conversación con BECOME"
+          title="Cuéntanoslo en una conversación, no en un formulario."
+          lead="Siete preguntas, una cada vez, a pantalla completa. Sin campos de procurement ni casillas premarcadas."
+          launchLabel="Empezar la conversación"
           fields={FIELDS}
           submitLabel="Iniciemos la conversación"
           confirmation="Gracias. Revisaremos el contexto y responderemos con la conversación adecuada, no con una secuencia comercial automatizada."
@@ -101,7 +104,7 @@ export default function Contacto() {
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, font: 'var(--type-body)', color: 'var(--text-muted)' }}>
             <Ico name="chat" size={20} style={{ color: 'var(--text-accent)' }} />
             O escríbenos a{' '}
-            <a href="mailto:hello@become.company" style={{ color: 'var(--text-accent)' }}>hello@become.company</a>
+            <a href="mailto:hello@meetbecome.com" style={{ color: 'var(--text-accent)' }}>hello@meetbecome.com</a>
           </span>
         </div>
       </Section>

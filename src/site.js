@@ -138,7 +138,7 @@ export const FOOTER = [
     title: 'Contacto',
     links: [
       { to: '/es/contacto', label: 'Contáctanos' },
-      { href: 'mailto:hello@become.company', label: 'hello@become.company' },
+      { href: 'mailto:hello@meetbecome.com', label: 'hello@meetbecome.com' },
     ],
   },
   {

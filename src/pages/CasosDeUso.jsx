@@ -47,7 +47,7 @@ export default function CasosDeUso() {
         </div>
       </Section>
 
-      <Banner src="/images/19-tech-workspace.webp" alt="" height="clamp(200px, 28vw, 320px)">
+      <Banner variant="dust" seed={47} height="clamp(260px, 32vw, 380px)">
         <Reveal as="p" style={{ margin: 0, maxWidth: '24ch', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h1)', lineHeight: 'var(--leading-heading)', letterSpacing: 'var(--track-display)', color: 'var(--white)' }}>
           Del síntoma a la decisión.
         </Reveal>

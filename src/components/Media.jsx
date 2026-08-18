@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import Field from './Field.jsx';
 
 /**
  * Imagen de marca.
@@ -95,44 +96,44 @@ export function Figure({
 }
 
 /**
- * Imagen ancha a sangre dentro de la sección. Sirve de respiro entre dos bloques
- * densos: es lo que evita que la home se lea como un documento.
+ * Banda a sangre entre dos secciones.
+ *
+ * Antes era una fotografía de stock estirada al ancho del viewport; ahora es un
+ * campo generado (ver Field.jsx), que no tiene resolución nativa que superar y
+ * además se atraviesa con el scroll. El titular encima entra desde el fondo
+ * mientras la banda cruza la pantalla: no es un cartel colocado sobre una
+ * imagen, es lo que hay al final del recorrido.
  */
-export function Banner({ src, alt, children, height = 'clamp(260px, 42vw, 460px)' }) {
+export function Banner({ variant = 'plexus', seed = 7, children, height = 'clamp(300px, 46vw, 520px)' }) {
   const reduced = useReducedMotion();
   const ref = React.useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const y = useTransform(scrollYProgress, [0, 1], [RANGE * 1.6, -RANGE * 1.6]);
+  /* El titular llega desde lejos y se va de largo: refuerza el eje Z de la
+     banda en vez de flotar por encima de ella. */
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.86, 1, 1.12]);
+  const y = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const opacity = useTransform(scrollYProgress, [0, 0.24, 0.76, 1], [0, 1, 1, 0]);
 
   return (
     <div ref={ref} style={{ position: 'relative', height, overflow: 'hidden', background: 'var(--navy-950)' }}>
-      <motion.img
-        src={src}
-        alt={alt}
-        loading="lazy"
-        decoding="async"
-        style={{
-          position: 'absolute',
-          inset: `-${RANGE * 1.6}px 0`,
-          width: '100%',
-          height: `calc(100% + ${RANGE * 3.2}px)`,
-          objectFit: 'cover',
-          y: reduced ? 0 : y,
-        }}
-      />
+      <Field variant={variant} seed={seed} />
+      {/* Suelo de contraste bajo el texto: el campo es luminoso en el centro */}
       <span
         aria-hidden="true"
-        style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(5,7,15,.72) 0%, rgba(5,7,15,.52) 45%, rgba(5,7,15,.86) 100%)' }}
+        style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(5,7,15,.9) 0%, rgba(5,7,15,.45) 46%, rgba(5,7,15,.1) 100%)' }}
       />
       {children && (
-        <div
-          style={{
-            position: 'relative', height: '100%',
-            display: 'flex', alignItems: 'center',
-            padding: '0 var(--gutter-page)',
-          }}
-        >
-          <div style={{ maxWidth: 'var(--maxw-content)', margin: '0 auto', width: '100%' }}>{children}</div>
+        <div style={{ position: 'relative', height: '100%', display: 'flex', alignItems: 'center', padding: '0 var(--gutter-page)' }}>
+          <motion.div
+            style={{
+              maxWidth: 'var(--maxw-content)', margin: '0 auto', width: '100%',
+              scale: reduced ? 1 : scale,
+              y: reduced ? 0 : y,
+              opacity: reduced ? 1 : opacity,
+            }}
+          >
+            {children}
+          </motion.div>
         </div>
       )}
     </div>

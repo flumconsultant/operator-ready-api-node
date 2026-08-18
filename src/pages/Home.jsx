@@ -177,7 +177,7 @@ export default function Home() {
 
       {/* Respiro visual entre dos bloques densos: la imagen ancha lleva el mismo
           parallax que el nodo, de modo que el plano fotográfico no queda quieto. */}
-      <Banner src="/images/01-neural-network.webp" alt="">
+      <Banner variant="plexus" seed={11}>
         <Reveal
           as="p"
           style={{
@@ -486,7 +486,7 @@ export default function Home() {
         <p style={{ margin: 'var(--space-7) 0 0', display: 'inline-flex', alignItems: 'center', gap: 10, font: 'var(--type-body)', color: 'var(--slate-200)' }}>
           <Ico name="chat" size={20} style={{ color: 'var(--electric-green)' }} />
           O escríbenos a{' '}
-          <a href="mailto:hello@become.company" style={{ color: 'var(--electric-green)' }}>hello@become.company</a>
+          <a href="mailto:hello@meetbecome.com" style={{ color: 'var(--electric-green)' }}>hello@meetbecome.com</a>
         </p>
       </Section>
 

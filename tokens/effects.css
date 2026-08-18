@@ -25,4 +25,12 @@
 --grid-step:48px; /* @kind spacing */
 --grid-overlay:repeating-linear-gradient(90deg,var(--grid-line) 0 1px,transparent 1px var(--grid-step)); /* @kind color */
 --grid-overlay-both:repeating-linear-gradient(90deg,var(--grid-line) 0 1px,transparent 1px var(--grid-step)),repeating-linear-gradient(180deg,var(--grid-line) 0 1px,transparent 1px var(--grid-step)); /* @kind color */
+
+/* Escala de apilamiento. Existe porque los tres elementos fijos del sitio
+   —cabecera, menú móvil y formulario a pantalla completa— tenían su z-index
+   escrito a mano en tres archivos distintos, y el orden entre ellos solo se
+   podía averiguar comparándolos. */
+--z-header:50; /* @kind number */
+--z-nav-overlay:60; /* @kind number */
+--z-modal:100; /* @kind number */
 }

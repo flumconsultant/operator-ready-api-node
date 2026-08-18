@@ -59,7 +59,7 @@ export default function Insights() {
             peor que ninguna.
           </Body>
           <div style={{ marginTop: 'var(--space-8)' }}>
-            <PrimaryCTA href="mailto:hello@become.company">Avísame cuando publiquéis</PrimaryCTA>
+            <PrimaryCTA href="mailto:hello@meetbecome.com">Avísame cuando publiquéis</PrimaryCTA>
           </div>
         </div>
       </Section>

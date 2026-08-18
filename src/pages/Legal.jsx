@@ -60,7 +60,7 @@ export default function Legal({ page }) {
             escrito.
           </Body>
           <div style={{ marginTop: 'var(--space-8)' }}>
-            <PrimaryCTA href="mailto:hello@become.company">Escríbenos</PrimaryCTA>
+            <PrimaryCTA href="mailto:hello@meetbecome.com">Escríbenos</PrimaryCTA>
           </div>
         </div>
       </Section>

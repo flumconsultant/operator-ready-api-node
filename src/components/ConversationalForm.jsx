@@ -1,6 +1,8 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Check, ArrowRight, ArrowLeft, PaperPlaneTilt } from '@phosphor-icons/react';
+import { Check, ArrowRight, ArrowLeft, PaperPlaneTilt, X, Clock } from '@phosphor-icons/react';
+import BackdropField from './Field.jsx';
 
 /**
  * Formulario conversacional con el recorrido a la vista.
@@ -18,6 +20,20 @@ import { Check, ArrowRight, ArrowLeft, PaperPlaneTilt } from '@phosphor-icons/re
  *
  * El carril no es decorativo: cada fila contestada es un botón que devuelve a
  * esa pregunta. Corregir un dato no obliga a retroceder paso a paso.
+ *
+ * ---- Por qué ocupa toda la pantalla ----
+ *
+ * Un formulario metido en una columna de una página larga compite con todo lo
+ * que tiene alrededor: el menú, el pie, la sección siguiente asomando. Cada uno
+ * de esos elementos es una salida. Al abrirse a pantalla completa desaparecen
+ * todas menos dos —responder o cerrar— y la conversación pasa a ser lo único
+ * que ocurre. El fondo es el mismo campo de partículas del resto del sitio, así
+ * que no se siente como una ventana modal ajena sino como entrar dentro.
+ *
+ * Lo que una capa a pantalla completa obliga a hacer bien, y aquí se hace:
+ * Esc cierra, el foco queda atrapado dentro mientras está abierta y vuelve al
+ * botón que la abrió al salir, el fondo no hace scroll, y si ya hay respuestas
+ * escritas se pide confirmación antes de descartar.
  *
  * ---- Lo que este patrón sigue haciendo mal, y cómo se compensa ----
  *
@@ -47,12 +63,14 @@ const validate = (f, v) => {
   return null;
 };
 
-export default function ConversationalForm({
+function Conversation({
   fields,
   submitLabel,
   confirmation,
   dark = true,
   formName,
+  bare = false,
+  onDirty,
 }) {
   const reduced = useReducedMotion();
   const [mode, setMode] = React.useState('steps');
@@ -85,12 +103,20 @@ export default function ConversationalForm({
 
   React.useEffect(() => {
     if (mode !== 'steps' || isReview) return;
-    /* El foco va al campo, no al contenedor: si no, hay que tabular en cada paso */
-    const id = setTimeout(() => inputRef.current?.focus(), reduced ? 0 : 260);
-    return () => clearTimeout(id);
+    /* El foco va al campo, no al contenedor: si no, hay que tabular en cada
+       paso. Va en el fotograma siguiente y no tras la animación: con 260 ms de
+       espera, quien escribe rápido y encadena con Enter perdía las primeras
+       letras de la respuesta siguiente. */
+    const id = requestAnimationFrame(() => inputRef.current?.focus());
+    return () => cancelAnimationFrame(id);
   }, [step, mode, isReview, reduced]);
 
   const set = (name, v) => setValues((p) => ({ ...p, [name]: v }));
+
+  /* El escenario necesita saber si hay respuestas para avisar antes de cerrar */
+  React.useEffect(() => {
+    onDirty?.(fields.some((f) => f.default === undefined && isFilled(f, values[f.name])));
+  }, [values, fields, onDirty]);
 
   const next = () => {
     const err = validate(current, values[current.name]);
@@ -135,8 +161,8 @@ export default function ConversationalForm({
         <p style={{ margin: 'var(--space-6) 0 0', font: 'var(--type-body)', color: dark ? 'var(--slate-300)' : 'var(--text-muted)' }}>
           Mientras el sitio está en construcción este formulario no está conectado a
           ningún destino, así que tu mensaje no ha salido del navegador. Escríbenos a{' '}
-          <a href="mailto:hello@become.company" style={{ color: dark ? 'var(--electric-green)' : 'var(--text-accent)' }}>
-            hello@become.company
+          <a href="mailto:hello@meetbecome.com" style={{ color: dark ? 'var(--electric-green)' : 'var(--text-accent)' }}>
+            hello@meetbecome.com
           </a>{' '}
           y lo leemos hoy.
         </p>
@@ -144,12 +170,12 @@ export default function ConversationalForm({
     );
   }
 
-  const c = colors(dark);
+  const c = colors(dark, bare);
 
   /* Sobre navy el formulario cae encima del nodo, y un campo vacío sobre
      partículas en movimiento es ilegible. Se le da suelo propio: no es una
      tarjeta decorativa, es lo que separa "escribir aquí" de "fondo". */
-  const shell = dark
+  const shell = bare ? null : dark
     ? {
         background: 'rgba(5,7,15,.62)',
         backdropFilter: 'blur(3px)',
@@ -214,7 +240,40 @@ export default function ConversationalForm({
             />
           </div>
 
-          <ol style={{ listStyle: 'none', margin: 'var(--space-6) 0 0', padding: 0, display: 'grid' }}>
+          {/* Puntos: el recorrido comprimido para móvil, donde la lista entera
+              empujaba la pregunta fuera de la primera pantalla — justo el dato
+              que el carril existe para dar. */}
+          <ol data-rail-dots style={{ listStyle: 'none', margin: 'var(--space-5) 0 0', padding: 0, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+            {fields.map((f, i) => {
+              const done = isFilled(f, values[f.name]);
+              const here = i === step;
+              const open = i <= reached;
+              return (
+                <li key={f.name}>
+                  <button
+                    type="button"
+                    onClick={() => jump(i)}
+                    disabled={!open}
+                    aria-label={`Pregunta ${i + 1}: ${f.short || f.label}${done ? ' (respondida)' : ''}`}
+                    aria-current={here ? 'step' : undefined}
+                    style={{
+                      width: 34, height: 34, minHeight: 34, padding: 0, borderRadius: '50%',
+                      display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                      border: `1px solid ${done || here ? 'var(--electric-green)' : c.border}`,
+                      background: done ? 'var(--electric-green)' : here ? 'rgba(0,255,136,.14)' : 'transparent',
+                      color: done ? 'var(--deep-navy)' : here ? 'var(--electric-green)' : c.faint,
+                      font: 'var(--type-mono)', fontSize: 'var(--text-micro)', lineHeight: 1,
+                      cursor: open ? 'pointer' : 'default', opacity: open ? 1 : 0.5,
+                    }}
+                  >
+                    {done ? <Check size={12} weight="bold" aria-hidden="true" /> : i + 1}
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
+
+          <ol data-rail-list style={{ listStyle: 'none', margin: 'var(--space-6) 0 0', padding: 0, display: 'grid' }}>
             {fields.map((f, i) => {
               const done = isFilled(f, values[f.name]);
               const here = i === step;
@@ -370,8 +429,8 @@ export default function ConversationalForm({
           <p style={{ ...c.help, marginTop: 'var(--space-7)', maxWidth: '54ch' }}>
             Tarda menos de dos minutos. Usaremos lo que escribas solo para preparar
             la respuesta; no te suscribimos a nada. ¿Prefieres escribir directamente?{' '}
-            <a href="mailto:hello@become.company" style={{ color: dark ? 'var(--electric-green)' : 'var(--text-accent)' }}>
-              hello@become.company
+            <a href="mailto:hello@meetbecome.com" style={{ color: dark ? 'var(--electric-green)' : 'var(--text-accent)' }}>
+              hello@meetbecome.com
             </a>
           </p>
         </div>
@@ -485,7 +544,7 @@ function Field({ f, value, onChange, onEnter, inputRef, c, big }) {
 
 /* Los formularios viven sobre navy y sobre claro; los colores salen de aquí
    en vez de duplicar el componente. */
-function colors(dark) {
+function colors(dark, stage) {
   const text = dark ? 'var(--white)' : 'var(--text-heading)';
   const faint = dark ? 'var(--slate-400)' : 'var(--text-faint)';
   const border = dark ? 'var(--border-strong-dark)' : 'var(--border-strong)';
@@ -498,7 +557,7 @@ function colors(dark) {
     },
     question: {
       margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)',
-      fontSize: 'var(--text-h2)', lineHeight: 'var(--leading-heading)',
+      fontSize: stage ? 'var(--text-h1)' : 'var(--text-h2)', lineHeight: 'var(--leading-heading)',
       letterSpacing: 'var(--track-display)', color: text, maxWidth: '22ch',
     },
     help: {
@@ -550,4 +609,162 @@ function colors(dark) {
       color: 'var(--electric-green)',
     },
   };
+}
+
+/* ---------------- el escenario a pantalla completa ---------------- */
+
+/**
+ * La invitación: lo único que ve la página hasta que alguien decide entrar.
+ *
+ * Dice cuánto cuesta (dos minutos, siete preguntas) antes de pedir el primer
+ * dato. Un formulario que no declara su longitud la declara igualmente — a
+ * mitad de camino, y para entonces ya es un motivo para abandonar.
+ */
+function Launcher({ dark, title, lead, count, launchLabel, onOpen, btnRef }) {
+  const c = colors(dark);
+  return (
+    <div style={{ maxWidth: '46ch' }}>
+      <h2 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h1)', lineHeight: 'var(--leading-heading)', letterSpacing: 'var(--track-display)', color: c.text }}>
+        {title}
+      </h2>
+      {lead && <p style={{ margin: 'var(--space-6) 0 0', font: 'var(--type-lead)', color: dark ? 'var(--slate-100)' : 'var(--text-body)' }}>{lead}</p>}
+
+      <p style={{ margin: 'var(--space-7) 0 0', display: 'inline-flex', alignItems: 'center', gap: 10, font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: c.faint }}>
+        <Clock size={18} aria-hidden="true" />
+        {count} preguntas · menos de dos minutos · sin compromiso
+      </p>
+
+      <div style={{ marginTop: 'var(--space-7)' }}>
+        <button ref={btnRef} type="button" onClick={onOpen} className="cta-primary" style={{ ...c.submit, gap: 10 }}>
+          {launchLabel} <ArrowRight size={16} weight="bold" aria-hidden="true" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default function ConversationalForm({
+  fields, submitLabel, confirmation, dark = true, formName,
+  title, lead, launchLabel = 'Empezar',
+}) {
+  const reduced = useReducedMotion();
+  const [open, setOpen] = React.useState(false);
+  const [dirty, setDirty] = React.useState(false);
+  const btnRef = React.useRef(null);
+  const stageRef = React.useRef(null);
+
+  const close = React.useCallback(() => {
+    if (dirty && !window.confirm('Tienes respuestas sin enviar. ¿Cerrar de todas formas?')) return;
+    setOpen(false);
+  }, [dirty]);
+
+  /* Mientras el escenario está abierto: sin scroll detrás, Esc cierra y el
+     tabulador no se escapa a la página que hay debajo. */
+  React.useEffect(() => {
+    if (!open) { btnRef.current?.focus(); return undefined; }
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const onKey = (e) => {
+      if (e.key === 'Escape') { e.preventDefault(); close(); return; }
+      if (e.key !== 'Tab') return;
+      const stage = stageRef.current;
+      if (!stage) return;
+      const f = stage.querySelectorAll('a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      if (!f.length) return;
+      const first = f[0];
+      const last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => { document.body.style.overflow = prev; document.removeEventListener('keydown', onKey); };
+  }, [open, close]);
+
+  const launcher = (
+    <Launcher
+      dark={dark}
+      title={title}
+      lead={lead}
+      count={fields.length}
+      launchLabel={launchLabel}
+      onOpen={() => setOpen(true)}
+      btnRef={btnRef}
+    />
+  );
+
+  if (!open) return launcher;
+
+  const stage = (
+    <motion.div
+      ref={stageRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label={formName}
+      initial={reduced ? false : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.28, ease: EASE }}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 'var(--z-modal)',
+        background: 'var(--navy-950)',
+        display: 'grid', gridTemplateRows: 'auto minmax(0, 1fr)',
+      }}
+    >
+      {/* El mismo campo del resto del sitio: entrar en la conversación no es
+          salir de la marca, es acercarse a ella. */}
+      <BackdropField variant="dust" seed={5} />
+      <span aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'radial-gradient(120% 80% at 50% 40%, rgba(5,7,15,.5) 0%, rgba(5,7,15,.92) 70%)' }} />
+
+      <header
+        style={{
+          position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          gap: 'var(--space-6)', padding: 'var(--space-5) var(--gutter-page)',
+          borderBottom: '1px solid var(--border-hairline-dark)',
+        }}
+      >
+        <img src="/logo/wordmark-white.webp" alt="BECOME" width="104" height="18" style={{ height: 18, width: 'auto', display: 'block' }} />
+        <button
+          type="button"
+          onClick={close}
+          aria-label="Cerrar el formulario"
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8, minHeight: 44, padding: '0 var(--space-5)',
+            background: 'transparent', border: '1px solid var(--border-strong-dark)', borderRadius: 'var(--radius-pill)',
+            color: 'var(--white)', cursor: 'pointer',
+            font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase',
+          }}
+        >
+          <X size={16} weight="bold" aria-hidden="true" /> Cerrar
+        </button>
+      </header>
+
+      {/* Centrado vertical: una pregunta sola pegada al borde superior de una
+          pantalla vacía se lee como un formulario que se quedó a medio cargar. */}
+      <div style={{ position: 'relative', overflowY: 'auto', display: 'grid', alignContent: 'center', padding: 'var(--space-9) var(--gutter-page) var(--space-10)' }}>
+        <motion.div
+          initial={reduced ? false : { opacity: 0, y: 24, scale: 0.985 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.42, ease: EASE, delay: 0.06 }}
+          style={{ maxWidth: 'var(--maxw-content)', margin: '0 auto' }}
+        >
+          <Conversation
+            fields={fields}
+            submitLabel={submitLabel}
+            confirmation={confirmation}
+            dark
+            formName={formName}
+            bare
+            onDirty={setDirty}
+          />
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+
+  return (
+    <>
+      {launcher}
+      {createPortal(stage, document.body)}
+    </>
+  );
 }

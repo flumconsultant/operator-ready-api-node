@@ -274,3 +274,14 @@ label {
 @media (min-width: 901px) {
   [data-form-rail] { position: sticky; top: 96px; }
 }
+
+/* Carril del formulario a pantalla completa: lista completa en escritorio,
+   puntos en móvil. La lista de diez filas ocupaba la primera pantalla entera
+   del móvil y dejaba la pregunta debajo del pliegue — que es exactamente lo
+   contrario de para lo que existe el carril. */
+@media (max-width: 900px) {
+  [data-rail-list] { display: none !important; }
+}
+@media (min-width: 901px) {
+  [data-rail-dots] { display: none !important; }
+}

@@ -102,7 +102,7 @@ export default function Discovery() {
         </Cols>
       </Section>
 
-      <Banner src="/images/46-strategy-session.webp" alt="" height="clamp(200px, 28vw, 320px)">
+      <Banner variant="corridor" seed={53} height="clamp(280px, 36vw, 440px)">
         <Reveal as="p" style={{ margin: 0, maxWidth: '24ch', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h1)', lineHeight: 'var(--leading-heading)', letterSpacing: 'var(--track-display)', color: 'var(--white)' }}>
           Primero la dirección. Después la inversión.
         </Reveal>

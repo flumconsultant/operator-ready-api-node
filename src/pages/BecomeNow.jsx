@@ -105,7 +105,7 @@ export default function BecomeNow() {
       </Section>
 
       {/* Respiro visual antes del bloque más largo de la página */}
-      <Banner src="/images/17-team-collab.webp" alt="" height="clamp(220px, 32vw, 360px)">
+      <Banner variant="circuit" seed={23} height="clamp(260px, 34vw, 400px)">
         <Reveal as="p" style={{ margin: 0, maxWidth: '24ch', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h1)', lineHeight: 'var(--leading-heading)', letterSpacing: 'var(--track-display)', color: 'var(--white)' }}>
           La capacitación entra al proceso real.
         </Reveal>
