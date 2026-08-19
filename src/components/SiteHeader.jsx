@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import * as es from '../site.js';
 import * as en from '../site.en.js';
+import wordmark from '../logo/wordmark-white.webp';
 
 /**
  * Cabecera del sitio en español.
@@ -132,7 +133,7 @@ export default function SiteHeader() {
 
   const Logo = ({ size = 23 }) => (
     <Link to={t.HOME} aria-label={lang === 'en' ? 'BECOME — Home' : 'BECOME — Inicio'} style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44 }}>
-      <img src="/logo/wordmark-white.webp" alt="" width={Math.round((size * 768) / 145)} height={size} style={{ height: size, width: 'auto', display: 'block' }} />
+      <img src={wordmark} alt="" width={Math.round((size * 768) / 145)} height={size} style={{ height: size, width: 'auto', display: 'block' }} />
     </Link>
   );
 

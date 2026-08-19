@@ -94,7 +94,8 @@ jobs:
         # que el sitio entero se ha roto.
         run: |
           for f in dist/index.html dist/.htaccess dist/sitemap.xml dist/robots.txt \
-                   dist/llms.txt dist/api/contacto.php dist/api/config.php; do
+                   dist/llms.txt dist/assets/.htaccess \
+                   dist/api/contacto.php dist/api/config.php; do
             [ -s "$f" ] || { echo "Falta o está vacío: $f"; exit 1; }
           done
           echo "dist/ listo — $(du -sh dist | cut -f1)"
@@ -286,6 +287,33 @@ jobs:
             exit 1
           fi
           echo "El sitio publicado es esta versión."
+
+          # ── Lo que el servidor hace con las cabeceras ──
+          #
+          # El bundle lleva hash en el nombre, así que comprobar que cambió
+          # solo prueba que el HTML es nuevo. Lo que NO se veía es qué hace el
+          # servidor con lo demás: durante días sirvió el logotipo viejo y unas
+          # caducidades de caché que ya no estaban en el .htaccess, porque las
+          # respuestas venían de una caché intermedia. Desde fuera el
+          # despliegue estaba en verde y la auditoría seguía quejándose de algo
+          # ya arreglado.
+          #
+          # Estas dos comprobaciones no detienen el despliegue —no todo depende
+          # de nosotros— pero dejan el dato escrito en el registro en vez de
+          # obligar a deducirlo.
+          CAB=$(curl -sSI --max-time 20 "https://meetbecome.com/${LOCAL}" || true)
+          COMPRESION=$(printf '%s' "$CAB" | grep -i '^content-encoding:' | tr -d '\r' || true)
+          CACHE=$(printf '%s' "$CAB" | grep -i '^cache-control:' | tr -d '\r' || true)
+          echo "Cabeceras de ${LOCAL}:"
+          echo "  ${COMPRESION:-content-encoding: (ninguna)}"
+          echo "  ${CACHE:-cache-control: (ninguna)}"
+
+          if [ -z "$COMPRESION" ]; then
+            echo "::warning::El JavaScript se está sirviendo SIN COMPRIMIR. Son unos 330 KB en vez de 108, y en una conexión móvil eso es más de un segundo. Revisa que el bloque mod_deflate del .htaccess incluya text/javascript."
+          fi
+          if ! printf '%s' "$CACHE" | grep -qi 'immutable'; then
+            echo "::warning::Los archivos con hash no se están cacheando un año. Comprueba que dist/assets/.htaccess llegó al servidor y que mod_headers está activo."
+          fi
 
       - name: Comprobar que el correo del formulario funciona
         # Conecta y se autentica contra el servidor de correo, sin enviar

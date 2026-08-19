@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { m as motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Check, ArrowRight, ArrowLeft, PaperPlaneTilt, X, Clock } from '@phosphor-icons/react';
 import BackdropField from './Field.jsx';
+import wordmark from '../logo/wordmark-white.webp';
 
 /**
  * Formulario conversacional con el recorrido a la vista.
@@ -951,7 +952,7 @@ export default function ConversationalForm({
           }}
           style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44 }}
         >
-          <img src="/logo/wordmark-white.webp" alt="BECOME" width="95" height="18" style={{ height: 18, width: 'auto', display: 'block' }} />
+          <img src={wordmark} alt="BECOME" width="95" height="18" style={{ height: 18, width: 'auto', display: 'block' }} />
         </Link>
         <button
           type="button"

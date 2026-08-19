@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import * as es from '../site.js';
 import * as en from '../site.en.js';
+import wordmark from '../logo/wordmark-white.webp';
 
 /**
  * Pie del sitio. Bilingüe: detecta el idioma por el prefijo de la ruta
@@ -39,7 +40,7 @@ export default function SiteFooter() {
         >
           <div>
             <Link to={t.HOME} aria-label={lang === "en" ? "BECOME — Home" : "BECOME — Inicio"} style={{ display: 'inline-flex', minHeight: 44, alignItems: 'center' }}>
-              <img src="/logo/wordmark-white.webp" alt="" width={138} height={26} style={{ height: 26, width: 'auto', display: 'block' }} />
+              <img src={wordmark} alt="" width={138} height={26} style={{ height: 26, width: 'auto', display: 'block' }} />
             </Link>
             <p style={{ margin: 'var(--space-5) 0 0', font: 'var(--type-body)', color: 'var(--slate-300)', maxWidth: '30ch' }}>
               {lang === 'en'

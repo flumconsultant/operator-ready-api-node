@@ -419,6 +419,35 @@ Disallow: /_pages/
 Sitemap: ${SITE}/sitemap.xml
 `);
 
+/* ------------------------------------------- caché de lo que lleva hash */
+/*
+ * Todo lo que Vite emite en assets/ lleva un hash del contenido en el nombre:
+ * bundles, hoja de estilos, tipografías y el logotipo. Cambiar cualquiera de
+ * esos archivos cambia su nombre, así que la versión vieja nunca se sirve por
+ * error y la nueva no espera a que caduque nada.
+ *
+ * Eso es justo lo que faltaba. El logotipo vivía en una ruta fija con una
+ * semana de caché: al reducirlo de 57 KB a 25, el archivo nuevo estaba en el
+ * servidor pero durante días se siguió sirviendo el viejo, y la auditoría lo
+ * seguía viendo de 1920 px. Con hash, el problema no puede repetirse.
+ *
+ * Un .htaccess dentro de la carpeta se aplica solo a ella, que es la forma de
+ * decir «un año» por ubicación y no por extensión: fuera de assets/ hay
+ * archivos con el mismo tipo que sí conservan su nombre entre versiones.
+ */
+writeFileSync(join(ROOT, 'dist/assets/.htaccess'),
+`# Generado por scripts/seo.mjs. Todo lo de esta carpeta lleva un hash del
+# contenido en el nombre, así que puede cachearse un año sin revalidar: si el
+# archivo cambia, cambia su nombre y el navegador pide una URL distinta.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 year"
+</IfModule>
+<IfModule mod_headers.c>
+  Header set Cache-Control "public, max-age=31536000, immutable"
+</IfModule>
+`);
+
 /* El manifiesto era para esto y ya cumplió: describe la estructura interna del
    proyecto y no tiene por qué acabar publicado en el servidor. */
 rmSync(join(ROOT, 'dist/.vite'), { recursive: true, force: true });
