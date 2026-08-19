@@ -26,7 +26,7 @@
  * archivo no existiera la petición cae en la regla de la SPA como antes: esto
  * añade, no sustituye.
  */
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -136,6 +136,84 @@ function datosEstructurados(path, meta) {
 /* --------------------------------------------------------- el HTML por ruta */
 
 const plantilla = read('dist/index.html');
+
+/* --------------------------------------------- qué código pide cada ruta */
+/*
+ * El navegador descubre el código de una SPA en fila india: lee el HTML, pide
+ * index.js, y solo cuando termina de leerlo se entera de que necesita el trozo
+ * de la página; al leer ese, del trozo común. Con la red de un móvil eso son
+ * tres esperas seguidas antes de pintar nada, y es justo lo que PageSpeed
+ * llama «árbol de dependencia de red».
+ *
+ * Aquí se rompe esa fila: como cada ruta ya tiene su propio HTML, se declara
+ * en su cabecera —con modulepreload— exactamente qué trozos va a pedir. El
+ * navegador los descarga los tres a la vez, desde la primera línea del
+ * documento. No cambia nada de lo que se ejecuta: solo cuándo se pide.
+ *
+ * La lista sale del manifiesto que escribe Vite al compilar, no de una tabla a
+ * mano: los nombres llevan hash y cambian en cada compilación.
+ */
+const manifiesto = JSON.parse(read('dist/.vite/manifest.json'));
+
+/*
+ * La hoja de estilos, incrustada en vez de enlazada.
+ *
+ * Un <link rel="stylesheet"> bloquea el pintado: el navegador no dibuja nada
+ * hasta que ese archivo llega, y no puede ni pedirlo hasta haber leído el HTML.
+ * Es un viaje de ida y vuelta entero antes del primer píxel, y es lo que
+ * PageSpeed cuenta como «solicitudes que bloquean el renderizado».
+ *
+ * Son 20 KB, unos 5 comprimidos: cabe dentro del propio documento sin
+ * engordarlo de forma apreciable, y así llega con él. El archivo sigue
+ * existiendo en dist/ porque index.html —el que se sirve cuando una ruta no
+ * tiene cabecera propia— lo sigue enlazando.
+ */
+const cssEntrada = manifiesto['index.html'].css?.[0];
+const cssEnLinea = cssEntrada ? read(`dist/${cssEntrada}`) : '';
+
+/* nombre del componente → archivo fuente, leído de las líneas
+   `const Home = lazy(() => import('./pages/Home.jsx'))` de routes.jsx */
+const fuentePorComponente = Object.fromEntries(
+  [...read('src/routes.jsx').matchAll(/const\s+(\w+)\s*=\s*lazy\(\s*\(\)\s*=>\s*import\('\.\/([^']+)'\)/g)]
+    .map((m) => [m[1], `src/${m[2]}`]),
+);
+
+/* patrón de ruta → archivo fuente de su página */
+const fuentePorPatron = Object.fromEntries(
+  [...read('src/routes.jsx').matchAll(/\{\s*path:\s*'([^']+)',\s*element:\s*<(\w+)[^>]*\/>/g)]
+    .map(([, ruta, comp]) => [ruta, fuentePorComponente[comp]])
+    .filter(([, fuente]) => fuente),
+);
+
+/** El patrón que atiende una URL concreta: primero el literal, luego el que
+    tiene parámetro. `/es/casos-de-uso/x` lo sirve `/es/casos-de-uso/:slug`. */
+function patronDe(path) {
+  if (fuentePorPatron[path]) return path;
+  const partes = path.split('/');
+  return Object.keys(fuentePorPatron).find((patron) => {
+    const suyas = patron.split('/');
+    return suyas.length === partes.length
+      && suyas.every((p, i) => p.startsWith(':') || p === partes[i]);
+  });
+}
+
+/** Todos los trozos que hacen falta para pintar esa ruta, sin repetir. */
+function trozosDe(path) {
+  const fuente = fuentePorPatron[patronDe(path) ?? ''];
+  const vistos = new Set();
+  const salida = [];
+  const recorrer = (clave) => {
+    /* index.html es el punto de entrada: ya va como <script> en la cabecera. */
+    if (!clave || clave === 'index.html' || vistos.has(clave)) return;
+    vistos.add(clave);
+    const entrada = manifiesto[clave];
+    if (!entrada) return;
+    salida.push(entrada.file);
+    (entrada.imports || []).forEach(recorrer);
+  };
+  recorrer(fuente);
+  return salida;
+}
 const escapa = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
@@ -145,6 +223,12 @@ function documentoPara(path, meta) {
   const lang = meta.lang;
   const altPath = meta.alt;
   const esEs = lang === 'es';
+
+  /* Los trozos de código de esta ruta, pedidos desde la cabecera en paralelo
+     en vez de descubiertos uno tras otro. */
+  const precarga = trozosDe(path)
+    .map((f) => `    <link rel="modulepreload" crossorigin fetchpriority="low" href="/${f}" />`)
+    .join('\n');
 
   const jsonLd = datosEstructurados(path, meta)
     .map((d) => `    <script type="application/ld+json">${JSON.stringify(d)}</script>`)
@@ -189,13 +273,14 @@ ${jsonLd}
       /* Lo que Vite inyectó (css y js con hash) se conserva tal cual */
       (plantilla.match(/<head>([\s\S]*?)<\/head>/)?.[1] || '')
         .split('\n')
-        .filter((l) => /<script|<link rel="stylesheet"|<link rel="modulepreload"/.test(l))
+        .filter((l) => /<script|<link rel="modulepreload"/.test(l))
         .join('\n')
-    }\n  </head>`);
+    }\n${precarga}\n    <style>${cssEnLinea}</style>\n  </head>`);
 }
 
 let escritos = 0;
 const sinMeta = [];
+const sinTrozos = [];
 for (const path of paths) {
   const fija = PAGES[path];
   const meta = fija
@@ -203,6 +288,7 @@ for (const path of paths) {
     : dinamicas[path] && { ...dinamicas[path], lang: langOf(path) };
 
   if (!meta) { sinMeta.push(path); continue; }
+  if (!trozosDe(path).length) sinTrozos.push(path);
 
   const destino = join(ROOT, 'dist/_pages', `${path}.html`);
   mkdirSync(dirname(destino), { recursive: true });
@@ -213,6 +299,14 @@ for (const path of paths) {
 /* Una ruta sin metadatos se serviría con el título de otra página. Es un fallo
    de mantenimiento —alguien añadió una ruta y no su título— y tiene que
    detener la compilación, no colarse en producción en silencio. */
+/* Una ruta sin trozos declarados sigue funcionando —el navegador los descubre
+   sola, como antes— pero pierde la mejora y nadie se entera. Casi siempre
+   significa que routes.jsx cambió de forma y el patrón dejó de reconocerse. */
+if (sinTrozos.length) {
+  console.error(`seo: no se pudo resolver qué código carga estas rutas; revisa el formato de src/routes.jsx:\n  ${sinTrozos.join('\n  ')}`);
+  process.exit(1);
+}
+
 if (sinMeta.length) {
   console.error(`seo: faltan título y descripción para estas rutas en src/seo-meta.js:\n  ${sinMeta.join('\n  ')}`);
   process.exit(1);
@@ -251,6 +345,55 @@ ${urls}
 </urlset>
 `);
 
+/* ------------------------------------------------------------- llms.txt */
+/*
+ * El equivalente de robots.txt para los asistentes de IA: un índice en texto
+ * plano de qué es el sitio y dónde está cada cosa, para que un modelo que
+ * responde por alguien no tenga que deducirlo del HTML. Es la convención que
+ * PageSpeed audita bajo «navegación agéntica».
+ *
+ * Se genera de la misma tabla que el sitemap: escrito a mano, se quedaría
+ * desfasado en cuanto alguien añadiera una página.
+ */
+const titulo = (p) => (PAGES[p] ? PAGES[p][0] : dinamicas[p]?.title || p);
+const resumen = (p) => (PAGES[p] ? PAGES[p][1] : dinamicas[p]?.description || '');
+
+const enlaces = (rutas) => rutas
+  .map((p) => `- [${titulo(p)}](${SITE}${p}): ${resumen(p)}`)
+  .join('\n');
+
+const es = paths.filter((p) => langOf(p) === 'es');
+const en = paths.filter((p) => langOf(p) === 'en');
+const principales = (rutas) => rutas.filter((p) => p.split('/').filter(Boolean).length <= 2);
+const resto = (rutas) => rutas.filter((p) => p.split('/').filter(Boolean).length > 2);
+
+writeFileSync(join(ROOT, 'dist/llms.txt'),
+`# ${BRAND}
+
+> ${ORG.description}
+
+El sitio está en español e inglés. Cada página tiene su equivalente en el otro
+idioma bajo el prefijo /es o /en; son la misma página, no dos contenidos
+distintos. Contacto: hello@meetbecome.com
+
+## Español
+
+${enlaces(principales(es))}
+
+## English
+
+${enlaces(principales(en))}
+
+## Detalle
+
+${enlaces(resto(es))}
+${enlaces(resto(en))}
+
+## Opcional
+
+- [Mapa del sitio](${SITE}/sitemap.xml): las ${paths.length} URLs con sus equivalencias de idioma.
+`);
+
 writeFileSync(join(ROOT, 'dist/robots.txt'),
 `User-agent: *
 Allow: /
@@ -261,5 +404,9 @@ Disallow: /_pages/
 
 Sitemap: ${SITE}/sitemap.xml
 `);
+
+/* El manifiesto era para esto y ya cumplió: describe la estructura interna del
+   proyecto y no tiene por qué acabar publicado en el servidor. */
+rmSync(join(ROOT, 'dist/.vite'), { recursive: true, force: true });
 
 console.log(`seo: ${escritos} páginas con cabecera propia · ${paths.length} URLs en el sitemap`);

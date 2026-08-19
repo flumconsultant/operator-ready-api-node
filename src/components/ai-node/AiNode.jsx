@@ -285,7 +285,10 @@ export default function AiNode({ onReady }) {
     /* Móvil: menos partículas, menos aristas, menos píxeles. */
     const COUNT = coarse ? 900 : 2600;
     const EDGES = coarse ? 90 : 260;
-    const MAX_DPR = coarse ? 1.5 : 2;
+    /* La densidad de píxeles del búfer. En un móvil, 1,25 en vez de 1,5 son
+       un 30 % menos de píxeles que pintar cada fotograma; sobre un fondo
+       difuminado y en movimiento no hay diferencia visible. */
+    const MAX_DPR = coarse ? 1.25 : 2;
 
     let renderer;
     try {
@@ -474,23 +477,52 @@ export default function AiNode({ onReady }) {
       }
       return tokenColor.get(token);
     };
-    let bandEls = [];
+    /*
+     * Las bandas, medidas una vez y guardadas en coordenadas del documento.
+     *
+     * Antes esto preguntaba la posición de cada elemento con
+     * getBoundingClientRect() en CADA fotograma. Preguntar la posición de algo
+     * obliga al navegador a recalcular la maquetación de la página entera
+     * antes de contestar, y hacerlo sesenta veces por segundo por una docena
+     * de elementos es lo que PageSpeed llama «redistribución forzada»: el
+     * navegador rehace un trabajo cuyo resultado no ha cambiado.
+     *
+     * Una banda solo se mueve respecto a la pantalla cuando se hace scroll o
+     * cambia el tamaño de la ventana. Así que su posición se mide en
+     * coordenadas del documento —que no dependen del scroll— y aquí solo se le
+     * resta scrollY, que es una resta. Medir vuelve a ocurrir cuando toca: al
+     * cambiar de tamaño y cuando el ResizeObserver ve crecer la página.
+     */
+    let bandas = [];
+
+    const medirBandas = () => {
+      bandas = [...document.querySelectorAll('[data-band]')].map((el) => {
+        const r = el.getBoundingClientRect();
+        const c = colorOf(el.dataset.band);
+        return {
+          top: r.top + window.scrollY,
+          bottom: r.bottom + window.scrollY,
+          col: c,
+          /* la luminancia decide la tinta de las partículas sobre esa banda */
+          light: c.r * 0.2126 + c.g * 0.7152 + c.b * 0.0722 > 0.35 ? 1 : 0,
+        };
+      });
+    };
 
     const syncBands = () => {
       const H = window.innerHeight;
+      const y = window.scrollY;
       let n = 0;
-      for (const el of bandEls) {
+      for (const b of bandas) {
         if (n >= MAX_BANDS) break;
-        const r = el.getBoundingClientRect();
-        if (r.bottom < 0 || r.top > H) continue;              // fuera de pantalla
+        const top = b.top - y;
+        const bottom = b.bottom - y;
+        if (bottom < 0 || top > H) continue;                  // fuera de pantalla
         /* gl_FragCoord.y cuenta desde abajo; el DOM, desde arriba */
-        bandU.uBandTop.value[n] = 1 - r.top / H;
-        bandU.uBandBot.value[n] = 1 - r.bottom / H;
-        const c = colorOf(el.dataset.band);
-        bandU.uBandCol.value[n].copy(c);
-        /* la luminancia decide la tinta de las partículas sobre esa banda */
-        bandU.uBandLight.value[n] =
-          c.r * 0.2126 + c.g * 0.7152 + c.b * 0.0722 > 0.35 ? 1 : 0;
+        bandU.uBandTop.value[n] = 1 - top / H;
+        bandU.uBandBot.value[n] = 1 - bottom / H;
+        bandU.uBandCol.value[n].copy(b.col);
+        bandU.uBandLight.value[n] = b.light;
         n++;
       }
       bandU.uBandN.value = n;
@@ -498,8 +530,10 @@ export default function AiNode({ onReady }) {
 
     /* ---- anclas de estado ---- */
     let anchors = [];
+    let maxScroll = 0;
     const measure = () => {
-      bandEls = [...document.querySelectorAll('[data-band]')];
+      maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      medirBandas();
       anchors = [...document.querySelectorAll('[data-node-state]')]
         .map((el) => {
           const r = el.getBoundingClientRect();
@@ -525,7 +559,9 @@ export default function AiNode({ onReady }) {
 
     let targetMix = 0, targetSpin = 0, lineTarget = 0.3, targetDoc = 0;
     const readScroll = () => {
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      /* maxScroll también es una lectura de maquetación, y se llama en cada
+         evento de scroll. Solo cambia cuando cambia el alto de la página, que
+         es justo lo que vigila el ResizeObserver. */
       targetDoc = maxScroll > 0 ? Math.min(Math.max(window.scrollY / maxScroll, 0), 1) : 0;
 
       let t;
@@ -572,10 +608,16 @@ export default function AiNode({ onReady }) {
     let entry = 0, fade = 1, docT = 0, streak = 0;
     const offsetX = coarse ? 0 : 3.4;
 
+    /* En un teléfono el nodo es un fondo que va a la deriva: a 30 fotogramas
+       por segundo se ve igual y cuesta la mitad. Dibujar a 60 en una pantalla
+       pequeña gasta batería y roba tiempo al scroll, que sí se nota. */
+    const MIN_DT = coarse ? 1 / 32 : 0;
+
     const tick = (now) => {
       raf = requestAnimationFrame(tick);
       if (!visible) return;
       const dt = Math.min((now - t0) / 1000, 0.05);
+      if (dt < MIN_DT) return;
       t0 = now;
 
       /* suavizado exponencial: el scroll llega a saltos y sin esto el morph se

@@ -76,15 +76,27 @@
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
 
-  # Imágenes, iconos y tipografías: no llevan hash, así que una semana y a
-  # revalidar. Si se cachearan un año, cambiar un icono obligaría a renombrarlo.
-  <FilesMatch "\.(webp|png|jpg|jpeg|svg|woff2|woff|ico)$">
-    ExpiresDefault "access plus 1 week"
-    Header set Cache-Control "public, max-age=604800"
+  # Las tipografías son las de Inter y JetBrains Mono en una versión concreta:
+  # no van a cambiar sin cambiar de archivo. Un año, sin revalidar.
+  <FilesMatch "\.(woff2|woff)$">
+    ExpiresDefault "access plus 1 year"
+    Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
 
-  # index.html nunca se cachea: es lo único que sabe qué bundle toca cargar.
-  <FilesMatch "^index\.html$">
+  # Imágenes e iconos: no llevan hash en el nombre, así que un año sería
+  # arriesgado —cambiar una foto obligaría a renombrarla— pero una semana era
+  # demasiado corto para archivos que casi nunca cambian. Treinta días, y a
+  # revalidar. Es lo que PageSpeed pedía en «tiempos de vida de caché».
+  <FilesMatch "\.(webp|png|jpg|jpeg|svg|ico)$">
+    ExpiresDefault "access plus 30 days"
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+
+  # El HTML nunca se cachea: es lo único que sabe qué bundle toca cargar, y eso
+  # cambia en cada despliegue. Vale para index.html y para las 64 cabeceras por
+  # ruta de _pages/. Sin esta regla el navegador aplica su propia heurística y
+  # puede quedarse con un HTML viejo que pide archivos que ya no existen.
+  <FilesMatch "\.html$">
     ExpiresDefault "access plus 0 seconds"
     Header set Cache-Control "public, max-age=0, must-revalidate"
   </FilesMatch>
@@ -96,9 +108,25 @@
 # LiteSpeed suele traerla activada; esto la garantiza si no lo está. El bundle
 # principal pasa de 260 KB a 84 KB comprimido.
 <IfModule mod_deflate.c>
+  # text/javascript va primero a propósito. Es el tipo con el que los
+  # servidores modernos sirven un .js —application/javascript quedó obsoleto—,
+  # y si no está en esta lista el bundle viaja SIN COMPRIMIR: 330 KB en vez de
+  # 108. En una conexión móvil eso es más de un segundo perdido, y no se ve
+  # desde un portátil con fibra.
+  AddOutputFilterByType DEFLATE text/javascript application/javascript
   AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
-  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE application/json application/xml
   AddOutputFilterByType DEFLATE image/svg+xml
+  AddOutputFilterByType DEFLATE application/x-javascript application/xhtml+xml
+</IfModule>
+
+# LiteSpeed, que es lo que corre en este hosting, entiende además Brotli, que
+# comprime otro 15 % sobre gzip. Se activa por su cuenta si está disponible;
+# esto solo declara qué tipos merece la pena comprimir.
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/javascript application/javascript
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/plain
+  AddOutputFilterByType BROTLI_COMPRESS application/json image/svg+xml
 </IfModule>
 
 # ─────────────────────────────────────────────────────────────────────────────

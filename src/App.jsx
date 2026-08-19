@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { LazyMotion, domAnimation } from 'framer-motion';
 import { routes } from './routes.jsx';
 import AiNodeStage from './components/ai-node/AiNodeStage.jsx';
 import RouteLoader from './components/RouteLoader.jsx';
@@ -106,7 +107,19 @@ export default function App() {
   const { pathname } = useLocation();
 
   return (
-    <>
+    /*
+     * LazyMotion + el componente `m` en vez de `motion`.
+     *
+     * `motion.div` arrastra consigo TODAS las capacidades de la librería
+     * —arrastrar, animaciones de layout, proyección— aunque la página solo
+     * desvanezca y desplace cosas. `m` es el mismo componente sin nada dentro,
+     * y `domAnimation` es el paquete de capacidades que este sitio sí usa:
+     * animar, `whileInView` y las entradas y salidas de AnimatePresence.
+     *
+     * No cambia una sola animación. Cambia lo que hay que descargar en un
+     * móvil antes de ver la página.
+     */
+    <LazyMotion features={domAnimation} strict>
       <ScrollToAnchor />
       <DocumentHead />
       {/* El nodo vive en todo el sitio. En la home las formas van ancladas a
@@ -124,6 +137,6 @@ export default function App() {
           ))}
         </Routes>
       </React.Suspense>
-    </>
+    </LazyMotion>
   );
 }

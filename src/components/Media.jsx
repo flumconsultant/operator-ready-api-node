@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { m as motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import Field from './Field.jsx';
 
 /**
@@ -33,6 +33,13 @@ export function Figure({
   });
   const y = useTransform(scrollYProgress, [0, 1], [RANGE, -RANGE]);
 
+  /* width y height declarados en el propio <img>. El hueco ya lo reserva el
+     aspect-ratio del contenedor, así que aquí no arreglan ningún salto: lo que
+     hacen es decírselo también a quien lee el HTML sin ejecutar el CSS —los
+     buscadores, y el auditor de PageSpeed, que lo reclama—. Salen del mismo
+     ratio, así que no pueden contradecirlo. */
+  const [ancho, alto] = String(ratio).split('/').map((n) => Number(n.trim()) || 1);
+
   return (
     <figure ref={ref} style={{ margin: 0, ...style }}>
       <motion.div
@@ -51,6 +58,8 @@ export function Figure({
         <motion.img
           src={src}
           alt={alt}
+          width={ancho * 100}
+          height={alto * 100}
           loading="lazy"
           decoding="async"
           style={{

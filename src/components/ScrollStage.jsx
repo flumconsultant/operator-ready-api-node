@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, useReducedMotion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
+import { m as motion, useReducedMotion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import Field from './Field.jsx';
 
 /**
