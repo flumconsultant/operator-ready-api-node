@@ -25,6 +25,10 @@ concurrency:
 jobs:
   desplegar:
     runs-on: ubuntu-latest
+    # Un despliegue completo tarda unos tres minutos. Veinte es margen de
+    # sobra, y evita que un paso que se cuelgue bloquee la cola de despliegues
+    # —que no se cancelan entre sí— durante horas.
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
 
@@ -90,13 +94,36 @@ jobs:
         # que el sitio entero se ha roto.
         run: |
           for f in dist/index.html dist/.htaccess dist/sitemap.xml dist/robots.txt \
-                   dist/api/contacto.php dist/api/config.php; do
+                   dist/llms.txt dist/api/contacto.php dist/api/config.php; do
             [ -s "$f" ] || { echo "Falta o está vacío: $f"; exit 1; }
           done
           echo "dist/ listo — $(du -sh dist | cut -f1)"
 
+      # El 19 de agosto este paso se quedó colgado SEIS HORAS y GitHub canceló
+      # el despliegue entero: `apt-get update` esperaba a un servidor de
+      # paquetes que no contestaba, y sin límite de tiempo esperó hasta el
+      # máximo permitido. El sitio se quedó en la versión anterior y el
+      # despliegue no salió en rojo, salió en gris.
+      #
+      # Ahora: cinco minutos de techo, tres intentos, y si el mirror de Ubuntu
+      # sigue sin contestar se dice en voz alta en vez de esperar en silencio.
       - name: Instalar lftp
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+        timeout-minutes: 5
+        run: |
+          set -u
+          for intento in 1 2 3; do
+            if sudo timeout 90 apt-get update -qq \
+               && sudo timeout 120 apt-get install -y -qq lftp; then
+              lftp --version | head -1
+              exit 0
+            fi
+            echo "Intento $intento de instalar lftp sin éxito; reintentando en $((intento * 10))s"
+            sleep $((intento * 10))
+          done
+          echo "::error::No se pudo instalar lftp: los repositorios de Ubuntu no responden."
+          echo "No es un fallo del sitio ni del código. Vuelve a lanzar el despliegue"
+          echo "desde la pestaña Actions con 'Re-run all jobs'."
+          exit 1
 
       - name: Subir a public_html
         timeout-minutes: 6

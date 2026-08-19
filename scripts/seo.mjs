@@ -389,10 +389,24 @@ ${enlaces(principales(en))}
 ${enlaces(resto(es))}
 ${enlaces(resto(en))}
 
-## Opcional
+## Optional
 
-- [Mapa del sitio](${SITE}/sitemap.xml): las ${paths.length} URLs con sus equivalencias de idioma.
+La sección se llama «Optional» en inglés a propósito: es un nombre con
+significado dentro de la convención —marca lo que se puede omitir cuando hay
+poco espacio de contexto—, no una traducción olvidada.
+
+- [Mapa del sitio](${SITE}/sitemap.xml): las ${paths.length} URLs del sitio con sus equivalencias de idioma.
+- [robots.txt](${SITE}/robots.txt): qué se puede rastrear.
 `);
+
+/* La auditoría pide dos cosas concretas: un encabezado H1 y al menos un
+   enlace. Comprobarlo aquí cuesta tres líneas y evita publicar un archivo que
+   no cumple sin que nadie se entere hasta la siguiente auditoría. */
+const llms = read('dist/llms.txt');
+if (!/^# \S/m.test(llms) || !/\]\(https?:\/\//.test(llms)) {
+  console.error('seo: llms.txt tiene que empezar por un título «# …» y contener enlaces.');
+  process.exit(1);
+}
 
 writeFileSync(join(ROOT, 'dist/robots.txt'),
 `User-agent: *
