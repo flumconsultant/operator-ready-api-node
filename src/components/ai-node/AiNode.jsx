@@ -568,6 +568,7 @@ export default function AiNode({ onReady }) {
 
     /* ---- bucle ---- */
     let raf = 0, t0 = performance.now(), mix = 0, spin = 0, visible = true;
+    const bufferSize = new Vector2();   // se reutiliza cada fotograma
     let entry = 0, fade = 1, docT = 0, streak = 0;
     const offsetX = coarse ? 0 : 3.4;
 
@@ -646,7 +647,17 @@ export default function AiNode({ onReady }) {
       dustUniforms.uOpacity.value = entry * (0.30 + fade * 0.55);
 
       syncBands();
-      bandU.uResolution.value.set(host.clientWidth, host.clientHeight);
+      /* En píxeles del BÚFER, no en píxeles CSS.
+       *
+       * gl_FragCoord.y viene en píxeles del búfer de dibujo, que es el tamaño
+       * CSS multiplicado por el ratio de píxeles. Dividiéndolo entre la altura
+       * CSS, el valor normalizado llegaba hasta ese ratio —1,5 en móvil— en vez
+       * de hasta 1. Todo lo que quedaba por encima de 1 caía fuera del rango de
+       * cualquier banda y se pintaba con el color de suelo: la franja superior
+       * de la pantalla salía navy sobre una sección clara, con el texto oscuro
+       * encima. En un portátil con ratio 1 no se notaba; en un móvil, sí. */
+      renderer.getDrawingBufferSize(bufferSize);
+      bandU.uResolution.value.copy(bufferSize);
 
       renderer.clear();
       renderer.render(bgScene, bgCam);
@@ -656,13 +667,47 @@ export default function AiNode({ onReady }) {
       if (reduced && entry >= 1) cancelAnimationFrame(raf);
     };
 
-    const onResize = () => {
+    /* Al hacer scroll hacia arriba en un móvil reaparece la barra del
+     * navegador y la ventana cambia de alto. Eso dispara un `resize` en mitad
+     * del gesto, y reasignar el búfer de WebGL ahí cuesta caro: se salta
+     * fotogramas justo mientras el dedo se mueve.
+     *
+     * Un cambio de alto sin cambio de ancho es casi siempre eso, no un giro de
+     * pantalla ni una ventana redimensionada. Se le cambia el encuadre a la
+     * cámara —barato— y se deja el búfer como está: el estirón que queda es de
+     * unas decenas de píxeles sobre un fondo de partículas, invisible. */
+    let anchoPrevio = host.clientWidth;
+    let esperaTamano = 0;
+
+    /* Lo caro: reasignar el búfer de WebGL y volver a medir la página. */
+    const aplicarTamano = () => {
       if (!host.clientWidth || !host.clientHeight) return;
-      camera.aspect = host.clientWidth / host.clientHeight;
-      camera.updateProjectionMatrix();
       renderer.setSize(host.clientWidth, host.clientHeight);
       measure();
       readScroll();
+    };
+
+    const onResize = () => {
+      if (!host.clientWidth || !host.clientHeight) return;
+
+      /* Lo barato va siempre y de inmediato: el lienzo tiene que seguir
+         cubriendo su capa desde el primer fotograma, o asoma el navy de
+         debajo por el borde que acaba de crecer. */
+      renderer.domElement.style.width = `${host.clientWidth}px`;
+      renderer.domElement.style.height = `${host.clientHeight}px`;
+      camera.aspect = host.clientWidth / host.clientHeight;
+      camera.updateProjectionMatrix();
+
+      /* Lo caro se aplaza cuando el cambio es solo de alto y sin cambio de
+         ancho: en un móvil eso es la barra del navegador entrando o saliendo
+         durante el scroll, no un giro de pantalla. Reasignar el búfer en mitad
+         del gesto salta fotogramas justo mientras el dedo se mueve. Al soltar,
+         un cuarto de segundo después, se aplica de verdad. */
+      const soloAlto = coarse && host.clientWidth === anchoPrevio;
+      anchoPrevio = host.clientWidth;
+      clearTimeout(esperaTamano);
+      if (soloAlto) esperaTamano = setTimeout(aplicarTamano, 250);
+      else aplicarTamano();
     };
     const onVisibility = () => { visible = !document.hidden; t0 = performance.now(); };
 
@@ -688,6 +733,7 @@ export default function AiNode({ onReady }) {
 
     return () => {
       cancelAnimationFrame(raf);
+      clearTimeout(esperaTamano);
       ro.disconnect();
       if (!reduced) {
         window.removeEventListener('scroll', readScroll);
