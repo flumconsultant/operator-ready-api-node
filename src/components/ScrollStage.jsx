@@ -56,7 +56,13 @@ export default function ScrollStage({ variant = 'corridor', seed = 3, steps, hei
           style={{ position: 'absolute', inset: 0, background: 'radial-gradient(130% 90% at 50% 50%, rgba(5,7,15,0) 0%, rgba(5,7,15,.72) 78%)' }}
         />
         <div style={{ position: 'relative', height: '100%', display: 'grid', alignContent: 'center', padding: '0 var(--gutter-page)' }}>
-          <div style={{ maxWidth: 'var(--maxw-content)', margin: '0 auto', width: '100%', position: 'relative' }}>
+          {/* Rejilla de una sola celda: los tres pasos ocupan la misma y el
+              bloque mide lo que mide el MÁS ALTO. Antes solo el primero estaba
+              en el flujo y los otros dos iban en posición absoluta encima, así
+              que la altura la fijaba el primero: en pantallas estrechas, donde
+              los titulares más largos ocupan una línea más, los otros pasos se
+              salían de la caja y se montaban sobre lo de al lado. */}
+          <div style={{ maxWidth: 'var(--maxw-content)', margin: '0 auto', width: '100%', display: 'grid' }}>
             {steps.map((s, i) => (
               <Relay key={s.title} step={s} index={i} count={steps.length} progress={scrollYProgress} />
             ))}
@@ -146,8 +152,6 @@ function Relay({ step, index, count, progress }) {
     <motion.div
       style={{
         gridArea: '1 / 1',
-        position: index === 0 ? 'relative' : 'absolute',
-        inset: index === 0 ? undefined : 0,
         opacity, scale, y, filter,
         transformOrigin: 'left center',
         willChange: 'transform, opacity',

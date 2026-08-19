@@ -133,6 +133,26 @@ label {
 :root[data-ai-node="on"] [data-page-root],
 :root[data-ai-node="on"] [data-band] { background: transparent !important; }
 
+/* ...salvo las bandas claras, que vuelven a pintar su propio fondo.
+ *
+ * El canvas no las estaba dibujando bien: la banda clara salía reflejada
+ * respecto al centro de la pantalla —terminaba en `alto_ventana − inicio` en
+ * vez de llegar hasta abajo—, así que la mitad inferior de cada sección clara
+ * se veía navy. Con texto oscuro encima, ilegible. Ocurría en todas las
+ * anchuras y se notaba más cuanto más alta la sección, que es por qué saltaba
+ * a la vista en móvil y tablet.
+ *
+ * Se corrige aquí y no en el shader a propósito. Que el fondo de una sección
+ * dependa de que un canvas WebGL acierte a pintarlo es frágil por diseño: el
+ * peor caso no es perder un efecto, es que el texto se vuelva ilegible, y eso
+ * puede dispararlo cualquier GPU, cualquier navegador o cualquier cambio en
+ * el shader. Las bandas claras se pintan solas y ese riesgo desaparece.
+ *
+ * El nodo se sigue viendo a lo largo de todas las bandas oscuras, que es donde
+ * su tinta verde tiene contraste y donde el efecto se diseñó para lucir. */
+:root[data-ai-node="on"] [data-band="--off-white"] { background: var(--off-white) !important; }
+:root[data-ai-node="on"] [data-band="--pale-100"] { background: var(--pale-100) !important; }
+
 /* Las secciones que traían foto de fondo la apagan: el nodo ocupa su sitio.
    La <img> se queda en el DOM a propósito — es exactamente el fallback que se
    ve si WebGL no está disponible. El degradado de legibilidad que va encima no

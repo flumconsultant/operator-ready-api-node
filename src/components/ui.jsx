@@ -149,18 +149,29 @@ export const Body = ({ children, dark, style }) => (
 
 /* ---------- llamadas a la acción ---------- */
 
+/* Sin `white-space: nowrap`, y con tope de ancho.
+ *
+ * Con nowrap, una etiqueta larga —"Ver el framework y sus herramientas"— no
+ * podía partirse: se salía de su contenedor, y con ella de la pantalla. En un
+ * móvil de 375 px eso dejaba la página entera arrastrable de lado, que es de
+ * los fallos que más ensucian la sensación de un sitio.
+ *
+ * El relleno vertical no cambia nada en una línea (48 px de alto mínimo mandan
+ * sobre 14 de texto más 32 de relleno); solo entra en juego cuando la etiqueta
+ * pasa a dos líneas, para que el texto no toque el borde de la píldora. */
 const ctaBase = {
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
   minHeight: '48px',
-  padding: '0 var(--space-7)',
+  padding: 'var(--space-4) var(--space-7)',
   borderRadius: 'var(--radius-pill)',
   font: 'var(--type-label)',
   letterSpacing: 'var(--track-label)',
   textTransform: 'uppercase',
   textDecoration: 'none',
-  whiteSpace: 'nowrap',
+  textAlign: 'center',
+  maxWidth: '100%',
 };
 
 export const PrimaryCTA = ({ to, href, children, ...rest }) => {

@@ -268,6 +268,7 @@ export default function Home() {
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-heading)' }}>
               BECOME NOW™
             </h3>
+            <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--text-accent)' }}>Capacitación en IA aplicada</p>
             <Body>
               Capacitación in company para que cada área use ChatGPT, Claude y Gemini
               sobre sus propios procesos, documentos y desafíos.
@@ -282,9 +283,10 @@ export default function Home() {
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-heading)' }}>
               AI-Native Transformation Discovery
             </h3>
+            <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--text-accent)' }}>Estrategia y modelo operativo</p>
             <Body>
-              Define la ambición, identifica dónde está el valor y diseña el operating
-              model y el roadmap.
+              Dónde está el valor de la IA en tu empresa, qué se hace primero y cómo
+              hay que operar para conseguirlo.
             </Body>
             <TextCTA to="/es/servicios/transformation-discovery">Explora Discovery</TextCTA>
           </Card>
@@ -296,6 +298,7 @@ export default function Home() {
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-heading)' }}>
               Build &amp; Embed Sprint
             </h3>
+            <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--text-accent)' }}>Construcción e implantación</p>
             <Body>
               Construye e incorpora una capacidad AI-native con adopción, controles y
               medición.
