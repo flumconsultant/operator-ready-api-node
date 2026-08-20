@@ -412,7 +412,13 @@ if ($accion === 'subir-foto') {
         responder(400, ['ok' => false, 'error' => 'pequena', 'mensaje' => "La foto es de {$info[0]}x{$info[1]} y se ve borrosa. Mínimo 200x200."]);
     }
 
-    $archivo = $id . '.' . $EXT[$info[2]];
+    /* `variante` distingue el recorte que se publica del original que se
+       guarda para poder reencuadrar más tarde. Sin el original, «Recolocar»
+       trabaja sobre un cuadrado de 400 px: no hay margen que mover, así que
+       los deslizadores se mueven y no cambian nada. Un control que parece
+       funcionar y no hace nada es peor que no tenerlo. */
+    $variante = ($cuerpo['variante'] ?? 'recorte') === 'original' ? '-original' : '';
+    $archivo = $id . $variante . '.' . $EXT[$info[2]];
     $camino  = RUTA_FOTOS . '/' . $archivo;
 
     /* Si ya había una foto con este nombre hay que mandar su sha, o GitHub
@@ -421,7 +427,7 @@ if ($accion === 'subir-foto') {
     $sha    = $previo['codigo'] === 200 ? ($previo['datos']['sha'] ?? null) : null;
 
     $r = github($config, 'contents/' . rawurlencode($camino), 'PUT', [
-        'message' => sprintf('Foto de %s (desde el panel, por %s)', $id, $nombre),
+        'message' => sprintf('Foto de %s%s (desde el panel, por %s)', $id, $variante ? ' (original)' : '', $nombre),
         'content' => base64_encode($bruto),
         'branch'  => $rama,
         ...($sha ? ['sha' => $sha] : []),
@@ -431,7 +437,19 @@ if ($accion === 'subir-foto') {
     }
     /* La ruta pública, que es distinta de dónde vive el archivo: assets/ es la
        raíz del sitio publicado. */
-    responder(200, ['ok' => true, 'foto' => '/images/autores/' . $archivo, 'ancho' => $info[0], 'alto' => $info[1]]);
+    /* La ruta pública, que es distinta de dónde vive el archivo: assets/ es la
+       raíz del sitio publicado.
+
+       Y lleva una marca de versión. El nombre del archivo no cambia al cambiar
+       la foto, y las imágenes se sirven con caché de treinta días: sin esta
+       marca, quien cambia su foto sigue viendo la anterior en el panel y en la
+       web, y concluye que el cambio no se guardó. */
+    responder(200, [
+        'ok'     => true,
+        'foto'   => '/images/autores/' . $archivo . '?v=' . substr((string) ($r['datos']['content']['sha'] ?? time()), 0, 8),
+        'ancho'  => $info[0],
+        'alto'   => $info[1],
+    ]);
 }
 
 /* ----------------------------------------------------------- suscriptores */

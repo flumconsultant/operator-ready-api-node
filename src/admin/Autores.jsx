@@ -15,7 +15,7 @@ import { Etiqueta, Texto, Area, Boton, Fila, Aviso, marco } from './piezas.jsx';
  * para no mandar cuatro megas de una foto que se va a ver a 44 píxeles.
  */
 
-const NUEVA = () => ({ id: '', nombre: '', foto: '', linkedin: '', predeterminado: false, es: { rol: '', bio: '' }, en: { rol: '', bio: '' } });
+const NUEVA = () => ({ id: '', nombre: '', foto: '', fotoOriginal: '', linkedin: '', predeterminado: false, es: { rol: '', bio: '' }, en: { rol: '', bio: '' } });
 
 const aId = (s) => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
   .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 70);
@@ -64,6 +64,27 @@ function recortar(img, { x, y, zoom }, lado) {
 }
 
 /**
+ * El original, reducido a 1200 px de lado mayor.
+ *
+ * Se guarda junto al recorte para que «Recolocar» tenga de dónde recortar. Sin
+ * él solo queda el cuadrado de 400 px ya recortado: mover el encuadre ahí no
+ * puede hacer nada, porque no sobra ni un píxel por ningún lado.
+ *
+ * 1200 y no el archivo tal cual: una foto de móvil moderna pesa varios megas y
+ * acabaría en el repositorio para siempre, a cambio de un detalle que a 44 px
+ * no se ve.
+ */
+function original(img) {
+  const MAYOR = 1200;
+  const escala = Math.min(1, MAYOR / Math.max(img.width, img.height));
+  const lienzo = document.createElement('canvas');
+  lienzo.width = Math.round(img.width * escala);
+  lienzo.height = Math.round(img.height * escala);
+  lienzo.getContext('2d').drawImage(img, 0, 0, lienzo.width, lienzo.height);
+  return lienzo.toDataURL('image/webp', 0.86);
+}
+
+/**
  * Encuadre por defecto.
  *
  * Centrar por el medio geométrico es lo que hacía antes y es exactamente lo que
@@ -89,7 +110,7 @@ const encuadreInicial = (img) => ({
  * teclado sin que haya que programar nada, y arrastrar exige por norma una
  * alternativa que no dependa del puntero. Aquí no compensaba escribir las dos.
  */
-function Encuadre({ img, alConfirmar, alCancelar, ocupado }) {
+function Encuadre({ img, alConfirmar, alCancelar, ocupado, sinOriginal }) {
   const [enc, setEnc] = React.useState(() => encuadreInicial(img));
   const lienzo = React.useRef(null);
   const PREVIA = 220;
@@ -168,9 +189,9 @@ function Encuadre({ img, alConfirmar, alCancelar, ocupado }) {
       />
       <p style={{ margin: '-4px 0 0', font: 'var(--type-body)', fontSize: 12, color: 'var(--text-faint)', textAlign: 'center', maxWidth: PREVIA }}>
         Arrastra la foto para colocarla, o usa los deslizadores.
-        {img.width <= LADO && (
-          <> Estás recolocando la foto ya guardada: si necesitas recuperar algo
-          que quedó fuera, sube el archivo original.</>
+        {sinOriginal && (
+          <> Esta foto se subió antes de que se guardara el original, así que
+          solo puedes acercarla. Súbela otra vez para poder recolocarla entera.</>
         )}
       </p>
 
@@ -217,6 +238,7 @@ function Ficha({ entrada, alGuardar, alCerrar }) {
   const [nota, setNota] = React.useState('');
   /* La imagen elegida esperando encuadre. null = no hay ninguna en curso. */
   const [porEncuadrar, setPorEncuadrar] = React.useState(null);
+  const [sinOriginal, setSinOriginal] = React.useState(false);
   const campo = React.useRef(null);
 
   const pon = (k, v) => setF({ ...f, [k]: v });
@@ -238,8 +260,10 @@ function Ficha({ entrada, alGuardar, alCerrar }) {
     if (!archivo) return;
     if (!f.id) { setError('Escribe primero el nombre: la foto se guarda con su identificador.'); return; }
     setError('');
-    try { setPorEncuadrar(await cargarImagen(archivo)); }
-    catch (err) { setError(err.message); }
+    try {
+      setSinOriginal(false);
+      setPorEncuadrar(await cargarImagen(archivo));
+    } catch (err) { setError(err.message); }
     finally { campo.current.value = ''; }
   };
 
@@ -250,10 +274,14 @@ function Ficha({ entrada, alGuardar, alCerrar }) {
      subir el archivo original cuando el reencuadre es grande. */
   const reencuadrar = async () => {
     setError('');
+    /* Del original si existe; si no, del recorte, y entonces la pantalla lo
+       dice, porque desde un cuadrado ya recortado solo se puede acercar. */
+    const fuente = f.fotoOriginal || f.foto;
     try {
       const img = new Image();
-      img.src = f.foto + '?v=' + Date.now();
+      img.src = fuente;
       await img.decode();
+      setSinOriginal(!f.fotoOriginal);
       setPorEncuadrar(img);
     } catch { setError('No se pudo abrir la foto guardada. Sube el archivo otra vez.'); }
   };
@@ -262,7 +290,16 @@ function Ficha({ entrada, alGuardar, alCerrar }) {
     setSubiendo(true); setError('');
     try {
       const { foto } = await api.subirFoto({ id: f.id, datos });
-      const siguiente = { ...f, foto };
+      /* El original se sube solo cuando la imagen viene de un archivo recién
+         elegido, que es lo que distingue una data URL de una ruta del sitio.
+         Al recolocar, la fuente ya es el original guardado: volver a subirlo
+         sería recomprimir una copia, y cada vuelta perdería nitidez. */
+      let fotoOriginal = f.fotoOriginal;
+      if (porEncuadrar?.src.startsWith('data:')) {
+        const r = await api.subirFoto({ id: f.id, variante: 'original', datos: original(porEncuadrar) });
+        fotoOriginal = r.foto;
+      }
+      const siguiente = { ...f, foto, fotoOriginal };
       setF(siguiente);
       setPorEncuadrar(null);
 
@@ -312,6 +349,7 @@ function Ficha({ entrada, alGuardar, alCerrar }) {
               <Encuadre
                 img={porEncuadrar}
                 ocupado={subiendo}
+                sinOriginal={sinOriginal}
                 alConfirmar={confirmarFoto}
                 alCancelar={() => setPorEncuadrar(null)}
               />
