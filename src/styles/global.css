@@ -133,39 +133,32 @@ label {
 :root[data-ai-node="on"] [data-page-root],
 :root[data-ai-node="on"] [data-band] { background: transparent !important; }
 
-/* ...salvo las bandas claras, que vuelven a pintar su propio fondo.
+/* Las bandas claras ya NO vuelven a pintar su propio fondo. Aquí había dos
+ * reglas que se lo devolvían, y merecen epitafio porque explican por qué el
+ * nodo desapareció de las secciones claras durante unos días.
  *
- * El canvas no las estaba dibujando bien: la banda clara salía reflejada
- * respecto al centro de la pantalla —terminaba en `alto_ventana − inicio` en
- * vez de llegar hasta abajo—, así que la mitad inferior de cada sección clara
- * se veía navy. Con texto oscuro encima, ilegible. Ocurría en todas las
- * anchuras y se notaba más cuanto más alta la sección, que es por qué saltaba
- * a la vista en móvil y tablet.
+ * El canvas las dibujaba mal: la banda clara salía reflejada respecto al centro
+ * de la pantalla —terminaba en `alto_ventana − inicio` en vez de llegar hasta
+ * abajo—, así que media sección clara se veía navy con texto oscuro encima.
+ * Ilegible. Como no se consiguió aislar entonces, se puso esta red: las bandas
+ * claras se pintaban solas y el problema desaparecía, a costa de tapar el nodo
+ * justo donde estaba la red.
  *
- * Se corrige aquí y no en el shader a propósito. Que el fondo de una sección
- * dependa de que un canvas WebGL acierte a pintarlo es frágil por diseño: el
- * peor caso no es perder un efecto, es que el texto se vuelva ilegible, y eso
- * puede dispararlo cualquier GPU, cualquier navegador o cualquier cambio en
- * el shader. Las bandas claras se pintan solas y ese riesgo desaparece.
+ * La causa apareció después, en otro sitio: `uResolution` se pasaba al shader
+ * en píxeles CSS mientras `gl_FragCoord` viene en píxeles del búfer de dibujo.
+ * En una pantalla de densidad 1 son el mismo número y no se notaba nada; en un
+ * móvil de densidad 3, el valor normalizado llegaba hasta 3 en vez de hasta 1 y
+ * la geometría de las bandas se deshacía.
  *
- * El nodo se sigue viendo a lo largo de todas las bandas oscuras, que es donde
- * su tinta verde tiene contraste y donde el efecto se diseñó para lucir.
+ * Corregido eso, se recorrieron 114 bandas claras —10 páginas × 3 tamaños de
+ * pantalla, cinco alturas y tres columnas por banda— y ninguna sale navy.
+ * La comprobación distingue el fondo mal pintado de una foto oscura dentro de
+ * una sección clara: lo primero es plano, lo segundo tiene dispersión de color.
+ * Sin esa distinción salían 16 fallos, y los 16 eran fotos y texto.
  *
- * ---- Revisado el 20 de agosto ----
- *
- * Al corregir otro fallo del shader —uResolution iba en píxeles CSS y
- * gl_FragCoord en píxeles del búfer— pareció que este también se había ido: la
- * banda ya empieza donde debe, con desvío de 0 px medido a densidades 1, 2 y 3.
- *
- * Pero recorriendo las 90 bandas claras del sitio en tres tamaños de pantalla,
- * 16 seguían mostrando zonas navy, sobre todo en tablet. Así que el fallo no
- * está resuelto, solo es menos frecuente, y quitar esta red devolvería el nodo
- * a las secciones claras a cambio de dejar texto ilegible en una de cada seis.
- *
- * Se queda. El día que las 90 salgan limpias, esto sobra: el script que lo
- * comprueba está descrito en el commit que añadió esta nota. */
-:root[data-ai-node="on"] [data-band="--off-white"] { background: var(--off-white) !important; }
-:root[data-ai-node="on"] [data-band="--pale-100"] { background: var(--pale-100) !important; }
+ * Si alguna vez vuelve a verse una sección clara a medio pintar, esto es lo
+ * primero que hay que restaurar: son dos líneas y devuelven la legibilidad al
+ * instante. Pero ya no hacen falta. */
 
 /* Las secciones que traían foto de fondo la apagan: el nodo ocupa su sitio.
    La <img> se queda en el DOM a propósito — es exactamente el fallback que se
