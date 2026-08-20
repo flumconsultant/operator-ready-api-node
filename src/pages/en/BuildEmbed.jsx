@@ -6,7 +6,7 @@ import { Ico } from '../../components/icons.jsx';
 import { Banner } from '../../components/Media.jsx';
 import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, Cols, Card, IndexRow } from '../../components/ui.jsx';
 
-/** Build & Embed Sprint — English mirror of src/pages/BuildEmbed.jsx. */
+/** BECOME EMBED™ — English mirror of src/pages/BuildEmbed.jsx. */
 
 const BUILDABLE = [
   ['flow', 'AI-native workflow', 'An end-to-end process redesigned with people and agents working together.'],
@@ -55,7 +55,7 @@ export default function BuildEmbed() {
           an AI-native capability inside the operation.
         </Lead>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
-          <PrimaryCTA to="/en/contact">Talk to us about Build &amp; Embed</PrimaryCTA>
+          <PrimaryCTA to="/en/contact">Talk to us about BECOME EMBED™</PrimaryCTA>
           <GhostCTA to="/en/services" dark>See both services</GhostCTA>
         </div>
       </Section>
@@ -96,10 +96,10 @@ export default function BuildEmbed() {
 
       <Section band="light">
         <Kicker>The journey</Kicker>
-        <Headline>Build &amp; Embed covers O–M–E of the framework.</Headline>
+        <Headline>BECOME EMBED™ covers O–M–E of the framework.</Headline>
         <Body>
           It can start from an existing blueprint that meets the readiness criteria;
-          it doesn’t require having done Discovery with us.
+          it doesn’t require having done BECOME DISCOVER™ with us.
         </Body>
         <div style={{ marginTop: 'var(--space-10)' }}>
           {STAGES.map(([letter, name, work, out]) => (

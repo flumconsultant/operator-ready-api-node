@@ -364,7 +364,7 @@ export const INDICATORS = [
   ['Productividad', 'Tiempo de preparación y de respuesta, reducción de tareas manuales y velocidad para producir un primer output útil.'],
   ['Calidad', 'Consistencia, errores detectados, cumplimiento del formato, retrabajo y nivel de trazabilidad.'],
   ['Confianza', 'Capacidad para verificar resultados, claridad sobre los límites y uso adecuado de la información.'],
-  ['Valor', 'Procesos mejorados, decisiones habilitadas, capacidades instaladas y casos preparados para Build & Embed.'],
+  ['Valor', 'Procesos mejorados, decisiones habilitadas, capacidades instaladas y casos preparados para BECOME EMBED™.'],
 ];
 
 export const GENERAL_DELIVERABLES = [
@@ -381,7 +381,7 @@ export const FAQ = [
   ['¿Necesitamos compartir información confidencial?', 'No necesariamente. La empresa puede trabajar con información real, anonimizada o simulada. El tratamiento se define durante la sesión de entendimiento.'],
   ['¿Es un curso de prompts?', 'No. Escribir buenas instrucciones es solo el punto de partida. El objetivo es construir asistentes, agentes, flujos de trabajo y entregables que mejoren el trabajo del área.'],
   ['¿Los participantes necesitan conocimientos técnicos?', 'No. La malla se adapta al nivel de los participantes. Los programas funcionales están diseñados para equipos de negocio.'],
-  ['¿BECOME automatiza los procesos durante la capacitación?', 'El programa estándar se concentra en construcción de capacidades y configuración dentro de las herramientas autorizadas. Integraciones y desarrollos pueden abordarse después mediante Build & Embed.'],
+  ['¿BECOME automatiza los procesos durante la capacitación?', 'El programa estándar se concentra en construcción de capacidades y configuración dentro de las herramientas autorizadas. Integraciones y desarrollos pueden abordarse después mediante BECOME EMBED™.'],
   ['¿Cuántas personas pueden participar?', 'El tamaño del grupo se define según el nivel de acompañamiento necesario. Se recomiendan grupos pequeños cuando cada participante debe construir y validar sus propios flujos de trabajo.'],
   ['¿Puede crearse un programa para un área que no aparece en el menú?', 'Sí. El catálogo muestra las rutas más frecuentes, pero BECOME puede diseñar programas para cualquier área, rol, industria o proceso específico.'],
   ['¿Qué queda después de la capacitación?', 'Capacidades aplicables, una biblioteca reutilizable, flujos de trabajo documentados, criterios de validación y recomendaciones de adopción.'],

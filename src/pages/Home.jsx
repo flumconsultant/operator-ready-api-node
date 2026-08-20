@@ -51,15 +51,15 @@ const WHAT = [
     icon: 'decision',
     label: 'Definimos',
     line: 'Dónde está el valor, qué debe cambiar y cómo debe operar la empresa después.',
-    to: '/es/servicios/transformation-discovery',
+    to: '/es/servicios/become-discover',
     cta: 'Discovery',
   },
   {
     icon: 'build',
     label: 'Construimos',
     line: 'El proceso, el agente o el producto, dentro de la operación y con quien lo va a usar.',
-    to: '/es/servicios/build-and-embed',
-    cta: 'Build & Embed',
+    to: '/es/servicios/become-embed',
+    cta: 'BECOME EMBED™',
   },
 ];
 
@@ -284,14 +284,14 @@ export default function Home() {
               <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>8–12 semanas</p>
             </div>
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-heading)' }}>
-              AI-Native Transformation Discovery
+              BECOME DISCOVER™
             </h3>
             <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--text-accent)' }}>Estrategia y modelo operativo</p>
             <Body>
               Dónde está el valor de la IA en tu empresa, qué se hace primero y cómo
               hay que operar para conseguirlo.
             </Body>
-            <TextCTA to="/es/servicios/transformation-discovery">Explora Discovery</TextCTA>
+            <TextCTA to="/es/servicios/become-discover">Explora Discovery</TextCTA>
           </Card>
           <Card>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
@@ -299,14 +299,14 @@ export default function Home() {
               <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>8–12 semanas por capacidad</p>
             </div>
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-heading)' }}>
-              Build &amp; Embed Sprint
+              BECOME EMBED™
             </h3>
             <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--text-accent)' }}>Construcción e implantación</p>
             <Body>
               Construye e incorpora una capacidad AI-native con adopción, controles y
               medición.
             </Body>
-            <TextCTA to="/es/servicios/build-and-embed">Explora Build &amp; Embed</TextCTA>
+            <TextCTA to="/es/servicios/become-embed">Explora BECOME EMBED™</TextCTA>
           </Card>
         </Cols>
 
@@ -425,7 +425,7 @@ export default function Home() {
           que necesitas transformar. Menos de dos minutos para contárnoslo.
         </Lead>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', alignItems: 'center', flexWrap: 'wrap' }}>
-          <PrimaryCTA to="/es/contacto">Inicia tu Discovery</PrimaryCTA>
+          <PrimaryCTA to="/es/contacto">Encuentra tu punto de partida</PrimaryCTA>
           <GhostCTA to="/es/servicios/become-now" dark>O capacita a tu equipo ya</GhostCTA>
         </div>
         <p style={{ margin: 'var(--space-7) 0 0', display: 'inline-flex', alignItems: 'center', gap: 10, font: 'var(--type-body)', color: 'var(--slate-200)' }}>

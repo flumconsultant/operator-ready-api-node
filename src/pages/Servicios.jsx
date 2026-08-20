@@ -18,10 +18,10 @@ import { Banner } from '../components/Media.jsx';
 
 const JOURNEY = [
   { n: '00', icon: 'capability', step: 'Enable', who: 'BECOME NOW™', q: '¿Sabe el equipo trabajar con IA hoy?', out: 'Capacidades aplicadas, procesos y recursos reutilizables.' },
-  { n: '01', icon: 'decision', step: 'Define', who: 'AI-Native Transformation Discovery', q: '¿Dónde está el valor y qué debe cambiar?', out: 'Ambición, diagnóstico y decisiones prioritarias.' },
+  { n: '01', icon: 'decision', step: 'Define', who: 'BECOME DISCOVER™', q: '¿Dónde está el valor y qué debe cambiar?', out: 'Ambición, diagnóstico y decisiones prioritarias.' },
   { n: '02', icon: 'layers', step: 'Design', who: 'Punto de conexión', q: '¿Cómo debe operar el modelo futuro?', out: 'Modelo operativo objetivo y diseño de la transformación.' },
-  { n: '03', icon: 'build', step: 'Build', who: 'Build & Embed Sprint', q: '¿Qué capacidad debe existir y cómo funcionará?', out: 'Proceso, agente, copiloto, producto o sistema de decisión.' },
-  { n: '04', icon: 'embed', step: 'Embed', who: 'Build & Embed Sprint', q: '¿Cómo se incorpora con adopción y control?', out: 'Responsable asignado, supervisión humana, controles y medición.' },
+  { n: '03', icon: 'build', step: 'Build', who: 'BECOME EMBED™', q: '¿Qué capacidad debe existir y cómo funcionará?', out: 'Proceso, agente, copiloto, producto o sistema de decisión.' },
+  { n: '04', icon: 'embed', step: 'Embed', who: 'BECOME EMBED™', q: '¿Cómo se incorpora con adopción y control?', out: 'Responsable asignado, supervisión humana, controles y medición.' },
   { n: '05', icon: 'scale', step: 'Scale', who: 'Evolución posterior', q: '¿Está lista para expandirse?', out: 'Decisión sobre escalar y lista de mejoras pendientes.' },
 ];
 
@@ -31,7 +31,7 @@ const COMPARE = [
   ['Comienza con', 'Ambición, tensión empresarial o dominio a transformar.', 'Un diseño que se pueda validar, un proceso o una oportunidad priorizada.'],
   ['Termina con', 'Estrategia, portafolio, estado objetivo, caso de negocio y hoja de ruta.', 'Capacidad funcionando, adoptada, controlada y medida.'],
   ['Framework', 'B–E–C–O.', 'O–M–E.'],
-  ['Siguiente paso', 'Build & Embed del primer caso priorizado.', 'Iterar, integrar, escalar o detener.'],
+  ['Siguiente paso', 'BECOME EMBED™ del primer caso priorizado.', 'Iterar, integrar, escalar o detener.'],
 ];
 
 export default function Servicios() {
@@ -117,14 +117,14 @@ export default function Servicios() {
               <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--electric-green)' }}>8–12 semanas</p>
             </div>
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--white)' }}>
-              AI-Native Transformation Discovery
+              BECOME DISCOVER™
             </h3>
             <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--electric-green)' }}>Estrategia y modelo operativo</p>
             <Body dark style={{ marginTop: 'var(--space-5)' }}>
               Alinea la ambición. Diagnostica la empresa. Identifica el valor. Diseña
               el operating model y el roadmap necesarios para avanzar.
             </Body>
-            <TextCTA to="/es/servicios/transformation-discovery" dark>Explora Discovery</TextCTA>
+            <TextCTA to="/es/servicios/become-discover" dark>Explora Discovery</TextCTA>
           </Card>
           <Card dark>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
@@ -132,14 +132,14 @@ export default function Servicios() {
               <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--electric-green)' }}>8–12 semanas por capacidad</p>
             </div>
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--white)' }}>
-              Build &amp; Embed Sprint
+              BECOME EMBED™
             </h3>
             <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--electric-green)' }}>Construcción e implantación</p>
             <Body dark style={{ marginTop: 'var(--space-5)' }}>
               Diseña, construye e incorpora un proceso, un agente o un producto AI-native
               dentro de la operación, con adopción, controles y medición desde el inicio.
             </Body>
-            <TextCTA to="/es/servicios/build-and-embed" dark>Explora Build &amp; Embed</TextCTA>
+            <TextCTA to="/es/servicios/become-embed" dark>Explora BECOME EMBED™</TextCTA>
           </Card>
         </Cols>
         <Body dark style={{ marginTop: 'var(--space-9)' }}>
@@ -156,8 +156,8 @@ export default function Servicios() {
             <thead>
               <tr>
                 <th scope="col" style={{ ...th, width: '18%' }} />
-                <th scope="col" style={th}>Transformation Discovery<span style={{ display: 'block', marginTop: 4, font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', textTransform: 'none', letterSpacing: 'normal', color: 'var(--text-muted)' }}>Estrategia y modelo operativo</span></th>
-                <th scope="col" style={th}>Build &amp; Embed<span style={{ display: 'block', marginTop: 4, font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', textTransform: 'none', letterSpacing: 'normal', color: 'var(--text-muted)' }}>Construcción e implantación</span></th>
+                <th scope="col" style={th}>BECOME DISCOVER™<span style={{ display: 'block', marginTop: 4, font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', textTransform: 'none', letterSpacing: 'normal', color: 'var(--text-muted)' }}>Estrategia y modelo operativo</span></th>
+                <th scope="col" style={th}>BECOME EMBED™<span style={{ display: 'block', marginTop: 4, font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', textTransform: 'none', letterSpacing: 'normal', color: 'var(--text-muted)' }}>Construcción e implantación</span></th>
               </tr>
             </thead>
             <tbody>
@@ -181,23 +181,23 @@ export default function Servicios() {
             <IcoBadge name="decision" />
             <Body style={{ color: 'var(--text-body)' }}>
               Si buscas <strong>definir dirección, priorizar inversiones o diseñar el
-              operating model</strong>, necesitas AI-Native Transformation Discovery.
+              operating model</strong>, necesitas BECOME DISCOVER™.
             </Body>
-            <TextCTA to="/es/servicios/transformation-discovery">Ir a Discovery</TextCTA>
+            <TextCTA to="/es/servicios/become-discover">Ir a Discovery</TextCTA>
           </Card>
           <Card>
             <IcoBadge name="build" />
             <Body style={{ color: 'var(--text-body)' }}>
               Si ya sabes <strong>qué capacidad construir</strong> y necesitas llevarla
-              a la operación, necesitas Build &amp; Embed Sprint.
+              a la operación, necesitas BECOME EMBED™.
             </Body>
-            <TextCTA to="/es/servicios/build-and-embed">Ir a Build &amp; Embed</TextCTA>
+            <TextCTA to="/es/servicios/become-embed">Ir a BECOME EMBED™</TextCTA>
           </Card>
           <Card>
             <IcoBadge name="signpost" />
             <Body style={{ color: 'var(--text-body)' }}>
               Si tienes una oportunidad pero <strong>todavía no un diseño validado</strong>,
-              hacemos una revisión corta antes de recomendar Build &amp; Embed.
+              hacemos una revisión corta antes de recomendar BECOME EMBED™.
             </Body>
             <TextCTA to="/es/contacto">Hablemos de esa revisión</TextCTA>
           </Card>

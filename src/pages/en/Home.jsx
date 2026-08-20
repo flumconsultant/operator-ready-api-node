@@ -36,15 +36,15 @@ const WHAT = [
     icon: 'decision',
     label: 'We define',
     line: 'Where the value is, what needs to change, and how the company should operate next.',
-    to: '/en/services/transformation-discovery',
+    to: '/en/services/become-discover',
     cta: 'Discovery',
   },
   {
     icon: 'build',
     label: 'We build',
     line: 'The workflow, the agent, or the product — inside the operation, with the people who will use it.',
-    to: '/en/services/build-and-embed',
-    cta: 'Build & Embed',
+    to: '/en/services/become-embed',
+    cta: 'BECOME EMBED™',
   },
 ];
 
@@ -248,13 +248,13 @@ export default function Home() {
               <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>8–12 weeks</p>
             </div>
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-heading)' }}>
-              AI-Native Transformation Discovery
+              BECOME DISCOVER™
             </h3>
             <Body>
               Defines the ambition, identifies where the value is, and designs the
               operating model and roadmap.
             </Body>
-            <TextCTA to="/en/services/transformation-discovery">Explore Discovery</TextCTA>
+            <TextCTA to="/en/services/become-discover">Explore Discovery</TextCTA>
           </Card>
           <Card>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
@@ -262,13 +262,13 @@ export default function Home() {
               <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>8–12 weeks per capability</p>
             </div>
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-heading)' }}>
-              Build &amp; Embed Sprint
+              BECOME EMBED™
             </h3>
             <Body>
               Builds and embeds an AI-native capability with adoption, controls and
               measurement.
             </Body>
-            <TextCTA to="/en/services/build-and-embed">Explore Build &amp; Embed</TextCTA>
+            <TextCTA to="/en/services/become-embed">Explore BECOME EMBED™</TextCTA>
           </Card>
         </Cols>
 

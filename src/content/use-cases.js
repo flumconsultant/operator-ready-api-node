@@ -15,7 +15,7 @@ export const USE_CASE_CONTENT = {
   'por-donde-empezar-con-ia': {
     q: '¿No sabes por dónde empezar con IA?',
     answer:
-      'Si estás buscando una dirección común para invertir, priorizar y gobernar la IA, necesitas un AI-Native Transformation Discovery.',
+      'Si estás buscando una dirección común para invertir, priorizar y gobernar la IA, necesitas un BECOME DISCOVER™.',
     signals: [
       'Cada área propone sus propios casos de uso.',
       'El comité ejecutivo no comparte una ambición común sobre la IA.',
@@ -28,7 +28,7 @@ export const USE_CASE_CONTENT = {
       'Alineamos la ambición y los resultados esperados, evaluamos la preparación de la empresa, identificamos dónde está el valor, priorizamos capacidades y diseñamos el modelo operativo objetivo y la hoja de ruta.',
     tools: ['Business Ambition Canvas™', 'Inside Readiness Index™', 'AI-Native Value Map™', 'Inside Target State Canvas™'],
     result: 'Una estrategia ejecutable y una primera capacidad elegida con criterios explícitos.',
-    engagement: 'Discovery',
+    engagement: 'BECOME DISCOVER™',
     engagementWhy:
       'Falta la capa estratégica: dirección, prioridad y diseño del modelo futuro. Construir antes de eso multiplica el número de pilotos, no el valor.',
     cta: 'Define dónde empezar',
@@ -51,7 +51,7 @@ export const USE_CASE_CONTENT = {
       'Evaluamos el piloto como parte de un sistema de Personas, Datos, Agentes, Productos y Operaciones; decidimos si debe detenerse, rediseñarse o convertirse en capacidad; luego construimos las condiciones de adopción y escala.',
     tools: ['Inside Readiness Index™', 'Agentic Workflow Blueprint™', 'Embed Scorecard™', 'Scale Readiness Gate™'],
     result: 'Una decisión informada y, cuando corresponde, una capacidad preparada para operar.',
-    engagement: 'Discovery → Build & Embed',
+    engagement: 'BECOME DISCOVER™ → BECOME EMBED™',
     engagementWhy:
       'El diagnóstico es estratégico y la solución es operativa. Saltarse el primero suele producir un segundo piloto igual de aislado.',
     cta: 'Convierte el piloto en capacidad',
@@ -74,7 +74,7 @@ export const USE_CASE_CONTENT = {
       'Rediseñamos como un solo proceso los eventos, las decisiones, los roles, las tareas del agente, los datos, las excepciones, la supervisión humana, los controles y las métricas. Después construimos y validamos la capacidad prioritaria.',
     tools: ['Inside Target State Canvas™', 'Agentic Workflow Blueprint™', 'Embed Scorecard™'],
     result: 'Un proceso más rápido, consistente, controlado y capaz de aprender.',
-    engagement: 'Discovery + Build & Embed',
+    engagement: 'BECOME DISCOVER™ + BECOME EMBED™',
     engagementWhy:
       'El rediseño necesita una mirada de sistema, y la mejora solo es real cuando el nuevo proceso funciona en producción.',
     cta: 'Rediseña el proceso',
@@ -96,7 +96,7 @@ export const USE_CASE_CONTENT = {
       'Validamos el diseño, definimos la supervisión humana y los controles, construimos e integramos el agente o copiloto, acompañamos la adopción y medimos confianza, desempeño, control y valor.',
     tools: ['Agentic Workflow Blueprint™', 'Embed Scorecard™', 'Scale Readiness Gate™'],
     result: 'Un agente o copiloto que participa en trabajo real, con un responsable explícito.',
-    engagement: 'Build & Embed',
+    engagement: 'BECOME EMBED™',
     engagementWhy:
       'Depende de la preparación: si la oportunidad todavía no tiene un diseño que se pueda validar, empezamos por una revisión corta.',
     cta: 'Construye la capacidad',
@@ -118,9 +118,9 @@ export const USE_CASE_CONTENT = {
       'Conectamos la tesis de producto, el recorrido de quien lo usa, la inteligencia, los datos, el comportamiento del agente, los controles y la responsabilidad operativa. Prototipamos, validamos y construimos el alcance que pueda demostrar valor real.',
     tools: ['AI-Native Value Map™', 'Inside Target State Canvas™', 'Agentic Workflow Blueprint™', 'Embed Scorecard™'],
     result: 'Un producto o servicio AI-native validado y listo para incorporarse.',
-    engagement: 'Build & Embed o secuencia completa',
+    engagement: 'BECOME EMBED™ o secuencia completa',
     engagementWhy:
-      'Si la tesis de producto todavía está abierta, Discovery la cierra antes de construir.',
+      'Si la tesis de producto todavía está abierta, BECOME DISCOVER™ la cierra antes de construir.',
     cta: 'Diseña la nueva experiencia',
   },
 
@@ -140,7 +140,7 @@ export const USE_CASE_CONTENT = {
       'Revisamos si están las condiciones, delimitamos el proceso y los resultados, construimos el alcance mínimo que sirva en la operación, lo implantamos de forma controlada y medimos uso, confianza, desempeño, control y valor.',
     tools: ['Agentic Workflow Blueprint™', 'Embed Scorecard™', 'Scale Readiness Gate™'],
     result: 'Evidencia suficiente para decidir si iterar, integrar, escalar o detener.',
-    engagement: 'Build & Embed',
+    engagement: 'BECOME EMBED™',
     engagementWhy:
       'Sujeto a priorización. Si el caso todavía no está suficientemente definido, no forzamos el plazo: un sprint mal delimitado gasta los 90 días sin producir la decisión.',
     cta: 'Define un sprint de valor',
@@ -150,10 +150,10 @@ export const USE_CASE_CONTENT = {
 /* Mapa de orientación del hub (§11). Es la tabla que traduce síntoma en
    decisión, y la razón por la que este hub no es una galería de tecnologías. */
 export const ORIENTATION = [
-  { q: '¿No sabes por dónde empezar con IA?', happens: 'Muchas ideas, presión ejecutiva y prioridades dispersas.', need: 'Ambición, dónde está el valor, qué se elige y una hoja de ruta.', rec: 'Discovery' },
-  { q: '¿Tienes pilotos que no escalan?', happens: 'Prototipos aislados, sin responsable, integración ni adopción.', need: 'Diagnóstico de sistema, estado objetivo y decisión sobre qué escalar.', rec: 'Discovery → Build & Embed' },
-  { q: '¿Necesitas rediseñar un proceso crítico?', happens: 'Un proceso lento, fragmentado o intensivo en decisiones.', need: 'Rediseño de principio a fin, con roles, agentes, datos y controles.', rec: 'Discovery + Build & Embed' },
-  { q: '¿Quieres construir un agente o un copiloto?', happens: 'Hay una idea o una necesidad concreta, pero falta el diseño operativo.', need: 'Diseño, límites de autonomía, supervisión humana, construcción y adopción.', rec: 'Build & Embed' },
-  { q: '¿Quieres crear una experiencia AI-native?', happens: 'Se busca nuevo valor para clientes o colaboradores.', need: 'Tesis de producto, diseño de la experiencia, arquitectura de datos y agentes, y validación.', rec: 'Build & Embed o secuencia completa' },
-  { q: '¿Necesitas demostrar valor en 90 días?', happens: 'Hay presión por mostrar resultados sin caer en otra demostración.', need: 'Un alcance viable, una línea base, una capacidad que funcione, adopción y medición.', rec: 'Build & Embed' },
+  { q: '¿No sabes por dónde empezar con IA?', happens: 'Muchas ideas, presión ejecutiva y prioridades dispersas.', need: 'Ambición, dónde está el valor, qué se elige y una hoja de ruta.', rec: 'BECOME DISCOVER™' },
+  { q: '¿Tienes pilotos que no escalan?', happens: 'Prototipos aislados, sin responsable, integración ni adopción.', need: 'Diagnóstico de sistema, estado objetivo y decisión sobre qué escalar.', rec: 'BECOME DISCOVER™ → BECOME EMBED™' },
+  { q: '¿Necesitas rediseñar un proceso crítico?', happens: 'Un proceso lento, fragmentado o intensivo en decisiones.', need: 'Rediseño de principio a fin, con roles, agentes, datos y controles.', rec: 'BECOME DISCOVER™ + BECOME EMBED™' },
+  { q: '¿Quieres construir un agente o un copiloto?', happens: 'Hay una idea o una necesidad concreta, pero falta el diseño operativo.', need: 'Diseño, límites de autonomía, supervisión humana, construcción y adopción.', rec: 'BECOME EMBED™' },
+  { q: '¿Quieres crear una experiencia AI-native?', happens: 'Se busca nuevo valor para clientes o colaboradores.', need: 'Tesis de producto, diseño de la experiencia, arquitectura de datos y agentes, y validación.', rec: 'BECOME EMBED™ o secuencia completa' },
+  { q: '¿Necesitas demostrar valor en 90 días?', happens: 'Hay presión por mostrar resultados sin caer en otra demostración.', need: 'Un alcance viable, una línea base, una capacidad que funcione, adopción y medición.', rec: 'BECOME EMBED™' },
 ];

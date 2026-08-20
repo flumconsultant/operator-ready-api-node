@@ -10,10 +10,10 @@ import { Banner } from '../../components/Media.jsx';
 
 const JOURNEY = [
   { n: '00', icon: 'capability', step: 'Enable', who: 'BECOME NOW™', q: 'Does the team know how to work with AI today?', out: 'Applied capabilities, workflows and reusable assets.' },
-  { n: '01', icon: 'decision', step: 'Define', who: 'AI-Native Transformation Discovery', q: 'Where is the value, and what needs to change?', out: 'Ambition, diagnostic and priority choices.' },
+  { n: '01', icon: 'decision', step: 'Define', who: 'BECOME DISCOVER™', q: 'Where is the value, and what needs to change?', out: 'Ambition, diagnostic and priority choices.' },
   { n: '02', icon: 'layers', step: 'Design', who: 'Connection point', q: 'How should the future model operate?', out: 'Target operating model and transformation blueprint.' },
-  { n: '03', icon: 'build', step: 'Build', who: 'Build & Embed Sprint', q: 'What capability should exist, and how will it work?', out: 'Workflow, agent, copilot, product or decision system.' },
-  { n: '04', icon: 'embed', step: 'Embed', who: 'Build & Embed Sprint', q: 'How is it embedded with adoption and control?', out: 'Ownership, human-in-the-loop, controls and scorecard.' },
+  { n: '03', icon: 'build', step: 'Build', who: 'BECOME EMBED™', q: 'What capability should exist, and how will it work?', out: 'Workflow, agent, copilot, product or decision system.' },
+  { n: '04', icon: 'embed', step: 'Embed', who: 'BECOME EMBED™', q: 'How is it embedded with adoption and control?', out: 'Ownership, human-in-the-loop, controls and scorecard.' },
   { n: '05', icon: 'scale', step: 'Scale', who: 'What comes after', q: 'Is it ready to expand?', out: 'Scale decision and evolution backlog.' },
 ];
 
@@ -23,7 +23,7 @@ const COMPARE = [
   ['Starts with', 'Ambition, a business tension, or a domain to transform.', 'A validatable blueprint, workflow or prioritized opportunity.'],
   ['Ends with', 'Strategy, portfolio, target state, business case and roadmap.', 'A working capability — adopted, controlled and measured.'],
   ['Framework', 'B–E–C–O.', 'O–M–E.'],
-  ['Next step', 'Build & Embed for the first prioritized case.', 'Iterate, integrate, scale or stop.'],
+  ['Next step', 'BECOME EMBED™ for the first prioritized case.', 'Iterate, integrate, scale or stop.'],
 ];
 
 export default function Servicios() {
@@ -107,13 +107,13 @@ export default function Servicios() {
               <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--electric-green)' }}>8–12 weeks</p>
             </div>
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--white)' }}>
-              AI-Native Transformation Discovery
+              BECOME DISCOVER™
             </h3>
             <Body dark style={{ marginTop: 'var(--space-5)' }}>
               Aligns the ambition. Diagnoses the company. Identifies the value.
               Designs the operating model and roadmap needed to move forward.
             </Body>
-            <TextCTA to="/en/services/transformation-discovery" dark>Explore Discovery</TextCTA>
+            <TextCTA to="/en/services/become-discover" dark>Explore Discovery</TextCTA>
           </Card>
           <Card dark>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
@@ -121,14 +121,14 @@ export default function Servicios() {
               <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--electric-green)' }}>8–12 weeks per capability</p>
             </div>
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--white)' }}>
-              Build &amp; Embed Sprint
+              BECOME EMBED™
             </h3>
             <Body dark style={{ marginTop: 'var(--space-5)' }}>
               Designs, builds and embeds an AI-native workflow, agent or product
               inside the operation, with adoption, controls and measurement from
               day one.
             </Body>
-            <TextCTA to="/en/services/build-and-embed" dark>Explore Build &amp; Embed</TextCTA>
+            <TextCTA to="/en/services/become-embed" dark>Explore BECOME EMBED™</TextCTA>
           </Card>
         </Cols>
         <Body dark style={{ marginTop: 'var(--space-9)' }}>
@@ -145,8 +145,8 @@ export default function Servicios() {
             <thead>
               <tr>
                 <th scope="col" style={{ ...th, width: '18%' }} />
-                <th scope="col" style={th}>AI-Native Transformation Discovery</th>
-                <th scope="col" style={th}>Build &amp; Embed Sprint</th>
+                <th scope="col" style={th}>BECOME DISCOVER™</th>
+                <th scope="col" style={th}>BECOME EMBED™</th>
               </tr>
             </thead>
             <tbody>
@@ -171,23 +171,23 @@ export default function Servicios() {
             <Body style={{ color: 'var(--text-body)' }}>
               If you’re looking to <strong>define direction, prioritize investments
               or design the operating model</strong>, you need AI-Native
-              Transformation Discovery.
+              BECOME DISCOVER™.
             </Body>
-            <TextCTA to="/en/services/transformation-discovery">Go to Discovery</TextCTA>
+            <TextCTA to="/en/services/become-discover">Go to Discovery</TextCTA>
           </Card>
           <Card>
             <IcoBadge name="build" />
             <Body style={{ color: 'var(--text-body)' }}>
               If you already know <strong>which capability to build</strong> and need
-              to bring it into operation, you need Build &amp; Embed Sprint.
+              to bring it into operation, you need BECOME EMBED™.
             </Body>
-            <TextCTA to="/en/services/build-and-embed">Go to Build &amp; Embed</TextCTA>
+            <TextCTA to="/en/services/become-embed">Go to BECOME EMBED™</TextCTA>
           </Card>
           <Card>
             <IcoBadge name="signpost" />
             <Body style={{ color: 'var(--text-body)' }}>
               If you have an opportunity but <strong>no validated blueprint</strong>,
-              we run a short readiness gate before recommending Build &amp; Embed.
+              we run a short readiness gate before recommending BECOME EMBED™.
             </Body>
             <TextCTA to="/en/contact">Talk about the gate</TextCTA>
           </Card>

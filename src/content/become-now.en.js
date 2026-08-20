@@ -353,7 +353,7 @@ export const INDICATORS = [
   ['Productivity', 'Preparation and response time, reduction of manual tasks, and speed to a first useful output.'],
   ['Quality', 'Consistency, detected errors, format compliance, rework and level of traceability.'],
   ['Trust', 'Ability to verify results, clarity about limits, and appropriate use of information.'],
-  ['Value', 'Improved processes, enabled decisions, installed capabilities and cases ready for Build & Embed.'],
+  ['Value', 'Improved processes, enabled decisions, installed capabilities and cases ready for BECOME EMBED™.'],
 ];
 
 export const GENERAL_DELIVERABLES = [
@@ -370,7 +370,7 @@ export const FAQ = [
   ['Do we need to share confidential information?', 'Not necessarily. The company can work with real, anonymized or simulated information. How it’s handled gets defined during the understanding session.'],
   ['Is this a prompting course?', 'No. Prompting is an enabling skill. The goal is to build assistants, agents, workflows and deliverables that improve the area’s work.'],
   ['Do participants need technical knowledge?', 'No. The curriculum adapts to the participants’ level. The functional programs are designed for business teams.'],
-  ['Does BECOME automate processes during the training?', 'The standard program focuses on capability building and configuration within authorized tools. Integrations and development can be addressed afterward through Build & Embed.'],
+  ['Does BECOME automate processes during the training?', 'The standard program focuses on capability building and configuration within authorized tools. Integrations and development can be addressed afterward through BECOME EMBED™.'],
   ['How many people can take part?', 'Group size is set based on the level of support required. Small cohorts are recommended when each participant needs to build and validate their own workflows.'],
   ['Can a program be created for an area that isn’t on the menu?', 'Yes. The catalog shows the most common routes, but BECOME can design programs for any area, role, industry or specific process.'],
   ['What’s left after the training?', 'Applicable capabilities, a reusable library, documented workflows, validation criteria and adoption recommendations.'],

@@ -51,7 +51,7 @@ const FIELDS = [
 const NEXT = [
   ['signpost', 'Leemos tu contexto', 'Lo mapeamos a las etapas del framework BECOME para saber por dónde entra.'],
   ['calendar', 'Conversación de 30 minutos', 'Centrada en el resultado de negocio y en las restricciones que tienes hoy.'],
-  ['target', 'Definimos el primer paso', 'BECOME NOW™, Discovery o Build & Embed. El que corresponda, no el más grande.'],
+  ['target', 'Definimos el primer paso', 'BECOME NOW™, BECOME DISCOVER™ o BECOME EMBED™. El que corresponda, no el más grande.'],
 ];
 
 export default function Contacto() {

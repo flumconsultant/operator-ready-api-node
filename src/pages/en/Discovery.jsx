@@ -6,7 +6,7 @@ import { Ico } from '../../components/icons.jsx';
 import { Banner } from '../../components/Media.jsx';
 import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, Cols, Card, IndexRow } from '../../components/ui.jsx';
 
-/** AI-Native Transformation Discovery — English mirror of src/pages/Discovery.jsx. */
+/** BECOME DISCOVER™ — English mirror of src/pages/Discovery.jsx. */
 
 const STAGES = [
   ['B', 'Business Ambition', 'Defines what the company must become and which outcomes matter.', 'AI-native ambition and strategic thesis.'],
@@ -58,7 +58,7 @@ export default function Discovery() {
           diagnosis, value prioritization and operating-model design.
         </Lead>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
-          <PrimaryCTA to="/en/contact">Talk to us about Discovery</PrimaryCTA>
+          <PrimaryCTA to="/en/contact">Talk to us about BECOME DISCOVER™</PrimaryCTA>
           <GhostCTA to="/en/services" dark>See both services</GhostCTA>
         </div>
       </Section>
@@ -79,7 +79,7 @@ export default function Discovery() {
 
       <Section band="dark">
         <Kicker dark>Who it’s for</Kicker>
-        <Headline dark>Five conditions that make Discovery the right next step.</Headline>
+        <Headline dark>Five conditions that make BECOME DISCOVER™ the right next step.</Headline>
         <Cols min="240px">
           {FIT.map((f, i) => (
             <Reveal as="div" key={f} style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
@@ -101,11 +101,11 @@ export default function Discovery() {
 
       <Section band="light">
         <Kicker>The journey</Kicker>
-        <Headline>Discovery covers B–E–C–O of the framework.</Headline>
+        <Headline>BECOME DISCOVER™ covers B–E–C–O of the framework.</Headline>
         <Body>
-          The last two stages — Make &amp; Embed and Expand &amp; Evolve — are Build
-          &amp; Embed territory. Operating Model Design is the visible transition
-          point between the two services.
+          The last two stages — Make &amp; Embed and Expand &amp; Evolve — are
+          BECOME EMBED™ territory. Operating Model Design is the visible
+          transition point between the two services.
         </Body>
         <div style={{ marginTop: 'var(--space-10)' }}>
           {STAGES.map(([letter, name, work, out]) => (
@@ -193,8 +193,8 @@ export default function Discovery() {
           </Card>
           <Card>
             <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>Next step</p>
-            <Body style={{ marginTop: 'var(--space-4)' }}>Build &amp; Embed for the first prioritized case.</Body>
-            <TextCTA to="/en/services/build-and-embed">Explore Build &amp; Embed</TextCTA>
+            <Body style={{ marginTop: 'var(--space-4)' }}>BECOME EMBED™ for the first prioritized case.</Body>
+            <TextCTA to="/en/services/become-embed">Explore BECOME EMBED™</TextCTA>
           </Card>
         </Cols>
       </Section>

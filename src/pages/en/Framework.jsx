@@ -7,12 +7,12 @@ import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, TextCTA, Cols, Card,
 /** BECOME™ Transformation Framework — English mirror of src/pages/Framework.jsx. */
 
 const STAGES = [
-  ['B', 'Business Ambition', 'Defines what the company must become and which outcomes matter.', 'AI-native ambition and strategic thesis.', 'Discovery'],
-  ['E', 'Enterprise Discovery', 'Understands how it works today and what limits change.', 'Enterprise diagnostic and readiness.', 'Discovery'],
-  ['C', 'Capability Choices', 'Prioritizes where AI can create differential value.', 'Value pools and prioritized portfolio.', 'Discovery'],
+  ['B', 'Business Ambition', 'Defines what the company must become and which outcomes matter.', 'AI-native ambition and strategic thesis.', 'BECOME DISCOVER™'],
+  ['E', 'Enterprise Discovery', 'Understands how it works today and what limits change.', 'Enterprise diagnostic and readiness.', 'BECOME DISCOVER™'],
+  ['C', 'Capability Choices', 'Prioritizes where AI can create differential value.', 'Value pools and prioritized portfolio.', 'BECOME DISCOVER™'],
   ['O', 'Operating Model Design', 'Designs the future system.', 'Target operating model and blueprint.', 'Transition point'],
-  ['M', 'Make & Embed', 'Builds and embeds the capability.', 'A capability working with controls.', 'Build & Embed'],
-  ['E', 'Expand & Evolve', 'Measures, governs, transfers and scales.', 'Scorecard and scale decision.', 'Build & Embed'],
+  ['M', 'Make & Embed', 'Builds and embeds the capability.', 'A capability working with controls.', 'BECOME EMBED™'],
+  ['E', 'Expand & Evolve', 'Measures, governs, transfers and scales.', 'Scorecard and scale decision.', 'BECOME EMBED™'],
 ];
 
 const DOMAINS = [
@@ -122,18 +122,18 @@ export default function Framework() {
           <Card>
             <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>B–E–C–O</p>
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-heading)' }}>
-              AI-Native Transformation Discovery
+              BECOME DISCOVER™
             </h3>
             <Body>Defines, diagnoses, prioritizes and designs the future model.</Body>
-            <TextCTA to="/en/services/transformation-discovery">Explore Discovery</TextCTA>
+            <TextCTA to="/en/services/become-discover">Explore Discovery</TextCTA>
           </Card>
           <Card>
             <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>O–M–E</p>
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-heading)' }}>
-              Build &amp; Embed Sprint
+              BECOME EMBED™
             </h3>
             <Body>Validates the design, builds, embeds and prepares for scale.</Body>
-            <TextCTA to="/en/services/build-and-embed">Explore Build &amp; Embed</TextCTA>
+            <TextCTA to="/en/services/become-embed">Explore BECOME EMBED™</TextCTA>
           </Card>
         </Cols>
         <Body style={{ marginTop: 'var(--space-8)' }}>
@@ -171,7 +171,7 @@ export default function Framework() {
         <Kicker dark>Apply the framework to your company</Kicker>
         <Headline dark>What should your company become next?</Headline>
         <div style={{ marginTop: 'var(--space-8)' }}>
-          <PrimaryCTA to="/en/contact">Start your Discovery</PrimaryCTA>
+          <PrimaryCTA to="/en/contact">Start with BECOME DISCOVER™</PrimaryCTA>
         </div>
       </Section>
 

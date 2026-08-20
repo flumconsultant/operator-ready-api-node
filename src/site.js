@@ -23,14 +23,14 @@ export const HOME = '/es';
    puerta de entrada. Lleva un tercer nivel — los programas por área.
 
    Cada nombre lleva detrás, tras un guion, qué es en castellano llano. Los
-   nombres solos —"Applied AI Enablement", "Build & Embed Sprint"— no dicen a
+   nombres solos —"Applied AI Enablement", "BECOME EMBED™"— no dicen a
    nadie de qué se trata: quien llegaba al menú no sabía que el primero es
    capacitación, y la explicación estaba debajo en letra pequeña, que es
    justo lo que no se lee. La marca se conserva; el descriptor la traduce. */
 export const SERVICES = [
   {
     to: '/es/servicios/become-now',
-    name: 'BECOME NOW™ — Capacitación en IA aplicada',
+    name: 'BECOME NOW™ — Capacitación aplicada en IA',
     line: 'Programas de ChatGPT, Claude y Gemini sobre los procesos, documentos y casos reales de cada área.',
     heading: 'Programas por área',
     groups: PROGRAM_GROUPS.map((g) => ({
@@ -43,13 +43,13 @@ export const SERVICES = [
     more: { to: '/es/servicios/become-now', label: 'Ver todos los programas' },
   },
   {
-    to: '/es/servicios/transformation-discovery',
-    name: 'Transformation Discovery — Estrategia y modelo operativo',
+    to: '/es/servicios/become-discover',
+    name: 'BECOME DISCOVER™ — Discovery de transformación AI-native',
     line: 'Dónde está el valor de la IA en tu empresa, qué se hace primero y cómo hay que operar para conseguirlo.',
   },
   {
-    to: '/es/servicios/build-and-embed',
-    name: 'Build & Embed — Construcción e implantación',
+    to: '/es/servicios/become-embed',
+    name: 'BECOME EMBED™ — Sprint de construcción e incorporación',
     line: 'Construimos la solución de IA con tu equipo y la dejamos funcionando dentro de la operación diaria.',
   },
 ];
@@ -161,8 +161,8 @@ export const FOOTER = [
 export const LEGACY_REDIRECTS = {
   '/': HOME,
   '/como-trabajamos': '/es/framework',
-  '/discovery': '/es/servicios/transformation-discovery',
-  '/build-embed': '/es/servicios/build-and-embed',
+  '/discovery': '/es/servicios/become-discover',
+  '/build-embed': '/es/servicios/become-embed',
   '/casos': '/es/casos-de-uso',
   '/insights': '/es/insights',
   '/nosotros': '/es/nosotros',

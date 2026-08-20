@@ -64,7 +64,7 @@ export default function CasosDeUso() {
         <Kicker dark>Mapa de orientación</Kicker>
         <Headline dark>Del síntoma a la decisión.</Headline>
         <Body dark style={{ marginTop: 'var(--space-6)' }}>
-          Discovery cuando falta estrategia o target state. Build &amp; Embed cuando
+          Discovery cuando falta estrategia o target state. BECOME EMBED™ cuando
           ya hay una capacidad priorizada y condiciones para construir.
         </Body>
 

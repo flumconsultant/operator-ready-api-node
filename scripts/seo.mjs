@@ -127,7 +127,7 @@ function datosEstructurados(path, meta) {
   }
   if (path === '/es/servicios/become-now') return [faqPage(esNow.FAQ)];
   if (path === '/en/services/become-now') return [faqPage(enNow.FAQ)];
-  if (/^\/(es\/servicios|en\/services)\/(transformation-discovery|build-and-embed)$/.test(path)) {
+  if (/^\/(es\/servicios|en\/services)\/(become-discover|become-embed)$/.test(path)) {
     return [servicio(meta.title.split('|')[0].trim(), meta.description, url)];
   }
   return [];

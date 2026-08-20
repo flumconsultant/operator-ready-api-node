@@ -7,7 +7,7 @@ import { Banner } from '../components/Media.jsx';
 import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, Cols, Card, IndexRow } from '../components/ui.jsx';
 
 /**
- * AI-Native Transformation Discovery (§8 del documento).
+ * BECOME DISCOVER™ (§8 del documento).
  *
  * La secuencia de la página es la del documento y empieza por el problema, no
  * por el servicio: quien llega aquí ya sabe que quiere hablar con alguien, lo
@@ -88,7 +88,7 @@ export default function Discovery() {
       {/* 2 — Para quién */}
       <Section band="dark">
         <Kicker dark>Para quién es</Kicker>
-        <Headline dark>Cinco condiciones que hacen que Discovery sea el paso correcto.</Headline>
+        <Headline dark>Cinco condiciones que hacen de BECOME DISCOVER™ el paso correcto.</Headline>
         <Cols min="240px">
           {FIT.map((f, i) => (
             <Reveal as="div" key={f} style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
@@ -111,10 +111,10 @@ export default function Discovery() {
       {/* 3 — Etapas B–E–C–O */}
       <Section band="light">
         <Kicker>El recorrido</Kicker>
-        <Headline>Discovery cubre B–E–C–O del framework.</Headline>
+        <Headline>BECOME DISCOVER™ cubre B–E–C–O del framework.</Headline>
         <Body>
           Las dos últimas etapas —Make &amp; Embed y Expand &amp; Evolve— son el
-          territorio de Build &amp; Embed. Operating Model Design es el punto de
+          territorio de BECOME EMBED™. Operating Model Design es el punto de
           transición visible entre los dos servicios.
         </Body>
         <div style={{ marginTop: 'var(--space-10)' }}>
@@ -206,8 +206,8 @@ export default function Discovery() {
           </Card>
           <Card>
             <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>Siguiente paso</p>
-            <Body style={{ marginTop: 'var(--space-4)' }}>Build &amp; Embed del primer caso priorizado.</Body>
-            <TextCTA to="/es/servicios/build-and-embed">Explora Build &amp; Embed</TextCTA>
+            <Body style={{ marginTop: 'var(--space-4)' }}>BECOME EMBED™ del primer caso priorizado.</Body>
+            <TextCTA to="/es/servicios/become-embed">Explora BECOME EMBED™</TextCTA>
           </Card>
         </Cols>
       </Section>
@@ -220,7 +220,7 @@ export default function Discovery() {
           diremos.
         </Lead>
         <div style={{ marginTop: 'var(--space-8)' }}>
-          <PrimaryCTA to="/es/contacto">Inicia tu Discovery</PrimaryCTA>
+          <PrimaryCTA to="/es/contacto">Hablemos de BECOME DISCOVER™</PrimaryCTA>
         </div>
       </Section>
 

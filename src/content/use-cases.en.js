@@ -7,7 +7,7 @@ export const USE_CASE_CONTENT = {
   'por-donde-empezar-con-ia': {
     q: 'Not sure where to start with AI?',
     answer:
-      'If you’re looking for a shared direction to invest, prioritize and govern AI, you need an AI-Native Transformation Discovery.',
+      'If you’re looking for a shared direction to invest, prioritize and govern AI, you need an BECOME DISCOVER™.',
     signals: [
       'Every area proposes its own use cases.',
       'The executive committee doesn’t share an AI-native ambition.',
@@ -20,7 +20,7 @@ export const USE_CASE_CONTENT = {
       'We align ambition and outcomes, assess readiness, identify value pools, prioritize capabilities and design the target operating model and roadmap.',
     tools: ['Business Ambition Canvas™', 'Inside Readiness Index™', 'AI-Native Value Map™', 'Inside Target State Canvas™'],
     result: 'An executable strategy and a first capability chosen with explicit criteria.',
-    engagement: 'Discovery',
+    engagement: 'BECOME DISCOVER™',
     engagementWhy:
       'The strategic layer is missing: direction, priority and the design of the future model. Building before that multiplies the number of pilots, not the value.',
     cta: 'Define where to start',
@@ -43,7 +43,7 @@ export const USE_CASE_CONTENT = {
       'We assess the pilot as part of a People, Data, Agents, Products and Operations system; decide whether it should stop, be redesigned or become a capability; then build the conditions for adoption and scale.',
     tools: ['Inside Readiness Index™', 'Agentic Workflow Blueprint™', 'Embed Scorecard™', 'Scale Readiness Gate™'],
     result: 'An informed decision and, where warranted, a capability ready to operate.',
-    engagement: 'Discovery → Build & Embed',
+    engagement: 'BECOME DISCOVER™ → BECOME EMBED™',
     engagementWhy:
       'The diagnosis is strategic and the solution is operational. Skipping the first usually produces a second, equally isolated pilot.',
     cta: 'Turn the pilot into a capability',
@@ -66,7 +66,7 @@ export const USE_CASE_CONTENT = {
       'We redesign events, decisions, roles, agent tasks, data, exceptions, human oversight, controls and metrics as a single workflow; then we build and validate the priority capability.',
     tools: ['Inside Target State Canvas™', 'Agentic Workflow Blueprint™', 'Embed Scorecard™'],
     result: 'A faster, more consistent, controlled workflow capable of learning.',
-    engagement: 'Discovery + Build & Embed',
+    engagement: 'BECOME DISCOVER™ + BECOME EMBED™',
     engagementWhy:
       'The redesign needs a systems view, and the improvement is only real once the new workflow runs in production.',
     cta: 'Redesign the workflow',
@@ -88,7 +88,7 @@ export const USE_CASE_CONTENT = {
       'We validate the blueprint, design human-in-the-loop oversight and controls, build and integrate the agent or copilot, support adoption, and measure trust, performance, control and value.',
     tools: ['Agentic Workflow Blueprint™', 'Embed Scorecard™', 'Scale Readiness Gate™'],
     result: 'An agent or copilot that participates in real work with explicit ownership.',
-    engagement: 'Build & Embed',
+    engagement: 'BECOME EMBED™',
     engagementWhy:
       'Subject to readiness: if the opportunity doesn’t yet have a validatable blueprint, we first run a short readiness gate.',
     cta: 'Build the capability',
@@ -110,9 +110,9 @@ export const USE_CASE_CONTENT = {
       'We connect product thesis, user journey, intelligence, data, agent behavior, controls and operational ownership; prototype, validate and build the scope that can prove real value.',
     tools: ['AI-Native Value Map™', 'Inside Target State Canvas™', 'Agentic Workflow Blueprint™', 'Embed Scorecard™'],
     result: 'A validated, embeddable AI-native product or service capability.',
-    engagement: 'Build & Embed or the full sequence',
+    engagement: 'BECOME EMBED™ or the full sequence',
     engagementWhy:
-      'If the product thesis is still open, Discovery closes it before we build.',
+      'If the product thesis is still open, BECOME DISCOVER™ closes it before we build.',
     cta: 'Design the new experience',
   },
 
@@ -132,7 +132,7 @@ export const USE_CASE_CONTENT = {
       'We apply a readiness gate, scope the workflow and the outcomes, build the minimum operational scope, roll it out in a controlled way, and measure usage, trust, performance, control and value.',
     tools: ['Agentic Workflow Blueprint™', 'Embed Scorecard™', 'Scale Readiness Gate™'],
     result: 'Enough evidence to decide whether to iterate, integrate, scale or stop.',
-    engagement: 'Build & Embed',
+    engagement: 'BECOME EMBED™',
     engagementWhy:
       'Subject to prioritization. If the case still isn’t sufficiently defined, we don’t force the deadline: a poorly scoped sprint spends the 90 days without producing the decision.',
     cta: 'Define a value sprint',
@@ -141,10 +141,10 @@ export const USE_CASE_CONTENT = {
 
 /* Orientation map for the hub. Same rows and order as use-cases.js. */
 export const ORIENTATION = [
-  { q: 'Not sure where to start with AI?', happens: 'Many ideas, executive pressure and scattered priorities.', need: 'Ambition, value pools, choices and roadmap.', rec: 'Discovery' },
-  { q: 'Do your pilots never scale?', happens: 'Isolated prototypes with no ownership, integration or adoption.', need: 'Systemic diagnosis, target state and a decision on what to scale.', rec: 'Discovery → Build & Embed' },
-  { q: 'Need to redesign a critical workflow?', happens: 'A slow, fragmented or decision-heavy process.', need: 'End-to-end workflow redesign with roles, agents, data and controls.', rec: 'Discovery + Build & Embed' },
-  { q: 'Want to build an agent or copilot?', happens: 'An idea or functional need exists, but operational design is missing.', need: 'Blueprint, autonomy boundaries, human-in-the-loop, build and adoption.', rec: 'Build & Embed' },
-  { q: 'Want to create an AI-native experience?', happens: 'New value is sought for customers or collaborators.', need: 'Product thesis, experience design, data/agent architecture and validation.', rec: 'Build & Embed or the full sequence' },
-  { q: 'Need to prove value in 90 days?', happens: 'Pressure to show outcomes without producing another demo.', need: 'Viable scope, baseline, working capability, adoption and scorecard.', rec: 'Build & Embed' },
+  { q: 'Not sure where to start with AI?', happens: 'Many ideas, executive pressure and scattered priorities.', need: 'Ambition, value pools, choices and roadmap.', rec: 'BECOME DISCOVER™' },
+  { q: 'Do your pilots never scale?', happens: 'Isolated prototypes with no ownership, integration or adoption.', need: 'Systemic diagnosis, target state and a decision on what to scale.', rec: 'BECOME DISCOVER™ → BECOME EMBED™' },
+  { q: 'Need to redesign a critical workflow?', happens: 'A slow, fragmented or decision-heavy process.', need: 'End-to-end workflow redesign with roles, agents, data and controls.', rec: 'BECOME DISCOVER™ + BECOME EMBED™' },
+  { q: 'Want to build an agent or copilot?', happens: 'An idea or functional need exists, but operational design is missing.', need: 'Blueprint, autonomy boundaries, human-in-the-loop, build and adoption.', rec: 'BECOME EMBED™' },
+  { q: 'Want to create an AI-native experience?', happens: 'New value is sought for customers or collaborators.', need: 'Product thesis, experience design, data/agent architecture and validation.', rec: 'BECOME EMBED™ or the full sequence' },
+  { q: 'Need to prove value in 90 days?', happens: 'Pressure to show outcomes without producing another demo.', need: 'Viable scope, baseline, working capability, adoption and scorecard.', rec: 'BECOME EMBED™' },
 ];

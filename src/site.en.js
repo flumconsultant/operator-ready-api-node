@@ -51,13 +51,13 @@ export const SERVICES = [
     more: { to: '/en/services/become-now', label: 'View all programs' },
   },
   {
-    to: '/en/services/transformation-discovery',
-    name: 'AI-Native Transformation Discovery',
+    to: '/en/services/become-discover',
+    name: 'BECOME DISCOVER™ — AI-Native Transformation Discovery',
     line: 'Define the strategy, prioritize the value and design the operating model.',
   },
   {
-    to: '/en/services/build-and-embed',
-    name: 'Build & Embed Sprint',
+    to: '/en/services/become-embed',
+    name: 'BECOME EMBED™ — Build & Embed Sprint',
     line: 'Build and embed an AI-native capability into the operation.',
   },
 ];

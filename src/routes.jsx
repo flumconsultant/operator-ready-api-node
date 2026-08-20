@@ -56,8 +56,8 @@ export const routes = [
   { path: '/en/services', element: <ServiciosEN /> },
   { path: '/en/services/become-now', element: <BecomeNowEN /> },
   { path: '/en/services/become-now/:slug', element: <ProgramEN /> },
-  { path: '/en/services/transformation-discovery', element: <DiscoveryEN /> },
-  { path: '/en/services/build-and-embed', element: <BuildEmbedEN /> },
+  { path: '/en/services/become-discover', element: <DiscoveryEN /> },
+  { path: '/en/services/become-embed', element: <BuildEmbedEN /> },
 
   { path: '/en/framework', element: <FrameworkEN /> },
   { path: '/en/about', element: <NosotrosEN /> },
@@ -74,8 +74,8 @@ export const routes = [
   { path: '/es/servicios', element: <Servicios /> },
   { path: '/es/servicios/become-now', element: <BecomeNow /> },
   { path: '/es/servicios/become-now/:slug', element: <Program /> },
-  { path: '/es/servicios/transformation-discovery', element: <Discovery /> },
-  { path: '/es/servicios/build-and-embed', element: <BuildEmbed /> },
+  { path: '/es/servicios/become-discover', element: <Discovery /> },
+  { path: '/es/servicios/become-embed', element: <BuildEmbed /> },
 
   { path: '/es/framework', element: <Framework /> },
   { path: '/es/nosotros', element: <Nosotros /> },

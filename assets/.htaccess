@@ -34,6 +34,19 @@
   RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
   RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
 
+  # ───────────────────────────────────────────────────────────────────────────
+  # Direcciones que cambiaron de nombre
+  # ───────────────────────────────────────────────────────────────────────────
+  # Los dos servicios pasaron a llamarse BECOME DISCOVER™ y BECOME EMBED™, y su
+  # dirección con ellos. Un 301 —y no la redirección del enrutador de React—
+  # porque es lo único que traslada el posicionamiento de la URL vieja a la
+  # nueva; con una redirección de JavaScript, para un buscador son dos páginas
+  # distintas y la vieja acaba en 404 el día que se retire.
+  RedirectMatch 301 ^/es/servicios/transformation-discovery/?$ /es/servicios/become-discover
+  RedirectMatch 301 ^/es/servicios/build-and-embed/?$          /es/servicios/become-embed
+  RedirectMatch 301 ^/en/services/transformation-discovery/?$  /en/services/become-discover
+  RedirectMatch 301 ^/en/services/build-and-embed/?$           /en/services/become-embed
+
   # La raíz no tiene página propia: el sitio empieza en /es. La redirección la
   # hace el servidor y no React para que los buscadores vean un 301 de verdad
   # en vez de una página vacía que se redirige sola con JavaScript.

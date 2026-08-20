@@ -47,15 +47,15 @@ export const PAGES = {
     'Programas in company de ChatGPT, Claude y Gemini diseñados sobre los procesos, documentos y casos reales de cada área.',
     '/en/services/become-now',
   ],
-  '/es/servicios/transformation-discovery': [
-    'Estrategia de IA y modelo operativo | BECOME',
+  '/es/servicios/become-discover': [
+    'Estrategia de IA y modelo operativo | BECOME DISCOVER™',
     'Ocho a doce semanas para saber dónde está el valor de la IA en tu negocio, qué se hace primero y cómo debe operar la empresa.',
-    '/en/services/transformation-discovery',
+    '/en/services/become-discover',
   ],
-  '/es/servicios/build-and-embed': [
-    'Construcción de soluciones de IA | Build & Embed',
+  '/es/servicios/become-embed': [
+    'Construcción de soluciones de IA | BECOME EMBED™',
     'Construimos la solución de IA con tu equipo y la dejamos funcionando dentro de la operación, con adopción y control medidos.',
-    '/en/services/build-and-embed',
+    '/en/services/become-embed',
   ],
   '/es/framework': [
     'BECOME Framework — Cómo trabajamos | BECOME',
@@ -109,15 +109,15 @@ export const PAGES = {
     'In-company programs on ChatGPT, Claude and Gemini, designed around each area’s real processes, documents and cases.',
     '/es/servicios/become-now',
   ],
-  '/en/services/transformation-discovery': [
-    'AI strategy and operating model | BECOME',
+  '/en/services/become-discover': [
+    'AI strategy and operating model | BECOME DISCOVER™',
     'Eight to twelve weeks to know where AI value sits in your business, what to do first, and how the company must operate to sustain it.',
-    '/es/servicios/transformation-discovery',
+    '/es/servicios/become-discover',
   ],
-  '/en/services/build-and-embed': [
-    'Build AI capabilities that stay | Build & Embed',
+  '/en/services/become-embed': [
+    'Build AI capabilities that stay | BECOME EMBED™',
     'We build the AI capability with your team and leave it running inside the operation, with adoption and control measured.',
-    '/es/servicios/build-and-embed',
+    '/es/servicios/become-embed',
   ],
   '/en/framework': [
     'BECOME Framework — How we work | BECOME',

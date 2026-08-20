@@ -7,7 +7,7 @@ import { Banner } from '../components/Media.jsx';
 import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, Cols, Card, IndexRow } from '../components/ui.jsx';
 
 /**
- * Build & Embed Sprint (§9 del documento).
+ * BECOME EMBED™ (§9 del documento).
  *
  * La página entera gira alrededor de una distinción: prototype no es capacidad.
  * Por eso adopción, controles y medición aparecen antes que la construcción —
@@ -62,7 +62,7 @@ export default function BuildEmbed() {
           usarla todos los días.
         </Lead>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
-          <PrimaryCTA to="/es/contacto">Conversemos sobre Build &amp; Embed</PrimaryCTA>
+          <PrimaryCTA to="/es/contacto">Conversemos sobre BECOME EMBED™</PrimaryCTA>
           <GhostCTA to="/es/servicios" dark>Ver los dos servicios</GhostCTA>
         </div>
       </Section>
@@ -102,10 +102,10 @@ export default function BuildEmbed() {
 
       <Section band="light">
         <Kicker>El recorrido</Kicker>
-        <Headline>Build &amp; Embed cubre O–M–E del framework.</Headline>
+        <Headline>BECOME EMBED™ cubre O–M–E del framework.</Headline>
         <Body>
           Puede empezar desde un diseño que ya exista, si cumple los criterios
-          mínimos; no exige haber hecho Discovery con nosotros.
+          mínimos; no exige haber hecho BECOME DISCOVER™ con nosotros.
         </Body>
         <div style={{ marginTop: 'var(--space-10)' }}>
           {STAGES.map(([letter, name, work, out]) => (

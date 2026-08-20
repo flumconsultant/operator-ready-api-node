@@ -32,7 +32,7 @@ const FIELDS = [
 const NEXT = [
   ['signpost', 'We read your context', 'We map it to the stages of the BECOME framework to know where it comes in.'],
   ['calendar', '30-minute conversation', 'Focused on the business outcome and the constraints you have today.'],
-  ['target', 'We define the first step', 'BECOME NOW™, Discovery or Build & Embed. Whichever fits, not the biggest one.'],
+  ['target', 'We define the first step', 'BECOME NOW™, BECOME DISCOVER™ or BECOME EMBED™. Whichever fits, not the biggest one.'],
 ];
 
 export default function Contacto() {
