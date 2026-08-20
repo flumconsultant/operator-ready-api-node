@@ -148,6 +148,35 @@ jobs:
           fi
           php -l dist/api/config-panel.php >/dev/null
 
+      - name: Generar la configuración de la lista de correo
+        env:
+          BD_HOST: ${{ secrets.BD_HOST }}
+          BD_BASE: ${{ secrets.BD_BASE }}
+          BD_USUARIO: ${{ secrets.BD_USUARIO }}
+          BD_CLAVE: ${{ secrets.BD_CLAVE }}
+          DIFUSION_TOKEN: ${{ secrets.DIFUSION_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${BD_BASE:-}" ] || [ -z "${BD_USUARIO:-}" ] || [ -z "${BD_CLAVE:-}" ]; then
+            echo "::warning::Sin los secretos BD_* el formulario de suscripción dirá que no está configurado. El resto del sitio se despliega igual."
+            printf '<?php return [];\n' > dist/api/config-datos.php
+          else
+            python3 - <<'PY' > dist/api/config-datos.php
+          import base64, json, os
+          cfg = {
+              'host':    os.environ.get('BD_HOST') or 'localhost',
+              'base':    os.environ['BD_BASE'],
+              'usuario': os.environ['BD_USUARIO'],
+              'clave':   os.environ['BD_CLAVE'],
+              'difusion': os.environ.get('DIFUSION_TOKEN') or '',
+          }
+          blob = base64.b64encode(json.dumps(cfg).encode()).decode()
+          print("<?php return json_decode(base64_decode('%s'), true);" % blob)
+          PY
+            echo "config-datos.php generado — base ${BD_BASE}"
+          fi
+          php -l dist/api/config-datos.php >/dev/null
+
       - name: Comprobar que el build es publicable
         # Barato, y detecta el fallo más caro: subir un dist/ sin .htaccess deja
         # todas las rutas menos la home devolviendo 404, y desde fuera parece
@@ -155,7 +184,8 @@ jobs:
         run: |
           for f in dist/index.html dist/.htaccess dist/sitemap.xml dist/robots.txt \
                    dist/llms.txt dist/api/contacto.php dist/api/config.php \
-                   dist/api/panel.php dist/api/config-panel.php; do
+                   dist/api/panel.php dist/api/config-panel.php \
+                   dist/api/suscripcion.php dist/api/correo.php dist/api/config-datos.php; do
             [ -s "$f" ] || { echo "Falta o está vacío: $f"; exit 1; }
           done
           echo "dist/ listo — $(du -sh dist | cut -f1)"
@@ -486,6 +516,60 @@ jobs:
               echo "::error::El formulario NO puede enviar correo. Falló en la etapa: ${ETAPA:-desconocida}. 'auth-clave' = la contraseña de MAIL_PASSWORD no es la del buzón; 'auth-usuario' = la dirección de MAIL_USER no existe; 'conexion' = el servidor no alcanza a MAIL_HOST; 'config' = el despliegue no dejó bien las credenciales. El motivo completo está en public_html/api/errores.log."
               exit 1 ;;
           esac
+
+      - name: Avisar por correo de los artículos nuevos
+        # Publicar es desplegar, así que este es el único sitio donde se sabe,
+        # con certeza y sin preguntarle a nadie, que un artículo acaba de
+        # ponerse en pie. El trabajo diario solo empuja; el aviso sale de aquí.
+        #
+        # Se compara con el commit anterior: un archivo que ya existía y solo
+        # cambió una coma no vuelve a enviarse. Lo que dispara el envío es que
+        # el archivo sea NUEVO y esté publicado.
+        if: success()
+        env:
+          DIFUSION_TOKEN: ${{ secrets.DIFUSION_TOKEN }}
+        run: |
+          set -uo pipefail
+          if [ -z "${DIFUSION_TOKEN:-}" ]; then
+            echo "Sin DIFUSION_TOKEN no se avisa a nadie. Es opcional."
+            exit 0
+          fi
+
+          NUEVOS=$(git diff --name-only --diff-filter=A "${{ github.event.before }}" "${GITHUB_SHA}" -- src/content/insights/ 2>/dev/null | grep '\.json$' || true)
+          if [ -z "$NUEVOS" ]; then
+            echo "Ningún artículo nuevo en este despliegue."
+            exit 0
+          fi
+
+          for f in $NUEVOS; do
+            [ -f "$f" ] || continue
+            if [ "$(python3 -c "import json,sys;print(json.load(open(sys.argv[1])).get('estado'))" "$f")" != "publicado" ]; then
+              echo "$f es un borrador; no se avisa."
+              continue
+            fi
+            for LANG in es en; do
+              CARGA=$(DIFUSION_TOKEN="$DIFUSION_TOKEN" python3 - "$f" "$LANG" <<'PY'
+          import json, os, sys
+          a = json.load(open(sys.argv[1])); lang = sys.argv[2]; t = a.get(lang)
+          if not t or not t.get('slug'):
+              print(''); raise SystemExit
+          seccion = 'insights'
+          print(json.dumps({
+              'accion': 'difundir',
+              'token': os.environ['DIFUSION_TOKEN'],
+              'idioma': lang,
+              'titulo': t['titulo'],
+              'entradilla': t.get('entradilla') or t.get('descripcion') or '',
+              'ruta': f"/{lang}/{seccion}/{t['slug']}",
+          }, ensure_ascii=False))
+          PY
+              )
+              [ -n "$CARGA" ] || continue
+              RES=$(curl -sS --max-time 180 -X POST -H 'Content-Type: application/json' \
+                      -d "$CARGA" "https://meetbecome.com/api/suscripcion.php" || true)
+              echo "$LANG → ${RES:-(sin respuesta)}"
+            done
+          done
 
       - name: Resumen
         run: |

@@ -6,6 +6,7 @@ import Reveal from '../Reveal.jsx';
 import { Section, Kicker, Headline, Lead, PrimaryCTA, TextCTA } from '../ui.jsx';
 import Bloques from './Bloques.jsx';
 import Compartir from './Compartir.jsx';
+import Formulario from '../suscripcion/Formulario.jsx';
 import { SITE } from '../../seo-meta.js';
 import { autorDe } from '../../content/autores.js';
 import { ARTICULOS, PILARES, FORMATOS, fechaLegible, minutosDeLectura } from '../../content/insights.js';
@@ -146,6 +147,12 @@ export default function ArticuloBase({ lang }) {
           {/* Al final y no al principio: se comparte lo que se ha terminado de
               leer, y una fila de botones antes del primer párrafo compite con
               el propio artículo por la atención. */}
+          {/* Al final del artículo y sin interrumpir: quien ha llegado hasta
+              aquí ya sabe si quiere más. Es el sitio donde una suscripción se
+              gana en vez de arrancarse. */}
+          <div style={{ marginTop: 'var(--space-11)', padding: 'var(--space-7)', background: 'var(--white)', border: '1px solid var(--border-hairline)', borderRadius: 2 }}>
+            <Formulario lang={lang} origen={`articulo/${a.slug}`} />
+          </div>
           <Compartir
             url={`${SITE}/${lang}/insights/${a.slug}`}
             titulo={a.titulo}
