@@ -50,7 +50,7 @@ export default function Nosotros() {
         </div>
       </Section>
 
-      <Section band="light">
+      <Section id="about-become" band="light">
         <Kicker>What BECOME is</Kicker>
         <Headline>We don’t show up to add another tool.</Headline>
         <Lead>
@@ -73,7 +73,7 @@ export default function Nosotros() {
         </Cols>
       </Section>
 
-      <Section band="dark">
+      <Section id="purpose" band="dark">
         <Kicker dark>Our purpose</Kicker>
         <Headline dark>Help companies become what the future requires.</Headline>
         <Lead dark>
@@ -83,7 +83,7 @@ export default function Nosotros() {
           and the operations of the company.
         </Lead>
 
-        <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 'var(--space-9)', marginTop: 'var(--space-11)' }}>
+        <div id="vision-mission" data-cols style={{ scrollMarginTop: '96px', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 'var(--space-9)', marginTop: 'var(--space-11)' }}>
           <Reveal as="div" style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
             <p style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--electric-green)' }}>Our vision</p>
             <Body dark style={{ marginTop: 'var(--space-5)' }}>
@@ -124,7 +124,7 @@ export default function Nosotros() {
         </Split>
       </Section>
 
-      <Section band="sunken">
+      <Section id="culture-dna" band="sunken">
         <Kicker>Our DNA</Kicker>
         <Headline>Six traits, and how they show up in the work.</Headline>
         <div style={{ marginTop: 'var(--space-10)' }}>
@@ -146,7 +146,7 @@ export default function Nosotros() {
         </Cols>
       </Section>
 
-      <Section band="light">
+      <Section id="how-we-work" band="light">
         <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 'var(--space-9)' }}>
           <Reveal as="div">
             <Kicker>How we work</Kicker>
@@ -168,7 +168,7 @@ export default function Nosotros() {
         </div>
       </Section>
 
-      <Section band="dark">
+      <Section id="team" band="dark">
         <Kicker dark>Team</Kicker>
         <Headline dark>The people, once we can name them.</Headline>
         <Body dark style={{ marginTop: 'var(--space-6)' }}>

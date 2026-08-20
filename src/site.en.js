@@ -116,7 +116,22 @@ export const NAV = [
       groups: s.groups, heading: s.heading, more: s.more,
     })),
   },
-  { label: 'About', to: '/en/about' },
+  {
+    label: 'About',
+    to: '/en/about',
+    heading: 'Who we are and how we work',
+    items: [
+      { to: '/en/about#about-become',   label: 'About BECOME',    line: 'What the company is, the category it plays in and what makes it different.' },
+      { to: '/en/about#purpose',        label: 'Our purpose',     line: 'Why BECOME exists and what it sets out to leave installed.' },
+      { to: '/en/about#vision-mission', label: 'Vision & mission', line: 'The future we want and the part we take in building it.' },
+      { to: '/en/about#culture-dna',    label: 'Culture & DNA',   line: 'Six traits and six behaviors, and how they show up in the work.' },
+      { to: '/en/about#team',           label: 'Team',            line: 'The disciplines that sit at the same table.' },
+      { to: '/en/about#how-we-work',    label: 'How we work',     line: 'How we start, how we adapt and what we hand over.' },
+      { to: '/en/about/responsible-ai', label: 'Responsible AI',  line: 'Controls, human oversight and named owners.' },
+    ],
+    more: { to: '/en/about', label: 'See everything about BECOME' },
+    wide: true,
+  },
   {
     label: 'Solutions',
     to: '/en/solutions',
@@ -144,6 +159,7 @@ export const FOOTER = [
     title: 'BECOME',
     links: [
       { to: '/en/about', label: 'About' },
+      { to: '/en/about/responsible-ai', label: 'Responsible AI' },
       { to: '/en/framework', label: 'BECOME Framework' },
       { to: '/en/insights', label: 'Insights' },
     ],

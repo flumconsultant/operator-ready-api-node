@@ -61,7 +61,7 @@ export default function Nosotros() {
       </Section>
 
       {/* 01 — Qué es BECOME */}
-      <Section band="light">
+      <Section band="light" id="sobre-become">
         <Kicker>Qué es BECOME</Kicker>
         <Headline>No llegamos para agregar otra herramienta.</Headline>
         <Lead>
@@ -85,7 +85,7 @@ export default function Nosotros() {
       </Section>
 
       {/* 02, 03, 04 — propósito, visión, misión */}
-      <Section band="dark">
+      <Section band="dark" id="proposito">
         <Kicker dark>Nuestro propósito</Kicker>
         <Headline dark>Ayudar a las empresas a convertirse en aquello que el futuro exige.</Headline>
         <Lead dark>
@@ -95,7 +95,7 @@ export default function Nosotros() {
           los productos y las operaciones de la empresa.
         </Lead>
 
-        <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 'var(--space-9)', marginTop: 'var(--space-11)' }}>
+        <div id="vision-mision" data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 'var(--space-9)', marginTop: 'var(--space-11)', scrollMarginTop: '96px' }}>
           <Reveal as="div" style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
             <p style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--electric-green)' }}>Nuestra visión</p>
             <Body dark style={{ marginTop: 'var(--space-5)' }}>
@@ -146,7 +146,7 @@ export default function Nosotros() {
       </Section>
 
       {/* 06 — ADN */}
-      <Section band="sunken">
+      <Section band="sunken" id="cultura-adn">
         <Kicker>Nuestro ADN</Kicker>
         <Headline>Seis rasgos, y cómo se notan en el trabajo.</Headline>
         <div style={{ marginTop: 'var(--space-10)' }}>
@@ -172,7 +172,7 @@ export default function Nosotros() {
       </Section>
 
       {/* 08 — cómo trabajamos */}
-      <Section band="light">
+      <Section id="como-trabajamos" band="light">
         <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 'var(--space-9)' }}>
           <Reveal as="div">
             <Kicker>Cómo trabajamos</Kicker>
@@ -195,7 +195,7 @@ export default function Nosotros() {
       </Section>
 
       {/* 09 — equipo: pendiente, y dicho en voz alta */}
-      <Section band="dark">
+      <Section band="dark" id="equipo">
         <Kicker dark>Equipo</Kicker>
         <Headline dark>Las personas, cuando podamos nombrarlas.</Headline>
         <Body dark style={{ marginTop: 'var(--space-6)' }}>

@@ -120,7 +120,28 @@ export const NAV = [
       groups: s.groups, heading: s.heading, more: s.more,
     })),
   },
-  { label: 'Nosotros', to: '/es/nosotros' },
+  {
+    label: 'Nosotros',
+    to: '/es/nosotros',
+    heading: 'Quiénes somos y cómo trabajamos',
+    /* Cinco de los siete destinos son secciones de la propia página de
+       Nosotros, no páginas aparte. Es lo que recomienda el documento cuando el
+       contenido no da para una página entera: un ancla se lee igual y evita
+       siete páginas cortas que se repiten entre sí.
+       IA responsable sí tiene dirección propia, porque es la página que alguien
+       reenvía dentro de su empresa cuando le preguntan quién controla esto. */
+    items: [
+      { to: '/es/nosotros#sobre-become',   label: 'Sobre BECOME',     line: 'Qué es la empresa, en qué categoría juega y en qué se diferencia.' },
+      { to: '/es/nosotros#proposito',      label: 'Nuestro propósito', line: 'Por qué existe BECOME y qué se propone dejar instalado.' },
+      { to: '/es/nosotros#vision-mision',  label: 'Visión y misión',   line: 'El futuro que queremos y el papel que tomamos para construirlo.' },
+      { to: '/es/nosotros#cultura-adn',    label: 'Cultura y ADN',     line: 'Seis rasgos y seis comportamientos, y cómo se notan en el trabajo.' },
+      { to: '/es/nosotros#equipo',         label: 'Equipo',            line: 'Las disciplinas que se sientan en la misma mesa.' },
+      { to: '/es/nosotros#como-trabajamos',label: 'Cómo trabajamos',   line: 'Cómo empezamos, cómo nos adaptamos y qué transferimos.' },
+      { to: '/es/nosotros/ia-responsable', label: 'IA responsable',    line: 'Controles, supervisión humana y responsables con nombre.' },
+    ],
+    more: { to: '/es/nosotros', label: 'Ver todo sobre BECOME' },
+    wide: true,
+  },
   {
     label: 'Soluciones',
     to: '/es/soluciones',
@@ -149,6 +170,7 @@ export const FOOTER = [
     title: 'BECOME',
     links: [
       { to: '/es/nosotros', label: 'Nosotros' },
+      { to: '/es/nosotros/ia-responsable', label: 'IA responsable' },
       { to: '/es/framework', label: 'BECOME Framework' },
       { to: '/es/insights', label: 'Insights' },
     ],

@@ -74,6 +74,11 @@ export const PAGES = {
     'Seis necesidades de negocio y qué necesita cada una: escalar más allá de los pilotos, preparar equipos, rediseñar procesos, agentes con control, productos con IA y medir el valor.',
     '/en/solutions',
   ],
+  '/es/nosotros/ia-responsable': [
+    'IA responsable: cómo la controlamos | BECOME',
+    'Uso de datos, supervisión humana, evaluación, escalamiento, trazabilidad y responsables con nombre. Ocho decisiones que se toman antes de construir.',
+    '/en/about/responsible-ai',
+  ],
   '/es/insights': [
     'Insights sobre IA aplicada a la empresa | BECOME',
     'Perspectivas sobre modelos operativos AI-native, trabajo con agents, adopción y escalado responsable.',
@@ -135,6 +140,11 @@ export const PAGES = {
     'AI solutions for companies | BECOME',
     'Six business needs and what each one takes: scaling beyond pilots, preparing teams, redesigning workflows, governed agents, AI-enabled products and measuring value.',
     '/es/soluciones',
+  ],
+  '/en/about/responsible-ai': [
+    'Responsible AI: how we control it | BECOME',
+    'Data use, human oversight, evaluation, escalation, traceability and named owners. Eight decisions made before anything gets built.',
+    '/es/nosotros/ia-responsable',
   ],
   '/en/insights': [
     'Insights on applied enterprise AI | BECOME',

@@ -37,6 +37,8 @@ const Program = lazy(() => import('./pages/Program.jsx'));
 const Soluciones = lazy(() => import('./pages/Soluciones.jsx'));
 const Solucion = lazy(() => import('./pages/Solucion.jsx'));
 const Legal = lazy(() => import('./pages/Legal.jsx'));
+const IaResponsable = lazy(() => import('./pages/IaResponsable.jsx'));
+const ResponsibleAI = lazy(() => import('./pages/en/ResponsibleAI.jsx'));
 
 /* Comodín consciente del idioma: una ruta /en/lo-que-sea que no existe todavía
    vuelve a la home en inglés, no a la española. El comodín plano de antes
@@ -61,6 +63,7 @@ export const routes = [
 
   { path: '/en/framework', element: <FrameworkEN /> },
   { path: '/en/about', element: <NosotrosEN /> },
+  { path: '/en/about/responsible-ai', element: <ResponsibleAI /> },
 
   { path: '/en/solutions', element: <SolucionesEN /> },
   { path: '/en/solutions/:slug', element: <SolucionEN /> },
@@ -79,6 +82,7 @@ export const routes = [
 
   { path: '/es/framework', element: <Framework /> },
   { path: '/es/nosotros', element: <Nosotros /> },
+  { path: '/es/nosotros/ia-responsable', element: <IaResponsable /> },
 
   { path: '/es/soluciones', element: <Soluciones /> },
   { path: '/es/soluciones/:slug', element: <Solucion /> },
