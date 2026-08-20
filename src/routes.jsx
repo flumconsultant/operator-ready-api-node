@@ -41,6 +41,9 @@ const Solucion = lazy(() => import('./pages/Solucion.jsx'));
 const Legal = lazy(() => import('./pages/Legal.jsx'));
 const IaResponsable = lazy(() => import('./pages/IaResponsable.jsx'));
 const ResponsibleAI = lazy(() => import('./pages/en/ResponsibleAI.jsx'));
+/* El panel de artículos. Va en su propio trozo y solo se descarga al abrir
+   /admin: quien visita la web nunca llega a pedirlo. */
+const Panel = lazy(() => import('./admin/Panel.jsx'));
 
 /* Comodín consciente del idioma: una ruta /en/lo-que-sea que no existe todavía
    vuelve a la home en inglés, no a la española. El comodín plano de antes
@@ -96,6 +99,10 @@ export const routes = [
 
   { path: '/es/privacidad', element: <Legal page="privacidad" /> },
   { path: '/es/terminos', element: <Legal page="terminos" /> },
+
+  /* Herramienta interna, sin prefijo de idioma y fuera del sitemap: no es una
+     página del sitio, es por donde se publican las que sí lo son. */
+  { path: '/admin', element: <Panel /> },
 
   /* Las rutas de la primera maqueta siguen resolviendo en vez de dar 404 */
   ...Object.entries(LEGACY_REDIRECTS).map(([from, to]) => ({

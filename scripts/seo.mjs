@@ -520,6 +520,10 @@ Allow: /
 # hay nada que rastrear aquí dentro; cada una lleva su canonical de todos modos.
 Disallow: /_pages/
 
+# El panel de artículos. No lleva contenido y exige un token para hacer nada,
+# pero tampoco tiene por qué aparecer en un buscador.
+Disallow: /admin
+
 Sitemap: ${SITE}/sitemap.xml
 `);
 

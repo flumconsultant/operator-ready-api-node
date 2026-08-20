@@ -125,7 +125,10 @@ export default function App() {
       {/* El nodo vive en todo el sitio. En la home las formas van ancladas a
           secciones concretas; en el resto de páginas el mismo journey se
           reparte sobre el documento. Lo que no cambia es la historia. */}
-      <AiNodeStage key={`nodo:${pathname}`} />
+      {/* En el panel no: es una herramienta de trabajo, y un campo de
+          partículas girando detrás de un formulario cuesta batería y no
+          significa nada ahí. */}
+      {!pathname.startsWith('/admin') && <AiNodeStage key={`nodo:${pathname}`} />}
       {/* La clave por ruta es lo que hace visible el fallback. React 19 trata
           la navegación como una transición y, por defecto, mantiene la pantalla
           anterior en vez de mostrar el Suspense: sin remontar el límite, el

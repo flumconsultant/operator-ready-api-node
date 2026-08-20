@@ -8,7 +8,7 @@
     "slug": "quien-responde-cuando-responde-un-agente",
     "titulo": "Quién responde cuando responde un agente",
     "entradilla": "La pregunta que decide si un agente llega a producción no es técnica. Es de quién es el resultado cuando sale mal.",
-    "descripcion": "Por qué los agentes de IA se atascan antes de producción: no falta capacidad técnica, falta un dueño nombrado del resultado y un umbral de decisión escrito.",
+    "descripcion": "Por qué los agentes de IA se atascan antes de producción: no falta capacidad técnica, falta un dueño del resultado y un umbral de decisión escrito.",
     "bloques": [
       { "tipo": "entradilla", "texto": "Casi todas las conversaciones sobre agentes empiezan por la capacidad —qué puede hacer el modelo— y se atascan en un sitio completamente distinto: qué pasa el día que hace algo que nadie quería." },
       { "tipo": "parrafo", "texto": "Hemos visto el mismo patrón las suficientes veces como para dejar de tratarlo como una coincidencia. Un equipo construye un agente que funciona. Lo demuestra. Todo el mundo asiente. Y entonces el proyecto entra en una fase que nadie planificó, que puede durar meses, en la que el agente ya no se mejora: se discute." },
