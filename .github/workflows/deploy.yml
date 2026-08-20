@@ -125,50 +125,6 @@ jobs:
           echo "desde la pestaña Actions con 'Re-run all jobs'."
           exit 1
 
-      # ── Qué hay realmente en assets/ ──
-      #
-      # El servidor responde 403 a esa carpeta y llevo dos intentos corrigiendo
-      # una causa supuesta. Borrar el .htaccess que había dentro no lo
-      # resolvió, así que la causa es otra y hay que mirarla, no deducirla.
-      #
-      # Un solo lftp, y ANTES del que sube: Hostinger corta las conexiones
-      # rápidas encadenadas —ya colgó un despliegue seis minutos por esto—, así
-      # que va separado y con una pausa detrás. Nunca detiene el despliegue: si
-      # no se puede listar, se sigue igual.
-      - name: Mirar la carpeta assets/ del servidor
-        continue-on-error: true
-        timeout-minutes: 3
-        env:
-          FTP_HOST: ${{ secrets.FTP_HOST }}
-          FTP_USER: ${{ secrets.FTP_USER }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          TLS_RELAJADO: ${{ vars.FTP_TLS_RELAJADO }}
-          FTP_DIR: ${{ vars.FTP_DIR }}
-        run: |
-          set -uo pipefail
-          VERIFICAR=true
-          [ "${TLS_RELAJADO:-}" = "true" ] && VERIFICAR=false
-          DESTINO="${FTP_DIR:-.}"
-          lftp -c "
-            set ftp:ssl-force true;
-            set ftp:ssl-protect-data true;
-            set ssl:verify-certificate $VERIFICAR;
-            set net:timeout 20;
-            set net:max-retries 4;
-            set ftp:list-options -a;
-            open -u '$FTP_USER','$FTP_PASSWORD' '$FTP_HOST';
-            cls -l --sort=name $DESTINO/ ;
-            echo '── dentro de assets/ ──';
-            cls -l --sort=name $DESTINO/assets/ ;
-          " > listado.txt 2>&1 || echo "(no se pudo listar)"
-          echo "── raíz publicada y assets/ (permisos a la izquierda) ──"
-          head -30 listado.txt
-          echo "..."
-          grep -iE 'htaccess|^d|^\s*d' listado.txt | head -10 || true
-          rm -f listado.txt
-          # Respiro antes de la conexión que sí importa.
-          sleep 8
-
       - name: Subir a public_html
         timeout-minutes: 6
         env:
@@ -380,21 +336,36 @@ jobs:
           # servidor esté contestando otra cosa —una página de error, el
           # index.html de la SPA— con un peso que parece una compresión
           # buenísima. Pasó: 2.482 bytes donde debía haber 106.000.
+          # El mismo User-Agent de navegador en las dos peticiones, y no es
+          # cosmético: la del HTML lo llevaba y respondía 200; estas dos no, y
+          # respondían 403 con una página de bloqueo de 2.482 bytes. El
+          # cortafuegos del hosting rechaza a curl cuando pide archivos
+          # estáticos. Se dio por caído un sitio que estaba sirviendo
+          # perfectamente a sus visitantes, y se persiguieron durante una hora
+          # dos causas inventadas —un .htaccess y unos permisos— que no lo eran.
+          #
+          # Una comprobación tiene que pedir las cosas como las pide un
+          # visitante. Si no, mide su propio reflejo.
+          NAVEGADOR='Mozilla/5.0 (Linux; Android 11; moto g power) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Mobile Safari/537.36'
+
           LEIDO=$(curl -sS --max-time 20 -o /dev/null \
+            -A "$NAVEGADOR" \
             -H 'Accept-Encoding: gzip, br' \
             -w '%{http_code} %{content_type} %{size_download}' \
             "https://meetbecome.com/${LOCAL}" || echo "000 - 0")
           ESTADO=$(printf '%s' "$LEIDO" | cut -d' ' -f1)
           TIPO=$(printf '%s' "$LEIDO" | cut -d' ' -f2)
           BYTES_RED=$(printf '%s' "$LEIDO" | cut -d' ' -f3)
-          CABS=$(curl -sSI --max-time 20 "https://meetbecome.com/${LOCAL}" || true)
+          CABS=$(curl -sSI --max-time 20 -A "$NAVEGADOR" "https://meetbecome.com/${LOCAL}" || true)
           CACHE=$(printf '%s' "$CABS" | grep -i '^cache-control:' | tr -d '\r' || true)
 
           echo "Bundle en disco  : ${BYTES_LOCAL} B"
           echo "Bundle por la red: ${BYTES_RED} B  ·  estado ${ESTADO}  ·  tipo ${TIPO}"
           echo "${CACHE:-cache-control: (ninguna)}"
 
-          if [ "$ESTADO" != "200" ]; then
+          if [ "$ESTADO" = "403" ]; then
+            echo "::warning::403 al pedir el bundle. Si el sitio se ve bien en un navegador, es el cortafuegos del hosting bloqueando esta comprobación, no un fallo de la web. No se detiene el despliegue por esto."
+          elif [ "$ESTADO" != "200" ]; then
             echo "::error::El bundle no se sirve: el servidor responde ${ESTADO} en /${LOCAL}. El sitio está cargando el HTML pero no su código."
             exit 1
           fi
