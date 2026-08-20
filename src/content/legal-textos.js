@@ -31,7 +31,9 @@ const filaProveedores = (lang) => ({
   cabecera: lang === 'es'
     ? ['Proveedor', 'Para qué', 'Qué datos', 'País']
     : ['Provider', 'Purpose', 'What data', 'Country'],
-  filas: PROVEEDORES.map((x) => [x.nombre, x.funcion[lang], x.datos[lang], x.pais]),
+  /* El nombre legal completo y no la marca: en un contrato de encargo de
+     tratamiento, «Hostinger» no identifica a nadie ante la autoridad. */
+  filas: PROVEEDORES.map((x) => [x.razonSocial || x.nombre, x.funcion[lang], x.datos[lang], x.pais[lang]]),
 });
 
 /* ------------------------------------------------------------- español */
@@ -149,7 +151,7 @@ const PRIVACIDAD_ES = [
   ...p(
     `${I.razonSocial}, con RUC ${I.ruc} y domicilio en ${I.domicilio}, titular de la marca ${I.marca}, es responsable del tratamiento de los datos personales descritos aquí.`,
     `Contacto para privacidad y derechos ARCO: ${I.correoPrivacidad}.`,
-    `Banco de datos personales: «${I.bancoDatos}», inscrito con código ${I.bancoDatosCodigo}.`,
+    `Banco de datos personales: «${I.bancoDatos}», inscrito ante el Registro Nacional de Protección de Datos Personales con código ${I.bancoDatosCodigo}, según constancia ${I.bancoDatosConstancia} de fecha ${I.bancoDatosFecha}.`,
   ),
 
   h('A qué se aplica'),
@@ -207,8 +209,10 @@ const PRIVACIDAD_ES = [
 
   h('Transferencias internacionales'),
   ...p(
-    'Los datos que envías por el formulario y tu dirección de suscripción se alojan en la infraestructura de Hostinger. El país del centro de datos figura en la tabla anterior.',
-    'GitHub, en Estados Unidos, aloja el código y los contenidos publicados del sitio. No recibe datos personales de visitantes.',
+    `Sí hay transferencia internacional, y conviene decirlo con claridad. Los datos que envías por el formulario y tu dirección de suscripción se alojan en la infraestructura de Hostinger International, Ltd., en servidores ubicados principalmente en Estados Unidos, incluido el estado de Arizona, así como en otros países donde Hostinger o sus proveedores de infraestructura operen.`,
+    `Hostinger actúa como encargado del tratamiento: aloja los datos y los trata únicamente conforme a nuestras instrucciones. ${I.razonSocial} sigue siendo el responsable, es decir, quien determina para qué y cómo se tratan.`,
+    'La transferencia se ampara en que es necesaria para ejecutar la relación que has iniciado —responder a tu consulta o enviarte los artículos— y el proveedor mantiene obligaciones contractuales de seguridad y confidencialidad. Puedes oponerte, y en ese caso dejaremos de tratar tus datos por completo, porque sin alojamiento no hay forma de conservarlos.',
+    'GitHub, Inc., en Estados Unidos, aloja el código y los contenidos publicados del sitio. No recibe datos personales de visitantes.',
   ),
 
   h('Decisiones automatizadas'),
@@ -388,7 +392,7 @@ const PRIVACIDAD_EN = [
   ...p(
     `${I.razonSocial}, tax ID (RUC) ${I.ruc}, registered at ${I.domicilio}, owner of the ${I.marca} brand, controls the personal data described here.`,
     `Privacy and data-rights contact: ${I.correoPrivacidad}.`,
-    `Personal-data bank: “${I.bancoDatos}”, registration code ${I.bancoDatosCodigo}.`,
+    `Personal-data bank: “${I.bancoDatos}”, entered in Peru's National Register of Personal Data Protection under code ${I.bancoDatosCodigo}, per certificate ${I.bancoDatosConstancia} dated ${I.bancoDatosFecha}.`,
   ),
 
   h('What this covers'),
@@ -446,8 +450,10 @@ const PRIVACIDAD_EN = [
 
   h('International transfers'),
   ...p(
-    "Data you send through the form and your subscription address are hosted on Hostinger's infrastructure. The data-centre country is shown in the table above.",
-    'GitHub, in the United States, hosts the site code and published content. It receives no visitor personal data.',
+    "There is an international transfer, and it is worth stating plainly. Data you send through the form and your subscription address are hosted on the infrastructure of Hostinger International, Ltd., on servers located mainly in the United States, including the state of Arizona, as well as in other countries where Hostinger or its infrastructure providers operate.",
+    `Hostinger acts as processor: it hosts the data and processes it only on our instructions. ${I.razonSocial} remains the controller, that is, the party deciding why and how the data is processed.`,
+    'The transfer relies on being necessary to carry out the relationship you started — answering your enquiry or sending you the articles — and the provider is under contractual security and confidentiality obligations. You may object, and if you do we will stop processing your data entirely, because without hosting there is no way to keep it.',
+    'GitHub, Inc., in the United States, hosts the site code and published content. It receives no visitor personal data.',
   ),
 
   h('Automated decisions'),

@@ -40,11 +40,18 @@ export const IDENTIDAD = {
      comercial, y ahí es donde se pierden los plazos legales. */
   correoPrivacidad: 'privacidad@meetbecome.com',
   correoLegal: 'legal@meetbecome.com',
-  telefono: PENDIENTE,
+  /* No hay teléfono ni oficial de protección de datos porque la ley peruana no
+     los exige aquí: basta un canal de contacto para ejercer derechos, y el
+     correo de privacidad lo es. Si algún día se nombra un DPO o se publica un
+     teléfono, se añaden como campos y las páginas los recogen solas. */
 
   bancoDatos: 'Prospectos y contactos comerciales',
-  bancoDatosCodigo: PENDIENTE,
-  dpo: PENDIENTE,
+  /* Los tres salen de la constancia de inscripción de la Autoridad Nacional de
+     Protección de Datos Personales. Se copian tal cual del documento: un dígito
+     cambiado convierte una inscripción real en una declaración falsa. */
+  bancoDatosCodigo: 'PJ-2026-4289',
+  bancoDatosConstancia: 'INS-2026-4832',
+  bancoDatosFecha: '2026-08-20',
 
   vigenciaDesde: '2026-08-20',
   ultimaActualizacion: '2026-08-20',
@@ -53,16 +60,21 @@ export const IDENTIDAD = {
 /**
  * Los proveedores que el sitio usa de verdad, auditados leyendo el código.
  *
- * `pais: PENDIENTE` en Hostinger no es descuido: el centro de datos se elige al
- * contratar y solo lo sabe quien lo contrató. De ahí depende si hay o no
- * transferencia internacional que declarar, así que no se puede suponer.
+ * El país de Hostinger no se dedujo: es lo que la propia Hostinger declara por
+ * escrito —servidores principalmente en Estados Unidos, incluido Arizona, y en
+ * otros países donde operen ella o sus proveedores de infraestructura—. De ahí
+ * depende que haya transferencia internacional que declarar, y la hay.
  */
 export const PROVEEDORES = [
   {
     nombre: 'Hostinger',
     funcion: { es: 'Alojamiento web, correo y base de datos', en: 'Web hosting, email and database' },
     datos: { es: 'Todos los datos del formulario y de la lista de correo', en: 'All form and mailing-list data' },
-    pais: PENDIENTE,
+    razonSocial: 'Hostinger International, Ltd.',
+    pais: {
+      es: 'Estados Unidos (Arizona) y otros países donde operen Hostinger o sus proveedores de infraestructura',
+      en: 'United States (Arizona) and other countries where Hostinger or its infrastructure providers operate',
+    },
   },
   {
     nombre: 'GitHub',
@@ -71,7 +83,8 @@ export const PROVEEDORES = [
       es: 'Ningún dato personal de visitantes. Solo artículos, imágenes y fichas de autor',
       en: 'No visitor personal data. Only articles, images and author profiles',
     },
-    pais: 'Estados Unidos',
+    razonSocial: 'GitHub, Inc.',
+    pais: { es: 'Estados Unidos', en: 'United States' },
   },
 ];
 
@@ -121,5 +134,5 @@ export const AUTORIDAD = {
 export const faltantes = () =>
   Object.entries({
     'Código de inscripción del banco de datos': IDENTIDAD.bancoDatosCodigo,
-    'País del centro de datos de Hostinger': PROVEEDORES[0].pais,
+    'País del centro de datos de Hostinger': PROVEEDORES[0].pais.es,
   }).filter(([, v]) => v === PENDIENTE).map(([k]) => k);
