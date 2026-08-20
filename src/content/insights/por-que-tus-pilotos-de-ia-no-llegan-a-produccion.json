@@ -1,0 +1,277 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-08-20",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "value-adoption",
+  "formato": "framework",
+  "es": {
+    "slug": "por-que-tus-pilotos-de-ia-no-llegan-a-produccion",
+    "titulo": "Por qué tus pilotos de IA no llegan a producción",
+    "entradilla": "El piloto salió bien. Y ese es exactamente el momento en el que se quedó parado.",
+    "descripcion": "Un piloto que funciona se atasca al pasar a producción cuando nadie presupuestó el gasto recurrente ni escribió la fecha en la que se mata.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "El piloto salió bien. Lo presentaste, hubo aplausos moderados, alguien dijo que había que llevarlo a toda la compañía. Eso fue en marzo. Sigue exactamente donde estaba."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "He visto pilotos perfectamente ejecutados morir en silencio. Sin reunión de cancelación, sin acta. Nadie los mata y nadie los financia, así que se quedan corriendo en un entorno de pruebas hasta que el equipo que los construyó se deshace. Al año siguiente el mismo caso de uso reaparece en el backlog con otro nombre y otro sponsor, y vuelve a empezar el teatrito."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El diagnóstico que circula es siempre el mismo. Datos sucios, falta de governance, gestión del cambio. Todo cierto y todo inútil, porque describe el estado del paciente sin decir qué se firma el lunes."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Lo que bloquea el paso a producción es una decisión de dinero que nadie ha tomado, y que casi nunca llega al acta: quién paga que esto siga funcionando cuando deje de ser noticia."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Por qué mis pilotos de IA no llegan a producción?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Porque un piloto se aprueba como experimento y la producción se aprueba como gasto. Dos conversaciones distintas, dos comités distintos, dos apetitos de riesgo distintos. Y el equipo que ganó la primera suele descubrir tarde que la segunda no estaba en la agenda de nadie."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cuando esa segunda decisión no existe, el proyecto entra en un estado reconocible. Ojo, no es que vaya mal: es que no va."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El piloto sigue en un entorno de pruebas, con datos que alguien copia a mano cada semana.",
+          "Nadie sabe decir contra qué línea de P&L se carga el gasto del año que viene.",
+          "El sponsor que lo aprobó cambió de puesto y quien llegó después no lo heredó formalmente.",
+          "Se pide una segunda PoC para confirmar lo que ya confirmó la primera.",
+          "El coste de inferencia lo absorbe el presupuesto de innovación, que es temporal por diseño.",
+          "No hay ninguna fecha escrita en la que el piloto deje de ser piloto."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema detrás",
+        "texto": "Nadie aprobó el coste de que funcionara."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Un piloto es barato porque está incompleto. Corre sobre un extracto que alguien preparó, lo vigila la misma persona que lo construyó, y si se cae un martes no pasa nada. Producción invierte esas tres cosas, y cada inversión tiene precio: una tubería de datos que se sostiene sola, observabilidad que te avisa de que el modelo se degradó antes de que te lo diga un cliente, y alguien de guardia. Ese paquete no es un extra del proyecto. Es la mitad del TCO, y aterriza cuando el comité ya creía que había aprobado el gasto."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y hay una segunda cosa, bastante menos cómoda de decir. El piloto lleva dentro un incentivo perverso: mientras siga siendo piloto, nadie responde por su retorno. Se puede enseñar en el comité, se puede meter en la memoria anual, se puede maquillar el reporte de transformación. En cuanto entra en operación se convierte en una línea de coste con nombre y apellido, y alguien tiene que defenderla el año que viene delante de un CFO. Hay más gente de la que parece a quien le conviene que el piloto siga siendo piloto."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un piloto que lleva medio año sin matarse y sin financiarse no está en evaluación. Está en un cajón con la luz encendida.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La secuencia",
+        "texto": "¿Qué hay que decidir, y en qué orden?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El orden importa más que el contenido. Casi todas las organizaciones tienen partes de esto escritas en algún sitio, y las tienen en la secuencia equivocada: empiezan por la arquitectura y llegan al dueño al final, cuando el dueño es lo único que desbloquea a los otros cuatro."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Corte",
+            "definicion": "El criterio que decide si el piloto se mata o se financia, escrito antes de mirar ningún resultado. Un número y una fecha. Escrito después, se escribe para justificar lo que ya se prefería hacer."
+          },
+          {
+            "termino": "Dueño",
+            "definicion": "El directivo de negocio que se lleva el resultado a su propio cuadro de mando. Ni el área de datos ni el equipo que lo construyó: quien ya responde por ese proceso y va a defender la línea de coste cuando se cierre el presupuesto."
+          },
+          {
+            "termino": "Línea",
+            "definicion": "Contra qué partida de P&L se carga el gasto recurrente: inferencia, plataforma, mantenimiento y guardia. Si sale de innovación, eso no es producción, es una prórroga."
+          },
+          {
+            "termino": "Orden de compra",
+            "definicion": "Qué se compra primero cuando el presupuesto no da para todo. La tubería de datos antes que la observabilidad, y la interfaz bonita la última. Se hace al revés casi siempre."
+          },
+          {
+            "termino": "Reversión",
+            "definicion": "Qué pasa el día que hay que apagarlo: quién ejecuta el proceso mientras tanto y cuánto tarda en volver el modo manual. Sin esa respuesta, riesgos no firma, y hace bien."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cinco respuestas, un folio, y ninguna la contesta un ingeniero. Por eso se posponen: no tienen dueño natural dentro del plan de proyecto, y lo que no tiene dueño se discute en el pasillo hasta que se olvida. Mientras tanto el equipo sigue afinando la precisión del modelo, que es la única parte del problema que sabe resolver."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Coge el piloto que lleva más tiempo parado y busca en el acta que lo aprobó la frase que dice qué pasa si sale bien. Si no está, ya tienes el motivo. Escríbela ahora con las cinco decisiones resueltas y llévala al mismo comité que aprobó el piloto, con una fecha de corte propuesta. Si el comité no quiere fijar esa fecha, acabas de averiguar lo que el proyecto vale para ellos."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Por qué mis pilotos de IA no llegan a producción?",
+            "respuesta": "Casi nunca por el modelo. Se atascan porque el piloto se aprobó como experimento y el paso a producción exige una decisión de gasto recurrente que nadie preparó: plataforma de datos, observabilidad, mantenimiento y guardia. Sin un dueño de negocio que cargue ese gasto en su presupuesto y sin una fecha de corte escrita, el proyecto se queda corriendo en pruebas hasta que el equipo se disuelve."
+          },
+          {
+            "pregunta": "¿Cuándo hay que matar un piloto de IA?",
+            "respuesta": "Cuando llega la fecha de corte fijada al aprobarlo y no se cumple el criterio que se escribió entonces. Lo importante es que ambas cosas se escriban antes de ver resultados, porque después el criterio se ajusta solo para encajar con la decisión que ya se prefería. Un piloto sin fecha de corte no se mata nunca: se abandona, que sale más caro y no deja aprendizaje."
+          },
+          {
+            "pregunta": "¿Qué cuesta de verdad llevar un piloto de IA a producción?",
+            "respuesta": "Lo que casi nadie presupuesta es el sostenimiento: la tubería de datos que ya no se alimenta a mano, la observabilidad para detectar cuándo se degrada el modelo, el mantenimiento y alguien de guardia cuando falla. Suele pesar tanto como la construcción y aparece cuando el comité ya daba el gasto por aprobado. Además el coste de inferencia crece con el uso, de modo que el éxito encarece la factura."
+          },
+          {
+            "pregunta": "¿De qué presupuesto sale un sistema de IA en producción?",
+            "respuesta": "Del presupuesto operativo del área dueña del proceso. Financiar la operación con el fondo de innovación garantiza que el sistema se cae en el primer recorte, porque ese fondo es temporal por diseño. El cambio de partida presupuestaria es la señal más fiable de que un piloto pasó de verdad a producción, mucho más que cualquier demostración."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Desatasquemos tu piloto",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "why-your-ai-pilots-never-reach-production",
+    "titulo": "Why your AI pilots never reach production",
+    "entradilla": "The pilot worked. And that is precisely the moment it stopped moving.",
+    "descripcion": "A pilot that works stalls on the way to production when nobody budgeted the recurring run cost or wrote down the date it gets killed.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "The pilot worked. You showed it, there was polite applause, someone said it should go company-wide. That was in March. It is sitting exactly where you left it."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "I have watched flawlessly executed pilots die quietly. No cancellation meeting, no minutes. Nobody kills them and nobody funds them, so they keep running in a sandbox until the team that built them gets reassigned. A year later the same use case shows up in the backlog under a new name and a new sponsor, and the whole show starts again."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The standard diagnosis never changes. Dirty data, weak governance, change management. All true and all useless, because it describes the patient without saying what anybody signs on Monday."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "What blocks the move to production is a money decision nobody made, and it rarely reaches the minutes: who pays to keep this thing running once it stops being news."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "Why don't my AI pilots reach production?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Because a pilot gets approved as an experiment and production gets approved as spend. Two conversations, two committees, two appetites for risk. And the team that won the first one usually finds out late that the second was never on anyone's calendar."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "When that second decision is missing, the project settles into a state you can recognise from across the room. It does not look like failure. It looks like nothing at all."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The pilot still runs in a sandbox, on data somebody copies across by hand every week.",
+          "Nobody can say which P&L line carries next year's run cost.",
+          "The sponsor who approved it moved on and their successor never formally inherited it.",
+          "A second PoC gets commissioned to confirm what the first one already confirmed.",
+          "Inference cost is being absorbed by the innovation budget, which is temporary by design.",
+          "There is no written date on which the pilot stops being a pilot."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "Nobody approved the cost of it working."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A pilot is cheap because it is incomplete. It runs on an extract somebody prepared, it is watched by the person who built it, and if it falls over on a Tuesday nothing happens. Production reverses all three, and every reversal carries a price: a pipeline that holds itself up, observability that tells you the model drifted before a customer does, and someone on call. That package is not a project extra. It is half the TCO, and it lands after the committee already believed it had approved the spend."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "And there is a second thing, considerably less comfortable to say out loud. A pilot carries a perverse incentive inside it: while it stays a pilot, nobody answers for its return. You can walk it through the board, put it in the annual report, dress up the transformation update with it. The moment it goes live it becomes a cost line with somebody's name on it, and that somebody defends it next year in front of a CFO. More people than you would think are quietly served by the pilot staying a pilot."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A pilot that has gone six months without being killed or funded is not under evaluation. It is in a drawer with the light left on.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The sequence",
+        "texto": "What has to be decided, and in what order?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The order matters more than the content. Most organisations already have pieces of this written down somewhere, in the wrong sequence: they open with architecture and get to ownership last, when ownership is the one thing that unlocks the other four."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Kill line",
+            "definicion": "The criterion that decides whether the pilot gets killed or funded, written before anyone looks at a result. A number and a date. Written afterwards, it gets written to justify the call somebody already preferred."
+          },
+          {
+            "termino": "Owner",
+            "definicion": "The business executive who takes the outcome onto their own scorecard. Not the data function and not the build team: whoever already answers for that process and will defend the cost line when the budget closes."
+          },
+          {
+            "termino": "The line",
+            "definicion": "Which P&L line carries the recurring cost: inference, platform, maintenance and on-call cover. If it comes out of innovation, that is not production, that is an extension."
+          },
+          {
+            "termino": "Buying order",
+            "definicion": "What gets bought first when the budget will not stretch. Pipeline before observability, and the polished interface last. It gets done in reverse almost every time."
+          },
+          {
+            "termino": "Rollback",
+            "definicion": "What happens the day you have to switch it off: who runs the process meanwhile, and how long the manual path takes to come back. Without that answer risk will not sign, and they are right not to."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Five answers, one page, and not one of them is an engineering question. Which is exactly why they get postponed: nothing in the project plan owns them, and what has no owner gets debated in corridors until everyone forgets. Meanwhile the team keeps tuning model accuracy, which is the only part of the problem it knows how to solve."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take the pilot that has been parked longest and find the line in the approval minutes that says what happens if it works. If it is not there, you have your answer. Write it now, with the five decisions resolved, and take it back to the committee that approved the pilot with a proposed kill date attached. If they will not set that date, you have just learned what the project is worth to them."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Why don't my AI pilots reach production?",
+            "respuesta": "Rarely because of the model. They stall because the pilot was approved as an experiment while production demands a recurring spend decision nobody prepared: data platform, observability, maintenance and on-call cover. Without a business owner carrying that cost in their own budget and a written kill date, the project keeps running in a sandbox until the team disbands."
+          },
+          {
+            "pregunta": "When should you kill an AI pilot?",
+            "respuesta": "When the kill date set at approval arrives and the criterion written at that point is not met. Both have to be written before anyone sees results, because afterwards the criterion quietly bends to fit the decision people already preferred. A pilot without a kill date never gets killed, it gets abandoned, which costs more and teaches nobody anything."
+          },
+          {
+            "pregunta": "What does it actually cost to run an AI system in production?",
+            "respuesta": "The part almost nobody budgets is the running: the pipeline that no longer gets fed by hand, observability to catch the model drifting, maintenance and someone on call when it breaks. It often weighs as much as the build, and it arrives once the committee already considered the spend approved. Inference cost also grows with usage, so success makes the invoice bigger."
+          },
+          {
+            "pregunta": "Which budget pays for an AI system in production?",
+            "respuesta": "The operating budget of the function that owns the process. Funding live operations from an innovation fund guarantees the system falls over at the first budget cut, because that fund is temporary by design. Moving the spend into an operating line is the most reliable signal that a pilot genuinely reached production, far more reliable than any demo."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's unstick your pilot",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
