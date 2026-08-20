@@ -41,6 +41,7 @@ const enCasos = await import('../src/content/soluciones.en.js');
 /* Cada solución tiene una dirección distinta en cada idioma; sin este mapa, el
    hreflang apuntaría a /en/solutions/escalar-ia, que no existe. */
 const { SLUG_ES_A_EN, SLUG_EN_A_ES } = await import('../src/content/soluciones-slugs.js');
+const { IMAGENES: CATALOGO } = await import('../src/content/imagenes.js');
 
 /* ------------------------------------------------------------- artículos */
 /*
@@ -193,9 +194,30 @@ const blogPosting = (a, lang, url) => {
       : { '@type': 'Organization', name: BRAND, url: SITE },
     publisher: { '@type': 'Organization', name: BRAND, url: SITE, logo: `${SITE}/logo/icon-white.svg` },
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
-    image: OG_IMAGE,
+    /* La imagen del propio artículo si la lleva, y solo si no, la genérica: un
+       BlogPosting que declara la misma imagen que los otros sesenta y nueve no
+       aporta nada a quien tiene que decidir cuál enseñar. */
+    image: (() => {
+      const img = (t.bloques || []).find((b) => b.tipo === 'imagen');
+      const c = img && CATALOGO.find((x) => x.src === img.src);
+      return c ? SITE + c.src : OG_IMAGE;
+    })(),
   };
 };
+
+/* Migas de pan. No son decoración del resultado de búsqueda: son la única
+   declaración explícita de dónde cuelga esta página. Un asistente que decide si
+   citar un artículo suelto o la sección entera necesita saber que existe una
+   sección, y sin esto tiene que deducirlo de la forma de la URL. */
+const migas = (lang, t) => ({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: BRAND, item: `${SITE}/${lang}` },
+    { '@type': 'ListItem', position: 2, name: 'Insights', item: `${SITE}/${lang}/insights` },
+    { '@type': 'ListItem', position: 3, name: t.titulo },
+  ],
+});
 
 function datosEstructurados(path, meta) {
   const url = SITE + path;
@@ -205,7 +227,7 @@ function datosEstructurados(path, meta) {
      estructurado inventado, y se penaliza. */
   const art = porUrl[path];
   if (art) {
-    const salida = [blogPosting(art.a, art.lang, url)];
+    const salida = [blogPosting(art.a, art.lang, url), migas(art.lang, art.a[art.lang])];
     const faq = (art.a[art.lang]?.bloques || [])
       .filter((b) => b.tipo === 'faq')
       .flatMap((b) => b.items || [])
@@ -309,6 +331,82 @@ function trozosDe(path) {
 const escapa = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+
+/* ---------------------------------------- cuerpo prerenderizado del artículo */
+
+/**
+ * Convierte los bloques de un artículo en HTML estático.
+ *
+ * ---- Por qué esto es lo que más importa de todo el archivo ----
+ *
+ * El sitio es una SPA: hasta ahora, el HTML que salía por cada URL llevaba la
+ * cabecera correcta y el cuerpo VACÍO. El texto lo montaba React en el
+ * navegador.
+ *
+ * Para Google eso es tolerable, porque ejecuta JavaScript. Para los
+ * rastreadores de los asistentes —GPTBot, ClaudeBot, PerplexityBot,
+ * OAI-SearchBot— no lo es: no ejecutan JavaScript. Leían el título y la
+ * descripción de un artículo y ni una línea del argumento. Es decir: el sitio
+ * estaba optimizado para que lo citaran, y lo único que un asistente no podía
+ * hacer era leerlo.
+ *
+ * Prerenderizar el sitio entero exigiría un navegador en el despliegue. Los
+ * artículos no: sus bloques ya son datos con un vocabulario cerrado, así que
+ * se convierten a HTML aquí, sin dependencias y sin navegador.
+ *
+ * Va dentro de #root. React lo sustituye al montar, y el contenido que sirve el
+ * servidor es exactamente el mismo que acaba viendo la persona: no hay dos
+ * versiones, que es lo que un buscador penaliza.
+ */
+function cuerpoDeArticulo(a, lang) {
+  const t = a[lang];
+  if (!t) return '';
+  const e = escapa;
+  const p = [];
+
+  p.push(`<h1>${e(t.titulo)}</h1>`);
+  if (t.entradilla) p.push(`<p>${e(t.entradilla)}</p>`);
+  p.push(`<p>${e(a.autor)} · <time datetime="${e(a.fecha)}">${e(a.fecha)}</time></p>`);
+
+  for (const b of t.bloques || []) {
+    const items = b.items || [];
+    switch (b.tipo) {
+      case 'entradilla':
+      case 'parrafo':
+      case 'destacado':
+        p.push(`<p>${e(b.texto)}</p>`); break;
+      case 'subtitulo':
+        if (b.antetitulo) p.push(`<p>${e(b.antetitulo)}</p>`);
+        p.push(`<h2>${e(b.texto)}</h2>`); break;
+      case 'cita':
+        p.push(`<blockquote><p>${e(b.texto)}</p>${b.fuente ? `<cite>${e(b.fuente)}</cite>` : ''}</blockquote>`); break;
+      case 'lista':
+        p.push(`<ul>${items.map((i) => `<li>${e(i)}</li>`).join('')}</ul>`); break;
+      case 'indice':
+        p.push(`<dl>${items.map((i) => `<dt>${e(i.termino)}</dt><dd>${e(i.definicion)}</dd>`).join('')}</dl>`); break;
+      case 'tarjetas':
+        p.push(items.map((i) => `<section><h3>${e(i.titulo)}</h3><p>${e(i.texto)}</p></section>`).join('')); break;
+      case 'imagen': {
+        const c = CATALOGO.find((x) => x.src === b.src);
+        if (!c) break;
+        /* Sin lazy: el rastreador no hace scroll, y el atributo no le estorba.
+           Lo que sí necesita es el alt, que es lo único que le dice qué hay. */
+        p.push(`<figure><img src="${e(c.src)}" alt="${e(c.alt[lang] || c.alt.es)}" />${
+          b.pie ? `<figcaption>${e(b.pie)}</figcaption>` : ''}</figure>`);
+        break;
+      }
+      case 'faq':
+        p.push(`<section><h2>${e(b.antetitulo || (lang === 'es' ? 'Preguntas frecuentes' : 'Frequently asked questions'))}</h2>${
+          items.map((i) => `<h3>${e(i.pregunta)}</h3><p>${e(i.respuesta)}</p>`).join('')}</section>`);
+        break;
+      case 'cta':
+        p.push(`<p><a href="${e(b.destino)}">${e(b.texto || '')}</a></p>`); break;
+      default: break;
+    }
+  }
+  return `<article>${p.join('')}</article>`;
+}
+
 /** Sustituye la cabecera entera de la plantilla por la de esta ruta. */
 function documentoPara(path, meta) {
   const url = SITE + path;
@@ -359,7 +457,13 @@ function documentoPara(path, meta) {
 ${jsonLd}
 `;
 
+  /* Solo los artículos. El resto de páginas necesitarían un navegador para
+     prerenderizarse, y su contenido no es lo que se busca que citen. */
+  const art = porUrl[path];
+  const cuerpo = art ? cuerpoDeArticulo(art.a, art.lang) : '';
+
   return plantilla
+    .replace('<div id="root"></div>', `<div id="root">${cuerpo}</div>`)
     .replace(/<html lang="[^"]*"/, `<html lang="${lang}"`)
     .replace(/<head>[\s\S]*?<\/head>/, `<head>${cabeza}${
       /* Lo que Vite inyectó (css y js con hash) se conserva tal cual */
