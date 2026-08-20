@@ -60,6 +60,7 @@ function Ficha({ entrada, alGuardar, alCerrar }) {
   const [error, setError] = React.useState('');
   const [subiendo, setSubiendo] = React.useState(false);
   const [guardando, setGuardando] = React.useState(false);
+  const [nota, setNota] = React.useState('');
   const campo = React.useRef(null);
 
   const pon = (k, v) => setF({ ...f, [k]: v });
@@ -80,10 +81,20 @@ function Ficha({ entrada, alGuardar, alCerrar }) {
     setSubiendo(true); setError('');
     try {
       const { foto } = await api.subirFoto({ id: f.id, datos: await reducir(archivo) });
-      /* La marca de tiempo obliga al navegador a volver a pedirla: sin ella,
-         al cambiar la foto se seguiría viendo la anterior desde la caché. */
-      setF({ ...f, foto });
+      const siguiente = { ...f, foto };
+      setF(siguiente);
       campo.current.value = '';
+
+      /* Y se guarda la ficha en el acto. Antes no: la foto se subía al
+         repositorio pero el campo `foto` solo se escribía al pulsar Guardar,
+         así que quien subía la foto y cerraba dejaba el archivo dentro y la
+         ficha sin él. La foto existía y no se veía en ningún sitio, que es la
+         peor de las dos mitades. Subir una foto ES el cambio; no hay un
+         segundo paso que tenga sentido pedir. */
+      const r = await api.guardarAutor({ ficha: siguiente, sha: entrada.sha });
+      entrada.sha = r.sha;
+      setNota('Foto guardada.');
+      setTimeout(() => setNota(''), 3000);
     } catch (err) { setError(err.message); }
     finally { setSubiendo(false); }
   };
@@ -152,6 +163,7 @@ function Ficha({ entrada, alGuardar, alCerrar }) {
         ))}
 
         <Aviso tono="mal">{error}</Aviso>
+        <Aviso tono="bien">{nota}</Aviso>
       </div>
     </div>
   );
