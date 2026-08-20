@@ -1,15 +1,15 @@
 {
-  "id": "carlos-andres-ramirez",
-  "nombre": "Carlos Andrés Ramírez",
-  "foto": "/images/autores/carlos-andres-ramirez.webp",
-  "linkedin": "",
-  "es": {
-    "rol": "",
-    "bio": ""
-  },
-  "en": {
-    "rol": "",
-    "bio": ""
-  },
-  "predeterminado": true
+    "id": "carlos-andres-ramirez",
+    "nombre": "Carlos Andrés Ramírez",
+    "foto": "/images/autores/carlos-andres-ramirez.webp",
+    "linkedin": "https://www.linkedin.com/in/carlosandres-ai/",
+    "es": {
+        "rol": "",
+        "bio": ""
+    },
+    "en": {
+        "rol": "",
+        "bio": ""
+    },
+    "predeterminado": true
 }
