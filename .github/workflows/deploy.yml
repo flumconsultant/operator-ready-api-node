@@ -8,11 +8,16 @@
 
 name: Desplegar a Hostinger
 
+# Solo main. Antes también desplegaba desde la rama de trabajo, y con el panel
+# de artículos en marcha eso se convirtió en un fallo: config-panel.php guarda
+# la rama del despliegue que lo generó, así que la rama a la que el panel
+# escribe los artículos era «la del último despliegue». Dos despliegues
+# seguidos desde ramas distintas y los artículos empiezan a guardarse en una
+# rama que no es la que está publicada, sin que nada lo avise.
 on:
   push:
     branches:
       - main
-      - claude/become-brand-image-kw83bw
   # Permite lanzarlo a mano desde la pestaña Actions sin tocar el código
   workflow_dispatch:
 
@@ -105,7 +110,7 @@ jobs:
             # decir «falta configurar» en vez de dar un error de servidor.
             printf '<?php return [];\n' > dist/api/config-panel.php
           else
-            PANEL_RAMA='${{ github.ref_name }}' php -r '
+            PANEL_RAMA='${{ github.event.repository.default_branch }}' php -r '
               $rama = getenv("PANEL_RAMA") ?: "main";
               $usuarios = [];
               foreach (preg_split("/\r?\n/", (string) getenv("PANEL_USUARIOS")) as $linea) {
