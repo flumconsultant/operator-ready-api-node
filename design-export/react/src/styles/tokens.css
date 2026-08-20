@@ -1,0 +1,285 @@
+/* Los 173 tokens del sistema BECOME, consolidados.
+   Generados desde tokens/ — ver design-export-react.mjs. */
+
+/* ═══ colors.css ═══ */
+:root{
+/* ---- PRIMARY (section 7). Usage ratio is a rule, not a suggestion:
+   navy 60% · green 20% · ice blue 10% · charcoal 10% ---- */
+--deep-navy:#0A0E27; /* @kind color */
+--electric-green:#00FF88; /* @kind color */
+--ice-blue:#E0F7FF; /* @kind color */
+--charcoal:#2D3748; /* @kind color */
+
+/* ---- SUPPORTING ---- */
+--dark-slate:#1A202C; /* @kind color */
+--neon-green:#00FFAA; /* @kind color */
+--soft-white:#F7FAFC; /* @kind color */
+
+/* ---- Navy ramp — every dark surface comes from here ---- */
+--navy-950:#05070F; /* @kind color */
+--navy-900:#0A0E27; /* @kind color */
+--navy-850:#0E1330; /* @kind color */
+--navy-800:#141A3A; /* @kind color */
+--navy-700:#1A202C; /* @kind color */
+--navy-600:#2D3748; /* @kind color */
+--navy-500:#3D4A63; /* @kind color */
+
+/* ---- Light ramp ---- */
+--white:#FFFFFF; /* @kind color */
+--off-white:#F7FAFC; /* @kind color */
+--pale-100:#EDF2F7; /* @kind color */
+--pale-200:#E2E8F0; /* @kind color */
+--pale-300:#CBD5E0; /* @kind color */
+
+/* ---- Text greys. On navy only slate-100/200/300 are legal para texto.
+   Sobre off-white solo slate-450/500. slate-400 es exclusivo de superficies
+   oscuras: sobre off-white da 3.83:1 y no llega a AA. ---- */
+--slate-100:#E2E8F0; /* @kind color */
+--slate-200:#C3CEDD; /* @kind color */
+--slate-300:#9BA9BF; /* @kind color */
+--slate-400:#718096; /* @kind color */
+--slate-450:#626E82; /* @kind color */ /* 4.92:1 sobre off-white — el escalón terciario del tema claro */
+--slate-500:#4A5568; /* @kind color */
+
+/* ---- Green washes ---- */
+--green-tint:rgba(0,255,136,.12); /* @kind color */
+--green-tint-strong:rgba(0,255,136,.22); /* @kind color */
+--green-line:rgba(0,255,136,.38); /* @kind color */
+
+/* ---- Semantic — light context (default) ---- */
+--bg-page:var(--off-white); /* @kind color */
+--bg-sunken:var(--pale-100); /* @kind color */
+--surface-card:var(--white); /* @kind color */
+--surface-inverse:var(--navy-900); /* @kind color */
+--text-heading:var(--deep-navy); /* @kind color */
+--text-body:var(--navy-700); /* @kind color */
+--text-muted:var(--slate-500); /* @kind color */
+--text-faint:var(--slate-450); /* @kind color */ /* 4.92:1 sobre off-white. Antes slate-400 = 3.83:1, por debajo de AA */
+--text-accent:#0F7A46; /* @kind color */
+--text-on-accent:var(--deep-navy); /* @kind color */
+--border-hairline:var(--pale-200); /* @kind color */
+--border-strong:var(--pale-300); /* @kind color */
+--accent:var(--electric-green); /* @kind color */
+--accent-hover:var(--neon-green); /* @kind color */
+--focus-ring:var(--electric-green); /* @kind color */
+
+/* Dark-surface hairlines — a navy island can sit on a light page */
+--border-hairline-dark:rgba(226,232,240,.14); /* @kind color */
+--border-strong-dark:rgba(226,232,240,.28); /* @kind color */
+
+/* ---- GRADIENT SYSTEM (section 8) — on dark backgrounds ---- */
+--gradient-transformation:linear-gradient(90deg,#0A0E27 0%,#00FF88 100%); /* @kind color */
+--gradient-energy:linear-gradient(90deg,#00FF88 0%,#00FFAA 100%); /* @kind color */
+--gradient-future:linear-gradient(90deg,#E0F7FF 0%,#00FF88 100%); /* @kind color */
+--gradient-transformation-diag:linear-gradient(135deg,#0A0E27 0%,#00FF88 100%); /* @kind color */
+--gradient-protect-dark:linear-gradient(180deg,rgba(10,14,39,0) 0%,rgba(10,14,39,.86) 66%,#0A0E27 100%); /* @kind color */
+--gradient-protect-light:linear-gradient(180deg,rgba(247,250,252,0) 0%,rgba(247,250,252,.9) 70%,#F7FAFC 100%); /* @kind color */
+/* Environmental green light — the "futuristic environment" ground */
+--gradient-environment:radial-gradient(70% 90% at 50% 108%,rgba(0,255,136,.30) 0%,rgba(0,255,136,.07) 42%,rgba(10,14,39,0) 72%); /* @kind color */
+}
+[data-theme="dark"],.become-dark{
+--bg-page:var(--navy-900); /* @kind color */
+--bg-sunken:var(--navy-950); /* @kind color */
+--surface-card:var(--navy-850); /* @kind color */
+--surface-inverse:var(--off-white); /* @kind color */
+--text-heading:var(--white); /* @kind color */
+--text-body:var(--slate-100); /* @kind color */
+--text-muted:var(--slate-200); /* @kind color */
+--text-faint:var(--slate-300); /* @kind color */
+--text-accent:var(--electric-green); /* @kind color */
+--border-hairline:var(--border-hairline-dark); /* @kind color */
+--border-strong:var(--border-strong-dark); /* @kind color */
+}
+
+/* ═══ typography.css ═══ */
+:root{
+--font-display:"Inter",system-ui,sans-serif; /* @kind font */
+--font-body:"Inter",system-ui,sans-serif; /* @kind font */
+--font-mono:"JetBrains Mono",ui-monospace,monospace; /* @kind font */
+
+--weight-display:600; /* @kind font */
+--weight-display-strong:700; /* @kind font */
+--weight-body:400; /* @kind font */
+--weight-body-medium:500; /* @kind font */
+--weight-mono:400; /* @kind font */
+
+/* Titulares fluidos. El máximo de cada clamp es el valor fijo que tenían antes,
+   así que de ~1180px para arriba nada cambia. Por debajo escalan: a 390px una
+   palabra como "TRANSFORMACIÓN" a 34px desbordaba el ancho de pantalla. */
+--text-hero:clamp(46px,6.4vw,104px); /* @kind font */
+--text-display:clamp(40px,8.4vw,76px); /* @kind font */
+--text-h1:clamp(32px,5.6vw,52px); /* @kind font */
+--text-h2:clamp(23px,3.6vw,34px); /* @kind font */
+--text-h3:clamp(18px,2.2vw,21px); /* @kind font */
+--text-lead:19px; /* @kind font */
+--text-body-lg:16.5px; /* @kind font */
+--text-body-md:15px; /* @kind font */
+--text-body-sm:13px; /* @kind font */
+--text-label:11px; /* @kind font */
+--text-micro:10px; /* @kind font */
+
+--leading-tight:.96; /* @kind font */
+--leading-heading:1.08; /* @kind font */
+--leading-body:1.55; /* @kind font */
+--leading-loose:1.65; /* @kind font */
+
+/* Tight tracking on display, as specified for the wordmark. */
+--track-hero:-.03em; /* @kind font */
+--track-display:-.022em; /* @kind font */
+--track-heading:-.014em; /* @kind font */
+--track-body:-.002em; /* @kind font */
+--track-label:.14em; /* @kind font */
+--track-mono:0em; /* @kind font */
+/* The descriptor line under the wordmark — very wide, per section 2 */
+--track-descriptor:.34em; /* @kind font */
+--track-wordmark:-.02em; /* @kind font */
+
+--type-hero:var(--weight-display) var(--text-hero)/var(--leading-tight) var(--font-display); /* @kind font */
+--type-h1:var(--weight-display) var(--text-h1)/var(--leading-heading) var(--font-display); /* @kind font */
+--type-h2:var(--weight-display) var(--text-h2)/var(--leading-heading) var(--font-display); /* @kind font */
+--type-h3:var(--weight-display-strong) var(--text-h3)/1.26 var(--font-display); /* @kind font */
+--type-body:var(--weight-body) var(--text-body-md)/var(--leading-body) var(--font-body); /* @kind font */
+--type-lead:var(--weight-body) var(--text-lead)/var(--leading-loose) var(--font-body); /* @kind font */
+--type-label:var(--weight-display) var(--text-label)/1.2 var(--font-display); /* @kind font */
+--type-mono:var(--weight-mono) var(--text-body-sm)/1.5 var(--font-mono); /* @kind font */
+--type-stat:var(--weight-display) 48px/1 var(--font-display); /* @kind font */
+}
+
+/* ═══ spacing.css ═══ */
+:root{
+--space-0:0px;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;
+--space-6:24px;--space-7:32px;--space-8:40px;--space-9:48px;--space-10:64px;--space-11:80px;
+--space-12:96px;--space-13:120px;--space-14:160px;
+--gutter-page:clamp(24px,5vw,80px); /* @kind spacing */
+--maxw-prose:60ch; /* @kind other */
+--maxw-content:1280px; /* @kind spacing */
+--grid-gap:24px; /* @kind spacing */
+--grid-gap-hair:1px; /* @kind spacing */
+--section-pad-y:var(--space-12); /* @kind spacing */
+/* Logo clearspace = one x, where x is the wordmark's cap height / icon stem */
+--logo-clearspace:1em; /* @kind spacing */
+--logo-min-wordmark:120px; /* @kind spacing */
+--logo-min-icon:32px; /* @kind spacing */
+}
+
+/* ═══ radius.css ═══ */
+:root{
+--radius-none:0px;
+--radius-xs:3px;
+--radius-sm:6px;
+--radius-md:8px;
+--radius-lg:12px;
+--radius-xl:16px;
+--radius-frame:22px;
+--radius-icon:22%;
+--radius-pill:999px;
+--border-hair:1px;
+--border-thick:2px;
+/* Icon library stroke, section 12 */
+--icon-stroke:2px;
+}
+
+/* ═══ effects.css ═══ */
+:root{
+--shadow-none:none;
+--shadow-card:0 1px 2px rgba(10,14,39,.05);
+--shadow-raised:0 2px 4px rgba(10,14,39,.06),0 14px 36px rgba(10,14,39,.10);
+--shadow-inset-hair:inset 0 0 0 1px var(--border-hairline);
+
+/* ---- GLOW & ENERGY (section 13). Dark backgrounds only.
+   Opacity 20-40%, blur 20-40px. Premium, not gaming — never red, never orange,
+   never a second glow in the same frame. ---- */
+--glow-text:0 0 24px rgba(0,255,136,.32); /* @kind other */
+--glow-icon:0 0 20px rgba(0,255,136,.30); /* @kind other */
+--glow-button:0 0 28px rgba(0,255,136,.34); /* @kind other */
+--glow-button-hover:0 0 36px rgba(0,255,136,.42); /* @kind other */
+--glow-pulse:0 0 40px rgba(0,255,136,.24); /* @kind other */
+--glow-soft:0 0 80px rgba(0,255,136,.18); /* @kind other */
+--glow-drop:drop-shadow(0 0 20px rgba(0,255,136,.32)); /* @kind other */
+
+--ring-focus:0 0 0 2px var(--bg-page),0 0 0 4px var(--electric-green);
+--blur-glass:saturate(120%) blur(18px); /* @kind other */
+--surface-glass:rgba(247,250,252,.78); /* @kind color */
+--surface-glass-dark:rgba(10,14,39,.72); /* @kind color */
+
+/* Technical grid — thin, cool, used sparingly on navy */
+--grid-line:rgba(226,232,240,.07); /* @kind color */
+--grid-step:48px; /* @kind spacing */
+--grid-overlay:repeating-linear-gradient(90deg,var(--grid-line) 0 1px,transparent 1px var(--grid-step)); /* @kind color */
+--grid-overlay-both:repeating-linear-gradient(90deg,var(--grid-line) 0 1px,transparent 1px var(--grid-step)),repeating-linear-gradient(180deg,var(--grid-line) 0 1px,transparent 1px var(--grid-step)); /* @kind color */
+
+/* Escala de apilamiento. Existe porque los tres elementos fijos del sitio
+   —cabecera, menú móvil y formulario a pantalla completa— tenían su z-index
+   escrito a mano en tres archivos distintos, y el orden entre ellos solo se
+   podía averiguar comparándolos. */
+--z-header:50; /* @kind number */
+--z-nav-overlay:60; /* @kind number */
+--z-modal:100; /* @kind number */
+}
+
+/* ═══ patterns.css ═══ */
+:root{
+/* ---- PATTERN LIBRARY ----
+   Backgrounds for AI-native transformation. Keep them at 5-20% opacity over a
+   navy base; green accents inside a pattern stay at 20% maximum. Never at full
+   opacity, never over body copy, never two patterns in one frame. ---- */
+
+/* Geometric */
+--pattern-circuit-grid:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cg fill='none' stroke='%2300FF88' stroke-width='1'%3E%3Cpath d='M0 32h96M0 64h96M32 0v96M64 0v96'/%3E%3C/g%3E%3Cg fill='%2300FF88'%3E%3Ccircle cx='32' cy='32' r='2.5'/%3E%3Ccircle cx='64' cy='64' r='2.5'/%3E%3C/g%3E%3C/svg%3E"); /* @kind other */
+--pattern-hexagon-grid:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='96'%3E%3Cg fill='none' stroke='%2300FF88' stroke-width='1'%3E%3Cpath d='M28 0l24 14v28L28 56 4 42V14z'/%3E%3Cpath d='M28 48l24 14v28L28 104 4 90V62z'/%3E%3C/g%3E%3C/svg%3E"); /* @kind other */
+--pattern-micro-grid:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpath d='M0 0h16v16H0z' fill='none' stroke='%23E2E8F0' stroke-width='.5'/%3E%3C/svg%3E"); /* @kind other */
+
+/* Dot matrices */
+--pattern-dot-grid:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Ccircle cx='2' cy='2' r='1.6' fill='%2300FF88'/%3E%3C/svg%3E"); /* @kind other */
+--pattern-particle-field:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cg fill='%2300FF88'%3E%3Ccircle cx='12' cy='22' r='1.8'/%3E%3Ccircle cx='58' cy='9' r='1.1'/%3E%3Ccircle cx='104' cy='34' r='2.1'/%3E%3Ccircle cx='31' cy='68' r='1.3'/%3E%3Ccircle cx='86' cy='79' r='1.7'/%3E%3Ccircle cx='128' cy='104' r='1.2'/%3E%3Ccircle cx='19' cy='118' r='2'/%3E%3Ccircle cx='66' cy='131' r='1.4'/%3E%3Ccircle cx='113' cy='56' r='1'/%3E%3C/g%3E%3C/svg%3E"); /* @kind other */
+--pattern-scattered-nodes:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cg stroke='%2300FF88' stroke-width='.7' fill='none'%3E%3Cpath d='M24 30L82 62 148 26M82 62l-38 76 84 22M82 62l72 58'/%3E%3C/g%3E%3Cg fill='%2300FF88'%3E%3Ccircle cx='24' cy='30' r='3'/%3E%3Ccircle cx='82' cy='62' r='3.6'/%3E%3Ccircle cx='148' cy='26' r='2.6'/%3E%3Ccircle cx='44' cy='138' r='3'/%3E%3Ccircle cx='128' cy='160' r='2.6'/%3E%3Ccircle cx='154' cy='120' r='3'/%3E%3C/g%3E%3C/svg%3E"); /* @kind other */
+
+/* Line systems */
+--pattern-parallel-lines:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Cpath d='M0 11.5h12' stroke='%2300FF88' stroke-width='1'/%3E%3C/svg%3E"); /* @kind other */
+--pattern-wave:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='44'%3E%3Cg fill='none' stroke='%2300FF88' stroke-width='1.2'%3E%3Cpath d='M0 22C26 4 54 4 80 22s54 18 80 0'/%3E%3Cpath d='M0 34C26 16 54 16 80 34s54 18 80 0' opacity='.6'/%3E%3C/g%3E%3C/svg%3E"); /* @kind other */
+--pattern-angular-lines:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg stroke='%2300FF88' stroke-width='1' fill='none'%3E%3Cpath d='M-20 60L60 -20M0 120L120 0M60 140L140 60'/%3E%3C/g%3E%3C/svg%3E"); /* @kind other */
+
+/* Textures */
+--pattern-noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"); /* @kind other */
+
+/* Opacity band the guidelines allow */
+--pattern-opacity:.10; /* @kind other */
+--pattern-opacity-strong:.20; /* @kind other */
+--pattern-opacity-subtle:.05; /* @kind other */
+}
+
+/* ═══ motion.css ═══ */
+:root{
+--ease-become:cubic-bezier(.22,1,.36,1); /* @kind other */
+--ease-standard:cubic-bezier(.4,0,.2,1); /* @kind other */
+--ease-exit:cubic-bezier(.4,0,1,1); /* @kind other */
+--dur-instant:80ms; /* @kind other */
+--dur-fast:160ms; /* @kind other */
+--dur-base:240ms; /* @kind other */
+--dur-slow:420ms; /* @kind other */
+--dur-sequence:700ms; /* @kind other */
+--stagger-step:80ms; /* @kind other */
+--transition-hover:color var(--dur-fast) var(--ease-standard),background-color var(--dur-fast) var(--ease-standard),border-color var(--dur-fast) var(--ease-standard),opacity var(--dur-fast) var(--ease-standard),box-shadow var(--dur-base) var(--ease-become),transform var(--dur-base) var(--ease-become); /* @kind other */
+}
+@media (prefers-reduced-motion:reduce){:root{--dur-fast:0ms; /* @kind other */
+--dur-base:0ms; /* @kind other */
+--dur-slow:0ms; /* @kind other */
+--dur-sequence:0ms; /* @kind other */
+--stagger-step:0ms /* @kind other */}}
+
+/* ═══ base.css ═══ */
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg-page);color:var(--text-body);font:var(--type-body);letter-spacing:var(--track-body);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:var(--weight-display);color:var(--text-heading);margin:0}
+h1{font-size:var(--text-h1);line-height:var(--leading-heading);letter-spacing:var(--track-display)}
+h2{font-size:var(--text-h2);line-height:var(--leading-heading);letter-spacing:var(--track-display)}
+h3{font-size:var(--text-h3);line-height:1.26;letter-spacing:var(--track-heading);font-weight:var(--weight-display-strong)}
+p{margin:0;text-wrap:pretty}
+a{color:var(--text-accent);text-decoration:none;transition:var(--transition-hover)}
+a:hover{color:var(--accent-hover);text-decoration:underline;text-underline-offset:3px}
+.b-label{font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--text-faint)}
+.b-mono{font:var(--type-mono)}
+.b-rule{height:1px;background:var(--border-hairline)}
+.b-grid{background-image:var(--grid-overlay-both)}
+.b-glow-text{text-shadow:var(--glow-text)}
+::selection{background:var(--electric-green);color:var(--deep-navy)}
