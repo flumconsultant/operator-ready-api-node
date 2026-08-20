@@ -23,11 +23,6 @@
         "texto": "Lo que se discute nunca es la precisión. Es una pregunta mucho más simple, y mucho más incómoda: si este agente aprueba un descuento que no tocaba, ¿de quién es el error?"
       },
       {
-        "tipo": "imagen",
-        "src": "/images/01-neural-network.webp",
-        "pie": "La responsabilidad no vive en el modelo. Vive en el sistema que lo rodea."
-      },
-      {
         "tipo": "subtitulo",
         "antetitulo": "El síntoma",
         "texto": "La responsabilidad no se delega hacia arriba."
@@ -140,11 +135,6 @@
       {
         "tipo": "parrafo",
         "texto": "What gets debated is never accuracy. It’s a much simpler and far more uncomfortable question: if this agent approves a discount it shouldn’t have, whose mistake is it?"
-      },
-      {
-        "tipo": "imagen",
-        "src": "/images/01-neural-network.webp",
-        "pie": "Accountability does not live in the model. It lives in the system around it."
       },
       {
         "tipo": "subtitulo",

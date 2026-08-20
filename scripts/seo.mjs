@@ -183,6 +183,24 @@ const servicio = (nombre, descripcion, url) => ({
 /* BlogPosting con autor y fechas: es lo que permite que un resultado muestre
    la fecha, y lo que le da a un asistente algo que citar con atribución en vez
    de un texto suelto sin procedencia. */
+/**
+ * La imagen que representa a un artículo.
+ *
+ * Primero su tarjeta, que lleva el titular escrito y por tanto dice algo; luego
+ * una imagen del cuerpo si la lleva; y solo si no hay ninguna, la genérica del
+ * sitio. El orden importa: que las setenta páginas declaren la misma imagen no
+ * ayuda a quien tiene que decidir cuál enseñar.
+ */
+const imagenDe = (a, lang) => {
+  const slug = a[lang]?.slug;
+  if (slug && existsSync(join(ROOT, 'assets/images/tarjetas', `${slug}.jpg`))) {
+    return `${SITE}/images/tarjetas/${slug}.jpg`;
+  }
+  const img = (a[lang]?.bloques || []).find((b) => b.tipo === 'imagen');
+  const c = img && CATALOGO.find((x) => x.src === img.src);
+  return c ? SITE + c.src : OG_IMAGE;
+};
+
 const blogPosting = (a, lang, url) => {
   const t = a[lang];
   return {
@@ -220,11 +238,7 @@ const blogPosting = (a, lang, url) => {
     /* La imagen del propio artículo si la lleva, y solo si no, la genérica: un
        BlogPosting que declara la misma imagen que los otros sesenta y nueve no
        aporta nada a quien tiene que decidir cuál enseñar. */
-    image: (() => {
-      const img = (t.bloques || []).find((b) => b.tipo === 'imagen');
-      const c = img && CATALOGO.find((x) => x.src === img.src);
-      return c ? SITE + c.src : OG_IMAGE;
-    })(),
+    image: imagenDe(a, lang),
   };
 };
 
@@ -443,6 +457,11 @@ function documentoPara(path, meta) {
     .map((f) => `    <link rel="modulepreload" crossorigin fetchpriority="low" href="/${f}" />`)
     .join('\n');
 
+  /* Un artículo enseña su tarjeta al compartirse; el resto del sitio, la
+     imagen general. */
+  const art0 = porUrl[path];
+  const imagenOg = art0 ? imagenDe(art0.a, art0.lang) : OG_IMAGE;
+
   const jsonLd = datosEstructurados(path, meta)
     .map((d) => `    <script type="application/ld+json">${JSON.stringify(d)}</script>`)
     .join('\n');
@@ -467,14 +486,14 @@ function documentoPara(path, meta) {
     <meta property="og:url" content="${url}" />
     <meta property="og:title" content="${escapa(meta.title)}" />
     <meta property="og:description" content="${escapa(meta.description)}" />
-    <meta property="og:image" content="${OG_IMAGE}" />
+    <meta property="og:image" content="${imagenOg}" />
     <meta property="og:image:width" content="1600" />
     <meta property="og:image:height" content="900" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapa(meta.title)}" />
     <meta name="twitter:description" content="${escapa(meta.description)}" />
-    <meta name="twitter:image" content="${OG_IMAGE}" />
+    <meta name="twitter:image" content="${imagenOg}" />
 
     <meta name="theme-color" content="#05070f" />
 ${jsonLd}

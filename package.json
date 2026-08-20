@@ -7,7 +7,8 @@
     "build": "vite build && node scripts/seo.mjs",
     "preview": "vite preview",
     "start": "node index.js",
-    "design:export": "node scripts/design-export.mjs && node scripts/design-export-react.mjs"
+    "design:export": "node scripts/design-export.mjs && node scripts/design-export-react.mjs",
+    "tarjetas": "node scripts/tarjeta-social.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

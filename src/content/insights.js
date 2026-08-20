@@ -54,24 +54,8 @@ export const SLUG_EN_A_ES = Object.fromEntries(
 /* Los cinco pilares de la página de Insights, con su etiqueta en cada idioma.
    Un artículo declara su pilar por clave, no por su nombre escrito: así se
    puede corregir la redacción de un pilar sin recorrer todos los artículos. */
-export const PILARES = {
-  'ai-native': { es: 'The AI-native enterprise', en: 'The AI-native enterprise' },
-  'agentic-work': { es: 'Agentic work', en: 'Agentic work' },
-  'operating-model': { es: 'Operating-model reinvention', en: 'Operating-model reinvention' },
-  'value-adoption': { es: 'Value and adoption', en: 'Value and adoption' },
-  'responsible-scale': { es: 'Responsible scale', en: 'Responsible scale' },
-};
+export { PILARES, FORMATOS } from './taxonomia.js';
 
-export const FORMATOS = {
-  perspective: { es: 'Perspective', en: 'Perspective' },
-  'field-note': { es: 'Field Note', en: 'Field Note' },
-  framework: { es: 'Framework', en: 'Framework' },
-  'executive-brief': { es: 'Executive Brief', en: 'Executive Brief' },
-  'case-evidence': { es: 'Case Evidence', en: 'Case Evidence' },
-};
-
-/* Una fecha en un artículo es una señal de vigencia: quien la lee decide si
-   sigue siendo válida. Por eso se muestra siempre, y en el idioma de la página. */
 export const fechaLegible = (iso, lang) => {
   const d = new Date(`${iso}T12:00:00Z`);
   if (Number.isNaN(d.getTime())) return '';

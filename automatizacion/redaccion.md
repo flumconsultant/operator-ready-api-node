@@ -101,30 +101,27 @@ es lo que ha salido bien. Entre 900 y 1400 palabras.
 **No uses el bloque `imagen`**: no hay imágenes que referenciar y una ruta
 inventada rompe la página.
 
-## La imagen
+## Las imágenes
 
-Cada artículo lleva **una** imagen, y solo una. Va después del segundo párrafo,
-nunca antes: la entradilla tiene que poder leerse sin que una imagen la empuje
-fuera de pantalla.
+**No pongas imagen.** Ni una.
 
-No inventes rutas. Las imágenes disponibles están en `src/content/imagenes.js`
-y son una lista cerrada; cada una dice en `cuando` para qué sirve. Elige por ese
-campo, no por el nombre del archivo. Las marcadas con `usable: false` están
-vetadas y el guardián las rechaza.
+Una foto de archivo no ayuda a posicionar, y en un sitio que vende criterio
+resta: quien ve una imagen genérica encima de un texto deduce que el texto
+también es genérico. El catálogo de `src/content/imagenes.js` sigue ahí para
+quien componga un artículo a mano, no para ti.
 
-El bloque lleva solo dos campos:
+La imagen que un artículo sí necesita es la que se ve al compartirlo en
+LinkedIn o WhatsApp, y esa se genera sola con el titular escrito encima. Es el
+último paso antes de publicar:
 
-```json
-{ "tipo": "imagen", "src": "/images/01-neural-network.webp", "pie": "..." }
+```
+node scripts/tarjeta-social.mjs src/content/insights/<archivo>.json
 ```
 
-El texto alternativo NO se escribe aquí: sale del catálogo, donde está escrito
-una vez mirando la imagen. El `pie` sí es tuyo, y va en el idioma del artículo:
-no describe la imagen —para eso está el texto alternativo— sino que dice algo
-que el artículo sostiene. Una frase, sin punto final si es un fragmento.
-
-Si ninguna imagen encaja de verdad con lo que estás contando, no pongas
-ninguna. Una imagen genérica pegada por cumplir se nota, y resta.
+La única imagen que merece ir dentro de un artículo es la que dice algo que el
+texto no puede decir solo: un esquema, una tabla, una captura de algo real. Si
+algún día tienes una así, no la inventes ni la busques: déjalo escrito en el
+commit y que la ponga una persona.
 
 ## SEO y asistentes
 
@@ -212,6 +209,16 @@ haya rayas largas ni muletillas, y que ninguna cifra viaje sin fuente.
 **Si no pasa, arréglalo y vuelve a ejecutarlo.** No entregues un artículo que no
 pase: el mismo guardián corre en el despliegue y lo va a rechazar igual, solo
 que entonces no habrá nadie para arreglarlo y el día se queda sin artículo.
+
+Y cuando pase, genera la tarjeta para compartir:
+
+```
+node scripts/tarjeta-social.mjs src/content/insights/<tu-archivo>.json
+```
+
+Deja dos archivos en `assets/images/tarjetas/`, uno por idioma, que entran en el
+commit con el artículo. Sin ellos, el artículo compartido en LinkedIn aparece
+como un enlace desnudo, y un enlace desnudo se pulsa mucho menos.
 
 ## Si hoy no hay nada bueno que decir
 
