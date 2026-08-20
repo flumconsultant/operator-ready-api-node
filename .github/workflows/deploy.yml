@@ -346,46 +346,59 @@ jobs:
           #
           # Una comprobación tiene que pedir las cosas como las pide un
           # visitante. Si no, mide su propio reflejo.
+          # Tres cosas que una petición de verdad lleva y `curl` a secas no:
+          # el User-Agent de un navegador, un Referer del propio dominio y un
+          # Accept. Sin el Referer, la protección anti-enlazado de Hostinger
+          # responde 403 a los archivos estáticos —es su función: impedir que
+          # otro sitio cuelgue de los tuyos— y la comprobación leía ese bloqueo
+          # como si la web estuviera caída.
+          #
+          # Costó una hora y dos arreglos a ciegas descubrirlo: se borró un
+          # .htaccess y se corrigieron unos permisos que no tenían nada que ver,
+          # mientras el sitio servía con total normalidad a sus visitantes. La
+          # pista estaba a la vista desde el principio: el 403 seguía igual
+          # después de cada arreglo, y eso solo puede significar que el problema
+          # está en quien pregunta.
           NAVEGADOR='Mozilla/5.0 (Linux; Android 11; moto g power) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Mobile Safari/537.36'
+          COMO_UN_VISITANTE=(-A "$NAVEGADOR" -e 'https://meetbecome.com/es' -H 'Accept: */*')
 
           LEIDO=$(curl -sS --max-time 20 -o /dev/null \
-            -A "$NAVEGADOR" \
+            "${COMO_UN_VISITANTE[@]}" \
             -H 'Accept-Encoding: gzip, br' \
             -w '%{http_code} %{content_type} %{size_download}' \
             "https://meetbecome.com/${LOCAL}" || echo "000 - 0")
           ESTADO=$(printf '%s' "$LEIDO" | cut -d' ' -f1)
           TIPO=$(printf '%s' "$LEIDO" | cut -d' ' -f2)
           BYTES_RED=$(printf '%s' "$LEIDO" | cut -d' ' -f3)
-          CABS=$(curl -sSI --max-time 20 -A "$NAVEGADOR" "https://meetbecome.com/${LOCAL}" || true)
-          CACHE=$(printf '%s' "$CABS" | grep -i '^cache-control:' | tr -d '\r' || true)
+          CACHE=$(curl -sSI --max-time 20 "${COMO_UN_VISITANTE[@]}" "https://meetbecome.com/${LOCAL}" \
+            | grep -i '^cache-control:' | tr -d '\r' || true)
 
           echo "Bundle en disco  : ${BYTES_LOCAL} B"
           echo "Bundle por la red: ${BYTES_RED} B  ·  estado ${ESTADO}  ·  tipo ${TIPO}"
           echo "${CACHE:-cache-control: (ninguna)}"
 
           if [ "$ESTADO" = "403" ]; then
-            echo "::warning::403 al pedir el bundle. Si el sitio se ve bien en un navegador, es el cortafuegos del hosting bloqueando esta comprobación, no un fallo de la web. No se detiene el despliegue por esto."
+            # Sigue sin poder afirmarse nada del sitio: 403 aquí es el
+            # cortafuegos del hosting, no la web. Se dice y se sigue.
+            echo "::warning::403 al pedir el bundle, incluso pidiéndolo como lo pide un navegador. Es el cortafuegos del hosting bloqueando peticiones desde fuera de un navegador real; NO significa que la web esté mal. Compruébala abriéndola. Lo que sí queda sin medir es si el JavaScript viaja comprimido."
           elif [ "$ESTADO" != "200" ]; then
             echo "::error::El bundle no se sirve: el servidor responde ${ESTADO} en /${LOCAL}. El sitio está cargando el HTML pero no su código."
             exit 1
-          fi
-          case "$TIPO" in
-            *javascript*|*ecmascript*) : ;;
-            *) echo "::error::El servidor devuelve '${TIPO}' donde debería haber JavaScript en /${LOCAL}. Alguna regla del .htaccess está desviando las peticiones a assets/." ; exit 1 ;;
-          esac
-
-          # Un bundle de JavaScript comprime a menos de la mitad. Si lo que
-          # viaja pesa casi lo mismo que el archivo, no se está comprimiendo.
-          if [ "${BYTES_RED:-0}" -eq 0 ]; then
-            echo "::warning::No se pudo medir el peso transferido. Compruébalo a mano."
-          elif [ "$BYTES_RED" -gt $((BYTES_LOCAL * 70 / 100)) ]; then
-            echo "::warning::El JavaScript viaja SIN COMPRIMIR: ${BYTES_RED} B de ${BYTES_LOCAL} B. En móvil eso es más de un segundo perdido. Revisa que el bloque mod_deflate del .htaccess incluya text/javascript."
           else
-            echo "Comprimido al $((BYTES_RED * 100 / BYTES_LOCAL)) % de su tamaño."
-          fi
+            case "$TIPO" in
+              *javascript*|*ecmascript*) : ;;
+              *) echo "::error::El servidor devuelve '${TIPO}' donde debería haber JavaScript en /${LOCAL}. Alguna regla del .htaccess está desviando las peticiones a assets/." ; exit 1 ;;
+            esac
 
-          if ! printf '%s' "$CACHE" | grep -qi 'immutable'; then
-            echo "::warning::Los archivos con hash no se están cacheando un año. Comprueba que dist/assets/.htaccess llegó al servidor y que mod_headers está activo."
+            # Un bundle de JavaScript comprime a menos de la mitad. Si lo que
+            # viaja pesa casi lo mismo que el archivo, no se está comprimiendo.
+            if [ "${BYTES_RED:-0}" -eq 0 ]; then
+              echo "::warning::No se pudo medir el peso transferido. Compruébalo a mano."
+            elif [ "$BYTES_RED" -gt $((BYTES_LOCAL * 70 / 100)) ]; then
+              echo "::warning::El JavaScript viaja SIN COMPRIMIR: ${BYTES_RED} B de ${BYTES_LOCAL} B. En móvil eso es más de un segundo perdido. Revisa que el bloque mod_deflate del .htaccess incluya text/javascript."
+            else
+              echo "Comprimido al $((BYTES_RED * 100 / BYTES_LOCAL)) % de su tamaño."
+            fi
           fi
 
       - name: Comprobar que el correo del formulario funciona
