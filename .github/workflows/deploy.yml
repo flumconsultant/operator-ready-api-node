@@ -125,6 +125,50 @@ jobs:
           echo "desde la pestaña Actions con 'Re-run all jobs'."
           exit 1
 
+      # ── Qué hay realmente en assets/ ──
+      #
+      # El servidor responde 403 a esa carpeta y llevo dos intentos corrigiendo
+      # una causa supuesta. Borrar el .htaccess que había dentro no lo
+      # resolvió, así que la causa es otra y hay que mirarla, no deducirla.
+      #
+      # Un solo lftp, y ANTES del que sube: Hostinger corta las conexiones
+      # rápidas encadenadas —ya colgó un despliegue seis minutos por esto—, así
+      # que va separado y con una pausa detrás. Nunca detiene el despliegue: si
+      # no se puede listar, se sigue igual.
+      - name: Mirar la carpeta assets/ del servidor
+        continue-on-error: true
+        timeout-minutes: 3
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          TLS_RELAJADO: ${{ vars.FTP_TLS_RELAJADO }}
+          FTP_DIR: ${{ vars.FTP_DIR }}
+        run: |
+          set -uo pipefail
+          VERIFICAR=true
+          [ "${TLS_RELAJADO:-}" = "true" ] && VERIFICAR=false
+          DESTINO="${FTP_DIR:-.}"
+          lftp -c "
+            set ftp:ssl-force true;
+            set ftp:ssl-protect-data true;
+            set ssl:verify-certificate $VERIFICAR;
+            set net:timeout 20;
+            set net:max-retries 4;
+            set ftp:list-options -a;
+            open -u '$FTP_USER','$FTP_PASSWORD' '$FTP_HOST';
+            cls -l --sort=name $DESTINO/ ;
+            echo '── dentro de assets/ ──';
+            cls -l --sort=name $DESTINO/assets/ ;
+          " > listado.txt 2>&1 || echo "(no se pudo listar)"
+          echo "── raíz publicada y assets/ (permisos a la izquierda) ──"
+          head -30 listado.txt
+          echo "..."
+          grep -iE 'htaccess|^d|^\s*d' listado.txt | head -10 || true
+          rm -f listado.txt
+          # Respiro antes de la conexión que sí importa.
+          sleep 8
+
       - name: Subir a public_html
         timeout-minutes: 6
         env:
@@ -243,6 +287,12 @@ jobs:
             # -f para que no proteste cuando ya no exista, que es lo que pasará
             # de ahora en adelante.
             rm -f $DESTINO/assets/.htaccess;
+
+            # Y los permisos de la carpeta. Un directorio que el servidor web
+            # no puede leer devuelve 403 en todo lo que hay dentro, que es
+            # exactamente el síntoma, y no se arregla borrando archivos. Si ya
+            # estaban bien, esto no cambia nada; si no, el sitio vuelve.
+            chmod -R 755 $DESTINO/assets;
 
             # 1. El bundle con hash va con --delete: esa carpeta es solo nuestra,
             #    y sin borrar acumularía todos los bundles de todos los despliegues
