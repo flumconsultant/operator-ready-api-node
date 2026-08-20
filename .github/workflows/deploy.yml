@@ -572,9 +572,47 @@ jobs:
           done
 
       - name: Resumen
+        # El resumen dice qué secretos están puestos y cuáles faltan. No sus
+        # valores: solo si tienen contenido o no.
+        #
+        # Existe porque diagnosticar esto leyendo el registro es imposible en
+        # la práctica: la subida de archivos escribe miles de líneas y entierra
+        # los pasos de configuración. Un secreto que falta se veía igual que
+        # uno que sobra, o sea, no se veía.
+        if: always()
+        env:
+          MAIL_USER: ${{ secrets.MAIL_USER }}
+          PANEL_TOKEN: ${{ secrets.PANEL_TOKEN }}
+          PANEL_USUARIOS: ${{ secrets.PANEL_USUARIOS }}
+          BD_BASE: ${{ secrets.BD_BASE }}
+          BD_USUARIO: ${{ secrets.BD_USUARIO }}
+          BD_CLAVE: ${{ secrets.BD_CLAVE }}
+          BD_HOST: ${{ secrets.BD_HOST }}
+          DIFUSION_TOKEN: ${{ secrets.DIFUSION_TOKEN }}
         run: |
           echo "### Desplegado a producción" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "- Commit: \`${GITHUB_SHA::7}\`" >> $GITHUB_STEP_SUMMARY
           echo "- Sitio: https://meetbecome.com" >> $GITHUB_STEP_SUMMARY
           echo "- Páginas en el sitemap: $(grep -c '<loc>' dist/sitemap.xml)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "#### Secretos" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Secreto | Estado |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          for nombre in MAIL_USER PANEL_TOKEN PANEL_USUARIOS BD_HOST BD_BASE BD_USUARIO BD_CLAVE DIFUSION_TOKEN; do
+            valor="${!nombre:-}"
+            if [ -z "$valor" ]; then
+              echo "| \`$nombre\` | **FALTA** |" >> $GITHUB_STEP_SUMMARY
+            else
+              # Un espacio al principio o al final es el error de copiar y pegar
+              # más común, y el que más cuesta encontrar: el secreto existe, se
+              # ve bien y no funciona.
+              limpio="$(printf '%s' "$valor" | tr -d '[:space:]')"
+              if [ ${#limpio} -ne ${#valor} ]; then
+                echo "| \`$nombre\` | puesto, pero **lleva espacios sobrantes** |" >> $GITHUB_STEP_SUMMARY
+              else
+                echo "| \`$nombre\` | puesto (${#valor} caracteres) |" >> $GITHUB_STEP_SUMMARY
+              fi
+            fi
+          done
