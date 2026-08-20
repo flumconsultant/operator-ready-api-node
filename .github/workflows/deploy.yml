@@ -18,6 +18,11 @@ on:
   push:
     branches:
       - main
+      # Red de seguridad para la rutina que publica los artículos: una rutina
+      # solo tiene garantizado el push a ramas que empiezan por claude/. Si
+      # algún día se le rechaza el push a main, publica aquí y el sitio sale
+      # igual, en vez de quedarse el artículo escrito y sin desplegar.
+      - claude/insights-diario
   # Permite lanzarlo a mano desde la pestaña Actions sin tocar el código
   workflow_dispatch:
 
