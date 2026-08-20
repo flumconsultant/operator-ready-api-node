@@ -94,8 +94,7 @@ jobs:
         # que el sitio entero se ha roto.
         run: |
           for f in dist/index.html dist/.htaccess dist/sitemap.xml dist/robots.txt \
-                   dist/llms.txt dist/assets/.htaccess \
-                   dist/api/contacto.php dist/api/config.php; do
+                   dist/llms.txt dist/api/contacto.php dist/api/config.php; do
             [ -s "$f" ] || { echo "Falta o está vacío: $f"; exit 1; }
           done
           echo "dist/ listo — $(du -sh dist | cut -f1)"
@@ -311,16 +310,33 @@ jobs:
           # Sin --compressed a propósito: así curl NO descomprime, y
           # size_download es lo que de verdad cruzó la red.
           BYTES_LOCAL=$(stat -c%s "dist/${LOCAL}")
-          BYTES_RED=$(curl -sS --max-time 20 -o /dev/null \
+          # Se piden también estado y tipo. Sin ellos, «pesa menos de lo
+          # esperado» es ambiguo: puede ser compresión o puede ser que el
+          # servidor esté contestando otra cosa —una página de error, el
+          # index.html de la SPA— con un peso que parece una compresión
+          # buenísima. Pasó: 2.482 bytes donde debía haber 106.000.
+          LEIDO=$(curl -sS --max-time 20 -o /dev/null \
             -H 'Accept-Encoding: gzip, br' \
-            -w '%{size_download}' \
-            "https://meetbecome.com/${LOCAL}" || echo 0)
-          CACHE=$(curl -sSI --max-time 20 "https://meetbecome.com/${LOCAL}" \
-            | grep -i '^cache-control:' | tr -d '\r' || true)
+            -w '%{http_code} %{content_type} %{size_download}' \
+            "https://meetbecome.com/${LOCAL}" || echo "000 - 0")
+          ESTADO=$(printf '%s' "$LEIDO" | cut -d' ' -f1)
+          TIPO=$(printf '%s' "$LEIDO" | cut -d' ' -f2)
+          BYTES_RED=$(printf '%s' "$LEIDO" | cut -d' ' -f3)
+          CABS=$(curl -sSI --max-time 20 "https://meetbecome.com/${LOCAL}" || true)
+          CACHE=$(printf '%s' "$CABS" | grep -i '^cache-control:' | tr -d '\r' || true)
 
-          echo "Bundle en disco : ${BYTES_LOCAL} B"
-          echo "Bundle por la red: ${BYTES_RED} B"
+          echo "Bundle en disco  : ${BYTES_LOCAL} B"
+          echo "Bundle por la red: ${BYTES_RED} B  ·  estado ${ESTADO}  ·  tipo ${TIPO}"
           echo "${CACHE:-cache-control: (ninguna)}"
+
+          if [ "$ESTADO" != "200" ]; then
+            echo "::error::El bundle no se sirve: el servidor responde ${ESTADO} en /${LOCAL}. El sitio está cargando el HTML pero no su código."
+            exit 1
+          fi
+          case "$TIPO" in
+            *javascript*|*ecmascript*) : ;;
+            *) echo "::error::El servidor devuelve '${TIPO}' donde debería haber JavaScript en /${LOCAL}. Alguna regla del .htaccess está desviando las peticiones a assets/." ; exit 1 ;;
+          esac
 
           # Un bundle de JavaScript comprime a menos de la mitad. Si lo que
           # viaja pesa casi lo mismo que el archivo, no se está comprimiendo.

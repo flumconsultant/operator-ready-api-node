@@ -70,26 +70,14 @@
 <IfModule mod_expires.c>
   ExpiresActive On
 
-  # Bundle con hash en el nombre: un año, y sin revalidar
+  # Sin hash en el nombre: caducidades cortas, porque cambiar el archivo NO
+  # cambia su dirección y una caché larga serviría la versión vieja durante
+  # días. Es exactamente lo que pasó con el logotipo.
   <FilesMatch "\.(js|css)$">
-    ExpiresDefault "access plus 1 year"
-    Header set Cache-Control "public, max-age=31536000, immutable"
+    ExpiresDefault "access plus 1 day"
   </FilesMatch>
-
-  # Las tipografías son las de Inter y JetBrains Mono en una versión concreta:
-  # no van a cambiar sin cambiar de archivo. Un año, sin revalidar.
-  <FilesMatch "\.(woff2|woff)$">
-    ExpiresDefault "access plus 1 year"
-    Header set Cache-Control "public, max-age=31536000, immutable"
-  </FilesMatch>
-
-  # Imágenes e iconos: no llevan hash en el nombre, así que un año sería
-  # arriesgado —cambiar una foto obligaría a renombrarla— pero una semana era
-  # demasiado corto para archivos que casi nunca cambian. Treinta días, y a
-  # revalidar. Es lo que PageSpeed pedía en «tiempos de vida de caché».
-  <FilesMatch "\.(webp|png|jpg|jpeg|svg|ico)$">
+  <FilesMatch "\.(webp|png|jpg|jpeg|svg|ico|woff2|woff)$">
     ExpiresDefault "access plus 30 days"
-    Header set Cache-Control "public, max-age=2592000"
   </FilesMatch>
 
   # El HTML nunca se cachea: es lo único que sabe qué bundle toca cargar, y eso
@@ -98,8 +86,37 @@
   # puede quedarse con un HTML viejo que pide archivos que ya no existen.
   <FilesMatch "\.html$">
     ExpiresDefault "access plus 0 seconds"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css)$">
+    Header set Cache-Control "public, max-age=86400"
+  </FilesMatch>
+  <FilesMatch "\.(webp|png|jpg|jpeg|svg|ico|woff2|woff)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  <FilesMatch "\.html$">
     Header set Cache-Control "public, max-age=0, must-revalidate"
   </FilesMatch>
+
+  # Y por encima de todo lo anterior: lo que vive en /assets/ lo compila Vite y
+  # lleva un hash del contenido en el nombre —index-_X1gDS-m.js,
+  # inter-variable-latin-Dx4kXJAl.woff2—. Si el archivo cambia, cambia su
+  # dirección, así que un año sin revalidar no puede servir nada viejo.
+  #
+  # Va por ubicación y no por extensión porque el hash no se distingue de un
+  # guion normal: 'machine-learning-white.webp' se parece a un nombre con hash
+  # y no lo es. Y va en este archivo, el de la raíz, y no en un .htaccess
+  # propio dentro de assets/: esa fue la primera versión, y la comprobación del
+  # despliegue empezó a leer 2.482 bytes donde debía haber 106.000.
+  #
+  # Este bloque va DESPUÉS de los de arriba a propósito: el último 'Header set'
+  # es el que manda.
+  <IfModule mod_setenvif.c>
+    SetEnvIf Request_URI "^/assets/" LLEVA_HASH
+    Header set Cache-Control "public, max-age=31536000, immutable" env=LLEVA_HASH
+  </IfModule>
 </IfModule>
 
 # ─────────────────────────────────────────────────────────────────────────────
