@@ -56,3 +56,4 @@ export const borrar = (datos) => llamar('borrar', datos);
 export const listarAutores = () => llamar('listar-autores').then((d) => d.autores || []);
 export const guardarAutor = (datos) => llamar('guardar-autor', datos);
 export const subirFoto = (datos) => llamar('subir-foto', datos);
+export const suscriptores = () => llamar('suscriptores');

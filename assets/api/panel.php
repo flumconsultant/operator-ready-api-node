@@ -397,4 +397,47 @@ if ($accion === 'subir-foto') {
     responder(200, ['ok' => true, 'foto' => '/images/autores/' . $archivo, 'ancho' => $info[0], 'alto' => $info[1]]);
 }
 
+/* ----------------------------------------------------------- suscriptores */
+
+/**
+ * La lista de correo, solo para mirarla.
+ *
+ * Existe porque la pregunta «¿se grabó?» no tenía respuesta desde el panel: la
+ * única forma de saberlo era abrir phpMyAdmin, y eso convierte una comprobación
+ * de cinco segundos en una excursión por el hosting.
+ *
+ * Solo lectura, a propósito. Dar de baja a alguien desde aquí sería cómodo y
+ * también sería la vía más rápida a borrar una dirección por error sin que
+ * quede rastro de quién ni por qué. La baja la hace cada persona con su enlace.
+ */
+if ($accion === 'suscriptores') {
+    $datos = @include __DIR__ . '/config-datos.php';
+    if (!is_array($datos) || empty($datos['base'])) {
+        responder(200, ['ok' => true, 'configurado' => false, 'totales' => [], 'ultimos' => []]);
+    }
+    try {
+        $pdo = new PDO(
+            sprintf('mysql:host=%s;dbname=%s;charset=utf8mb4', $datos['host'] ?? 'localhost', $datos['base']),
+            $datos['usuario'], $datos['clave'],
+            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_EMULATE_PREPARES => false]
+        );
+    } catch (PDOException $e) {
+        /* El motivo va tal cual: aquí solo llega quien ya entró al panel, y sin
+           el motivo real este error es media hora de adivinar cuál de las
+           cuatro credenciales está mal. */
+        responder(200, ['ok' => true, 'configurado' => false, 'error' => $e->getMessage(), 'totales' => [], 'ultimos' => []]);
+    }
+
+    $totales = [];
+    foreach ($pdo->query('SELECT estado, COUNT(*) n FROM suscriptores GROUP BY estado') as $f) {
+        $totales[$f['estado']] = (int) $f['n'];
+    }
+    $ultimos = $pdo->query(
+        'SELECT email, estado, idioma, origen, alta_en, confirmado_en
+         FROM suscriptores ORDER BY alta_en DESC LIMIT 50'
+    )->fetchAll(PDO::FETCH_ASSOC);
+
+    responder(200, ['ok' => true, 'configurado' => true, 'totales' => $totales, 'ultimos' => $ultimos]);
+}
+
 responder(400, ['ok' => false, 'error' => 'accion_desconocida']);

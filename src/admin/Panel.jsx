@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import * as api from './api.js';
 import Editor, { ARTICULO_NUEVO, problemas } from './Editor.jsx';
 import Autores from './Autores.jsx';
+import Suscriptores from './Suscriptores.jsx';
 import { Etiqueta, Texto, Boton, Fila, Aviso, marco } from './piezas.jsx';
 
 /**
@@ -270,6 +271,9 @@ export default function Panel() {
               </>
             ) : (
               <>
+                <Boton variante="quieto" onClick={() => setVista(vista === 'suscriptores' ? 'articulos' : 'suscriptores')}>
+                  {vista === 'suscriptores' ? 'Artículos' : 'Suscriptores'}
+                </Boton>
                 <Boton variante="quieto" onClick={() => setVista(vista === 'autores' ? 'articulos' : 'autores')}>
                   {vista === 'autores' ? 'Artículos' : 'Autores'}
                 </Boton>
@@ -285,7 +289,9 @@ export default function Panel() {
         <Aviso tono="mal">{error}</Aviso>
         <Aviso tono="bien">{nota}</Aviso>
 
-        {vista === 'autores' && !abierto ? (
+        {vista === 'suscriptores' && !abierto ? (
+          <Suscriptores alCerrar={() => setVista('articulos')} />
+        ) : vista === 'autores' && !abierto ? (
           <div style={{ marginTop: 16 }}>
             <Autores alCerrar={() => setVista('articulos')} />
           </div>
