@@ -5,6 +5,8 @@ import SiteFooter from '../SiteFooter.jsx';
 import Reveal from '../Reveal.jsx';
 import { Section, Kicker, Headline, Lead, PrimaryCTA, TextCTA } from '../ui.jsx';
 import Bloques from './Bloques.jsx';
+import Compartir from './Compartir.jsx';
+import { SITE } from '../../seo-meta.js';
 import { ARTICULOS, PILARES, FORMATOS, fechaLegible, minutosDeLectura } from '../../content/insights.js';
 
 /**
@@ -98,7 +100,15 @@ export default function ArticuloBase({ lang }) {
       <Section band="light">
         <div style={COLUMNA}>
           <Bloques bloques={a.bloques} lang={lang} />
-          <div style={{ marginTop: 'var(--space-11)' }}>
+          {/* Al final y no al principio: se comparte lo que se ha terminado de
+              leer, y una fila de botones antes del primer párrafo compite con
+              el propio artículo por la atención. */}
+          <Compartir
+            url={`${SITE}/${lang}/insights/${a.slug}`}
+            titulo={a.titulo}
+            lang={lang}
+          />
+          <div style={{ marginTop: 'var(--space-9)' }}>
             <TextCTA to={t.indice}>{t.volver}</TextCTA>
           </div>
         </div>

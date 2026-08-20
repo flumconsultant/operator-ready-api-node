@@ -9,6 +9,7 @@ import {
   Books, MapTrifold, Scales, ChartLineUp, Stack, Clock,
   CheckCircle, XCircle, FileText, Briefcase, Lightbulb, Path,
   Cpu, TreeStructure, UserFocus, Crosshair, MagnifyingGlass, Certificate,
+  LinkedinLogo, XLogo, WhatsappLogo, LinkSimple, Check,
 } from '@phosphor-icons/react';
 
 /**
@@ -81,6 +82,14 @@ const REGISTRY = {
   outcome: Crosshair,
   inspect: MagnifyingGlass,
   trust: Certificate,
+
+  /* Compartir. Los logos de marca son los únicos iconos del sistema que no
+     puedo elegir: si no se reconocen al instante, el botón no se pulsa. */
+  linkedin: LinkedinLogo,
+  x: XLogo,
+  whatsapp: WhatsappLogo,
+  enlace: LinkSimple,
+  copiado: Check,
 };
 
 export function Ico({ name, size = 26, color = 'currentColor', weight = 'light', style }) {
