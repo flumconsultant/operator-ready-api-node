@@ -134,7 +134,7 @@ export default function Framework() {
               BECOME DISCOVER™
             </h3>
             <Body>Define, diagnostica, prioriza y diseña el modelo futuro.</Body>
-            <TextCTA to="/es/servicios/become-discover">Explora Discovery</TextCTA>
+            <TextCTA to="/es/servicios/become-discover">Explora BECOME DISCOVER™</TextCTA>
           </Card>
           <Card>
             <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>O–M–E</p>

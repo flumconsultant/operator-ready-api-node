@@ -288,7 +288,7 @@ export default function AiNode({ onReady }) {
     /* La densidad de píxeles del búfer. En un móvil, 1,25 en vez de 1,5 son
        un 30 % menos de píxeles que pintar cada fotograma; sobre un fondo
        difuminado y en movimiento no hay diferencia visible. */
-    const MAX_DPR = coarse ? 1.25 : 2;
+    const MAX_DPR = coarse ? 1.25 : 1.75;
 
     let renderer;
     try {
@@ -631,12 +631,101 @@ export default function AiNode({ onReady }) {
 
     /* En un teléfono el nodo es un fondo que va a la deriva: a 30 fotogramas
        por segundo se ve igual y cuesta la mitad. Dibujar a 60 en una pantalla
-       pequeña gasta batería y roba tiempo al scroll, que sí se nota. */
-    const MIN_DT = coarse ? 1 / 32 : 0;
+       pequeña gasta batería y roba tiempo al scroll, que sí se nota. En un
+       ordenador se dibuja a 50, que tampoco se distingue de 60 en algo que se
+       mueve tan despacio. */
+    const MIN_DT = coarse ? 1 / 32 : 1 / 52;
+
+    /*
+     * ---- Calidad que se ajusta sola ----
+     *
+     * Este nodo pinta dos pasadas a pantalla completa por fotograma. Con una
+     * tarjeta gráfica decente eso no se nota; sin ella, cada fotograma tarda
+     * cientos de milisegundos y el navegador se queda sin tiempo para nada
+     * más. En la auditoría de escritorio salían 34 segundos de trabajo del
+     * hilo principal, de los cuales solo 0,6 eran JavaScript: el resto era
+     * pintar píxeles.
+     *
+     * En vez de elegir de antemano una calidad que funcione en el peor equipo
+     * —castigando a quien tiene un buen monitor—, se mide cuánto tarda de
+     * verdad y se baja la densidad del búfer por escalones si no llega. Un
+     * fondo difuminado a densidad 1 se distingue poco de uno a densidad 2; un
+     * sitio que va a tirones se distingue siempre.
+     *
+     * Solo baja, nunca sube: subir y bajar produciría un parpadeo de nitidez
+     * cada vez que el equipo se ocupa con otra cosa, que se ve peor que la
+     * pérdida de definición.
+     */
+    /* Apaga el nodo y devuelve la página a su diseño de respaldo. */
+    let rendido = false;
+    const rendirse = () => {
+      if (rendido) return;
+      rendido = true;
+      cancelAnimationFrame(raf);
+      document.documentElement.removeAttribute('data-ai-node');
+      renderer.domElement.remove();
+    };
+
+    const ESCALONES = coarse ? [1.25, 1, 0.75] : [1.75, 1.5, 1.25, 1, 0.75];
+    let escalon = 0;
+    let ritmo = 16;              // ms entre fotogramas, media móvil
+    let lentos = 0;
+
+    /*
+     * Se mide el hueco ENTRE fotogramas, no lo que tarda el código dentro de
+     * uno. La diferencia importa: renderer.render() solo encola órdenes para
+     * la tarjeta gráfica, y lo caro —rasterizar dos pantallas completas—
+     * ocurre después de que este código haya terminado. La primera versión de
+     * esto medía `performance.now() - now` y siempre daba unos pocos
+     * milisegundos, así que nunca bajaba de calidad aunque el nodo fuera a 4
+     * fotogramas por segundo. Lo que sí lo delata es que el navegador tarde en
+     * volver a llamarnos.
+     */
+    let anterior = 0;
+    const ajustarCalidad = (now) => {
+      if (anterior) ritmo += ((now - anterior) - ritmo) * 0.15;
+      anterior = now;
+
+      /* el techo son ~30 fotogramas por segundo; por debajo de 20 hay problema */
+      if (ritmo < 50) { lentos = 0; return; }
+      if (++lentos < 12) return;          // ~medio segundo de mal ritmo
+      lentos = 0;
+      ritmo = 16;                          // se reevalúa desde cero tras bajar
+
+      if (escalon < ESCALONES.length - 1) {
+        /* Con un ritmo catastrófico —menos de ocho fotogramas por segundo— no
+           tiene sentido bajar de uno en uno: cada escalón cuesta otro medio
+           segundo de página a tirones antes de descubrir que tampoco basta.
+           Se salta al mínimo y, si desde ahí sigue sin poder, se apaga. */
+        escalon = ritmo > 120 ? ESCALONES.length - 1 : escalon + 1;
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, ESCALONES[escalon]));
+        /* el búfer cambió de tamaño: las bandas se miden en píxeles suyos */
+        renderer.getDrawingBufferSize(bufferSize);
+        bandU.uResolution.value.copy(bufferSize);
+        return;
+      }
+
+      /*
+       * Ya está en la calidad mínima y sigue sin poder. Aquí el nodo se apaga.
+       *
+       * Es la decisión incómoda y es la correcta: un fondo decorativo que deja
+       * la página a tirones ha dejado de aportar. El sitio tiene desde el
+       * principio un diseño de respaldo para los equipos sin WebGL —fondos
+       * navy sólidos y la foto del hero— y retirar la marca data-ai-node es
+       * exactamente lo que lo activa. Nadie se queda con media página: se
+       * queda con la versión que siempre estuvo pensada para su equipo.
+       *
+       * A un ordenador con tarjeta gráfica normal no le pasa: para llegar aquí
+       * hay que estar por debajo de 20 fotogramas por segundo con el búfer al
+       * 75 % de la pantalla, durante medio segundo seguido.
+       */
+      rendirse();
+    };
 
     const tick = (now) => {
       raf = requestAnimationFrame(tick);
       if (!visible) return;
+      ajustarCalidad(now);
       const dt = Math.min((now - t0) / 1000, 0.05);
       if (dt < MIN_DT) return;
       t0 = now;

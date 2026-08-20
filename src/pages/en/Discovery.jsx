@@ -183,7 +183,7 @@ export default function Discovery() {
 
       <Section band="light">
         <Reveal as="p" style={{ margin: 0, font: 'var(--type-lead)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)', maxWidth: '52ch' }}>
-          By the end of Discovery, leadership knows where AI can create value, what
+          By the end of BECOME DISCOVER™, leadership knows where AI can create value, what
           needs to change inside the company, and which capability to build first.
         </Reveal>
         <Cols min="260px">
@@ -203,11 +203,11 @@ export default function Discovery() {
         <Kicker dark>Find the right point to start</Kicker>
         <Headline dark>Tell us what needs to change in the business.</Headline>
         <Lead dark>
-          We’ll determine whether Discovery is the right first step. If it isn’t,
+          We’ll determine whether BECOME DISCOVER™ is the right first step. If it isn’t,
           we’ll tell you.
         </Lead>
         <div style={{ marginTop: 'var(--space-8)' }}>
-          <PrimaryCTA to="/en/contact">Start your Discovery</PrimaryCTA>
+          <PrimaryCTA to="/en/contact">Start with BECOME DISCOVER™</PrimaryCTA>
         </div>
       </Section>
 

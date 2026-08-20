@@ -37,7 +37,7 @@ const WHAT = [
     label: 'We define',
     line: 'Where the value is, what needs to change, and how the company should operate next.',
     to: '/en/services/become-discover',
-    cta: 'Discovery',
+    cta: 'BECOME DISCOVER™',
   },
   {
     icon: 'build',
@@ -254,7 +254,7 @@ export default function Home() {
               Defines the ambition, identifies where the value is, and designs the
               operating model and roadmap.
             </Body>
-            <TextCTA to="/en/services/become-discover">Explore Discovery</TextCTA>
+            <TextCTA to="/en/services/become-discover">Explore BECOME DISCOVER™</TextCTA>
           </Card>
           <Card>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
@@ -375,7 +375,7 @@ export default function Home() {
           need to transform. Under two minutes to tell us about it.
         </Lead>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', alignItems: 'center', flexWrap: 'wrap' }}>
-          <PrimaryCTA to="/en/contact">Start your Discovery</PrimaryCTA>
+          <PrimaryCTA to="/en/contact">Find your starting point</PrimaryCTA>
           <GhostCTA to="/en/services/become-now" dark>Or train your team now</GhostCTA>
         </div>
         <p style={{ margin: 'var(--space-7) 0 0', display: 'inline-flex', alignItems: 'center', gap: 10, font: 'var(--type-body)', color: 'var(--slate-200)' }}>

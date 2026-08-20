@@ -133,20 +133,28 @@
     Header set Cache-Control "public, max-age=0, must-revalidate"
   </FilesMatch>
 
-  # Aquí iba una regla para cachear un año lo que vive en /assets/, que lleva
-  # hash en el nombre. Se retira a propósito, y merece explicación porque el
-  # razonamiento sigue siendo bueno:
+  # Y por encima de todo lo anterior: lo que vive en /assets/ lo compila Vite
+  # y lleva un hash del contenido en el nombre —index-BgoHAaAX.js,
+  # inter-variable-latin-Dx4kXJAl.woff2—. Si el archivo cambia, cambia su
+  # dirección, así que un año sin revalidar no puede servir nada viejo.
   #
-  # La primera forma de conseguirlo fue un .htaccess propio dentro de assets/.
-  # El servidor respondió 403 a toda la carpeta: el sitio servía su HTML pero
-  # no su código, es decir, en blanco, y estuvo así hasta que la comprobación
-  # del despliegue lo detectó. La segunda forma fue `SetEnvIf` aquí mismo, que
-  # depende de mod_setenvif y, si no está cargado, es un error de sintaxis —
-  # otra vez un 403, otra vez el sitio entero.
+  # Va por ubicación y no por extensión porque el hash no se distingue de un
+  # guion normal: se probó un patrón de «guion más ocho caracteres» contra el
+  # dist/ real y marcaba como inmutables 21 archivos que no llevan hash
+  # —machine-learning-white.webp, 01-neural-network.webp—, que es exactamente
+  # el error que dejó el logotipo viejo servido durante días.
   #
-  # Lo que se gana es pasar de treinta días a un año en archivos que casi nadie
-  # vuelve a pedir. Lo que se arriesga es el sitio. Vuelve cuando se pueda
-  # comprobar contra el servidor de verdad antes de publicarlo, no antes.
+  # Segundo intento. El primero fue un .htaccess propio DENTRO de assets/ y el
+  # servidor respondió 403 a toda la carpeta: el sitio servía su HTML y no su
+  # código. Esta versión vive aquí, en el archivo de la raíz que lleva meses
+  # funcionando, y va envuelta en su IfModule: si mod_setenvif no estuviera
+  # cargado, esto se ignora en vez de tumbar el sitio con un error de sintaxis.
+  # Y si aun así algo saliera mal, el despliegue lo detecta: comprueba que el
+  # bundle publicado responde 200 y con tipo JavaScript, y falla en rojo si no.
+  <IfModule mod_setenvif.c>
+    SetEnvIf Request_URI "^/assets/" LLEVA_HASH
+    Header set Cache-Control "public, max-age=31536000, immutable" env=LLEVA_HASH
+  </IfModule>
 </IfModule>
 
 # ─────────────────────────────────────────────────────────────────────────────

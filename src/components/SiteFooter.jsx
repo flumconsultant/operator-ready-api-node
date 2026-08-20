@@ -44,7 +44,7 @@ export default function SiteFooter() {
         >
           <div>
             <Link to={t.HOME} aria-label={lang === "en" ? "BECOME — Home" : "BECOME — Inicio"} style={{ display: 'inline-flex', minHeight: 44, alignItems: 'center' }}>
-              <img src={wordmark} alt="" width={138} height={26} style={{ height: 26, width: 'auto', display: 'block' }} />
+              <img src={wordmark} alt="" width={137} height={26} style={{ height: 26, width: 'auto', display: 'block' }} />
             </Link>
             <p style={{ margin: 'var(--space-5) 0 0', font: 'var(--type-body)', color: 'var(--slate-300)', maxWidth: '30ch' }}>
               {lang === 'en'

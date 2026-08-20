@@ -65,7 +65,7 @@ export default function Discovery() {
           operar la empresa para sostenerlo.
         </Lead>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
-          <PrimaryCTA to="/es/contacto">Conversemos sobre Discovery</PrimaryCTA>
+          <PrimaryCTA to="/es/contacto">Conversemos sobre BECOME DISCOVER™</PrimaryCTA>
           <GhostCTA to="/es/servicios" dark>Ver los dos servicios</GhostCTA>
         </div>
       </Section>
@@ -196,7 +196,7 @@ export default function Discovery() {
       {/* 8 — promesa final */}
       <Section band="light">
         <Reveal as="p" style={{ margin: 0, font: 'var(--type-lead)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)', maxWidth: '52ch' }}>
-          Al terminar Discovery, el liderazgo sabe dónde la IA puede crear valor, qué
+          Al terminar BECOME DISCOVER™, el liderazgo sabe dónde la IA puede crear valor, qué
           debe cambiar dentro de la empresa y qué capacidad debe construir primero.
         </Reveal>
         <Cols min="260px">
@@ -216,7 +216,7 @@ export default function Discovery() {
         <Kicker dark>Encuentra el punto correcto para comenzar</Kicker>
         <Headline dark>Cuéntanos qué necesita cambiar en el negocio.</Headline>
         <Lead dark>
-          Determinaremos si Discovery es el primer paso adecuado. Si no lo es, te lo
+          Determinaremos si BECOME DISCOVER™ es el primer paso adecuado. Si no lo es, te lo
           diremos.
         </Lead>
         <div style={{ marginTop: 'var(--space-8)' }}>

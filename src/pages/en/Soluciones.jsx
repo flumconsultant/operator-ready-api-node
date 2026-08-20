@@ -50,7 +50,7 @@ export default function Soluciones() {
         <Kicker dark>Orientation map</Kicker>
         <Headline dark>From symptom to decision.</Headline>
         <Body dark style={{ marginTop: 'var(--space-6)' }}>
-          Discovery when strategy or target state is missing. BECOME EMBED™
+          BECOME DISCOVER™ when strategy or target state is missing. BECOME EMBED™
           when a capability is already prioritized and conditions are ready to
           build.
         </Body>

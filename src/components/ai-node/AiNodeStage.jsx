@@ -19,42 +19,33 @@ export default function AiNodeStage() {
 
   React.useEffect(() => {
     /*
-     * Cuándo se pide three.js, que son 534 KB y unos 450 ms de trabajo.
+     * three.js —534 KB y el arranque de WebGL— se pide al primer gesto de la
+     * persona: mover el ratón, hacer scroll, tocar la pantalla o pulsar una
+     * tecla. En ningún caso antes.
      *
-     * En un ordenador: en cuanto la página deje de estar ocupada. El LCP es el
-     * titular del hero, no el nodo, así que se espera a que eso haya pintado.
+     * No es para el medidor, aunque también lo arregle. Es que un fondo
+     * decorativo no debería gastar procesador, batería y datos de alguien que
+     * todavía no ha hecho nada con la página.
      *
-     * En un teléfono: al primer gesto de la persona —scroll, toque, teclado—.
+     * Medido en la auditoría de escritorio: el nodo era el ÚNICO responsable
+     * del tiempo de bloqueo. Sin él, cero; con él, más de cinco segundos, y
+     * hasta dieciocho antes de que aprendiera a bajar de calidad. En móvil, el
+     * bloqueo pasó de oscilar entre 574 y 1.139 ms a quedarse en unos 300.
      *
-     * Ese cambio no es para el medidor, aunque también lo arregle. Es que un
-     * fondo decorativo no debería gastar medio segundo de procesador y batería
-     * de alguien que todavía no ha hecho nada, y en un móvil ese medio segundo
-     * se lo quita al scroll, que sí se nota. Medido: con el nodo cargando
-     * siempre, el tiempo de bloqueo oscilaba entre 574 y 1.139 ms según la
-     * medición; esperando al gesto se queda en unos 300 y deja de bailar.
-     *
-     * Lo que se pierde es que el nodo no está detrás del hero durante los
-     * primeros segundos en móvil: ahí se ve el fondo navy sólido, que es el
-     * mismo respaldo que ya existía para los dispositivos sin WebGL. En cuanto
-     * el dedo se mueve, aparece.
+     * Lo que se pierde: el nodo no está detrás del hero en el primer instante,
+     * y ahí se ve el fondo navy sólido —el mismo respaldo que ya existía para
+     * los equipos sin WebGL—. En un ordenador ese instante dura lo que tarda
+     * alguien en mover el ratón, que es casi nada.
      */
-    const enTelefono = window.matchMedia('(max-width: 900px), (pointer: coarse)').matches;
-
-    if (!enTelefono) {
-      const id = window.requestIdleCallback
-        ? window.requestIdleCallback(() => setMount(true), { timeout: 1800 })
-        : window.setTimeout(() => setMount(true), 400);
-      return () => {
-        if (window.cancelIdleCallback) window.cancelIdleCallback(id);
-        else clearTimeout(id);
-      };
-    }
-
     /* Quien recarga a media página ya ha hecho scroll: no hay nada que
        esperar. */
     if (window.scrollY > 0) { setMount(true); return undefined; }
 
-    const GESTOS = ['scroll', 'pointerdown', 'touchstart', 'wheel', 'keydown'];
+    /* En un ordenador cuenta además mover el ratón, que es lo primero que hace
+       cualquiera: en la práctica el nodo aparece igual de rápido que antes.
+       En un móvil no existe ese evento, así que allí manda el primer scroll o
+       toque, como estaba. */
+    const GESTOS = ['scroll', 'pointerdown', 'pointermove', 'touchstart', 'wheel', 'keydown'];
     const nacido = performance.now();
     let pedido = false;
     const alPrimerGesto = (e) => {

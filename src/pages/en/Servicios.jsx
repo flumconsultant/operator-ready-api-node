@@ -113,7 +113,7 @@ export default function Servicios() {
               Aligns the ambition. Diagnoses the company. Identifies the value.
               Designs the operating model and roadmap needed to move forward.
             </Body>
-            <TextCTA to="/en/services/become-discover" dark>Explore Discovery</TextCTA>
+            <TextCTA to="/en/services/become-discover" dark>Explore BECOME DISCOVER™</TextCTA>
           </Card>
           <Card dark>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
@@ -173,7 +173,7 @@ export default function Servicios() {
               or design the operating model</strong>, you need AI-Native
               BECOME DISCOVER™.
             </Body>
-            <TextCTA to="/en/services/become-discover">Go to Discovery</TextCTA>
+            <TextCTA to="/en/services/become-discover">Go to BECOME DISCOVER™</TextCTA>
           </Card>
           <Card>
             <IcoBadge name="build" />

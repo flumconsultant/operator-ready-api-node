@@ -297,7 +297,7 @@ export default function BecomeNow() {
             can be engaged alone or combined with the other two.
           </Body>
           <div style={{ marginTop: 'var(--space-6)', display: 'flex', gap: 'var(--space-7)', flexWrap: 'wrap' }}>
-            <TextCTA to="/en/services/become-discover" dark>Explore Discovery</TextCTA>
+            <TextCTA to="/en/services/become-discover" dark>Explore BECOME DISCOVER™</TextCTA>
             <TextCTA to="/en/services/become-embed" dark>Explore BECOME EMBED™</TextCTA>
           </div>
         </div>

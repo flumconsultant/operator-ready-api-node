@@ -124,7 +124,7 @@ export default function Servicios() {
               Alinea la ambición. Diagnostica la empresa. Identifica el valor. Diseña
               el operating model y el roadmap necesarios para avanzar.
             </Body>
-            <TextCTA to="/es/servicios/become-discover" dark>Explora Discovery</TextCTA>
+            <TextCTA to="/es/servicios/become-discover" dark>Explora BECOME DISCOVER™</TextCTA>
           </Card>
           <Card dark>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
@@ -183,7 +183,7 @@ export default function Servicios() {
               Si buscas <strong>definir dirección, priorizar inversiones o diseñar el
               operating model</strong>, necesitas BECOME DISCOVER™.
             </Body>
-            <TextCTA to="/es/servicios/become-discover">Ir a Discovery</TextCTA>
+            <TextCTA to="/es/servicios/become-discover">Ir a BECOME DISCOVER™</TextCTA>
           </Card>
           <Card>
             <IcoBadge name="build" />

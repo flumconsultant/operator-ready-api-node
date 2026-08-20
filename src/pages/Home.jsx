@@ -52,7 +52,7 @@ const WHAT = [
     label: 'Definimos',
     line: 'Dónde está el valor, qué debe cambiar y cómo debe operar la empresa después.',
     to: '/es/servicios/become-discover',
-    cta: 'Discovery',
+    cta: 'BECOME DISCOVER™',
   },
   {
     icon: 'build',
@@ -291,7 +291,7 @@ export default function Home() {
               Dónde está el valor de la IA en tu empresa, qué se hace primero y cómo
               hay que operar para conseguirlo.
             </Body>
-            <TextCTA to="/es/servicios/become-discover">Explora Discovery</TextCTA>
+            <TextCTA to="/es/servicios/become-discover">Explora BECOME DISCOVER™</TextCTA>
           </Card>
           <Card>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>

@@ -325,12 +325,12 @@ export default function BecomeNow() {
             esta, y las dos terminaban en lo mismo. */}
         <div style={{ marginTop: 'var(--space-11)', paddingTop: 'var(--space-6)', borderTop: '1px solid var(--border-hairline-dark)' }}>
           <Body dark style={{ marginTop: 0 }}>
-            NOW™ capacita para el trabajo de hoy. Discovery define en qué debe
+            NOW™ capacita para el trabajo de hoy. BECOME DISCOVER™ define en qué debe
             convertirse la empresa. BECOME EMBED™ construye lo que hará posible ese
             futuro. Puede contratarse solo o integrarse en los otros dos.
           </Body>
           <div style={{ marginTop: 'var(--space-6)', display: 'flex', gap: 'var(--space-7)', flexWrap: 'wrap' }}>
-            <TextCTA to="/es/servicios/become-discover" dark>Explora Discovery</TextCTA>
+            <TextCTA to="/es/servicios/become-discover" dark>Explora BECOME DISCOVER™</TextCTA>
             <TextCTA to="/es/servicios/become-embed" dark>Explora BECOME EMBED™</TextCTA>
           </div>
         </div>
