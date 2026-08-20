@@ -14,6 +14,14 @@
 
 const PUNTO = '/api/panel.php';
 
+/* La primera versión del panel guardaba el token de GitHub de cada persona en
+   el navegador. Ya no lo lee nadie, pero seguiría ahí en el equipo de quien lo
+   usó, y un token de escritura olvidado en un almacén del navegador es
+   exactamente la clase de cosa que sigue siendo válida meses después de dejar
+   de hacer falta. Se borra al abrir el panel, sin que nadie tenga que saber
+   que estaba. */
+try { localStorage.removeItem('become.admin.config'); } catch { /* modo privado */ }
+
 async function llamar(accion, cuerpo) {
   let r;
   try {
