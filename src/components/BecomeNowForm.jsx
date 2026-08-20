@@ -21,7 +21,7 @@ const FIELDS = {
     {
       name: 'participantes', short: 'Nº de personas', label: '¿Cuántas personas participarían?',
       inputMode: 'numeric', placeholder: 'Por ejemplo: 12',
-      help: 'Un número aproximado nos vale. Las cohortes pequeñas permiten que cada participante construya y valide sus propios workflows.',
+      help: 'Un número aproximado nos vale. Los grupos pequeños permiten que cada participante construya y valide sus propios flujos de trabajo.',
     },
     {
       name: 'herramientas', short: 'Herramientas', label: '¿Qué herramientas tenéis disponibles?', type: 'multi',

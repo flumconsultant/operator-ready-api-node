@@ -98,10 +98,10 @@ export default function Framework() {
 
       <Section band="darker">
         <Kicker dark>At every stage</Kicker>
-        <Headline dark>Four systems transformed at once.</Headline>
+        <Headline dark>Five systems transformed at once.</Headline>
         <Lead dark>
-          They aren’t four parallel workstreams. At every stage, decisions get made
-          about all four — because leaving one out is what makes change not survive
+          They aren’t five parallel workstreams. At every stage, decisions get made
+          about all five — because leaving one out is what makes change not survive
           the first quarter.
         </Lead>
         <Cols min="230px">

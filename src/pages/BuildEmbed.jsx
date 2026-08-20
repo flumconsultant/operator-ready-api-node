@@ -15,24 +15,24 @@ import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, C
  */
 
 const BUILDABLE = [
-  ['flow', 'AI-native workflow', 'Un proceso end-to-end rediseñado con personas y agents trabajando juntos.'],
+  ['flow', 'Proceso AI-native', 'Un proceso rediseñado de principio a fin, con personas y agentes trabajando juntos.'],
   ['agents', 'Agent o copilot', 'Una capacidad con límites de autonomía, integración y accountability explícitos.'],
   ['decision', 'Decision system', 'El flujo de información y la decisión de alto valor que lo consume.'],
   ['product', 'AI-native product', 'Una experiencia nueva para clientes o colaboradores, con su operación detrás.'],
 ];
 
 const STAGES = [
-  ['O', 'Operating Model Design', 'Valida el blueprint: roles, agents, datos, decisiones, excepciones y controles.', 'Agentic Workflow Blueprint validado.'],
-  ['M', 'Make & Embed', 'Construye, integra y lleva a un entorno real con adopción acompañada.', 'Capacidad funcionando con ownership.'],
+  ['O', 'Operating Model Design', 'Valida el diseño: roles, agentes, datos, decisiones, excepciones y controles.', 'Agentic Workflow Blueprint™ validado.'],
+  ['M', 'Make & Embed', 'Construye, integra y lleva a un entorno real con adopción acompañada.', 'Capacidad funcionando, con un responsable claro.'],
   ['E', 'Expand & Evolve', 'Mide, gobierna, transfiere y decide si iterar, integrar, escalar o detener.', 'Scorecard y scale decision.'],
 ];
 
 const DELIVERABLES = [
-  'Workflow y capacidad blueprint validados.',
-  'Agent, product o decision system funcionando.',
+  'Proceso y diseño de la capacidad validados.',
+  'Agente, producto o sistema de decisión funcionando.',
   'Human-in-the-loop model y controles operativos.',
   'Plan de adopción y transferencia de capacidades.',
-  'Scorecard de performance, riesgo y valor.',
+  'Cuadro de mando de desempeño, riesgo y valor.',
 ];
 
 const CONTROLS = [
@@ -43,8 +43,8 @@ const CONTROLS = [
 ];
 
 const TOOLS = [
-  ['Agentic Workflow Blueprint™', 'Diseñar roles, agents, datos, decisiones, excepciones y controles.'],
-  ['Embed Scorecard™', 'Medir uso, confianza, performance, control y valor.'],
+  ['Agentic Workflow Blueprint™', 'Diseñar roles, agentes, datos, decisiones, excepciones y controles.'],
+  ['Embed Scorecard™', 'Medir uso, confianza, desempeño, control y valor.'],
   ['Scale Readiness Gate™', 'Decidir si iterar, integrar, escalar o detener.'],
 ];
 
@@ -96,7 +96,7 @@ export default function BuildEmbed() {
 
       <Banner variant="streams" seed={31} height="clamp(260px, 32vw, 380px)">
         <Reveal as="p" style={{ margin: 0, maxWidth: '26ch', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h1)', lineHeight: 'var(--leading-heading)', letterSpacing: 'var(--track-display)', color: 'var(--white)' }}>
-          Del blueprint a la operación.
+          Del diseño a la operación.
         </Reveal>
       </Banner>
 
@@ -104,8 +104,8 @@ export default function BuildEmbed() {
         <Kicker>El recorrido</Kicker>
         <Headline>Build &amp; Embed cubre O–M–E del framework.</Headline>
         <Body>
-          Puede empezar desde un blueprint existente que cumpla los readiness
-          criteria; no exige haber hecho Discovery con nosotros.
+          Puede empezar desde un diseño que ya exista, si cumple los criterios
+          mínimos; no exige haber hecho Discovery con nosotros.
         </Body>
         <div style={{ marginTop: 'var(--space-10)' }}>
           {STAGES.map(([letter, name, work, out]) => (
@@ -181,14 +181,14 @@ export default function BuildEmbed() {
         </ul>
         <Reveal as="p" style={{ margin: 'var(--space-10) 0 0', font: 'var(--type-lead)', color: 'var(--white)', maxWidth: '54ch' }}>
           El sprint termina con una capacidad funcionando en un entorno real, con
-          ownership, controles y medición frente a business outcomes.
+          un responsable claro, controles y medición frente a resultados de negocio.
         </Reveal>
       </Section>
 
       <Section band="darker" pad="var(--space-13)">
-        <Kicker dark>Pasa del blueprint a una capacidad incorporada</Kicker>
-        <Headline dark>Trae un workflow, decisión o product opportunity prioritario.</Headline>
-        <Lead dark>Definiremos el build path correcto — o si todavía falta un paso antes.</Lead>
+        <Kicker dark>Pasa del diseño a una capacidad incorporada</Kicker>
+        <Headline dark>Trae un proceso, una decisión o una oportunidad de producto prioritaria.</Headline>
+        <Lead dark>Definiremos el camino de construcción correcto — o si todavía falta un paso antes.</Lead>
         <div style={{ marginTop: 'var(--space-8)' }}>
           <PrimaryCTA to="/es/contacto">Inicia una conversación de Build</PrimaryCTA>
         </div>

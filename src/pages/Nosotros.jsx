@@ -17,20 +17,20 @@ import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, TextCTA, Cols, Index
  */
 
 const DNA = [
-  ['target', 'Business-first', 'Comenzamos por el outcome y la decisión empresarial, no por la herramienta.'],
+  ['target', 'Business-first', 'Comenzamos por el resultado y la decisión de negocio, no por la herramienta.'],
   ['native', 'AI-native', 'Diseñamos modelos de trabajo que incorporan inteligencia desde su origen.'],
-  ['system', 'Systems-minded', 'Conectamos estrategia, personas, datos, agents, operaciones y governance.'],
-  ['build', 'Builder', 'Convertimos direction y blueprint en capacidades que funcionan.'],
+  ['system', 'Systems-minded', 'Conectamos estrategia, personas, datos, agentes, productos, operaciones y gobernanza.'],
+  ['build', 'Builder', 'Convertimos la dirección y el diseño en capacidades que funcionan.'],
   ['accountable', 'Human-accountable', 'La IA amplía la capacidad; las personas mantienen dirección, supervisión y responsabilidad.'],
   ['embed', 'Embedded', 'Trabajamos con el equipo del cliente para que la capacidad permanezca y evolucione.'],
 ];
 
 const CULTURE = [
-  ['outcome', 'Think in outcomes', 'Preguntamos qué decisión, comportamiento o business result debe cambiar antes de hablar de tecnología.'],
-  ['inspect', 'Go inside the system', 'Buscamos la causa en el operating model, no una solución superficial al síntoma.'],
+  ['outcome', 'Think in outcomes', 'Preguntamos qué decisión, qué comportamiento o qué resultado de negocio debe cambiar antes de hablar de tecnología.'],
+  ['inspect', 'Go inside the system', 'Buscamos la causa en el modelo operativo, no una solución superficial al síntoma.'],
   ['together', 'Build with, not for', 'Diseñamos y construimos junto a quienes operarán la capacidad.'],
   ['idea', 'Stay curious, stay precise', 'Exploramos posibilidades sin confundir exploración con evidencia.'],
-  ['trust', 'Earn trust', 'Hacemos visibles límites, riesgos, assumptions, controls y decisiones.'],
+  ['trust', 'Earn trust', 'Hacemos visibles los límites, los riesgos, los supuestos, los controles y las decisiones.'],
   ['capability', 'Leave capability behind', 'El trabajo debe aumentar la autonomía del cliente, no su dependencia de BECOME.'],
 ];
 
@@ -40,7 +40,7 @@ const DELIVERY = [
   'Decisiones y riesgos visibles.',
   'Working software o artefactos utilizables, no solo presentaciones.',
   'Transferencia de capacidades incluida en el alcance.',
-  'Governance y responsible AI incorporados al delivery.',
+  'Gobernanza e IA responsable incorporadas al diseño, no añadidas al final.',
 ];
 
 export default function Nosotros() {
@@ -91,8 +91,8 @@ export default function Nosotros() {
         <Lead dark>
           Hacemos de la IA una capacidad interna para operar mejor, decidir con
           mayor inteligencia y crear nuevas formas de valor. La transformación
-          importa cuando queda instalada en las personas, los datos, los agents, los
-          productos y las operaciones de la empresa.
+          importa cuando queda instalada en las personas, los datos, los agentes,
+          los productos y las operaciones de la empresa.
         </Lead>
 
         <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 'var(--space-9)', marginTop: 'var(--space-11)' }}>
@@ -108,9 +108,10 @@ export default function Nosotros() {
           <Reveal as="div" style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
             <p style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--electric-green)' }}>Nuestra misión</p>
             <Body dark style={{ marginTop: 'var(--space-5)' }}>
-              Convertir ambiciones empresariales en capacidades AI-native
-              incorporadas, conectando strategy, People, Data, Agents, Products y Operations
-              desde la definición del valor hasta la adopción y la escala.
+              Convertir la ambición de la empresa en capacidades AI-native
+              incorporadas, conectando la estrategia con Personas, Datos, Agentes,
+              Productos y Operaciones, desde la definición del valor hasta la
+              adopción y la escala.
             </Body>
           </Reveal>
         </div>
@@ -133,11 +134,12 @@ export default function Nosotros() {
           <Headline>La transformación no se instala. Se construye dentro.</Headline>
           <Lead>
             Los pilotos aislados no cambian una empresa. El cambio ocurre cuando se
-            rediseñan workflows, roles, decision rights, data, controls, skills y
-            measures como un solo operating system.
+            rediseñan a la vez los procesos, los roles, quién decide, los datos, los
+            controles, las capacidades y las métricas: un solo sistema, no siete
+            proyectos.
           </Lead>
           <Body>
-            Por eso construimos con los equipos del cliente y transferimos ownership
+            Por eso construimos con los equipos del cliente y les transferimos la responsabilidad
             desde el inicio.
           </Body>
         </Split>
@@ -174,7 +176,7 @@ export default function Nosotros() {
         <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 'var(--space-9)' }}>
           <Reveal as="div">
             <Kicker>Cómo trabajamos</Kicker>
-            <Headline>Equipos pequeños y senior alrededor de un outcome común.</Headline>
+            <Headline>Equipos pequeños y con experiencia alrededor de un resultado común.</Headline>
             <Body>
               Business strategy, product, design, data, AI, engineering y change
               trabajando juntos. La composición cambia según el engagement; el

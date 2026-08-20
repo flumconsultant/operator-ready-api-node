@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import * as es from '../site.js';
 import * as en from '../site.en.js';
 import wordmark from '../logo/wordmark-white.webp';
+import { equivalenteEnElOtroIdioma } from '../seo-meta.js';
 
 /**
  * Cabecera del sitio en español.
@@ -56,7 +57,23 @@ export default function SiteHeader() {
      cualquier otra ruta se trata como español. */
   const lang = pathname.startsWith('/en') ? 'en' : 'es';
   const t = lang === 'en' ? en : es;
-  const other = lang === 'en' ? { code: 'ES', to: '/es' } : { code: 'EN', to: '/en' };
+  /* El otro idioma, en la MISMA página. Antes iba siempre a la portada: se
+     escribió cuando el árbol en inglés estaba a medias, y quedó así cuando dejó
+     de estarlo. Cambiar de idioma no debería costar volver a buscar dónde
+     estabas. */
+  const other = lang === 'en'
+    ? { code: 'ES', to: equivalenteEnElOtroIdioma(pathname), label: 'Cambiar a español' }
+    : { code: 'EN', to: equivalenteEnElOtroIdioma(pathname), label: 'Switch to English' };
+  /* Las etiquetas que solo oye un lector de pantalla. Estaban escritas en
+     español dentro del componente, así que en las páginas en inglés se
+     anunciaban en español: "Cerrar menú", "Principal (móvil)". No se ven, y por
+     eso llevaban ahí desde el principio. */
+  const A11Y = lang === 'en'
+    ? { nav: 'Main navigation', navMovil: 'Main navigation (mobile)', cerrarMenu: 'Close menu',
+        abrirMenu: 'Open menu', desplegar: 'Expand', cerrar: 'Collapse', programas: 'BECOME NOW programs' }
+    : { nav: 'Principal', navMovil: 'Principal (móvil)', cerrarMenu: 'Cerrar menú',
+        abrirMenu: 'Abrir menú', desplegar: 'Desplegar', cerrar: 'Cerrar', programas: 'programas por área' };
+
   const [open, setOpen] = React.useState(false);        // menú móvil
   const [drop, setDrop] = React.useState(null);         // índice del desplegable abierto
   const [acc, setAcc] = React.useState(null);           // acordeón móvil abierto
@@ -145,12 +162,11 @@ export default function SiteHeader() {
   const Lang = () => (
     <span style={{ font: 'var(--type-label)', letterSpacing: 'var(--track-label)', color: 'var(--slate-300)', whiteSpace: 'nowrap' }}>
       {/* Cada opción con su propia área de 24×24: como texto suelto, "EN"
-          medía 18×14 y era un objetivo por debajo del mínimo. Va a la home del
-          otro idioma, no a la traducción de la página actual — la mayoría de
-          páginas todavía no tienen su versión en inglés. */}
+          medía 18×14 y era un objetivo por debajo del mínimo. Va a la MISMA
+          página en el otro idioma; ver equivalenteEnElOtroIdioma. */}
       <span style={{ ...langItem, color: 'var(--white)' }}>{lang === 'en' ? 'EN' : 'ES'}</span>
       {' / '}
-      <Link to={other.to} style={{ ...langItem, color: 'var(--slate-300)', textDecoration: 'none' }} className="hv-lang">{other.code}</Link>
+      <Link to={other.to} aria-label={other.label} style={{ ...langItem, color: 'var(--slate-300)', textDecoration: 'none' }} className="hv-lang">{other.code}</Link>
     </span>
   );
 
@@ -182,7 +198,7 @@ export default function SiteHeader() {
         >
           <Logo />
 
-          <nav data-nav aria-label="Principal" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-6)', marginLeft: 'auto' }}>
+          <nav data-nav aria-label={A11Y.nav} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-6)', marginLeft: 'auto' }}>
             {t.NAV.map((item, i) =>
               item.items ? (
                 /* Dos controles, no uno. El label es un enlace a la landing de
@@ -209,7 +225,7 @@ export default function SiteHeader() {
                     ref={(el) => { triggers.current[i] = el; }}
                     aria-expanded={drop === i}
                     aria-controls={`drop-${i}`}
-                    aria-label={`${drop === i ? 'Cerrar' : 'Desplegar'} ${item.label}`}
+                    aria-label={`${drop === i ? A11Y.cerrar : A11Y.desplegar} ${item.label}`}
                     onClick={() => setDrop((d) => (d === i ? null : i))}
                     style={{
                       /* 9 px de aire a cada lado: con 4 el botón medía 18 de
@@ -273,7 +289,7 @@ export default function SiteHeader() {
                                   type="button"
                                   aria-expanded={sub === opt.to}
                                   aria-controls={`sub-${slugOf(opt.to)}`}
-                                  aria-label={`${sub === opt.to ? 'Cerrar' : 'Desplegar'} programas por área`}
+                                  aria-label={`${sub === opt.to ? A11Y.cerrar : A11Y.desplegar} ${A11Y.programas}`}
                                   onClick={() => setSub((v) => (v === opt.to ? null : opt.to))}
                                   style={{
                                     border: 0, background: 'transparent', cursor: 'pointer', padding: 8,
@@ -370,7 +386,7 @@ export default function SiteHeader() {
             <button
               data-burger
               type="button"
-              aria-label={open ? (lang === 'en' ? 'Close menu' : 'Cerrar menú') : (lang === 'en' ? 'Open menu' : 'Abrir menú')}
+              aria-label={open ? A11Y.cerrarMenu : A11Y.abrirMenu}
               aria-expanded={open}
               onClick={() => setOpen((o) => !o)}
               style={{
@@ -398,7 +414,7 @@ export default function SiteHeader() {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Logo />
             <button
-              type="button" aria-label="Cerrar menú" onClick={() => setOpen(false)}
+              type="button" aria-label={A11Y.cerrarMenu} onClick={() => setOpen(false)}
               style={{
                 display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 44, height: 44,
                 border: '1px solid var(--border-strong-dark)', borderRadius: 2, background: 'transparent',
@@ -411,7 +427,7 @@ export default function SiteHeader() {
             </button>
           </div>
 
-          <nav aria-label="Principal (móvil)" style={{ marginTop: 'var(--space-9)', display: 'flex', flexDirection: 'column' }}>
+          <nav aria-label={A11Y.navMovil} style={{ marginTop: 'var(--space-9)', display: 'flex', flexDirection: 'column' }}>
             {t.NAV.map((item, i) =>
               item.items ? (
                 <div key={item.label} style={{ borderBottom: '1px solid var(--border-hairline-dark)' }}>

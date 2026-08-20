@@ -81,7 +81,7 @@ export const PROGRAMS = {
       ['Propuestas y manejo de objeciones', 'Proposal and Objection Assistant.'],
       ['Seguimiento y pipeline', 'Pipeline Narrative y Next-Best-Action Assistant.'],
     ],
-    deliverables: ['Account brief', 'Lead scoring guide', 'Biblioteca de mensajes', 'Plantilla de reunión', 'Proposal assistant', 'Follow-up workflow', 'Pipeline summary'],
+    deliverables: ['Account brief', 'Lead scoring guide', 'Biblioteca de mensajes', 'Plantilla de reunión', 'Proposal assistant', 'Proceso de seguimiento', 'Pipeline summary'],
     cta: 'Adapta este programa a Ventas',
   },
 
@@ -239,7 +239,7 @@ export const PROGRAMS = {
       ['Reuniones y seguimiento', 'Meeting and Commitment Assistant.'],
       ['Portfolio y comunicación', 'Strategy Portfolio Brief.'],
     ],
-    deliverables: ['Executive prompt system', 'Market brief', 'Scenario matrix', 'Decision memo', 'Meeting workflow', 'Portfolio narrative'],
+    deliverables: ['Executive prompt system', 'Market brief', 'Scenario matrix', 'Decision memo', 'Proceso de reuniones', 'Portfolio narrative'],
     cta: 'Diseña el programa para líderes',
   },
 
@@ -275,7 +275,7 @@ export const PROGRAMS = {
       ['Visualización y narrativa', 'Data Storytelling Assistant.'],
       ['Decision support', 'Executive Decision Pack.'],
     ],
-    deliverables: ['Data quality checklist', 'Analysis workflow', 'Scenario templates', 'Visualization brief', 'Data narrative', 'Decision pack'],
+    deliverables: ['Data quality checklist', 'Proceso de análisis', 'Scenario templates', 'Visualization brief', 'Data narrative', 'Decision pack'],
     cta: 'Diseña el programa para Data',
   },
 
@@ -319,12 +319,12 @@ export const EXISTING_MATERIAL = [
 
 /* Sesión 0 — lo que se trabaja antes de que exista malla */
 export const SESSION_ZERO = [
-  ['Objetivos empresariales', 'Qué espera mejorar el área, qué indicadores importan, qué presión originó la capacitación y qué outcomes debe producir.'],
+  ['Objetivos empresariales', 'Qué espera mejorar el área, qué indicadores importan, qué presión originó la capacitación y qué resultados debe producir.'],
   ['Procesos actuales', 'Actividades recurrentes, decisiones importantes, cuellos de botella, handoffs, retrabajos, excepciones y dependencias entre áreas.'],
   ['Información y herramientas', 'Documentos, data sources, spreadsheets, sistemas, reportes, licencias disponibles de ChatGPT, Claude o Gemini y restricciones de acceso.'],
   ['Usuarios y nivel de adopción', 'Roles participantes, experiencia previa, frecuencia de uso, confianza y diferencias entre perfiles.'],
   ['Seguridad y responsible use', 'Información sensible, datos personales, propiedad intelectual, reglas internas, herramientas autorizadas y criterios de human review.'],
-  ['Selección de casos', 'Qué procesos se trabajan, qué agents se construyen, qué outputs se esperan y con qué criterios se validan.'],
+  ['Selección de casos', 'Qué procesos se trabajan, qué agentes se construyen, qué entregables se esperan y con qué criterios se validan.'],
 ];
 
 export const SESSION_ZERO_OUTPUTS = [
@@ -338,14 +338,14 @@ export const SESSION_FLOW = [
   ['Business challenge', 'Se presenta el problema real que el área necesita resolver.'],
   ['AI concept', 'Se enseña únicamente el concepto de IA necesario para abordar ese problema.'],
   ['Applied demonstration', 'Se demuestra con ChatGPT, Claude o Gemini sobre un caso cercano a la realidad del equipo.'],
-  ['Build', 'Cada participante configura un assistant, agent, workflow o plantilla reutilizable.'],
+  ['Build', 'Cada participante configura un asistente, un agente, un flujo de trabajo o una plantilla reutilizable.'],
   ['Validate', 'El resultado se compara con criterios definidos por el área.'],
   ['Transfer', 'El activo queda documentado para poder usarse después de la capacitación.'],
 ];
 
 export const FORMATS = [
   { name: 'Programa Esencial', hours: '12 horas lectivas', sessions: '4 sesiones de 3 horas', items: ['Sesión previa de entendimiento', 'Cuatro casos o capacidades', 'Biblioteca inicial de instrucciones', 'Informe final'] },
-  { name: 'Programa Completo', hours: '18 horas lectivas', sessions: '6 sesiones de 3 horas', items: ['Sesión previa de entendimiento', 'Seis casos o capacidades', 'Biblioteca de workflows', 'Protocolos de validación', 'Medición posterior'] },
+  { name: 'Programa Completo', hours: '18 horas lectivas', sessions: '6 sesiones de 3 horas', items: ['Sesión previa de entendimiento', 'Seis casos o capacidades', 'Biblioteca de flujos de trabajo', 'Protocolos de validación', 'Medición posterior'] },
   { name: 'Programa Integral', hours: '24 horas lectivas', sessions: '8 sesiones de 3 horas', items: ['Sesión previa de entendimiento', 'Seis sesiones formativas', 'Laboratorio sobre casos reales', 'Consultoría de implementación', 'Plan de adopción para el área'] },
 ];
 
@@ -353,14 +353,14 @@ export const IS_IS_NOT = [
   ['IA aplicada al trabajo real de cada área.', 'Un curso genérico sobre ChatGPT.'],
   ['Un programa construido sobre los procesos de la empresa.', 'Una lista de prompts mágicos.'],
   ['Trabajo con documentos, datos y formatos existentes.', 'Una demostración desconectada de la operación.'],
-  ['Construcción de assistants, agents y workflows reutilizables.', 'Una automatización completa de sistemas.'],
+  ['Construcción de asistentes, agentes y flujos de trabajo reutilizables.', 'Una automatización completa de sistemas.'],
   ['Criterios de validación y human review.', 'Un reemplazo del criterio profesional.'],
   ['Capacidades que pueden utilizarse desde el día siguiente.', 'Teoría sin aplicación.'],
   ['Un programa adaptable a ChatGPT, Claude o Gemini.', 'Una capacitación atada a una sola plataforma.'],
 ];
 
 export const INDICATORS = [
-  ['Adopción', 'Participantes activos, frecuencia de uso, workflows reutilizados y casos incorporados al trabajo habitual.'],
+  ['Adopción', 'Participantes activos, frecuencia de uso, flujos de trabajo reutilizados y casos incorporados al trabajo habitual.'],
   ['Productividad', 'Tiempo de preparación y de respuesta, reducción de tareas manuales y velocidad para producir un primer output útil.'],
   ['Calidad', 'Consistencia, errores detectados, cumplimiento del formato, retrabajo y nivel de trazabilidad.'],
   ['Confianza', 'Capacidad para verificar resultados, claridad sobre los límites y uso adecuado de la información.'],
@@ -369,7 +369,7 @@ export const INDICATORS = [
 
 export const GENERAL_DELIVERABLES = [
   'AI Fluency Baseline', 'Understanding Brief', 'Mapa de procesos y oportunidades',
-  'Malla personalizada', 'Biblioteca de instrucciones', 'Assistants o agents configurados',
+  'Malla personalizada', 'Biblioteca de instrucciones', 'Asistentes o agentes configurados',
   'Prompt systems', 'Applied Workflow Canvas', 'Plantillas del área',
   'Protocolos de validación', 'Responsible Use Guide', 'AI Champions Kit',
   'Adoption Scorecard', 'Informe final para la Gerencia', 'Recomendaciones para los siguientes 90 días',
@@ -379,12 +379,12 @@ export const FAQ = [
   ['¿La capacitación es igual para todas las empresas?', 'No. Cada programa comienza con una sesión de entendimiento. La malla, los casos, los documentos y los ejercicios se adaptan a los procesos reales de la empresa.'],
   ['¿Trabajan con ChatGPT, Claude o Gemini?', 'Sí. El programa puede utilizar una o varias plataformas según las licencias, políticas, herramientas y necesidades de la organización.'],
   ['¿Necesitamos compartir información confidencial?', 'No necesariamente. La empresa puede trabajar con información real, anonimizada o simulada. El tratamiento se define durante la sesión de entendimiento.'],
-  ['¿Es un curso de prompts?', 'No. El prompting es una capacidad habilitadora. El objetivo es construir assistants, agents, workflows y entregables que mejoren el trabajo del área.'],
+  ['¿Es un curso de prompts?', 'No. Escribir buenas instrucciones es solo el punto de partida. El objetivo es construir asistentes, agentes, flujos de trabajo y entregables que mejoren el trabajo del área.'],
   ['¿Los participantes necesitan conocimientos técnicos?', 'No. La malla se adapta al nivel de los participantes. Los programas funcionales están diseñados para equipos de negocio.'],
   ['¿BECOME automatiza los procesos durante la capacitación?', 'El programa estándar se concentra en construcción de capacidades y configuración dentro de las herramientas autorizadas. Integraciones y desarrollos pueden abordarse después mediante Build & Embed.'],
-  ['¿Cuántas personas pueden participar?', 'El tamaño del grupo se define según el nivel de acompañamiento requerido. Se recomiendan cohortes pequeñas cuando cada participante debe construir y validar sus propios workflows.'],
+  ['¿Cuántas personas pueden participar?', 'El tamaño del grupo se define según el nivel de acompañamiento necesario. Se recomiendan grupos pequeños cuando cada participante debe construir y validar sus propios flujos de trabajo.'],
   ['¿Puede crearse un programa para un área que no aparece en el menú?', 'Sí. El catálogo muestra las rutas más frecuentes, pero BECOME puede diseñar programas para cualquier área, rol, industria o proceso específico.'],
-  ['¿Qué queda después de la capacitación?', 'Capacidades aplicables, una biblioteca reutilizable, workflows documentados, criterios de validación y recomendaciones de adopción.'],
+  ['¿Qué queda después de la capacitación?', 'Capacidades aplicables, una biblioteca reutilizable, flujos de trabajo documentados, criterios de validación y recomendaciones de adopción.'],
 ];
 
 /* Lista plana en el orden del sub-submenú */

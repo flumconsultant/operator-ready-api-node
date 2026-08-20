@@ -14,10 +14,10 @@ import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, TextCTA, Cols, Card,
  */
 
 const STAGES = [
-  ['B', 'Business Ambition', 'Define en qué debe convertirse la empresa y qué outcomes importan.', 'AI-native ambition y tesis estratégica.', 'Discovery'],
-  ['E', 'Enterprise Discovery', 'Comprende cómo funciona hoy y qué limita el cambio.', 'Enterprise diagnostic y readiness.', 'Discovery'],
-  ['C', 'Capacidad Choices', 'Prioriza dónde la IA puede crear valor diferencial.', 'Value pools y portafolio priorizado.', 'Discovery'],
-  ['O', 'Operating Model Design', 'Diseña el sistema futuro.', 'Target operating model y blueprint.', 'Punto de transición'],
+  ['B', 'Business Ambition', 'Define en qué debe convertirse la empresa y qué resultados importan.', 'AI-native ambition y tesis estratégica.', 'Discovery'],
+  ['E', 'Enterprise Discovery', 'Comprende cómo funciona hoy y qué limita el cambio.', 'Diagnóstico de la empresa y su preparación.', 'Discovery'],
+  ['C', 'Elección de capacidades', 'Prioriza dónde la IA puede crear valor diferencial.', 'Dónde está el valor y un portafolio priorizado.', 'Discovery'],
+  ['O', 'Operating Model Design', 'Diseña el sistema futuro.', 'Modelo operativo objetivo y diseño de la solución.', 'Punto de transición'],
   ['M', 'Make & Embed', 'Construye e incorpora la capacidad.', 'Capacidad funcionando con controles.', 'Build & Embed'],
   ['E', 'Expand & Evolve', 'Mide, gobierna, transfiere y escala.', 'Scorecard y scale decision.', 'Build & Embed'],
 ];
@@ -25,16 +25,16 @@ const STAGES = [
 const DOMAINS = [
   ['People, inside.', 'Liderazgo, roles, skills y adopción diseñados para el trabajo entre personas e IA.', '/icons/people-inside-white.webp'],
   ['Data, inside.', 'Contexto y conocimiento convertidos en decisiones y acción.', '/icons/data-inside-white.webp'],
-  ['Agents, inside.', 'Copilots y agents incorporados en workflows reales, con supervisión humana definida.', '/icons/agents-inside-white.webp'],
+  ['Agents, inside.', 'Copilotos y agentes incorporados en procesos reales, con supervisión humana definida.', '/icons/agents-inside-white.webp'],
   ['Products, inside.', 'Propuestas, experiencias y diferenciación construidas sobre lo que la IA hace posible.', '/icons/products-inside-white.webp'],
-  ['Operations, inside.', 'Procesos, governance y performance rediseñados para crear valor a escala.', '/icons/operations-inside-white.webp'],
+  ['Operations, inside.', 'Procesos, gobernanza y desempeño rediseñados para crear valor a escala.', '/icons/operations-inside-white.webp'],
 ];
 
 const TOOLS = [
-  ['Business Ambition Canvas™', 'Alinear al equipo ejecutivo alrededor de outcomes y strategic choices.'],
-  ['Inside Readiness Index™', 'Evaluar madurez en People, Data, Agents, Products y Operations.'],
+  ['Business Ambition Canvas™', 'Alinear al equipo ejecutivo alrededor de los resultados y las decisiones estratégicas.'],
+  ['Inside Readiness Index™', 'Evaluar la madurez en Personas, Datos, Agentes, Productos y Operaciones.'],
   ['AI-Native Value Map™', 'Priorizar oportunidades por valor, feasibility, velocidad y riesgo.'],
-  ['Inside Target State Canvas™', 'Definir el target operating model y transformation blueprint.'],
+  ['Inside Target State Canvas™', 'Definir el modelo operativo objetivo y el diseño de la transformación.'],
   ['Agentic Workflow Blueprint™', 'Diseñar roles, agents, datos, decisiones, excepciones y controles.'],
   ['Embed Scorecard™', 'Medir uso, confianza, performance, control y valor.'],
   ['Scale Readiness Gate™', 'Decidir si iterar, integrar, escalar o detener.'],
@@ -66,8 +66,9 @@ export default function Framework() {
         <Headline>La transformación no se instala. Se construye dentro.</Headline>
         <Lead>
           Los pilotos aislados no cambian una empresa. El cambio ocurre cuando se
-          rediseñan workflows, roles, decision rights, data, controls, skills y
-          measures como un solo operating system.
+          rediseñan a la vez los procesos, los roles, quién decide, los datos, los
+          controles, las capacidades y las métricas: un solo sistema, no siete
+          proyectos.
         </Lead>
         <Body>
           El framework existe para que ese rediseño tenga una secuencia. No es un
@@ -106,10 +107,10 @@ export default function Framework() {
       {/* Los cinco dominios atraviesan las seis etapas: esa es la tesis */}
       <Section band="darker">
         <Kicker dark>En todas las etapas</Kicker>
-        <Headline dark>Cuatro sistemas que se transforman a la vez.</Headline>
+        <Headline dark>Cinco sistemas que se transforman a la vez.</Headline>
         <Lead dark>
-          No son cuatro workstreams paralelos. En cada etapa se toman decisiones
-          sobre los cuatro, porque dejar uno fuera es lo que hace que el cambio no
+          No son cinco proyectos en paralelo. En cada etapa se toman decisiones
+          sobre los cinco, porque dejar uno fuera es lo que hace que el cambio no
           sobreviva al primer trimestre.
         </Lead>
         <Cols min="230px">
@@ -163,7 +164,7 @@ export default function Framework() {
       </Section>
 
       <Section band="dark">
-        <Kicker dark>Governance y medición</Kicker>
+        <Kicker dark>Gobernanza y medición</Kicker>
         <Headline dark>Cuatro principios que no se negocian por velocidad.</Headline>
         <Cols min="250px">
           {GOVERNANCE.map(([name, line]) => (

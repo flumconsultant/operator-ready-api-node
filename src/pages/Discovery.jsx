@@ -15,32 +15,32 @@ import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, C
  */
 
 const STAGES = [
-  ['B', 'Business Ambition', 'Define en qué debe convertirse la empresa y qué outcomes importan.', 'AI-native ambition y tesis estratégica.'],
-  ['E', 'Enterprise Discovery', 'Comprende cómo funciona hoy y qué limita el cambio.', 'Enterprise diagnostic y readiness.'],
-  ['C', 'Capacidad Choices', 'Prioriza dónde la IA puede crear valor diferencial.', 'Value pools y portafolio priorizado.'],
-  ['O', 'Operating Model Design', 'Diseña el sistema futuro de People, Data, Agents, Products y Operations.', 'Target operating model y blueprint.'],
+  ['B', 'Business Ambition', 'Define en qué debe convertirse la empresa y qué resultados importan.', 'AI-native ambition y tesis estratégica.'],
+  ['E', 'Enterprise Discovery', 'Comprende cómo funciona hoy y qué limita el cambio.', 'Diagnóstico de la empresa y su preparación.'],
+  ['C', 'Elección de capacidades', 'Prioriza dónde la IA puede crear valor diferencial.', 'Dónde está el valor y un portafolio priorizado.'],
+  ['O', 'Operating Model Design', 'Diseña el sistema futuro de Personas, Datos, Agentes, Productos y Operaciones.', 'Modelo operativo objetivo y diseño de la solución.'],
 ];
 
 const DELIVERABLES = [
   'AI-native ambition y tesis estratégica.',
-  'Enterprise diagnostic e Inside Readiness Index.',
+  'Diagnóstico de la empresa e Inside Readiness Index™.',
   'Value pools y portafolio priorizado de capacidades.',
   'Target operating model.',
-  'Transformation blueprint, business case y roadmap.',
+  'Diseño de la transformación, caso de negocio y hoja de ruta.',
 ];
 
 const TOOLS = [
-  ['Business Ambition Canvas™', 'Alinear al equipo ejecutivo alrededor de outcomes y strategic choices.'],
-  ['Inside Readiness Index™', 'Evaluar madurez en People, Data, Agents, Products y Operations.'],
+  ['Business Ambition Canvas™', 'Alinear al equipo ejecutivo alrededor de los resultados y las decisiones estratégicas.'],
+  ['Inside Readiness Index™', 'Evaluar la madurez en Personas, Datos, Agentes, Productos y Operaciones.'],
   ['AI-Native Value Map™', 'Priorizar oportunidades por valor, feasibility, velocidad y riesgo.'],
-  ['Inside Target State Canvas™', 'Definir el target operating model y transformation blueprint.'],
+  ['Inside Target State Canvas™', 'Definir el modelo operativo objetivo y el diseño de la transformación.'],
 ];
 
 const FIT = [
   'Existe executive sponsorship.',
   'Hay iniciativas de IA sin coherencia empresarial.',
   'Un dominio de negocio necesita reinvención.',
-  'El liderazgo necesita portfolio, target state o roadmap.',
+  'El liderazgo necesita un portafolio, un estado objetivo o una hoja de ruta.',
   'La empresa involucrará a líderes de negocio, tecnología, datos y People.',
 ];
 
@@ -48,7 +48,7 @@ const DECISIONS = [
   'Dónde la IA puede crear valor empresarial diferencial.',
   'Qué debe cambiar dentro para que ese valor sea posible.',
   'Qué capacidad construir primero y con qué criterios.',
-  'Qué inversión, secuencia y governance sostienen el plan.',
+  'Qué inversión, qué secuencia y qué gobernanza sostienen el plan.',
 ];
 
 export default function Discovery() {

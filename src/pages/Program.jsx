@@ -47,7 +47,7 @@ export default function Program() {
               área y desaparece cuando esa persona cambia de rol.
             </Body>
             <Body>
-              El programa convierte esos hallazgos sueltos en workflows del equipo, con
+              El programa convierte esos hallazgos sueltos en procesos del equipo, con
               criterios de validación comunes y activos que quedan documentados.
             </Body>
           </Reveal>

@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import * as es from '../site.js';
 import * as en from '../site.en.js';
 import wordmark from '../logo/wordmark-white.webp';
+import { equivalenteEnElOtroIdioma } from '../seo-meta.js';
 
 /**
  * Pie del sitio. Bilingüe: detecta el idioma por el prefijo de la ruta
@@ -22,7 +23,10 @@ export default function SiteFooter() {
   const { pathname } = useLocation();
   const lang = pathname.startsWith('/en') ? 'en' : 'es';
   const t = lang === 'en' ? en : es;
-  const other = lang === 'en' ? { code: 'ES', to: '/es' } : { code: 'EN', to: '/en' };
+  /* Mismo criterio que la cabecera: el otro idioma en la MISMA página. */
+  const other = lang === 'en'
+    ? { code: 'ES', to: equivalenteEnElOtroIdioma(pathname), label: 'Cambiar a español' }
+    : { code: 'EN', to: equivalenteEnElOtroIdioma(pathname), label: 'Switch to English' };
 
   return (
     <footer
@@ -92,7 +96,7 @@ export default function SiteFooter() {
           <span style={{ font: 'var(--type-label)', letterSpacing: 'var(--track-label)', color: 'var(--slate-300)' }}>
             <span style={{ ...langItem, color: 'var(--white)' }}>{lang === 'en' ? 'EN' : 'ES'}</span>
             {' / '}
-            <Link to={other.to} style={{ ...langItem, color: 'var(--slate-300)', textDecoration: 'none' }} className="hv-lang">{other.code}</Link>
+            <Link to={other.to} aria-label={other.label} style={{ ...langItem, color: 'var(--slate-300)', textDecoration: 'none' }} className="hv-lang">{other.code}</Link>
           </span>
         </div>
       </div>

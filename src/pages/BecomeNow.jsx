@@ -76,8 +76,8 @@ export default function BecomeNow() {
         <Headline dark>Primero entendemos cómo trabajan. Después diseñamos la capacitación.</Headline>
         <Lead dark>
           Antes de definir la malla conocemos el área, sus procesos, sus cuellos de
-          botella y las herramientas que usa hoy. De ahí salen los casos, asistentes
-          y workflows que se trabajan en las sesiones.
+          botella y las herramientas que usa hoy. De ahí salen los casos, los
+          asistentes y los procesos que se trabajan en las sesiones.
         </Lead>
 
         <div style={{ marginTop: 'var(--space-11)' }}>

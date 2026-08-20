@@ -32,7 +32,7 @@ const FIELDS = [
   { name: 'rol', short: 'Rol', label: '¿Cuál es tu rol?', required: true, autoComplete: 'organization-title' },
   {
     name: 'cambio', short: 'Qué debe cambiar', label: '¿Qué necesita cambiar?', type: 'textarea', required: true, wide: true,
-    help: 'El business outcome, la capacidad o el workflow que necesitas transformar. Sin formalidades.',
+    help: 'El resultado de negocio, la capacidad o el proceso que necesitas transformar. Sin formalidades.',
   },
   {
     name: 'etapa', short: 'Etapa actual', label: '¿En qué etapa estáis hoy?', type: 'select',
@@ -50,7 +50,7 @@ const FIELDS = [
 
 const NEXT = [
   ['signpost', 'Leemos tu contexto', 'Lo mapeamos a las etapas del framework BECOME para saber por dónde entra.'],
-  ['calendar', 'Conversación de 30 minutos', 'Centrada en el business outcome y en las restricciones que tenéis hoy.'],
+  ['calendar', 'Conversación de 30 minutos', 'Centrada en el resultado de negocio y en las restricciones que tienes hoy.'],
   ['target', 'Definimos el primer paso', 'BECOME NOW™, Discovery o Build & Embed. El que corresponda, no el más grande.'],
 ];
 
@@ -63,8 +63,8 @@ export default function Contacto() {
         <Kicker dark>Start a conversation</Kicker>
         <Headline as="h1" dark>¿Qué necesita cambiar dentro de tu empresa?</Headline>
         <Lead dark>
-          El business outcome, la capacidad o el workflow. Respondemos con el punto
-          de partida adecuado, no con una secuencia comercial.
+          El resultado de negocio, la capacidad o el proceso. Respondemos con el
+          punto de partida adecuado, no con una secuencia comercial.
         </Lead>
       </Section>
 

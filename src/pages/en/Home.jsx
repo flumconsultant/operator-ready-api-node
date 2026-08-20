@@ -113,10 +113,12 @@ export default function Home() {
           BECOME WHAT COMES NEXT.
         </h1>
         <Lead dark>
-          We redesign how companies operate, decide and create value around AI.
+          We turn AI into a capability your company owns. We align strategy,
+          people, data, agents, products and operations to improve decisions,
+          redesign how work gets done and create new sources of value.
         </Lead>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
-          <PrimaryCTA to="/en/contact">Start your Discovery</PrimaryCTA>
+          <PrimaryCTA to="/en/contact">Find your starting point</PrimaryCTA>
           <a href="#what-we-do" style={ghostAnchor}>See what we do</a>
         </div>
         <p
@@ -126,8 +128,8 @@ export default function Home() {
             font: 'var(--type-body)', color: 'var(--slate-300)', maxWidth: '52ch',
           }}
         >
-          For executive teams ready to move from AI initiatives to enterprise
-          reinvention.
+          For companies ready to move from isolated tools and pilots to governed,
+          adopted and measurable results.
         </p>
       </Section>
 
@@ -153,7 +155,7 @@ export default function Home() {
         seed={13}
         steps={[
           { kicker: 'Today', title: 'The company you already have.', line: 'Scattered AI initiatives, pilots that never scale, and decisions that still take just as long.' },
-          { kicker: 'Inside', title: 'The system that moves it.', line: 'People, data, agents and operations. Changing the company means changing all four at once.' },
+          { kicker: 'Inside', title: 'The system that moves it.', line: 'People, data, agents, products and operations. Changing the company means changing all five at once.' },
           { kicker: 'After', title: 'The company it becomes.', line: 'A capability of its own, governed and measured, that keeps evolving without us in the room.' },
         ]}
       />
@@ -285,7 +287,7 @@ export default function Home() {
             <IndexRow key={c.slug} index={i} icon={c.icon} to={c.to} num={String(i + 1).padStart(2, '0')} term={c.q} def={c.line} />
           ))}
         </div>
-        <TextCTA to="/en/use-cases">Find your starting point</TextCTA>
+        <TextCTA to="/en/use-cases">See all use cases</TextCTA>
       </Section>
 
       <Section band="dark" nodeState={3}>

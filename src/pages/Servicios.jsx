@@ -17,19 +17,19 @@ import { Banner } from '../components/Media.jsx';
  */
 
 const JOURNEY = [
-  { n: '00', icon: 'capability', step: 'Enable', who: 'BECOME NOW™', q: '¿Sabe el equipo trabajar con IA hoy?', out: 'Capacidades aplicadas, workflows y activos reutilizables.' },
-  { n: '01', icon: 'decision', step: 'Define', who: 'AI-Native Transformation Discovery', q: '¿Dónde está el valor y qué debe cambiar?', out: 'Ambition, diagnostic y priority choices.' },
-  { n: '02', icon: 'layers', step: 'Design', who: 'Punto de conexión', q: '¿Cómo debe operar el modelo futuro?', out: 'Target operating model y transformation blueprint.' },
-  { n: '03', icon: 'build', step: 'Build', who: 'Build & Embed Sprint', q: '¿Qué capacidad debe existir y cómo funcionará?', out: 'Workflow, agent, copilot, product o decision system.' },
-  { n: '04', icon: 'embed', step: 'Embed', who: 'Build & Embed Sprint', q: '¿Cómo se incorpora con adopción y control?', out: 'Ownership, human-in-the-loop, controls y scorecard.' },
-  { n: '05', icon: 'scale', step: 'Scale', who: 'Evolución posterior', q: '¿Está lista para expandirse?', out: 'Scale decision y evolution backlog.' },
+  { n: '00', icon: 'capability', step: 'Enable', who: 'BECOME NOW™', q: '¿Sabe el equipo trabajar con IA hoy?', out: 'Capacidades aplicadas, procesos y recursos reutilizables.' },
+  { n: '01', icon: 'decision', step: 'Define', who: 'AI-Native Transformation Discovery', q: '¿Dónde está el valor y qué debe cambiar?', out: 'Ambición, diagnóstico y decisiones prioritarias.' },
+  { n: '02', icon: 'layers', step: 'Design', who: 'Punto de conexión', q: '¿Cómo debe operar el modelo futuro?', out: 'Modelo operativo objetivo y diseño de la transformación.' },
+  { n: '03', icon: 'build', step: 'Build', who: 'Build & Embed Sprint', q: '¿Qué capacidad debe existir y cómo funcionará?', out: 'Proceso, agente, copiloto, producto o sistema de decisión.' },
+  { n: '04', icon: 'embed', step: 'Embed', who: 'Build & Embed Sprint', q: '¿Cómo se incorpora con adopción y control?', out: 'Responsable asignado, supervisión humana, controles y medición.' },
+  { n: '05', icon: 'scale', step: 'Scale', who: 'Evolución posterior', q: '¿Está lista para expandirse?', out: 'Decisión sobre escalar y lista de mejoras pendientes.' },
 ];
 
 const COMPARE = [
   ['Úsalo cuando', 'Falta claridad estratégica, priorización o diseño del modelo futuro.', 'Existe una oportunidad priorizada y condiciones para construir.'],
   ['Duración', '8–12 semanas.', '8–12 semanas por capacidad.'],
-  ['Comienza con', 'Ambición, tensión empresarial o dominio a transformar.', 'Blueprint validable, workflow o opportunity priorizada.'],
-  ['Termina con', 'Strategy, portfolio, target state, business case y roadmap.', 'Capacidad funcionando, adoptada, controlada y medida.'],
+  ['Comienza con', 'Ambición, tensión empresarial o dominio a transformar.', 'Un diseño que se pueda validar, un proceso o una oportunidad priorizada.'],
+  ['Termina con', 'Estrategia, portafolio, estado objetivo, caso de negocio y hoja de ruta.', 'Capacidad funcionando, adoptada, controlada y medida.'],
   ['Framework', 'B–E–C–O.', 'O–M–E.'],
   ['Siguiente paso', 'Build & Embed del primer caso priorizado.', 'Iterar, integrar, escalar o detener.'],
 ];
@@ -136,7 +136,7 @@ export default function Servicios() {
             </h3>
             <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--electric-green)' }}>Construcción e implantación</p>
             <Body dark style={{ marginTop: 'var(--space-5)' }}>
-              Diseña, construye e incorpora un AI-native workflow, agent o product
+              Diseña, construye e incorpora un proceso, un agente o un producto AI-native
               dentro de la operación, con adopción, controles y medición desde el inicio.
             </Body>
             <TextCTA to="/es/servicios/build-and-embed" dark>Explora Build &amp; Embed</TextCTA>
@@ -196,10 +196,10 @@ export default function Servicios() {
           <Card>
             <IcoBadge name="signpost" />
             <Body style={{ color: 'var(--text-body)' }}>
-              Si tienes una oportunidad pero <strong>no un blueprint validado</strong>,
-              evaluamos un short readiness gate antes de recomendar Build &amp; Embed.
+              Si tienes una oportunidad pero <strong>todavía no un diseño validado</strong>,
+              hacemos una revisión corta antes de recomendar Build &amp; Embed.
             </Body>
-            <TextCTA to="/es/contacto">Hablemos del gate</TextCTA>
+            <TextCTA to="/es/contacto">Hablemos de esa revisión</TextCTA>
           </Card>
         </Cols>
       </Section>

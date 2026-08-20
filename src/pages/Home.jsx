@@ -57,16 +57,16 @@ const WHAT = [
   {
     icon: 'build',
     label: 'Construimos',
-    line: 'El workflow, el agent o el producto, dentro de la operación y con quien lo va a usar.',
+    line: 'El proceso, el agente o el producto, dentro de la operación y con quien lo va a usar.',
     to: '/es/servicios/build-and-embed',
     cta: 'Build & Embed',
   },
 ];
 
 const STAGES = [
-  ['B', 'Business Ambition', 'Define en qué debe convertirse la empresa y qué outcomes importan.'],
+  ['B', 'Business Ambition', 'Define en qué debe convertirse la empresa y qué resultados importan.'],
   ['E', 'Enterprise Discovery', 'Comprende cómo funciona hoy y qué limita el cambio.'],
-  ['C', 'Capacidad Choices', 'Prioriza dónde la IA puede crear valor diferencial.'],
+  ['C', 'Elección de capacidades', 'Prioriza dónde la IA puede crear valor diferencial.'],
   ['O', 'Operating Model Design', 'Diseña el sistema futuro.'],
   ['M', 'Make & Embed', 'Construye e incorpora la capacidad.'],
   ['E', 'Expand & Evolve', 'Mide, gobierna, transfiere y escala.'],
@@ -77,14 +77,14 @@ const STAGES = [
 const DOMAINS = [
   ['People, inside.', 'Liderazgo, roles, skills y adopción diseñados para el trabajo entre personas e IA.', '/icons/people-inside-white.webp'],
   ['Data, inside.', 'Contexto y conocimiento convertidos en decisiones y acción.', '/icons/data-inside-white.webp'],
-  ['Agents, inside.', 'Copilots y agents incorporados en workflows reales, con supervisión humana definida.', '/icons/agents-inside-white.webp'],
+  ['Agents, inside.', 'Copilotos y agentes incorporados en procesos reales, con supervisión humana definida.', '/icons/agents-inside-white.webp'],
   ['Products, inside.', 'Propuestas, experiencias y diferenciación construidas sobre lo que la IA hace posible.', '/icons/products-inside-white.webp'],
-  ['Operations, inside.', 'Procesos, governance y performance rediseñados para crear valor a escala.', '/icons/operations-inside-white.webp'],
+  ['Operations, inside.', 'Procesos, gobernanza y desempeño rediseñados para crear valor a escala.', '/icons/operations-inside-white.webp'],
 ];
 
 const OUTCOMES = [
   ['speed', 'Speed', 'Ciclos de decisión y ejecución más cortos.'],
-  ['quality', 'Quality', 'Trabajo consistente, menos errores y mejores outcomes.'],
+  ['quality', 'Quality', 'Trabajo consistente, menos errores y mejores resultados.'],
   ['growth', 'Growth', 'Nuevos products, experiences y fuentes de valor.'],
   ['risk', 'Risk', 'Controles, accountability y human oversight claros.'],
   ['capability', 'Capacidad', 'Equipos capaces de operar y mejorar el sistema.'],
@@ -92,19 +92,19 @@ const OUTCOMES = [
 
 const SCENARIOS = [
   ['decision', 'Decision intelligence', 'Rediseñar una decisión de alto valor y su flujo de información.', 'Contexto compartido, rutas de excepción y decision rights explícitos.', '/images/46-strategy-session.webp', 'Equipo directivo trabajando sobre una decisión'],
-  ['flow', 'Agentic operations', 'Incorporar agents en un end-to-end workflow controlado.', 'Orquestación, human-in-the-loop model y controles operativos.', '/images/19-tech-workspace.webp', 'Puesto de trabajo con operaciones asistidas por IA'],
-  ['product', 'AI-native product', 'Crear una nueva capacidad inteligente para clientes o colaboradores.', 'Data layer, ownership de producto y medición de valor.', '/images/50-next-gen.webp', 'Equipo construyendo un producto AI-native'],
+  ['flow', 'Agentic operations', 'Incorporar agentes en un proceso controlado de principio a fin.', 'Orquestación, human-in-the-loop model y controles operativos.', '/images/19-tech-workspace.webp', 'Puesto de trabajo con operaciones asistidas por IA'],
+  ['product', 'AI-native product', 'Crear una nueva capacidad inteligente para clientes o colaboradores.', 'Capa de datos, responsable de producto y medición de valor.', '/images/50-next-gen.webp', 'Equipo construyendo un producto AI-native'],
 ];
 
 const PRINCIPLES = [
-  ['target', 'Business first', 'Comenzamos por el enterprise outcome, no por la herramienta.'],
-  ['together', 'Build with, not for', 'Trabajamos con los equipos del cliente para crear ownership y confianza operativa.'],
+  ['target', 'Business first', 'Comenzamos por el resultado de negocio, no por la herramienta.'],
+  ['together', 'Build with, not for', 'Trabajamos con los equipos del cliente para que la capacidad quede en sus manos, con confianza operativa.'],
   ['fit', 'Adoption by design', 'Roles, controles, skills y medición forman parte de la solución desde el inicio.'],
 ];
 
 const INSIGHTS = [
   ['agents', 'The AI-native enterprise', 'Qué distingue a una empresa AI-native de una empresa con IA.'],
-  ['flow', 'Agentic work', 'Workflows, roles, agents y responsabilidad humana.'],
+  ['flow', 'Agentic work', 'Procesos, roles, agentes y responsabilidad humana.'],
   ['operations', 'Operating-model reinvention', 'Las decisiones de diseño que determinan dónde se acumula el valor.'],
 ];
 
@@ -132,10 +132,13 @@ export default function Home() {
           BECOME WHAT COMES NEXT.
         </h1>
         <Lead dark>
-          Rediseñamos cómo las empresas operan, deciden y crean valor alrededor de la IA.
+          Convertimos la IA en una capacidad propia de tu empresa. Conectamos la
+          estrategia con personas, datos, agentes, productos y operaciones para
+          mejorar decisiones, rediseñar la forma de trabajar y crear nuevas
+          fuentes de valor.
         </Lead>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
-          <PrimaryCTA to="/es/contacto">Inicia tu Discovery</PrimaryCTA>
+          <PrimaryCTA to="/es/contacto">Encuentra tu punto de partida</PrimaryCTA>
           <a href="#que-hacemos" style={ghostAnchor}>Ver qué hacemos</a>
         </div>
         <p
@@ -145,8 +148,8 @@ export default function Home() {
             font: 'var(--type-body)', color: 'var(--slate-300)', maxWidth: '52ch',
           }}
         >
-          Para equipos ejecutivos preparados para pasar de iniciativas de IA a
-          reinvención empresarial.
+          Para empresas que necesitan pasar de herramientas aisladas y pilotos a
+          resultados gobernados, adoptados y medibles.
         </p>
       </Section>
 
@@ -176,7 +179,7 @@ export default function Home() {
         seed={13}
         steps={[
           { kicker: 'Hoy', title: 'La empresa que ya tienes.', line: 'Iniciativas de IA sueltas, pilotos que no escalan y decisiones que siguen tardando lo mismo.' },
-          { kicker: 'Dentro', title: 'El sistema que la mueve.', line: 'Personas, datos, agents y operaciones. Cambiar la empresa es cambiar los cuatro a la vez.' },
+          { kicker: 'Dentro', title: 'El sistema que la mueve.', line: 'Personas, datos, agentes, productos y operaciones. Cambiar la empresa es cambiar los cinco a la vez.' },
           { kicker: 'Después', title: 'La empresa en la que se convierte.', line: 'Una capacidad propia, gobernada y medida, que sigue evolucionando sin nosotros delante.' },
         ]}
       />
@@ -242,7 +245,7 @@ export default function Home() {
             anunciaba la de /framework. Aquí caben en una línea. */}
         <Body dark style={{ marginTop: 'var(--space-9)' }}>
           Cada etapa se apoya en una herramienta propia que desbloquea una decisión
-          concreta: readiness, valor, diseño, adopción y escala.
+          concreta: preparación, valor, diseño, adopción y escala.
         </Body>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
           <GhostCTA to="/es/framework" dark>Ver el framework y sus herramientas</GhostCTA>
@@ -323,7 +326,7 @@ export default function Home() {
             <IndexRow key={c.slug} index={i} icon={c.icon} to={c.to} num={String(i + 1).padStart(2, '0')} term={c.q} def={c.line} />
           ))}
         </div>
-        <TextCTA to="/es/casos-de-uso">Encuentra tu punto de partida</TextCTA>
+        <TextCTA to="/es/casos-de-uso">Ver todos los casos de uso</TextCTA>
       </Section>
 
       {/* 08 — Outcomes. Sistema de medición, no métricas inventadas. */}
@@ -418,7 +421,7 @@ export default function Home() {
         <Kicker dark>Your next operating model starts with a question</Kicker>
         <Headline dark>¿En qué debe convertirse tu empresa después?</Headline>
         <Lead dark>
-          Empieza con una conversación sobre el outcome, la capacidad o el workflow
+          Empieza con una conversación sobre el resultado, la capacidad o el proceso
           que necesitas transformar. Menos de dos minutos para contárnoslo.
         </Lead>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', alignItems: 'center', flexWrap: 'wrap' }}>

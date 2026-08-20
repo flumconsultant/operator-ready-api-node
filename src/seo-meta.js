@@ -169,3 +169,34 @@ export function metaFor(path, dinamicas = {}) {
   const din = dinamicas[path];
   return din ? { ...din, lang: langOf(path) } : null;
 }
+
+/**
+ * La misma página en el otro idioma.
+ *
+ * El selector ES/EN llevaba a la home del idioma contrario. Tenía sentido
+ * cuando el árbol en inglés estaba a medias; hoy las 32 páginas existen en los
+ * dos idiomas, y mandar a alguien a la portada por cambiar de idioma le hace
+ * perder dónde estaba.
+ *
+ * Las rutas fijas salen de PAGES, que ya guarda su equivalente. Las de programa
+ * y caso de uso comparten el slug en los dos idiomas —finanzas, ventas,
+ * pilotos-que-no-escalan— así que basta traducir el tramo del medio. Y si algo
+ * no encaja, se cae a la home del otro idioma: es el comportamiento anterior,
+ * que nunca deja a nadie en una URL que no existe.
+ */
+const TRAMOS = [
+  ['/es/servicios/become-now/', '/en/services/become-now/'],
+  ['/es/casos-de-uso/', '/en/use-cases/'],
+];
+
+export function equivalenteEnElOtroIdioma(path) {
+  const fija = PAGES[path];
+  if (fija) return fija[2];
+
+  for (const [es, en] of TRAMOS) {
+    if (path.startsWith(es)) return en + path.slice(es.length);
+    if (path.startsWith(en)) return es + path.slice(en.length);
+  }
+
+  return langOf(path) === 'en' ? '/es' : '/en';
+}

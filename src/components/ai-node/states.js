@@ -66,11 +66,15 @@ function scattered(rand) {
   ];
 }
 
-/* 2 — Cuatro clústeres: people, data, agents, operations */
-const CLUSTERS = [[-6.6, 0, 0], [-2.2, 0, 0], [2.2, 0, 0], [6.6, 0, 0]];
+/* 2 — Los cinco sistemas: personas, datos, agentes, productos y operaciones.
+   Eran cuatro: productos faltaba, y es el que convierte la IA en propuesta de
+   valor y no solo en eficiencia interna. Se reparten sobre el mismo ancho que
+   antes —de -6,6 a 6,6— para que el nodo ocupe el mismo espacio en pantalla:
+   cinco clústeres algo más juntos, no una fila más larga. */
+const CLUSTERS = [[-6.6, 0, 0], [-3.3, 0, 0], [0, 0, 0], [3.3, 0, 0], [6.6, 0, 0]];
 function clusters(rand, i) {
-  const c = CLUSTERS[i % 4];
-  return inSphere(rand, 1.45, c[0], c[1], c[2]);
+  const c = CLUSTERS[i % CLUSTERS.length];
+  return inSphere(rand, 1.3, c[0], c[1], c[2]);
 }
 
 /* 3 — Espina de seis: B-E-C-O-M-E, en arco ascendente */
@@ -116,7 +120,7 @@ export function buildStates(n) {
 }
 
 /**
- * Aristas de la red. Se eligen en el estado 2 (los cuatro clústeres), que es
+ * Aristas de la red. Se eligen en el estado 2 (los cinco clústeres), que es
  * donde la estructura tiene sentido: cada partícula se une a otra de su mismo
  * clúster. En los estados dispersos esas mismas aristas quedan estiradas, que
  * es justo lo que debe transmitir "conectado sobre el papel, roto en la
@@ -126,10 +130,13 @@ export function buildEdges(n, count) {
   const rand = rng(0xc2b2ae35);
   const edges = new Uint32Array(count * 2);
   for (let e = 0; e < count; e++) {
-    const group = e % 4;
-    /* dos índices que caen en el mismo clúster: i % 4 === group */
-    const a = group + 4 * Math.floor(rand() * Math.floor((n - group) / 4));
-    const b = group + 4 * Math.floor(rand() * Math.floor((n - group) / 4));
+    /* El número de clústeres sale de la propia tabla: añadir un sistema no
+       obliga a acordarse de cambiarlo también aquí. */
+    const k = CLUSTERS.length;
+    const group = e % k;
+    /* dos índices que caen en el mismo clúster: i % k === group */
+    const a = group + k * Math.floor(rand() * Math.floor((n - group) / k));
+    const b = group + k * Math.floor(rand() * Math.floor((n - group) / k));
     edges[e * 2] = Math.min(a, n - 1);
     edges[e * 2 + 1] = Math.min(b, n - 1);
   }

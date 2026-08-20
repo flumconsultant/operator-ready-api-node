@@ -9,7 +9,7 @@ import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, TextCTA, Cols, Index
 const DNA = [
   ['target', 'Business-first', 'We start from the outcome and the business decision, not the tool.'],
   ['native', 'AI-native', 'We design ways of working that build in intelligence from the start.'],
-  ['system', 'Systems-minded', 'We connect strategy, people, data, agents, operations and governance.'],
+  ['system', 'Systems-minded', 'We connect strategy, people, data, agents, products, operations and governance.'],
   ['build', 'Builder', 'We turn direction and blueprint into capabilities that work.'],
   ['accountable', 'Human-accountable', 'AI extends capacity; people keep direction, oversight and accountability.'],
   ['embed', 'Embedded', 'We work with the client’s team so the capability stays and evolves.'],
