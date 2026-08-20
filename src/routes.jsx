@@ -21,6 +21,7 @@ const BecomeNowEN = lazy(() => import('./pages/en/BecomeNow.jsx'));
 const ProgramEN = lazy(() => import('./pages/en/Program.jsx'));
 const NosotrosEN = lazy(() => import('./pages/en/Nosotros.jsx'));
 const InsightsEN = lazy(() => import('./pages/en/Insights.jsx'));
+const ArticuloEN = lazy(() => import('./pages/en/Articulo.jsx'));
 const ContactoEN = lazy(() => import('./pages/en/Contacto.jsx'));
 const SolucionesEN = lazy(() => import('./pages/en/Soluciones.jsx'));
 const SolucionEN = lazy(() => import('./pages/en/Solucion.jsx'));
@@ -30,6 +31,7 @@ const Discovery = lazy(() => import('./pages/Discovery.jsx'));
 const BuildEmbed = lazy(() => import('./pages/BuildEmbed.jsx'));
 const Nosotros = lazy(() => import('./pages/Nosotros.jsx'));
 const Insights = lazy(() => import('./pages/Insights.jsx'));
+const Articulo = lazy(() => import('./pages/Articulo.jsx'));
 const Contacto = lazy(() => import('./pages/Contacto.jsx'));
 const Servicios = lazy(() => import('./pages/Servicios.jsx'));
 const BecomeNow = lazy(() => import('./pages/BecomeNow.jsx'));
@@ -69,6 +71,7 @@ export const routes = [
   { path: '/en/solutions/:slug', element: <SolucionEN /> },
 
   { path: '/en/insights', element: <InsightsEN /> },
+  { path: '/en/insights/:slug', element: <ArticuloEN /> },
   { path: '/en/contact', element: <ContactoEN /> },
 
   { path: '/en/privacy', element: <LegalEN page="privacy" /> },
@@ -88,6 +91,7 @@ export const routes = [
   { path: '/es/soluciones/:slug', element: <Solucion /> },
 
   { path: '/es/insights', element: <Insights /> },
+  { path: '/es/insights/:slug', element: <Articulo /> },
   { path: '/es/contacto', element: <Contacto /> },
 
   { path: '/es/privacidad', element: <Legal page="privacidad" /> },

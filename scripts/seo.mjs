@@ -26,7 +26,7 @@
  * archivo no existiera la petición cae en la regla de la SPA como antes: esto
  * añade, no sustituye.
  */
-import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, rmSync, readdirSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -42,11 +42,40 @@ const enCasos = await import('../src/content/soluciones.en.js');
    hreflang apuntaría a /en/solutions/escalar-ia, que no existe. */
 const { SLUG_ES_A_EN, SLUG_EN_A_ES } = await import('../src/content/soluciones-slugs.js');
 
+/* ------------------------------------------------------------- artículos */
+/*
+ * Los artículos de Insights se leen del directorio, no de un módulo con la
+ * lista: es lo que permite que el panel de /admin y el trabajo automático
+ * publiquen escribiendo un archivo, sin tener que editar además un índice —que
+ * es exactamente el paso que se olvida y deja un artículo invisible.
+ *
+ * Solo entran los publicados. Un borrador existe en el repositorio y no en el
+ * sitemap; si entrara, se estaría ofreciendo a los buscadores una URL que la
+ * aplicación no sirve.
+ */
+const DIR_INSIGHTS = join(ROOT, 'src/content/insights');
+const articulos = (existsSync(DIR_INSIGHTS) ? readdirSync(DIR_INSIGHTS) : [])
+  .filter((f) => f.endsWith('.json'))
+  .map((f) => JSON.parse(readFileSync(join(DIR_INSIGHTS, f), 'utf8')))
+  .filter((a) => a.estado === 'publicado')
+  .sort((a, b) => String(b.fecha).localeCompare(String(a.fecha)));
+
+/* URL → artículo e idioma, para no volver a buscarlo en cada uno de los tres
+   sitios que necesitan sus datos (cabecera, datos estructurados y sitemap). */
+const porUrl = {};
+for (const a of articulos) {
+  if (a.es?.slug) porUrl[`/es/insights/${a.es.slug}`] = { a, lang: 'es' };
+  if (a.en?.slug) porUrl[`/en/insights/${a.en.slug}`] = { a, lang: 'en' };
+}
+
 /* Las rutas fijas salen de routes.jsx leído como texto: importarlo exigiría un
    runtime capaz de resolver JSX, y el archivo es una lista plana. */
 const staticPaths = [...read('src/routes.jsx').matchAll(/\{\s*path:\s*'([^']+)'/g)]
   .map((m) => m[1])
-  .filter((p) => p !== '*' && !p.includes(':'));
+  /* /admin es una herramienta interna: no lleva contenido, exige un token para
+     hacer nada y no debe aparecer ni en el sitemap ni en llms.txt. Se excluye
+     aquí, en el origen, y no con una excepción en cada consumidor. */
+  .filter((p) => p !== '*' && !p.includes(':') && !p.startsWith('/admin'));
 
 /* ------------------------------------------------- rutas con parámetro */
 
@@ -83,6 +112,25 @@ for (const [slug, c] of Object.entries(enCasos.SOLUCION_CONTENIDO)) {
     title: recorta(`${c.q.replace(/\?$/, '')} | ${BRAND}`, 60),
     description: recorta(c.answer, 155),
     alt: `/es/soluciones/${SLUG_EN_A_ES[slug]}`,
+  };
+}
+
+/* Título y descripción del artículo salen del propio artículo. La descripción
+   tiene campo propio en vez de reaprovechar la entradilla: lo que engancha a
+   quien ya está leyendo y lo que gana un clic en un resultado de búsqueda rara
+   vez son la misma frase. Si falta, cae a la entradilla antes que quedarse en
+   blanco. */
+for (const [url, { a, lang }] of Object.entries(porUrl)) {
+  const t = a[lang];
+  const otro = lang === 'es' ? 'en' : 'es';
+  dinamicas[url] = {
+    title: recorta(`${t.titulo} | ${BRAND}`, 60),
+    description: recorta(t.descripcion || t.entradilla || '', 155),
+    alt: a[otro]?.slug
+      ? `/${otro}/insights/${a[otro].slug}`
+      : (lang === 'es' ? '/en/insights' : '/es/insights'),
+    tipoOg: 'article',
+    lastmod: a.actualizado || a.fecha,
   };
 }
 
@@ -123,8 +171,43 @@ const servicio = (nombre, descripcion, url) => ({
   url,
 });
 
+/* BlogPosting con autor y fechas: es lo que permite que un resultado muestre
+   la fecha, y lo que le da a un asistente algo que citar con atribución en vez
+   de un texto suelto sin procedencia. */
+const blogPosting = (a, lang, url) => {
+  const t = a[lang];
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: t.titulo,
+    description: t.descripcion || t.entradilla || '',
+    inLanguage: lang,
+    datePublished: a.fecha,
+    dateModified: a.actualizado || a.fecha,
+    author: { '@type': 'Organization', name: a.autor || BRAND, url: SITE },
+    publisher: { '@type': 'Organization', name: BRAND, url: SITE, logo: `${SITE}/logo/icon-white.svg` },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    image: OG_IMAGE,
+  };
+};
+
 function datosEstructurados(path, meta) {
   const url = SITE + path;
+
+  /* Las preguntas del JSON-LD son literalmente las del bloque «faq» que
+     renderiza la página. Declarar preguntas que no están visibles es contenido
+     estructurado inventado, y se penaliza. */
+  const art = porUrl[path];
+  if (art) {
+    const salida = [blogPosting(art.a, art.lang, url)];
+    const faq = (art.a[art.lang]?.bloques || [])
+      .filter((b) => b.tipo === 'faq')
+      .flatMap((b) => b.items || [])
+      .filter((it) => it.pregunta && it.respuesta);
+    if (faq.length) salida.push(faqPage(faq.map((it) => [it.pregunta, it.respuesta])));
+    return salida;
+  }
+
   if (path === '/es' || path === '/en') {
     return [ORG, { '@context': 'https://schema.org', '@type': 'WebSite', name: BRAND, url: SITE }];
   }
@@ -251,7 +334,7 @@ function documentoPara(path, meta) {
     <link rel="alternate" hreflang="${esEs ? 'en' : 'es'}" href="${SITE}${altPath}" />
     <link rel="alternate" hreflang="x-default" href="${SITE}${esEs ? path : altPath}" />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="${meta.tipoOg || 'website'}" />
     <meta property="og:site_name" content="${BRAND}" />
     <meta property="og:locale" content="${esEs ? 'es_ES' : 'en_US'}" />
     <meta property="og:url" content="${url}" />
@@ -335,7 +418,7 @@ const urls = paths.map((p) => {
   return `  <url>
     <loc>${SITE}${p}</loc>
 ${alternos}
-    <lastmod>${today}</lastmod>
+    <lastmod>${meta.lastmod || today}</lastmod>
     <priority>${priority(p)}</priority>
   </url>`;
 }).join('\n');
@@ -368,7 +451,25 @@ const enlaces = (rutas) => rutas
 const es = paths.filter((p) => langOf(p) === 'es');
 const en = paths.filter((p) => langOf(p) === 'en');
 const principales = (rutas) => rutas.filter((p) => p.split('/').filter(Boolean).length <= 2);
-const resto = (rutas) => rutas.filter((p) => p.split('/').filter(Boolean).length > 2);
+const resto = (rutas) => rutas.filter((p) => p.split('/').filter(Boolean).length > 2 && !porUrl[p]);
+
+/* Los artículos van en su propia sección y no mezclados en «Detalle». Un
+   asistente que busca una opinión sobre un tema necesita distinguir entre una
+   página de servicio y un artículo con una tesis; en una lista plana no puede.
+   Si todavía no hay ninguno publicado, la sección no aparece: un encabezado
+   vacío es peor que ninguno. */
+const seccionArticulos = () => {
+  const rutas = Object.keys(porUrl).sort();
+  if (!rutas.length) return '';
+  return `## Insights
+
+Artículos con una tesis propia. Cada uno existe en español e inglés bajo su
+propia dirección; la fecha indica cuándo se publicó.
+
+${rutas.map((p) => `- [${titulo(p)}](${SITE}${p}) — ${porUrl[p].a.fecha}: ${resumen(p)}`).join('\n')}
+
+`;
+};
 
 writeFileSync(join(ROOT, 'dist/llms.txt'),
 `# ${BRAND}
@@ -387,7 +488,7 @@ ${enlaces(principales(es))}
 
 ${enlaces(principales(en))}
 
-## Detalle
+${seccionArticulos()}## Detalle
 
 ${enlaces(resto(es))}
 ${enlaces(resto(en))}

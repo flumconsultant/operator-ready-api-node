@@ -1,7 +1,8 @@
 import React from 'react';
 import SiteHeader from '../../components/SiteHeader.jsx';
 import SiteFooter from '../../components/SiteFooter.jsx';
-import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, IndexRow } from '../../components/ui.jsx';
+import { Section, Kicker, Headline, Lead, PrimaryCTA, IndexRow } from '../../components/ui.jsx';
+import Listado from '../../components/insights/Listado.jsx';
 
 const PILLARS = [
   ['The AI-native enterprise', 'Strategy, ambition and enterprise design. What sets an AI-native company apart from a company that just uses AI.'],
@@ -34,23 +35,7 @@ export default function Insights() {
       </Section>
 
       <Section band="light">
-        <div style={{ maxWidth: 'var(--maxw-prose)' }}>
-          <Kicker>Editorial status</Kicker>
-          <Headline>Nothing published yet.</Headline>
-          <Body style={{ marginTop: 'var(--space-6)' }}>
-            We’d rather say so than fill this page with cards for articles that
-            don’t exist. Three solid pieces will build more authority than a
-            crowded resource hub, and the first one is in progress.
-          </Body>
-          <Body>
-            If you’d like to hear when it’s out, write to us. There’s no
-            newsletter yet because there’s no real cadence to sustain it, and a
-            list that goes unused is worse than none.
-          </Body>
-          <div style={{ marginTop: 'var(--space-8)' }}>
-            <PrimaryCTA href="mailto:hello@meetbecome.com">Let me know when you publish</PrimaryCTA>
-          </div>
-        </div>
+        <Listado lang="en" />
       </Section>
 
       <Section band="darker">

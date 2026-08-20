@@ -2,15 +2,17 @@ import React from 'react';
 import SiteHeader from '../components/SiteHeader.jsx';
 import SiteFooter from '../components/SiteFooter.jsx';
 import Reveal from '../components/Reveal.jsx';
-import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, IndexRow } from '../components/ui.jsx';
+import { Section, Kicker, Headline, Lead, PrimaryCTA, IndexRow } from '../components/ui.jsx';
+import Listado from '../components/insights/Listado.jsx';
 
 /**
  * Insights (§13 del documento).
  *
- * Autoridad mediante ideas propias, no un repositorio de SEO. La página está
- * lista para recibir artículos, pero hoy no hay ninguno publicado — y lo dice,
- * en vez de mostrar tarjetas con títulos inventados y fechas falsas. Los cinco
- * pilares editoriales sí son reales: son el compromiso de qué se va a publicar.
+ * Autoridad mediante ideas propias, no un repositorio de SEO. El listado de
+ * artículos lo pone Listado, que sigue diciendo que no hay nada publicado
+ * mientras sea verdad en vez de mostrar tarjetas con fechas inventadas. Los
+ * cinco pilares editoriales son el compromiso de qué se va a publicar, y son
+ * también las claves con las que cada artículo declara a cuál pertenece.
  */
 
 const PILLARS = [
@@ -43,25 +45,8 @@ export default function Insights() {
         </Lead>
       </Section>
 
-      {/* Sin artículos todavía: se dice, no se rellena */}
       <Section band="light">
-        <div style={{ maxWidth: 'var(--maxw-prose)' }}>
-          <Kicker>Estado editorial</Kicker>
-          <Headline>Todavía no hay nada publicado.</Headline>
-          <Body style={{ marginTop: 'var(--space-6)' }}>
-            Preferimos decirlo a llenar esta página con tarjetas de artículos que no
-            existen. Tres piezas sólidas van a construir más autoridad que un centro
-            de recursos saturado, y la primera está en preparación.
-          </Body>
-          <Body>
-            Si quieres recibirla cuando salga, escríbenos. No hay newsletter todavía
-            porque no hay cadencia real que sostenerla, y una lista que no se usa es
-            peor que ninguna.
-          </Body>
-          <div style={{ marginTop: 'var(--space-8)' }}>
-            <PrimaryCTA href="mailto:hello@meetbecome.com">Avísame cuando publiquéis</PrimaryCTA>
-          </div>
-        </div>
+        <Listado lang="es" />
       </Section>
 
       <Section band="darker">

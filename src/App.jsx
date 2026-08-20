@@ -125,12 +125,17 @@ export default function App() {
       {/* El nodo vive en todo el sitio. En la home las formas van ancladas a
           secciones concretas; en el resto de páginas el mismo journey se
           reparte sobre el documento. Lo que no cambia es la historia. */}
-      <AiNodeStage key={pathname} />
+      <AiNodeStage key={`nodo:${pathname}`} />
       {/* La clave por ruta es lo que hace visible el fallback. React 19 trata
           la navegación como una transición y, por defecto, mantiene la pantalla
           anterior en vez de mostrar el Suspense: sin remontar el límite, el
-          loader no aparecería nunca. */}
-      <React.Suspense key={pathname} fallback={<RouteLoader />}>
+          loader no aparecería nunca.
+
+          Va prefijada porque el nodo, que es su hermano, se remonta por la
+          misma razón y con la misma clave: dos hermanos con la clave `/es` son
+          dos claves repetidas, y React avisa de que puede omitir uno de los
+          dos. Con prefijo, cada uno se remonta al cambiar de ruta sin colisión. */}
+      <React.Suspense key={`ruta:${pathname}`} fallback={<RouteLoader />}>
         <Routes>
           {routes.map((r) => (
             <Route key={r.path} path={r.path} element={r.element} />

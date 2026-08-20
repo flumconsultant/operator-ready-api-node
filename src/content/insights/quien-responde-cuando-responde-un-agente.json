@@ -1,0 +1,85 @@
+{
+  "estado": "borrador",
+  "fecha": "2026-08-20",
+  "autor": "BECOME",
+  "pilar": "agentic-work",
+  "formato": "perspective",
+  "es": {
+    "slug": "quien-responde-cuando-responde-un-agente",
+    "titulo": "Quién responde cuando responde un agente",
+    "entradilla": "La pregunta que decide si un agente llega a producción no es técnica. Es de quién es el resultado cuando sale mal.",
+    "descripcion": "Por qué los agentes de IA se atascan antes de producción: no falta capacidad técnica, falta un dueño nombrado del resultado y un umbral de decisión escrito.",
+    "bloques": [
+      { "tipo": "entradilla", "texto": "Casi todas las conversaciones sobre agentes empiezan por la capacidad —qué puede hacer el modelo— y se atascan en un sitio completamente distinto: qué pasa el día que hace algo que nadie quería." },
+      { "tipo": "parrafo", "texto": "Hemos visto el mismo patrón las suficientes veces como para dejar de tratarlo como una coincidencia. Un equipo construye un agente que funciona. Lo demuestra. Todo el mundo asiente. Y entonces el proyecto entra en una fase que nadie planificó, que puede durar meses, en la que el agente ya no se mejora: se discute." },
+      { "tipo": "parrafo", "texto": "Lo que se discute nunca es la precisión. Es una pregunta mucho más simple, y mucho más incómoda: si este agente aprueba un descuento que no tocaba, ¿de quién es el error?" },
+      { "tipo": "subtitulo", "antetitulo": "El síntoma", "texto": "La responsabilidad no se delega hacia arriba." },
+      { "tipo": "parrafo", "texto": "Cuando una organización no ha decidido de quién es el resultado, la respuesta por defecto es escalarlo. El agente propone y una persona confirma. Sobre el papel suena prudente. En la práctica es la forma más cara de no automatizar nada: se ha construido un sistema que hace el trabajo dos veces, una el agente y otra quien lo revisa, y se ha añadido una espera en medio." },
+      { "tipo": "lista", "items": [
+        "El agente propone, pero nadie tiene autoridad para dejar de revisarlo.",
+        "La revisión no se mide, así que no se sabe cuántas veces corrige algo de verdad.",
+        "Cada excepción sube un nivel, y el nivel de arriba no tiene contexto para decidirla.",
+        "El equipo que construyó el agente no es el que responde por sus decisiones.",
+        "No hay un umbral escrito a partir del cual el agente decide solo."
+      ] },
+      { "tipo": "subtitulo", "antetitulo": "El problema detrás", "texto": "Un agente no es una herramienta. Ocupa un puesto." },
+      { "tipo": "parrafo", "texto": "Una herramienta la usa alguien, y ese alguien responde por el resultado. Un agente actúa en nombre de la organización dentro de un proceso, y eso lo acerca mucho más a un puesto de trabajo que a un software. Los puestos tienen un ámbito de decisión, un jefe, un umbral a partir del cual consultan y una medida de si lo están haciendo bien. Los agentes que llegan a producción tienen esas cuatro cosas. Los que se quedan en piloto, ninguna." },
+      { "tipo": "cita", "texto": "Si no puedes nombrar a la persona que responde por lo que decide el agente, no tienes un agente en producción: tienes una demo con turno de guardia.", "fuente": "BECOME" },
+      { "tipo": "subtitulo", "antetitulo": "Qué cambia", "texto": "Cuatro decisiones, antes de la primera línea de código." },
+      { "tipo": "indice", "items": [
+        { "termino": "Ámbito", "definicion": "Qué decisiones entran dentro del agente y cuáles no. Escrito como una lista cerrada, no como un principio general." },
+        { "termino": "Dueño", "definicion": "Una persona nombrada que responde por el resultado agregado. No el equipo de IA: quien responde hoy por ese proceso." },
+        { "termino": "Umbral", "definicion": "El punto exacto —importe, riesgo, confianza— por encima del cual el agente consulta. Un número, no un criterio." },
+        { "termino": "Medida", "definicion": "Qué se mira para saber si funciona, y cada cuánto. Incluye cuántas veces la revisión humana cambió algo de verdad." }
+      ] },
+      { "tipo": "parrafo", "texto": "Ninguna de las cuatro es técnica, y las cuatro son bloqueantes. Por eso el trabajo de diseño va antes que el de construcción: un agente construido sin ellas funciona igual de bien en la demostración y no llega nunca a operar." },
+      { "tipo": "destacado", "antetitulo": "Cómo empezar", "texto": "Coge el agente que tengas parado ahora mismo y responde las cuatro preguntas por escrito, en una página. Si alguna no tiene respuesta, ahí está el motivo por el que no ha escalado — y no era el modelo." },
+      { "tipo": "faq", "items": [
+        { "pregunta": "¿Quién debe ser el dueño de un agente de IA?", "respuesta": "La persona que ya responde por el resultado del proceso donde opera el agente, no el equipo que lo construyó. Si un agente decide sobre crédito, responde el responsable de riesgo; si decide sobre devoluciones, el responsable de atención. El equipo técnico responde de que el agente haga lo que se acordó, no de que lo acordado sea correcto." },
+        { "pregunta": "¿Cómo se decide cuándo un agente puede actuar sin supervisión humana?", "respuesta": "Con un umbral escrito antes de construirlo: un importe, un nivel de riesgo o un nivel de confianza por encima del cual el agente consulta y por debajo del cual actúa. El umbral se revisa con datos de operación, no con la sensación de si el agente va bien." },
+        { "pregunta": "¿Por qué la mayoría de agentes no llegan a producción?", "respuesta": "Casi nunca por precisión del modelo. Se quedan porque nadie ha decidido de quién es el resultado cuando el agente se equivoca, y sin esa decisión la organización responde escalando cada caso a una persona, lo que elimina el beneficio de haberlo automatizado." },
+        { "pregunta": "¿Qué se mide en un agente en producción?", "respuesta": "Además de la precisión, cuántas veces la revisión humana cambió realmente la decisión del agente. Si ese número es muy bajo y sostenido, la revisión está costando dinero sin añadir control y el umbral debería subir." }
+      ] },
+      { "tipo": "cta", "texto": "Revisemos tu agente parado", "destino": "/es/contacto" }
+    ]
+  },
+  "en": {
+    "slug": "who-answers-when-an-agent-answers",
+    "titulo": "Who answers when an agent answers",
+    "entradilla": "The question that decides whether an agent reaches production isn’t technical. It’s who owns the outcome when it goes wrong.",
+    "descripcion": "Why AI agents stall before production: the gap is rarely model capability. It’s a named owner for the outcome and a written decision threshold.",
+    "bloques": [
+      { "tipo": "entradilla", "texto": "Almost every conversation about agents starts with capability — what the model can do — and gets stuck somewhere else entirely: what happens the day it does something nobody wanted." },
+      { "tipo": "parrafo", "texto": "We’ve seen the same pattern often enough to stop treating it as coincidence. A team builds an agent that works. They demo it. Everyone nods. And then the project enters a phase nobody planned for, which can last months, in which the agent is no longer improved: it’s debated." },
+      { "tipo": "parrafo", "texto": "What gets debated is never accuracy. It’s a much simpler and far more uncomfortable question: if this agent approves a discount it shouldn’t have, whose mistake is it?" },
+      { "tipo": "subtitulo", "antetitulo": "The symptom", "texto": "Accountability doesn’t delegate upwards." },
+      { "tipo": "parrafo", "texto": "When an organisation hasn’t decided who owns the outcome, the default answer is to escalate it. The agent proposes and a person confirms. On paper that sounds prudent. In practice it’s the most expensive way to automate nothing: you’ve built a system that does the work twice, once by the agent and once by whoever reviews it, and added a queue in between." },
+      { "tipo": "lista", "items": [
+        "The agent proposes, but nobody has the authority to stop reviewing it.",
+        "The review isn’t measured, so nobody knows how often it actually changes anything.",
+        "Every exception moves up a level, and that level lacks the context to decide it.",
+        "The team that built the agent isn’t the team answering for its decisions.",
+        "There’s no written threshold above which the agent decides on its own."
+      ] },
+      { "tipo": "subtitulo", "antetitulo": "The problem underneath", "texto": "An agent isn’t a tool. It holds a post." },
+      { "tipo": "parrafo", "texto": "A tool is used by someone, and that someone answers for the result. An agent acts on the organisation’s behalf inside a process, which puts it far closer to a job than to a piece of software. Jobs have a decision scope, a manager, a threshold above which they escalate, and a measure of whether they’re doing well. Agents that reach production have all four. Agents that stay in pilot have none." },
+      { "tipo": "cita", "texto": "If you can’t name the person who answers for what the agent decides, you don’t have an agent in production: you have a demo with an on-call rota.", "fuente": "BECOME" },
+      { "tipo": "subtitulo", "antetitulo": "What changes", "texto": "Four decisions, before the first line of code." },
+      { "tipo": "indice", "items": [
+        { "termino": "Scope", "definicion": "Which decisions sit inside the agent and which don’t. Written as a closed list, not as a general principle." },
+        { "termino": "Owner", "definicion": "A named person who answers for the aggregate outcome. Not the AI team: whoever already answers for that process." },
+        { "termino": "Threshold", "definicion": "The exact point — amount, risk, confidence — above which the agent escalates. A number, not a judgement call." },
+        { "termino": "Measure", "definicion": "What gets watched to know it works, and how often. Including how many times human review actually changed the decision." }
+      ] },
+      { "tipo": "parrafo", "texto": "None of the four is technical, and all four are blocking. That’s why design work comes before build work: an agent built without them demos just as well and never gets to operate." },
+      { "tipo": "destacado", "antetitulo": "Where to start", "texto": "Take the agent that’s stalled right now and answer the four questions in writing, on one page. If one of them has no answer, that’s why it hasn’t scaled — and it wasn’t the model." },
+      { "tipo": "faq", "items": [
+        { "pregunta": "Who should own an AI agent?", "respuesta": "The person who already answers for the outcome of the process the agent operates in, not the team that built it. If an agent decides on credit, the risk owner answers; if it decides on returns, the service owner does. The technical team answers for the agent doing what was agreed, not for what was agreed being right." },
+        { "pregunta": "How do you decide when an agent can act without human review?", "respuesta": "With a threshold written before it’s built: an amount, a risk level or a confidence level above which the agent escalates and below which it acts. The threshold is revised with operating data, not with a sense of how well the agent seems to be doing." },
+        { "pregunta": "Why do most AI agents never reach production?", "respuesta": "Rarely because of model accuracy. They stall because nobody has decided who owns the outcome when the agent is wrong, and without that decision the organisation responds by escalating every case to a person — which removes the benefit of automating it at all." },
+        { "pregunta": "What do you measure on an agent in production?", "respuesta": "Beyond accuracy, how often human review actually changed the agent’s decision. If that number is low and stays low, the review is costing money without adding control, and the threshold should go up." }
+      ] },
+      { "tipo": "cta", "texto": "Let’s look at your stalled agent", "destino": "/en/contact" }
+    ]
+  }
+}
