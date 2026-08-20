@@ -35,11 +35,11 @@ export const IDENTIDAD = {
   dominio: 'meetbecome.com',
 
   correoGeneral: 'hello@meetbecome.com',
-  /* Mientras no existan buzones propios, los tres apuntan al que sí existe.
-     Es preferible a publicar una dirección que rebota: quien ejerce un derecho
-     de datos y recibe un rebote tiene un motivo de reclamo, no un contratiempo. */
-  correoPrivacidad: 'hello@meetbecome.com',
-  correoLegal: 'hello@meetbecome.com',
+  /* Buzones propios, no alias del general. Un derecho de datos que llega al
+     mismo sitio que una consulta comercial acaba tratado como una consulta
+     comercial, y ahí es donde se pierden los plazos legales. */
+  correoPrivacidad: 'privacidad@meetbecome.com',
+  correoLegal: 'legal@meetbecome.com',
   telefono: PENDIENTE,
 
   bancoDatos: 'Prospectos y contactos comerciales',

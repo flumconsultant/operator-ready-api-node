@@ -89,6 +89,13 @@ const STRINGS = {
     optional: ' · opcional',
     back: 'Atrás',
     review: 'Revisar',
+    consentimiento: 'He leído la Política de privacidad y autorizo el tratamiento de mis datos para responder esta consulta.',
+    consentimientoFalta: 'Para poder responderte necesitamos tu autorización.',
+    marketing: 'Quiero recibir los artículos de BECOME. Puedo darme de baja en un clic.',
+    obligatorio: 'obligatorio',
+    verPolitica: 'Política de privacidad',
+    politicaRuta: '/es/privacidad',
+    avisoSensible: 'No incluyas contraseñas, datos sensibles ni información confidencial en este formulario.',
     next: 'Siguiente',
     enterTextarea: 'Ctrl + Enter para continuar',
     enterDefault: 'Enter para continuar',
@@ -140,6 +147,13 @@ const STRINGS = {
     optional: ' · optional',
     back: 'Back',
     review: 'Review',
+    consentimiento: 'I have read the Privacy Policy and authorize the processing of my data to answer this enquiry.',
+    consentimientoFalta: 'We need your authorization before we can reply.',
+    marketing: 'I would like to receive BECOME articles. I can unsubscribe in one click.',
+    obligatorio: 'required',
+    verPolitica: 'Privacy Policy',
+    politicaRuta: '/en/privacy',
+    avisoSensible: 'Do not include passwords, sensitive data or confidential information in this form.',
     next: 'Next',
     enterTextarea: 'Ctrl + Enter to continue',
     enterDefault: 'Enter to continue',
@@ -237,6 +251,14 @@ function Conversation({
   const t = STRINGS[lang];
   const reduced = useReducedMotion();
   const [sending, setSending] = React.useState(false);
+  /* Las dos van separadas y ninguna nace marcada. Premarcar el consentimiento
+     lo invalida —deja de ser una acción de la persona— y juntarlos convierte
+     «respóndeme» en «apúntame a la lista», que es exactamente lo que la norma
+     pide separar. */
+  const [consiente, setConsiente] = React.useState(false);
+  const [quiereArticulos, setQuiereArticulos] = React.useState(false);
+  const idConsentimiento = React.useId();
+  const idMarketing = React.useId();
   const [sendError, setSendError] = React.useState(null);
   const honeypotRef = React.useRef(null);
   const [mode, setMode] = React.useState('steps');
@@ -311,6 +333,14 @@ function Conversation({
     e?.preventDefault();
     if (sending) return;   // doble clic: un mensaje, no dos
 
+    if (!consiente) {
+      setError(t.consentimientoFalta);
+      /* El foco va a la casilla, no al principio: quien no ve el error tiene
+         que poder llegar a lo que falta sin buscarlo. */
+      document.getElementById(idConsentimiento)?.focus();
+      return;
+    }
+
     const firstBad = fields.findIndex((f) => validate(f, values[f.name], t));
     if (firstBad >= 0) {
       setError(validate(fields[firstBad], values[fields[firstBad].name], t));
@@ -322,7 +352,16 @@ function Conversation({
     setSendError(null);
     setSending(true);
     const fallo = await enviar({
-      fields, values, formId, lang,
+      fields,
+      /* El consentimiento viaja con el envío y queda escrito en el correo que
+         llega: sin el texto exacto que se aceptó y cuándo, no hay forma de
+         acreditarlo el día que alguien lo pida. */
+      values: {
+        ...values,
+        __consentimiento: `${t.consentimiento} — ${new Date().toISOString()}`,
+        __articulos: quiereArticulos ? 'sí' : 'no',
+      },
+      formId, lang,
       honeypot: honeypotRef.current?.value || '',
     });
     setSending(false);
@@ -387,6 +426,38 @@ function Conversation({
       }
     : null;
 
+
+  /* El bloque de consentimiento, en una variable y no escrito dos veces.
+     Escrito dos veces se desincroniza, y aquí desincronizarse significa que un
+     modo pide una autorización y el otro no: el envío la exige siempre, así
+     que el modo sin casillas no podría enviarse nunca. */
+  const consentimiento = (
+    <div style={{ marginTop: 'var(--space-7)', display: 'grid', gap: 'var(--space-4)' }}>
+      <Casilla
+        id={idConsentimiento}
+        marcada={consiente}
+        alCambiar={(v) => { setConsiente(v); if (v && error === t.consentimientoFalta) setError(null); }}
+        c={c}
+        requerida
+        etiquetaRequerida={t.obligatorio}
+        invalida={error === t.consentimientoFalta}
+      >
+        {t.consentimiento}{' '}
+        <a href={t.politicaRuta} target="_blank" rel="noopener noreferrer" style={{ color: c.accent, textDecoration: 'underline' }}>
+          {t.verPolitica}
+        </a>
+      </Casilla>
+
+      <Casilla id={idMarketing} marcada={quiereArticulos} alCambiar={setQuiereArticulos} c={c}>
+        {t.marketing}
+      </Casilla>
+
+      <p style={{ margin: 0, font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: c.faint }}>
+        {t.avisoSensible}
+      </p>
+    </div>
+  );
+
   /* ---------------- modo formulario completo ---------------- */
   if (mode === 'all') {
     return (
@@ -401,6 +472,8 @@ function Conversation({
             </div>
           ))}
         </div>
+        {consentimiento}
+
         {honeypot}
         {error && <p role="alert" style={c.error}>{error}</p>}
         {avisoEnvio}
@@ -608,6 +681,8 @@ function Conversation({
             </AnimatePresence>
           </div>
 
+          {isReview && consentimiento}
+
           {honeypot}
           {error && <p role="alert" style={c.error}>{error}</p>}
           {avisoEnvio}
@@ -759,6 +834,10 @@ function colors(dark, stage) {
   const border = dark ? 'var(--border-strong-dark)' : 'var(--border-strong)';
   return {
     text, faint, border,
+    /* El verde de marca sobre fondo oscuro no llega al contraste mínimo sobre
+       fondo claro, así que el enlace cambia de tono con la banda en vez de
+       usar el mismo en las dos. */
+    accent: dark ? 'var(--electric-green)' : 'var(--text-accent)',
     rule: dark ? 'var(--border-hairline-dark)' : 'var(--border-hairline)',
     label: {
       display: 'block', font: 'var(--type-label)', letterSpacing: 'var(--track-label)',
@@ -849,6 +928,59 @@ function Launcher({ dark, title, lead, count, launchLabel, onOpen, btnRef, t }) 
         </button>
       </div>
     </div>
+  );
+}
+
+/**
+ * Casilla de consentimiento.
+ *
+ * Una casilla nativa dentro de una etiqueta, y no un div con aspecto de
+ * casilla: la nativa ya sabe recibir el foco, responder a la barra
+ * espaciadora y anunciarse como casilla a un lector de pantalla, y una
+ * imitación tiene que reimplementar las tres cosas para quedar igual.
+ *
+ * El área que se puede pulsar es la etiqueta entera, no solo el cuadradito de
+ * 18 px: con el pulgar, acertar en 18 px es difícil, y el texto al lado es lo
+ * que la persona ya está mirando.
+ */
+function Casilla({ id, marcada, alCambiar, children, c, requerida, etiquetaRequerida, invalida }) {
+  return (
+    <label
+      htmlFor={id}
+      style={{
+        display: 'flex', gap: 'var(--space-4)', alignItems: 'flex-start',
+        cursor: 'pointer', padding: 'var(--space-3) 0', minHeight: 44,
+      }}
+    >
+      <input
+        id={id}
+        type="checkbox"
+        checked={marcada}
+        onChange={(e) => alCambiar(e.target.checked)}
+        aria-required={requerida || undefined}
+        aria-invalid={invalida || undefined}
+        style={{
+          width: 20, height: 20, marginTop: 2, flex: 'none',
+          accentColor: 'var(--accent)',
+          outline: invalida ? '2px solid #f87171' : undefined,
+          outlineOffset: 2,
+        }}
+      />
+      {/* textTransform none explícito: el contenedor del formulario pone
+          mayúsculas en las etiquetas, y un consentimiento en capitales se lee
+          peor. Lo que se acepta tiene que poder leerse sin esfuerzo. */}
+      <span style={{
+        font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: c.text,
+        lineHeight: 1.55, textTransform: 'none', letterSpacing: 'normal',
+      }}>
+        {children}
+        {requerida && (
+          <span style={{ marginLeft: 6, font: 'var(--type-mono)', fontSize: 11, color: c.faint, textTransform: 'uppercase', letterSpacing: '.1em' }}>
+            {etiquetaRequerida}
+          </span>
+        )}
+      </span>
+    </label>
   );
 }
 
