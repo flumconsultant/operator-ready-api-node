@@ -78,7 +78,7 @@ function Puerta({ alEntrar }) {
   );
 }
 
-function Lista({ items, alAbrir, alNuevo, alRecargar, cargando }) {
+function Lista({ items, alAbrir, alNuevo, alRecargar, cargando, vacioEn }) {
   return (
     <>
       <Fila style={{ justifyContent: 'space-between', marginBottom: 20 }}>
@@ -92,7 +92,10 @@ function Lista({ items, alAbrir, alNuevo, alRecargar, cargando }) {
       </Fila>
 
       {items.length === 0 && !cargando && (
-        <Aviso>Todavía no hay ningún artículo. El primero que crees creará también la carpeta en el repositorio.</Aviso>
+        <Aviso>
+          Todavía no hay ningún artículo. El primero que crees creará también la carpeta en el repositorio.
+          {vacioEn ? ` Se miró en ${vacioEn}.` : ''}
+        </Aviso>
       )}
 
       <div style={{ display: 'grid', gap: 1, background: 'var(--border-hairline)', border: marco.linea }}>
@@ -136,6 +139,7 @@ export default function Panel() {
      durante un instante a alguien que ya tiene la sesión abierta. */
   const [sesion, setSesion] = React.useState(null);
   const [items, setItems] = React.useState([]);
+  const [vacioEn, setVacioEn] = React.useState('');
   const [cargando, setCargando] = React.useState(false);
   const [abierto, setAbierto] = React.useState(null);   // { archivo, sha, articulo, publicadoAntes }
   const [error, setError] = React.useState('');
@@ -156,7 +160,7 @@ export default function Panel() {
 
   const cargar = React.useCallback(async () => {
     setCargando(true); setError('');
-    try { setItems(await api.listar()); }
+    try { const d = await api.listar(); setItems(d.articulos || []); setVacioEn(d.vacio_en || ''); }
     catch (e) {
       if (e.tipo === 'sin_sesion') { setSesion(false); return; }
       setError(e.message);
@@ -308,6 +312,7 @@ export default function Panel() {
             <Lista
               items={items}
               cargando={cargando}
+              vacioEn={vacioEn}
               alRecargar={cargar}
               alNuevo={() => setAbierto({ archivo: null, sha: null, articulo: ARTICULO_NUEVO() })}
               alAbrir={(it) => setAbierto({ archivo: it.archivo, sha: it.sha, articulo: it.articulo })}

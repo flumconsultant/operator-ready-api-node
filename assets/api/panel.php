@@ -236,10 +236,18 @@ function archivo_valido(string $n): bool {
 $rama = (string) $config['rama'];
 
 if ($accion === 'listar') {
-    $r = github($config, RUTA_ARTICULOS . '?ref=' . rawurlencode($rama));
-    /* 404 aquí significa que todavía no hay ningún artículo, no un fallo: el
-       directorio nace con el primero que se guarde. */
-    if ($r['codigo'] === 404) responder(200, ['ok' => true, 'articulos' => []]);
+    $r = github($config, 'contents/' . rawurlencode(RUTA_ARTICULOS) . '?ref=' . rawurlencode($rama));
+    /* Un 404 significa que el directorio todavía no existe, y eso es normal:
+       nace con el primero que se guarde. Pero también es lo que devuelve una
+       ruta mal construida, y durante un tiempo lo fue: a esta llamada le
+       faltaba el «contents/» de la API, así que GitHub respondía 404 y el
+       panel enseñaba «todavía no hay nada» con el repositorio lleno.
+       Por eso ahora se dice DÓNDE se miró. Una lista vacía que no explica de
+       dónde sale no se puede distinguir de una avería. */
+    if ($r['codigo'] === 404) {
+        responder(200, ['ok' => true, 'articulos' => [],
+            'vacio_en' => RUTA_ARTICULOS . ' @ ' . $config['repo'] . ':' . $rama]);
+    }
     if ($r['codigo'] >= 400) {
         responder(502, ['ok' => false, 'error' => 'github', 'mensaje' => $r['datos']['message'] ?? "GitHub respondió {$r['codigo']}."]);
     }
@@ -306,8 +314,11 @@ function autor_valido(string $id): bool {
 }
 
 if ($accion === 'listar-autores') {
-    $r = github($config, RUTA_AUTORES . '?ref=' . rawurlencode($rama));
-    if ($r['codigo'] === 404) responder(200, ['ok' => true, 'autores' => []]);
+    $r = github($config, 'contents/' . rawurlencode(RUTA_AUTORES) . '?ref=' . rawurlencode($rama));
+    if ($r['codigo'] === 404) {
+        responder(200, ['ok' => true, 'autores' => [],
+            'vacio_en' => RUTA_AUTORES . ' @ ' . $config['repo'] . ':' . $rama]);
+    }
     if ($r['codigo'] >= 400) {
         responder(502, ['ok' => false, 'error' => 'github', 'mensaje' => $r['datos']['message'] ?? "GitHub respondió {$r['codigo']}."]);
     }
@@ -349,7 +360,7 @@ if ($accion === 'guardar-autor') {
        trabajo diario acabaría firmando con la que saliera primero al leer el
        directorio. Que es una forma silenciosa de firmar con quien no toca. */
     if (!empty($ficha['predeterminado'])) {
-        $otros = github($config, RUTA_AUTORES . '?ref=' . rawurlencode($rama));
+        $otros = github($config, 'contents/' . rawurlencode(RUTA_AUTORES) . '?ref=' . rawurlencode($rama));
         foreach (($otros['codigo'] < 400 ? $otros['datos'] : []) as $e) {
             $arch = (string) ($e['name'] ?? '');
             if (($e['type'] ?? '') !== 'file' || $arch === $id . '.json' || !str_ends_with($arch, '.json')) continue;

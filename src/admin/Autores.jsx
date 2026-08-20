@@ -201,11 +201,15 @@ export default function Autores({ alCerrar }) {
   const [items, setItems] = React.useState(null);
   const [abierta, setAbierta] = React.useState(null);
   const [error, setError] = React.useState('');
+  const [vacioEn, setVacioEn] = React.useState('');
 
   const cargar = React.useCallback(async () => {
     setError('');
-    try { setItems(await api.listarAutores()); }
-    catch (e) { setError(e.message); setItems([]); }
+    try {
+      const d = await api.listarAutores();
+      setItems(d.autores || []);
+      setVacioEn(d.vacio_en || '');
+    } catch (e) { setError(e.message); setItems([]); }
   }, []);
 
   React.useEffect(() => { cargar(); }, [cargar]);
@@ -244,6 +248,11 @@ export default function Autores({ alCerrar }) {
         <p style={{ font: 'var(--type-body)', color: 'var(--text-muted)' }}>
           Todavía no hay ninguna ficha. Sin al menos una, el guardián no deja publicar:
           un nombre sin ficha aparece en la web como texto que no se puede contrastar con nada.
+          {vacioEn && (
+            <><br /><span style={{ font: 'var(--type-mono)', fontSize: 12, color: 'var(--text-faint)' }}>
+              Se miró en {vacioEn}
+            </span></>
+          )}
         </p>
       )}
 

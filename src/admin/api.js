@@ -50,10 +50,15 @@ async function llamar(accion, cuerpo) {
 export const entrar = (usuario, clave) => llamar('entrar', { usuario, clave });
 export const salir = () => llamar('salir', {});
 export const quienSoy = () => llamar('yo');
-export const listar = () => llamar('listar').then((d) => d.articulos || []);
+/* Devuelven la respuesta entera y no solo el array: cuando viene vacía, el
+   servidor dice en `vacio_en` dónde miró. Una lista vacía sin esa pista no se
+   puede distinguir de una avería, y durante un tiempo lo fue: una ruta mal
+   construida hacía que el panel enseñara «todavía no hay nada» con el
+   repositorio lleno. */
+export const listar = () => llamar('listar');
 export const guardar = (datos) => llamar('guardar', datos);
 export const borrar = (datos) => llamar('borrar', datos);
-export const listarAutores = () => llamar('listar-autores').then((d) => d.autores || []);
+export const listarAutores = () => llamar('listar-autores');
 export const guardarAutor = (datos) => llamar('guardar-autor', datos);
 export const subirFoto = (datos) => llamar('subir-foto', datos);
 export const suscriptores = () => llamar('suscriptores');

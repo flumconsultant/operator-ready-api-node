@@ -64,9 +64,9 @@ export default function Editor({ articulo, alCambiar, publicadoAntes }) {
   React.useEffect(() => {
     let vivo = true;
     api.listarAutores()
-      .then((l) => {
+      .then((d) => {
         if (!vivo) return;
-        const lista = l.map((e) => e.ficha).filter(Boolean);
+        const lista = (d.autores || []).map((e) => e.ficha).filter(Boolean);
         setFichas(lista);
         /* Un artículo nuevo nace sin firma y toma la predeterminada en cuanto
            se sabe cuál es. Se rellena aquí y no en la plantilla del artículo
