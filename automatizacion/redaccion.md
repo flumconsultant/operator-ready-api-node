@@ -10,14 +10,53 @@ queda publicado bajo el nombre de una persona real. Escribe en consecuencia.
 
 ## Qué hay que hacer
 
-1. Lee el informe más reciente de `automatizacion/informes/`. Toma el hueco de
-   la sección «Recomendación».
-2. Comprueba en `src/content/insights/` que no esté ya cubierto. Si lo está,
+1. Lee `automatizacion/seguimiento.md`, sección **«Qué está funcionando»**. Es
+   lo que el sistema ha aprendido midiendo lo ya publicado, y te dice qué
+   pilares se mueven, qué formato se cita y qué no ha servido. Si dice que
+   todavía no hay datos, sigue adelante sin más; si dice algo, tenlo en cuenta
+   al elegir formato y enfoque.
+2. Lee el informe más reciente de `automatizacion/informes/`.
+3. **Mira primero la sección «Qué hay que revisar»**, si la hay. Un artículo que
+   ya existe y no rinde está más cerca de rendir que uno en blanco: mejorarlo
+   vale más que publicar otro. Si hay algo ahí, hoy tu trabajo es ese, y salta
+   al apartado «Cuando toca revisar en vez de escribir».
+4. Si no hay nada que revisar, toma el hueco de la sección «Recomendación».
+5. Comprueba en `src/content/insights/` que no esté ya cubierto. Si lo está,
    coge el siguiente hueco de la lista.
-3. Lee dos o tres artículos ya publicados en `src/content/insights/` **antes de
+6. Lee dos o tres artículos ya publicados en `src/content/insights/` **antes de
    escribir una palabra**. La voz de BECOME está ahí, no en este documento.
-4. Escribe el artículo en español y en inglés y guárdalo como un JSON nuevo en
+7. Escribe el artículo en español y en inglés y guárdalo como un JSON nuevo en
    `src/content/insights/<slug-en-español>.json`.
+8. Añade su fila a `automatizacion/seguimiento.md`: archivo, fecha, la pregunta
+   objetivo tal cual, estado `nuevo`. Sin esa fila el artículo nace fuera del
+   sistema de medición y nadie volverá a mirarlo nunca.
+
+## Cuando toca revisar en vez de escribir
+
+Un día de revisión no produce un artículo nuevo, y está bien: produce uno que
+funciona. Que el contenido mejore con el tiempo depende de esto, no de acumular.
+
+Toma la hipótesis que da el informe sobre por qué ese artículo no se movió y
+trabaja sobre ella. Lo que suele faltar, por orden de frecuencia:
+
+- **Cuerpo donde estaba fino.** Un apartado que se resuelve en dos frases y
+  debería llevar el ejemplo concreto que lo hace verdad.
+- **Una respuesta citable.** Un asistente cita párrafos que se sostienen solos.
+  Si para entender la respuesta hay que haber leído los tres párrafos
+  anteriores, no se puede citar. Reescribe ese pasaje para que se aguante suelto.
+- **Preguntas frecuentes cortas.** Son la pieza más citada de un artículo.
+  Amplía las respuestas y añade las que falten, con las palabras con las que la
+  gente pregunta de verdad.
+- **Ataca la pregunta de lado.** El artículo habla del tema, pero no responde la
+  pregunta literal. Entonces hay que rehacer la entradilla y el primer
+  subtítulo para que respondan de frente.
+
+Reglas de la revisión: **no cambies el `slug` ni la fecha de publicación** —
+cambiar la dirección tira a la basura lo poco o mucho que hubiera ganado, y la
+fecha es una señal de vigencia, no un truco. Cambia solo lo que la hipótesis
+señala; reescribir entero un artículo que ya es correcto es empezar de cero sin
+decirlo. Y en `seguimiento.md`, pon su estado en `revisado` y anota en una línea
+qué tocaste, para que dentro de cuatro semanas se sepa si eso fue lo que sirvió.
 
 ## El formato del archivo
 
