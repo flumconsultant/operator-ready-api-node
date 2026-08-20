@@ -3,6 +3,7 @@ import Bloques, { CATALOGO } from '../components/insights/Bloques.jsx';
 import { PILARES, FORMATOS, minutosDeLectura } from '../content/insights.js';
 import Bloque from './Bloque.jsx';
 import { Etiqueta, Texto, Area, Selector, Contador, Boton, Fila, Aviso, marco } from './piezas.jsx';
+import * as api from './api.js';
 
 /**
  * El editor de un artículo.
@@ -27,7 +28,7 @@ const aSlug = (s) => String(s)
 export const ARTICULO_NUEVO = () => ({
   estado: 'borrador',
   fecha: new Date().toISOString().slice(0, 10),
-  autor: 'Carlos Andrés Ramírez',
+  autor: '',
   pilar: 'ai-native',
   formato: 'perspective',
   es: { slug: '', titulo: '', entradilla: '', descripcion: '', bloques: [] },
@@ -55,6 +56,30 @@ export function problemas(art) {
 
 export default function Editor({ articulo, alCambiar, publicadoAntes }) {
   const [lang, setLang] = React.useState('es');
+  /* Las fichas de autor, para el desplegable de la firma. null mientras se
+     piden: sin ese tercer estado, el desplegable aparecería un instante vacío
+     y parecería que no hay autores. */
+  const [fichas, setFichas] = React.useState(null);
+
+  React.useEffect(() => {
+    let vivo = true;
+    api.listarAutores()
+      .then((l) => {
+        if (!vivo) return;
+        const lista = l.map((e) => e.ficha).filter(Boolean);
+        setFichas(lista);
+        /* Un artículo nuevo nace sin firma y toma la predeterminada en cuanto
+           se sabe cuál es. Se rellena aquí y no en la plantilla del artículo
+           porque la plantilla no puede preguntarle al servidor, y un nombre
+           escrito a mano en el código es justo lo que dejó de estarlo. */
+        if (!articulo.autor) {
+          const porDefecto = (lista.find((f) => f.predeterminado) || lista[0])?.nombre;
+          if (porDefecto) alCambiar({ ...articulo, autor: porDefecto });
+        }
+      })
+      .catch(() => vivo && setFichas([]));
+    return () => { vivo = false; };
+  }, []);
   const [previa, setPrevia] = React.useState(true);
   const t = articulo[lang] || {};
 
@@ -103,7 +128,41 @@ export default function Editor({ articulo, alCambiar, publicadoAntes }) {
             <Selector valor={articulo.formato} alCambiar={(v) => ponRaiz('formato', v)}
               opciones={Object.entries(FORMATOS).map(([k, v]) => [k, v.es])} />
           </div>
-          <div><Etiqueta>Autor</Etiqueta><Texto valor={articulo.autor} alCambiar={(v) => ponRaiz('autor', v)} /></div>
+          {/* Un desplegable con las fichas que existen, no un campo libre.
+              Escribir el nombre a mano deja publicar «Carlos Andres Ramirez»
+              sin tildes: para el sitio es otra persona, se queda sin foto y
+              sin LinkedIn, y el guardián lo rechaza cuando ya está escrito el
+              artículo entero. Aquí no se puede elegir a alguien que no exista. */}
+          <div>
+            <Etiqueta pista="quién firma ESTE artículo">Autor</Etiqueta>
+            {fichas === null ? (
+              <p style={{ margin: 0, font: 'var(--type-mono)', fontSize: 12, color: 'var(--text-faint)' }}>Cargando…</p>
+            ) : fichas.length ? (
+              <Selector
+                valor={articulo.autor}
+                alCambiar={(v) => ponRaiz('autor', v)}
+                opciones={[
+                  ...(articulo.autor && !fichas.some((f) => f.nombre === articulo.autor)
+                    /* Un artículo antiguo firmado por alguien sin ficha se sigue
+                       pudiendo abrir: se muestra su nombre marcado, en vez de
+                       cambiárselo en silencio al abrir el editor. */
+                    ? [[articulo.autor, `${articulo.autor} (sin ficha)`]]
+                    : []),
+                  ...fichas.map((f) => [f.nombre, f.nombre + (f.predeterminado ? ' · firma lo automático' : '')]),
+                ]}
+              />
+            ) : (
+              <p style={{ margin: 0, font: 'var(--type-body)', fontSize: 13, color: '#c2410c' }}>
+                No hay ninguna ficha de autor. Créala en Autores antes de publicar.
+              </p>
+            )}
+            {fichas?.length > 0 && (
+              <p style={{ margin: '6px 0 0', font: 'var(--type-body)', fontSize: 12, color: 'var(--text-faint)' }}>
+                Quién firma los artículos automáticos se elige en <strong>Autores</strong>,
+                con la casilla de cada ficha.
+              </p>
+            )}
+          </div>
         </div>
       </div>
 
