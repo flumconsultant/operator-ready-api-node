@@ -1,39 +1,51 @@
 import React from 'react';
-import SiteHeader from '../../components/SiteHeader.jsx';
-import SiteFooter from '../../components/SiteFooter.jsx';
-import Reveal from '../../components/Reveal.jsx';
-import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, IndexRow } from '../../components/ui.jsx';
-import { Banner } from '../../components/Media.jsx';
-import KineticGrid from '../../components/KineticGrid.jsx';
-import { USE_CASES } from '../../site.en.js';
-import { ORIENTATION } from '../../content/use-cases.en.js';
+import SiteHeader from '../components/SiteHeader.jsx';
+import SiteFooter from '../components/SiteFooter.jsx';
+import Reveal from '../components/Reveal.jsx';
+import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, IndexRow } from '../components/ui.jsx';
+import { Banner } from '../components/Media.jsx';
+import KineticGrid from '../components/KineticGrid.jsx';
+import { SOLUCIONES_MENU } from '../site.js';
+import { ORIENTATION } from '../content/soluciones.js';
 
-export default function CasosDeUso() {
+/**
+ * Hub de casos de uso.
+ *
+ * No es una galería de tecnologías ni un archivo de case studies: es una capa
+ * de orientación que empieza por la pregunta del visitante. De ahí que las seis
+ * entradas sean preguntas y no nombres de solución — nadie busca "agentic
+ * workflow redesign", busca que su proceso deje de ir lento.
+ */
+export default function Soluciones() {
   return (
-    <main id="content" data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
+    <main id="contenido" data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
       <SiteHeader />
 
+      {/* La retícula reacciona al puntero, así que va en la página donde hay
+          que elegir entre seis opciones: el fondo confirma que esto responde a
+          ti. Debajo de un párrafo largo sería ruido moviéndose. */}
       <Section band="dark" pad="var(--space-13)" backdrop={<KineticGrid />} scrim="soft">
         <Kicker dark>Start with your question</Kicker>
-        <Headline as="h1" dark>Don’t look for a solution. Start with what needs to change.</Headline>
+        <Headline as="h1" dark>No busques una solución. Empieza por lo que debe cambiar.</Headline>
         <Lead dark>
-          Pick the situation closest to yours. We’ll show you what capability you
-          need, what has to change inside, and the best place to start.
+          Selecciona la situación que más se parece a la tuya. Te mostraremos qué
+          capacidad necesitas, qué debe cambiar dentro y cuál es el mejor punto de
+          partida.
         </Lead>
       </Section>
 
       <Section band="light">
-        <Kicker>What do you need to transform?</Kicker>
-        <Headline>Six questions you’ll recognize before any technical name.</Headline>
+        <Kicker>¿Qué necesitas transformar?</Kicker>
+        <Headline>Seis preguntas que reconocerás antes que cualquier nombre técnico.</Headline>
         <div style={{ marginTop: 'var(--space-10)' }}>
-          {USE_CASES.map((c, i) => (
+          {SOLUCIONES_MENU.map((c, i) => (
             <IndexRow
               key={c.slug}
               to={c.to}
               index={i}
               icon={c.icon}
               num={String(i + 1).padStart(2, '0')}
-              term={c.q}
+              term={c.label}
               def={c.line}
             />
           ))}
@@ -42,24 +54,25 @@ export default function CasosDeUso() {
 
       <Banner variant="dust" seed={47} height="clamp(260px, 32vw, 380px)">
         <Reveal as="p" style={{ margin: 0, maxWidth: '24ch', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h1)', lineHeight: 'var(--leading-heading)', letterSpacing: 'var(--track-display)', color: 'var(--white)' }}>
-          From symptom to decision.
+          Del síntoma a la decisión.
         </Reveal>
       </Banner>
 
+      {/* El mapa de orientación: síntoma → necesidad real → engagement. Es lo
+          que evita que la elección dependa de intuición comercial. */}
       <Section band="darker">
-        <Kicker dark>Orientation map</Kicker>
-        <Headline dark>From symptom to decision.</Headline>
+        <Kicker dark>Mapa de orientación</Kicker>
+        <Headline dark>Del síntoma a la decisión.</Headline>
         <Body dark style={{ marginTop: 'var(--space-6)' }}>
-          Discovery when strategy or target state is missing. BECOME EMBED™
-          when a capability is already prioritized and conditions are ready to
-          build.
+          Discovery cuando falta estrategia o target state. BECOME EMBED™ cuando
+          ya hay una capacidad priorizada y condiciones para construir.
         </Body>
 
         <div style={{ marginTop: 'var(--space-10)', overflowX: 'auto' }}>
           <table style={{ width: '100%', minWidth: 720, borderCollapse: 'collapse', textAlign: 'left' }}>
             <thead>
               <tr>
-                {['Question', 'What usually happens', 'What’s needed', 'Engagement'].map((h) => (
+                {['Pregunta', 'Lo que suele ocurrir', 'Lo que se necesita', 'Engagement'].map((h) => (
                   <th
                     key={h}
                     scope="col"
@@ -91,10 +104,10 @@ export default function CasosDeUso() {
 
       <Section band="light" pad="var(--space-12)">
         <Reveal as="div">
-          <Kicker>Find your starting point</Kicker>
-          <Headline>Don’t start with the service. Start with the decision you need to make.</Headline>
+          <Kicker>Encuentra tu punto de partida</Kicker>
+          <Headline>No empieces por el servicio. Empieza por la decisión que necesitas tomar.</Headline>
           <div style={{ marginTop: 'var(--space-8)' }}>
-            <PrimaryCTA to="/en/contact">Tell us what needs to change</PrimaryCTA>
+            <PrimaryCTA to="/es/contacto">Cuéntanos qué debe cambiar</PrimaryCTA>
           </div>
         </Reveal>
       </Section>

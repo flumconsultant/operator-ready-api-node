@@ -11,7 +11,7 @@ import { Figure, Split } from '../../components/Media.jsx';
 import ScrollStage from '../../components/ScrollStage.jsx';
 import GradientField from '../../components/GradientField.jsx';
 import StateTransition from '../../components/StateTransition.jsx';
-import { USE_CASES } from '../../site.en.js';
+import { SOLUCIONES_MENU } from '../../site.en.js';
 
 /**
  * Home — English.
@@ -283,11 +283,11 @@ export default function Home() {
         <Headline>What do you need to transform right now?</Headline>
         <Lead>Start with the situation, not the name of the solution.</Lead>
         <div style={{ marginTop: 'var(--space-10)' }}>
-          {USE_CASES.map((c, i) => (
-            <IndexRow key={c.slug} index={i} icon={c.icon} to={c.to} num={String(i + 1).padStart(2, '0')} term={c.q} def={c.line} />
+          {SOLUCIONES_MENU.map((c, i) => (
+            <IndexRow key={c.slug} index={i} icon={c.icon} to={c.to} num={String(i + 1).padStart(2, '0')} term={c.label} def={c.q} />
           ))}
         </div>
-        <TextCTA to="/en/use-cases">See all use cases</TextCTA>
+        <TextCTA to="/en/solutions">See all use cases</TextCTA>
       </Section>
 
       <Section band="dark" nodeState={3}>
@@ -353,7 +353,7 @@ export default function Home() {
             </Reveal>
           ))}
         </Cols>
-        <TextCTA to="/en/use-cases" dark>Find the scenario closest to yours</TextCTA>
+        <TextCTA to="/en/solutions" dark>Find the scenario closest to yours</TextCTA>
       </Section>
 
       <Section band="light">

@@ -1,32 +1,11 @@
 /**
- * English content for the six use-case pages. Mirrors use-cases.js field for
+ * English content for the six solution pages. Mirrors soluciones.js field for
  * field — see that file for why the structure and block order are fixed.
  */
 
-export const USE_CASE_CONTENT = {
-  'por-donde-empezar-con-ia': {
-    q: 'Not sure where to start with AI?',
-    answer:
-      'If you’re looking for a shared direction to invest, prioritize and govern AI, you need an BECOME DISCOVER™.',
-    signals: [
-      'Every area proposes its own use cases.',
-      'The executive committee doesn’t share an AI-native ambition.',
-      'Technology receives demands with no single value criterion.',
-      'Pilots exist, but there’s no portfolio or integrated business case.',
-    ],
-    problem:
-      'The symptom is dispersion, but the cause is the absence of a company thesis that orders the decisions. Without a shared ambition, every initiative competes for budget on its own area’s argument, and none is measured against the same outcome.',
-    value:
-      'We align ambition and outcomes, assess readiness, identify value pools, prioritize capabilities and design the target operating model and roadmap.',
-    tools: ['Business Ambition Canvas™', 'Inside Readiness Index™', 'AI-Native Value Map™', 'Inside Target State Canvas™'],
-    result: 'An executable strategy and a first capability chosen with explicit criteria.',
-    engagement: 'BECOME DISCOVER™',
-    engagementWhy:
-      'The strategic layer is missing: direction, priority and the design of the future model. Building before that multiplies the number of pilots, not the value.',
-    cta: 'Define where to start',
-  },
+export const SOLUCION_CONTENIDO = {
 
-  'pilotos-que-no-escalan': {
+  'scale-ai-beyond-pilots': {
     q: 'Do your pilots never scale?',
     answer:
       'If your prototypes work in a demo but not in operation, you need to identify what’s missing around the technology before scaling.',
@@ -49,7 +28,30 @@ export const USE_CASE_CONTENT = {
     cta: 'Turn the pilot into a capability',
   },
 
-  'redisenar-workflow-critico': {
+  'prepare-teams-for-ai': {
+    q: 'Need to prepare your teams to work with AI?',
+    answer:
+      'If your teams already use AI tools with no shared method, that scattered use has to become a common way of working, with criteria and controls.',
+    signals: [
+      'Everyone uses AI their own way, with uneven results.',
+      'General training happened and day-to-day work didn’t change.',
+      'Nobody knows what a tool can reasonably be asked to do, and what it can’t.',
+      'What works in one team never reaches the others.',
+      'There’s no shared standard for what counts as an acceptable output.',
+    ],
+    problem:
+      'A generic course teaches a tool; the work doesn’t change because nobody looked at the team’s real process. Capability appears when each team works on its own documents, its own cases and its own constraints — and keeps something reusable.',
+    value:
+      'We start from the work each area does today: we map its process, pick the priority cases, work on its real documents, and leave assistants, templates and validation criteria that stay in the company.',
+    tools: ['Applied Workflow Canvas', 'Adoption Scorecard', 'Inside Readiness Index™'],
+    result: 'Teams working with AI on their own processes, with a reusable library and shared quality criteria.',
+    engagement: 'BECOME NOW™',
+    engagementWhy:
+      'It’s the service built for this. If deciding where to invest as a company is also missing, Discover orders that decision before or alongside it.',
+    cta: 'Design your team’s program',
+  },
+
+  'redesign-critical-workflows': {
     q: 'Need to redesign a critical workflow?',
     answer:
       'If you’re looking to improve a critical operation, you need to redesign the workflow end-to-end — not automate isolated tasks.',
@@ -72,7 +74,7 @@ export const USE_CASE_CONTENT = {
     cta: 'Redesign the workflow',
   },
 
-  'construir-agent-o-copilot': {
+  'deploy-governed-ai-agents': {
     q: 'Want to build an agent or copilot?',
     answer:
       'If you already have a prioritized opportunity, you need to turn it into a capability with defined autonomy boundaries, integration, adoption and accountability.',
@@ -94,7 +96,7 @@ export const USE_CASE_CONTENT = {
     cta: 'Build the capability',
   },
 
-  'experiencia-ai-native': {
+  'build-ai-enabled-products': {
     q: 'Want to create an AI-native experience?',
     answer:
       'If you’re looking for a new experience for customers or collaborators, you need to design the value, the intelligent behavior and the operation that sustains it.',
@@ -116,35 +118,36 @@ export const USE_CASE_CONTENT = {
     cta: 'Design the new experience',
   },
 
-  'demostrar-valor-en-90-dias': {
-    q: 'Need to prove value in 90 days?',
+  'measure-and-govern-ai-value': {
+    q: 'Need to measure and govern AI value?',
     answer:
-      'If you need fast evidence, you need to narrow the scope without lowering the bar: a viable capability, a real environment and measurable outcomes.',
+      'If you have to demonstrate results, reduce risk and clarify who owns each decision, you need to measure against a baseline and govern what is already running.',
     signals: [
-      'There’s an executive sponsor and urgency.',
-      'The opportunity looks clear, but still has no baseline.',
-      'There’s a risk of producing another demo with no adoption.',
-      'The team needs an investment decision based on evidence.',
+      'Activity gets reported — users, pilots, licences — but not results.',
+      'There’s no baseline, so any improvement is arguable.',
+      'Nobody knows who answers for it when a system gets something wrong.',
+      'Leadership needs to decide on investment from evidence, not demos.',
+      'There are no criteria for what gets scaled and what gets stopped.',
     ],
     problem:
-      'Deadline pressure pushes teams to show something, and showing something is exactly what fails to generate evidence. Without a baseline and real use, 90 days later there’s a better demo and the same doubt.',
+      'Without a baseline there is no improvement to prove, only opinions about a demo. And with no named owners, control becomes a document nobody applies. Measurement and governance aren’t admin work at the end: they’re what separates a capability from an expensive experiment.',
     value:
-      'We apply a readiness gate, scope the workflow and the outcomes, build the minimum operational scope, roll it out in a controlled way, and measure usage, trust, performance, control and value.',
-    tools: ['Agentic Workflow Blueprint™', 'Embed Scorecard™', 'Scale Readiness Gate™'],
-    result: 'Enough evidence to decide whether to iterate, integrate, scale or stop.',
-    engagement: 'BECOME EMBED™',
+      'We define what value means in your case, measure the starting point, assign owners and a review cadence, and set the controls — human oversight, traceability, quality and escalation — that make the result hold.',
+    tools: ['Embed Scorecard™', 'Scale Readiness Gate™', 'Inside Readiness Index™'],
+    result: 'Measurement that survives a hard question, and a governance model with names rather than good intentions.',
+    engagement: 'BECOME DISCOVER™ or BECOME EMBED™',
     engagementWhy:
-      'Subject to prioritization. If the case still isn’t sufficiently defined, we don’t force the deadline: a poorly scoped sprint spends the 90 days without producing the decision.',
-    cta: 'Define a value sprint',
+      'If what’s missing is the criteria, it starts in Discover. If something is already running and what’s missing is measuring and governing it, it belongs inside Embed.',
+    cta: 'Define how it gets measured',
   },
 };
 
-/* Orientation map for the hub. Same rows and order as use-cases.js. */
+/* Orientation map for the hub. Same rows and order as soluciones.js. */
 export const ORIENTATION = [
-  { q: 'Not sure where to start with AI?', happens: 'Many ideas, executive pressure and scattered priorities.', need: 'Ambition, value pools, choices and roadmap.', rec: 'BECOME DISCOVER™' },
-  { q: 'Do your pilots never scale?', happens: 'Isolated prototypes with no ownership, integration or adoption.', need: 'Systemic diagnosis, target state and a decision on what to scale.', rec: 'BECOME DISCOVER™ → BECOME EMBED™' },
-  { q: 'Need to redesign a critical workflow?', happens: 'A slow, fragmented or decision-heavy process.', need: 'End-to-end workflow redesign with roles, agents, data and controls.', rec: 'BECOME DISCOVER™ + BECOME EMBED™' },
-  { q: 'Want to build an agent or copilot?', happens: 'An idea or functional need exists, but operational design is missing.', need: 'Blueprint, autonomy boundaries, human-in-the-loop, build and adoption.', rec: 'BECOME EMBED™' },
-  { q: 'Want to create an AI-native experience?', happens: 'New value is sought for customers or collaborators.', need: 'Product thesis, experience design, data/agent architecture and validation.', rec: 'BECOME EMBED™ or the full sequence' },
-  { q: 'Need to prove value in 90 days?', happens: 'Pressure to show outcomes without producing another demo.', need: 'Viable scope, baseline, working capability, adoption and scorecard.', rec: 'BECOME EMBED™' },
+  { q: 'Do your pilots never scale?', happens: 'Isolated prototypes with no owner, integration or adoption.', need: 'A systemic diagnosis, a target state and a decision on what to scale.', rec: 'BECOME DISCOVER™ → BECOME EMBED™' },
+  { q: 'Need to prepare your teams to work with AI?', happens: 'Everyone uses AI their own way, with uneven results.', need: 'A shared method built on the team’s real processes, with criteria and controls.', rec: 'BECOME NOW™' },
+  { q: 'Need to redesign a critical workflow?', happens: 'A slow, fragmented or decision-heavy process.', need: 'End-to-end redesign with roles, agents, data and controls.', rec: 'BECOME DISCOVER™ + BECOME EMBED™' },
+  { q: 'Want to introduce agents without losing control?', happens: 'There’s an idea or a concrete need, but no operating design.', need: 'Design, autonomy boundaries, human oversight, build and adoption.', rec: 'BECOME EMBED™' },
+  { q: 'Want AI to become part of your value proposition?', happens: 'You’re looking for new value for customers or collaborators.', need: 'Product thesis, experience design, data and agent architecture, and validation.', rec: 'BECOME EMBED™ or the full sequence' },
+  { q: 'Need to measure and govern AI value?', happens: 'Activity gets reported, but not results, and nobody answers for the decisions.', need: 'Baseline, owners, review cadence and controls.', rec: 'BECOME DISCOVER™ or BECOME EMBED™' },
 ];

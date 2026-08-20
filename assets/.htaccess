@@ -47,6 +47,26 @@
   RedirectMatch 301 ^/en/services/transformation-discovery/?$  /en/services/become-discover
   RedirectMatch 301 ^/en/services/build-and-embed/?$           /en/services/become-embed
 
+  # El apartado pasó de llamarse «casos de uso» a «soluciones», y cuatro de las
+  # seis cambiaron de dirección. Dos ya no tienen equivalente: «por dónde
+  # empezar» desapareció como solución propia —es lo que hace BECOME DISCOVER™
+  # entero— y «demostrar valor en 90 días» se convirtió en «medir y gobernar el
+  # valor», que es la necesidad de fondo. Ambas van al índice: es preferible a
+  # un 404, y a inventar una correspondencia que no existe.
+  RedirectMatch 301 ^/es/casos-de-uso/pilotos-que-no-escalan/?$      /es/soluciones/escalar-ia
+  RedirectMatch 301 ^/es/casos-de-uso/redisenar-workflow-critico/?$  /es/soluciones/redisenar-procesos-criticos
+  RedirectMatch 301 ^/es/casos-de-uso/construir-agent-o-copilot/?$   /es/soluciones/agentes-de-ia-con-control
+  RedirectMatch 301 ^/es/casos-de-uso/experiencia-ai-native/?$       /es/soluciones/productos-y-servicios-con-ia
+  RedirectMatch 301 ^/es/casos-de-uso/demostrar-valor-en-90-dias/?$  /es/soluciones/medir-y-gobernar-valor
+  RedirectMatch 301 ^/es/casos-de-uso(/.*)?$                         /es/soluciones
+
+  RedirectMatch 301 ^/en/use-cases/pilotos-que-no-escalan/?$         /en/solutions/scale-ai-beyond-pilots
+  RedirectMatch 301 ^/en/use-cases/redisenar-workflow-critico/?$     /en/solutions/redesign-critical-workflows
+  RedirectMatch 301 ^/en/use-cases/construir-agent-o-copilot/?$      /en/solutions/deploy-governed-ai-agents
+  RedirectMatch 301 ^/en/use-cases/experiencia-ai-native/?$          /en/solutions/build-ai-enabled-products
+  RedirectMatch 301 ^/en/use-cases/demostrar-valor-en-90-dias/?$     /en/solutions/measure-and-govern-ai-value
+  RedirectMatch 301 ^/en/use-cases(/.*)?$                            /en/solutions
+
   # La raíz no tiene página propia: el sitio empieza en /es. La redirección la
   # hace el servidor y no React para que los buscadores vean un 301 de verdad
   # en vez de una página vacía que se redirige sola con JavaScript.

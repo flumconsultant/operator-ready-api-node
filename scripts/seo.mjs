@@ -36,8 +36,11 @@ const read = (p) => readFileSync(join(ROOT, p), 'utf8');
 const { SITE, BRAND, OG_IMAGE, PAGES, langOf } = await import('../src/seo-meta.js');
 const esNow = await import('../src/content/become-now.js');
 const enNow = await import('../src/content/become-now.en.js');
-const esCasos = await import('../src/content/use-cases.js');
-const enCasos = await import('../src/content/use-cases.en.js');
+const esCasos = await import('../src/content/soluciones.js');
+const enCasos = await import('../src/content/soluciones.en.js');
+/* Cada solución tiene una dirección distinta en cada idioma; sin este mapa, el
+   hreflang apuntaría a /en/solutions/escalar-ia, que no existe. */
+const { SLUG_ES_A_EN, SLUG_EN_A_ES } = await import('../src/content/soluciones-slugs.js');
 
 /* Las rutas fijas salen de routes.jsx leído como texto: importarlo exigiría un
    runtime capaz de resolver JSX, y el archivo es una lista plana. */
@@ -68,18 +71,18 @@ for (const [slug, p] of Object.entries(enNow.PROGRAMS)) {
     alt: `/es/servicios/become-now/${slug}`,
   };
 }
-for (const [slug, c] of Object.entries(esCasos.USE_CASE_CONTENT)) {
-  dinamicas[`/es/casos-de-uso/${slug}`] = {
+for (const [slug, c] of Object.entries(esCasos.SOLUCION_CONTENIDO)) {
+  dinamicas[`/es/soluciones/${slug}`] = {
     title: recorta(`${c.q.replace(/^¿|\?$/g, '')} | ${BRAND}`, 60),
     description: recorta(c.answer, 155),
-    alt: `/en/use-cases/${slug}`,
+    alt: `/en/solutions/${SLUG_ES_A_EN[slug]}`,
   };
 }
-for (const [slug, c] of Object.entries(enCasos.USE_CASE_CONTENT)) {
-  dinamicas[`/en/use-cases/${slug}`] = {
+for (const [slug, c] of Object.entries(enCasos.SOLUCION_CONTENIDO)) {
+  dinamicas[`/en/solutions/${slug}`] = {
     title: recorta(`${c.q.replace(/\?$/, '')} | ${BRAND}`, 60),
     description: recorta(c.answer, 155),
-    alt: `/es/casos-de-uso/${slug}`,
+    alt: `/es/soluciones/${SLUG_EN_A_ES[slug]}`,
   };
 }
 
@@ -186,7 +189,7 @@ const fuentePorPatron = Object.fromEntries(
 );
 
 /** El patrón que atiende una URL concreta: primero el literal, luego el que
-    tiene parámetro. `/es/casos-de-uso/x` lo sirve `/es/casos-de-uso/:slug`. */
+    tiene parámetro. `/es/soluciones/x` lo sirve `/es/soluciones/:slug`. */
 function patronDe(path) {
   if (fuentePorPatron[path]) return path;
   const partes = path.split('/');

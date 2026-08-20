@@ -22,8 +22,8 @@ const ProgramEN = lazy(() => import('./pages/en/Program.jsx'));
 const NosotrosEN = lazy(() => import('./pages/en/Nosotros.jsx'));
 const InsightsEN = lazy(() => import('./pages/en/Insights.jsx'));
 const ContactoEN = lazy(() => import('./pages/en/Contacto.jsx'));
-const CasosDeUsoEN = lazy(() => import('./pages/en/CasosDeUso.jsx'));
-const UseCaseEN = lazy(() => import('./pages/en/UseCase.jsx'));
+const SolucionesEN = lazy(() => import('./pages/en/Soluciones.jsx'));
+const SolucionEN = lazy(() => import('./pages/en/Solucion.jsx'));
 const LegalEN = lazy(() => import('./pages/en/Legal.jsx'));
 const Framework = lazy(() => import('./pages/Framework.jsx'));
 const Discovery = lazy(() => import('./pages/Discovery.jsx'));
@@ -34,8 +34,8 @@ const Contacto = lazy(() => import('./pages/Contacto.jsx'));
 const Servicios = lazy(() => import('./pages/Servicios.jsx'));
 const BecomeNow = lazy(() => import('./pages/BecomeNow.jsx'));
 const Program = lazy(() => import('./pages/Program.jsx'));
-const CasosDeUso = lazy(() => import('./pages/CasosDeUso.jsx'));
-const UseCase = lazy(() => import('./pages/UseCase.jsx'));
+const Soluciones = lazy(() => import('./pages/Soluciones.jsx'));
+const Solucion = lazy(() => import('./pages/Solucion.jsx'));
 const Legal = lazy(() => import('./pages/Legal.jsx'));
 
 /* Comodín consciente del idioma: una ruta /en/lo-que-sea que no existe todavía
@@ -62,8 +62,8 @@ export const routes = [
   { path: '/en/framework', element: <FrameworkEN /> },
   { path: '/en/about', element: <NosotrosEN /> },
 
-  { path: '/en/use-cases', element: <CasosDeUsoEN /> },
-  { path: '/en/use-cases/:slug', element: <UseCaseEN /> },
+  { path: '/en/solutions', element: <SolucionesEN /> },
+  { path: '/en/solutions/:slug', element: <SolucionEN /> },
 
   { path: '/en/insights', element: <InsightsEN /> },
   { path: '/en/contact', element: <ContactoEN /> },
@@ -80,8 +80,8 @@ export const routes = [
   { path: '/es/framework', element: <Framework /> },
   { path: '/es/nosotros', element: <Nosotros /> },
 
-  { path: '/es/casos-de-uso', element: <CasosDeUso /> },
-  { path: '/es/casos-de-uso/:slug', element: <UseCase /> },
+  { path: '/es/soluciones', element: <Soluciones /> },
+  { path: '/es/soluciones/:slug', element: <Solucion /> },
 
   { path: '/es/insights', element: <Insights /> },
   { path: '/es/contacto', element: <Contacto /> },

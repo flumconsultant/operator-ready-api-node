@@ -16,6 +16,8 @@
  * no penaliza, pero la frase que se lleva el clic queda a medias.
  */
 
+import { SLUG_ES_A_EN, SLUG_EN_A_ES } from './content/soluciones-slugs.js';
+
 export const SITE = 'https://meetbecome.com';
 export const BRAND = 'BECOME';
 
@@ -67,10 +69,10 @@ export const PAGES = {
     'BECOME conecta estrategia, diseño del modelo operativo, construcción y adopción en un solo sistema. Qué creemos y cómo trabajamos.',
     '/en/about',
   ],
-  '/es/casos-de-uso': [
-    'Casos de uso de IA en empresas | BECOME',
-    'Seis situaciones reconocibles y qué necesita cada una: por dónde empezar, pilotos que no escalan, workflows críticos, agents y valor en 90 días.',
-    '/en/use-cases',
+  '/es/soluciones': [
+    'Soluciones de IA para empresas | BECOME',
+    'Seis necesidades de negocio y qué necesita cada una: escalar más allá de los pilotos, preparar equipos, rediseñar procesos, agentes con control, productos con IA y medir el valor.',
+    '/en/solutions',
   ],
   '/es/insights': [
     'Insights sobre IA aplicada a la empresa | BECOME',
@@ -129,10 +131,10 @@ export const PAGES = {
     'BECOME connects strategy, operating-model design, building and adoption in one system. What we believe and how we work.',
     '/es/nosotros',
   ],
-  '/en/use-cases': [
-    'AI use cases for companies | BECOME',
-    'Six recognizable situations and what each one needs: where to start, pilots that never scale, critical workflows, agents and value in 90 days.',
-    '/es/casos-de-uso',
+  '/en/solutions': [
+    'AI solutions for companies | BECOME',
+    'Six business needs and what each one takes: scaling beyond pilots, preparing teams, redesigning workflows, governed agents, AI-enabled products and measuring value.',
+    '/es/soluciones',
   ],
   '/en/insights': [
     'Insights on applied enterprise AI | BECOME',
@@ -179,14 +181,13 @@ export function metaFor(path, dinamicas = {}) {
  * perder dónde estaba.
  *
  * Las rutas fijas salen de PAGES, que ya guarda su equivalente. Las de programa
- * y caso de uso comparten el slug en los dos idiomas —finanzas, ventas,
- * pilotos-que-no-escalan— así que basta traducir el tramo del medio. Y si algo
- * no encaja, se cae a la home del otro idioma: es el comportamiento anterior,
- * que nunca deja a nadie en una URL que no existe.
+ * comparten el slug en los dos idiomas —finanzas, ventas—, así que basta
+ * traducir el tramo del medio. Las de solución NO lo comparten, y para esas hay
+ * un mapa. Si algo no encaja, se cae a la home del otro idioma: nunca deja a
+ * nadie en una URL que no existe.
  */
 const TRAMOS = [
   ['/es/servicios/become-now/', '/en/services/become-now/'],
-  ['/es/casos-de-uso/', '/en/use-cases/'],
 ];
 
 export function equivalenteEnElOtroIdioma(path) {
@@ -196,6 +197,17 @@ export function equivalenteEnElOtroIdioma(path) {
   for (const [es, en] of TRAMOS) {
     if (path.startsWith(es)) return en + path.slice(es.length);
     if (path.startsWith(en)) return es + path.slice(en.length);
+  }
+
+  /* Las soluciones son el caso que NO comparte slug: cada idioma tiene el suyo
+     —escalar-ia / scale-ai-beyond-pilots— y hace falta el mapa para emparejarlas. */
+  if (path.startsWith('/es/soluciones/')) {
+    const en = SLUG_ES_A_EN[path.slice('/es/soluciones/'.length)];
+    if (en) return `/en/solutions/${en}`;
+  }
+  if (path.startsWith('/en/solutions/')) {
+    const es = SLUG_EN_A_ES[path.slice('/en/solutions/'.length)];
+    if (es) return `/es/soluciones/${es}`;
   }
 
   return langOf(path) === 'en' ? '/es' : '/en';

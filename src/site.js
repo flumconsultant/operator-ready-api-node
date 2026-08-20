@@ -54,45 +54,58 @@ export const SERVICES = [
   },
 ];
 
-/* ---- casos de uso: preguntas, no tecnologías ---- */
-export const USE_CASES = [
+/* ---- las seis soluciones ----
+   Cada una con tres textos distintos, y no es redundancia:
+
+     label — la etiqueta del menú. Corta y orientada al resultado, porque en un
+             desplegable una pregunta larga no se lee, se salta.
+     q     — la pregunta de diagnóstico. Abre la página de la solución, donde
+             hay sitio para plantear la situación de quien llega.
+     line  — qué hace BECOME con eso, en una línea. */
+export const SOLUCIONES_MENU = [
   {
-    slug: 'por-donde-empezar-con-ia',
-    icon: 'signpost',
-    q: '¿No sabes por dónde empezar con IA?',
-    line: 'Define la ambición, identifica dónde está el valor y prioriza el primer movimiento.',
-  },
-  {
-    slug: 'pilotos-que-no-escalan',
+    slug: 'escalar-ia',
     icon: 'scale',
+    label: 'Escalar la IA más allá de los pilotos',
     q: '¿Tienes pilotos que no escalan?',
     line: 'Identifica qué falta en el proceso, los datos, los controles, el modelo operativo y quién responde.',
   },
   {
-    slug: 'redisenar-workflow-critico',
+    slug: 'preparar-equipos-para-ia',
+    icon: 'capability',
+    label: 'Preparar equipos para trabajar con IA',
+    q: '¿Necesitas preparar a tus equipos para trabajar con IA?',
+    line: 'Convierte el uso suelto de herramientas en una forma de trabajar compartida, con criterios y controles.',
+  },
+  {
+    slug: 'redisenar-procesos-criticos',
     icon: 'flow',
+    label: 'Rediseñar procesos críticos',
     q: '¿Necesitas rediseñar un proceso crítico?',
     line: 'Replantea de principio a fin las personas, los agentes, las decisiones, los datos, las excepciones y las métricas.',
   },
   {
-    slug: 'construir-agent-o-copilot',
+    slug: 'agentes-de-ia-con-control',
     icon: 'agents',
-    q: '¿Quieres construir un agente o un copiloto?',
+    label: 'Implementar agentes de IA con control',
+    q: '¿Quieres incorporar agentes de IA sin perder el control?',
     line: 'Convierte una oportunidad priorizada en una capacidad segura, adoptada y medible.',
   },
   {
-    slug: 'experiencia-ai-native',
+    slug: 'productos-y-servicios-con-ia',
     icon: 'product',
-    q: '¿Quieres crear una experiencia AI-native?',
+    label: 'Crear productos y servicios con IA',
+    q: '¿Quieres que la IA forme parte de tu propuesta de valor?',
     line: 'Diseña y construye un producto o una experiencia que cree valor nuevo para clientes o equipos.',
   },
   {
-    slug: 'demostrar-valor-en-90-dias',
-    icon: 'time',
-    q: '¿Necesitas demostrar valor en 90 días?',
-    line: 'Delimita una capacidad viable, ponla a funcionar en el entorno real y mide los resultados.',
+    slug: 'medir-y-gobernar-valor',
+    icon: 'decision',
+    label: 'Medir y gobernar el valor de la IA',
+    q: '¿Necesitas medir y gobernar el valor de la IA?',
+    line: 'Define la línea base, los responsables y los controles que hacen que el resultado se sostenga.',
   },
-].map((c) => ({ ...c, to: `/es/casos-de-uso/${c.slug}` }));
+].map((c) => ({ ...c, to: `/es/soluciones/${c.slug}` }));
 
 /* ---- menú principal ----
    Orden canónico del documento. Nada de Home, Framework, Metodología ni Blog:
@@ -109,11 +122,11 @@ export const NAV = [
   },
   { label: 'Nosotros', to: '/es/nosotros' },
   {
-    label: 'Casos de uso',
-    to: '/es/casos-de-uso',
-    heading: '¿Qué necesitas transformar?',
-    items: USE_CASES.map((c) => ({ to: c.to, label: c.q, line: c.line })),
-    more: { to: '/es/casos-de-uso', label: 'Ver todos los casos de uso' },
+    label: 'Soluciones',
+    to: '/es/soluciones',
+    heading: '¿Qué necesita cambiar en tu empresa?',
+    items: SOLUCIONES_MENU.map((c) => ({ to: c.to, label: c.label, line: c.line })),
+    more: { to: '/es/soluciones', label: 'Ver todas las soluciones' },
     wide: true,
   },
   { label: 'Insights', to: '/es/insights' },
@@ -131,7 +144,7 @@ export const FOOTER = [
       label: PROGRAMS[slug].menu.replace('IA aplicada a ', ''),
     })).concat([{ to: '/es/servicios/become-now', label: 'Ver todos los programas' }]),
   },
-  { title: 'Casos de uso', links: USE_CASES.map((c) => ({ to: c.to, label: c.q })) },
+  { title: 'Soluciones', links: SOLUCIONES_MENU.map((c) => ({ to: c.to, label: c.label })) },
   {
     title: 'BECOME',
     links: [
@@ -163,7 +176,7 @@ export const LEGACY_REDIRECTS = {
   '/como-trabajamos': '/es/framework',
   '/discovery': '/es/servicios/become-discover',
   '/build-embed': '/es/servicios/become-embed',
-  '/casos': '/es/casos-de-uso',
+  '/casos': '/es/soluciones',
   '/insights': '/es/insights',
   '/nosotros': '/es/nosotros',
   '/contacto': '/es/contacto',

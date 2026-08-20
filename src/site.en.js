@@ -8,7 +8,7 @@
  * cada página que lo usa. Duplicar es más código, pero cero riesgo sobre lo
  * que ya funciona.
  *
- * Los slugs de los programas y los casos de uso NO se traducen — siguen en
+ * Los slugs de los programas NO se traducen — siguen en
  * español bajo /en/. Traducir el slug exigiría un mapa slug↔slug para el
  * conmutador de idioma y para las redirecciones, y esta primera versión en
  * inglés no lo necesita todavía.
@@ -62,44 +62,50 @@ export const SERVICES = [
   },
 ];
 
-export const USE_CASES = [
+export const SOLUCIONES_MENU = [
   {
-    slug: 'por-donde-empezar-con-ia',
-    icon: 'signpost',
-    q: 'Not sure where to start with AI?',
-    line: 'Define the ambition, find the value pools and prioritize the first move.',
-  },
-  {
-    slug: 'pilotos-que-no-escalan',
+    slug: 'scale-ai-beyond-pilots',
     icon: 'scale',
+    label: 'Scale AI beyond pilots',
     q: 'Do your pilots never scale?',
-    line: 'Identify what’s missing in workflow, ownership, data, controls and operating model.',
+    line: 'Identify what’s missing around the technology: the process, the data, the controls, the operating model and who answers for it.',
   },
   {
-    slug: 'redisenar-workflow-critico',
+    slug: 'prepare-teams-for-ai',
+    icon: 'capability',
+    label: 'Prepare teams to work with AI',
+    q: 'Need to prepare your teams to work with AI?',
+    line: 'Turn scattered tool use into a shared way of working, with criteria and controls.',
+  },
+  {
+    slug: 'redesign-critical-workflows',
     icon: 'flow',
+    label: 'Redesign critical workflows',
     q: 'Need to redesign a critical workflow?',
-    line: 'Rethink people, agents, decisions, data, exceptions and end-to-end metrics.',
+    line: 'Rethink people, agents, decisions, data, exceptions and metrics from end to end.',
   },
   {
-    slug: 'construir-agent-o-copilot',
+    slug: 'deploy-governed-ai-agents',
     icon: 'agents',
-    q: 'Want to build an agent or copilot?',
+    label: 'Deploy governed AI agents',
+    q: 'Want to introduce agents without losing control?',
     line: 'Turn a prioritized opportunity into a secure, adopted and measurable capability.',
   },
   {
-    slug: 'experiencia-ai-native',
+    slug: 'build-ai-enabled-products',
     icon: 'product',
-    q: 'Want to create an AI-native experience?',
+    label: 'Build AI-enabled products and services',
+    q: 'Want AI to become part of your value proposition?',
     line: 'Design and build a product or experience that creates new value for customers or teams.',
   },
   {
-    slug: 'demostrar-valor-en-90-dias',
-    icon: 'time',
-    q: 'Need to prove value in 90 days?',
-    line: 'Scope a viable capability, ship it in a real environment and measure outcomes.',
+    slug: 'measure-and-govern-ai-value',
+    icon: 'decision',
+    label: 'Measure and govern AI value',
+    q: 'Need to measure and govern AI value?',
+    line: 'Define the baseline, the owners and the controls that make the result hold.',
   },
-].map((c) => ({ ...c, to: `/en/use-cases/${c.slug}` }));
+].map((c) => ({ ...c, to: `/en/solutions/${c.slug}` }));
 
 export const NAV = [
   {
@@ -112,11 +118,11 @@ export const NAV = [
   },
   { label: 'About', to: '/en/about' },
   {
-    label: 'Use cases',
-    to: '/en/use-cases',
-    heading: 'What do you need to transform?',
-    items: USE_CASES.map((c) => ({ to: c.to, label: c.q, line: c.line })),
-    more: { to: '/en/use-cases', label: 'View all use cases' },
+    label: 'Solutions',
+    to: '/en/solutions',
+    heading: 'What needs to change in your company?',
+    items: SOLUCIONES_MENU.map((c) => ({ to: c.to, label: c.label, line: c.line })),
+    more: { to: '/en/solutions', label: 'View all solutions' },
     wide: true,
   },
   { label: 'Insights', to: '/en/insights' },
@@ -133,7 +139,7 @@ export const FOOTER = [
       label: (PROGRAM_MENU_EN[slug] || PROGRAMS[slug].menu).replace('AI applied to ', ''),
     })).concat([{ to: '/en/services/become-now', label: 'View all programs' }]),
   },
-  { title: 'Use cases', links: USE_CASES.map((c) => ({ to: c.to, label: c.q })) },
+  { title: 'Solutions', links: SOLUCIONES_MENU.map((c) => ({ to: c.to, label: c.label })) },
   {
     title: 'BECOME',
     links: [

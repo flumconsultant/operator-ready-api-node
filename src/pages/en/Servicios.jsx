@@ -39,7 +39,7 @@ export default function Servicios() {
           operating-model design, building, adoption and scale.
         </Lead>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
-          <PrimaryCTA to="/en/use-cases">Find your starting point</PrimaryCTA>
+          <PrimaryCTA to="/en/solutions">Find your starting point</PrimaryCTA>
           <GhostCTA to="/en/contact" dark>Let’s talk</GhostCTA>
         </div>
       </Section>
@@ -199,7 +199,7 @@ export default function Servicios() {
         <Headline dark>Don’t start with the service. Start with the decision you need to make.</Headline>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
           <PrimaryCTA to="/en/contact">Tell us what needs to change</PrimaryCTA>
-          <GhostCTA to="/en/use-cases" dark>Start with your question</GhostCTA>
+          <GhostCTA to="/en/solutions" dark>Start with your question</GhostCTA>
         </div>
       </Section>
 

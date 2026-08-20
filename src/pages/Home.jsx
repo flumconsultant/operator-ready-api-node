@@ -11,7 +11,7 @@ import { Figure, Split } from '../components/Media.jsx';
 import ScrollStage from '../components/ScrollStage.jsx';
 import GradientField from '../components/GradientField.jsx';
 import StateTransition from '../components/StateTransition.jsx';
-import { USE_CASES } from '../site.js';
+import { SOLUCIONES_MENU } from '../site.js';
 
 /**
  * Home.
@@ -322,11 +322,11 @@ export default function Home() {
         <Headline>¿Qué necesitas transformar ahora?</Headline>
         <Lead>Empieza por la situación, no por el nombre de la solución.</Lead>
         <div style={{ marginTop: 'var(--space-10)' }}>
-          {USE_CASES.map((c, i) => (
-            <IndexRow key={c.slug} index={i} icon={c.icon} to={c.to} num={String(i + 1).padStart(2, '0')} term={c.q} def={c.line} />
+          {SOLUCIONES_MENU.map((c, i) => (
+            <IndexRow key={c.slug} index={i} icon={c.icon} to={c.to} num={String(i + 1).padStart(2, '0')} term={c.label} def={c.q} />
           ))}
         </div>
-        <TextCTA to="/es/casos-de-uso">Ver todos los casos de uso</TextCTA>
+        <TextCTA to="/es/soluciones">Ver todos los casos de uso</TextCTA>
       </Section>
 
       {/* 08 — Outcomes. Sistema de medición, no métricas inventadas. */}
@@ -396,7 +396,7 @@ export default function Home() {
             </Reveal>
           ))}
         </Cols>
-        <TextCTA to="/es/casos-de-uso" dark>Encuentra el escenario que se parece al tuyo</TextCTA>
+        <TextCTA to="/es/soluciones" dark>Encuentra el escenario que se parece al tuyo</TextCTA>
       </Section>
 
       {/* 11 — Insights. Tres piezas, en índice: como tarjetas ocupaban una

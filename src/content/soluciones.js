@@ -11,30 +11,9 @@
  * ve qué cambiaría dentro y solo entonces se le nombra un engagement.
  */
 
-export const USE_CASE_CONTENT = {
-  'por-donde-empezar-con-ia': {
-    q: '¿No sabes por dónde empezar con IA?',
-    answer:
-      'Si estás buscando una dirección común para invertir, priorizar y gobernar la IA, necesitas un BECOME DISCOVER™.',
-    signals: [
-      'Cada área propone sus propios casos de uso.',
-      'El comité ejecutivo no comparte una ambición común sobre la IA.',
-      'Tecnología recibe demandas sin un criterio único de valor.',
-      'Hay pilotos, pero no un portafolio ni un caso de negocio que los una.',
-    ],
-    problem:
-      'El síntoma es dispersión, pero la causa es que no hay una tesis de empresa que ordene las decisiones. Sin ambición compartida, cada iniciativa compite por presupuesto con el argumento de su propia área y ninguna se mide contra el mismo resultado.',
-    value:
-      'Alineamos la ambición y los resultados esperados, evaluamos la preparación de la empresa, identificamos dónde está el valor, priorizamos capacidades y diseñamos el modelo operativo objetivo y la hoja de ruta.',
-    tools: ['Business Ambition Canvas™', 'Inside Readiness Index™', 'AI-Native Value Map™', 'Inside Target State Canvas™'],
-    result: 'Una estrategia ejecutable y una primera capacidad elegida con criterios explícitos.',
-    engagement: 'BECOME DISCOVER™',
-    engagementWhy:
-      'Falta la capa estratégica: dirección, prioridad y diseño del modelo futuro. Construir antes de eso multiplica el número de pilotos, no el valor.',
-    cta: 'Define dónde empezar',
-  },
+export const SOLUCION_CONTENIDO = {
 
-  'pilotos-que-no-escalan': {
+  'escalar-ia': {
     q: '¿Tienes pilotos que no escalan?',
     answer:
       'Si tus prototipos funcionan en una demostración pero no en la operación, hay que identificar qué falta alrededor de la tecnología antes de escalar.',
@@ -57,7 +36,30 @@ export const USE_CASE_CONTENT = {
     cta: 'Convierte el piloto en capacidad',
   },
 
-  'redisenar-workflow-critico': {
+  'preparar-equipos-para-ia': {
+    q: '¿Necesitas preparar a tus equipos para trabajar con IA?',
+    answer:
+      'Si tus equipos ya usan herramientas de IA sin un método común, hace falta convertir ese uso suelto en una forma de trabajar compartida, con criterios y controles.',
+    signals: [
+      'Cada persona usa la IA a su manera y con resultados desiguales.',
+      'Se han hecho formaciones generales que no cambiaron el trabajo del día a día.',
+      'Nadie sabe qué se puede pedir a una herramienta y qué no.',
+      'Lo que funciona en un equipo no llega a los demás.',
+      'Falta un criterio común sobre qué es un resultado aceptable.',
+    ],
+    problem:
+      'Un curso genérico enseña una herramienta; el trabajo no cambia porque nadie ha mirado el proceso real del área. La capacidad aparece cuando cada equipo trabaja sobre sus propios documentos, sus casos y sus restricciones, y se lleva algo reutilizable.',
+    value:
+      'Partimos del trabajo que hace hoy cada área: mapeamos su proceso, elegimos los casos prioritarios, trabajamos sobre sus documentos reales y dejamos asistentes, plantillas y criterios de validación que quedan en la empresa.',
+    tools: ['Applied Workflow Canvas', 'Adoption Scorecard', 'Inside Readiness Index™'],
+    result: 'Equipos que trabajan con IA sobre sus propios procesos, con una biblioteca reutilizable y criterios comunes de calidad.',
+    engagement: 'BECOME NOW™',
+    engagementWhy:
+      'Es el servicio diseñado para esto. Si además falta decidir dónde invertir como empresa, Discover ordena esa decisión antes o en paralelo.',
+    cta: 'Diseña el programa de tu área',
+  },
+
+  'redisenar-procesos-criticos': {
     q: '¿Necesitas rediseñar un proceso crítico?',
     answer:
       'Si buscas mejorar una operación crítica, hay que rediseñar el proceso de principio a fin, no automatizar tareas aisladas.',
@@ -80,7 +82,7 @@ export const USE_CASE_CONTENT = {
     cta: 'Rediseña el proceso',
   },
 
-  'construir-agent-o-copilot': {
+  'agentes-de-ia-con-control': {
     q: '¿Quieres construir un agente o un copiloto?',
     answer:
       'Si ya tienes una oportunidad priorizada, hay que convertirla en una capacidad con límites de autonomía, integración, adopción y responsabilidades definidas.',
@@ -102,7 +104,7 @@ export const USE_CASE_CONTENT = {
     cta: 'Construye la capacidad',
   },
 
-  'experiencia-ai-native': {
+  'productos-y-servicios-con-ia': {
     q: '¿Quieres crear una experiencia AI-native?',
     answer:
       'Si buscas una nueva experiencia para clientes o colaboradores, necesitas diseñar el valor, el comportamiento inteligente y la operación que lo sostiene.',
@@ -124,36 +126,37 @@ export const USE_CASE_CONTENT = {
     cta: 'Diseña la nueva experiencia',
   },
 
-  'demostrar-valor-en-90-dias': {
-    q: '¿Necesitas demostrar valor en 90 días?',
+  'medir-y-gobernar-valor': {
+    q: '¿Necesitas medir y gobernar el valor de la IA?',
     answer:
-      'Si necesitas evidencia rápida, hay que reducir el alcance sin bajar la exigencia: una capacidad viable, un entorno real y resultados medibles.',
+      'Si tienes que demostrar resultados, reducir riesgos y aclarar quién responde por cada decisión, hace falta medir contra una línea base y gobernar lo que ya está funcionando.',
     signals: [
-      'Hay un responsable que lo impulsa y urgencia en la dirección.',
-      'La oportunidad parece clara, pero todavía no tiene una línea base.',
-      'Hay riesgo de producir otra demostración sin adopción.',
-      'El equipo necesita una decisión de inversión basada en evidencia.',
+      'Se reportan actividades —usuarios, pilotos, licencias— pero no resultados.',
+      'No hay línea base, así que cualquier mejora es discutible.',
+      'Nadie sabe quién responde cuando un sistema se equivoca.',
+      'La dirección necesita decidir la inversión con evidencia, no con demostraciones.',
+      'Faltan criterios para decidir qué se escala y qué se detiene.',
     ],
     problem:
-      'La presión de plazo empuja a enseñar algo, y enseñar algo es exactamente lo que no genera evidencia. Sin línea base y sin uso real, a los 90 días hay una demostración mejor y la misma duda.',
+      'Sin línea base no hay mejora que probar, solo opiniones sobre una demostración. Y sin responsables asignados, el control se convierte en un documento que nadie aplica. Medir y gobernar no son dos tareas administrativas al final: son lo que separa una capacidad de un experimento caro.',
     value:
-      'Revisamos si están las condiciones, delimitamos el proceso y los resultados, construimos el alcance mínimo que sirva en la operación, lo implantamos de forma controlada y medimos uso, confianza, desempeño, control y valor.',
-    tools: ['Agentic Workflow Blueprint™', 'Embed Scorecard™', 'Scale Readiness Gate™'],
-    result: 'Evidencia suficiente para decidir si iterar, integrar, escalar o detener.',
-    engagement: 'BECOME EMBED™',
+      'Definimos qué significa valor en tu caso, medimos el punto de partida, asignamos responsables y frecuencia de revisión, y establecemos los controles —supervisión humana, trazabilidad, calidad y escalamiento— que hacen que el resultado se sostenga.',
+    tools: ['Embed Scorecard™', 'Scale Readiness Gate™', 'Inside Readiness Index™'],
+    result: 'Una medición que resiste una pregunta difícil y un modelo de gobierno con nombres, no con buenas intenciones.',
+    engagement: 'BECOME DISCOVER™ o BECOME EMBED™',
     engagementWhy:
-      'Sujeto a priorización. Si el caso todavía no está suficientemente definido, no forzamos el plazo: un sprint mal delimitado gasta los 90 días sin producir la decisión.',
-    cta: 'Define un sprint de valor',
+      'Si lo que falta es el criterio, empieza en Discover. Si ya hay algo funcionando y lo que falta es medirlo y gobernarlo, va dentro de Embed.',
+    cta: 'Define cómo se mide',
   },
 };
 
 /* Mapa de orientación del hub (§11). Es la tabla que traduce síntoma en
    decisión, y la razón por la que este hub no es una galería de tecnologías. */
 export const ORIENTATION = [
-  { q: '¿No sabes por dónde empezar con IA?', happens: 'Muchas ideas, presión ejecutiva y prioridades dispersas.', need: 'Ambición, dónde está el valor, qué se elige y una hoja de ruta.', rec: 'BECOME DISCOVER™' },
   { q: '¿Tienes pilotos que no escalan?', happens: 'Prototipos aislados, sin responsable, integración ni adopción.', need: 'Diagnóstico de sistema, estado objetivo y decisión sobre qué escalar.', rec: 'BECOME DISCOVER™ → BECOME EMBED™' },
+  { q: '¿Necesitas preparar a tus equipos para trabajar con IA?', happens: 'Cada persona usa la IA a su manera y con resultados desiguales.', need: 'Un método común sobre los procesos reales del área, con criterios y controles.', rec: 'BECOME NOW™' },
   { q: '¿Necesitas rediseñar un proceso crítico?', happens: 'Un proceso lento, fragmentado o intensivo en decisiones.', need: 'Rediseño de principio a fin, con roles, agentes, datos y controles.', rec: 'BECOME DISCOVER™ + BECOME EMBED™' },
-  { q: '¿Quieres construir un agente o un copiloto?', happens: 'Hay una idea o una necesidad concreta, pero falta el diseño operativo.', need: 'Diseño, límites de autonomía, supervisión humana, construcción y adopción.', rec: 'BECOME EMBED™' },
-  { q: '¿Quieres crear una experiencia AI-native?', happens: 'Se busca nuevo valor para clientes o colaboradores.', need: 'Tesis de producto, diseño de la experiencia, arquitectura de datos y agentes, y validación.', rec: 'BECOME EMBED™ o secuencia completa' },
-  { q: '¿Necesitas demostrar valor en 90 días?', happens: 'Hay presión por mostrar resultados sin caer en otra demostración.', need: 'Un alcance viable, una línea base, una capacidad que funcione, adopción y medición.', rec: 'BECOME EMBED™' },
+  { q: '¿Quieres incorporar agentes de IA sin perder el control?', happens: 'Hay una idea o una necesidad concreta, pero falta el diseño operativo.', need: 'Diseño, límites de autonomía, supervisión humana, construcción y adopción.', rec: 'BECOME EMBED™' },
+  { q: '¿Quieres que la IA forme parte de tu propuesta de valor?', happens: 'Se busca valor nuevo para clientes o colaboradores.', need: 'Tesis de producto, diseño de la experiencia, arquitectura de datos y agentes, y validación.', rec: 'BECOME EMBED™ o la secuencia completa' },
+  { q: '¿Necesitas medir y gobernar el valor de la IA?', happens: 'Se reportan actividades, pero no resultados, y nadie responde por las decisiones.', need: 'Línea base, responsables, frecuencia de revisión y controles.', rec: 'BECOME DISCOVER™ o BECOME EMBED™' },
 ];
