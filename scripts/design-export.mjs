@@ -260,7 +260,21 @@ add('`<Ico name="…" />` o `<IcoBadge name="…" />`. Los nombres son la API: s
 add('uno no está en esta lista, el componente no lo dibuja.', '');
 add(iconos.map((i) => `\`${i}\``).join(' · '), '');
 
-add('---', '', '## 5. Reglas del sistema', '');
+add('---', '', '## 5. Las primitivas, enteras', '');
+add('El catálogo de arriba da la API de cada componente: qué props acepta. Eso');
+add('basta para USARLOS, pero no para reproducir el aspecto — un `Headline` se');
+add('define tanto por su prop `size` como por el peso, el interlineado y el');
+add('tracking que aplica, y eso solo está en el código.');
+add('');
+add('Va entero, que son trescientas líneas. Con esto y los tokens de arriba, el');
+add('documento es autosuficiente: se puede reconstruir el sistema sin abrir el');
+add('repositorio.');
+add('');
+add('```jsx');
+add(leer('src/components/ui.jsx').trimEnd());
+add('```', '');
+
+add('---', '', '## 6. Reglas del sistema', '');
 add('Decisiones que no se leen en un token ni en una prop, extraídas de los');
 add('comentarios de `src/styles/global.css`, que es donde se tomaron.', '');
 for (const r of reglasCss) add(r, '');
