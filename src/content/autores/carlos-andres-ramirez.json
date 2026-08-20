@@ -1,7 +1,7 @@
 {
     "id": "carlos-andres-ramirez",
     "nombre": "Carlos Andrés Ramírez",
-    "foto": "/images/autores/carlos-andres-ramirez.webp",
+    "foto": "/images/autores/carlos-andres-ramirez.webp?v=58258a7e",
     "linkedin": "https://www.linkedin.com/in/carlosandres-ai/",
     "es": {
         "rol": "Director de Transformación",
@@ -11,5 +11,6 @@
         "rol": "",
         "bio": ""
     },
-    "predeterminado": true
+    "predeterminado": true,
+    "fotoOriginal": "/images/autores/carlos-andres-ramirez-original.webp?v=e2352852"
 }
