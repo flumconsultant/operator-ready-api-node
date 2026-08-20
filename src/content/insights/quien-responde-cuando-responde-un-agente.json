@@ -1,5 +1,5 @@
 {
-  "estado": "borrador",
+  "estado": "publicado",
   "fecha": "2026-08-20",
   "autor": "Carlos Andrés Ramírez",
   "pilar": "agentic-work",
@@ -12,7 +12,7 @@
     "bloques": [
       {
         "tipo": "entradilla",
-        "texto": "Casi todas las conversaciones sobre agentes empiezan por la capacidad —qué puede hacer el modelo— y se atascan en un sitio completamente distinto: qué pasa el día que hace algo que nadie quería."
+        "texto": "Casi todas las conversaciones sobre agentes empiezan por la capacidad. Qué puede hacer el modelo, hasta dónde llega, qué tan bueno es. Y se atascan en un sitio completamente distinto: qué pasa el día que hace algo que nadie quería."
       },
       {
         "tipo": "parrafo",
@@ -73,7 +73,7 @@
           },
           {
             "termino": "Umbral",
-            "definicion": "El punto exacto —importe, riesgo, confianza— por encima del cual el agente consulta. Un número, no un criterio."
+            "definicion": "El punto exacto por encima del cual el agente consulta: un importe, un nivel de riesgo, un nivel de confianza. Un número, no un criterio."
           },
           {
             "termino": "Medida",
@@ -88,7 +88,7 @@
       {
         "tipo": "destacado",
         "antetitulo": "Cómo empezar",
-        "texto": "Coge el agente que tengas parado ahora mismo y responde las cuatro preguntas por escrito, en una página. Si alguna no tiene respuesta, ahí está el motivo por el que no ha escalado — y no era el modelo."
+        "texto": "Coge el agente que tengas parado ahora mismo y responde las cuatro preguntas por escrito, en una página. Si alguna no tiene respuesta, ahí está el motivo por el que no ha escalado. Y no era el modelo."
       },
       {
         "tipo": "faq",
@@ -126,7 +126,7 @@
     "bloques": [
       {
         "tipo": "entradilla",
-        "texto": "Almost every conversation about agents starts with capability — what the model can do — and gets stuck somewhere else entirely: what happens the day it does something nobody wanted."
+        "texto": "Almost every conversation about agents starts with capability. What the model can do, how far it goes, how good it is. Then it gets stuck somewhere else entirely: what happens the day it does something nobody wanted."
       },
       {
         "tipo": "parrafo",
@@ -187,7 +187,7 @@
           },
           {
             "termino": "Threshold",
-            "definicion": "The exact point — amount, risk, confidence — above which the agent escalates. A number, not a judgement call."
+            "definicion": "The exact point above which the agent escalates: an amount, a risk level, a confidence level. A number, not a judgement call."
           },
           {
             "termino": "Measure",
@@ -202,7 +202,7 @@
       {
         "tipo": "destacado",
         "antetitulo": "Where to start",
-        "texto": "Take the agent that’s stalled right now and answer the four questions in writing, on one page. If one of them has no answer, that’s why it hasn’t scaled — and it wasn’t the model."
+        "texto": "Take the agent that’s stalled right now and answer the four questions in writing, on one page. If one of them has no answer, that’s why it hasn’t scaled. And it wasn’t the model."
       },
       {
         "tipo": "faq",
@@ -217,7 +217,7 @@
           },
           {
             "pregunta": "Why do most AI agents never reach production?",
-            "respuesta": "Rarely because of model accuracy. They stall because nobody has decided who owns the outcome when the agent is wrong, and without that decision the organisation responds by escalating every case to a person — which removes the benefit of automating it at all."
+            "respuesta": "Rarely because of model accuracy. They stall because nobody has decided who owns the outcome when the agent is wrong. Without that decision the organisation responds by escalating every case to a person, which removes the benefit of automating it at all."
           },
           {
             "pregunta": "What do you measure on an agent in production?",
