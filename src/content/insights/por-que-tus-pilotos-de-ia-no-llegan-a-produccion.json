@@ -23,6 +23,11 @@
         "texto": "El diagnóstico que circula es siempre el mismo. Datos sucios, falta de governance, gestión del cambio. Todo cierto y todo inútil, porque describe el estado del paciente sin decir qué se firma el lunes."
       },
       {
+        "tipo": "imagen",
+        "src": "/images/47-global-ops.webp",
+        "pie": "Un piloto demuestra que algo funciona una vez. Producción exige que funcione siempre."
+      },
+      {
         "tipo": "parrafo",
         "texto": "Lo que bloquea el paso a producción es una decisión de dinero que nadie ha tomado, y que casi nunca llega al acta: quién paga que esto siga funcionando cuando deje de ser noticia."
       },
@@ -156,6 +161,11 @@
       {
         "tipo": "parrafo",
         "texto": "The standard diagnosis never changes. Dirty data, weak governance, change management. All true and all useless, because it describes the patient without saying what anybody signs on Monday."
+      },
+      {
+        "tipo": "imagen",
+        "src": "/images/47-global-ops.webp",
+        "pie": "A pilot proves something works once. Production demands it works every time."
       },
       {
         "tipo": "parrafo",

@@ -94,6 +94,31 @@ es lo que ha salido bien. Entre 900 y 1400 palabras.
 **No uses el bloque `imagen`**: no hay imágenes que referenciar y una ruta
 inventada rompe la página.
 
+## La imagen
+
+Cada artículo lleva **una** imagen, y solo una. Va después del segundo párrafo,
+nunca antes: la entradilla tiene que poder leerse sin que una imagen la empuje
+fuera de pantalla.
+
+No inventes rutas. Las imágenes disponibles están en `src/content/imagenes.js`
+y son una lista cerrada; cada una dice en `cuando` para qué sirve. Elige por ese
+campo, no por el nombre del archivo. Las marcadas con `usable: false` están
+vetadas y el guardián las rechaza.
+
+El bloque lleva solo dos campos:
+
+```json
+{ "tipo": "imagen", "src": "/images/01-neural-network.webp", "pie": "..." }
+```
+
+El texto alternativo NO se escribe aquí: sale del catálogo, donde está escrito
+una vez mirando la imagen. El `pie` sí es tuyo, y va en el idioma del artículo:
+no describe la imagen —para eso está el texto alternativo— sino que dice algo
+que el artículo sostiene. Una frase, sin punto final si es un fragmento.
+
+Si ninguna imagen encaja de verdad con lo que estás contando, no pongas
+ninguna. Una imagen genérica pegada por cumplir se nota, y resta.
+
 ## SEO y asistentes
 
 - El `titulo` y el primer `subtitulo` deben contener la pregunta real, con las

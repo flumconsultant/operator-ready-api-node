@@ -1,6 +1,7 @@
 import React from 'react';
 import { CATALOGO } from '../components/insights/Bloques.jsx';
-import { Etiqueta, Texto, Area, Boton, Fila } from './piezas.jsx';
+import { Etiqueta, Texto, Area, Boton, Fila, Selector } from './piezas.jsx';
+import { USABLES } from '../content/imagenes.js';
 
 /**
  * El formulario de un bloque, generado a partir de su descripción en CATALOGO.
@@ -82,6 +83,29 @@ export default function Bloque({ bloque, indice, total, alCambiar, alMover, alQu
               </div>
             );
           }
+          /* Un selector y no un campo libre: escribir la ruta a mano es la
+             única forma de referenciar una imagen que no existe, y eso se
+             publica igual y deja un hueco roto en la página. */
+          if (clase === 'imagen') {
+            return (
+              <div key={campo}>
+                <Etiqueta pista="solo las aprobadas para artículos">Imagen</Etiqueta>
+                <Selector
+                  valor={bloque[campo]}
+                  alCambiar={(v) => pon(campo, v)}
+                  opciones={[['', '— elige una —'], ...USABLES.map((i) => [i.src, `${i.src.split('/').pop()} · ${i.cuando}`])]}
+                />
+                {bloque[campo] && (
+                  <img
+                    src={bloque[campo]}
+                    alt=""
+                    style={{ marginTop: 8, width: '100%', maxWidth: 260, borderRadius: 2, display: 'block' }}
+                  />
+                )}
+              </div>
+            );
+          }
+
           const C = clase === 'area' ? Area : Texto;
           return (
             <div key={campo}>

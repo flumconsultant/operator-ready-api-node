@@ -97,7 +97,7 @@ export default function ArticuloBase({ lang }) {
 
       <Section band="light">
         <div style={COLUMNA}>
-          <Bloques bloques={a.bloques} />
+          <Bloques bloques={a.bloques} lang={lang} />
           <div style={{ marginTop: 'var(--space-11)' }}>
             <TextCTA to={t.indice}>{t.volver}</TextCTA>
           </div>

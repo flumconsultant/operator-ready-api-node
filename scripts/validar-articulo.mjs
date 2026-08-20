@@ -19,6 +19,7 @@
  */
 import { readFileSync, readdirSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
+import { IMAGENES as CATALOGO } from '../src/content/imagenes.js';
 
 export const AUTOR = 'Carlos Andrés Ramírez';
 
@@ -83,7 +84,14 @@ export function validar(art, { archivo = '', slugsAjenos = new Set() } = {}) {
       if (!TIPOS.includes(b.tipo)) d(`bloque de tipo "${b.tipo}", que la web no sabe pintar`);
       /* Una imagen apunta a un archivo que el trabajo automático no ha subido:
          la página se publica con un hueco roto. */
-      if (b.tipo === 'imagen') d('lleva un bloque de imagen, y no hay ninguna imagen que referenciar');
+      if (b.tipo === 'imagen') {
+        /* Antes esto era un rechazo seco: no había catálogo, así que cualquier
+           ruta era una ruta inventada. Ahora hay lista cerrada, y lo que se
+           comprueba es la pertenencia. */
+        const c = CATALOGO.find((x) => x.src === b.src);
+        if (!c) d(`la imagen "${b.src}" no está en el catálogo (src/content/imagenes.js)`);
+        else if (!c.usable) d(`la imagen "${b.src}" está marcada como no usable: ${c.motivo}`);
+      }
     }
 
     const faq = bloques.find((b) => b.tipo === 'faq');
@@ -94,6 +102,11 @@ export function validar(art, { archivo = '', slugsAjenos = new Set() } = {}) {
         if (palabras(it.respuesta || '') < 25) d(`la respuesta a "${it.pregunta}" es demasiado corta para citarse fuera del artículo`);
       }
     }
+
+    /* Una sola imagen por artículo. Dos ya no ilustran: parten la lectura, y
+       en un texto de mil palabras la segunda siempre acaba siendo de relleno. */
+    const imagenes = bloques.filter((b) => b.tipo === 'imagen');
+    if (imagenes.length > 1) d(`lleva ${imagenes.length} imágenes; una basta`);
 
     const cta = bloques.find((b) => b.tipo === 'cta');
     const destino = lang === 'es' ? '/es/contacto' : '/en/contact';

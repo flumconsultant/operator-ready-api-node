@@ -2,6 +2,7 @@ import React from 'react';
 import Reveal from '../Reveal.jsx';
 import { Figure } from '../Media.jsx';
 import { Kicker, Headline, Lead, Body, PrimaryCTA, Cols, Card, IndexRow } from '../ui.jsx';
+import { porSrc } from '../../content/imagenes.js';
 
 /**
  * Traduce los bloques de un artículo a los componentes reales del sitio.
@@ -108,11 +109,34 @@ const Destacado = ({ b, i }) => (
   </Reveal>
 );
 
-const Imagen = ({ b, i }) => (
-  <Reveal as="div" index={i} style={{ marginTop: 'var(--space-10)' }}>
-    <Figure src={b.src} alt={b.alt || ''} ratio={b.ratio || '16 / 9'} caption={b.pie} />
-  </Reveal>
-);
+/**
+ * El artículo declara solo QUÉ imagen y, si acaso, un pie. La proporción y el
+ * texto alternativo salen del catálogo (src/content/imagenes.js) y no del
+ * artículo, por dos motivos distintos:
+ *
+ * La proporción, porque es un hecho del archivo y no una decisión editorial.
+ * Declarar 16/9 sobre una imagen cuadrada no cambia la imagen: hace que el
+ * navegador recorte un tercio, y eso no se ve al escribir, se ve en la web.
+ *
+ * El texto alternativo, porque es lo que oye quien no ve la imagen, y si se
+ * escribe suelto en cada artículo acaba siendo el título del artículo repetido.
+ * En el catálogo se escribe una vez, mirando la imagen.
+ *
+ * Una imagen que no está en el catálogo no se pinta. Es deliberado: el hueco
+ * roto de una ruta inventada es peor que la ausencia de la imagen.
+ */
+const Imagen = ({ b, i, lang }) => {
+  const c = porSrc(b.src);
+  if (!c) {
+    if (import.meta.env.DEV) console.warn(`insights: imagen «${b.src}» fuera del catálogo, omitida`);
+    return null;
+  }
+  return (
+    <Reveal as="div" index={i} style={{ marginTop: 'var(--space-10)' }}>
+      <Figure src={c.src} alt={c.alt[lang] || c.alt.es} ratio={c.ratio} caption={b.pie} />
+    </Reveal>
+  );
+};
 
 /* Las preguntas frecuentes no son decoración: son el bloque que un asistente
    puede citar entero como respuesta, y el que alimenta el JSON-LD de FAQPage
@@ -173,12 +197,15 @@ export const CATALOGO = [
   { tipo: 'tarjetas', nombre: 'Tarjetas', campos: [['items', 'pares:titulo,texto']], nuevo: { items: [{ titulo: '', texto: '' }] } },
   { tipo: 'cita', nombre: 'Cita destacada', campos: [['texto', 'area'], ['fuente', 'texto']], nuevo: { texto: '', fuente: '' } },
   { tipo: 'destacado', nombre: 'Recuadro destacado', campos: [['antetitulo', 'texto'], ['texto', 'area']], nuevo: { texto: '' } },
-  { tipo: 'imagen', nombre: 'Imagen', campos: [['src', 'texto'], ['alt', 'texto'], ['pie', 'texto']], nuevo: { src: '', alt: '', pie: '' } },
+  /* `alt` ya no se pide aquí: vive en el catálogo, escrito una vez mirando la
+     imagen. Pedirlo por artículo garantizaba que acabara siendo el título del
+     artículo repetido, que es peor que no tenerlo. */
+  { tipo: 'imagen', nombre: 'Imagen', campos: [['src', 'imagen'], ['pie', 'texto']], nuevo: { src: '', pie: '' } },
   { tipo: 'faq', nombre: 'Preguntas frecuentes', campos: [['items', 'pares:pregunta,respuesta']], nuevo: { items: [{ pregunta: '', respuesta: '' }] } },
   { tipo: 'cta', nombre: 'Llamada a la acción', campos: [['texto', 'texto'], ['destino', 'texto']], nuevo: { texto: '', destino: '/es/contacto' } },
 ];
 
-export default function Bloques({ bloques = [] }) {
+export default function Bloques({ bloques = [], lang = 'es' }) {
   return (
     <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
       {bloques.map((b, i) => {
@@ -187,7 +214,7 @@ export default function Bloques({ bloques = [] }) {
           if (import.meta.env.DEV) console.warn(`insights: bloque desconocido «${b.tipo}», omitido`);
           return null;
         }
-        return <C key={i} b={b} i={i} />;
+        return <C key={i} b={b} i={i} lang={lang} />;
       })}
     </div>
   );
