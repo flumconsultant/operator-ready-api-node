@@ -75,8 +75,15 @@ export default function Listado({ lang }) {
                 display: 'grid', gap: 'var(--space-4)', textDecoration: 'none',
                 gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)',
                 alignItems: 'start',
-                padding: 'var(--space-6) 0',
+                /* Relleno lateral compensado con margen negativo: en reposo
+                   el texto sigue alineado con el titular de arriba, y al pasar
+                   por encima la tarjeta que levanta el hover tiene aire a los
+                   lados en vez de recortar contra las letras. Sin esto, la
+                   sombra caía justo sobre la primera y la última palabra. */
+                padding: 'var(--space-6) var(--space-5)',
+                margin: '0 calc(var(--space-5) * -1)',
                 borderTop: '1px solid var(--border-hairline)',
+                borderRadius: 2,
               }}
               data-cols
             >
