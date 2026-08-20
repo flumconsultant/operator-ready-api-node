@@ -88,13 +88,64 @@ jobs:
           php -l dist/api/config.php >/dev/null 2>&1 || true
           echo "config.php generado ($(wc -c < dist/api/config.php) bytes) — destino: ${MAIL_TO:-$MAIL_USER}"
 
+      - name: Generar la configuración del panel de artículos
+        # Las contraseñas del panel llegan en claro dentro del secreto —que es
+        # donde tienen que estar, cifradas y sin que nadie pueda volver a
+        # leerlas desde la interfaz— y salen de aquí convertidas en hashes.
+        # El servidor nunca llega a guardar una contraseña legible: si alguien
+        # se hiciera con config-panel.php, no obtendría con qué entrar.
+        env:
+          PANEL_USUARIOS: ${{ secrets.PANEL_USUARIOS }}
+          PANEL_TOKEN: ${{ secrets.PANEL_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${PANEL_USUARIOS:-}" ] || [ -z "${PANEL_TOKEN:-}" ]; then
+            echo "::warning::Sin los secretos PANEL_USUARIOS y PANEL_TOKEN, /admin no dejará entrar a nadie. El resto del sitio se despliega igual."
+            # Un marcador vacío para que el archivo exista y el panel pueda
+            # decir «falta configurar» en vez de dar un error de servidor.
+            printf '<?php return [];\n' > dist/api/config-panel.php
+          else
+            PANEL_RAMA='${{ github.ref_name }}' php -r '
+              $rama = getenv("PANEL_RAMA") ?: "main";
+              $usuarios = [];
+              foreach (preg_split("/\r?\n/", (string) getenv("PANEL_USUARIOS")) as $linea) {
+                  $linea = trim($linea);
+                  if ($linea === "" || $linea[0] === "#") continue;
+                  $partes = array_map("trim", explode("|", $linea));
+                  if (count($partes) < 2 || $partes[0] === "" || $partes[1] === "") continue;
+                  $usuarios[strtolower($partes[0])] = [
+                      "hash"   => password_hash($partes[1], PASSWORD_DEFAULT),
+                      "nombre" => $partes[2] ?? $partes[0],
+                  ];
+              }
+              if (!$usuarios) { fwrite(STDERR, "PANEL_USUARIOS no tiene ninguna línea válida\n"); exit(1); }
+              $cfg = [
+                  "repo"     => getenv("GITHUB_REPOSITORY"),
+                  "rama"     => $rama,
+                  "token"    => getenv("PANEL_TOKEN"),
+                  /* La clave que firma las sesiones se deriva del token en vez de
+                     pedir otro secreto más. Consecuencia buscada: cambiar el token
+                     invalida todas las sesiones abiertas, que es lo que se quiere
+                     el día que haya que revocarlo. */
+                  "secreto"  => hash("sha256", getenv("PANEL_TOKEN") . "|sesiones-del-panel"),
+                  "usuarios" => $usuarios,
+              ];
+              $blob = base64_encode(json_encode($cfg, JSON_UNESCAPED_UNICODE));
+              file_put_contents("dist/api/config-panel.php",
+                  "<?php return json_decode(base64_decode(\"$blob\"), true);\n");
+              fwrite(STDERR, sprintf("config-panel.php generado — %d usuario(s), rama %s\n", count($usuarios), $rama));
+            '
+          fi
+          php -l dist/api/config-panel.php >/dev/null
+
       - name: Comprobar que el build es publicable
         # Barato, y detecta el fallo más caro: subir un dist/ sin .htaccess deja
         # todas las rutas menos la home devolviendo 404, y desde fuera parece
         # que el sitio entero se ha roto.
         run: |
           for f in dist/index.html dist/.htaccess dist/sitemap.xml dist/robots.txt \
-                   dist/llms.txt dist/api/contacto.php dist/api/config.php; do
+                   dist/llms.txt dist/api/contacto.php dist/api/config.php \
+                   dist/api/panel.php dist/api/config-panel.php; do
             [ -s "$f" ] || { echo "Falta o está vacío: $f"; exit 1; }
           done
           echo "dist/ listo — $(du -sh dist | cut -f1)"

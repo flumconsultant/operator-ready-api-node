@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import * as gh from './github.js';
+import * as api from './api.js';
 import Editor, { ARTICULO_NUEVO, problemas } from './Editor.jsx';
 import { Etiqueta, Texto, Boton, Fila, Aviso, marco } from './piezas.jsx';
 
@@ -13,6 +13,11 @@ import { Etiqueta, Texto, Boton, Fila, Aviso, marco } from './piezas.jsx';
  * indistinguible de que el botón no haya funcionado, y lleva a pulsarlo otra
  * vez.
  *
+ * Quien entra lo hace con usuario y contraseña contra /api/panel.php; el token
+ * de GitHub vive en el servidor y nunca llega al navegador. Eso es lo que
+ * permite dar acceso a alguien del equipo sin darle también permiso de
+ * escritura sobre el repositorio entero.
+ *
  * No hay autoguardado. Un editor que guarda solo, sobre un repositorio, deja un
  * historial de decenas de versiones a medio escribir por cada artículo — y en
  * un sitio donde publicar dispara un despliegue, cada guardado automático sería
@@ -22,57 +27,51 @@ import { Etiqueta, Texto, Boton, Fila, Aviso, marco } from './piezas.jsx';
 const ESTADO_CLAVE = 'become.admin.borrador';
 
 function Puerta({ alEntrar }) {
-  const [cfg, setCfg] = React.useState({ repo: 'flumconsultant/operator-ready-api-node', rama: 'main', token: '' });
+  const [usuario, setUsuario] = React.useState('');
+  const [clave, setClave] = React.useState('');
   const [error, setError] = React.useState('');
-  const [probando, setProbando] = React.useState(false);
+  const [entrando, setEntrando] = React.useState(false);
 
-  const entrar = async () => {
-    setProbando(true); setError('');
-    try {
-      await gh.comprobar(cfg);
-      gh.guardarConfig(cfg);
-      alEntrar(cfg);
-    } catch (e) { setError(e.message); } finally { setProbando(false); }
+  const enviar = async (e) => {
+    e.preventDefault();
+    setEntrando(true); setError('');
+    try { alEntrar(await api.entrar(usuario, clave)); }
+    catch (err) { setError(err.message); setClave(''); }
+    finally { setEntrando(false); }
   };
 
   return (
-    <div style={{ maxWidth: 560, margin: '0 auto', padding: '64px 24px' }}>
+    <div style={{ maxWidth: 420, margin: '0 auto', padding: '80px 24px' }}>
       <h1 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-heading)' }}>
         Artículos de BECOME
       </h1>
-      <p style={{ font: 'var(--type-body)', color: 'var(--text-muted)', maxWidth: '52ch' }}>
-        Este panel escribe directamente en el repositorio del sitio. Quien
-        autoriza es GitHub, así que hace falta un token con permiso de escritura
-        — sin él, aquí no se puede ver ni cambiar nada.
+      <p style={{ font: 'var(--type-body)', color: 'var(--text-muted)' }}>
+        Entra para escribir y publicar en Insights.
       </p>
 
-      <div style={{ display: 'grid', gap: 12, marginTop: 24, background: marco.papel, border: marco.linea, borderRadius: 2, padding: 20 }}>
-        <div><Etiqueta>Repositorio</Etiqueta><Texto valor={cfg.repo} alCambiar={(v) => setCfg({ ...cfg, repo: v })} /></div>
-        <div><Etiqueta pista="la rama que se despliega">Rama</Etiqueta><Texto valor={cfg.rama} alCambiar={(v) => setCfg({ ...cfg, rama: v })} /></div>
+      {/* Un formulario de verdad, no dos campos sueltos: así el gestor de
+          contraseñas del navegador ofrece guardarlas y rellenarlas, y la tecla
+          Intro envía. */}
+      <form onSubmit={enviar} style={{ display: 'grid', gap: 12, marginTop: 24, background: marco.papel, border: marco.linea, borderRadius: 2, padding: 20 }}>
         <div>
-          <Etiqueta>Token de GitHub</Etiqueta>
-          <Texto valor={cfg.token} alCambiar={(v) => setCfg({ ...cfg, token: v.trim() })} type="password" placeholder="github_pat_…" autoComplete="off" />
+          <Etiqueta>Usuario</Etiqueta>
+          <Texto valor={usuario} alCambiar={setUsuario} type="email" name="username" autoComplete="username" autoFocus />
         </div>
-        <Fila>
-          <Boton variante="fuerte" onClick={entrar} disabled={!cfg.token || probando}>
-            {probando ? 'Comprobando…' : 'Entrar'}
+        <div>
+          <Etiqueta>Contraseña</Etiqueta>
+          <Texto valor={clave} alCambiar={setClave} type="password" name="password" autoComplete="current-password" />
+        </div>
+        <div>
+          <Boton variante="fuerte" type="submit" disabled={!usuario || !clave || entrando}>
+            {entrando ? 'Entrando…' : 'Entrar'}
           </Boton>
-          <a
-            href="https://github.com/settings/personal-access-tokens/new"
-            target="_blank" rel="noreferrer"
-            style={{ font: 'var(--type-body)', fontSize: 14, color: 'var(--text-accent)' }}
-          >
-            Crear un token
-          </a>
-        </Fila>
+        </div>
         <Aviso tono="mal">{error}</Aviso>
-        <p style={{ margin: 0, font: 'var(--type-body)', fontSize: 13, color: 'var(--text-faint)' }}>
-          Al crearlo, elige «Only select repositories» → este repositorio, y en
-          permisos únicamente <strong>Contents: Read and write</strong>. Con eso
-          puede escribir artículos y nada más. El token se guarda solo en este
-          navegador y no se envía a ningún sitio que no sea GitHub.
-        </p>
-      </div>
+      </form>
+
+      <p style={{ font: 'var(--type-body)', fontSize: 13, color: 'var(--text-faint)' }}>
+        ¿No tienes acceso? Las cuentas las da quien administra el sitio.
+      </p>
     </div>
   );
 }
@@ -130,7 +129,10 @@ function Lista({ items, alAbrir, alNuevo, alRecargar, cargando }) {
 }
 
 export default function Panel() {
-  const [cfg, setCfg] = React.useState(() => gh.leerConfig());
+  /* null = no se sabe todavía; false = no hay sesión; objeto = quién eres.
+     El tercer estado importa: sin él, el panel enseñaría la pantalla de entrada
+     durante un instante a alguien que ya tiene la sesión abierta. */
+  const [sesion, setSesion] = React.useState(null);
   const [items, setItems] = React.useState([]);
   const [cargando, setCargando] = React.useState(false);
   const [abierto, setAbierto] = React.useState(null);   // { archivo, sha, articulo, publicadoAntes }
@@ -150,14 +152,27 @@ export default function Panel() {
     return () => m.remove();
   }, []);
 
-  const cargar = React.useCallback(async (c) => {
+  const cargar = React.useCallback(async () => {
     setCargando(true); setError('');
-    try { setItems(await gh.listar(c)); }
-    catch (e) { setError(e.message); }
-    finally { setCargando(false); }
+    try { setItems(await api.listar()); }
+    catch (e) {
+      if (e.tipo === 'sin_sesion') { setSesion(false); return; }
+      setError(e.message);
+    } finally { setCargando(false); }
   }, []);
 
-  React.useEffect(() => { if (cfg) cargar(cfg); }, [cfg, cargar]);
+  /* Quién eres se le pregunta al servidor, no se deduce de nada guardado en el
+     navegador: la cookie es ilegible desde aquí a propósito, y la sesión puede
+     haber caducado o haberse revocado desde el último uso. */
+  React.useEffect(() => {
+    let vivo = true;
+    api.quienSoy()
+      .then((d) => vivo && setSesion(d))
+      .catch(() => vivo && setSesion(false));
+    return () => { vivo = false; };
+  }, []);
+
+  React.useEffect(() => { if (sesion) cargar(); }, [sesion, cargar]);
 
   /* Un cambio a medio escribir sobrevive a un refresco accidental. Vive en el
      navegador y no en el repositorio: no es una versión, es lo que había en
@@ -176,16 +191,31 @@ export default function Panel() {
 
   const cerrar = () => { setAbierto(null); sessionStorage.removeItem(ESTADO_CLAVE); setNota(''); };
 
-  const salir = () => { gh.olvidarConfig(); sessionStorage.removeItem(ESTADO_CLAVE); setCfg(null); setItems([]); setAbierto(null); };
+  const cerrarSesion = async () => {
+    await api.salir().catch(() => {});
+    sessionStorage.removeItem(ESTADO_CLAVE);
+    setSesion(false); setItems([]); setAbierto(null);
+  };
 
-  if (!cfg) return <Puerta alEntrar={setCfg} />;
+  if (sesion === null) {
+    return <div style={{ padding: 80, textAlign: 'center', font: 'var(--type-mono)', color: 'var(--text-faint)' }}>Comprobando la sesión…</div>;
+  }
+  if (!sesion) return <Puerta alEntrar={setSesion} />;
+
+  /* Si la sesión caducó a media edición, no se enseña un error: se vuelve a la
+     pantalla de entrada. Lo escrito sigue en sessionStorage, así que al
+     volver a entrar el artículo aparece tal como se dejó. */
+  const fallo = (e) => {
+    if (e.tipo === 'sin_sesion') { setSesion(false); return; }
+    setError(e.message);
+  };
 
   const publicar = async () => {
     const art = abierto.articulo;
     setGuardando(true); setError(''); setNota('');
     try {
       const archivo = abierto.archivo || `${art.es?.slug || art.en?.slug}.json`;
-      await gh.guardar(cfg, {
+      await api.guardar({
         archivo,
         sha: abierto.sha,
         articulo: art,
@@ -196,8 +226,8 @@ export default function Panel() {
       setNota(art.estado === 'publicado'
         ? 'Guardado. El sitio se está reconstruyendo: tarda unos tres minutos en verse en meetbecome.com.'
         : 'Guardado como borrador. No aparece en la web hasta que lo pongas en «Publicado».');
-      await cargar(cfg);
-    } catch (e) { setError(e.message); } finally { setGuardando(false); }
+      await cargar();
+    } catch (e) { fallo(e); } finally { setGuardando(false); }
   };
 
   const retirar = async () => {
@@ -205,12 +235,12 @@ export default function Panel() {
     if (!window.confirm('¿Retirar este artículo? Se borra del repositorio; el historial de git lo conserva.')) return;
     setGuardando(true); setError('');
     try {
-      await gh.borrar(cfg, { archivo: abierto.archivo, sha: abierto.sha });
+      await api.borrar({ archivo: abierto.archivo, sha: abierto.sha });
       sessionStorage.removeItem(ESTADO_CLAVE);
       setAbierto(null);
       setNota('Retirado. El sitio se está reconstruyendo.');
-      await cargar(cfg);
-    } catch (e) { setError(e.message); } finally { setGuardando(false); }
+      await cargar();
+    } catch (e) { fallo(e); } finally { setGuardando(false); }
   };
 
   const fallos = abierto ? problemas(abierto.articulo) : [];
@@ -221,7 +251,7 @@ export default function Panel() {
         <div style={{ maxWidth: 1400, margin: '0 auto', padding: '14px 24px', display: 'flex', gap: 16, alignItems: 'center', justifyContent: 'space-between' }}>
           <Fila gap={12}>
             <strong style={{ fontFamily: 'var(--font-display)', letterSpacing: 'var(--track-label)' }}>BECOME · Artículos</strong>
-            <span style={{ font: 'var(--type-mono)', fontSize: 12, color: 'var(--text-faint)' }}>{cfg.repo}@{cfg.rama}</span>
+            <span style={{ font: 'var(--type-mono)', fontSize: 12, color: 'var(--text-faint)' }}>{sesion.nombre}</span>
           </Fila>
           <Fila gap={8}>
             {abierto ? (
@@ -235,7 +265,7 @@ export default function Panel() {
             ) : (
               <>
                 <Link to="/es/insights" style={{ font: 'var(--type-body)', fontSize: 14, color: 'var(--text-accent)' }}>Ver Insights</Link>
-                <Boton variante="quieto" onClick={salir}>Salir</Boton>
+                <Boton variante="quieto" onClick={cerrarSesion}>Salir</Boton>
               </>
             )}
           </Fila>
@@ -259,7 +289,7 @@ export default function Panel() {
             <Lista
               items={items}
               cargando={cargando}
-              alRecargar={() => cargar(cfg)}
+              alRecargar={cargar}
               alNuevo={() => setAbierto({ archivo: null, sha: null, articulo: ARTICULO_NUEVO() })}
               alAbrir={(it) => setAbierto({ archivo: it.archivo, sha: it.sha, articulo: it.articulo })}
             />

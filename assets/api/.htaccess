@@ -1,11 +1,12 @@
-# config.php lo genera el despliegue y contiene la contraseña del correo.
+# config.php y config-panel.php los genera el despliegue: contienen la
+# contraseña del correo y el token de GitHub del panel respectivamente.
 # PHP no lo devolvería como texto —lo ejecuta y no imprime nada— pero eso
 # depende de que PHP siga activo: si algún día se desactiva en el hosting,
 # el servidor pasaría a servir el archivo tal cual, con la contraseña dentro.
 # Esta regla lo impide en los dos casos.
-<Files "config.php">
+<FilesMatch "^config.*\.php$">
   Require all denied
-</Files>
+</FilesMatch>
 
 # El registro de fallos de envío puede contener lo que responde el servidor de
 # correo. Se lee desde el gestor de archivos de hPanel, nunca desde la web.
