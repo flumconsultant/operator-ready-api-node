@@ -5,6 +5,12 @@
 --gutter-page:clamp(24px,5vw,80px); /* @kind spacing */
 --maxw-prose:60ch; /* @kind other */
 --maxw-content:1280px; /* @kind spacing */
+/* Columna de un artículo. Va aparte de --maxw-prose y de --maxw-content porque
+   una página de artículo no es ninguna de las dos cosas: el ancho de contenido
+   deja la prosa nadando en un vacío de 700px a la derecha, y el de prosa deja
+   sin sitio a las tarjetas y al índice numerado. 68ch cae dentro del rango
+   legible y da aire a los bloques que no son párrafos. */
+--maxw-articulo:68ch; /* @kind other */
 --grid-gap:24px; /* @kind spacing */
 --grid-gap-hair:1px; /* @kind spacing */
 --section-pad-y:var(--space-12); /* @kind spacing */

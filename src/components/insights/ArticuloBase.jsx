@@ -44,6 +44,8 @@ const COPIA = {
   },
 };
 
+const COLUMNA = { maxWidth: 'var(--maxw-articulo)', marginInline: 'auto' };
+
 export default function ArticuloBase({ lang }) {
   const { slug } = useParams();
   const t = COPIA[lang];
@@ -71,21 +73,34 @@ export default function ArticuloBase({ lang }) {
     <main id="contenido" data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
       <SiteHeader />
 
+      {/* Una página de artículo se lee en una sola columna centrada, y no en el
+          ancho de contenido del resto del sitio. En las páginas de aterrizaje el
+          texto alineado a la izquierda lo equilibra lo que hay a su derecha
+          —tarjetas, parrillas, el nodo—; en un artículo no hay nada a la
+          derecha, así que veinte párrafos pegados al margen izquierdo dejan
+          setecientos píxeles de vacío y parecen un fallo de maquetación.
+
+          La columna envuelve también la cabecera: centrar solo el cuerpo
+          descuadraba la costura entre la banda oscura y la clara. */}
       <Section band="dark" pad="var(--space-12)">
-        <Kicker dark>{[pilar, formato].filter(Boolean).join(' · ')}</Kicker>
-        <Headline as="h1" dark>{a.titulo}</Headline>
-        {a.entradilla && <Lead dark>{a.entradilla}</Lead>}
-        <p style={{ margin: 'var(--space-8) 0 0', font: 'var(--type-mono)', color: 'var(--slate-400)' }}>
-          <time dateTime={art.fecha}>{fechaLegible(art.fecha, lang)}</time>
-          {' · '}{t.lectura(minutos)}
-          {art.autor ? ` · ${art.autor}` : ''}
-        </p>
+        <div style={COLUMNA}>
+          <Kicker dark>{[pilar, formato].filter(Boolean).join(' · ')}</Kicker>
+          <Headline as="h1" dark style={{ maxWidth: 'none' }}>{a.titulo}</Headline>
+          {a.entradilla && <Lead dark>{a.entradilla}</Lead>}
+          <p style={{ margin: 'var(--space-8) 0 0', font: 'var(--type-mono)', color: 'var(--slate-400)' }}>
+            <time dateTime={art.fecha}>{fechaLegible(art.fecha, lang)}</time>
+            {' · '}{t.lectura(minutos)}
+            {art.autor ? ` · ${art.autor}` : ''}
+          </p>
+        </div>
       </Section>
 
       <Section band="light">
-        <Bloques bloques={a.bloques} />
-        <div style={{ marginTop: 'var(--space-11)', maxWidth: 'var(--maxw-prose)' }}>
-          <TextCTA to={t.indice}>{t.volver}</TextCTA>
+        <div style={COLUMNA}>
+          <Bloques bloques={a.bloques} />
+          <div style={{ marginTop: 'var(--space-11)' }}>
+            <TextCTA to={t.indice}>{t.volver}</TextCTA>
+          </div>
         </div>
       </Section>
 

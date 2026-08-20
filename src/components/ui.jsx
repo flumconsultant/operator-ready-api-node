@@ -100,7 +100,7 @@ export const Kicker = ({ children, dark }) => (
   </p>
 );
 
-export const Headline = ({ children, dark, as = 'h2', size = 'var(--text-h1)' }) => {
+export const Headline = ({ children, dark, as = 'h2', size = 'var(--text-h1)', style }) => {
   const Tag = as;
   return (
     <Tag
@@ -112,7 +112,12 @@ export const Headline = ({ children, dark, as = 'h2', size = 'var(--text-h1)' })
         lineHeight: 'var(--leading-heading)',
         letterSpacing: 'var(--track-display)',
         color: dark ? 'var(--white)' : 'var(--text-heading)',
+        /* 18ch es el ancho de un titular de portada, que tiene que caber en una
+           línea corta y contundente. Un titular de artículo vive dentro de una
+           columna de lectura y ahí ese límite lo parte en tres. Por eso se
+           puede sobrescribir en vez de estar fijado. */
         maxWidth: '18ch',
+        ...style,
       }}
     >
       {children}

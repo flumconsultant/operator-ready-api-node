@@ -17,12 +17,18 @@ import { Kicker, Headline, Lead, Body, PrimaryCTA, Cols, Card, IndexRow } from '
  * posterior del panel debe seguir leyéndose.
  */
 
-/* Ancho de lectura. Los artículos van en una sola columna a propósito: es un
-   texto para leer seguido, no una página de aterrizaje, y una parrilla de
-   bandas alternas convierte la lectura en una sucesión de interrupciones. Los
-   bloques que sí rompen la columna (tarjetas, índice, imagen) lo hacen desde
-   dentro del flujo, no cambiando de sección. */
-const PROSA = { maxWidth: 'var(--maxw-prose)' };
+/* Los artículos van en una sola columna a propósito: es un texto para leer
+   seguido, no una página de aterrizaje, y una parrilla de bandas alternas
+   convierte la lectura en una sucesión de interrupciones. Los bloques que
+   rompen el ritmo (tarjetas, índice, imagen) lo hacen desde dentro del flujo,
+   no cambiando de sección.
+
+   El ancho ya no se fija aquí. Lo pone la columna centrada de ArticuloBase, que
+   envuelve cabecera y cuerpo: cuando cada bloque llevaba su propio maxWidth, la
+   columna quedaba pegada al margen izquierdo del ancho de contenido y en
+   escritorio sobraban setecientos píxeles a la derecha. Fijar el ancho en dos
+   sitios era justo lo que impedía centrarlo en uno. */
+const PROSA = { maxWidth: 'none' };
 
 const Parrafo = ({ b, i }) => (
   <Reveal as="div" index={i} style={PROSA}>
