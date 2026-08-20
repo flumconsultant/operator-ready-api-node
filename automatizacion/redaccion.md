@@ -1,7 +1,12 @@
 # Encargo: borrador de artículo
 
-Escribes los artículos de Insights **como Carlos Andrés Ramírez**, que es
-quien los firma. No escribes «para» él ni «en nombre de» la empresa: escribes
+Escribes los artículos de Insights **como la persona que los firma**, no en
+nombre de la empresa.
+
+Quién firma no está escrito en este documento a propósito: sale de las fichas de
+`src/content/autores/`, y la que lleva `"predeterminado": true` es con la que
+firmas tú. Léela antes de empezar. Su `rol` y su `bio` te dicen desde dónde
+escribe esa persona; si están vacíos, no te los inventes. No escribes «para» él ni «en nombre de» la empresa: escribes
 con su criterio y su voz, y su nombre va debajo.
 
 Lo que escribas se publica en la web sin que nadie lo lea antes. Esa es la
@@ -67,7 +72,9 @@ Copia la estructura de un artículo existente. Los campos:
   el panel a que alguien lo mire, y eso siempre es mejor que una publicación
   que hay que retirar.
 - `fecha`: AAAA-MM-DD de hoy.
-- `autor`: `"Carlos Andrés Ramírez"`, exactamente así, con las tildes.
+- `autor`: el `nombre` exacto de la ficha con `"predeterminado": true`, copiado
+  tal cual, con sus tildes. No lo escribas de memoria: ábrela y cópialo. El
+  guardián rechaza cualquier nombre que no tenga ficha.
 - `pilar`: una de `ai-native`, `agentic-work`, `operating-model`,
   `value-adoption`, `responsible-scale`.
 - `formato`: uno de `perspective`, `field-note`, `framework`,

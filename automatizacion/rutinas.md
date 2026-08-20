@@ -75,7 +75,7 @@ Contiene el encargo, la voz con la que tienes que escribir y las reglas que no
 puedes saltarte.
 
 Contexto que importa: lo que publiques sale en la web sin que nadie lo lea
-antes, firmado por Carlos Andrés Ramírez, que es una persona real. No hay red
+antes, firmado por una persona real. No hay red
 debajo.
 
 Cuando tengas el artículo guardado como un JSON nuevo en `src/content/insights/`:

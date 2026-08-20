@@ -15,7 +15,8 @@ Cada día 07:00   Redactor      →  src/content/insights/<slug>.json
                  Publicación   →  commit + despliegue. En la web en minutos
 ```
 
-Los artículos los firma **Carlos Andrés Ramírez** y se declaran como escritos
+Los artículos los firma la ficha de autor marcada como predeterminada en el
+panel (**/admin → Autores**), y se declaran como escritos
 por una persona, no por la empresa, en los datos estructurados. Un artículo de
 opinión atribuido a una marca no acumula autoridad de autor.
 

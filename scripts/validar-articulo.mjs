@@ -19,9 +19,35 @@
  */
 import { readFileSync, readdirSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
 import { IMAGENES as CATALOGO } from '../src/content/imagenes.js';
 
-export const AUTOR = 'Carlos Andrés Ramírez';
+/**
+ * Quién firma no está escrito aquí: sale de las fichas de autor, que se editan
+ * desde el panel.
+ *
+ * Antes era una constante con un nombre dentro, y eso significaba que cambiar
+ * de firma —o añadir una segunda— exigía tocar código. La firma es una
+ * decisión editorial y tiene que poder tomarla quien opera el sitio.
+ *
+ * La ficha marcada como `predeterminado` es con la que firma el trabajo
+ * automático. Las demás valen igual para un artículo escrito a mano: lo que se
+ * comprueba es que quien firma EXISTA, no que sea uno en concreto. Un nombre
+ * sin ficha no tiene foto, ni cargo, ni LinkedIn, así que aparece en la web
+ * como una cadena de texto que no se puede contrastar con nada.
+ */
+export function autores(dir = join(RAIZ, 'src/content/autores')) {
+  let archivos = [];
+  try { archivos = readdirSync(dir).filter((f) => f.endsWith('.json')); } catch { return []; }
+  return archivos.map((f) => {
+    try { return JSON.parse(readFileSync(join(dir, f), 'utf8')); } catch { return null; }
+  }).filter(Boolean);
+}
+
+export const autorPorDefecto = (lista = autores()) =>
+  (lista.find((a) => a.predeterminado) || lista[0])?.nombre || '';
 
 const PILARES = ['ai-native', 'agentic-work', 'operating-model', 'value-adoption', 'responsible-scale'];
 const FORMATOS = ['perspective', 'field-note', 'framework', 'executive-brief', 'case-evidence'];
@@ -58,7 +84,12 @@ export function validar(art, { archivo = '', slugsAjenos = new Set() } = {}) {
 
   if (!['borrador', 'publicado'].includes(art.estado)) di(`estado tiene que ser "borrador" o "publicado", no "${art.estado}"`);
   if (!/^\d{4}-\d{2}-\d{2}$/.test(art.fecha || '')) di('fecha tiene que ser AAAA-MM-DD');
-  if (art.autor !== AUTOR) di(`autor tiene que ser exactamente "${AUTOR}", no "${art.autor}"`);
+  const fichas = autores();
+  if (!fichas.length) {
+    di('no hay ninguna ficha de autor en src/content/autores: créala en el panel antes de publicar');
+  } else if (!fichas.some((a) => a.nombre === art.autor)) {
+    di(`autor "${art.autor}" no tiene ficha. Los que sí la tienen: ${fichas.map((a) => `"${a.nombre}"`).join(', ')}`);
+  }
   if (!PILARES.includes(art.pilar)) di(`pilar "${art.pilar}" no existe. Son: ${PILARES.join(', ')}`);
   if (!FORMATOS.includes(art.formato)) di(`formato "${art.formato}" no existe. Son: ${FORMATOS.join(', ')}`);
 

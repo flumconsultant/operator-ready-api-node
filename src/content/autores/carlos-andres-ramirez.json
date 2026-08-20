@@ -4,11 +4,12 @@
   "foto": "/images/autores/carlos-andres-ramirez.webp",
   "linkedin": "",
   "es": {
-    "rol": "Fundador de BECOME",
-    "bio": "Trabaja con equipos directivos en la transformación de sus modelos operativos con IA aplicada."
+    "rol": "",
+    "bio": ""
   },
   "en": {
-    "rol": "Founder of BECOME",
-    "bio": "Works with leadership teams on reinventing their operating models with applied AI."
-  }
+    "rol": "",
+    "bio": ""
+  },
+  "predeterminado": true
 }

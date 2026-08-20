@@ -343,6 +343,32 @@ if ($accion === 'guardar-autor') {
     if ($r['codigo'] >= 400) {
         responder(502, ['ok' => false, 'error' => 'github', 'mensaje' => $r['datos']['message'] ?? "GitHub respondió {$r['codigo']}."]);
     }
+    /* «Firma los artículos automáticos» solo puede estar en una ficha. Se
+       aplica aquí y no en el navegador porque el navegador solo ve la ficha
+       abierta: marcarla en dos pestañas distintas dejaría dos marcadas, y el
+       trabajo diario acabaría firmando con la que saliera primero al leer el
+       directorio. Que es una forma silenciosa de firmar con quien no toca. */
+    if (!empty($ficha['predeterminado'])) {
+        $otros = github($config, RUTA_AUTORES . '?ref=' . rawurlencode($rama));
+        foreach (($otros['codigo'] < 400 ? $otros['datos'] : []) as $e) {
+            $arch = (string) ($e['name'] ?? '');
+            if (($e['type'] ?? '') !== 'file' || $arch === $id . '.json' || !str_ends_with($arch, '.json')) continue;
+
+            $f = github($config, 'contents/' . rawurlencode(RUTA_AUTORES . '/' . $arch) . '?ref=' . rawurlencode($rama));
+            if ($f['codigo'] >= 400) continue;
+            $otra = json_decode((string) base64_decode(str_replace("\n", '', (string) $f['datos']['content']), true), true);
+            if (!is_array($otra) || empty($otra['predeterminado'])) continue;
+
+            $otra['predeterminado'] = false;
+            github($config, 'contents/' . rawurlencode(RUTA_AUTORES . '/' . $arch), 'PUT', [
+                'message' => sprintf('%s deja de firmar los artículos automáticos (desde el panel, por %s)', $otra['nombre'] ?? $arch, $nombre),
+                'content' => base64_encode(json_encode($otra, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n"),
+                'branch'  => $rama,
+                'sha'     => $f['datos']['sha'],
+            ]);
+        }
+    }
+
     responder(200, ['ok' => true, 'sha' => $r['datos']['content']['sha'] ?? null]);
 }
 

@@ -15,7 +15,7 @@ import { Etiqueta, Texto, Area, Boton, Fila, Aviso, marco } from './piezas.jsx';
  * para no mandar cuatro megas de una foto que se va a ver a 44 píxeles.
  */
 
-const NUEVA = () => ({ id: '', nombre: '', foto: '', linkedin: '', es: { rol: '', bio: '' }, en: { rol: '', bio: '' } });
+const NUEVA = () => ({ id: '', nombre: '', foto: '', linkedin: '', predeterminado: false, es: { rol: '', bio: '' }, en: { rol: '', bio: '' } });
 
 const aId = (s) => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
   .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 70);
@@ -151,14 +151,42 @@ function Ficha({ entrada, alGuardar, alCerrar }) {
               <Etiqueta pista="conecta la firma con una trayectoria pública; lo leen Google y los asistentes">LinkedIn</Etiqueta>
               <Texto valor={f.linkedin} alCambiar={(v) => pon('linkedin', v)} placeholder="https://www.linkedin.com/in/..." />
             </div>
+            {/* Es la única casilla de esta pantalla que cambia algo fuera de
+                ella: decide con qué nombre firma el artículo que se escribe y
+                se publica solo cada mañana. */}
+            <label style={{ display: 'flex', gap: 10, alignItems: 'flex-start', cursor: 'pointer' }}>
+              <input
+                type="checkbox"
+                checked={!!f.predeterminado}
+                onChange={(e) => pon('predeterminado', e.target.checked)}
+                style={{ width: 18, height: 18, marginTop: 2, flex: 'none', accentColor: 'var(--accent)' }}
+              />
+              <span>
+                <span style={{ display: 'block', font: 'var(--type-body)', fontSize: 14, color: 'var(--text-heading)' }}>
+                  Firma los artículos automáticos
+                </span>
+                <span style={{ display: 'block', font: 'var(--type-body)', fontSize: 13, color: 'var(--text-muted)' }}>
+                  El artículo que se escribe y publica solo cada mañana saldrá con este nombre.
+                  Solo una ficha puede tenerlo marcado.
+                </span>
+              </span>
+            </label>
           </div>
         </Fila>
 
         {['es', 'en'].map((l) => (
           <div key={l} style={{ display: 'grid', gap: 8, paddingTop: 12, borderTop: '1px solid var(--border-hairline)' }}>
             <Etiqueta>{l === 'es' ? 'Español' : 'Inglés'}</Etiqueta>
-            <Texto valor={f[l]?.rol} alCambiar={(v) => ponLang(l, 'rol', v)} placeholder={l === 'es' ? 'Cargo' : 'Role'} />
-            <Area valor={f[l]?.bio} alCambiar={(v) => ponLang(l, 'bio', v)} placeholder={l === 'es' ? 'Una o dos frases' : 'One or two sentences'} />
+            <Texto
+              valor={f[l]?.rol}
+              alCambiar={(v) => ponLang(l, 'rol', v)}
+              placeholder={l === 'es' ? 'Cargo (opcional). Sale junto a la fecha en cada artículo' : 'Role (optional). Appears next to the date on every article'}
+            />
+            <Area
+              valor={f[l]?.bio}
+              alCambiar={(v) => ponLang(l, 'bio', v)}
+              placeholder={l === 'es' ? 'Bio (opcional). Una o dos frases' : 'Bio (optional). One or two sentences'}
+            />
           </div>
         ))}
 
@@ -189,19 +217,33 @@ export default function Autores({ alCerrar }) {
   return (
     <div style={{ display: 'grid', gap: 16 }}>
       <Fila style={{ justifyContent: 'space-between' }}>
-        <h2 style={{ margin: 0, font: 'var(--type-body)', color: 'var(--text-heading)' }}>Autores</h2>
+        <h2 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)' }}>
+          Autores
+        </h2>
         <Fila gap={8}>
           <Boton variante="quieto" onClick={alCerrar}>Volver a los artículos</Boton>
           <Boton variante="fuerte" onClick={() => setAbierta({ ficha: null, sha: null })}>Nueva ficha</Boton>
         </Fila>
       </Fila>
 
+      {/* Qué controla esta pantalla, dicho antes de la lista. Sin esto era una
+          lista de nombres sin consecuencia visible: nada explicaba que lo que
+          se escribe aquí sale en cada artículo y que una casilla decide quién
+          firma lo que se publica solo. */}
+      <p style={{ margin: 0, font: 'var(--type-body)', fontSize: 14, color: 'var(--text-muted)', maxWidth: '62ch' }}>
+        Cada ficha es quien firma los artículos. Lo que pongas aquí sale en la web
+        —foto, nombre y cargo, junto a la fecha— y en los datos que leen Google y
+        los asistentes. Pulsa una ficha para editarla. Nada se rellena solo: lo que
+        no escribas, no aparece.
+      </p>
+
       <Aviso tono="mal">{error}</Aviso>
 
       {items === null && <p style={{ font: 'var(--type-mono)', color: 'var(--text-faint)' }}>Cargando…</p>}
       {items?.length === 0 && (
         <p style={{ font: 'var(--type-body)', color: 'var(--text-muted)' }}>
-          Todavía no hay ninguna ficha. La foto y el cargo salen en la firma de cada artículo.
+          Todavía no hay ninguna ficha. Sin al menos una, el guardián no deja publicar:
+          un nombre sin ficha aparece en la web como texto que no se puede contrastar con nada.
         </p>
       )}
 
@@ -220,7 +262,8 @@ export default function Autores({ alCerrar }) {
             <span style={{ minWidth: 0 }}>
               <span style={{ display: 'block', font: 'var(--type-body)', color: 'var(--text-heading)' }}>{e.ficha?.nombre}</span>
               <span style={{ display: 'block', font: 'var(--type-mono)', fontSize: 12, color: 'var(--text-faint)' }}>
-                {e.ficha?.es?.rol || '—'}{e.ficha?.linkedin ? ' · LinkedIn' : ' · sin LinkedIn'}
+                {e.ficha?.es?.rol || 'sin cargo'}{e.ficha?.linkedin ? ' · LinkedIn' : ' · sin LinkedIn'}
+                {e.ficha?.predeterminado ? ' · firma lo automático' : ''}
               </span>
             </span>
           </button>
