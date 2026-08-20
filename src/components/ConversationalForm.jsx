@@ -874,10 +874,24 @@ export default function ConversationalForm({
     if (puedeSalir()) setOpen(false);
   }, [puedeSalir]);
 
-  /* Mientras el escenario está abierto: sin scroll detrás, Esc cierra y el
-     tabulador no se escapa a la página que hay debajo. */
+  /* Al cerrar el escenario, el foco vuelve al botón que lo abrió: si no, quien
+     navega con teclado se queda sin sitio y vuelve a empezar por la cabecera.
+     Pero solo AL CERRAR, no en el primer render.
+     
+     Sin esta distinción, el efecto se ejecutaba al montar la página —cuando
+     `open` ya es false porque nunca se abrió— y enfocaba un botón que está
+     abajo del todo. El navegador desplaza la página hasta lo que enfoca, así
+     que entrar en Contacto o en BECOME NOW™ te dejaba, sin tocar nada, a 15.000
+     píxeles del principio. El preventScroll es el segundo cinturón: aunque
+     alguna vez vuelva a enfocarse a destiempo, la página ya no salta. */
+  const llegoAAbrirse = React.useRef(false);
+
   React.useEffect(() => {
-    if (!open) { btnRef.current?.focus(); return undefined; }
+    if (!open) {
+      if (llegoAAbrirse.current) btnRef.current?.focus({ preventScroll: true });
+      return undefined;
+    }
+    llegoAAbrirse.current = true;
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 

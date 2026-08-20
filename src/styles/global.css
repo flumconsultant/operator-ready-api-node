@@ -149,7 +149,21 @@ label {
  * el shader. Las bandas claras se pintan solas y ese riesgo desaparece.
  *
  * El nodo se sigue viendo a lo largo de todas las bandas oscuras, que es donde
- * su tinta verde tiene contraste y donde el efecto se diseñó para lucir. */
+ * su tinta verde tiene contraste y donde el efecto se diseñó para lucir.
+ *
+ * ---- Revisado el 20 de agosto ----
+ *
+ * Al corregir otro fallo del shader —uResolution iba en píxeles CSS y
+ * gl_FragCoord en píxeles del búfer— pareció que este también se había ido: la
+ * banda ya empieza donde debe, con desvío de 0 px medido a densidades 1, 2 y 3.
+ *
+ * Pero recorriendo las 90 bandas claras del sitio en tres tamaños de pantalla,
+ * 16 seguían mostrando zonas navy, sobre todo en tablet. Así que el fallo no
+ * está resuelto, solo es menos frecuente, y quitar esta red devolvería el nodo
+ * a las secciones claras a cambio de dejar texto ilegible en una de cada seis.
+ *
+ * Se queda. El día que las 90 salgan limpias, esto sobra: el script que lo
+ * comprueba está descrito en el commit que añadió esta nota. */
 :root[data-ai-node="on"] [data-band="--off-white"] { background: var(--off-white) !important; }
 :root[data-ai-node="on"] [data-band="--pale-100"] { background: var(--pale-100) !important; }
 

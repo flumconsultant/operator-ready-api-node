@@ -495,13 +495,33 @@ export default function AiNode({ onReady }) {
      */
     let bandas = [];
 
+    /*
+     * La posición se suma con offsetTop en vez de leerse con
+     * getBoundingClientRect, y la diferencia importa: getBoundingClientRect
+     * devuelve dónde está el elemento DIBUJADO, transformaciones incluidas, y
+     * media página entra con una animación que la desplaza unos píxeles antes
+     * de asentarse. Midiendo en cada fotograma daba igual —el valor se
+     * corregía solo al terminar la animación—, pero midiendo una vez, la
+     * posición se queda congelada a mitad de la entrada y la banda se pinta
+     * desplazada para siempre. Se veía en escritorio: el titular de la primera
+     * sección clara quedaba sobre fondo navy.
+     *
+     * offsetTop ignora las transformaciones: da la posición de la maqueta, que
+     * es la que no cambia.
+     */
+    const topEnDocumento = (el) => {
+      let y = 0;
+      for (let n = el; n; n = n.offsetParent) y += n.offsetTop;
+      return y;
+    };
+
     const medirBandas = () => {
       bandas = [...document.querySelectorAll('[data-band]')].map((el) => {
-        const r = el.getBoundingClientRect();
+        const top = topEnDocumento(el);
         const c = colorOf(el.dataset.band);
         return {
-          top: r.top + window.scrollY,
-          bottom: r.bottom + window.scrollY,
+          top,
+          bottom: top + el.offsetHeight,
           col: c,
           /* la luminancia decide la tinta de las partículas sobre esa banda */
           light: c.r * 0.2126 + c.g * 0.7152 + c.b * 0.0722 > 0.35 ? 1 : 0,
@@ -534,11 +554,12 @@ export default function AiNode({ onReady }) {
     const measure = () => {
       maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       medirBandas();
+      /* Mismo motivo que las bandas: la maqueta, no lo dibujado. */
       anchors = [...document.querySelectorAll('[data-node-state]')]
-        .map((el) => {
-          const r = el.getBoundingClientRect();
-          return { state: +el.dataset.nodeState, mid: r.top + window.scrollY + r.height / 2 };
-        })
+        .map((el) => ({
+          state: +el.dataset.nodeState,
+          mid: topEnDocumento(el) + el.offsetHeight / 2,
+        }))
         .sort((a, b) => a.state - b.state);
     };
 
