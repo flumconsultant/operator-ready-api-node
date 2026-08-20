@@ -1,0 +1,73 @@
+# Mide cada semana dónde aparece BECOME en las respuestas que la gente busca.
+#
+# No escribe artículos: solo deja un informe en automatizacion/informes/. La
+# separación es deliberada — medir y redactar en el mismo trabajo produce
+# informes escritos para justificar el artículo que ya se quería escribir.
+#
+# Corre con la suscripción Max a través de CLAUDE_CODE_OAUTH_TOKEN, así que no
+# añade coste de API. Ese token caduca: cuando lo haga, este trabajo falla en
+# rojo y el paso final dice exactamente qué comando lo renueva.
+
+name: Observatorio de posicionamiento
+
+on:
+  schedule:
+    # Lunes a las 06:00 UTC — 01:00 en Colombia, con el informe puesto antes de
+    # que empiece la semana.
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  id-token: write
+
+concurrency:
+  group: observatorio
+  cancel-in-progress: false
+
+jobs:
+  medir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Comprobar que hay con qué autenticarse
+        # Sin esto, el fallo llega treinta líneas más abajo disfrazado de error
+        # de autenticación de la acción, que no dice qué hacer.
+        run: |
+          if [ -z "${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}" ]; then
+            echo "::error::Falta el secreto CLAUDE_CODE_OAUTH_TOKEN. Genéralo con 'claude setup-token' y añádelo en Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: 'Lee automatizacion/observatorio.md y haz exactamente lo que dice ese documento. No hagas nada más.'
+          claude_args: |
+            --max-turns 60
+            --allowedTools "WebSearch,WebFetch,Read,Write,Glob,Grep"
+
+      - name: Guardar el informe
+        # El commit lo hace git y no la acción: así el trabajo automático no
+        # necesita permiso para ejecutar comandos, y lo único que puede acabar
+        # en el repositorio es un archivo dentro de informes/.
+        run: |
+          set -euo pipefail
+          git add automatizacion/informes/
+          if git diff --cached --quiet; then
+            echo "::warning::El observatorio no dejó ningún informe. Revisa el registro de la ejecución."
+            exit 0
+          fi
+          git -c user.name='Observatorio BECOME' \
+              -c user.email='hello@meetbecome.com' \
+              commit -m "Observatorio: informe del $(date -u +%Y-%m-%d)"
+          git push
+          echo "### Informe publicado" >> $GITHUB_STEP_SUMMARY
+          ls -1 automatizacion/informes/ | tail -3 >> $GITHUB_STEP_SUMMARY
+
+      - name: Si algo falló
+        if: failure()
+        run: |
+          echo "::error::El observatorio no pudo completarse. La causa más habitual es que el token de la suscripción haya caducado: renuévalo con 'claude setup-token' y sustituye el secreto CLAUDE_CODE_OAUTH_TOKEN."
