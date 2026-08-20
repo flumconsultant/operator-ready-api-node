@@ -227,7 +227,22 @@ jobs:
             set net:reconnect-interval-base 5;
             set net:reconnect-interval-multiplier 1.5;
 
+            # Sin esto, lftp pide al servidor el listado normal, que NO incluye
+            # los archivos que empiezan por punto. Y lo que no ve, no lo borra:
+            # --delete dejaba huérfanos los .htaccess de versiones anteriores
+            # creyendo que la carpeta ya estaba limpia.
+            set ftp:list-options -a;
+
             open -u '$FTP_USER','$FTP_PASSWORD' '$FTP_HOST';
+
+            # Un despliegue anterior dejó un .htaccess dentro de assets/ para
+            # cachear un año. El servidor empezó a responder 403 a TODA la
+            # carpeta: el sitio servía su HTML y no su código, o sea, en blanco.
+            # Quitarlo del repositorio no bastaba, porque el archivo ya vivía en
+            # el servidor y el espejo no lo veía. Esto lo borra explícitamente;
+            # -f para que no proteste cuando ya no exista, que es lo que pasará
+            # de ahora en adelante.
+            rm -f $DESTINO/assets/.htaccess;
 
             # 1. El bundle con hash va con --delete: esa carpeta es solo nuestra,
             #    y sin borrar acumularía todos los bundles de todos los despliegues

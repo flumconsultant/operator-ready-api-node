@@ -100,23 +100,20 @@
     Header set Cache-Control "public, max-age=0, must-revalidate"
   </FilesMatch>
 
-  # Y por encima de todo lo anterior: lo que vive en /assets/ lo compila Vite y
-  # lleva un hash del contenido en el nombre —index-_X1gDS-m.js,
-  # inter-variable-latin-Dx4kXJAl.woff2—. Si el archivo cambia, cambia su
-  # dirección, así que un año sin revalidar no puede servir nada viejo.
+  # Aquí iba una regla para cachear un año lo que vive en /assets/, que lleva
+  # hash en el nombre. Se retira a propósito, y merece explicación porque el
+  # razonamiento sigue siendo bueno:
   #
-  # Va por ubicación y no por extensión porque el hash no se distingue de un
-  # guion normal: 'machine-learning-white.webp' se parece a un nombre con hash
-  # y no lo es. Y va en este archivo, el de la raíz, y no en un .htaccess
-  # propio dentro de assets/: esa fue la primera versión, y la comprobación del
-  # despliegue empezó a leer 2.482 bytes donde debía haber 106.000.
+  # La primera forma de conseguirlo fue un .htaccess propio dentro de assets/.
+  # El servidor respondió 403 a toda la carpeta: el sitio servía su HTML pero
+  # no su código, es decir, en blanco, y estuvo así hasta que la comprobación
+  # del despliegue lo detectó. La segunda forma fue `SetEnvIf` aquí mismo, que
+  # depende de mod_setenvif y, si no está cargado, es un error de sintaxis —
+  # otra vez un 403, otra vez el sitio entero.
   #
-  # Este bloque va DESPUÉS de los de arriba a propósito: el último 'Header set'
-  # es el que manda.
-  <IfModule mod_setenvif.c>
-    SetEnvIf Request_URI "^/assets/" LLEVA_HASH
-    Header set Cache-Control "public, max-age=31536000, immutable" env=LLEVA_HASH
-  </IfModule>
+  # Lo que se gana es pasar de treinta días a un año en archivos que casi nadie
+  # vuelve a pedir. Lo que se arriesga es el sitio. Vuelve cuando se pueda
+  # comprobar contra el servidor de verdad antes de publicarlo, no antes.
 </IfModule>
 
 # ─────────────────────────────────────────────────────────────────────────────
