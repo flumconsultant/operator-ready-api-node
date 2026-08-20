@@ -48,7 +48,13 @@ export const TEXTOS = {
 
 const PARECE_CORREO = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-export default function Formulario({ lang = 'es', origen = '', compacto = false, alTerminar }) {
+export default function Formulario({ lang = 'es', origen = '', compacto = false, oscuro = false, alTerminar }) {
+  /* Sobre navy los mismos colores dejan de leerse: el gris de las etiquetas
+     desaparece y el borde del campo se funde con el fondo. En vez de un tema
+     entero, tres valores que cambian y el resto igual. */
+  const col = oscuro
+    ? { titulo: 'var(--white)', texto: 'var(--slate-300)', tenue: 'var(--slate-400)', campo: 'rgba(255,255,255,.06)', borde: 'var(--border-hairline-dark)', escrito: 'var(--white)' }
+    : { titulo: 'var(--text-heading)', texto: 'var(--text-muted)', tenue: 'var(--text-faint)', campo: 'var(--white)', borde: 'var(--border-hairline)', escrito: 'var(--text-body)' };
   const t = TEXTOS[lang] || TEXTOS.es;
   const [email, setEmail] = React.useState('');
   const [error, setError] = React.useState('');
@@ -93,8 +99,8 @@ export default function Formulario({ lang = 'es', origen = '', compacto = false,
       <div role="status" style={{ display: 'flex', gap: 'var(--space-4)', alignItems: 'flex-start' }}>
         <Ico name="yes" size={22} style={{ color: 'var(--text-accent)', marginTop: 2 }} />
         <div>
-          <p style={{ margin: 0, font: 'var(--type-body)', color: 'var(--text-heading)' }}>{t.listo}</p>
-          <p style={{ margin: '4px 0 0', font: 'var(--type-body)', fontSize: 14, color: 'var(--text-muted)' }}>{t.listoDetalle}</p>
+          <p style={{ margin: 0, font: 'var(--type-body)', color: col.titulo }}>{t.listo}</p>
+          <p style={{ margin: '4px 0 0', font: 'var(--type-body)', fontSize: 14, color: col.texto }}>{t.listoDetalle}</p>
         </div>
       </div>
     );
@@ -104,16 +110,16 @@ export default function Formulario({ lang = 'es', origen = '', compacto = false,
     <form onSubmit={enviar} noValidate>
       {!compacto && (
         <>
-          <p style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)' }}>
+          <p style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: col.titulo }}>
             {t.titulo}
           </p>
-          <p style={{ margin: 'var(--space-3) 0 var(--space-5)', font: 'var(--type-body)', fontSize: 15, color: 'var(--text-muted)' }}>
+          <p style={{ margin: 'var(--space-3) 0 var(--space-5)', font: 'var(--type-body)', fontSize: 15, color: col.texto }}>
             {t.lead}
           </p>
         </>
       )}
 
-      <label htmlFor={idCampo} style={{ display: 'block', font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', fontSize: 11, color: 'var(--text-faint)', marginBottom: 6 }}>
+      <label htmlFor={idCampo} style={{ display: 'block', font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', fontSize: 11, color: col.tenue, marginBottom: 6 }}>
         {t.etiqueta}
       </label>
 
@@ -138,9 +144,9 @@ export default function Formulario({ lang = 'es', origen = '', compacto = false,
             /* 16px o iOS hace zoom al enfocar y descoloca la página; 48 de alto
                para que el dedo acierte sin apuntar. */
             height: 48, padding: '0 14px', fontSize: 16,
-            font: 'var(--type-body)', color: 'var(--text-body)',
-            background: 'var(--white)',
-            border: `1px solid ${error ? '#c2410c' : 'var(--border-hairline)'}`,
+            font: 'var(--type-body)', color: col.escrito,
+            background: col.campo,
+            border: `1px solid ${error ? '#c2410c' : col.borde}`,
             borderRadius: 2,
           }}
         />
@@ -173,7 +179,7 @@ export default function Formulario({ lang = 'es', origen = '', compacto = false,
         </p>
       )}
 
-      <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 13, color: 'var(--text-faint)' }}>
+      <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 13, color: col.tenue }}>
         {t.privacidad}
       </p>
     </form>

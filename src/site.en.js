@@ -177,6 +177,7 @@ export const FOOTER = [
       { to: '/en/privacy', label: 'Privacy' },
       { to: '/en/terms', label: 'Terms' },
       { to: '/en/cookies', label: 'Cookies' },
+      { accion: 'cookies', label: 'Cookie settings' },
     ],
   },
 ];

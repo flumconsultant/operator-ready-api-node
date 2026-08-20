@@ -4,6 +4,7 @@ import * as es from '../site.js';
 import * as en from '../site.en.js';
 import wordmark from '../logo/wordmark-white.webp';
 import { equivalenteEnElOtroIdioma } from '../seo-meta.js';
+import { abrirPanelCookies } from './privacidad/Cookies.jsx';
 
 /**
  * Pie del sitio. Bilingüe: detecta el idioma por el prefijo de la ruta
@@ -65,8 +66,21 @@ export default function SiteFooter() {
               </p>
               <ul style={{ listStyle: 'none', margin: 'var(--space-5) 0 0', padding: 0, display: 'grid', gap: 'var(--space-4)' }}>
                 {col.links.map((l) => (
-                  <li key={l.to || l.href}>
-                    {l.href ? (
+                  <li key={l.to || l.href || l.label}>
+                    {l.accion === 'cookies' ? (
+                      /* Botón y no enlace: no lleva a otra página, abre un
+                         panel aquí mismo. Un enlace que no navega deja al
+                         teclado y al lector de pantalla anunciando un destino
+                         que no existe. */
+                      <button
+                        type="button"
+                        onClick={abrirPanelCookies}
+                        style={{ ...linkStyle, background: 'none', border: 0, padding: 0, cursor: 'pointer', font: 'inherit', textAlign: 'left' }}
+                        className="hv-foot"
+                      >
+                        {l.label}
+                      </button>
+                    ) : l.href ? (
                       <a href={l.href} style={linkStyle} className="hv-foot">{l.label}</a>
                     ) : (
                       <Link to={l.to} style={linkStyle} className="hv-foot">{l.label}</Link>

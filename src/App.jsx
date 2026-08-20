@@ -5,6 +5,7 @@ import { routes } from './routes.jsx';
 import AiNodeStage from './components/ai-node/AiNodeStage.jsx';
 import RouteLoader from './components/RouteLoader.jsx';
 import Invitacion from './components/suscripcion/Invitacion.jsx';
+import Cookies from './components/privacidad/Cookies.jsx';
 import { PAGES, SITE } from './seo-meta.js';
 
 /**
@@ -131,6 +132,7 @@ export default function App() {
           significa nada ahí. */}
       {!pathname.startsWith('/admin') && <AiNodeStage key={`nodo:${pathname}`} />}
       <Invitacion />
+      <Cookies />
       {/* La clave por ruta es lo que hace visible el fallback. React 19 trata
           la navegación como una transición y, por defecto, mantiene la pantalla
           anterior en vez de mostrar el Suspense: sin remontar el límite, el

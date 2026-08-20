@@ -60,6 +60,10 @@ const T = {
 const leer = (k) => { try { return localStorage.getItem(k); } catch { return null; } };
 const escribir = (k, v) => { try { localStorage.setItem(k, v); } catch { /* modo privado */ } };
 
+/* El aviso de cookies sale primero. Dos elementos fijos a la vez se tapan en
+   un móvil, y el que interrumpe menos es el que debe esperar. */
+const cookiesVistas = () => !!leer('become.cookies.visto');
+
 function yaNoMolestar() {
   if (leer(CLAVE_DENTRO)) return true;
   const cerrado = Number(leer(CLAVE_CERRADO) || 0);
@@ -124,10 +128,15 @@ function Dialogo({ lang, origen, alCerrar }) {
         aria-modal="true"
         aria-label={T[lang]?.abrir || T.es.abrir}
         style={{
-          position: 'relative', width: 'min(460px, 100%)',
-          background: 'var(--off-white)', borderRadius: 2,
+          position: 'relative', width: 'min(460px, 100%)', overflow: 'hidden',
+          /* Navy, retícula y destello: el mismo lenguaje que el panel de
+             cookies y que la tarjeta de compartir. Tres piezas que aparecen
+             encima del sitio deben parecer la misma familia, o el sitio parece
+             tres sitios. */
+          background: 'var(--navy-950)', borderRadius: 2,
+          border: '1px solid var(--border-hairline-dark)',
           padding: 'var(--space-8)',
-          boxShadow: '0 24px 64px rgba(5,7,15,.34)',
+          boxShadow: '0 30px 80px rgba(5,7,15,.55)',
           animation: reduce ? 'none' : 'becomeAviso .22s cubic-bezier(.2,.7,.2,1)',
         }}
       >
@@ -138,12 +147,25 @@ function Dialogo({ lang, origen, alCerrar }) {
           style={{
             position: 'absolute', top: 6, right: 6, width: 44, height: 44,
             display: 'grid', placeItems: 'center',
-            border: 0, background: 'transparent', cursor: 'pointer', color: 'var(--text-faint)',
+            border: 0, background: 'transparent', cursor: 'pointer', color: 'var(--slate-400)', zIndex: 1,
           }}
         >
           <Ico name="no" size={20} />
         </button>
-        <Formulario lang={lang} origen={origen} alTerminar={() => escribir(CLAVE_DENTRO, '1')} />
+        <span aria-hidden="true" style={{
+          position: 'absolute', inset: 0, pointerEvents: 'none',
+          backgroundImage:
+            'linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),' +
+            'linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px)',
+          backgroundSize: '44px 44px',
+        }} />
+        <span aria-hidden="true" style={{
+          position: 'absolute', width: 420, height: 420, right: -160, top: -180, pointerEvents: 'none',
+          background: 'radial-gradient(circle, rgba(0,255,136,.16) 0%, rgba(0,255,136,0) 62%)',
+        }} />
+        <div style={{ position: 'relative' }}>
+          <Formulario lang={lang} origen={origen} oscuro alTerminar={() => escribir(CLAVE_DENTRO, '1')} />
+        </div>
       </div>
     </div>
   );
@@ -157,6 +179,13 @@ export default function Invitacion() {
   const [abierto, setAbierto] = React.useState(false);
   const [ofrecer, setOfrecer] = React.useState(false);
   const [botonVisible, setBotonVisible] = React.useState(!yaNoMolestar());
+  const [libre, setLibre] = React.useState(cookiesVistas);
+
+  React.useEffect(() => {
+    if (libre) return undefined;
+    const reloj = setInterval(() => { if (cookiesVistas()) { setLibre(true); clearInterval(reloj); } }, 800);
+    return () => clearInterval(reloj);
+  }, [libre]);
 
   const esArticulo = /^\/(es|en)\/insights\/.+/.test(pathname);
   /* El panel es una herramienta de trabajo, no una página de captación. */
@@ -208,7 +237,7 @@ export default function Invitacion() {
       {/* El botón se esconde mientras el diálogo está abierto: un elemento fijo
           por encima puede tapar el control que tiene el foco, y eso es
           justamente lo que prohíbe la regla de foco no obstruido. */}
-      {botonVisible && !abierto && (
+      {botonVisible && libre && !abierto && (
         <button
           type="button"
           onClick={() => setAbierto(true)}
@@ -221,7 +250,8 @@ export default function Invitacion() {
             background: 'var(--navy-950)', color: 'var(--white)', cursor: 'pointer',
             font: 'var(--type-label)', letterSpacing: 'var(--track-label)',
             textTransform: 'uppercase', fontSize: 11,
-            boxShadow: '0 8px 28px rgba(5,7,15,.28)',
+            border: '1px solid rgba(0,255,136,.28)',
+            boxShadow: '0 8px 28px rgba(5,7,15,.28), 0 0 0 4px rgba(0,255,136,.08)',
           }}
         >
           <Ico name="chat" size={18} style={{ color: 'var(--accent)' }} />

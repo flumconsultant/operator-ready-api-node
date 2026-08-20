@@ -188,6 +188,7 @@ export const FOOTER = [
       { to: '/es/privacidad', label: 'Privacidad' },
       { to: '/es/terminos', label: 'Términos' },
       { to: '/es/cookies', label: 'Cookies' },
+      { accion: 'cookies', label: 'Configurar cookies' },
     ],
   },
 ];
