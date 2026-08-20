@@ -79,6 +79,7 @@ export const routes = [
 
   { path: '/en/privacy', element: <LegalEN page="privacy" /> },
   { path: '/en/terms', element: <LegalEN page="terms" /> },
+  { path: '/en/cookies', element: <LegalEN page="cookies" /> },
 
   { path: '/es/servicios', element: <Servicios /> },
   { path: '/es/servicios/become-now', element: <BecomeNow /> },
@@ -99,6 +100,7 @@ export const routes = [
 
   { path: '/es/privacidad', element: <Legal page="privacidad" /> },
   { path: '/es/terminos', element: <Legal page="terminos" /> },
+  { path: '/es/cookies', element: <Legal page="cookies" /> },
 
   /* Herramienta interna, sin prefijo de idioma y fuera del sitemap: no es una
      página del sitio, es por donde se publican las que sí lo son. */

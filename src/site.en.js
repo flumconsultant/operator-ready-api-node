@@ -176,6 +176,7 @@ export const FOOTER = [
     links: [
       { to: '/en/privacy', label: 'Privacy' },
       { to: '/en/terms', label: 'Terms' },
+      { to: '/en/cookies', label: 'Cookies' },
     ],
   },
 ];

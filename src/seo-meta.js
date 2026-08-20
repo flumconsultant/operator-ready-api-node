@@ -99,6 +99,11 @@ export const PAGES = {
     'Condiciones bajo las que se ofrece el contenido de este sitio.',
     '/en/terms',
   ],
+  '/es/cookies': [
+    'Política de cookies | BECOME',
+    'Qué guarda este sitio en tu navegador. Sin analítica, sin píxeles y sin scripts de terceros.',
+    '/en/cookies',
+  ],
 
   /* ---------------------------------------------------------------- inglés */
   '/en': [
@@ -160,6 +165,11 @@ export const PAGES = {
     'Privacy policy | BECOME',
     'How BECOME handles the personal data it receives through this site.',
     '/es/privacidad',
+  ],
+  '/en/cookies': [
+    'Cookie Policy | BECOME',
+    'What this site stores in your browser. No analytics, no pixels and no third-party scripts.',
+    '/es/cookies',
   ],
   '/en/terms': [
     'Terms of use | BECOME',

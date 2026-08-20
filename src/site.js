@@ -187,6 +187,7 @@ export const FOOTER = [
     links: [
       { to: '/es/privacidad', label: 'Privacidad' },
       { to: '/es/terminos', label: 'Términos' },
+      { to: '/es/cookies', label: 'Cookies' },
     ],
   },
 ];
