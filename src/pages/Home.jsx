@@ -352,7 +352,7 @@ export default function Home() {
           textual de la página. */}
       <Section band="light">
         <Kicker>Por qué BECOME</Kicker>
-        <Headline>Strategy that builds. Technology that embeds. Capacidad that stays.</Headline>
+        <Headline>Strategy that builds. Technology that embeds. Capability that stays.</Headline>
         <div style={{ marginTop: 'var(--space-10)' }}>
           <Split src="/images/45-executive.webp" alt="Conversación ejecutiva sobre el modelo operativo" ratio="1 / 1">
             <div style={{ display: 'grid', gap: 'var(--space-7)' }}>

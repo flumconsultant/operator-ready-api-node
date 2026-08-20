@@ -6,7 +6,8 @@
     "dev": "vite",
     "build": "vite build && node scripts/seo.mjs",
     "preview": "vite preview",
-    "start": "node index.js"
+    "start": "node index.js",
+    "design:export": "node scripts/design-export.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

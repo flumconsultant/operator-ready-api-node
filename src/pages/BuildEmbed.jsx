@@ -30,7 +30,7 @@ const STAGES = [
 const DELIVERABLES = [
   'Proceso y diseño de la capacidad validados.',
   'Agente, producto o sistema de decisión funcionando.',
-  'Human-in-the-loop model y controles operativos.',
+  'Modelo de supervisión humana y controles operativos.',
   'Plan de adopción y transferencia de capacidades.',
   'Cuadro de mando de desempeño, riesgo y valor.',
 ];
@@ -130,7 +130,7 @@ export default function BuildEmbed() {
 
       {/* Human-in-the-loop antes que la construcción: es lo que decide el destino */}
       <Section band="darker">
-        <Kicker dark>Human-in-the-loop y controles</Kicker>
+        <Kicker dark>Supervisión humana y controles</Kicker>
         <Headline dark>Lo que decide el destino de un agent no es la calidad de sus respuestas.</Headline>
         <Lead dark>
           Es quién responde cuando se equivoca y qué pasa con los casos que no
