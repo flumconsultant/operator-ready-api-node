@@ -184,7 +184,13 @@ const blogPosting = (a, lang, url) => {
     inLanguage: lang,
     datePublished: a.fecha,
     dateModified: a.actualizado || a.fecha,
-    author: { '@type': 'Organization', name: a.autor || BRAND, url: SITE },
+    /* Persona, no organización, cuando firma alguien. Un artículo de opinión
+       atribuido a una empresa no acumula autoridad de autor: ni Google ni un
+       asistente pueden reconocer experiencia en un nombre comercial. Si algún
+       día firma la marca, se vuelve a declarar como organización. */
+    author: a.autor && a.autor !== BRAND
+      ? { '@type': 'Person', name: a.autor, url: `${SITE}/es/nosotros` }
+      : { '@type': 'Organization', name: BRAND, url: SITE },
     publisher: { '@type': 'Organization', name: BRAND, url: SITE, logo: `${SITE}/logo/icon-white.svg` },
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
     image: OG_IMAGE,

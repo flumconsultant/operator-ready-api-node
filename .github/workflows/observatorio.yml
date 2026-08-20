@@ -12,9 +12,10 @@ name: Observatorio de posicionamiento
 
 on:
   schedule:
-    # Lunes a las 06:00 UTC — 01:00 en Colombia, con el informe puesto antes de
-    # que empiece la semana.
-    - cron: '0 6 * * 1'
+    # Domingos a las 05:00 UTC. Va por delante del redactor, que publica todos
+    # los días a las 07:00: el domingo se llena la cola de la semana y de lunes
+    # a domingo se consume, un hueco al día.
+    - cron: '0 5 * * 0'
   workflow_dispatch:
 
 permissions:

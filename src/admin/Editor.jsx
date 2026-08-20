@@ -27,7 +27,7 @@ const aSlug = (s) => String(s)
 export const ARTICULO_NUEVO = () => ({
   estado: 'borrador',
   fecha: new Date().toISOString().slice(0, 10),
-  autor: 'BECOME',
+  autor: 'Carlos Andrés Ramírez',
   pilar: 'ai-native',
   formato: 'perspective',
   es: { slug: '', titulo: '', entradilla: '', descripcion: '', bloques: [] },

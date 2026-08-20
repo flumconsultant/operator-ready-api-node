@@ -1,21 +1,24 @@
-# Escribe un borrador de artículo a partir del último informe del observatorio.
+# Escribe y PUBLICA un artículo al día, a partir del informe del observatorio.
 #
-# El borrador se guarda con estado "borrador", que significa que existe en el
-# panel de /admin y NO en la web. Nadie publica nada aquí: una persona lo abre,
-# lo edita con el constructor y decide.
+# Publica sin revisión humana previa. Es una decisión de quien firma los
+# artículos, y cambia dónde vive el control: como no hay nadie leyendo entre la
+# redacción y la web, el control es scripts/validar-articulo.mjs, y es
+# mecánico. Todo lo que comprueba se eligió porque se puede comprobar sin
+# criterio: autor, longitudes, los dos idiomas, preguntas frecuentes, rayas
+# largas, muletillas y —la que más importa— que ninguna cifra viaje sin fuente.
 #
-# Se eligió dejar el borrador en el panel en vez de abrir un pull request con el
-# JSON. Revisar un artículo en un diff de JSON es incómodo hasta para quien lee
-# diffs a diario, y el sitio ya tiene un editor que enseña el artículo como se
-# va a ver. La revisión ocurre donde se entiende lo que se está revisando.
+# Un artículo que no pasa el guardián no se publica y el día se queda sin
+# artículo. Ese es el comportamiento correcto: el coste de no publicar un día
+# es cero, y el de publicar un dato inventado bajo el nombre de una persona
+# real no se arregla borrándolo después.
 
-name: Borrador de artículo
+name: Artículo diario
 
 on:
   schedule:
-    # Cada dos martes a las 07:00 UTC. Cron no sabe de quincenas: se dispara
-    # todos los martes y el propio trabajo se salta las semanas impares.
-    - cron: '0 7 * * 2'
+    # Todos los días a las 07:00 UTC, que son las 02:00 en Colombia: el artículo
+    # está publicado antes de que empiece la jornada.
+    - cron: '0 7 * * *'
   workflow_dispatch:
 
 permissions:
@@ -33,21 +36,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: ¿Toca esta semana?
-        id: toca
-        # En un disparo a mano siempre toca. En el automático, solo las semanas
-        # pares del año, que es lo más parecido a «cada quince días» que se
-        # puede expresar sin guardar estado en ningún sitio.
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ $(( $(date -u +%V) % 2 )) -eq 0 ]; then
-            echo "seguir=si" >> "$GITHUB_OUTPUT"
-          else
-            echo "Semana impar: le toca al observatorio, no al redactor."
-            echo "seguir=no" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Comprobar que hay informe y con qué autenticarse
-        if: steps.toca.outputs.seguir == 'si'
         run: |
           if [ -z "${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}" ]; then
             echo "::error::Falta el secreto CLAUDE_CODE_OAUTH_TOKEN. Genéralo con 'claude setup-token'."
@@ -59,50 +48,63 @@ jobs:
           fi
 
       - uses: anthropics/claude-code-action@v1
-        if: steps.toca.outputs.seguir == 'si'
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           prompt: 'Lee automatizacion/redaccion.md y haz exactamente lo que dice ese documento. No hagas nada más.'
           claude_args: |
             --max-turns 80
-            --allowedTools "WebSearch,WebFetch,Read,Write,Edit,Glob,Grep"
+            --allowedTools "WebSearch,WebFetch,Read,Write,Edit,Glob,Grep,Bash(node scripts/validar-articulo.mjs:*)"
 
-      - name: Comprobar el borrador antes de guardarlo
-        if: steps.toca.outputs.seguir == 'si'
-        # Un JSON roto o un artículo marcado como publicado no pueden llegar al
-        # repositorio. Lo primero rompe el panel; lo segundo publica en la web
-        # algo que no ha leído nadie, que es justo lo que este diseño evita.
+      - name: El guardián editorial
+        # Lo único que separa lo que escribió el modelo de lo que lee un cliente.
         run: |
           set -euo pipefail
-          NUEVOS=$(git ls-files --others --exclude-standard src/content/insights/)
+          NUEVOS=$(git ls-files --others --modified --exclude-standard src/content/insights/)
           if [ -z "$NUEVOS" ]; then
-            echo "::warning::El redactor no dejó ningún borrador. Revisa el registro."
+            echo "Hoy no había ningún hueco sin cubrir y no se escribió nada. Es un resultado válido."
+            echo "Sin artículo hoy: no había tema nuevo." >> $GITHUB_STEP_SUMMARY
             exit 0
           fi
-          for f in $NUEVOS; do
-            node -e "
-              const a = JSON.parse(require('fs').readFileSync('$f', 'utf8'));
-              if (a.estado !== 'borrador') { console.error('$f no está marcado como borrador'); process.exit(1); }
-              for (const l of ['es', 'en']) {
-                const t = a[l] || {};
-                if (!t.titulo || !t.slug || !(t.bloques || []).length) { console.error('$f: falta título, dirección o cuerpo en ' + l); process.exit(1); }
-                if ((t.bloques || []).some((b) => b.tipo === 'imagen')) { console.error('$f: lleva un bloque de imagen, que apunta a un archivo que no existe'); process.exit(1); }
-              }
-              if (!/^\d{4}-\d{2}-\d{2}\$/.test(a.fecha || '')) { console.error('$f: fecha mal formada'); process.exit(1); }
-              console.log('$f — ' + a.es.titulo);
-            "
-          done
+          echo "Revisando: $NUEVOS"
+          node scripts/validar-articulo.mjs $NUEVOS
+          echo "ARTICULOS<<EOF" >> "$GITHUB_ENV"
+          echo "$NUEVOS" >> "$GITHUB_ENV"
+          echo "EOF" >> "$GITHUB_ENV"
+
+      - name: Publicar
+        if: env.ARTICULOS != ''
+        run: |
+          set -euo pipefail
           git add src/content/insights/
-          git -c user.name='Redactor BECOME' \
+          git -c user.name='Carlos Andrés Ramírez' \
               -c user.email='hello@meetbecome.com' \
-              commit -m "Borrador de artículo (sin publicar, para revisar en /admin)"
+              commit -m "Artículo del $(date -u +%Y-%m-%d)"
           git push
           {
-            echo "### Borrador listo para revisar"
+            echo "### Publicado"
+            for f in $ARTICULOS; do node -e "const a=require('./$f');console.log('- '+a.es.titulo+' · '+a.estado)"; done
             echo ""
-            echo "Está en el panel: https://meetbecome.com/admin"
-            echo "No se ha publicado — hay que abrirlo, revisarlo y decidir."
+            echo "Estará en la web en unos minutos: https://meetbecome.com/es/insights"
           } >> $GITHUB_STEP_SUMMARY
+
+      - name: Desplegar el sitio
+        if: env.ARTICULOS != ''
+        # El push de arriba usa GITHUB_TOKEN, y GitHub no dispara workflows con
+        # commits hechos con ese token: sin esta llamada el artículo se queda en
+        # el repositorio y no llega nunca a la web.
+        env:
+          GH_TOKEN: ${{ secrets.PANEL_TOKEN }}
+        run: |
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "::warning::Sin PANEL_TOKEN no puedo lanzar el despliegue. El artículo está en el repositorio pero no en la web hasta el siguiente despliegue."
+            exit 0
+          fi
+          curl -fsS -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/deploy.yml/dispatches" \
+            -d '{"ref":"${{ github.event.repository.default_branch }}"}' \
+            && echo "Despliegue lanzado."
 
       - name: Si algo falló
         if: failure()

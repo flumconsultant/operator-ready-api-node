@@ -31,7 +31,8 @@ Tres frases como mucho. Qué ha cambiado respecto al informe anterior, si lo hay
 Tabla: pregunta | ¿aparece BECOME? | página nuestra | quién domina la respuesta
 
 ## Huecos, por prioridad
-Para cada hueco, y como máximo cinco:
+Ocho como mínimo si los hay, porque de aquí sale un artículo al día durante
+toda la semana. Para cada uno:
 - **La pregunta**, tal cual la haría una persona
 - Por qué importa: quién la hace y qué presupuesto mueve
 - Quién la responde hoy y qué le falta a esa respuesta
@@ -40,7 +41,9 @@ Para cada hueco, y como máximo cinco:
 - Qué formato pide (perspective, field-note, framework, executive-brief)
 
 ## Recomendación
-Un solo hueco, el siguiente que hay que escribir, y en una frase por qué ese.
+El orden en que hay que escribirlos, de hoy en adelante. Una línea por hueco.
+Quien redacta toma el primero que no esté ya cubierto en src/content/insights/,
+así que el orden importa: lo más valioso primero.
 ```
 
 ## Reglas que no se negocian
