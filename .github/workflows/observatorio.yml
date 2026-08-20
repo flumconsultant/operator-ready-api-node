@@ -11,11 +11,14 @@
 name: Observatorio de posicionamiento
 
 on:
-  schedule:
-    # Domingos a las 05:00 UTC. Va por delante del redactor, que publica todos
-    # los días a las 07:00: el domingo se llena la cola de la semana y de lunes
-    # a domingo se consume, un hueco al día.
-    - cron: '0 5 * * 0'
+  # El horario ya no vive aquí. La cadencia diaria la lleva una Routine de
+  # Claude Code, que corre con la suscripción y no necesita el token de CI:
+  # quien opera este sitio trabaja desde el navegador y no tiene la CLI
+  # instalada, así que pedirle un `claude setup-token` era pedirle que montara
+  # un taller para apretar un tornillo.
+  #
+  # Este workflow se queda como camino manual: si algún día existe el secreto
+  # CLAUDE_CODE_OAUTH_TOKEN, se lanza desde la pestaña Actions y hace lo mismo.
   workflow_dispatch:
 
 permissions:
