@@ -111,9 +111,68 @@ function Encuadre({ img, alConfirmar, alCancelar, ocupado }) {
 
   const pon = (k) => (e) => setEnc({ ...enc, [k]: Number(e.target.value) });
 
+  /* Arrastrar la foto dentro del círculo.
+   *
+   * Es un añadido, no el único camino: los deslizadores siguen ahí y hacen lo
+   * mismo con el teclado. Una interacción que solo exista arrastrando deja
+   * fuera a quien no usa ratón, y la norma pide ofrecer siempre la
+   * alternativa.
+   *
+   * La cuenta: un píxel movido en la vista previa son `corte / PREVIA` píxeles
+   * de la imagen original. Y el signo se invierte, porque mover la foto hacia
+   * la derecha es mover la ventana de recorte hacia la izquierda. */
+  const arrastre = React.useRef(null);
+
+  const empezar = (e) => {
+    e.currentTarget.setPointerCapture(e.pointerId);
+    arrastre.current = { px: e.clientX, py: e.clientY, enc };
+  };
+
+  const mover = (e) => {
+    const a = arrastre.current;
+    if (!a) return;
+    const corte = Math.min(img.width, img.height) / a.enc.zoom;
+    const escala = corte / PREVIA;
+    const holguraX = img.width - corte;
+    const holguraY = img.height - corte;
+    /* Sin holgura no hay nada que mover en ese eje: dividir daría infinito y
+       el encuadre saltaría al borde a la primera. */
+    const limita = (v) => Math.min(1, Math.max(0, v));
+    setEnc({
+      ...a.enc,
+      x: holguraX > 0 ? limita(a.enc.x - ((e.clientX - a.px) * escala) / holguraX) : a.enc.x,
+      y: holguraY > 0 ? limita(a.enc.y - ((e.clientY - a.py) * escala) / holguraY) : a.enc.y,
+    });
+  };
+
+  const soltar = () => { arrastre.current = null; };
+
   return (
     <div style={{ display: 'grid', gap: 12, justifyItems: 'center' }}>
-      <canvas ref={lienzo} width={PREVIA} height={PREVIA} style={{ width: PREVIA, height: PREVIA, display: 'block' }} />
+      <canvas
+        ref={lienzo}
+        width={PREVIA}
+        height={PREVIA}
+        onPointerDown={empezar}
+        onPointerMove={mover}
+        onPointerUp={soltar}
+        onPointerCancel={soltar}
+        style={{
+          width: PREVIA, height: PREVIA, display: 'block',
+          cursor: 'grab',
+          /* Sin esto, arrastrar con el dedo desplaza la página en vez de
+             mover la foto. */
+          touchAction: 'none',
+          userSelect: 'none',
+        }}
+      />
+      <p style={{ margin: '-4px 0 0', font: 'var(--type-body)', fontSize: 12, color: 'var(--text-faint)', textAlign: 'center', maxWidth: PREVIA }}>
+        Arrastra la foto para colocarla, o usa los deslizadores.
+        {img.width <= LADO && (
+          <> Estás recolocando la foto ya guardada: si necesitas recuperar algo
+          que quedó fuera, sube el archivo original.</>
+        )}
+      </p>
 
       <div style={{ width: '100%', maxWidth: PREVIA, display: 'grid', gap: 10 }}>
         <label style={{ display: 'grid', gap: 4 }}>
@@ -182,6 +241,21 @@ function Ficha({ entrada, alGuardar, alCerrar }) {
     try { setPorEncuadrar(await cargarImagen(archivo)); }
     catch (err) { setError(err.message); }
     finally { campo.current.value = ''; }
+  };
+
+  /* Reencuadrar lo que ya está guardado, sin volver a buscar el archivo.
+     Trabaja sobre la copia de 400px que hay en el repositorio, no sobre el
+     original: se puede recolocar y acercar dentro de lo que se guardó, pero lo
+     que se recortó la primera vez no vuelve. Por eso el aviso de abajo manda
+     subir el archivo original cuando el reencuadre es grande. */
+  const reencuadrar = async () => {
+    setError('');
+    try {
+      const img = new Image();
+      img.src = f.foto + '?v=' + Date.now();
+      await img.decode();
+      setPorEncuadrar(img);
+    } catch { setError('No se pudo abrir la foto guardada. Sube el archivo otra vez.'); }
   };
 
   const confirmarFoto = async (datos) => {
@@ -253,9 +327,21 @@ function Ficha({ entrada, alGuardar, alCerrar }) {
             <input ref={campo} type="file" accept="image/webp,image/jpeg,image/png" onChange={elegirFoto} style={{ display: 'none' }} id="foto" />
             <label htmlFor="foto" style={{ display: 'inline-block', marginTop: 8, cursor: 'pointer' }}>
               <span style={{ font: 'var(--type-mono)', fontSize: 12, color: 'var(--text-accent)', textDecoration: 'underline' }}>
-                {f.foto ? 'Cambiar' : 'Subir foto'}
+                {f.foto ? 'Subir otra' : 'Subir foto'}
               </span>
             </label>
+            {f.foto && (
+              <>
+                <span aria-hidden="true" style={{ color: 'var(--text-faint)', margin: '0 6px' }}>·</span>
+                <button
+                  type="button"
+                  onClick={reencuadrar}
+                  style={{ border: 0, background: 'none', padding: 0, cursor: 'pointer', font: 'var(--type-mono)', fontSize: 12, color: 'var(--text-accent)', textDecoration: 'underline' }}
+                >
+                  Recolocar
+                </button>
+              </>
+            )}
             </>
             )}
           </div>
