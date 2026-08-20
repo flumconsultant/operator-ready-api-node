@@ -180,6 +180,10 @@ if ($accion === 'alta') {
             . htmlspecialchars($t['boton']) . '</a></p>'
             . '<p style="color:#5b6478;font-size:14px">' . htmlspecialchars($t['ignora']) . '</p></div>');
         correo_cerrar($fp);
+        /* Se registra también el envío que sale bien. Sin esta línea, un
+           registro vacío no distingue «se envió sin problema» de «no se
+           intentó siquiera», y son dos averías completamente distintas. */
+        registrar('alta ' . $email . ': correo de confirmación aceptado por el servidor');
     } catch (ErrorDeCorreo $e) {
         registrar('alta ' . $email . ': ' . $e->getMessage());
         salir(500, ['ok' => false, 'error' => 'correo',

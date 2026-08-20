@@ -124,9 +124,29 @@ export default function Suscriptores({ alCerrar }) {
             </div>
           )}
 
+          {/* El registro de envíos. Es lo que responde a «se grabó pero no me
+              llegó el correo»: si aquí hay una línea con el motivo, el fallo es
+              del envío; si dice «aceptado por el servidor», el correo salió y
+              el problema está en la bandeja de quien lo recibe. */}
+          <div style={{ background: marco.papel, border: marco.linea, borderRadius: 2, padding: 16 }}>
+            <Etiqueta>Últimos envíos</Etiqueta>
+            {datos.fallos?.length ? (
+              <pre style={{
+                margin: '8px 0 0', font: 'var(--type-mono)', fontSize: 12, lineHeight: 1.6,
+                color: 'var(--text-body)', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere',
+              }}>
+                {datos.fallos.join('\n')}
+              </pre>
+            ) : (
+              <p style={{ margin: '6px 0 0', font: 'var(--type-body)', fontSize: 14, color: 'var(--text-muted)' }}>
+                No hay ningún registro de envío todavía.
+              </p>
+            )}
+          </div>
+
           <p style={{ margin: 0, font: 'var(--type-body)', fontSize: 13, color: 'var(--text-faint)' }}>
-            Se muestran los 50 más recientes. Muchos pendientes seguidos suelen significar que el correo de
-            confirmación está cayendo en spam, no que la gente se arrepienta.
+            Se muestran los 50 suscriptores más recientes. Muchos pendientes seguidos suelen significar que el
+            correo de confirmación está cayendo en spam, no que la gente se arrepienta.
           </p>
         </>
       )}

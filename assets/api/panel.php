@@ -437,7 +437,22 @@ if ($accion === 'suscriptores') {
          FROM suscriptores ORDER BY alta_en DESC LIMIT 50'
     )->fetchAll(PDO::FETCH_ASSOC);
 
-    responder(200, ['ok' => true, 'configurado' => true, 'totales' => $totales, 'ultimos' => $ultimos]);
+    /* Los fallos de envío, que es lo que responde a la pregunta de verdad:
+       «se grabó pero no llegó el correo, ¿por qué?». Ese registro está fuera
+       del alcance de la web —lo bloquea .htaccess— y hasta ahora solo se podía
+       leer entrando por el gestor de archivos del hosting.
+
+       Un registro vacío también dice algo, y algo distinto: significa que el
+       servidor de correo aceptó el mensaje, así que no se perdió aquí. Ahí la
+       respuesta es la carpeta de spam, no el código. */
+    $fallos = [];
+    $log = __DIR__ . '/suscripcion.log';
+    if (is_readable($log)) {
+        $lineas = @file($log, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [];
+        $fallos = array_slice($lineas, -15);
+    }
+
+    responder(200, ['ok' => true, 'configurado' => true, 'totales' => $totales, 'ultimos' => $ultimos, 'fallos' => $fallos]);
 }
 
 responder(400, ['ok' => false, 'error' => 'accion_desconocida']);
