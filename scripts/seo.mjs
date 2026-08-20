@@ -42,6 +42,14 @@ const enCasos = await import('../src/content/soluciones.en.js');
    hreflang apuntaría a /en/solutions/escalar-ia, que no existe. */
 const { SLUG_ES_A_EN, SLUG_EN_A_ES } = await import('../src/content/soluciones-slugs.js');
 const { IMAGENES: CATALOGO } = await import('../src/content/imagenes.js');
+/* Las fichas de autor se leen del directorio y no por import.meta.glob, que
+   solo existe dentro de Vite. */
+const FICHAS = Object.fromEntries(
+  readdirSync(join(ROOT, 'src/content/autores'))
+    .filter((f) => f.endsWith('.json'))
+    .map((f) => JSON.parse(read(`src/content/autores/${f}`)))
+    .map((a) => [a.nombre, a]),
+);
 
 /* ------------------------------------------------------------- artículos */
 /*
@@ -190,7 +198,22 @@ const blogPosting = (a, lang, url) => {
        asistente pueden reconocer experiencia en un nombre comercial. Si algún
        día firma la marca, se vuelve a declarar como organización. */
     author: a.autor && a.autor !== BRAND
-      ? { '@type': 'Person', name: a.autor, url: `${SITE}/es/nosotros` }
+      ? (() => {
+        const f = FICHAS[a.autor];
+        return {
+          '@type': 'Person',
+          name: a.autor,
+          url: `${SITE}/${lang}/${lang === 'es' ? 'nosotros' : 'about'}`,
+          ...(f?.[lang]?.rol ? { jobTitle: f[lang].rol } : {}),
+          ...(f?.[lang]?.bio ? { description: f[lang].bio } : {}),
+          ...(f?.foto ? { image: SITE + f.foto } : {}),
+          /* sameAs es la pieza que convierte un nombre en una identidad. Sin
+             ella, «Carlos Andrés Ramírez» es una cadena de texto que no se
+             puede contrastar con nada; con ella, un buscador o un asistente
+             puede unir el artículo con una trayectoria pública. */
+          ...(f?.linkedin ? { sameAs: [f.linkedin] } : {}),
+        };
+      })()
       : { '@type': 'Organization', name: BRAND, url: SITE },
     publisher: { '@type': 'Organization', name: BRAND, url: SITE, logo: `${SITE}/logo/icon-white.svg` },
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },

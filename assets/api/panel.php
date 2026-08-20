@@ -37,6 +37,9 @@ header('Cache-Control: no-store');
 const SESION_HORAS     = 12;
 const COOKIE           = 'become_panel';
 const RUTA_ARTICULOS   = 'src/content/insights';
+const RUTA_AUTORES     = 'src/content/autores';
+const RUTA_FOTOS       = 'assets/images/autores';
+const FOTO_MAX_BYTES   = 3_000_000;
 const INTENTOS_MAX     = 8;      // intentos de entrar...
 const INTENTOS_SECS    = 900;    // ...por cada cuarto de hora e IP
 
@@ -292,6 +295,106 @@ if ($accion === 'borrar') {
         responder(502, ['ok' => false, 'error' => 'github', 'mensaje' => $r['datos']['message'] ?? "GitHub respondió {$r['codigo']}."]);
     }
     responder(200, ['ok' => true]);
+}
+
+
+/* ------------------------------------------------------------- autores */
+
+/** Un identificador de autor: minúsculas, números y guiones. Nada más. */
+function autor_valido(string $id): bool {
+    return (bool) preg_match('/^[a-z0-9]+(-[a-z0-9]+)*$/', $id) && strlen($id) <= 80;
+}
+
+if ($accion === 'listar-autores') {
+    $r = github($config, RUTA_AUTORES . '?ref=' . rawurlencode($rama));
+    if ($r['codigo'] === 404) responder(200, ['ok' => true, 'autores' => []]);
+    if ($r['codigo'] >= 400) {
+        responder(502, ['ok' => false, 'error' => 'github', 'mensaje' => $r['datos']['message'] ?? "GitHub respondió {$r['codigo']}."]);
+    }
+    $salida = [];
+    foreach ($r['datos'] as $e) {
+        if (($e['type'] ?? '') !== 'file' || !str_ends_with((string) $e['name'], '.json')) continue;
+        $f = github($config, 'contents/' . rawurlencode(RUTA_AUTORES . '/' . $e['name']) . '?ref=' . rawurlencode($rama));
+        if ($f['codigo'] >= 400) continue;
+        $salida[] = [
+            'archivo' => $e['name'],
+            'sha'     => $f['datos']['sha'] ?? null,
+            'ficha'   => json_decode((string) base64_decode(str_replace("\n", '', (string) $f['datos']['content']), true), true),
+        ];
+    }
+    responder(200, ['ok' => true, 'autores' => $salida]);
+}
+
+if ($accion === 'guardar-autor') {
+    $ficha = $cuerpo['ficha'] ?? null;
+    $id    = is_array($ficha) ? (string) ($ficha['id'] ?? '') : '';
+    if (!is_array($ficha) || !autor_valido($id) || empty($ficha['nombre'])) {
+        responder(400, ['ok' => false, 'error' => 'datos', 'mensaje' => 'La ficha necesita un identificador válido y un nombre.']);
+    }
+    $r = github($config, 'contents/' . rawurlencode(RUTA_AUTORES . '/' . $id . '.json'), 'PUT', [
+        'message' => sprintf('Ficha de autor: %s (desde el panel, por %s)', $ficha['nombre'], $nombre),
+        'content' => base64_encode(json_encode($ficha, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n"),
+        'branch'  => $rama,
+        ...(!empty($cuerpo['sha']) ? ['sha' => (string) $cuerpo['sha']] : []),
+    ]);
+    if ($r['codigo'] === 409 || $r['codigo'] === 422) {
+        responder(409, ['ok' => false, 'error' => 'conflicto', 'mensaje' => 'Alguien modificó esta ficha mientras la editabas. Recárgala y repite el cambio.']);
+    }
+    if ($r['codigo'] >= 400) {
+        responder(502, ['ok' => false, 'error' => 'github', 'mensaje' => $r['datos']['message'] ?? "GitHub respondió {$r['codigo']}."]);
+    }
+    responder(200, ['ok' => true, 'sha' => $r['datos']['content']['sha'] ?? null]);
+}
+
+if ($accion === 'subir-foto') {
+    $id   = (string) ($cuerpo['id'] ?? '');
+    $dato = (string) ($cuerpo['datos'] ?? '');
+    if (!autor_valido($id)) responder(400, ['ok' => false, 'error' => 'datos', 'mensaje' => 'Identificador de autor no válido.']);
+
+    /* Llega como data URL desde el navegador. Se separa la cabecera y se
+       decodifica en estricto: un base64 con basura dentro no se acepta a
+       medias, se rechaza. */
+    $bruto = base64_decode(preg_replace('#^data:[^;]+;base64,#', '', $dato), true);
+    if ($bruto === false || $bruto === '') {
+        responder(400, ['ok' => false, 'error' => 'datos', 'mensaje' => 'La imagen no se pudo leer.']);
+    }
+    if (strlen($bruto) > FOTO_MAX_BYTES) {
+        responder(413, ['ok' => false, 'error' => 'grande', 'mensaje' => 'La foto pesa más de 3 MB. Redúcela y vuelve a intentarlo.']);
+    }
+
+    /* La comprobación que importa: que el archivo SEA una imagen, no que se
+       llame como una. Fiarse de la extensión o del tipo que declara el
+       navegador es fiarse de quien envía; getimagesizefromstring lee los bytes
+       y devuelve false para cualquier cosa que no sea una imagen de verdad. */
+    $info = @getimagesizefromstring($bruto);
+    $EXT = [IMAGETYPE_WEBP => 'webp', IMAGETYPE_JPEG => 'jpg', IMAGETYPE_PNG => 'png'];
+    if ($info === false || !isset($EXT[$info[2]])) {
+        responder(400, ['ok' => false, 'error' => 'formato', 'mensaje' => 'Solo se aceptan imágenes WebP, JPEG o PNG.']);
+    }
+    if ($info[0] < 200 || $info[1] < 200) {
+        responder(400, ['ok' => false, 'error' => 'pequena', 'mensaje' => "La foto es de {$info[0]}x{$info[1]} y se ve borrosa. Mínimo 200x200."]);
+    }
+
+    $archivo = $id . '.' . $EXT[$info[2]];
+    $camino  = RUTA_FOTOS . '/' . $archivo;
+
+    /* Si ya había una foto con este nombre hay que mandar su sha, o GitHub
+       rechaza la escritura por conflicto. */
+    $previo = github($config, 'contents/' . rawurlencode($camino) . '?ref=' . rawurlencode($rama));
+    $sha    = $previo['codigo'] === 200 ? ($previo['datos']['sha'] ?? null) : null;
+
+    $r = github($config, 'contents/' . rawurlencode($camino), 'PUT', [
+        'message' => sprintf('Foto de %s (desde el panel, por %s)', $id, $nombre),
+        'content' => base64_encode($bruto),
+        'branch'  => $rama,
+        ...($sha ? ['sha' => $sha] : []),
+    ]);
+    if ($r['codigo'] >= 400) {
+        responder(502, ['ok' => false, 'error' => 'github', 'mensaje' => $r['datos']['message'] ?? "GitHub respondió {$r['codigo']}."]);
+    }
+    /* La ruta pública, que es distinta de dónde vive el archivo: assets/ es la
+       raíz del sitio publicado. */
+    responder(200, ['ok' => true, 'foto' => '/images/autores/' . $archivo, 'ancho' => $info[0], 'alto' => $info[1]]);
 }
 
 responder(400, ['ok' => false, 'error' => 'accion_desconocida']);

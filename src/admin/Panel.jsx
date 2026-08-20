@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import * as api from './api.js';
 import Editor, { ARTICULO_NUEVO, problemas } from './Editor.jsx';
+import Autores from './Autores.jsx';
 import { Etiqueta, Texto, Boton, Fila, Aviso, marco } from './piezas.jsx';
 
 /**
@@ -191,6 +192,11 @@ export default function Panel() {
 
   const cerrar = () => { setAbierto(null); sessionStorage.removeItem(ESTADO_CLAVE); setNota(''); };
 
+  /* La pantalla de autores es una vista aparte y no una pestaña dentro del
+     editor: se toca una vez cada muchos meses, y meterla junto a lo que se usa
+     todos los días solo estorba. */
+  const [vista, setVista] = React.useState('articulos');
+
   const cerrarSesion = async () => {
     await api.salir().catch(() => {});
     sessionStorage.removeItem(ESTADO_CLAVE);
@@ -264,6 +270,9 @@ export default function Panel() {
               </>
             ) : (
               <>
+                <Boton variante="quieto" onClick={() => setVista(vista === 'autores' ? 'articulos' : 'autores')}>
+                  {vista === 'autores' ? 'Artículos' : 'Autores'}
+                </Boton>
                 <Link to="/es/insights" style={{ font: 'var(--type-body)', fontSize: 14, color: 'var(--text-accent)' }}>Ver Insights</Link>
                 <Boton variante="quieto" onClick={cerrarSesion}>Salir</Boton>
               </>
@@ -276,7 +285,11 @@ export default function Panel() {
         <Aviso tono="mal">{error}</Aviso>
         <Aviso tono="bien">{nota}</Aviso>
 
-        {abierto ? (
+        {vista === 'autores' && !abierto ? (
+          <div style={{ marginTop: 16 }}>
+            <Autores alCerrar={() => setVista('articulos')} />
+          </div>
+        ) : abierto ? (
           <div style={{ marginTop: 16 }}>
             <Editor
               articulo={abierto.articulo}

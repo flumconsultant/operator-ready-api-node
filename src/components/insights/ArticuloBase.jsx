@@ -7,6 +7,7 @@ import { Section, Kicker, Headline, Lead, PrimaryCTA, TextCTA } from '../ui.jsx'
 import Bloques from './Bloques.jsx';
 import Compartir from './Compartir.jsx';
 import { SITE } from '../../seo-meta.js';
+import { autorDe } from '../../content/autores.js';
 import { ARTICULOS, PILARES, FORMATOS, fechaLegible, minutosDeLectura } from '../../content/insights.js';
 
 /**
@@ -47,6 +48,52 @@ const COPIA = {
 };
 
 const COLUMNA = { maxWidth: 'var(--maxw-articulo)', marginInline: 'auto' };
+
+
+/**
+ * La firma del artículo.
+ *
+ * Con foto cuando la ficha la tiene, y sin ella cuando no: un círculo gris con
+ * las iniciales es peor que el nombre solo, porque ocupa el sitio de una cara
+ * sin serlo. Si algún día hay foto, aparece; mientras tanto, no se finge.
+ */
+function Firma({ autor, fecha, minutos, lang, t }) {
+  const ficha = autorDe(autor);
+  const meta = (
+    <>
+      <time dateTime={fecha}>{fechaLegible(fecha, lang)}</time>
+      {' · '}{t.lectura(minutos)}
+    </>
+  );
+
+  if (!ficha?.foto) {
+    return (
+      <p style={{ margin: 'var(--space-8) 0 0', font: 'var(--type-mono)', color: 'var(--slate-400)' }}>
+        {meta}{autor ? ` · ${autor}` : ''}
+      </p>
+    );
+  }
+
+  return (
+    <div style={{ margin: 'var(--space-8) 0 0', display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
+      <img
+        src={ficha.foto}
+        alt={autor}
+        width={88}
+        height={88}
+        loading="lazy"
+        decoding="async"
+        style={{ width: 44, height: 44, borderRadius: '50%', objectFit: 'cover', flex: 'none', background: 'var(--navy-900)' }}
+      />
+      <div style={{ minWidth: 0 }}>
+        <p style={{ margin: 0, font: 'var(--type-body)', color: 'var(--slate-100)' }}>{autor}</p>
+        <p style={{ margin: 0, font: 'var(--type-mono)', fontSize: 12, color: 'var(--slate-400)' }}>
+          {ficha[lang]?.rol ? <>{ficha[lang].rol}{' · '}</> : null}{meta}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 export default function ArticuloBase({ lang }) {
   const { slug } = useParams();
@@ -89,11 +136,7 @@ export default function ArticuloBase({ lang }) {
           <Kicker dark>{[pilar, formato].filter(Boolean).join(' · ')}</Kicker>
           <Headline as="h1" dark style={{ maxWidth: 'none' }}>{a.titulo}</Headline>
           {a.entradilla && <Lead dark>{a.entradilla}</Lead>}
-          <p style={{ margin: 'var(--space-8) 0 0', font: 'var(--type-mono)', color: 'var(--slate-400)' }}>
-            <time dateTime={art.fecha}>{fechaLegible(art.fecha, lang)}</time>
-            {' · '}{t.lectura(minutos)}
-            {art.autor ? ` · ${art.autor}` : ''}
-          </p>
+          <Firma autor={art.autor} fecha={art.fecha} minutos={minutos} lang={lang} t={t} />
         </div>
       </Section>
 

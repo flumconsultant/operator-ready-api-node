@@ -53,3 +53,6 @@ export const quienSoy = () => llamar('yo');
 export const listar = () => llamar('listar').then((d) => d.articulos || []);
 export const guardar = (datos) => llamar('guardar', datos);
 export const borrar = (datos) => llamar('borrar', datos);
+export const listarAutores = () => llamar('listar-autores').then((d) => d.autores || []);
+export const guardarAutor = (datos) => llamar('guardar-autor', datos);
+export const subirFoto = (datos) => llamar('subir-foto', datos);
