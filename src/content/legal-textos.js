@@ -173,7 +173,7 @@ const PRIVACIDAD_ES = [
     'Datos técnicos: dirección IP y momento del envío, registrados por el servidor para limitar abuso del formulario.',
     'Comunicaciones: correos, respuestas y preferencias de suscripción.',
   ),
-  ...p('No pedimos datos sensibles a través del formulario público. Este sitio no usa analítica ni herramientas de seguimiento, así que no construimos perfiles de navegación.'),
+  ...p('No pedimos datos sensibles a través del formulario público. Usamos Google Analytics para medir el tráfico, solo si lo aceptas, y no cruzamos esos datos con los del formulario ni con la lista de correo: no construimos perfiles de personas identificadas.'),
 
   h('De dónde vienen'),
   ...p('Directamente de ti o de un representante autorizado de tu empresa. No usamos bases de datos compradas, extraídas ni cedidas.'),
@@ -262,19 +262,26 @@ const PRIVACIDAD_ES = [
 const COOKIES_ES = [
   h('La versión corta'),
   ...p(
-    'Este sitio no usa analítica, ni píxeles publicitarios, ni scripts de terceros. No hay cookies de marketing, no medimos tu navegación y no compartimos tu comportamiento con nadie.',
-    'Por eso no verás un aviso pidiéndote permiso: no hay nada opcional que activar. Un banner que pide permiso para cookies que no existen no protege a nadie, solo entrena a la gente a aceptar sin leer.',
+    'Este sitio usa Google Analytics para saber qué páginas se leen y desde dónde. No hay píxeles publicitarios, no hay cookies de marketing y no compartimos tu comportamiento con anunciantes.',
+    'La medición no se activa sola: la etiqueta arranca con todos los permisos denegados y no escribe una sola cookie hasta que la aceptas. Rechazar cuesta un clic, el mismo que aceptar, y el sitio funciona igual.',
+    'Puedes cambiar de opinión cuando quieras desde «Configurar cookies», al pie de cualquier página. Si rechazas después de haber aceptado, las cookies que se hubieran creado se borran en ese momento.',
   ),
 
   h('Qué guardamos y por qué'),
-  ...p('Lo único que este sitio guarda en tu navegador es lo que hace falta para que funcione lo que has pedido:'),
+  ...p('Las tres primeras son necesarias y existen siempre. Las de Google solo aparecen si aceptas la medición:'),
   filaAlmacenamiento('es'),
 
   h('Cómo borrarlo'),
   ...p('Todo lo anterior se borra desde los ajustes de tu navegador, en la opción de eliminar datos de sitios. No hace falta pedírnoslo ni esperar respuesta. Borrarlo no rompe nada: como mucho perderás un borrador del formulario a medio escribir.'),
 
+  h('Dónde van los datos de la medición'),
+  ...p(
+    'A Google Ireland Limited y a Google LLC, en Estados Unidos. Se envían la página vista, tu dirección IP truncada, el tipo de dispositivo, el navegador y el país. No se envía nada de lo que escribas en el formulario ni tu dirección de suscripción.',
+    'La base de esa transferencia es tu consentimiento, y por eso puedes retirarlo cuando quieras sin dar explicaciones.',
+  ),
+
   h('Si esto cambia'),
-  ...p('Si algún día añadimos analítica o cualquier tecnología no esencial, esta página lo dirá antes de activarla y aparecerá un panel para aceptarla, rechazarla o configurarla por categorías, con las opciones igual de visibles. Hasta entonces, no hay nada que configurar.'),
+  ...p('Si añadimos cualquier otra tecnología no esencial, esta página lo dirá antes de activarla y volveremos a preguntarte, con las opciones igual de visibles. Lo que no haremos nunca es encender algo antes de preguntar.'),
 ];
 
 /* -------------------------------------------------------------- english */
@@ -414,7 +421,7 @@ const PRIVACIDAD_EN = [
     'Technical data: IP address and time of submission, logged by the server to limit form abuse.',
     'Communications: emails, replies and subscription preferences.',
   ),
-  ...p('We do not request sensitive data through the public form. This site uses no analytics and no tracking tools, so we build no browsing profiles.'),
+  ...p('We do not request sensitive data through the public form. We use Google Analytics to measure traffic, only if you accept it, and we do not combine that data with the form or the mailing list: we build no profiles of identified people.'),
 
   h('Where it comes from'),
   ...p('Directly from you or an authorized representative of your company. We do not use purchased, scraped or transferred databases.'),
@@ -503,19 +510,26 @@ const PRIVACIDAD_EN = [
 const COOKIES_EN = [
   h('The short version'),
   ...p(
-    'This site uses no analytics, no advertising pixels and no third-party scripts. There are no marketing cookies, we do not measure your browsing and we share your behaviour with nobody.',
-    'That is why you will not see a consent banner: there is nothing optional to switch on. A banner asking permission for cookies that do not exist protects nobody; it just trains people to accept without reading.',
+    'This site uses Google Analytics to know which pages get read and where from. There are no advertising pixels, no marketing cookies, and we do not share your behaviour with advertisers.',
+    'Measurement does not switch itself on: the tag starts with every permission denied and writes no cookie at all until you accept. Rejecting takes one click, the same as accepting, and the site works the same.',
+    'You can change your mind at any time from “Cookie settings” in the footer of any page. If you reject after having accepted, any cookies created in the meantime are deleted right then.',
   ),
 
   h('What we store and why'),
-  ...p('The only things this site stores in your browser are what is needed for what you asked it to do:'),
+  ...p('The first three are necessary and always present. The Google ones appear only if you accept measurement:'),
   filaAlmacenamiento('en'),
 
   h('How to delete it'),
   ...p('All of the above can be cleared from your browser settings, under site data. You do not need to ask us or wait for a reply. Clearing it breaks nothing: at most you lose a half-written form draft.'),
 
+  h('Where the measurement data goes'),
+  ...p(
+    'To Google Ireland Limited and Google LLC, in the United States. What is sent is the page viewed, your truncated IP address, device type, browser and country. Nothing you type into the form and no subscription address is ever sent.',
+    'The basis for that transfer is your consent, which is why you can withdraw it at any time without giving a reason.',
+  ),
+
   h('If this changes'),
-  ...p('If we ever add analytics or any non-essential technology, this page will say so before it is switched on, and a panel will appear to accept, reject or configure it by category, with the options equally visible. Until then, there is nothing to configure.'),
+  ...p('If we add any other non-essential technology, this page will say so before it is switched on and we will ask you again, with the options equally visible. What we will never do is switch something on before asking.'),
 ];
 
 export const LEGALES = {

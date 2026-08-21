@@ -101,7 +101,7 @@ export const PAGES = {
   ],
   '/es/cookies': [
     'Política de cookies | BECOME',
-    'Qué guarda este sitio en tu navegador. Sin analítica, sin píxeles y sin scripts de terceros.',
+    'Qué guarda este sitio en tu navegador, cuánto dura cada cosa y cómo aceptar o rechazar la medición con Google Analytics en un clic.',
     '/en/cookies',
   ],
 
@@ -168,7 +168,7 @@ export const PAGES = {
   ],
   '/en/cookies': [
     'Cookie Policy | BECOME',
-    'What this site stores in your browser. No analytics, no pixels and no third-party scripts.',
+    'What this site stores in your browser, how long each item lasts, and how to accept or reject Google Analytics measurement in one click.',
     '/es/cookies',
   ],
   '/en/terms': [

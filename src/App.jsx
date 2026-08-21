@@ -7,6 +7,7 @@ import RouteLoader from './components/RouteLoader.jsx';
 import Invitacion from './components/suscripcion/Invitacion.jsx';
 import Cookies from './components/privacidad/Cookies.jsx';
 import { PAGES, SITE } from './seo-meta.js';
+import { arrancarAnalitica, paginaVista } from './analitica.js';
 
 /**
  * Cada navegación empieza arriba; los anclas (#comparacion) van a su sección.
@@ -17,6 +18,34 @@ import { PAGES, SITE } from './seo-meta.js';
  * scroll al inicio, y el enlace parecía llevar "al mismo sitio de siempre".
  * Es el motivo por el que "Compara los tres" no llevaba a la comparación.
  */
+/**
+ * La medición: arranca una vez y manda una vista por cada cambio de ruta.
+ *
+ * En una SPA no hay recarga al navegar, así que la etiqueta de Google solo
+ * vería la primera página de cada visita. Sin esto, en el informe todo el
+ * tráfico entraría por donde entró y parecería irse sin ver nada más.
+ *
+ * Va después del efecto que actualiza el título, y por eso mira `pathname`
+ * igual que aquel: el título tiene que estar ya cambiado cuando se manda la
+ * vista, o cada página se registraría con el nombre de la anterior.
+ */
+function Medicion() {
+  const { pathname, search } = useLocation();
+  const primera = React.useRef(true);
+
+  React.useEffect(() => { arrancarAnalitica(); }, []);
+
+  React.useEffect(() => {
+    /* La primera vista la manda el arranque, con la página ya montada. */
+    if (primera.current) { primera.current = false; return undefined; }
+    /* Un fotograma de margen para que el título ya sea el de la página nueva. */
+    const id = requestAnimationFrame(() => paginaVista(pathname + search));
+    return () => cancelAnimationFrame(id);
+  }, [pathname, search]);
+
+  return null;
+}
+
 function ScrollToAnchor() {
   const { pathname, hash } = useLocation();
 
@@ -123,6 +152,7 @@ export default function App() {
      */
     <LazyMotion features={domAnimation} strict>
       <ScrollToAnchor />
+      <Medicion />
       <DocumentHead />
       {/* El nodo vive en todo el sitio. En la home las formas van ancladas a
           secciones concretas; en el resto de páginas el mismo journey se

@@ -13,15 +13,15 @@
  *
  * ---- Sobre las cookies ----
  *
- * Este sitio no tiene analítica, ni píxeles, ni scripts de terceros. Se
- * comprobó leyendo el código, no suponiéndolo. Lo único que guarda en el
- * navegador es lo que hace falta para que funcione lo que la persona ha pedido:
- * el borrador del formulario que está rellenando y la decisión de no volver a
- * ver el aviso de suscripción.
+ * Hasta ahora este sitio no tenía analítica, ni píxeles, ni scripts de
+ * terceros, y la política decía eso porque era verdad. Con Google Analytics
+ * instalado deja de serlo, y el texto se ha corregido en el mismo cambio que
+ * instaló la etiqueta: una política que se contradice con el código es lo
+ * primero que mira quien reclama.
  *
- * Por eso la política de cookies es corta y no hay banner. Un banner que pide
- * permiso para cookies que no existen no protege a nadie: entrena a la gente a
- * aceptar sin leer y estorba a quien viene a leer.
+ * Lo que sigue siendo verdad, y por eso se dice: la etiqueta arranca con todos
+ * los permisos denegados, no escribe una sola cookie hasta que alguien acepta,
+ * y rechazar cuesta exactamente un clic —el mismo que aceptar—.
  */
 
 export const PENDIENTE = 'PENDIENTE';
@@ -77,6 +77,16 @@ export const PROVEEDORES = [
     },
   },
   {
+    nombre: 'Google',
+    funcion: { es: 'Analítica del sitio (Google Analytics 4)', en: 'Site analytics (Google Analytics 4)' },
+    datos: {
+      es: 'Páginas vistas, dirección IP truncada, tipo de dispositivo, navegador y país. Ningún dato del formulario ni de la lista de correo',
+      en: 'Page views, truncated IP address, device type, browser and country. No form or mailing-list data',
+    },
+    razonSocial: 'Google Ireland Limited / Google LLC',
+    pais: { es: 'Irlanda y Estados Unidos', en: 'Ireland and the United States' },
+  },
+  {
     nombre: 'GitHub',
     funcion: { es: 'Alojamiento del código y de los contenidos publicados', en: 'Code and published-content hosting' },
     datos: {
@@ -90,7 +100,8 @@ export const PROVEEDORES = [
 
 /**
  * Lo que el sitio guarda en el navegador. La lista sale del código, una por
- * una, y por eso es corta: no hay analítica ni terceros.
+ * una: las tres primeras son necesarias y existen siempre; las de Google solo
+ * aparecen si se acepta la medición.
  */
 export const ALMACENAMIENTO = [
   {
@@ -112,6 +123,26 @@ export const ALMACENAMIENTO = [
       en: 'Remember that you dismissed the subscription notice, so it is not shown again',
     },
     duracion: { es: '90 días', en: '90 days' },
+  },
+  {
+    nombre: 'become.consentimiento',
+    tipo: { es: 'Almacenamiento local', en: 'Local storage' },
+    categoria: { es: 'Estrictamente necesaria', en: 'Strictly necessary' },
+    finalidad: {
+      es: 'Recordar si aceptaste o rechazaste la medición, para no volver a preguntártelo en cada página',
+      en: 'Remember whether you accepted or rejected measurement, so you are not asked again on every page',
+    },
+    duracion: { es: 'Hasta que borres los datos del navegador', en: 'Until you clear browser data' },
+  },
+  {
+    nombre: '_ga, _ga_G-VXPXSDD12K',
+    tipo: { es: 'Cookie', en: 'Cookie' },
+    categoria: { es: 'Medición — solo si la aceptas', en: 'Measurement — only if you accept' },
+    finalidad: {
+      es: 'Google Analytics. Distinguir una visita nueva de una recurrente y seguir una sesión entre páginas, para saber qué contenido se lee. Si no aceptas, no se crean',
+      en: 'Google Analytics. Tell a new visit from a returning one and follow a session across pages, so we know which content gets read. If you do not accept, they are never created',
+    },
+    duracion: { es: '2 años (_ga) y 2 años (_ga_…)', en: '2 years (_ga) and 2 years (_ga_…)' },
   },
   {
     nombre: 'become_panel',

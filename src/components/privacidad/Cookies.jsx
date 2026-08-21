@@ -2,28 +2,39 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Ico } from '../icons.jsx';
 import { ALMACENAMIENTO } from '../../content/legal.js';
+import {
+  decisionGuardada, aceptarAnalitica, rechazarAnalitica,
+} from '../../analitica.js';
 
 /**
- * Aviso y panel de lo que este sitio guarda en tu navegador.
+ * El consentimiento de cookies.
  *
- * ---- Qué es y qué no es ----
+ * ---- Qué cambió, y por qué el aviso ya no puede ser informativo ----
  *
- * No es un muro de consentimiento, porque no habría nada que consentir: el
- * sitio no tiene analítica, ni píxeles, ni scripts de terceros. Pedir permiso
- * para cookies que no existen no protege a nadie; entrena a la gente a aceptar
- * sin leer, y gasta el único momento de atención que tienes con quien acaba de
- * llegar en un trámite falso.
+ * Antes este componente decía «aquí no te seguimos» y era verdad: no había
+ * analítica, ni píxeles, ni un solo script de terceros, así que pedir permiso
+ * habría sido un trámite falso.
  *
- * Así que dice lo que es verdad —que aquí no se te sigue— y ofrece ver la
- * lista y borrarla. Para una consultora que vende criterio, eso dice más que
- * un banner con dos botones.
+ * Con Google Analytics instalado eso deja de ser cierto, y un aviso que solo
+ * informa deja de valer: hay una cookie de terceros que identifica al visitante
+ * entre páginas y una transferencia de datos a otro país. Eso se consiente o no
+ * se hace.
  *
- * ---- Y si algún día hay analítica ----
+ * ---- Las reglas que sigue, y por qué ----
  *
- * El panel ya está: se le añaden los interruptores por categoría, se ponen
- * apagados por defecto y el aviso pasa a tener «Aceptar» y «Rechazar» con el
- * mismo peso visual. La estructura no cambia. Lo que no se hace nunca es
- * encender algo antes de preguntar.
+ * · Aceptar y Rechazar tienen el MISMO peso visual. Un «rechazar» en gris
+ *   pequeño al lado de un «aceptar» verde grande es la forma más común de
+ *   invalidar un consentimiento: el que decide no es la persona, es el diseño.
+ * · Rechazar cuesta un clic, igual que aceptar. Nada de «configurar» como
+ *   único camino para decir que no.
+ * · Nada se enciende antes de responder. La etiqueta de Google se carga en
+ *   todas las páginas, pero con todos los permisos denegados: en ese estado no
+ *   escribe cookies. Solo al aceptar pasan a concedidos.
+ * · Cambiar de opinión es posible y borra lo que se escribió mientras tanto.
+ *   Un rechazo posterior que dejara las cookies puestas no sería un rechazo.
+ *
+ * Y no se cierra solo al hacer scroll ni al seguir navegando: seguir leyendo no
+ * es decir que sí.
  */
 
 const VISTO = 'become.cookies.visto';
@@ -31,32 +42,46 @@ const CLAVES_PROPIAS = ['become.formulario', 'become.suscripcion.cerrado', 'beco
 
 const T = {
   es: {
-    titulo: 'Aquí no te seguimos',
-    texto: 'Este sitio no usa analítica, ni píxeles publicitarios, ni scripts de terceros. Solo guarda lo necesario para que funcione lo que pides.',
-    ver: 'Ver qué se guarda',
-    ok: 'Entendido',
+    titulo: 'Cookies y medición',
+    texto: 'Usamos Google Analytics para saber qué páginas se leen y desde dónde. No vendemos ni compartimos tus datos, y no hay publicidad. Puedes decir que no y el sitio funciona igual.',
+    aceptar: 'Aceptar',
+    rechazar: 'Rechazar',
+    ver: 'Ver detalle',
     cerrar: 'Cerrar',
     panelTitulo: 'Qué guarda este sitio',
-    panelLead: 'La lista completa. Son tres cosas y las tres son necesarias para lo que has pedido.',
+    panelLead: 'La lista completa, y qué depende de tu decisión.',
+    medicion: 'Medición con Google Analytics',
+    medicionQue: 'Cuenta visitas y páginas vistas para saber qué contenido sirve. Escribe cookies propias del sitio y envía los datos a Google, en Estados Unidos.',
+    activa: 'Activada',
+    inactiva: 'Desactivada',
+    necesarias: 'Estrictamente necesarias',
+    necesariasQue: 'Sin estas no funciona lo que pides. No se pueden desactivar y no sirven para seguirte.',
     borrar: 'Borrar lo guardado',
     borrado: 'Borrado. Lo que estuvieras escribiendo en un formulario se ha perdido.',
     politica: 'Política de cookies',
     politicaRuta: '/es/cookies',
-    columnas: ['Qué', 'Para qué', 'Cuánto dura'],
+    guardar: 'Guardar decisión',
   },
   en: {
-    titulo: 'We do not track you here',
-    texto: 'This site uses no analytics, no advertising pixels and no third-party scripts. It stores only what is needed for what you ask it to do.',
-    ver: 'See what is stored',
-    ok: 'Got it',
+    titulo: 'Cookies and measurement',
+    texto: 'We use Google Analytics to know which pages get read and where from. We don’t sell or share your data, and there is no advertising. You can say no and the site works the same.',
+    aceptar: 'Accept',
+    rechazar: 'Reject',
+    ver: 'See details',
     cerrar: 'Close',
     panelTitulo: 'What this site stores',
-    panelLead: 'The full list. Three things, and all three are needed for what you asked for.',
+    panelLead: 'The full list, and what depends on your choice.',
+    medicion: 'Measurement with Google Analytics',
+    medicionQue: 'Counts visits and page views so we know which content is useful. It writes first-party cookies and sends the data to Google, in the United States.',
+    activa: 'On',
+    inactiva: 'Off',
+    necesarias: 'Strictly necessary',
+    necesariasQue: 'Without these, what you ask for does not work. They cannot be switched off and they are not used to track you.',
     borrar: 'Clear what is stored',
     borrado: 'Cleared. Anything you were typing in a form is gone.',
     politica: 'Cookie Policy',
     politicaRuta: '/en/cookies',
-    columnas: ['What', 'Purpose', 'How long'],
+    guardar: 'Save choice',
   },
 };
 
@@ -66,9 +91,17 @@ const escribir = (k, v) => { try { localStorage.setItem(k, v); } catch { /* modo
 /** Se expone para que el pie pueda reabrir el panel desde «Configurar cookies». */
 export const abrirPanelCookies = () => window.dispatchEvent(new CustomEvent('become:cookies'));
 
-function Panel({ lang, alCerrar }) {
+const botonBase = {
+  minHeight: 44, padding: '0 20px', borderRadius: 2, cursor: 'pointer',
+  font: 'var(--type-label)', letterSpacing: 'var(--track-label)',
+  textTransform: 'uppercase', fontSize: 11, fontWeight: 600,
+  flex: '1 1 130px',
+};
+
+function Panel({ lang, alCerrar, decision, alDecidir }) {
   const t = T[lang] || T.es;
   const [borrado, setBorrado] = React.useState(false);
+  const [medicion, setMedicion] = React.useState(decision === 'aceptado');
   const caja = React.useRef(null);
   const previo = React.useRef(null);
 
@@ -78,7 +111,7 @@ function Panel({ lang, alCerrar }) {
     const enTecla = (e) => {
       if (e.key === 'Escape') { alCerrar(); return; }
       if (e.key !== 'Tab') return;
-      const focos = caja.current?.querySelectorAll('a[href], button:not([disabled])');
+      const focos = caja.current?.querySelectorAll('a[href], button:not([disabled]), input:not([disabled])');
       if (!focos?.length) return;
       const [primero, ultimo] = [focos[0], focos[focos.length - 1]];
       if (e.shiftKey && document.activeElement === primero) { e.preventDefault(); ultimo.focus(); }
@@ -140,7 +173,33 @@ function Panel({ lang, alCerrar }) {
           {t.panelLead}
         </p>
 
-        <div style={{ marginTop: 'var(--space-6)', display: 'grid', gap: 'var(--space-4)' }}>
+        {/* La medición, con su interruptor. Apagado si nunca se aceptó: lo que
+            no se ha consentido no puede aparecer encendido. */}
+        <div style={{ marginTop: 'var(--space-6)', paddingTop: 'var(--space-5)', borderTop: '1px solid var(--border-hairline-dark)' }}>
+          <label style={{ display: 'flex', gap: 12, alignItems: 'flex-start', cursor: 'pointer' }}>
+            <input
+              type="checkbox"
+              checked={medicion}
+              onChange={(e) => setMedicion(e.target.checked)}
+              style={{ width: 18, height: 18, marginTop: 3, flex: 'none', accentColor: 'var(--electric-green)' }}
+            />
+            <span>
+              <span style={{ display: 'block', font: 'var(--type-body)', fontSize: 15, color: 'var(--white)' }}>
+                {t.medicion} · {medicion ? t.activa : t.inactiva}
+              </span>
+              <span style={{ display: 'block', margin: '4px 0 0', font: 'var(--type-body)', fontSize: 14, color: 'var(--slate-300)' }}>
+                {t.medicionQue}
+              </span>
+            </span>
+          </label>
+        </div>
+
+        <div style={{ marginTop: 'var(--space-6)', paddingTop: 'var(--space-5)', borderTop: '1px solid var(--border-hairline-dark)' }}>
+          <p style={{ margin: 0, font: 'var(--type-body)', fontSize: 15, color: 'var(--white)' }}>{t.necesarias}</p>
+          <p style={{ margin: '4px 0 0', font: 'var(--type-body)', fontSize: 14, color: 'var(--slate-300)' }}>{t.necesariasQue}</p>
+        </div>
+
+        <div style={{ marginTop: 'var(--space-5)', display: 'grid', gap: 'var(--space-4)' }}>
           {ALMACENAMIENTO.map((a) => (
             <div key={a.nombre} style={{ paddingTop: 'var(--space-4)', borderTop: '1px solid var(--border-hairline-dark)' }}>
               <p style={{ margin: 0, font: 'var(--type-mono)', fontSize: 13, color: 'var(--electric-green)' }}>{a.nombre}</p>
@@ -152,22 +211,30 @@ function Panel({ lang, alCerrar }) {
           ))}
         </div>
 
-        <div style={{ marginTop: 'var(--space-7)', display: 'flex', gap: 'var(--space-4)', alignItems: 'center', flexWrap: 'wrap' }}>
+        <div style={{ marginTop: 'var(--space-7)', display: 'flex', gap: 'var(--space-4)', flexWrap: 'wrap' }}>
+          <button
+            type="button"
+            onClick={() => { alDecidir(medicion ? 'aceptado' : 'rechazado'); alCerrar(); }}
+            style={{ ...botonBase, border: 0, background: 'var(--accent)', color: 'var(--navy-950)' }}
+          >
+            {t.guardar}
+          </button>
           <button
             type="button" onClick={borrar} disabled={borrado}
             style={{
-              minHeight: 44, padding: '0 20px', borderRadius: 2, cursor: borrado ? 'default' : 'pointer',
+              ...botonBase, fontWeight: 400,
               background: 'transparent', color: borrado ? 'var(--slate-400)' : 'var(--white)',
-              border: '1px solid var(--border-hairline-dark)',
-              font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', fontSize: 11,
+              border: '1px solid var(--border-hairline-dark)', cursor: borrado ? 'default' : 'pointer',
             }}
           >
             {t.borrar}
           </button>
+        </div>
+        <p style={{ margin: 'var(--space-5) 0 0' }}>
           <a href={t.politicaRuta} style={{ font: 'var(--type-mono)', fontSize: 13, color: 'var(--electric-green)' }}>
             {t.politica}
           </a>
-        </div>
+        </p>
         <p aria-live="polite" style={{ margin: 'var(--space-4) 0 0', font: 'var(--type-body)', fontSize: 13, color: 'var(--electric-green)', minHeight: '1.2em' }}>
           {borrado ? t.borrado : ''}
         </p>
@@ -183,18 +250,24 @@ export default function Cookies() {
 
   const [aviso, setAviso] = React.useState(false);
   const [panel, setPanel] = React.useState(false);
+  const [decision, setDecision] = React.useState(() => decisionGuardada());
 
   React.useEffect(() => {
     if (pathname.startsWith('/admin')) return undefined;
     /* Un momento de margen: el aviso que aparece a la vez que la página
        compite con lo primero que la persona ha venido a leer. */
-    const reloj = setTimeout(() => { if (!leer(VISTO)) setAviso(true); }, 1200);
+    const reloj = setTimeout(() => { if (!decisionGuardada()) setAviso(true); }, 1200);
     const abrir = () => setPanel(true);
     window.addEventListener('become:cookies', abrir);
     return () => { clearTimeout(reloj); window.removeEventListener('become:cookies', abrir); };
   }, [pathname]);
 
-  const cerrarAviso = () => { escribir(VISTO, String(Date.now())); setAviso(false); };
+  const decidir = React.useCallback((valor) => {
+    if (valor === 'aceptado') aceptarAnalitica(); else rechazarAnalitica();
+    escribir(VISTO, String(Date.now()));
+    setDecision(valor);
+    setAviso(false);
+  }, []);
 
   if (pathname.startsWith('/admin')) return null;
 
@@ -203,12 +276,12 @@ export default function Cookies() {
       {aviso && (
         <div
           role="region"
-          aria-label={t.panelTitulo}
+          aria-label={t.titulo}
           style={{
             position: 'fixed', zIndex: 1100,
             left: 'max(16px, env(safe-area-inset-left))',
             bottom: 'max(16px, env(safe-area-inset-bottom))',
-            width: 'min(380px, calc(100vw - 32px))',
+            width: 'min(400px, calc(100vw - 32px))',
             background: 'var(--navy-950)', color: 'var(--white)',
             border: '1px solid var(--border-hairline-dark)', borderRadius: 2,
             padding: 'var(--space-6)',
@@ -227,33 +300,45 @@ export default function Cookies() {
           <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 14, lineHeight: 1.55, color: 'var(--slate-300)' }}>
             {t.texto}
           </p>
+
+          {/* Los dos con el mismo tamaño, el mismo alto y el mismo peso. Un
+              «rechazar» más pequeño o más apagado que el «aceptar» invalida el
+              consentimiento: quien decide deja de ser la persona. */}
           <div style={{ marginTop: 'var(--space-5)', display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
             <button
-              type="button" onClick={cerrarAviso}
-              style={{
-                minHeight: 44, padding: '0 20px', border: 0, borderRadius: 2, cursor: 'pointer',
-                background: 'var(--accent)', color: 'var(--navy-950)',
-                font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', fontSize: 11, fontWeight: 600,
-              }}
+              type="button" onClick={() => decidir('aceptado')}
+              style={{ ...botonBase, border: 0, background: 'var(--accent)', color: 'var(--navy-950)' }}
             >
-              {t.ok}
+              {t.aceptar}
             </button>
             <button
-              type="button" onClick={() => setPanel(true)}
-              style={{
-                minHeight: 44, padding: '0 16px', borderRadius: 2, cursor: 'pointer',
-                background: 'transparent', color: 'var(--white)',
-                border: '1px solid var(--border-hairline-dark)',
-                font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', fontSize: 11,
-              }}
+              type="button" onClick={() => decidir('rechazado')}
+              style={{ ...botonBase, background: 'transparent', color: 'var(--white)', border: '1px solid var(--white)' }}
             >
-              {t.ver}
+              {t.rechazar}
             </button>
           </div>
+          <button
+            type="button" onClick={() => setPanel(true)}
+            style={{
+              marginTop: 'var(--space-4)', minHeight: 44, padding: 0, border: 0, background: 'none',
+              cursor: 'pointer', font: 'var(--type-mono)', fontSize: 13, color: 'var(--electric-green)',
+              textDecoration: 'underline',
+            }}
+          >
+            {t.ver}
+          </button>
         </div>
       )}
 
-      {panel && <Panel lang={lang} alCerrar={() => { setPanel(false); cerrarAviso(); }} />}
+      {panel && (
+        <Panel
+          lang={lang}
+          decision={decision}
+          alDecidir={decidir}
+          alCerrar={() => setPanel(false)}
+        />
+      )}
     </>
   );
 }
