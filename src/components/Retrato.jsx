@@ -59,7 +59,7 @@ export const ESTILOS_RETRATO = `
     display: block;
     /* El contraste sube un punto porque quitar el color aplana la cara: sin
        ese punto, el duotono convierte un retrato en una mancha. */
-    filter: grayscale(1) contrast(1.06);
+    filter: grayscale(1) contrast(1.08);
     transform: scale(1.01);
     transition: filter .38s ease, transform .38s ease;
   }
@@ -75,6 +75,20 @@ export const ESTILOS_RETRATO = `
     position: absolute; inset: 0; pointer-events: none;
     mix-blend-mode: screen;
     background: radial-gradient(120% 90% at 78% 6%, rgba(0,255,136,.20) 0%, rgba(0,255,136,0) 58%);
+    transition: opacity .38s ease;
+  }
+  .becomeRetrato .velo {
+    position: absolute; inset: 0; pointer-events: none;
+    /* Viñeta en multiply. Existe porque el duotono iguala el TONO pero no la
+       luminosidad: dos de las tres fotos vienen con fondo claro de estudio y,
+       puestas al lado de una con fondo navy, la fila se leía como dos fotos
+       encendidas y una apagada.
+       La viñeta baja el fondo —que es donde está la diferencia— y deja el
+       centro casi intacto, así que la cara no se oscurece. Sobre una foto que
+       ya es oscura apenas hace nada, que es justo lo que se quiere: corrige
+       solo lo que hay que corregir. */
+    mix-blend-mode: multiply;
+    background: radial-gradient(115% 100% at 50% 40%, rgba(10,14,39,0) 0%, rgba(10,14,39,.10) 46%, rgba(5,7,15,.55) 100%);
     transition: opacity .38s ease;
   }
   .becomeRetrato .reticula {
@@ -102,6 +116,8 @@ export const ESTILOS_RETRATO = `
   .becomeFicha:focus-within .becomeRetrato .tinte { opacity: .3 }
   .becomeFicha:hover .becomeRetrato .luz,
   .becomeFicha:focus-within .becomeRetrato .luz { opacity: .45 }
+  .becomeFicha:hover .becomeRetrato .velo,
+  .becomeFicha:focus-within .becomeRetrato .velo { opacity: .35 }
   .becomeFicha:hover .becomeRetrato .linea,
   .becomeFicha:focus-within .becomeRetrato .linea { transform: scaleX(1) }
 
@@ -111,6 +127,7 @@ export const ESTILOS_RETRATO = `
     .becomeRetrato img,
     .becomeRetrato .tinte,
     .becomeRetrato .luz,
+    .becomeRetrato .velo,
     .becomeRetrato .linea { transition: none }
     .becomeFicha:hover .becomeRetrato img,
     .becomeFicha:focus-within .becomeRetrato img { transform: none }
@@ -145,6 +162,7 @@ export default function Retrato({ nombre, foto, alt }) {
           {iniciales(nombre)}
         </div>
       )}
+      {foto && <span className="velo" aria-hidden="true" />}
       {foto && <span className="tinte" aria-hidden="true" />}
       {foto && <span className="luz" aria-hidden="true" />}
       <span className="reticula" aria-hidden="true" />
