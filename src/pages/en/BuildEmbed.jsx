@@ -5,6 +5,7 @@ import Reveal from '../../components/Reveal.jsx';
 import { Ico } from '../../components/icons.jsx';
 import { Banner } from '../../components/Media.jsx';
 import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, Cols, Card, IndexRow } from '../../components/ui.jsx';
+import { BajoElCapo } from '../../components/tecnologia.jsx';
 
 /** BECOME EMBED™ — English mirror of src/pages/BuildEmbed.jsx. */
 
@@ -49,11 +50,17 @@ export default function BuildEmbed() {
 
       <Section band="dark" pad="var(--space-12)">
         <Kicker dark>BECOME Embed™</Kicker>
-        <Headline as="h1" dark>Build the capability. Embed the change.</Headline>
+        <Headline as="h1" dark>Turn an AI priority into an operational capability.</Headline>
         <Lead dark>
-          An 8–12 week sprint that turns a prioritized transformation blueprint into
-          an AI-native capability inside the operation.
+          We design and build copilots, AI agents and LLM-powered workflows
+          connected to your organization’s data, tools and systems.
         </Lead>
+        <Body dark style={{ marginTop: 'var(--space-6)' }}>
+          We work from model selection and architecture through APIs, integrations,
+          controls, evaluation, observability and the human-in-the-loop mechanisms
+          required to operate with confidence. An 8–12 week sprint, with the team
+          that will use it every day.
+        </Body>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
           <PrimaryCTA to="/en/contact">Talk to us about BECOME EMBED™</PrimaryCTA>
           <GhostCTA to="/en/services" dark>See both services</GhostCTA>
@@ -121,6 +128,8 @@ export default function BuildEmbed() {
           ))}
         </div>
       </Section>
+
+      <BajoElCapo lang="en" />
 
       <Section band="darker">
         <Kicker dark>Human-in-the-loop and controls</Kicker>

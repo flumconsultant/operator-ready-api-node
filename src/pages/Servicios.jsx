@@ -31,6 +31,9 @@ const COMPARE = [
   ['Comienza con', 'Ambición, tensión empresarial o dominio a transformar.', 'Un diseño que se pueda validar, un proceso o una oportunidad priorizada.'],
   ['Termina con', 'Estrategia, portafolio, estado objetivo, caso de negocio y hoja de ruta.', 'Capacidad funcionando, adoptada, controlada y medida.'],
   ['Framework', 'B–E–C–O.', 'O–M–E.'],
+  /* La fila de tecnología va aquí y no en una sección aparte: en una tabla de
+     comparación se lee como un criterio más de decisión, que es lo que es. */
+  ['Foco tecnológico', 'AI landscape, estrategia de modelos, casos de uso, madurez de datos, governance e implicaciones de arquitectura.', 'LLMs, agents, APIs, datos, integraciones, orquestación, evaluación y observabilidad.'],
   ['Siguiente paso', 'BECOME EMBED™ del primer caso priorizado.', 'Iterar, integrar, escalar o detener.'],
 ];
 

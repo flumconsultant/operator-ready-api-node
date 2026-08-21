@@ -75,10 +75,12 @@ const STRINGS = {
       </>
     ),
     errorRate: 'Has enviado varios mensajes seguidos. Espera un momento antes de volver a intentarlo.',
-    privacyNote: 'Usaremos estos datos únicamente para responder y preparar la conversación adecuada. No te suscribimos a nada ni compartimos la información.',
+    privacyNote: 'Usaremos estos datos únicamente para entender tu contexto y responderte. No compartimos la información con nadie.',
     railLabel: 'Recorrido del formulario',
-    answeredOf: (a, t) => `${a} de ${t} respondidas`,
-    left: (n) => ` · quedan ${n}`,
+    /* «0 de 7 respondidas» nada más abrir es un reproche antes de empezar:
+       cuenta lo que falta en vez de decir dónde estás. El paso actual dice lo
+       mismo sin la deuda. */
+    paso: (n, t) => `Paso ${n} de ${t}`,
     questionAria: (i, label) => `Pregunta ${i}: ${label}`,
     answeredSuffix: ' (respondida)',
     reviewAndSend: 'Revisar y enviar',
@@ -96,7 +98,7 @@ const STRINGS = {
     verPolitica: 'Política de privacidad',
     politicaRuta: '/es/privacidad',
     avisoSensible: 'No incluyas contraseñas, datos sensibles ni información confidencial en este formulario.',
-    next: 'Siguiente',
+    next: 'Continuar',
     enterTextarea: 'Ctrl + Enter para continuar',
     enterDefault: 'Enter para continuar',
     footerNote: (email) => (
@@ -133,10 +135,9 @@ const STRINGS = {
       </>
     ),
     errorRate: 'You’ve sent several messages in a row. Give it a moment before trying again.',
-    privacyNote: 'We’ll use this information only to respond and prepare the right conversation. We won’t subscribe you to anything or share it.',
+    privacyNote: 'We’ll use this information only to understand your context and respond. We don’t share it with anyone.',
     railLabel: 'Form journey',
-    answeredOf: (a, t) => `${a} of ${t} answered`,
-    left: (n) => ` · ${n} left`,
+    paso: (n, t) => `Step ${n} of ${t}`,
     questionAria: (i, label) => `Question ${i}: ${label}`,
     answeredSuffix: ' (answered)',
     reviewAndSend: 'Review and send',
@@ -154,7 +155,7 @@ const STRINGS = {
     verPolitica: 'Privacy Policy',
     politicaRuta: '/en/privacy',
     avisoSensible: 'Do not include passwords, sensitive data or confidential information in this form.',
-    next: 'Next',
+    next: 'Continue',
     enterTextarea: 'Ctrl + Enter to continue',
     enterDefault: 'Enter to continue',
     footerNote: (email) => (
@@ -488,9 +489,7 @@ function Conversation({
   }
 
   /* ---------------- modo conversación ---------------- */
-  const answered = fields.filter((f) => isFilled(f, values[f.name])).length;
   const pct = Math.round((Math.min(step, total) / total) * 100);
-  const left = total - answered;
 
   return (
     <form onSubmit={(e) => e.preventDefault()} style={{ ...shell }} aria-label={formName}>
@@ -508,8 +507,7 @@ function Conversation({
         {/* ---- el recorrido, entero y a la vista ---- */}
         <nav data-form-rail aria-label={t.railLabel}>
           <p style={{ margin: 0, font: 'var(--type-mono)', fontSize: 'var(--text-micro)', letterSpacing: 'var(--track-mono)', color: c.faint }}>
-            {t.answeredOf(answered, total)}
-            {left > 0 && t.left(left)}
+            {t.paso(Math.min(step + 1, total), total)}
           </p>
           <div style={{ marginTop: 'var(--space-4)', height: 2, background: c.rule, borderRadius: 2, overflow: 'hidden' }}>
             <motion.div

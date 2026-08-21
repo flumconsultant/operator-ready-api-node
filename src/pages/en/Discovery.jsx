@@ -5,6 +5,7 @@ import Reveal from '../../components/Reveal.jsx';
 import { Ico } from '../../components/icons.jsx';
 import { Banner } from '../../components/Media.jsx';
 import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, Cols, Card, IndexRow } from '../../components/ui.jsx';
+import { EstrategiaDeModelos } from '../../components/tecnologia.jsx';
 
 /** BECOME DISCOVER™ — English mirror of src/pages/Discovery.jsx. */
 
@@ -127,6 +128,8 @@ export default function Discovery() {
           ))}
         </div>
       </Section>
+
+      <EstrategiaDeModelos lang="en" />
 
       <Section band="sunken">
         <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1.2fr)', gap: 'var(--space-9)' }}>

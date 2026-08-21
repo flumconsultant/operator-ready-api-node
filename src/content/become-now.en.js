@@ -275,18 +275,18 @@ export const PROGRAMS = {
   'technology-engineering': {
     menu: 'AI applied to Technology & Engineering',
     area: 'Technology & Engineering',
-    h1: 'Integrate AI into technical delivery with standards, review and accountability.',
-    body: 'A program applied to requirements, architecture, coding, testing, documentation, incidents and engineering knowledge.',
+    h1: 'Build the judgment to work with LLMs, agents and AI systems.',
+    body: 'The program connects practical use of ChatGPT, Claude, Gemini and other foundation models with the concepts needed to design enterprise solutions: APIs, context engineering, RAG, tool calling, MCP, evaluations, guardrails and observability. The goal isn’t to turn everyone into an AI engineer: it’s to help technical teams make better decisions about how AI should be built, integrated and governed. It applies to requirements, architecture, coding, testing, documentation, incidents and engineering knowledge.',
     who: ['Software Engineering', 'Architecture', 'QA', 'DevOps', 'IT Operations', 'Technology Leadership'],
     route: [
-      ['AI for Technology & Engineering', 'Engineering Copilot with usage rules.'],
-      ['Requirements and architecture', 'Technical Requirements Assistant.'],
-      ['Coding and code review', 'Coding and Review Workflow.'],
-      ['Testing and quality', 'Test Design Assistant.'],
-      ['Incidents and documentation', 'Incident and Documentation Assistant.'],
-      ['Engineering knowledge', 'Technical Knowledge System.'],
+      ['LLMs, foundation models and prompt engineering', 'Engineering Copilot with usage rules, boundaries and review criteria.'],
+      ['Context engineering, RAG and embeddings', 'An assistant connected to the team’s technical knowledge through vector search and grounding.'],
+      ['APIs, tool calling and MCP', 'A requirements assistant that queries real systems instead of answering from memory.'],
+      ['Agentic workflows and model routing', 'A coding and review workflow with automated steps and human review points.'],
+      ['Evaluations, guardrails and testing', 'A test design assistant and an evaluation set to measure behaviour before trusting it.'],
+      ['Observability, incidents and cost governance', 'A technical knowledge system with tracing, monitoring and runbooks.'],
     ],
-    deliverables: ['Engineering prompt library', 'Requirement templates', 'Code-review checklist', 'Test scenarios', 'Incident summary', 'Documentation assistant'],
+    deliverables: ['Engineering prompt library', 'Context and RAG design', 'Requirement templates', 'Code-review checklist', 'Evaluation set (evals)', 'Guardrails and human-in-the-loop', 'Incident runbook', 'Documentation assistant'],
     cta: 'Adapt this program to Technology',
   },
 };
@@ -366,7 +366,9 @@ export const GENERAL_DELIVERABLES = [
 
 export const FAQ = [
   ['Is the training the same for every company?', 'No. Every program starts with an understanding session. The curriculum, cases, documents and exercises are adapted to the company’s real processes.'],
-  ['Do you work with ChatGPT, Claude or Gemini?', 'Yes. The program can use one or several platforms depending on the organization’s licenses, policies, tools and needs.'],
+  ['Is the program focused on ChatGPT?', 'No. BECOME NOW™ is vendor-neutral. The program can work with ChatGPT, Claude, Gemini, Microsoft Copilot or other models and tools approved by the organization. The choice depends on the technology stack, use cases and internal policies.'],
+  ['Do we work with company accounts and documents?', 'Session 0 defines what information, tools and environments may be used during the program. Exercises must follow each organization’s security, privacy and AI-use policies.'],
+  ['Does BECOME work with a single AI model or provider?', 'No. Our approach is vendor-neutral. Selection depends on the use case, your data, internal policies, required level of autonomy, architecture and total operating cost. Depending on the context, we evaluate ecosystems such as OpenAI/ChatGPT, Anthropic/Claude, Google/Gemini, Microsoft Copilot and other alternatives available within the organization’s stack.'],
   ['Do we need to share confidential information?', 'Not necessarily. The company can work with real, anonymized or simulated information. How it’s handled gets defined during the understanding session.'],
   ['Is this a prompting course?', 'No. Prompting is an enabling skill. The goal is to build assistants, agents, workflows and deliverables that improve the area’s work.'],
   ['Do participants need technical knowledge?', 'No. The curriculum adapts to the participants’ level. The functional programs are designed for business teams.'],

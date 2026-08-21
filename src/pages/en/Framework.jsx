@@ -16,11 +16,11 @@ const STAGES = [
 ];
 
 const DOMAINS = [
-  ['People, inside.', 'Leadership, roles, skills and adoption designed for people working alongside AI.', '/icons/people-inside-white.webp'],
-  ['Data, inside.', 'Context and knowledge turned into decisions and action.', '/icons/data-inside-white.webp'],
-  ['Agents, inside.', 'Copilots and agents embedded in real workflows, with defined human oversight.', '/icons/agents-inside-white.webp'],
-  ['Products, inside.', 'Propositions, experiences and differentiation built on what AI makes possible.', '/icons/products-inside-white.webp'],
-  ['Operations, inside.', 'Processes, governance and performance redesigned to create value at scale.', '/icons/operations-inside-white.webp'],
+  ['People, inside.', 'People able to work, decide and collaborate with AI.', '/icons/people-inside-white.webp'],
+  ['Data, inside.', 'Structured and unstructured data prepared to support models, RAG, enterprise search and decisions.', '/icons/data-inside-white.webp'],
+  ['Agents, inside.', 'LLMs, copilots and AI agents able to reason, use tools and execute parts of a workflow within defined boundaries.', '/icons/agents-inside-white.webp'],
+  ['Products, inside.', 'AI-native products and experiences that embed models, data and agents directly into the value proposition.', '/icons/products-inside-white.webp'],
+  ['Operations, inside.', 'Redesigned workflows combining automation, AI agents, human decisions, exceptions and controls.', '/icons/operations-inside-white.webp'],
 ];
 
 const TOOLS = [

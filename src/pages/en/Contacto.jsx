@@ -41,23 +41,24 @@ export default function Contacto() {
       <SiteHeader />
 
       <Section band="dark" pad="var(--space-12)">
-        <Kicker dark>Start a conversation</Kicker>
-        <Headline as="h1" dark>What needs to change inside your company?</Headline>
+        <Kicker dark>Contact</Kicker>
+        <Headline as="h1" dark>Start with what you want to change.</Headline>
         <Lead dark>
-          The business outcome, the capability or the workflow. We respond with
-          the right starting point, not a sales sequence.
+          Share the challenge, the outcome you are aiming for and the context of
+          your organization. We will review it to understand your starting point
+          and recommend the most appropriate next step.
         </Lead>
       </Section>
 
       <Section band="light">
         <ConversationalForm
-          formName="Start a conversation with BECOME"
-          title="Tell us in a conversation, not a form."
-          lead="Seven questions, one at a time, full screen. No procurement fields, no pre-checked boxes."
-          launchLabel="Start the conversation"
+          formName="BECOME initial context intake"
+          title="Share the essential context."
+          lead="You don’t need to have the solution defined. We want to understand the problem, the priority and the current constraints."
+          launchLabel="Get started"
           fields={FIELDS}
-          submitLabel="Start the conversation"
-          confirmation="Thanks. We’ll review the context and respond with the right conversation, not an automated sales sequence."
+          submitLabel="Share context"
+          confirmation="Thank you. We have the initial context. We’ll review what you shared to identify the most appropriate starting point, and if there is a good fit we’ll suggest a conversation focused on the outcome, constraints and next step."
           dark={false}
           formId="contacto"
           lang="en"

@@ -4,6 +4,7 @@ import SiteHeader from '../../components/SiteHeader.jsx';
 import SiteFooter from '../../components/SiteFooter.jsx';
 import Reveal from '../../components/Reveal.jsx';
 import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, Cols, Card, IndexRow } from '../../components/ui.jsx';
+import { TecnologiaAdaptada } from '../../components/tecnologia.jsx';
 import { PROGRAMS, PROGRAM_LIST, PERSONALIZATION_NOTE, SESSION_FLOW, FAQ } from '../../content/become-now.en.js';
 
 export default function Program() {
@@ -126,6 +127,7 @@ export default function Program() {
             </Reveal>
           ))}
         </Cols>
+        <TecnologiaAdaptada lang="en" dark />
       </Section>
 
       {p.guardrails && (

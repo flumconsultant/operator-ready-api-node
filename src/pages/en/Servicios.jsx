@@ -23,6 +23,7 @@ const COMPARE = [
   ['Starts with', 'Ambition, a business tension, or a domain to transform.', 'A validatable blueprint, workflow or prioritized opportunity.'],
   ['Ends with', 'Strategy, portfolio, target state, business case and roadmap.', 'A working capability — adopted, controlled and measured.'],
   ['Framework', 'B–E–C–O.', 'O–M–E.'],
+  ['Technology focus', 'AI landscape, model strategy, use cases, data readiness, governance and architecture implications.', 'LLMs, agents, APIs, data, integrations, orchestration, evaluation and observability.'],
   ['Next step', 'BECOME EMBED™ for the first prioritized case.', 'Iterate, integrate, scale or stop.'],
 ];
 

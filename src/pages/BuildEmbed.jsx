@@ -5,6 +5,7 @@ import Reveal from '../components/Reveal.jsx';
 import { Ico } from '../components/icons.jsx';
 import { Banner } from '../components/Media.jsx';
 import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, Cols, Card, IndexRow } from '../components/ui.jsx';
+import { BajoElCapo } from '../components/tecnologia.jsx';
 
 /**
  * BECOME EMBED™ (§9 del documento).
@@ -55,12 +56,17 @@ export default function BuildEmbed() {
 
       <Section band="dark" pad="var(--space-12)">
         <Kicker dark>BECOME Embed™</Kicker>
-        <Headline as="h1" dark>Construye la solución. Incorpora el cambio.</Headline>
+        <Headline as="h1" dark>Convierte una prioridad de IA en una capacidad lista para operar.</Headline>
         <Lead dark>
-          De ocho a doce semanas para construir una solución de IA priorizada y
-          dejarla funcionando dentro de la operación, con el equipo que va a
-          usarla todos los días.
+          Diseñamos y construimos copilots, AI agents y workflows basados en LLMs
+          conectados a los datos, herramientas y sistemas de tu organización.
         </Lead>
+        <Body dark style={{ marginTop: 'var(--space-6)' }}>
+          Trabajamos desde la selección del modelo y la arquitectura hasta las
+          APIs, integraciones, controles, evaluación, observabilidad y
+          human-in-the-loop necesarios para operar con confianza. De ocho a doce
+          semanas, con el equipo que va a usarla todos los días.
+        </Body>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
           <PrimaryCTA to="/es/contacto">Conversemos sobre BECOME EMBED™</PrimaryCTA>
           <GhostCTA to="/es/servicios" dark>Ver los dos servicios</GhostCTA>
@@ -128,7 +134,10 @@ export default function BuildEmbed() {
         </div>
       </Section>
 
+      <BajoElCapo lang="es" />
+
       {/* Human-in-the-loop antes que la construcción: es lo que decide el destino */}
+
       <Section band="darker">
         <Kicker dark>Supervisión humana y controles</Kicker>
         <Headline dark>Lo que decide el destino de un agent no es la calidad de sus respuestas.</Headline>

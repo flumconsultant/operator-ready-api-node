@@ -85,7 +85,7 @@ export const SOLUCION_CONTENIDO = {
   'agentes-de-ia-con-control': {
     q: '¿Quieres construir un agente o un copiloto?',
     answer:
-      'Si ya tienes una oportunidad priorizada, hay que convertirla en una capacidad con límites de autonomía, integración, adopción y responsabilidades definidas.',
+      'Diseñamos el workflow antes de elegir el modelo. Definimos qué debe hacer el agent, a qué datos y herramientas puede acceder, qué LLM necesita, cuándo debe pedir aprobación humana y cómo se evaluará antes y después del go-live. Una solución puede combinar ChatGPT/OpenAI, Claude/Anthropic, Gemini/Google u otros modelos, junto con APIs, RAG, tool calling, MCP e integraciones empresariales.',
     signals: [
       'El equipo conoce la tarea, pero no el modelo operativo.',
       'No está claro qué decide el agente y qué conserva la persona.',

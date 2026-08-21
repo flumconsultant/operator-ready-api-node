@@ -4,6 +4,7 @@ import SiteHeader from '../components/SiteHeader.jsx';
 import SiteFooter from '../components/SiteFooter.jsx';
 import Reveal from '../components/Reveal.jsx';
 import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, Cols, Card, IndexRow } from '../components/ui.jsx';
+import { HerramientasCambian } from '../components/tecnologia.jsx';
 import BecomeNowForm from '../components/BecomeNowForm.jsx';
 import { Ico } from '../components/icons.jsx';
 import { Banner } from '../components/Media.jsx';
@@ -30,11 +31,20 @@ export default function BecomeNow() {
 
       <Section band="dark" pad="var(--space-12)">
         <Kicker dark>BECOME NOW™ — Capacitación en IA aplicada</Kicker>
-        <Headline as="h1" dark>Capacita a tu empresa para trabajar mejor con IA, hoy.</Headline>
+        <Headline as="h1" dark>Lleva a tus equipos de usar IA a trabajar mejor con ella.</Headline>
         <Lead dark>
-          Programas in company en ChatGPT, Claude y Gemini, diseñados alrededor de
-          los procesos, documentos y desafíos reales de cada área.
+          BECOME NOW™ convierte herramientas de inteligencia artificial generativa
+          en nuevas formas de trabajo aplicadas a cada función.
         </Lead>
+        {/* Las marcas van aquí y no en el H1: en el titular convierten a BECOME
+            en implementador de una herramienta; en el segundo párrafo demuestran
+            que se conoce el ecosistema sin cambiar de categoría. */}
+        <Body dark style={{ marginTop: 'var(--space-6)' }}>
+          Trabajamos sobre procesos, documentos y retos reales utilizando el
+          ecosistema autorizado por la empresa —por ejemplo, ChatGPT, Claude,
+          Gemini, Microsoft Copilot y otros LLMs— en lugar de enseñar herramientas
+          de forma aislada.
+        </Body>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
           <PrimaryCTA href="#disena-tu-programa">Diseña tu programa</PrimaryCTA>
           <GhostCTA to="#programas" dark>Explora los programas por área</GhostCTA>
@@ -127,6 +137,8 @@ export default function BecomeNow() {
         {/* Los entregables de la Sesión 0 estaban aquí y otra vez abajo como
             "entregables generales". Se quedan en un sitio. */}
       </Section>
+
+      <HerramientasCambian lang="es" />
 
       {/* Cómo funciona cada sesión */}
       <Section band="darker">

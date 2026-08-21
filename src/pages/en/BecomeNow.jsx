@@ -4,6 +4,7 @@ import SiteHeader from '../../components/SiteHeader.jsx';
 import SiteFooter from '../../components/SiteFooter.jsx';
 import Reveal from '../../components/Reveal.jsx';
 import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, Cols, Card, IndexRow } from '../../components/ui.jsx';
+import { HerramientasCambian } from '../../components/tecnologia.jsx';
 import BecomeNowForm from '../../components/BecomeNowForm.jsx';
 import { Ico } from '../../components/icons.jsx';
 import { Banner } from '../../components/Media.jsx';
@@ -19,11 +20,16 @@ export default function BecomeNow() {
 
       <Section band="dark" pad="var(--space-12)">
         <Kicker dark>BECOME NOW™ — Applied AI Enablement</Kicker>
-        <Headline as="h1" dark>Get your company working better with AI, today.</Headline>
+        <Headline as="h1" dark>Move your teams from using AI to working differently with it.</Headline>
         <Lead dark>
-          In-company programs on ChatGPT, Claude and Gemini, designed around each
-          area’s real processes, documents and challenges.
+          BECOME NOW™ turns generative AI tools into new, applied ways of working
+          across each business function.
         </Lead>
+        <Body dark style={{ marginTop: 'var(--space-6)' }}>
+          We work with real processes, documents and business challenges using your
+          organization’s approved ecosystem —for example, ChatGPT, Claude, Gemini,
+          Microsoft Copilot and other LLMs— rather than teaching tools in isolation.
+        </Body>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
           <PrimaryCTA href="#design-your-program">Design your program</PrimaryCTA>
           <GhostCTA to="#programs" dark>Explore programs by area</GhostCTA>
@@ -108,6 +114,8 @@ export default function BecomeNow() {
           ))}
         </div>
       </Section>
+
+      <HerramientasCambian lang="en" />
 
       <Section band="darker">
         <Kicker dark>How each session works</Kicker>

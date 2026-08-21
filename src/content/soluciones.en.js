@@ -77,7 +77,7 @@ export const SOLUCION_CONTENIDO = {
   'deploy-governed-ai-agents': {
     q: 'Want to build an agent or copilot?',
     answer:
-      'If you already have a prioritized opportunity, you need to turn it into a capability with defined autonomy boundaries, integration, adoption and accountability.',
+      'We design the workflow before selecting the model. We define what the agent should do, which data and tools it can access, which LLM it needs, when human approval is required and how it will be evaluated before and after go-live. A solution may combine ChatGPT/OpenAI, Claude/Anthropic, Gemini/Google or other models, together with APIs, RAG, tool calling, MCP and enterprise integrations.',
     signals: [
       'The team knows the task, but not the operating model.',
       'It’s unclear what the agent decides and what the person keeps.',

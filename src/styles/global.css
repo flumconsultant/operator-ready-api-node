@@ -203,9 +203,17 @@ label {
 /* ---------------------------------------------------------------------------
    Navegación y piezas nuevas
 --------------------------------------------------------------------------- */
-.hv-nav:hover { color: var(--electric-green); }
-.hv-foot:hover { color: var(--electric-green); }
-.hv-lang:hover { color: var(--electric-green); }
+/* !important, y no por pereza: el color de reposo de estos enlaces se aplica
+   como estilo EN LÍNEA desde el componente, y un estilo en línea gana a
+   cualquier regla de hoja de estilos por específica que sea. Sin !important
+   estas tres reglas no llegaban a hacer nada.
+   No se notaba en los enlaces con desplegable porque ahí el color lo cambia
+   además el estado de React al entrar el puntero. Insights no tiene
+   desplegable, así que era el único del menú que se quedaba gris: el fallo
+   estaba en los cuatro, pero solo se veía en uno. */
+.hv-nav:hover, .hv-nav:focus-visible { color: var(--electric-green) !important; }
+.hv-foot:hover, .hv-foot:focus-visible { color: var(--electric-green) !important; }
+.hv-lang:hover, .hv-lang:focus-visible { color: var(--electric-green) !important; }
 .cta-primary:hover { background: var(--neon-green); }
 .cta-ghost:hover { border-color: var(--green-line); color: var(--electric-green); }
 .cta-text:hover { color: var(--accent-hover); border-color: var(--green-line); }

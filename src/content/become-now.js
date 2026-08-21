@@ -282,18 +282,18 @@ export const PROGRAMS = {
   'technology-engineering': {
     menu: 'IA aplicada a Technology & Engineering',
     area: 'Technology & Engineering',
-    h1: 'Integra la IA al delivery técnico con estándares, revisión y accountability.',
-    body: 'Programa aplicado a requirements, architecture, coding, testing, documentation, incidents y engineering knowledge.',
+    h1: 'Construye criterio para trabajar con LLMs, agents y sistemas de IA.',
+    body: 'El programa conecta el uso práctico de ChatGPT, Claude, Gemini y otros foundation models con los conceptos necesarios para diseñar soluciones empresariales: APIs, context engineering, RAG, tool calling, MCP, evaluaciones, guardrails y observabilidad. No buscamos convertir a todos en AI engineers: buscamos que los equipos técnicos puedan tomar mejores decisiones sobre cómo construir, integrar y gobernar IA. Se aplica a requirements, architecture, coding, testing, documentation, incidents y engineering knowledge.',
     who: ['Software Engineering', 'Architecture', 'QA', 'DevOps', 'IT Operations', 'Technology Leadership'],
     route: [
-      ['IA para Technology & Engineering', 'Engineering Copilot con reglas de uso.'],
-      ['Requirements y architecture', 'Technical Requirements Assistant.'],
-      ['Coding y code review', 'Coding and Review Workflow.'],
-      ['Testing y quality', 'Test Design Assistant.'],
-      ['Incidentes y documentación', 'Incident and Documentation Assistant.'],
-      ['Engineering knowledge', 'Technical Knowledge System.'],
+      ['LLMs, foundation models y prompt engineering', 'Engineering Copilot con reglas de uso, límites y criterios de revisión.'],
+      ['Context engineering, RAG y embeddings', 'Asistente conectado al conocimiento técnico del equipo mediante vector search y grounding.'],
+      ['APIs, tool calling y MCP', 'Requirements assistant que consulta sistemas reales en vez de responder de memoria.'],
+      ['Agentic workflows y model routing', 'Workflow de coding y code review con pasos automáticos y puntos de revisión humana.'],
+      ['Evaluaciones, guardrails y testing', 'Test design assistant y batería de evals para medir el comportamiento antes de confiar en él.'],
+      ['Observabilidad, incidentes y cost governance', 'Sistema de conocimiento técnico con tracing, monitoreo y runbooks.'],
     ],
-    deliverables: ['Engineering prompt library', 'Requirement templates', 'Code-review checklist', 'Test scenarios', 'Incident summary', 'Documentation assistant'],
+    deliverables: ['Engineering prompt library', 'Context and RAG design', 'Requirement templates', 'Code-review checklist', 'Evaluation set (evals)', 'Guardrails y human-in-the-loop', 'Incident runbook', 'Documentation assistant'],
     cta: 'Adapta este programa a Technology',
   },
 };
@@ -377,7 +377,9 @@ export const GENERAL_DELIVERABLES = [
 
 export const FAQ = [
   ['¿La capacitación es igual para todas las empresas?', 'No. Cada programa comienza con una sesión de entendimiento. La malla, los casos, los documentos y los ejercicios se adaptan a los procesos reales de la empresa.'],
-  ['¿Trabajan con ChatGPT, Claude o Gemini?', 'Sí. El programa puede utilizar una o varias plataformas según las licencias, políticas, herramientas y necesidades de la organización.'],
+  ['¿El programa se enfoca en ChatGPT?', 'No. BECOME NOW™ es vendor-neutral. El programa puede trabajar con ChatGPT, Claude, Gemini, Microsoft Copilot u otros modelos y herramientas aprobados por la organización. La elección depende del stack, los casos de uso y las políticas internas.'],
+  ['¿Trabajamos con cuentas y documentos de la empresa?', 'La Sesión 0 define qué información, herramientas y entornos pueden utilizarse durante el programa. Los ejercicios deben respetar las políticas de seguridad, privacidad y uso de IA de cada organización.'],
+  ['¿BECOME trabaja solo con un modelo o proveedor de IA?', 'No. Nuestro enfoque es vendor-neutral. La selección depende del caso de uso, tus datos, las políticas internas, el nivel de autonomía requerido, la arquitectura y el costo total de operación. Según el contexto evaluamos ecosistemas como OpenAI/ChatGPT, Anthropic/Claude, Google/Gemini, Microsoft Copilot y otras alternativas disponibles en el stack de la organización.'],
   ['¿Necesitamos compartir información confidencial?', 'No necesariamente. La empresa puede trabajar con información real, anonimizada o simulada. El tratamiento se define durante la sesión de entendimiento.'],
   ['¿Es un curso de prompts?', 'No. Escribir buenas instrucciones es solo el punto de partida. El objetivo es construir asistentes, agentes, flujos de trabajo y entregables que mejoren el trabajo del área.'],
   ['¿Los participantes necesitan conocimientos técnicos?', 'No. La malla se adapta al nivel de los participantes. Los programas funcionales están diseñados para equipos de negocio.'],

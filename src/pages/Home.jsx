@@ -6,6 +6,7 @@ import {
   Section, Kicker, Headline, Lead, Body,
   PrimaryCTA, GhostCTA, TextCTA, Cols, Card, IndexRow,
 } from '../components/ui.jsx';
+import { MasIaNoEsTransformacion, VendorNeutral } from '../components/tecnologia.jsx';
 import { Ico, IcoBadge } from '../components/icons.jsx';
 import { Figure, Split } from '../components/Media.jsx';
 import ScrollStage from '../components/ScrollStage.jsx';
@@ -75,11 +76,11 @@ const STAGES = [
 /* Los cinco sistemas conservan su pictograma de marca: son un set propio y con
    nombre, no iconografía de interfaz. El resto de la web usa Phosphor. */
 const DOMAINS = [
-  ['People, inside.', 'Liderazgo, roles, skills y adopción diseñados para el trabajo entre personas e IA.', '/icons/people-inside-white.webp'],
-  ['Data, inside.', 'Contexto y conocimiento convertidos en decisiones y acción.', '/icons/data-inside-white.webp'],
-  ['Agents, inside.', 'Copilotos y agentes incorporados en procesos reales, con supervisión humana definida.', '/icons/agents-inside-white.webp'],
-  ['Products, inside.', 'Propuestas, experiencias y diferenciación construidas sobre lo que la IA hace posible.', '/icons/products-inside-white.webp'],
-  ['Operations, inside.', 'Procesos, gobernanza y desempeño rediseñados para crear valor a escala.', '/icons/operations-inside-white.webp'],
+  ['People, inside.', 'Personas capaces de trabajar, decidir y colaborar con IA.', '/icons/people-inside-white.webp'],
+  ['Data, inside.', 'Datos estructurados y no estructurados preparados para alimentar modelos, RAG, enterprise search y decisiones.', '/icons/data-inside-white.webp'],
+  ['Agents, inside.', 'LLMs, copilots y AI agents capaces de razonar, utilizar herramientas y ejecutar partes de un workflow dentro de límites definidos.', '/icons/agents-inside-white.webp'],
+  ['Products, inside.', 'Productos y experiencias AI-native que incorporan modelos, datos y agents directamente en la propuesta de valor.', '/icons/products-inside-white.webp'],
+  ['Operations, inside.', 'Workflows rediseñados para combinar automatización, AI agents, decisiones humanas, excepciones y controles.', '/icons/operations-inside-white.webp'],
 ];
 
 const OUTCOMES = [
@@ -152,6 +153,11 @@ export default function Home() {
           resultados gobernados, adoptados y medibles.
         </p>
       </Section>
+
+      {/* 01b — Por qué más IA no es más transformación. Va aquí porque es la
+          objeción que trae quien llega, y contestarla antes de vender nada es
+          lo que separa una consultora de un catálogo. */}
+      <MasIaNoEsTransformacion lang="es" />
 
       {/* 02 — Qué hacemos, antes que cualquier método. Tres verbos, tres salidas. */}
       <Section band="light" id="que-hacemos">
@@ -315,6 +321,10 @@ export default function Home() {
           <PrimaryCTA to="/es/contacto">Cuéntanos qué debe cambiar</PrimaryCTA>
         </div>
       </Section>
+
+      {/* 05b — Vendor-neutral. Después de los tres servicios a propósito: la
+          pregunta «¿y con qué lo hacen?» aparece justo al terminar de leerlos. */}
+      <VendorNeutral lang="es" />
 
       {/* 06 — Casos de uso como preguntas. */}
       <Section band="sunken">

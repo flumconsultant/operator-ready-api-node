@@ -70,7 +70,7 @@ const COPY = {
   es: {
     formName: 'Diseñemos la capacitación alrededor de tu empresa',
     title: 'Cuéntanos cómo trabaja tu equipo hoy.',
-    lead: 'Diez preguntas, una cada vez, a pantalla completa. Con eso preparamos la sesión de entendimiento.',
+    lead: 'Solo necesitamos el contexto esencial: qué necesitas cambiar, dónde estás hoy y qué resultado buscas. Con eso preparamos la sesión de entendimiento.',
     launchLabel: 'Diseña tu programa',
     submitLabel: 'Solicita una sesión de entendimiento',
     confirmation: 'Gracias. Revisaremos el contexto y coordinaremos una primera conversación para entender el área antes de diseñar la propuesta.',
@@ -78,7 +78,7 @@ const COPY = {
   en: {
     formName: 'Let’s design the training around your company',
     title: 'Tell us how your team works today.',
-    lead: 'Ten questions, one at a time, full screen. That’s what we use to prepare the understanding session.',
+    lead: 'We only need the essential context: what needs to change, where you are today and the outcome you are aiming for. That’s what we use to prepare the understanding session.',
     launchLabel: 'Design your program',
     submitLabel: 'Request an understanding session',
     confirmation: 'Thanks. We’ll review the context and set up a first conversation to understand the area before designing the proposal.',

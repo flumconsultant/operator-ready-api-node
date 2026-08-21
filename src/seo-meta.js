@@ -36,7 +36,7 @@ export const PAGES = {
   /* ---------------------------------------------------------------- español */
   '/es': [
     'BECOME — Consultoría de transformación con IA',
-    'Convertimos la IA en una capacidad propia de tu empresa: capacitación aplicada, estrategia y construcción de soluciones que quedan funcionando.',
+    'BECOME transforma IA, LLMs y AI agents en capacidades empresariales: estrategia, adopción, workflows, tecnología y governance para organizaciones AI-native.',
     '/en',
   ],
   '/es/servicios': [
@@ -46,7 +46,7 @@ export const PAGES = {
   ],
   '/es/servicios/become-now': [
     'Capacitación en IA aplicada para empresas | BECOME NOW™',
-    'Programas in company de ChatGPT, Claude y Gemini diseñados sobre los procesos, documentos y casos reales de cada área.',
+    'Programas de IA aplicada para empresas sobre workflows reales con ChatGPT, Claude, Gemini, Microsoft Copilot y otros LLMs autorizados.',
     '/en/services/become-now',
   ],
   '/es/servicios/become-discover': [
@@ -56,7 +56,7 @@ export const PAGES = {
   ],
   '/es/servicios/become-embed': [
     'Construcción de soluciones de IA | BECOME EMBED™',
-    'Construimos la solución de IA con tu equipo y la dejamos funcionando dentro de la operación, con adopción y control medidos.',
+    'Diseñamos y construimos AI agents, copilots y workflows basados en LLMs con datos, APIs, integraciones, evaluación, governance y observabilidad.',
     '/en/services/become-embed',
   ],
   '/es/framework': [
@@ -108,7 +108,7 @@ export const PAGES = {
   /* ---------------------------------------------------------------- inglés */
   '/en': [
     'BECOME — AI-native transformation company',
-    'We turn AI into a capability your company owns: applied training, strategy and solutions built to keep running inside the operation.',
+    'BECOME turns AI, LLMs and AI agents into enterprise capabilities through strategy, adoption, workflows, technology and governance.',
     '/es',
   ],
   '/en/services': [
@@ -118,7 +118,7 @@ export const PAGES = {
   ],
   '/en/services/become-now': [
     'Applied AI training for teams | BECOME NOW™',
-    'In-company programs on ChatGPT, Claude and Gemini, designed around each area’s real processes, documents and cases.',
+    'Applied enterprise AI programs built around real workflows using ChatGPT, Claude, Gemini, Microsoft Copilot and other approved LLMs.',
     '/es/servicios/become-now',
   ],
   '/en/services/become-discover': [
@@ -128,7 +128,7 @@ export const PAGES = {
   ],
   '/en/services/become-embed': [
     'Build AI capabilities that stay | BECOME EMBED™',
-    'We build the AI capability with your team and leave it running inside the operation, with adoption and control measured.',
+    'We design and build AI agents, copilots and LLM-powered workflows with enterprise data, APIs, integrations, evaluation, governance and observability.',
     '/es/servicios/become-embed',
   ],
   '/en/framework': [

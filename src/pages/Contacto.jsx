@@ -60,23 +60,24 @@ export default function Contacto() {
       <SiteHeader />
 
       <Section band="dark" pad="var(--space-12)">
-        <Kicker dark>Start a conversation</Kicker>
-        <Headline as="h1" dark>¿Qué necesita cambiar dentro de tu empresa?</Headline>
+        <Kicker dark>Contacto</Kicker>
+        <Headline as="h1" dark>Empecemos por lo que quieres cambiar.</Headline>
         <Lead dark>
-          El resultado de negocio, la capacidad o el proceso. Respondemos con el
-          punto de partida adecuado, no con una secuencia comercial.
+          Comparte brevemente el reto, el outcome que buscas y el contexto de tu
+          organización. Lo revisaremos para entender tu punto de partida y
+          proponerte el siguiente paso más adecuado.
         </Lead>
       </Section>
 
       <Section band="light">
         <ConversationalForm
-          formName="Inicia una conversación con BECOME"
-          title="Cuéntanoslo en una conversación, no en un formulario."
-          lead="Siete preguntas, una cada vez, a pantalla completa. Sin campos de procurement ni casillas premarcadas."
-          launchLabel="Empezar la conversación"
+          formName="Diagnóstico inicial BECOME"
+          title="Cuéntanos el contexto esencial."
+          lead="No necesitas tener la solución definida. Queremos entender el problema, la prioridad y las restricciones actuales."
+          launchLabel="Empezar"
           fields={FIELDS}
-          submitLabel="Iniciemos la conversación"
-          confirmation="Gracias. Revisaremos el contexto y responderemos con la conversación adecuada, no con una secuencia comercial automatizada."
+          submitLabel="Enviar contexto"
+          confirmation="Gracias. Ya tenemos el contexto inicial. Revisaremos lo que compartiste para identificar el punto de partida más adecuado, y si vemos encaje te propondremos una conversación centrada en el outcome, las restricciones y el siguiente paso."
           dark={false}
           formId="contacto"
         />
@@ -84,7 +85,7 @@ export default function Contacto() {
 
       <Section band="sunken">
         <Kicker>Qué ocurre después</Kicker>
-        <Headline>Tres pasos, y ninguno es una secuencia comercial.</Headline>
+        <Headline>Tres pasos, y el siguiente siempre es transparente.</Headline>
         <div data-cols style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'var(--space-8)', marginTop: 'var(--space-10)' }}>
           {NEXT.map(([icon, title, line], i) => (
             <Reveal as="div" key={title} style={{ borderTop: '1px solid var(--border-strong)', paddingTop: 'var(--space-5)' }}>
