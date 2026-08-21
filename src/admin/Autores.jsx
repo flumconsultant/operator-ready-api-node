@@ -341,12 +341,35 @@ function Ficha({ entrada, alGuardar, alCerrar }) {
           {entrada.sha ? f.nombre : 'Ficha nueva'}
         </h2>
         <Fila gap={8}>
-          <Boton variante="quieto" onClick={alCerrar}>Volver</Boton>
-          <Boton variante="fuerte" onClick={guardar} disabled={falta || guardando || subiendo}>
+          {/* Mientras hay un encuadre abierto, «Volver» avisa y «Guardar» está
+              apagado.
+              La trampa era esta: se elige el archivo, aparece el encuadre, y
+              pulsar el Guardar de arriba por costumbre guardaba la ficha SIN la
+              foto y sin decir nada. La foto elegida se perdía en silencio y la
+              ficha quedaba igual que antes, así que ni siquiera había forma de
+              notar que había pasado algo. */}
+          <Boton
+            variante="quieto"
+            onClick={() => {
+              if (porEncuadrar && !window.confirm('Estás encuadrando una foto que aún no se ha subido. Si vuelves ahora, se pierde. ¿Volver de todas formas?')) return;
+              alCerrar();
+            }}
+          >
+            Volver
+          </Boton>
+          <Boton variante="fuerte" onClick={guardar} disabled={falta || guardando || subiendo || !!porEncuadrar}>
             {guardando ? 'Guardando…' : 'Guardar'}
           </Boton>
         </Fila>
       </Fila>
+
+      {porEncuadrar && (
+        /* Un botón apagado sin explicación es un callejón sin salida: quien lo
+           pulsa y no pasa nada no tiene forma de saber qué le falta. */
+        <p style={{ margin: 0, font: 'var(--type-body)', fontSize: 13, color: 'var(--text-muted)' }}>
+          Termina de encuadrar la foto —«Usar esta foto» o «Cancelar»— para poder guardar la ficha.
+        </p>
+      )}
 
       <div style={{ background: marco.papel, border: marco.linea, borderRadius: 2, padding: 16, display: 'grid', gap: 12 }}>
         <Fila gap={16} style={{ alignItems: 'flex-start' }}>
