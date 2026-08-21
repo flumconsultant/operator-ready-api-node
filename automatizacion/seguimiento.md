@@ -28,6 +28,7 @@ abandonar a la primera algo que solo necesitaba más cuerpo.
 |---|---|---|---|---|---|
 | `quien-responde-cuando-responde-un-agente` | 2026-08-20 | ¿Quién responde cuando un agente de IA toma una decisión equivocada? | — | `nuevo` | Terreno blando: solo prensa jurídica de nicho, sin consultora fuerte |
 | `por-que-tus-pilotos-de-ia-no-llegan-a-produccion` | 2026-08-20 | ¿Por qué mis pilotos de IA no llegan a producción? | — | `nuevo` | Máxima intención de compra. Sin consultora global en español |
+| `como-se-redisena-un-proceso-para-que-lo-ejecute-una-ia` | 2026-08-21 | ¿Cómo se rediseña un proceso para que lo ejecute en parte una IA? | — | `nuevo` | SERP más blanda del barrido, sin consultora global compitiendo |
 
 ## Qué está funcionando
 

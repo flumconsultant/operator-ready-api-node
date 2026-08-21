@@ -1,0 +1,245 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-08-21",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "operating-model",
+  "formato": "framework",
+  "es": {
+    "slug": "como-se-redisena-un-proceso-para-que-lo-ejecute-una-ia",
+    "titulo": "Cómo rediseñar un proceso para que lo ejecute una IA",
+    "entradilla": "Metieron un agente en medio del proceso y siguieron haciendo exactamente lo mismo. Solo que ahora hay un paso más: alguien copia lo que dice el agente a la hoja de siempre, por si acaso.",
+    "descripcion": "Rediseñar un proceso no es insertar una IA en él. Es decidir antes qué puede hacer sola, qué necesita firma humana y quién responde si sale mal.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Metieron un agente en medio del proceso y siguieron haciendo exactamente lo mismo. Solo que ahora hay un paso más: alguien copia lo que dice el agente a la hoja de siempre, por si acaso."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "«Rediseña antes de automatizar» es la frase que repite todo el mundo. Vendors, boutiques, notas de prensa sindicadas. La dicen con la seguridad de quien entrega una verdad y en realidad entrega una consigna: suena a método y no lo es, porque no dice qué se decide primero, quién lo decide, ni con qué criterio."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Así que las empresas hacen lo que hace cualquiera cuando le dan una frase sin instrucciones: la interpretan como pueden. Cogen el diagrama del proceso, buscan la caja donde meter la IA, y la meten. El proceso sigue teniendo las mismas aprobaciones, los mismos controles, el mismo dueño formal, solo que ahora uno de los pasos lo ejecuta un modelo en vez de una persona junior. Eso no es rediseño. Es maquillaje sobre un esqueleto pensado para que lo ejecutara alguien con criterio, miedo a equivocarse y un jefe al que rendir cuentas."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Cómo se rediseña un proceso para que lo ejecute en parte una IA?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La pregunta la hace quien tiene un proceso con volumen real, no una demo. Facturación, reclamaciones, altas de proveedor, conciliación. Y la respuesta que encuentra en cualquier búsqueda es siempre la misma consigna repetida con otro logo encima. Nadie dice qué criterio decide que una tarea es delegable, qué umbral dispara la escalada a un humano, quién firma el resultado, ni cómo queda ese paso ante un auditor que llega ocho meses después preguntando quién aprobó qué."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Se automatizó un paso, pero el control que va justo después sigue diseñado para el ritmo de error de una persona, no de un modelo que produce cien salidas por hora.",
+          "Nadie escribió qué decisiones puede tomar el agente solo y cuáles tienen que volver a un humano antes de ejecutarse.",
+          "El rastro de auditoría asumía una firma humana, y ahora esa firma o desapareció o la pone alguien que no leyó nada antes de firmar.",
+          "Las excepciones escalan a quien esté conectado en ese momento, no a quien tiene autoridad real para decidir sobre esa excepción.",
+          "El indicador que dice que el proceso «mejoró» mide velocidad de salida, no los casos que ahora fallan en silencio porque nadie los revisa.",
+          "El diagrama del proceso sigue teniendo las mismas cajas de siempre, con la palabra IA escrita a mano dentro de una de ellas."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema de fondo",
+        "texto": "Rediseñar no es dibujar el mismo proceso con una caja nueva."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El rediseño de verdad empieza antes de mirar qué tecnología comprar, y empieza por una pregunta que casi nunca se hace en voz alta: de las tareas que forman este proceso, ¿cuáles son delegables y cuáles no? Y el criterio para responder no es «¿puede la IA hacer esto técnicamente?». Casi siempre puede. El criterio es otro: si el resultado se puede deshacer sin coste cuando sale mal, si el error cuesta poco o cuesta una demanda, y si el dato de entrada está lo bastante estructurado como para que el agente actúe sin tener que interpretar una zona gris."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y hay algo más incómodo todavía. Rediseñar un proceso significa redistribuir quién manda en él, y eso toca a personas con nombre y con un puesto que defender. El mando medio que hoy aprueba cada excepción pierde ese poder si el criterio de escalada queda escrito y automatizado. Por eso el rediseño real se atasca donde el maquillaje no se atasca nunca: en la conversación sobre quién deja de decidir lo que hoy decide."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Meter un agente en un proceso diseñado para que lo ejecutara una persona no es rediseñar el proceso. Es ponerle copiloto a un proceso que va a seguir estrellándose exactamente igual, solo que más rápido.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "¿Qué hay que decidir antes de tocar el proceso?"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Reversibilidad",
+            "definicion": "Si el resultado de la tarea se puede deshacer sin coste cuando está mal, se delega. Si deshacerlo exige un reembolso, una disculpa a un cliente o una corrección legal, el agente propone y una persona ejecuta o aprueba antes de que el efecto sea irreversible."
+          },
+          {
+            "termino": "Coste del error",
+            "definicion": "No el coste medio, el coste del peor caso razonable. Un importe y un umbral escritos antes de delegar nada: por debajo, el agente decide solo; por encima, la decisión vuelve a un humano con nombre, no a una cola genérica de revisión."
+          },
+          {
+            "termino": "Estructura del dato",
+            "definicion": "Si la entrada es un formulario con reglas claras, el agente actúa. Si exige interpretar una excepción, un matiz de contrato o una situación que no estaba prevista, esa tarea no es delegable todavía, por muy bien que el modelo la resuelva en pruebas."
+          },
+          {
+            "termino": "Firma",
+            "definicion": "Quién se hace responsable del resultado ante quien lo cuestiona después: nombre y cargo, no «el sistema» ni «el equipo». Si nadie está dispuesto a poner su nombre en esa casilla, esa tarea todavía no está lista para delegarse."
+          },
+          {
+            "termino": "Rastro",
+            "definicion": "Qué queda registrado para que, meses después, alguien pueda reconstruir por qué el agente decidió lo que decidió: qué datos vio, qué regla aplicó, si escaló y a quién. Sin eso, un auditor no tiene nada que auditar, solo un resultado."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Coge el proceso que ibas a rediseñar y, antes de mirar ninguna herramienta, haz una lista de cada tarea que lo compone. Para cada una, escribe una respuesta a las cinco preguntas del marco. Las que salgan verdes en las cinco se automatizan primero. Las que fallen en una sola se quedan con supervisión humana, y esa lista, no el diagrama bonito, es el verdadero plan de rediseño."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cómo se rediseña un proceso para que lo ejecute en parte una IA?",
+            "respuesta": "Antes de tocar ninguna herramienta, se descompone el proceso en tareas y se decide, tarea por tarea, cuáles son delegables según cuatro criterios: si el error es reversible, cuánto cuesta el peor caso, si el dato de entrada está estructurado y quién firma el resultado. El rediseño es esa decisión escrita, no la caja donde se inserta la IA en el diagrama."
+          },
+          {
+            "pregunta": "¿Qué tareas puede delegar una empresa a un agente de IA?",
+            "respuesta": "Las que combinan bajo coste de error, resultado reversible y datos de entrada estructurados: por ejemplo, clasificar una solicitud, extraer datos de un documento estándar o generar un borrador que revisa una persona. Las tareas con error costoso, resultado irreversible o excepciones frecuentes se quedan con una persona en el bucle, aunque el modelo sea técnicamente capaz de resolverlas."
+          },
+          {
+            "pregunta": "¿Quién firma el resultado de un proceso que ejecuta en parte una IA?",
+            "respuesta": "La misma persona que firmaría si lo hubiera ejecutado un equipo humano: quien tiene autoridad sobre ese proceso y responde por él ante su jefe o ante un auditor. Delegar la ejecución a un agente no delega la responsabilidad; si nadie quiere poner su nombre en el resultado, esa tarea no estaba lista para automatizarse."
+          },
+          {
+            "pregunta": "¿Cómo se audita un proceso que ejecuta en parte una IA?",
+            "respuesta": "Con un rastro que registre, para cada decisión del agente, qué datos vio, qué regla o criterio aplicó y si escaló a un humano. Sin ese rastro escrito desde el diseño, un auditor que llega meses después solo tiene un resultado final sin manera de reconstruir cómo se llegó a él, y eso convierte cualquier revisión en un acto de fe."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Rediseñemos el proceso",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-to-redesign-a-process-for-an-ai-to-run",
+    "titulo": "How to redesign a process for an AI to run",
+    "entradilla": "They dropped an agent into the middle of the process and kept doing exactly the same thing. Except now there is one extra step: someone copies what the agent says into the usual spreadsheet, just in case.",
+    "descripcion": "Redesigning a process isn't inserting an AI into it. It means deciding what it can do alone, what needs a signature, and who answers if it fails.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "They dropped an agent into the middle of the process and kept doing exactly the same thing. Except now there is one extra step: someone copies what the agent says into the usual spreadsheet, just in case."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "\"Redesign before you automate\" is the line everyone repeats. Vendors, boutiques, syndicated press releases. They say it with the confidence of someone handing over a truth, and what they actually hand over is a slogan. It sounds like a method and is not one, because it never says what gets decided first, who decides it, or against what criteria."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "So companies do what anyone does when handed a slogan with no instructions: they interpret it however they can. They pull up the process map, find the box where the AI fits, and drop it in. Same approvals, same controls, same formal owner, except one step now runs on a model instead of a junior analyst. That is not redesign. It is a coat of paint over a skeleton built for a person with judgment, fear of getting it wrong, and a boss to answer to."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "How do you redesign a process for an AI to run part of it?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The people asking this run a process with real volume, not a demo. Billing, claims, vendor onboarding, reconciliation. And every search turns up the same slogan under a different logo. Nobody says what criterion makes a task delegable, what threshold triggers escalation to a human, who signs the output, or how that step holds up in front of an auditor who shows up eight months later asking who approved what."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "One step got automated, but the review sitting right after it is still built for a human's error rate, not a model producing a hundred outputs an hour.",
+          "Nobody wrote down which decisions the agent can make on its own and which have to go back to a person before they execute.",
+          "The audit trail assumed a human signature, and now that signature either disappeared or gets stamped by someone who read nothing before signing.",
+          "Exceptions escalate to whoever happens to be online, not to whoever actually has the authority to rule on that exception.",
+          "The metric claiming the process \"improved\" measures output speed, not the cases now failing quietly because nobody reviews them.",
+          "The process map still has all the old boxes, with the word AI scrawled inside one of them by hand."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "Redesign is not drawing the same process with one new box."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Real redesign starts before anyone looks at what technology to buy, and it starts with a question almost nobody asks out loud: of the tasks that make up this process, which are delegable and which are not? The test is not \"can AI technically do this.\" It almost always can. The test is whether the outcome can be undone at no cost when it is wrong, whether the error costs little or costs a lawsuit, and whether the input data is structured enough for the agent to act without interpreting a grey area."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "There is something even less comfortable underneath that. Redesigning a process means redistributing who holds authority inside it, and that touches people with a name and a title to defend. The middle manager who currently approves every exception loses that power the moment the escalation rule gets written down and automated. That is exactly where real redesign stalls and cosmetic redesign never does: in the conversation about who stops deciding what they decide today."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Dropping an agent into a process built for a person to run is not redesigning the process. It is fitting a copilot onto a process that is going to keep crashing exactly the same way, just faster.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "What has to be decided before you touch the process?"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Reversibility",
+            "definicion": "If the task's outcome can be undone at no cost when it is wrong, delegate it. If undoing it means a refund, an apology to a customer, or a legal correction, the agent proposes and a person executes or approves before the effect becomes irreversible."
+          },
+          {
+            "termino": "Cost of error",
+            "definicion": "Not the average cost, the reasonable worst case. A figure and a threshold written down before anything gets delegated: below it, the agent decides alone; above it, the decision goes back to a named person, not a generic review queue."
+          },
+          {
+            "termino": "Data structure",
+            "definicion": "If the input is a form with clear rules, the agent acts. If it requires interpreting an exception, a contract nuance, or a situation nobody anticipated, that task is not delegable yet, no matter how well the model handles it in testing."
+          },
+          {
+            "termino": "Signature",
+            "definicion": "Who is accountable for the outcome to whoever questions it afterwards: a name and a title, not \"the system\" or \"the team.\" If nobody is willing to put their name against that box, the task is not ready to be delegated."
+          },
+          {
+            "termino": "Trail",
+            "definicion": "What gets logged so that, months later, someone can reconstruct why the agent decided what it decided: what data it saw, what rule it applied, whether it escalated and to whom. Without that, an auditor has nothing to audit, just an outcome."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take the process you were about to redesign and, before looking at any tool, list every task inside it. For each one, write an answer to the framework's five questions. The ones that come back green on all five get automated first. The ones that fail even one keep a human in the loop, and that list, not the pretty diagram, is the actual redesign plan."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How do you redesign a process for an AI to run part of it?",
+            "respuesta": "Before touching any tool, break the process into tasks and decide, task by task, which are delegable against four tests: whether the error is reversible, what the worst case costs, whether the input data is structured, and who signs the outcome. The redesign is that written decision, not the box where AI gets inserted into the diagram."
+          },
+          {
+            "pregunta": "What tasks can a company delegate to an AI agent?",
+            "respuesta": "Ones that combine low cost of error, reversible outcomes and structured input data: classifying a request, extracting data from a standard document, or drafting something a person then reviews. Tasks with costly errors, irreversible outcomes or frequent exceptions keep a human in the loop, even when the model is technically capable of handling them."
+          },
+          {
+            "pregunta": "Who signs the output of a process an AI partly runs?",
+            "respuesta": "The same person who would sign it if a human team had run it: whoever has authority over that process and answers for it to their boss or to an auditor. Delegating execution to an agent does not delegate accountability; if nobody is willing to put their name on the outcome, that task was not ready to be automated."
+          },
+          {
+            "pregunta": "How do you audit a process an AI partly runs?",
+            "respuesta": "With a trail that logs, for every decision the agent makes, what data it saw, what rule or criterion it applied, and whether it escalated to a human. Without that trail built in from the design stage, an auditor arriving months later has only a final outcome with no way to reconstruct how it was reached, which turns any review into an act of faith."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's redesign the process",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
