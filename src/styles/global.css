@@ -72,6 +72,12 @@ textarea:focus-visible {
 }
 @media (max-width: 900px) {
   [data-cols] { grid-template-columns: 1fr !important; }
+  /* Y se deshace también el reparto en pistas. Esta regla lleva !important, así
+     que gana a las columnas que declara la rejilla, pero NO a los `grid-column:
+     span` de sus hijos: quedaban tarjetas pidiendo dos y tres pistas en una
+     rejilla de una, y el navegador se inventaba pistas implícitas. Una columna
+     tiene que ser una columna para la rejilla y para lo que hay dentro. */
+  [data-cols] > * { grid-column: auto !important; }
   [data-hide-sm] { display: none !important; }
 }
 

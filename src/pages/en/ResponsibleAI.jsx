@@ -2,7 +2,7 @@ import React from 'react';
 import SiteHeader from '../../components/SiteHeader.jsx';
 import SiteFooter from '../../components/SiteFooter.jsx';
 import Reveal from '../../components/Reveal.jsx';
-import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA } from '../../components/ui.jsx';
+import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, Cols } from '../../components/ui.jsx';
 
 /**
  * IA responsable.
@@ -69,7 +69,10 @@ export default function ResponsibleAI() {
         <Section band="sunken">
           <Kicker>What gets defined in every case</Kicker>
           <Headline>Eight decisions, always the same ones.</Headline>
-          <div data-cols style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--space-8)', marginTop: 'var(--space-10)' }}>
+          {/* Rejilla a mano no: ocho controles en tres columnas dejaban la
+              última fila con dos y un hueco. <Cols> reparte 3, 3 y 2 estirando
+              las tres filas hasta el borde. */}
+          <Cols min="280px">
             {CONTROLES.map(([nombre, linea], i) => (
               <Reveal as="div" key={nombre} style={{ borderTop: '1px solid var(--border-hairline)', paddingTop: 'var(--space-5)' }}>
                 <p style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', color: 'var(--text-muted)' }}>
@@ -81,7 +84,7 @@ export default function ResponsibleAI() {
                 <Body style={{ marginTop: 'var(--space-4)' }}>{linea}</Body>
               </Reveal>
             ))}
-          </div>
+          </Cols>
         </Section>
 
         <Section band="darker" pad="var(--space-13)">

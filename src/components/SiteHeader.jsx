@@ -148,8 +148,34 @@ export default function SiteHeader() {
   }, [hidden, open, drop]);
   React.useEffect(() => () => document.documentElement.removeAttribute('data-header-hidden'), []);
 
+  /**
+   * El logotipo lleva a la home, siempre, desde cualquier parte del sitio.
+   *
+   * El caso que faltaba: estando YA en la home y desplazado hacia abajo,
+   * pulsarlo no hacía nada. La ruta no cambia, así que el router no navega y
+   * tampoco sube la página; para quien lo pulsa, el logotipo estaba roto. Que
+   * la causa sea «ya estabas ahí» no lo arregla: lo que se espera al pulsarlo
+   * es volver al principio.
+   *
+   * Se cierra además el menú móvil, que si no se queda abierto encima de la
+   * página a la que se acaba de llegar.
+   */
+  const irACasa = (e) => {
+    setOpen(false);
+    setDrop(null);
+    if (pathname !== t.HOME) return;
+    e.preventDefault();
+    const salta = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: salta ? 'auto' : 'smooth' });
+  };
+
   const Logo = ({ size = 23 }) => (
-    <Link to={t.HOME} aria-label={lang === 'en' ? 'BECOME — Home' : 'BECOME — Inicio'} style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44 }}>
+    <Link
+      to={t.HOME}
+      onClick={irACasa}
+      aria-label={lang === 'en' ? 'BECOME — Home' : 'BECOME — Inicio'}
+      style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44 }}
+    >
       <img src={wordmark} alt="" width={Math.round((size * 480) / 91)} height={size} style={{ height: size, width: 'auto', display: 'block' }} />
     </Link>
   );

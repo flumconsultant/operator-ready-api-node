@@ -34,17 +34,48 @@ export default function SiteFooter() {
       data-band="--navy-950"
       style={{ background: 'var(--navy-950)', padding: 'var(--space-12) var(--gutter-page) var(--space-8)' }}
     >
-      <div style={{ maxWidth: 'var(--maxw-content)', margin: '0 auto' }}>
+      <div style={{ maxWidth: 'var(--maxw-content)', margin: '0 auto', containerType: 'inline-size' }}>
+        {/* La rejilla del pie se escribió para cuatro grupos de enlaces y hoy
+            hay seis. Con cinco pistas y siete bloques, los dos últimos caían
+            solos en una fila con tres huecos: no parece una decisión, parece
+            que no cupo.
+            Ahora la marca ocupa su columna a lo alto y los seis grupos forman
+            un bloque de 3x2 al lado. Al estrecharse, la marca pasa a ocupar la
+            fila entera y los grupos van de tres en tres y luego de dos en dos.
+            Ninguna combinación deja una fila a medias. */}
+        <style>{`
+          .becomePie { display: grid; gap: var(--space-9); grid-template-columns: minmax(0,1fr) }
+          @container (min-width: 520px) {
+            .becomePie { grid-template-columns: repeat(2, minmax(0,1fr)) }
+            .becomePie > :first-child { grid-column: 1 / -1 }
+          }
+          @container (min-width: 760px) {
+            .becomePie { grid-template-columns: repeat(3, minmax(0,1fr)) }
+          }
+          @container (min-width: 1040px) {
+            .becomePie { grid-template-columns: minmax(0,1.3fr) repeat(3, minmax(0,1fr)) }
+            .becomePie > :first-child { grid-column: auto; grid-row: span 2 }
+          }
+        `}</style>
         <div
           data-cols
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'minmax(0, 1.3fr) repeat(4, minmax(0, 1fr))',
-            gap: 'var(--space-9)',
-          }}
+          className="becomePie"
         >
           <div>
-            <Link to={t.HOME} aria-label={lang === "en" ? "BECOME — Home" : "BECOME — Inicio"} style={{ display: 'inline-flex', minHeight: 44, alignItems: 'center' }}>
+            {/* Mismo trato que el del encabezado: estando ya en la home, pulsarlo
+                sube al principio en vez de no hacer nada. Y aquí importa más,
+                porque al pie se llega precisamente desplazándose hasta abajo. */}
+            <Link
+              to={t.HOME}
+              onClick={(e) => {
+                if (pathname !== t.HOME) return;
+                e.preventDefault();
+                const salta = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                window.scrollTo({ top: 0, behavior: salta ? 'auto' : 'smooth' });
+              }}
+              aria-label={lang === "en" ? "BECOME — Home" : "BECOME — Inicio"}
+              style={{ display: 'inline-flex', minHeight: 44, alignItems: 'center' }}
+            >
               <img src={wordmark} alt="" width={137} height={26} style={{ height: 26, width: 'auto', display: 'block' }} />
             </Link>
             <p style={{ margin: 'var(--space-5) 0 0', font: 'var(--type-body)', color: 'var(--slate-300)', maxWidth: '30ch' }}>
