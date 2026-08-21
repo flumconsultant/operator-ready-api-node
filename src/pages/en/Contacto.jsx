@@ -1,4 +1,5 @@
 import React from 'react';
+import { BloqueAgenda } from '../../components/Agendar.jsx';
 import SiteHeader from '../../components/SiteHeader.jsx';
 import SiteFooter from '../../components/SiteFooter.jsx';
 import Reveal from '../../components/Reveal.jsx';
@@ -63,6 +64,14 @@ export default function Contacto() {
           formId="contacto"
           lang="en"
         />
+      </Section>
+
+      {/* La alternativa al formulario, para quien ya viene decidido. Va
+          después del formulario y no antes: quien llega aquí ya eligió
+          escribir, y ofrecerle una llamada primero es cambiarle el paso que
+          estaba dando. */}
+      <Section band="light" pad="var(--space-10)">
+        <BloqueAgenda lang="en" origen="contacto" />
       </Section>
 
       <Section band="sunken">

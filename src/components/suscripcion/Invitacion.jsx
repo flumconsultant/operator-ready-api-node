@@ -62,7 +62,7 @@ const escribir = (k, v) => { try { localStorage.setItem(k, v); } catch { /* modo
 
 /* El aviso de cookies sale primero. Dos elementos fijos a la vez se tapan en
    un móvil, y el que interrumpe menos es el que debe esperar. */
-const cookiesVistas = () => !!leer('become.cookies.visto');
+const cookiesVistas = () => !!leer('become.consentimiento.v1');
 
 function yaNoMolestar() {
   if (leer(CLAVE_DENTRO)) return true;
@@ -237,14 +237,20 @@ export default function Invitacion() {
       {/* El botón se esconde mientras el diálogo está abierto: un elemento fijo
           por encima puede tapar el control que tiene el foco, y eso es
           justamente lo que prohíbe la regla de foco no obstruido. */}
-      {botonVisible && libre && !abierto && (
+      {/* Solo en artículos, y por encima del de agendar.
+          Antes salía en todo el sitio, pero desde que agendar tiene su propio
+          botón fijo, dos pastillas en la misma esquina compiten y no se pulsa
+          ninguna. Suscribirse solo significa algo donde hay algo que leer, así
+          que aquí es donde se queda. */}
+      {esArticulo && botonVisible && libre && !abierto && (
         <button
           type="button"
           onClick={() => setAbierto(true)}
           style={{
             position: 'fixed', zIndex: 900,
             right: 'max(16px, env(safe-area-inset-right))',
-            bottom: 'max(16px, env(safe-area-inset-bottom))',
+            /* 52 del botón de agendar + 12 de aire: se apilan, no se tapan. */
+            bottom: 'calc(max(16px, env(safe-area-inset-bottom)) + 64px)',
             height: 48, padding: '0 18px', borderRadius: 999, border: 0,
             display: 'inline-flex', alignItems: 'center', gap: 8,
             background: 'var(--navy-950)', color: 'var(--white)', cursor: 'pointer',
