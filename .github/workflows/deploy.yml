@@ -227,7 +227,12 @@ jobs:
           exit 1
 
       - name: Subir a public_html
-        timeout-minutes: 6
+        # 16 y no 6. Con 6, un solo tropiezo del FTP del hosting se llevaba por
+        # delante el despliegue entero, y con él el artículo del día. Pasó el
+        # 21 de agosto: la subida se colgó, agotó los seis minutos y el
+        # artículo se quedó escrito en el repositorio sin llegar a la web.
+        # Ahora caben tres intentos completos con sus esperas.
+        timeout-minutes: 16
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USER: ${{ secrets.FTP_USER }}
@@ -315,7 +320,20 @@ jobs:
           # siguiente le pide la página al dominio de verdad, que es la única
           # prueba que de verdad importa. Un diagnóstico que rompe el proceso
           # que vigila es peor que no tener diagnóstico.
-          lftp -c "
+          # Tres intentos, no uno.
+          #
+          # lftp ya reintenta por dentro cada conexión (net:max-retries), pero
+          # eso no cubre el caso que de verdad ocurre en un hosting compartido:
+          # que la sesión entera se quede colgada y muera por tiempo. Cuando
+          # eso pasa, el trabajo se pierde entero aunque el servidor esté
+          # perfectamente bien treinta segundos después.
+          #
+          # Cada intento tiene su propio límite de tiempo, para que uno colgado
+          # no se coma el presupuesto de los siguientes; entre uno y otro se
+          # espera cada vez más, que es lo que hace falta cuando el servidor
+          # está estrangulando conexiones por exceso.
+          subir() {
+            timeout 300 lftp -c "
             set ftp:ssl-force true;
             set ftp:ssl-protect-data true;
             set ssl:verify-certificate $VERIFICAR;
@@ -362,6 +380,22 @@ jobs:
             #    destruir trabajo que este repositorio no conoce.
             mirror --reverse --parallel=2 --verbose --exclude-glob assets/* dist/ $DESTINO/;
           "
+          }
+
+          for intento in 1 2 3; do
+            if subir; then
+              echo "Subida completada en el intento $intento."
+              exit 0
+            fi
+            if [ "$intento" -lt 3 ]; then
+              ESPERA=$((intento * 45))
+              echo "::warning::La subida falló en el intento $intento. Reintentando en ${ESPERA}s."
+              sleep "$ESPERA"
+            fi
+          done
+
+          echo "::error::La subida al hosting falló en los tres intentos. El sitio sigue publicando la versión anterior; lo que se acaba de compilar NO está en la web. Vuelve a lanzar este despliegue desde la pestaña Actions cuando el FTP de Hostinger responda."
+          exit 1
 
       - name: Comprobar que lo subido es lo que se publica
         # Un despliegue que sube los archivos a una carpeta que el servidor no
