@@ -31,6 +31,44 @@
     <meta name="twitter:image" content="https://meetbecome.com/images/01-neural-network.webp" />
 
     <meta name="theme-color" content="#05070f" />
+    <!-- ga -->
+    <!-- Etiqueta de Google (gtag.js) — G-VXPXSDD12K.
+
+         Va aquí, en el HTML de cada página, y no la inyecta el JavaScript de
+         la aplicación. Dos razones:
+
+         · El comprobador de Google mira el CÓDIGO FUENTE de la página. Una
+           etiqueta añadida después por el bundle funciona para medir, pero
+           «no se detecta» en la comprobación, y entonces no hay forma de
+           saber si está bien puesta o no.
+         · Cargando aquí empieza a medir antes: no espera a que descargue y
+           arranque la aplicación.
+
+         Lo que NO cambia es el consentimiento. La primera línea declara los
+         cuatro permisos DENEGADOS, y eso se hace antes de que gtag.js llegue
+         a ejecutarse: en ese estado la etiqueta no escribe una sola cookie.
+         Solo si ya hay un «aceptado» guardado de una visita anterior se
+         concede el de analítica —y solo ese, porque aquí no hay publicidad—.
+
+         El panel de /admin se excluye: es una herramienta de trabajo, y las
+         visitas de quien edita ensuciarían el informe. -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      var becomeDenegado = {ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'};
+      gtag('consent','default',Object.assign({},becomeDenegado,{wait_for_update:500}));
+      try{
+        if(localStorage.getItem('become.consentimiento.v1')==='aceptado'){
+          gtag('consent','update',Object.assign({},becomeDenegado,{analytics_storage:'granted'}));
+        }
+      }catch(e){}
+      gtag('js', new Date());
+      if(location.pathname.indexOf('/admin')!==0){
+        gtag('config','G-VXPXSDD12K',{send_page_view:false,cookie_domain:'auto',cookie_flags:'SameSite=Lax;Secure',anonymize_ip:true});
+      }
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VXPXSDD12K"></script>
+    <!-- /ga -->
   </head>
   <body>
     <div id="root"></div>

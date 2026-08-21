@@ -400,6 +400,18 @@ function datosEstructurados(path, meta) {
 
 const plantilla = read('dist/index.html');
 
+/**
+ * La etiqueta de Google, tal cual está en la plantilla.
+ *
+ * Se saca entera y se vuelve a poner entera en cada una de las 72 páginas. No
+ * se puede dejar que caiga en el filtro por líneas de más abajo: ese filtro
+ * conserva las líneas que contienen «<script», así que de un script en línea
+ * de treinta líneas solo sobreviviría la primera y el resto acabaría suelto en
+ * medio del HTML.
+ */
+const analitica = (plantilla.match(/<!-- ga -->[\s\S]*?<!-- \/ga -->/) || [''])[0];
+if (!analitica) console.warn('seo: no se encontró el bloque <!-- ga --> en la plantilla');
+
 /* --------------------------------------------- qué código pide cada ruta */
 /*
  * El navegador descubre el código de una SPA en fila india: lee el HTML, pide
@@ -619,9 +631,19 @@ ${jsonLd}
   return plantilla
     .replace('<div id="root"></div>', `<div id="root">${cuerpo}</div>`)
     .replace(/<html lang="[^"]*"/, `<html lang="${lang}"`)
-    .replace(/<head>[\s\S]*?<\/head>/, `<head>${cabeza}${
-      /* Lo que Vite inyectó (css y js con hash) se conserva tal cual */
+    .replace(/<head>[\s\S]*?<\/head>/, `<head>${cabeza}${analitica}${
+      /* Lo que Vite inyectó (css y js con hash) se conserva tal cual.
+         Se filtra por líneas, así que un <script> en línea de varias líneas
+         llegaría partido: por eso la etiqueta de Google se extrae aparte, en
+         bloque, y no depende de este filtro. */
       (plantilla.match(/<head>([\s\S]*?)<\/head>/)?.[1] || '')
+        /* El bloque de Google se quita ENTERO antes de filtrar, no línea a
+           línea. Filtrando por «<script», de sus treinta líneas sobrevivía la
+           que dice exactamente `<script>`: una etiqueta abierta y sin cerrar
+           que se tragaba el resto de la cabecera. La página quedaba rota y en
+           silencio —el build no falla, y solo se notó porque el prerenderizado
+           empezó a sacar 0 caracteres de las 68—. */
+        .replace(/<!-- ga -->[\s\S]*?<!-- \/ga -->/, '')
         .split('\n')
         .filter((l) => /<script|<link rel="modulepreload"/.test(l))
         .join('\n')

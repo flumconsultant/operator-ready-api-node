@@ -26,6 +26,18 @@
  * Al aceptar, los permisos pasan a concedidos y GA empieza a contar como
  * siempre. Al rechazar, se quedan denegados y no hay cookies.
  *
+ * ---- Dónde vive cada mitad ----
+ *
+ * La CARGA está en el <head> del HTML, no aquí. La primera versión la inyectaba
+ * este archivo y medía perfectamente, pero el comprobador de Google respondía
+ * «no se ha detectado su etiqueta»: ese comprobador lee el código fuente de la
+ * página, y una etiqueta que aparece después, puesta por el bundle, no está en
+ * el código fuente. Una instalación que funciona pero no se puede verificar es
+ * una instalación en la que nadie puede confiar.
+ *
+ * Aquí queda lo que el HTML no puede hacer: cambiar el consentimiento cuando
+ * alguien responde, y mandar una vista por cada navegación dentro del sitio.
+ *
  * ---- Y por qué el page_view se manda a mano ----
  *
  * Este sitio es una SPA: al navegar no hay recarga, así que la etiqueta solo
@@ -70,44 +82,21 @@ const denegarTodo = () => Object.fromEntries(TODOS.map((k) => [k, 'denied']));
 const soloAnalitica = () => ({ ...denegarTodo(), analytics_storage: 'granted' });
 
 /**
- * Carga la etiqueta una sola vez, con todo denegado por defecto.
+ * Manda la primera vista, cuando la aplicación ya está montada.
  *
- * El `default` tiene que declararse ANTES de que cargue gtag.js, o durante ese
- * hueco la etiqueta funcionaría en su modo normal —con cookies— y el
- * consentimiento llegaría tarde. Por eso las dos cosas están aquí y en este
- * orden, y no repartidas entre el HTML y el componente del aviso.
+ * El `config` del <head> lleva `send_page_view: false`, así que la primera
+ * página tampoco se manda sola: se manda aquí, con el título ya puesto por la
+ * aplicación. Si se dejara el automático, esa primera vista se registraría con
+ * el título de la plantilla en vez de con el de la página.
  */
 export function arrancarAnalitica() {
   if (arrancada || typeof window === 'undefined') return;
   /* El panel de administración no se mide: es una herramienta de trabajo, no
      una página del sitio, y su tráfico ensuciaría el informe con las visitas
-     de quien lo edita. */
+     de quien lo edita. El <head> ya se salta el `config` en /admin; esto es el
+     segundo cierre, para los eventos. */
   if (window.location.pathname.startsWith('/admin')) return;
   arrancada = true;
-
-  gtag('consent', 'default', {
-    ...denegarTodo(),
-    wait_for_update: 500,
-  });
-
-  const guardada = decisionGuardada();
-  if (guardada === 'aceptado') gtag('consent', 'update', soloAnalitica());
-
-  const s = document.createElement('script');
-  s.async = true;
-  s.src = `https://www.googletagmanager.com/gtag/js?id=${MEDICION}`;
-  document.head.appendChild(s);
-
-  gtag('js', new Date());
-  gtag('config', MEDICION, {
-    send_page_view: false,
-    /* Sin dominio de cookie explícito, GA la escribiría también para
-       subdominios que no son del sitio. */
-    cookie_domain: 'auto',
-    cookie_flags: 'SameSite=Lax;Secure',
-    anonymize_ip: true,
-  });
-
   paginaVista();
 }
 
