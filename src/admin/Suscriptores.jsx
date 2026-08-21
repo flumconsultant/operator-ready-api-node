@@ -28,15 +28,112 @@ const COLOR = {
 
 const fecha = (s) => (s ? String(s).slice(0, 16).replace('T', ' ') : '');
 
+/**
+ * Por qué el correo del sitio acaba en spam.
+ *
+ * Un correo bien compuesto sigue yendo a spam si el DOMINIO no está
+ * autenticado, y eso no se ve ni en el navegador ni en el código: son tres
+ * registros en el DNS. Aquí se consultan de verdad, desde el servidor, y se
+ * dice cuál falta y qué hay que pegar exactamente.
+ *
+ * Los tres hacen falta. Con dos de tres, sigue yendo a spam.
+ */
+function Entrega({ e }) {
+  if (!e) return null;
+  if (e.fallo) return null;
+
+  if (!e.disponible) {
+    return (
+      <div style={{ background: marco.papel, border: marco.linea, borderRadius: 2, padding: 16 }}>
+        <Etiqueta>Autenticación del dominio</Etiqueta>
+        <p style={{ margin: '8px 0 0', font: 'var(--type-body)', fontSize: 14, color: 'var(--text-muted)' }}>
+          Este hosting no deja consultar el DNS desde PHP, así que desde aquí no se puede comprobar.
+          Se revisa en <code style={{ font: 'var(--type-mono)', fontSize: 13 }}>mxtoolbox.com/SuperTool.aspx</code> escribiendo {e.dominio}.
+        </p>
+      </div>
+    );
+  }
+
+  const filas = [
+    {
+      clave: 'SPF',
+      ok: !!e.spf,
+      valor: e.spf,
+      que: 'Dice qué servidores pueden enviar correo en nombre del dominio.',
+      arreglo: 'Añade un registro TXT en el dominio (nombre @) con el valor que indique tu proveedor de correo. Si el buzón es de Hostinger: v=spf1 include:_spf.mail.hostinger.com ~all',
+    },
+    {
+      clave: 'DKIM',
+      ok: e.dkim?.length > 0,
+      valor: e.dkim?.length ? e.dkim.map((d) => `${d.selector}: ${d.valor}`).join(' · ') : null,
+      que: 'Firma cada mensaje, para que se pueda comprobar que nadie lo ha tocado por el camino.',
+      arreglo: 'Lo genera el proveedor del buzón. En Hostinger: Correos → tu dominio → Configuración → DKIM, y copiar el registro TXT que da al DNS del dominio.',
+    },
+    {
+      clave: 'DMARC',
+      ok: !!e.dmarc,
+      valor: e.dmarc,
+      que: 'Dice qué hacer cuando SPF o DKIM fallan. Desde 2024 Gmail y Yahoo rechazan el correo masivo sin él.',
+      arreglo: 'Añade un TXT en el nombre _dmarc con: v=DMARC1; p=none; rua=mailto:hello@' + e.dominio + '  — empieza con p=none para solo observar, y cuando lleves unas semanas sin fallos súbelo a p=quarantine.',
+    },
+  ];
+  const faltan = filas.filter((f) => !f.ok);
+
+  return (
+    <div style={{ background: marco.papel, border: marco.linea, borderRadius: 2, padding: 16, display: 'grid', gap: 12 }}>
+      <div>
+        <Etiqueta>Autenticación del dominio {e.dominio}</Etiqueta>
+        <p style={{ margin: '6px 0 0', font: 'var(--type-body)', fontSize: 14, color: faltan.length ? '#b45309' : 'var(--text-accent)' }}>
+          {faltan.length
+            ? `Faltan ${faltan.length} de 3. Mientras falte alguno, el correo seguirá cayendo en spam por bien escrito que esté.`
+            : 'Los tres están puestos. Si aun así cae en spam, el motivo ya no es la autenticación.'}
+        </p>
+        {e.remitente && (
+          <p style={{ margin: '4px 0 0', font: 'var(--type-mono)', fontSize: 12, color: 'var(--text-faint)' }}>
+            Remitente: {e.remitente}{e.mx?.length ? ` · MX: ${e.mx.join(', ')}` : ''}
+          </p>
+        )}
+      </div>
+
+      <div style={{ display: 'grid', gap: 10 }}>
+        {filas.map((f) => (
+          <div key={f.clave} style={{ paddingTop: 10, borderTop: '1px solid var(--border-hairline)' }}>
+            <p style={{ margin: 0, font: 'var(--type-mono)', fontSize: 13, color: f.ok ? 'var(--text-accent)' : '#b45309' }}>
+              {f.ok ? '✓' : '✗'} {f.clave} — {f.ok ? 'puesto' : 'falta'}
+            </p>
+            <p style={{ margin: '4px 0 0', font: 'var(--type-body)', fontSize: 13, color: 'var(--text-muted)' }}>{f.que}</p>
+            {f.ok
+              ? <p style={{ margin: '4px 0 0', font: 'var(--type-mono)', fontSize: 12, color: 'var(--text-faint)', wordBreak: 'break-all' }}>{f.valor}</p>
+              : <p style={{ margin: '4px 0 0', font: 'var(--type-body)', fontSize: 13, color: 'var(--text-heading)' }}>{f.arreglo}</p>}
+          </div>
+        ))}
+      </div>
+      {e.dkim?.length === 0 && (
+        <p style={{ margin: 0, font: 'var(--type-body)', fontSize: 12, color: 'var(--text-faint)' }}>
+          {/* Un DKIM vive siempre bajo un selector concreto, así que «no hay
+              DKIM» solo significa «no hay bajo estos». Decir cuáles se
+              probaron evita dar por ausente lo que está en otro sitio. */}
+          Selectores probados: {e.selectoresProbados?.join(', ')}. Si tu proveedor usa otro, el DKIM puede existir bajo ese nombre.
+        </p>
+      )}
+    </div>
+  );
+}
+
 export default function Suscriptores({ alCerrar }) {
   const [datos, setDatos] = React.useState(null);
+  const [entrega, setEntrega] = React.useState(null);
   const [error, setError] = React.useState('');
   const [cargando, setCargando] = React.useState(true);
 
   const cargar = React.useCallback(async () => {
     setCargando(true); setError('');
-    try { setDatos(await api.suscriptores()); }
-    catch (e) { setError(e.message); }
+    try {
+      setDatos(await api.suscriptores());
+      /* En su propio try: si el diagnóstico falla, la lista de correo tiene
+         que seguir viéndose. Son dos preguntas distintas. */
+      try { setEntrega(await api.diagnosticoCorreo()); } catch { setEntrega({ fallo: true }); }
+    } catch (e) { setError(e.message); }
     finally { setCargando(false); }
   }, []);
 
@@ -58,6 +155,8 @@ export default function Suscriptores({ alCerrar }) {
       </div>
 
       <Aviso tono="mal">{error}</Aviso>
+
+      <Entrega e={entrega} />
 
       {datos && !datos.configurado && (
         <div style={{ background: marco.papel, border: marco.linea, borderRadius: 2, padding: 16 }}>

@@ -510,4 +510,101 @@ if ($accion === 'suscriptores') {
     responder(200, ['ok' => true, 'configurado' => true, 'totales' => $totales, 'ultimos' => $ultimos, 'fallos' => $fallos]);
 }
 
+/* ------------------------------------------------- diagnóstico de entrega */
+
+/**
+ * Por qué el correo del sitio acaba en spam, respondido desde el servidor.
+ *
+ * ---- Por qué existe esta pantalla ----
+ *
+ * Un correo bien escrito, con su Message-ID, su Date, su parte en texto plano y
+ * su enlace de baja, sigue yendo a spam si el DOMINIO no está autenticado. Y
+ * eso no se ve desde el navegador ni desde el código: son tres registros TXT en
+ * el DNS. Sin ellos, Gmail no puede comprobar que el mensaje sale de donde dice
+ * salir, y lo que no puede comprobar lo trata como sospechoso.
+ *
+ * Averiguarlo a mano exige herramientas de línea de comandos que nadie tiene a
+ * mano justo cuando hace falta. El servidor sí puede consultarlo, así que lo
+ * consulta y lo dice en castellano.
+ *
+ * ---- Qué comprueba y por qué esos tres ----
+ *
+ * SPF   dice qué servidores pueden enviar en nombre del dominio.
+ * DKIM  firma cada mensaje para que se pueda comprobar que no lo han tocado.
+ * DMARC dice qué hacer cuando alguno de los dos falla, y sin él Gmail y Yahoo
+ *       rechazan el correo masivo desde 2024.
+ *
+ * Los tres son necesarios. Con dos de tres, sigue yendo a spam.
+ */
+if ($accion === 'diagnostico-correo') {
+    $dominio = 'meetbecome.com';
+    $correoCfg = @include __DIR__ . '/config-correo.php';
+    if (is_array($correoCfg) && !empty($correoCfg['user']) && strpos($correoCfg['user'], '@') !== false) {
+        $dominio = substr(strrchr($correoCfg['user'], '@'), 1);
+    }
+
+    /* dns_get_record puede estar desactivado en hosting compartido. Si lo está,
+       se dice, en vez de devolver «no hay registros» —que es la respuesta
+       equivocada y la que haría perder una tarde buscando en el sitio que no
+       es—. */
+    if (!function_exists('dns_get_record')) {
+        responder(200, ['ok' => true, 'disponible' => false, 'dominio' => $dominio]);
+    }
+
+    $txt = static function (string $nombre): array {
+        $r = @dns_get_record($nombre, DNS_TXT);
+        if (!is_array($r)) return [];
+        $fuera = [];
+        foreach ($r as $x) {
+            $v = $x['txt'] ?? (isset($x['entries']) ? implode('', $x['entries']) : '');
+            if ($v !== '') $fuera[] = $v;
+        }
+        return $fuera;
+    };
+
+    $raiz  = $txt($dominio);
+    $dmarc = $txt('_dmarc.' . $dominio);
+
+    $spf = null;
+    foreach ($raiz as $v) {
+        if (stripos($v, 'v=spf1') === 0) { $spf = $v; break; }
+    }
+
+    /* Los selectores que usan de verdad los proveedores de este sitio. No se
+       adivina: se prueban los conocidos y se dice cuál respondió. Un DKIM
+       existe siempre bajo un selector concreto, así que preguntar «¿hay DKIM?»
+       sin selector no tiene respuesta. */
+    $selectores = ['hostingermail-a', 'hostingermail-b', 'hostingermail-c', 'default', 'mail', 'dkim', 'google', 'selector1', 'selector2'];
+    $dkim = [];
+    foreach ($selectores as $sel) {
+        $v = $txt($sel . '._domainkey.' . $dominio);
+        foreach ($v as $x) {
+            if (stripos($x, 'v=DKIM1') !== false || stripos($x, 'p=') !== false) {
+                $dkim[] = ['selector' => $sel, 'valor' => substr($x, 0, 60) . '…'];
+                break;
+            }
+        }
+    }
+
+    $politicaDmarc = null;
+    foreach ($dmarc as $v) {
+        if (stripos($v, 'v=DMARC1') === 0) { $politicaDmarc = $v; break; }
+    }
+
+    $mx = @dns_get_record($dominio, DNS_MX) ?: [];
+    usort($mx, static fn($a, $b) => ($a['pri'] ?? 0) <=> ($b['pri'] ?? 0));
+
+    responder(200, [
+        'ok' => true,
+        'disponible' => true,
+        'dominio' => $dominio,
+        'remitente' => is_array($correoCfg) ? ($correoCfg['user'] ?? null) : null,
+        'spf' => $spf,
+        'dkim' => $dkim,
+        'dmarc' => $politicaDmarc,
+        'mx' => array_map(static fn($x) => ($x['target'] ?? '') . ' (' . ($x['pri'] ?? '?') . ')', $mx),
+        'selectoresProbados' => $selectores,
+    ]);
+}
+
 responder(400, ['ok' => false, 'error' => 'accion_desconocida']);

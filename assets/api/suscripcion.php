@@ -212,11 +212,23 @@ if ($accion === 'confirmar' || $accion === 'baja') {
         irA("/$lang/insights?suscripcion=confirmada");
     }
 
+    /* La baja SOLO por POST.
+       Gmail, Outlook y los antivirus de correo abren los enlaces de un mensaje
+       por su cuenta para comprobar que no llevan a nada peligroso. Si un GET
+       diera de baja, esas visitas automáticas irían borrando suscriptores sin
+       que nadie hubiera pulsado nada, y el efecto sería el contrario del que
+       se busca: la lista encogiendo sola y sin explicación.
+       Por eso el enlace del correo lleva a una página con un botón, y ese
+       botón es el que hace el POST. El un-clic del cliente de correo ya llega
+       por POST —lo exige List-Unsubscribe-Post— así que ese camino no cambia. */
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        irA("/$lang/insights?suscripcion=confirmar-baja&t=" . rawurlencode($token));
+    }
+
     $pdo->prepare('UPDATE suscriptores SET estado = "baja", baja_en = NOW() WHERE id = ?')->execute([$s['id']]);
-    /* Un clic desde el cliente de correo llega por POST y no espera una página:
-       espera un 200 seco. */
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') salir(200, ['ok' => true]);
-    irA("/$lang/insights?suscripcion=baja");
+    /* El un-clic del cliente de correo no espera una página: espera un 200 seco. */
+    if (!empty($_POST['desde_web'])) irA("/$lang/insights?suscripcion=baja");
+    salir(200, ['ok' => true]);
 }
 
 /* --------------------------------------------------------------- difusión */

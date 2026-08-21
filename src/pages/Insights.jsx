@@ -1,4 +1,5 @@
 import React from 'react';
+import Resultado from '../components/suscripcion/Resultado.jsx';
 import SiteHeader from '../components/SiteHeader.jsx';
 import SiteFooter from '../components/SiteFooter.jsx';
 import Reveal from '../components/Reveal.jsx';
@@ -46,6 +47,9 @@ export default function Insights() {
       </Section>
 
       <Section band="light">
+        {/* Lo que se ve al volver de un enlace del correo: alta confirmada, o
+            la baja. Va aquí porque es donde llevan esos enlaces. */}
+        <Resultado />
         <Listado lang="es" />
       </Section>
 
