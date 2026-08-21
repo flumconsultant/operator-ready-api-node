@@ -4,13 +4,17 @@
     "foto": "/images/autores/carlos-andres-ramirez.webp?v=58258a7e",
     "linkedin": "https://www.linkedin.com/in/carlosandres-ai/",
     "es": {
-        "rol": "Director de Transformación",
-        "bio": ""
+        "rol": "Business Reinvention & AI Transformation Advisor",
+        "bio": "Reimagino cómo las organizaciones compiten, operan y crean valor. Conecto estrategia, negocio e inteligencia artificial para transformar desafíos complejos en nuevos modelos, capacidades y oportunidades de crecimiento.",
+        "credencial": "Especialista en transformación y reinvención de negocios. Director de Programas Especializados y docente de Inteligencia Artificial en la Escuela de Postgrado de la UPC."
     },
     "en": {
-        "rol": "",
-        "bio": ""
+        "rol": "Business Reinvention & AI Transformation Advisor",
+        "bio": "I rethink how organisations compete, operate and create value. I connect strategy, business and artificial intelligence to turn complex challenges into new models, capabilities and growth opportunities.",
+        "credencial": "Specialist in business transformation and reinvention. Director of Specialised Programmes and lecturer in Artificial Intelligence at UPC's Graduate School."
     },
     "predeterminado": true,
-    "fotoOriginal": "/images/autores/carlos-andres-ramirez-original.webp?v=e2352852"
+    "fotoOriginal": "/images/autores/carlos-andres-ramirez-original.webp?v=e2352852",
+    "equipo": true,
+    "orden": 1
 }

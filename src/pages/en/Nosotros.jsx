@@ -4,7 +4,8 @@ import SiteFooter from '../../components/SiteFooter.jsx';
 import Reveal from '../../components/Reveal.jsx';
 import { Ico } from '../../components/icons.jsx';
 import { Split } from '../../components/Media.jsx';
-import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, TextCTA, Cols, IndexRow } from '../../components/ui.jsx';
+import Equipo from '../../components/Equipo.jsx';
+import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, Cols, IndexRow } from '../../components/ui.jsx';
 
 const DNA = [
   ['target', 'Business-first', 'We start from the outcome and the business decision, not the tool.'],
@@ -168,20 +169,7 @@ export default function Nosotros() {
         </div>
       </Section>
 
-      <Section id="team" band="dark">
-        <Kicker dark>Team</Kicker>
-        <Headline dark>The people, once we can name them.</Headline>
-        <Body dark style={{ marginTop: 'var(--space-6)' }}>
-          This section is waiting on real content: founder and leadership team,
-          core team and, only once agreements are signed, specialist network or
-          partners.
-        </Body>
-        <Body dark>
-          We don’t invent people or titles to fill the layout. A fictional team
-          is exactly the kind of detail an executive committee checks.
-        </Body>
-        <TextCTA to="/en/contact" dark>Talk to us</TextCTA>
-      </Section>
+      <Equipo lang="en" id="team" />
 
       <Section band="darker" pad="var(--space-13)">
         <Kicker dark>The next capability is built from the inside</Kicker>

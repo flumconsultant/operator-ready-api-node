@@ -276,6 +276,46 @@ function datosEstructurados(path, meta) {
   if (path === '/es' || path === '/en') {
     return [ORG, { '@context': 'https://schema.org', '@type': 'WebSite', name: BRAND, url: SITE }];
   }
+  /* La página de equipo: las personas también en datos estructurados.
+     No es decoración. Un asistente que resume «quién es BECOME» no ejecuta
+     JavaScript, así que sin esto lo único que sabe de las tres personas es que
+     no las hay. Con `sameAs` apuntando a su LinkedIn, además, el nombre deja de
+     ser texto suelto y pasa a ser una identidad que se puede contrastar, que es
+     de lo que depende que una firma signifique algo. */
+  if (path === '/es/nosotros' || path === '/en/about') {
+    const lang = path.startsWith('/en') ? 'en' : 'es';
+    const gente = Object.values(FICHAS)
+      .filter((a) => a.equipo)
+      .sort((a, b) => (a.orden ?? 999) - (b.orden ?? 999) || a.nombre.localeCompare(b.nombre))
+      .map((a) => {
+        const t = a[lang] || a.es || {};
+        const persona = {
+          '@type': 'Person',
+          name: a.nombre,
+          worksFor: { '@type': 'Organization', name: BRAND, url: SITE },
+        };
+        if (t.rol) persona.jobTitle = t.rol;
+        if (t.bio) persona.description = t.bio;
+        if (a.linkedin) persona.sameAs = [a.linkedin];
+        /* Solo si hay foto de verdad. Declarar una imagen que no existe es
+           peor que no declarar ninguna. */
+        if (a.foto) persona.image = SITE + a.foto.split('?')[0];
+        return persona;
+      });
+    if (!gente.length) return [ORG];
+    return [
+      ORG,
+      {
+        '@context': 'https://schema.org',
+        '@type': 'AboutPage',
+        url,
+        name: meta.title,
+        about: { '@type': 'Organization', name: BRAND, url: SITE },
+        mainEntity: gente,
+      },
+    ];
+  }
+
   if (path === '/es/servicios/become-now') return [faqPage(esNow.FAQ)];
   if (path === '/en/services/become-now') return [faqPage(enNow.FAQ)];
   if (/^\/(es\/servicios|en\/services)\/(become-discover|become-embed)$/.test(path)) {

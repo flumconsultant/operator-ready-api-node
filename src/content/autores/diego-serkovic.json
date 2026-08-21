@@ -1,0 +1,20 @@
+{
+    "id": "diego-serkovic",
+    "nombre": "Diego Serkovic",
+    "foto": "",
+    "fotoOriginal": "",
+    "linkedin": "https://www.linkedin.com/in/diegoserkovic/",
+    "es": {
+        "rol": "Innovation & Growth Advisor",
+        "bio": "Convierto oportunidades de innovación en productos, experimentos y sistemas de crecimiento capaces de generar resultados sostenibles. Conecto estrategia, analítica y ejecución para acelerar la evolución de los negocios.",
+        "credencial": "Especialista en innovación, crecimiento, desarrollo de productos y transformación digital, con experiencia ejecutiva y docente en programas de posgrado."
+    },
+    "en": {
+        "rol": "Innovation & Growth Advisor",
+        "bio": "I turn innovation opportunities into products, experiments and growth systems that deliver sustainable results. I connect strategy, analytics and execution to accelerate how businesses evolve.",
+        "credencial": "Specialist in innovation, growth, product development and digital transformation, with executive and teaching experience in graduate programmes."
+    },
+    "predeterminado": false,
+    "equipo": true,
+    "orden": 3
+}

@@ -4,16 +4,16 @@ import SiteFooter from '../components/SiteFooter.jsx';
 import Reveal from '../components/Reveal.jsx';
 import { Ico } from '../components/icons.jsx';
 import { Split } from '../components/Media.jsx';
-import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, TextCTA, Cols, IndexRow } from '../components/ui.jsx';
+import Equipo from '../components/Equipo.jsx';
+import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, Cols, IndexRow } from '../components/ui.jsx';
 
 /**
  * Nosotros (§12 del documento).
  *
- * Primero por qué existe BECOME, qué cree y cómo trabaja. La historia
- * corporativa y las biografías vienen después — y de momento no vienen: el
- * documento prohíbe inventar integrantes, cargos, partnerships o años de
- * experiencia para completar el diseño, así que el bloque de equipo dice que
- * está pendiente en lugar de rellenarse con perfiles ficticios.
+ * Primero por qué existe BECOME, qué cree y cómo trabaja; las personas
+ * después. El bloque de equipo sale de <Equipo>, que lee las fichas de autor:
+ * nada de lo que aparece ahí está escrito en esta página, así que un cargo se
+ * corrige desde el panel y no desde el código.
  */
 
 const DNA = [
@@ -194,21 +194,8 @@ export default function Nosotros() {
         </div>
       </Section>
 
-      {/* 09 — equipo: pendiente, y dicho en voz alta */}
-      <Section band="dark" id="equipo">
-        <Kicker dark>Equipo</Kicker>
-        <Headline dark>Las personas, cuando podamos nombrarlas.</Headline>
-        <Body dark style={{ marginTop: 'var(--space-6)' }}>
-          Esta sección está pendiente de contenido real: founder y leadership team,
-          core team y, solo cuando existan acuerdos firmados, specialist network o
-          partners.
-        </Body>
-        <Body dark>
-          No inventamos integrantes ni cargos para llenar el layout. Un equipo
-          ficticio es exactamente el detalle que un comité ejecutivo verifica.
-        </Body>
-        <TextCTA to="/es/contacto" dark>Habla con nosotros</TextCTA>
-      </Section>
+      {/* 09 — equipo: personas reales, desde las fichas del panel */}
+      <Equipo lang="es" />
 
       <Section band="darker" pad="var(--space-13)">
         <Kicker dark>La próxima capacidad se construye desde dentro</Kicker>

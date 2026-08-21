@@ -15,19 +15,25 @@ import { Etiqueta, Texto, Area, Boton, Fila, Aviso, marco } from './piezas.jsx';
  * para no mandar cuatro megas de una foto que se va a ver a 44 píxeles.
  */
 
-const NUEVA = () => ({ id: '', nombre: '', foto: '', fotoOriginal: '', linkedin: '', predeterminado: false, es: { rol: '', bio: '' }, en: { rol: '', bio: '' } });
+const NUEVA = () => ({ id: '', nombre: '', foto: '', fotoOriginal: '', linkedin: '', predeterminado: false, equipo: false, orden: '', es: { rol: '', bio: '', credencial: '' }, en: { rol: '', bio: '', credencial: '' } });
 
 const aId = (s) => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
   .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 70);
 
 /**
- * Reduce la foto a 400px de lado antes de subirla.
+ * Reduce la foto a 800px de lado antes de subirla.
  *
- * Se ve a 44 píxeles en la firma. Subir el original de una cámara son varios
- * megas que hay que guardar, servir y descargar para pintar un círculo pequeño.
- * 400 deja margen para pantallas de alta densidad y pesa unas cien veces menos.
+ * Eran 400, que bastaban cuando la foto solo salía a 44 píxeles en la firma de
+ * un artículo. Desde que el mismo archivo es el retrato de Nosotros —cerca de
+ * 400 px de lado en una pantalla grande— 400 se queda corto: en una pantalla de
+ * alta densidad se ve blando, y una foto blanda en la página de equipo se lee
+ * como descuido.
+ *
+ * 800 sigue siendo unas veinte veces menos que el archivo de una cámara. Quien
+ * subió su foto antes de este cambio la tiene a 400: se arregla pulsando
+ * «Recolocar» y guardando, que recorta otra vez desde el original de 1200.
  */
-const LADO = 400;
+const LADO = 800;
 
 /** Carga el archivo elegido como una imagen ya medida. */
 function cargarImagen(archivo) {
@@ -413,6 +419,41 @@ function Ficha({ entrada, alGuardar, alCerrar }) {
                 </span>
               </span>
             </label>
+
+            {/* Aparecer en Nosotros y firmar artículos son dos cosas distintas:
+                puede haber quien escriba sin salir en la página, y quien salga
+                en la página sin escribir nunca. Por eso es otra casilla. */}
+            <label style={{ display: 'flex', gap: 10, alignItems: 'flex-start', cursor: 'pointer' }}>
+              <input
+                type="checkbox"
+                checked={!!f.equipo}
+                onChange={(e) => pon('equipo', e.target.checked)}
+                style={{ width: 18, height: 18, marginTop: 2, flex: 'none', accentColor: 'var(--accent)' }}
+              />
+              <span>
+                <span style={{ display: 'block', font: 'var(--type-body)', fontSize: 14, color: 'var(--text-heading)' }}>
+                  Sale en la página Nosotros
+                </span>
+                <span style={{ display: 'block', font: 'var(--type-body)', fontSize: 13, color: 'var(--text-muted)' }}>
+                  Con su foto, su cargo, su descripción y su LinkedIn, en español y en inglés.
+                </span>
+              </span>
+            </label>
+
+            {f.equipo && (
+              <div style={{ display: 'grid', gap: 6, maxWidth: 220 }}>
+                <Etiqueta pista="Menor primero. Sin número, va al final.">Orden en la página</Etiqueta>
+                <Texto
+                  valor={f.orden === 0 || f.orden ? String(f.orden) : ''}
+                  /* Se guarda como número o como vacío, nunca como la cadena
+                     «2»: al ordenar, una cadena se compara letra a letra y
+                     «10» acabaría delante de «9». */
+                  alCambiar={(v) => pon('orden', v.trim() === '' ? '' : Number(v.replace(/[^0-9]/g, '')) || '')}
+                  inputMode="numeric"
+                  placeholder="1, 2, 3…"
+                />
+              </div>
+            )}
           </div>
         </Fila>
 
@@ -428,6 +469,14 @@ function Ficha({ entrada, alGuardar, alCerrar }) {
               valor={f[l]?.bio}
               alCambiar={(v) => ponLang(l, 'bio', v)}
               placeholder={l === 'es' ? 'Bio (opcional). Una o dos frases' : 'Bio (optional). One or two sentences'}
+            />
+            <Area
+              valor={f[l]?.credencial}
+              alCambiar={(v) => ponLang(l, 'credencial', v)}
+              filas={2}
+              placeholder={l === 'es'
+                ? 'Credencial (opcional). Lo comprobable: cargo, institución, docencia'
+                : 'Credential (optional). The verifiable part: role, institution, teaching'}
             />
           </div>
         ))}
