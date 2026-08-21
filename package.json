@@ -4,11 +4,12 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/seo.mjs",
+    "build": "vite build && node scripts/seo.mjs && node scripts/prerender.mjs",
     "preview": "vite preview",
     "start": "node index.js",
     "design:export": "node scripts/design-export.mjs && node scripts/design-export-react.mjs",
-    "tarjetas": "node scripts/tarjeta-social.mjs"
+    "tarjetas": "node scripts/tarjeta-social.mjs",
+    "seo:auditar": "node scripts/auditar-seo.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

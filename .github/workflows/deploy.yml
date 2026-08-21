@@ -50,6 +50,16 @@ jobs:
       - name: Instalar dependencias
         run: npm ci
 
+      - name: Instalar el navegador del prerenderizado
+        # El paso de prerenderizado monta cada página en un navegador de verdad
+        # para sacar su texto. El runner no trae ninguno instalado, así que sin
+        # esta línea el build se cae con «Executable doesn't exist», y con
+        # `continue-on-error` sería peor: se publicarían 72 páginas sin texto
+        # sin que nadie se entere.
+        # Solo chromium: instalar los tres navegadores son tres minutos y dos
+        # de ellos no se usan nunca.
+        run: npx playwright install --with-deps chromium
+
       - name: Compilar
         run: npm run build
 

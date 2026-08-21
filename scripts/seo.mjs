@@ -93,32 +93,43 @@ const recorta = (s, max) => {
   return t.length <= max ? t : `${t.slice(0, max - 1).replace(/[\s,;:.]+$/, '')}…`;
 };
 
+/**
+ * El título con la marca SIEMPRE, aunque haya que recortar el resto.
+ *
+ * Antes se recortaba la cadena entera a 60, y con una pregunta larga lo que
+ * quedaba fuera era precisamente el « | BECOME» del final: en un resultado de
+ * búsqueda, la única palabra que dice de quién es la página. Ahora se recorta
+ * la parte variable y la marca se pega después.
+ */
+const tituloConMarca = (texto, marca = ` | ${BRAND}`, max = 60) =>
+  recorta(texto, Math.max(12, max - marca.length)) + marca;
+
 const dinamicas = {};
 
 for (const [slug, p] of Object.entries(esNow.PROGRAMS)) {
   dinamicas[`/es/servicios/become-now/${slug}`] = {
-    title: recorta(`${p.menu} — BECOME NOW™`, 60),
+    title: tituloConMarca(p.menu, ' — BECOME NOW™'),
     description: recorta(p.body, 155),
     alt: `/en/services/become-now/${slug}`,
   };
 }
 for (const [slug, p] of Object.entries(enNow.PROGRAMS)) {
   dinamicas[`/en/services/become-now/${slug}`] = {
-    title: recorta(`${p.menu} — BECOME NOW™`, 60),
+    title: tituloConMarca(p.menu, ' — BECOME NOW™'),
     description: recorta(p.body, 155),
     alt: `/es/servicios/become-now/${slug}`,
   };
 }
 for (const [slug, c] of Object.entries(esCasos.SOLUCION_CONTENIDO)) {
   dinamicas[`/es/soluciones/${slug}`] = {
-    title: recorta(`${c.q.replace(/^¿|\?$/g, '')} | ${BRAND}`, 60),
+    title: tituloConMarca(c.q.replace(/^¿|\?$/g, '')),
     description: recorta(c.answer, 155),
     alt: `/en/solutions/${SLUG_ES_A_EN[slug]}`,
   };
 }
 for (const [slug, c] of Object.entries(enCasos.SOLUCION_CONTENIDO)) {
   dinamicas[`/en/solutions/${slug}`] = {
-    title: recorta(`${c.q.replace(/\?$/, '')} | ${BRAND}`, 60),
+    title: tituloConMarca(c.q.replace(/\?$/, '')),
     description: recorta(c.answer, 155),
     alt: `/es/soluciones/${SLUG_EN_A_ES[slug]}`,
   };
@@ -154,6 +165,11 @@ const ORG = {
   url: SITE,
   logo: `${SITE}/logo/icon-white.svg`,
   email: 'hello@meetbecome.com',
+  /* `sameAs` es lo que conecta el nombre «BECOME» de este sitio con una entidad
+     que existe fuera de él. Sin esta línea, para un buscador o un asistente el
+     nombre es una cadena de texto más; con ella, es una empresa que se puede
+     contrastar. Es la señal de entidad más barata que hay. */
+  sameAs: ['https://www.linkedin.com/company/meetbecome/'],
   description: 'Consultora de transformación AI-native: capacitación en IA aplicada, estrategia y construcción de capacidades.',
 };
 
@@ -256,6 +272,38 @@ const migas = (lang, t) => ({
   ],
 });
 
+/**
+ * Las migas de cualquier página, deducidas de su propia URL.
+ *
+ * El nombre de cada escalón sale del `title` de esa ruta si existe, y solo si
+ * no existe se cae al tramo de la URL con guiones cambiados por espacios.
+ * Inventar el nombre de un nivel intermedio sería declarar una jerarquía que
+ * el sitio no tiene, y eso se penaliza igual que inventar una FAQ.
+ */
+function migasDeRuta(path, meta, titulos) {
+  const [, lang, ...tramos] = path.split('/');
+  if (!tramos.length) return null;
+  const items = [{ '@type': 'ListItem', position: 1, name: BRAND, item: `${SITE}/${lang}` }];
+  let acumulada = `/${lang}`;
+  tramos.forEach((tramo, i) => {
+    acumulada += `/${tramo}`;
+    const propio = titulos[acumulada];
+    const nombre = propio
+      ? propio.split('|')[0].split('—')[0].trim()
+      : tramo.replace(/-/g, ' ').replace(/^\w/, (c) => c.toUpperCase());
+    const ultimo = i === tramos.length - 1;
+    items.push({
+      '@type': 'ListItem',
+      position: i + 2,
+      name: ultimo ? (meta.title || nombre).split('|')[0].split('—')[0].trim() : nombre,
+      /* El último escalón va sin `item`: es la página en la que ya estás, y
+         enlazarla a sí misma es lo que marca como error un validador. */
+      ...(ultimo ? {} : { item: SITE + acumulada }),
+    });
+  });
+  return { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: items };
+}
+
 function datosEstructurados(path, meta) {
   const url = SITE + path;
 
@@ -318,10 +366,34 @@ function datosEstructurados(path, meta) {
 
   if (path === '/es/servicios/become-now') return [faqPage(esNow.FAQ)];
   if (path === '/en/services/become-now') return [faqPage(enNow.FAQ)];
+  /* Todas las demás páginas: WebPage y migas. Sin esto, 58 de las 72 rutas se
+     publicaban sin un solo dato estructurado, y el único modo que tenía un
+     asistente de saber que /es/servicios/become-now cuelga de /es/servicios
+     era deducirlo de la forma de la URL. */
+  const titulos = Object.fromEntries(
+    Object.entries(PAGES).map(([r, v]) => [r, v[0]]).concat(
+      Object.entries(dinamicas).map(([r, v]) => [r, v.title]),
+    ),
+  );
+  const migasAqui = migasDeRuta(path, meta, titulos);
+  const base = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      url,
+      name: meta.title,
+      description: meta.description,
+      inLanguage: langOf(path),
+      isPartOf: { '@type': 'WebSite', name: BRAND, url: SITE },
+      publisher: { '@type': 'Organization', name: BRAND, url: SITE },
+    },
+    ...(migasAqui ? [migasAqui] : []),
+  ];
+
   if (/^\/(es\/servicios|en\/services)\/(become-discover|become-embed)$/.test(path)) {
-    return [servicio(meta.title.split('|')[0].trim(), meta.description, url)];
+    return [servicio(meta.title.split('|')[0].trim(), meta.description, url), ...base];
   }
-  return [];
+  return base;
 }
 
 /* --------------------------------------------------------- el HTML por ruta */

@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import * as es from '../site.js';
 import * as en from '../site.en.js';
 import wordmark from '../logo/wordmark-white.webp';
+import { Ico } from './icons.jsx';
 import { equivalenteEnElOtroIdioma } from '../seo-meta.js';
 import { abrirPanelCookies } from './privacidad/Cookies.jsx';
 
@@ -83,6 +84,43 @@ export default function SiteFooter() {
                 ? 'AI-native transformation company. We redesign how companies operate, decide and create value around AI.'
                 : 'AI-native transformation company. Rediseñamos cómo las empresas operan, deciden y crean valor alrededor de la IA.'}
             </p>
+
+            {/* LinkedIn.
+                Va en la columna de marca y no entre los enlaces del pie porque
+                no es una sección del sitio: es dónde sigue existiendo la
+                empresa fuera de aquí, y eso se busca junto al logotipo.
+                Con etiqueta visible y no solo el icono. Un icono suelto obliga
+                a reconocer un glifo, y quien no lo reconozca no tiene forma de
+                averiguarlo; el aria-label lo resuelve para el lector de
+                pantalla y deja fuera a todos los demás.
+                Se declara además como `sameAs` de la Organization en los datos
+                estructurados: es lo que conecta el nombre BECOME de este sitio
+                con la entidad verificable de LinkedIn. */}
+            <a
+              href="https://www.linkedin.com/company/meetbecome/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                /* relative para que el texto solo-lector de abajo se posicione
+                   respecto a este enlace: absoluto sin ancestro posicionado se
+                   coloca respecto a la página y puede acabar en cualquier
+                   sitio. */
+                position: 'relative',
+                marginTop: 'var(--space-6)', minHeight: 44, padding: '0 16px',
+                display: 'inline-flex', alignItems: 'center', gap: 10,
+                border: '1px solid var(--border-hairline-dark)', borderRadius: 999,
+                font: 'var(--type-label)', letterSpacing: 'var(--track-label)',
+                textTransform: 'uppercase', fontSize: 11,
+                color: 'var(--slate-200)', textDecoration: 'none',
+              }}
+              className="hv-foot"
+            >
+              <Ico name="linkedin" size={16} style={{ color: 'var(--electric-green)' }} />
+              LinkedIn
+              <span style={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0 0 0 0)', whiteSpace: 'nowrap' }}>
+                {lang === 'en' ? ' — opens in a new tab' : ' — se abre en una pestaña nueva'}
+              </span>
+            </a>
           </div>
 
           {t.FOOTER.map((col) => (

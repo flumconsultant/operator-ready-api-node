@@ -71,7 +71,7 @@ export const PAGES = {
   ],
   '/es/soluciones': [
     'Soluciones de IA para empresas | BECOME',
-    'Seis necesidades de negocio y qué necesita cada una: escalar más allá de los pilotos, preparar equipos, rediseñar procesos, agentes con control, productos con IA y medir el valor.',
+    'Seis necesidades de negocio y qué exige cada una: escalar más allá de los pilotos, preparar equipos, rediseñar procesos, AI agents con control y medir el valor.',
     '/en/solutions',
   ],
   '/es/nosotros/ia-responsable': [
@@ -85,18 +85,18 @@ export const PAGES = {
     '/en/insights',
   ],
   '/es/contacto': [
-    'Contacto | BECOME',
-    'Cuéntanos qué necesita cambiar en tu empresa. Respondemos con el punto de partida adecuado, no con una secuencia comercial.',
+    'Contacto — Empecemos por lo que quieres cambiar | BECOME',
+    'Comparte el reto, el outcome que buscas y el contexto de tu organización. Lo revisamos y te proponemos el siguiente paso de tu transformación con IA.',
     '/en/contact',
   ],
   '/es/privacidad': [
     'Política de privacidad | BECOME',
-    'Cómo BECOME trata los datos personales que recibe a través de este sitio.',
+    'Cómo BECOME (FLUM E.I.R.L.) recoge, usa, conserva y comparte los datos personales que recibe en meetbecome.com, y cómo ejercer tus derechos ARCO en Perú.',
     '/en/privacy',
   ],
   '/es/terminos': [
     'Términos de uso | BECOME',
-    'Condiciones bajo las que se ofrece el contenido de este sitio.',
+    'Condiciones bajo las que BECOME (FLUM E.I.R.L.) ofrece el contenido, los servicios y los formularios de meetbecome.com: propiedad intelectual y responsabilidad.',
     '/en/terms',
   ],
   '/es/cookies': [
@@ -143,7 +143,7 @@ export const PAGES = {
   ],
   '/en/solutions': [
     'AI solutions for companies | BECOME',
-    'Six business needs and what each one takes: scaling beyond pilots, preparing teams, redesigning workflows, governed agents, AI-enabled products and measuring value.',
+    'Six business needs and what each takes: scaling beyond pilots, preparing teams, redesigning workflows, governed AI agents and measuring value.',
     '/es/soluciones',
   ],
   '/en/about/responsible-ai': [
@@ -157,13 +157,13 @@ export const PAGES = {
     '/es/insights',
   ],
   '/en/contact': [
-    'Contact | BECOME',
-    'Tell us what needs to change in your company. We respond with the right starting point, not a sales sequence.',
+    'Contact — Start with what you want to change | BECOME',
+    'Share the challenge, the outcome you are aiming for and your organization’s context. We review it and recommend the next step for your AI transformation.',
     '/es/contacto',
   ],
   '/en/privacy': [
     'Privacy policy | BECOME',
-    'How BECOME handles the personal data it receives through this site.',
+    'How BECOME (FLUM E.I.R.L.) collects, uses, stores and shares the personal data received through meetbecome.com, and how to exercise your data rights.',
     '/es/privacidad',
   ],
   '/en/cookies': [
@@ -173,7 +173,7 @@ export const PAGES = {
   ],
   '/en/terms': [
     'Terms of use | BECOME',
-    'The conditions under which this site’s content is offered.',
+    'The conditions under which BECOME (FLUM E.I.R.L.) offers the content, services and forms on meetbecome.com: intellectual property, liability and law.',
     '/es/terminos',
   ],
 };
