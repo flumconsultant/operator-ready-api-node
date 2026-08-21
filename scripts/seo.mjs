@@ -144,12 +144,22 @@ for (const [url, { a, lang }] of Object.entries(porUrl)) {
   const t = a[lang];
   const otro = lang === 'es' ? 'en' : 'es';
   dinamicas[url] = {
-    title: recorta(`${t.titulo} | ${BRAND}`, 60),
+    /* Con la marca garantizada, igual que los programas y las soluciones.
+       Recortando la cadena entera, un titular largo se comía el « | BECOME»
+       del final y el resultado de búsqueda quedaba sin decir de quién es la
+       página. Pasó con el artículo del 21 de agosto: «… | BECO…». */
+    title: tituloConMarca(t.titulo),
     description: recorta(t.descripcion || t.entradilla || '', 155),
     alt: a[otro]?.slug
       ? `/${otro}/insights/${a[otro].slug}`
       : (lang === 'es' ? '/en/insights' : '/es/insights'),
     tipoOg: 'article',
+    /* Fecha y autor para las etiquetas de artículo de Open Graph. Ya estaban
+       en el JSON-LD, pero LinkedIn y las tarjetas de los mensajeros leen Open
+       Graph y no JSON-LD: sin esto, un artículo compartido sale sin fecha ni
+       firma, y un enlace sin firma se comparte menos. */
+    publicado: a.fecha,
+    autor: a.autor,
     lastmod: a.actualizado || a.fecha,
   };
 }
@@ -605,6 +615,7 @@ function documentoPara(path, meta) {
     <link rel="alternate" hreflang="x-default" href="${SITE}${esEs ? path : altPath}" />
 
     <meta property="og:type" content="${meta.tipoOg || 'website'}" />
+${meta.tipoOg === 'article' && meta.publicado ? `    <meta property="article:published_time" content="${escapa(meta.publicado)}" />\n` : ''}${meta.tipoOg === 'article' && meta.autor ? `    <meta property="article:author" content="${escapa(meta.autor)}" />\n` : ''}
     <meta property="og:site_name" content="${BRAND}" />
     <meta property="og:locale" content="${esEs ? 'es_ES' : 'en_US'}" />
     <meta property="og:url" content="${url}" />
