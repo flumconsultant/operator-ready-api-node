@@ -65,9 +65,11 @@ function Entrega({ e }) {
     {
       clave: 'DKIM',
       ok: e.dkim?.length > 0,
-      valor: e.dkim?.length ? e.dkim.map((d) => `${d.selector}: ${d.valor}`).join(' · ') : null,
+      valor: e.dkim?.length ? e.dkim.map((d) => `${d.selector} (${d.tipo}): ${d.valor}`).join(' · ') : null,
       que: 'Firma cada mensaje, para que se pueda comprobar que nadie lo ha tocado por el camino.',
-      arreglo: 'Lo genera el proveedor del buzón. En Hostinger: Correos → tu dominio → Configuración → DKIM, y copiar el registro TXT que da al DNS del dominio.',
+      /* En Hostinger el DKIM son CNAME, no TXT. Decirlo aquí evita buscar un
+         registro TXT que no existe y concluir que falta algo que está puesto. */
+      arreglo: 'Lo genera el proveedor del buzón. En Hostinger: Correos → tu dominio → Configuración → DKIM. Son registros CNAME llamados hostingermail-a._domainkey, -b y -c, no registros TXT.',
     },
     {
       clave: 'DMARC',
@@ -75,6 +77,11 @@ function Entrega({ e }) {
       valor: e.dmarc,
       que: 'Dice qué hacer cuando SPF o DKIM fallan. Desde 2024 Gmail y Yahoo rechazan el correo masivo sin él.',
       arreglo: 'Añade un TXT en el nombre _dmarc con: v=DMARC1; p=none; rua=mailto:hello@' + e.dominio + '  — empieza con p=none para solo observar, y cuando lleves unas semanas sin fallos súbelo a p=quarantine.',
+      /* Válido pero ciego: la política se aplica y los informes que dirían si
+         algo falla no llegan a ninguna parte. */
+      nota: e.dmarcSinInformes
+        ? 'Está puesto pero sin «rua=»: no recibes los informes, así que si algo empieza a fallar no te enteras. Añade  rua=mailto:hello@' + e.dominio + '  al final del mismo registro.'
+        : null,
     },
   ];
   const faltan = filas.filter((f) => !f.ok);
@@ -105,6 +112,9 @@ function Entrega({ e }) {
             {f.ok
               ? <p style={{ margin: '4px 0 0', font: 'var(--type-mono)', fontSize: 12, color: 'var(--text-faint)', wordBreak: 'break-all' }}>{f.valor}</p>
               : <p style={{ margin: '4px 0 0', font: 'var(--type-body)', fontSize: 13, color: 'var(--text-heading)' }}>{f.arreglo}</p>}
+            {f.ok && f.nota && (
+              <p style={{ margin: '6px 0 0', font: 'var(--type-body)', fontSize: 13, color: '#b45309' }}>{f.nota}</p>
+            )}
           </div>
         ))}
       </div>

@@ -573,15 +573,32 @@ if ($accion === 'diagnostico-correo') {
     /* Los selectores que usan de verdad los proveedores de este sitio. No se
        adivina: se prueban los conocidos y se dice cuál respondió. Un DKIM
        existe siempre bajo un selector concreto, así que preguntar «¿hay DKIM?»
-       sin selector no tiene respuesta. */
-    $selectores = ['hostingermail-a', 'hostingermail-b', 'hostingermail-c', 'default', 'mail', 'dkim', 'google', 'selector1', 'selector2'];
+       sin selector no tiene respuesta.
+
+       Y se mira TXT **y CNAME**. Hostinger no publica la clave en un TXT: pone
+       un CNAME que apunta a un host suyo, y allí vive la clave. Buscando solo
+       TXT, esta pantalla habría dicho «falta DKIM» con el DKIM perfectamente
+       puesto —que es la peor respuesta posible: manda a arreglar algo que ya
+       está bien y deja el problema real sin buscar—. */
+    $selectores = ['hostingermail-a', 'hostingermail-b', 'hostingermail-c', 'default', 'mail', 'dkim', 'google', 'selector1', 'selector2', 's1', 's2', 'k1'];
     $dkim = [];
     foreach ($selectores as $sel) {
-        $v = $txt($sel . '._domainkey.' . $dominio);
-        foreach ($v as $x) {
+        $nombre = $sel . '._domainkey.' . $dominio;
+
+        foreach ($txt($nombre) as $x) {
             if (stripos($x, 'v=DKIM1') !== false || stripos($x, 'p=') !== false) {
-                $dkim[] = ['selector' => $sel, 'valor' => substr($x, 0, 60) . '…'];
-                break;
+                $dkim[] = ['selector' => $sel, 'tipo' => 'TXT', 'valor' => substr($x, 0, 56) . '…'];
+                continue 2;
+            }
+        }
+
+        $cn = @dns_get_record($nombre, DNS_CNAME);
+        if (is_array($cn)) {
+            foreach ($cn as $x) {
+                if (!empty($x['target'])) {
+                    $dkim[] = ['selector' => $sel, 'tipo' => 'CNAME', 'valor' => $x['target']];
+                    continue 2;
+                }
             }
         }
     }
@@ -590,6 +607,10 @@ if ($accion === 'diagnostico-correo') {
     foreach ($dmarc as $v) {
         if (stripos($v, 'v=DMARC1') === 0) { $politicaDmarc = $v; break; }
     }
+    /* Un DMARC sin `rua` es válido, pero es un DMARC ciego: la política se
+       aplica y los informes que dirían si algo está fallando no llegan a
+       ninguna parte. Se avisa aparte, sin marcarlo como que falta. */
+    $dmarcSinInformes = $politicaDmarc !== null && stripos($politicaDmarc, 'rua=') === false;
 
     $mx = @dns_get_record($dominio, DNS_MX) ?: [];
     usort($mx, static fn($a, $b) => ($a['pri'] ?? 0) <=> ($b['pri'] ?? 0));
@@ -602,6 +623,7 @@ if ($accion === 'diagnostico-correo') {
         'spf' => $spf,
         'dkim' => $dkim,
         'dmarc' => $politicaDmarc,
+        'dmarcSinInformes' => $dmarcSinInformes,
         'mx' => array_map(static fn($x) => ($x['target'] ?? '') . ' (' . ($x['pri'] ?? '?') . ')', $mx),
         'selectoresProbados' => $selectores,
     ]);
