@@ -4,129 +4,138 @@
 
 **En Google** (no se ve en la página):
 
-<!-- b3782 -->
+<!-- b3785 -->
 - **Título:** Insights on applied enterprise AI | BECOME
-<!-- b3783 -->
+<!-- b3786 -->
 - **Descripción:** Perspectives on AI-native operating models, agentic work, adoption and responsible scale.
 
-<!-- b3784 -->
+<!-- b3787 -->
 BECOME INSIGHTS
 
-<!-- b3785 -->
+<!-- b3788 -->
 # Ideas for the company that comes next.
 
-<!-- b3786 -->
+<!-- b3789 -->
 Perspectives on AI-native operating models, agentic work, decision intelligence, adoption and responsible scale.
 
-<!-- b3787 -->
+<!-- b3790 -->
 PUBLISHED
 
-<!-- b3788 -->
+<!-- b3791 -->
 ## The latest we’ve written.
 
-<!-- b3789 -->
-### How to redesign a process for an AI to run
-
-<!-- b3790 -->
-They dropped an agent into the middle of the process and kept doing exactly the same thing. Except now there is one extra step: someone copies what the agent says into the usual spreadsheet, just in case.
-
-<!-- b3791 -->
-21 August 2026 · 6 min
-
 <!-- b3792 -->
-### Why your AI pilots never reach production
+### Why your team won't use the AI you gave them
 
 <!-- b3793 -->
-The pilot worked. And that is precisely the moment it stopped moving.
+You bought the licences. Three months in, the usage panel says the thing nobody puts on the slide.
 
 <!-- b3794 -->
-20 August 2026 · 6 min
+22 August 2026 · 5 min
 
 <!-- b3795 -->
-### Who answers when an agent answers
+### How to redesign a process for an AI to run
 
 <!-- b3796 -->
-The question that decides whether an agent reaches production isn’t technical. It’s who owns the outcome when it goes wrong.
+They dropped an agent into the middle of the process and kept doing exactly the same thing. Except now there is one extra step: someone copies what the agent says into the usual spreadsheet, just in case.
 
 <!-- b3797 -->
-20 August 2026 · 4 min
+21 August 2026 · 6 min
 
 <!-- b3798 -->
-EDITORIAL PILLARS
+### Why your AI pilots never reach production
 
 <!-- b3799 -->
-## What we’re going to write about, and what we won’t.
+The pilot worked. And that is precisely the moment it stopped moving.
 
 <!-- b3800 -->
-Five lines. No model news, no tool comparisons, no summaries of what someone else already said.
+20 August 2026 · 6 min
 
 <!-- b3801 -->
-### The AI-native enterprise
+### Who answers when an agent answers
 
 <!-- b3802 -->
-Strategy, ambition and enterprise design. What sets an AI-native company apart from a company that just uses AI.
+The question that decides whether an agent reaches production isn’t technical. It’s who owns the outcome when it goes wrong.
 
 <!-- b3803 -->
-### Agentic work
+20 August 2026 · 4 min
 
 <!-- b3804 -->
-Workflows, roles, agents and human accountability. How work changes when part of it is done by a system.
+EDITORIAL PILLARS
 
 <!-- b3805 -->
-### Operating-model reinvention
+## What we’re going to write about, and what we won’t.
 
 <!-- b3806 -->
-People, Data, Agents, Products and Operations. The design decisions that determine where value accumulates.
+Five lines. No model news, no tool comparisons, no summaries of what someone else already said.
 
 <!-- b3807 -->
-### Value and adoption
+### The AI-native enterprise
 
 <!-- b3808 -->
-Measurement, trust, change and capability transfer. Why adoption is a design problem, not a communication one.
+Strategy, ambition and enterprise design. What sets an AI-native company apart from a company that just uses AI.
 
 <!-- b3809 -->
-### Responsible scale
+### Agentic work
 
 <!-- b3810 -->
-Governance, controls, risk and scale readiness. When to scale and, above all, when not to.
+Workflows, roles, agents and human accountability. How work changes when part of it is done by a system.
 
 <!-- b3811 -->
-FORMATS
+### Operating-model reinvention
 
 <!-- b3812 -->
-## Every idea has its own shape.
+People, Data, Agents, Products and Operations. The design decisions that determine where value accumulates.
 
 <!-- b3813 -->
-### Perspective
+### Value and adoption
 
 <!-- b3814 -->
-An argued thesis on where something is headed.
+Measurement, trust, change and capability transfer. Why adoption is a design problem, not a communication one.
 
 <!-- b3815 -->
-### Field Note
+### Responsible scale
 
 <!-- b3816 -->
-What we learned inside a specific problem.
+Governance, controls, risk and scale readiness. When to scale and, above all, when not to.
 
 <!-- b3817 -->
-### Framework
+FORMATS
 
 <!-- b3818 -->
-A reusable way to structure a decision.
+## Every idea has its own shape.
 
 <!-- b3819 -->
-### Executive Brief
+### Perspective
 
 <!-- b3820 -->
-What a committee needs to know, in its format.
+An argued thesis on where something is headed.
 
 <!-- b3821 -->
-### Case Evidence
+### Field Note
 
 <!-- b3822 -->
-Real work, only when the client approves it.
+What we learned inside a specific problem.
 
 <!-- b3823 -->
+### Framework
+
+<!-- b3824 -->
+A reusable way to structure a decision.
+
+<!-- b3825 -->
+### Executive Brief
+
+<!-- b3826 -->
+What a committee needs to know, in its format.
+
+<!-- b3827 -->
+### Case Evidence
+
+<!-- b3828 -->
+Real work, only when the client approves it.
+
+<!-- b3829 -->
 ## Which idea needs to become a capability?
 
 ---

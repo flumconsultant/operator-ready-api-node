@@ -38,7 +38,11 @@ jobs:
     # Un despliegue completo tarda unos tres minutos. Veinte es margen de
     # sobra, y evita que un paso que se cuelgue bloquee la cola de despliegues
     # —que no se cancelan entre sí— durante horas.
-    timeout-minutes: 20
+    # 30 y no 20. La compilación tarda unos cuatro minutos y la subida tiene
+    # dieciséis de presupuesto propio: con veinte, el trabajo entero moría por
+    # tiempo justo cuando la subida entraba en su tercer intento. Pasó el 22 de
+    # agosto y se llevó el artículo del día.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
@@ -227,12 +231,14 @@ jobs:
           exit 1
 
       - name: Subir a public_html
-        # 16 y no 6. Con 6, un solo tropiezo del FTP del hosting se llevaba por
-        # delante el despliegue entero, y con él el artículo del día. Pasó el
-        # 21 de agosto: la subida se colgó, agotó los seis minutos y el
-        # artículo se quedó escrito en el repositorio sin llegar a la web.
-        # Ahora caben tres intentos completos con sus esperas.
-        timeout-minutes: 16
+        # 22 y no 16. El presupuesto tiene que caber en el paso, y no cabía:
+        # tres intentos de cinco minutos más las esperas de 45 y 90 segundos
+        # suman diecisiete y medio. El 22 de agosto la subida se cortó a los
+        # 16:12 —en mitad del tercer intento— y el artículo del día se quedó
+        # escrito en el repositorio sin llegar a la web, con el despliegue
+        # marcado como cancelado en vez de fallido, que es peor porque no
+        # parece un error. Ahora el paso dura más que lo que programa.
+        timeout-minutes: 22
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USER: ${{ secrets.FTP_USER }}

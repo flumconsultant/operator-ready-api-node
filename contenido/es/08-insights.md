@@ -25,108 +25,117 @@ PUBLICADO
 ## Lo último que hemos escrito.
 
 <!-- b3747 -->
-### Cómo rediseñar un proceso para que lo ejecute una IA
+### Por qué tu equipo no usa la IA que le diste
 
 <!-- b3748 -->
-Metieron un agente en medio del proceso y siguieron haciendo exactamente lo mismo. Solo que ahora hay un paso más: alguien copia lo que dice el agente a la hoja de siempre, por si acaso.
+Compraste las licencias. Y tres meses después el panel de uso dice la verdad que nadie enseña en el comité.
 
 <!-- b3749 -->
-21 de agosto de 2026 · 6 min
+22 de agosto de 2026 · 5 min
 
 <!-- b3750 -->
-### Por qué tus pilotos de IA no llegan a producción
+### Cómo rediseñar un proceso para que lo ejecute una IA
 
 <!-- b3751 -->
-El piloto salió bien. Y ese es exactamente el momento en el que se quedó parado.
+Metieron un agente en medio del proceso y siguieron haciendo exactamente lo mismo. Solo que ahora hay un paso más: alguien copia lo que dice el agente a la hoja de siempre, por si acaso.
 
 <!-- b3752 -->
-20 de agosto de 2026 · 7 min
+21 de agosto de 2026 · 6 min
 
 <!-- b3753 -->
-### Quién responde cuando responde un agente
+### Por qué tus pilotos de IA no llegan a producción
 
 <!-- b3754 -->
-La pregunta que decide si un agente llega a producción no es técnica. Es de quién es el resultado cuando sale mal.
+El piloto salió bien. Y ese es exactamente el momento en el que se quedó parado.
 
 <!-- b3755 -->
-20 de agosto de 2026 · 4 min
+20 de agosto de 2026 · 7 min
 
 <!-- b3756 -->
-PILARES EDITORIALES
+### Quién responde cuando responde un agente
 
 <!-- b3757 -->
-## Sobre qué vamos a escribir, y sobre qué no.
+La pregunta que decide si un agente llega a producción no es técnica. Es de quién es el resultado cuando sale mal.
 
 <!-- b3758 -->
-Cinco líneas. Nada de noticias de modelos, comparativas de herramientas ni resúmenes de lo que ya dijo otro.
+20 de agosto de 2026 · 4 min
 
 <!-- b3759 -->
-### The AI-native enterprise
+PILARES EDITORIALES
 
 <!-- b3760 -->
-Estrategia, ambition y enterprise design. Qué distingue a una empresa AI-native de una empresa con IA.
+## Sobre qué vamos a escribir, y sobre qué no.
 
 <!-- b3761 -->
-### Agentic work
+Cinco líneas. Nada de noticias de modelos, comparativas de herramientas ni resúmenes de lo que ya dijo otro.
 
 <!-- b3762 -->
-Procesos, roles, agentes y responsabilidad humana. Cómo cambia el trabajo cuando parte lo hace un sistema.
+### The AI-native enterprise
 
 <!-- b3763 -->
-### Operating-model reinvention
+Estrategia, ambition y enterprise design. Qué distingue a una empresa AI-native de una empresa con IA.
 
 <!-- b3764 -->
-Personas, Datos, Agentes, Productos y Operaciones. Las decisiones de diseño que determinan dónde se acumula el valor.
+### Agentic work
 
 <!-- b3765 -->
-### Value and adoption
+Procesos, roles, agentes y responsabilidad humana. Cómo cambia el trabajo cuando parte lo hace un sistema.
 
 <!-- b3766 -->
-Medición, confianza, gestión del cambio y transferencia de capacidades. Por qué la adopción es un problema de diseño, no de comunicación.
+### Operating-model reinvention
 
 <!-- b3767 -->
-### Responsible scale
+Personas, Datos, Agentes, Productos y Operaciones. Las decisiones de diseño que determinan dónde se acumula el valor.
 
 <!-- b3768 -->
-Gobernanza, controles, riesgo y condiciones para escalar. Cuándo hacerlo y, sobre todo, cuándo no.
+### Value and adoption
 
 <!-- b3769 -->
-FORMATOS
+Medición, confianza, gestión del cambio y transferencia de capacidades. Por qué la adopción es un problema de diseño, no de comunicación.
 
 <!-- b3770 -->
-## Cada idea tiene su forma.
+### Responsible scale
 
 <!-- b3771 -->
-### Perspective
+Gobernanza, controles, riesgo y condiciones para escalar. Cuándo hacerlo y, sobre todo, cuándo no.
 
 <!-- b3772 -->
-Una tesis argumentada sobre hacia dónde va algo.
+FORMATOS
 
 <!-- b3773 -->
-### Field Note
+## Cada idea tiene su forma.
 
 <!-- b3774 -->
-Lo aprendido dentro de un problema concreto.
+### Perspective
 
 <!-- b3775 -->
-### Framework
+Una tesis argumentada sobre hacia dónde va algo.
 
 <!-- b3776 -->
-Una forma reutilizable de estructurar una decisión.
+### Field Note
 
 <!-- b3777 -->
-### Executive Brief
+Lo aprendido dentro de un problema concreto.
 
 <!-- b3778 -->
-Lo que un comité necesita saber, en su formato.
+### Framework
 
 <!-- b3779 -->
-### Case Evidence
+Una forma reutilizable de estructurar una decisión.
 
 <!-- b3780 -->
-Trabajo real, solo cuando el cliente lo aprueba.
+### Executive Brief
 
 <!-- b3781 -->
+Lo que un comité necesita saber, en su formato.
+
+<!-- b3782 -->
+### Case Evidence
+
+<!-- b3783 -->
+Trabajo real, solo cuando el cliente lo aprueba.
+
+<!-- b3784 -->
 ## ¿Qué idea necesita convertirse en capacidad?
 
 ---
