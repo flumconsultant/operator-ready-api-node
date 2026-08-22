@@ -4,232 +4,169 @@
 
 **En Google** (no se ve en la página):
 
-<!-- b3093 -->
-- **Título:** Nosotros — Consultora AI-native | BECOME
-<!-- b3094 -->
-- **Descripción:** BECOME conecta estrategia, diseño del modelo operativo, construcción y adopción en un solo sistema. Qué creemos y cómo trabajamos.
+<!-- b3192 -->
+- **Título:** BECOME | Transformación AI-native para empresas
+<!-- b3193 -->
+- **Descripción:** BECOME conecta negocio, transformación, tecnología y adopción para convertir la IA en capacidades que las empresas puedan operar y evolucionar.
 
-<!-- b3095 -->
+<!-- b3194 -->
 ABOUT BECOME
 
-<!-- b3096 -->
+<!-- b3195 -->
 # La próxima empresa ya existe dentro de la tuya.
 
-<!-- b3097 -->
-BECOME es una AI-native transformation company creada para conectar strategy, operating-model design, building y adoption en un solo sistema.
+<!-- b3196 -->
+BECOME es una AI-native transformation company que conecta estrategia, modelo operativo, tecnología y adopción para convertir una ambición en capacidad real.
 
-<!-- b3098 -->
+<!-- b3197 -->
 QUÉ ES BECOME
 
-<!-- b3099 -->
+<!-- b3198 -->
 ## No llegamos para agregar otra herramienta.
 
-<!-- b3100 -->
+<!-- b3199 -->
 Ayudamos a las empresas a rediseñar cómo operan, deciden y crean valor alrededor de la IA. Trabajamos dentro del negocio para convertir una ambición en una capacidad propia, gobernable y capaz de evolucionar.
 
-<!-- b3101 -->
+<!-- b3200 -->
 CATEGORÍA
 
-<!-- b3102 -->
+<!-- b3201 -->
 AI-native transformation company.
 
-<!-- b3103 -->
+<!-- b3202 -->
 PROMESA
 
-<!-- b3104 -->
+<!-- b3203 -->
 Become what comes next.
 
-<!-- b3105 -->
+<!-- b3204 -->
 FILOSOFÍA
 
-<!-- b3106 -->
+<!-- b3205 -->
 The transformation happens inside.
 
-<!-- b3107 -->
-NUESTRO PROPÓSITO
-
-<!-- b3108 -->
-## Ayudar a las empresas a convertirse en aquello que el futuro exige.
-
-<!-- b3109 -->
-Hacemos de la IA una capacidad interna para operar mejor, decidir con mayor inteligencia y crear nuevas formas de valor. La transformación importa cuando queda instalada en las personas, los datos, los agentes, los productos y las operaciones de la empresa.
-
-<!-- b3110 -->
-NUESTRA VISIÓN
-
-<!-- b3111 -->
-Un futuro en el que las empresas no solo usen IA, sino que evolucionen la forma en que trabajan, aprenden y compiten; con inteligencia incorporada, responsabilidad humana y capacidad propia para seguir transformándose.
-
-<!-- b3112 -->
-NUESTRA MISIÓN
-
-<!-- b3113 -->
-Convertir la ambición de la empresa en capacidades AI-native incorporadas, conectando la estrategia con Personas, Datos, Agentes, Productos y Operaciones, desde la definición del valor hasta la adopción y la escala.
-
-<!-- b3114 -->
+<!-- b3206 -->
 NUESTRA CREENCIA
 
-<!-- b3115 -->
+<!-- b3207 -->
 ## La transformación no se instala. Se construye dentro.
 
-<!-- b3116 -->
+<!-- b3208 -->
 Los pilotos aislados no cambian una empresa. El cambio ocurre cuando se rediseñan a la vez los procesos, los roles, quién decide, los datos, los controles, las capacidades y las métricas: un solo sistema, no siete proyectos.
 
-<!-- b3117 -->
+<!-- b3209 -->
 Por eso construimos con los equipos del cliente y les transferimos la responsabilidad desde el inicio.
 
-<!-- b3118 -->
-NUESTRO ADN
-
-<!-- b3119 -->
-## Seis rasgos, y cómo se notan en el trabajo.
-
-<!-- b3120 -->
-### Business-first
-
-<!-- b3121 -->
-Comenzamos por el resultado y la decisión de negocio, no por la herramienta.
-
-<!-- b3122 -->
-### AI-native
-
-<!-- b3123 -->
-Diseñamos modelos de trabajo que incorporan inteligencia desde su origen.
-
-<!-- b3124 -->
-### Systems-minded
-
-<!-- b3125 -->
-Conectamos estrategia, personas, datos, agentes, productos, operaciones y gobernanza.
-
-<!-- b3126 -->
-### Builder
-
-<!-- b3127 -->
-Convertimos la dirección y el diseño en capacidades que funcionan.
-
-<!-- b3128 -->
-### Human-accountable
-
-<!-- b3129 -->
-La IA amplía la capacidad; las personas mantienen dirección, supervisión y responsabilidad.
-
-<!-- b3130 -->
-### Embedded
-
-<!-- b3131 -->
-Trabajamos con el equipo del cliente para que la capacidad permanezca y evolucione.
-
-<!-- b3132 -->
-NUESTRA CULTURA
-
-<!-- b3133 -->
-## Comportamientos observables, no adjetivos aspiracionales.
-
-<!-- b3134 -->
-### Think in outcomes
-
-<!-- b3135 -->
-Preguntamos qué decisión, qué comportamiento o qué resultado de negocio debe cambiar antes de hablar de tecnología.
-
-<!-- b3136 -->
-### Go inside the system
-
-<!-- b3137 -->
-Buscamos la causa en el modelo operativo, no una solución superficial al síntoma.
-
-<!-- b3138 -->
-Diseñamos y construimos junto a quienes operarán la capacidad.
-
-<!-- b3139 -->
-### Stay curious, stay precise
-
-<!-- b3140 -->
-Exploramos posibilidades sin confundir exploración con evidencia.
-
-<!-- b3141 -->
-### Earn trust
-
-<!-- b3142 -->
-Hacemos visibles los límites, los riesgos, los supuestos, los controles y las decisiones.
-
-<!-- b3143 -->
-### Leave capability behind
-
-<!-- b3144 -->
-El trabajo debe aumentar la autonomía del cliente, no su dependencia de BECOME.
-
-<!-- b3145 -->
+<!-- b3210 -->
 CÓMO TRABAJAMOS
 
-<!-- b3146 -->
-## Equipos pequeños y con experiencia alrededor de un resultado común.
+<!-- b3211 -->
+## Comportamientos observables, no adjetivos aspiracionales.
 
-<!-- b3147 -->
-Business strategy, product, design, data, AI, engineering y change trabajando juntos. La composición cambia según el engagement; el accountability no.
+<!-- b3212 -->
+### Think in outcomes
 
-<!-- b3148 -->
-- — Un accountable lead por engagement.
-<!-- b3149 -->
-- — Client team integrado desde el inicio.
-<!-- b3150 -->
-- — Decisiones y riesgos visibles.
-<!-- b3151 -->
-- — Working software o artefactos utilizables, no solo presentaciones.
-<!-- b3152 -->
-- — Transferencia de capacidades incluida en el alcance.
-<!-- b3153 -->
-- — Gobernanza e IA responsable incorporadas al diseño, no añadidas al final.
+<!-- b3213 -->
+Preguntamos qué decisión, qué comportamiento o qué resultado de negocio debe cambiar antes de hablar de tecnología.
 
-<!-- b3154 -->
+<!-- b3214 -->
+### Go inside the system
+
+<!-- b3215 -->
+Buscamos la causa en el modelo operativo, no una solución superficial al síntoma.
+
+<!-- b3216 -->
+Diseñamos y construimos junto a quienes operarán la capacidad.
+
+<!-- b3217 -->
+### Stay curious, stay precise
+
+<!-- b3218 -->
+Exploramos posibilidades sin confundir exploración con evidencia.
+
+<!-- b3219 -->
+### Earn trust
+
+<!-- b3220 -->
+Hacemos visibles los límites, los riesgos, los supuestos, los controles y las decisiones.
+
+<!-- b3221 -->
+### Leave capability behind
+
+<!-- b3222 -->
+El trabajo debe aumentar la autonomía del cliente, no su dependencia de BECOME.
+
+<!-- b3223 -->
+EL EQUIPO DE TRABAJO
+
+<!-- b3224 -->
+## Un equipo senior y multidisciplinario alrededor del resultado.
+
+<!-- b3225 -->
+La composición combina negocio, transformación, producto, adopción, datos e IA según lo que el reto necesita. Cada engagement mantiene un responsable claro.
+
+<!-- b3226 -->
+- — Un responsable claro por engagement.
+<!-- b3227 -->
+- — Equipo del cliente involucrado desde el inicio.
+<!-- b3228 -->
+- — Decisiones, supuestos y riesgos visibles.
+<!-- b3229 -->
+- — Software funcional o artefactos utilizables, no solo presentaciones.
+<!-- b3230 -->
+- — Transferencia de conocimiento y capacidades incluida en el alcance.
+<!-- b3231 -->
+- — Gobierno y uso responsable incorporados al diseño, no añadidos al final.
+
+<!-- b3232 -->
 EQUIPO
 
-<!-- b3155 -->
+<!-- b3233 -->
 ## Las personas detrás de BECOME.
 
-<!-- b3156 -->
-Un equipo pequeño y senior. Cada quien responde por lo suyo y lo firma con su nombre.
+<!-- b3234 -->
+Un equipo senior y multidisciplinario alrededor del resultado. Cada engagement mantiene un responsable claro.
 
-<!-- b3157 -->
+<!-- b3235 -->
 ### Carlos Andrés Ramírez
 
-<!-- b3158 -->
-Business Reinvention & AI Transformation Advisor
+<!-- b3236 -->
+Director de Transformación
 
-<!-- b3159 -->
-Reimagino cómo las organizaciones compiten, operan y crean valor. Conecto estrategia, negocio e inteligencia artificial para transformar desafíos complejos en nuevos modelos, capacidades y oportunidades de crecimiento.
+<!-- b3237 -->
+Especialista en reinvención de negocios y transformación con IA. Conecta estrategia, negocio y tecnología para convertir problemas complejos en nuevas capacidades y modelos de operación.
 
-<!-- b3160 -->
+<!-- b3238 -->
 Especialista en transformación y reinvención de negocios. Director de Programas Especializados y docente de Inteligencia Artificial en la Escuela de Postgrado de la UPC.
 
-<!-- b3161 -->
+<!-- b3239 -->
 ### Melissa Córdova
 
-<!-- b3162 -->
-Transformation, Influence & AI Adoption Advisor
+<!-- b3240 -->
+Directora de Consultoría
 
-<!-- b3163 -->
-Conecto estrategia, cultura e influencia para convertir la inteligencia artificial en una capacidad que las personas comprendan, adopten y lleven a la acción. Impulso transformaciones que movilizan equipos y convierten la visión en resultados reales.
+<!-- b3241 -->
+Especialista en transformación, influencia y adopción. Diseña programas y estrategias para convertir nuevas capacidades de IA en cambios que los equipos comprendan, adopten y lleven a la práctica.
 
-<!-- b3164 -->
+<!-- b3242 -->
 Especialista en transformación, influencia y adopción de inteligencia artificial. Docente de programas de Inteligencia Artificial en la Escuela de Postgrado de la UPC.
 
-<!-- b3165 -->
+<!-- b3243 -->
 ### Diego Serkovic
 
-<!-- b3166 -->
+<!-- b3244 -->
 Innovation & Growth Advisor
 
-<!-- b3167 -->
-Convierto oportunidades de innovación en productos, experimentos y sistemas de crecimiento capaces de generar resultados sostenibles. Conecto estrategia, analítica y ejecución para acelerar la evolución de los negocios.
+<!-- b3245 -->
+Especialista en innovación, producto y crecimiento. Conecta estrategia, analítica y experimentación para convertir oportunidades en nuevos productos y sistemas de crecimiento.
 
-<!-- b3168 -->
+<!-- b3246 -->
 Especialista en innovación, crecimiento, desarrollo de productos y transformación digital, con experiencia ejecutiva y docente en programas de posgrado.
 
-<!-- b3169 -->
+<!-- b3247 -->
 LA PRÓXIMA CAPACIDAD SE CONSTRUYE DESDE DENTRO
 
-<!-- b3170 -->
+<!-- b3248 -->
 ## Cuéntanos qué necesita cambiar en tu empresa.
 
 ---
@@ -238,108 +175,108 @@ LA PRÓXIMA CAPACIDAD SE CONSTRUYE DESDE DENTRO
 
 **En Google** (no se ve en la página):
 
-<!-- b3171 -->
+<!-- b3249 -->
 - **Título:** IA responsable: cómo la controlamos | BECOME
-<!-- b3172 -->
+<!-- b3250 -->
 - **Descripción:** Uso de datos, supervisión humana, evaluación, escalamiento, trazabilidad y responsables con nombre. Ocho decisiones que se toman antes de construir.
 
-<!-- b3173 -->
+<!-- b3251 -->
 IA RESPONSABLE
 
-<!-- b3174 -->
+<!-- b3252 -->
 # Los controles se diseñan con la solución, no se añaden al final.
 
-<!-- b3175 -->
+<!-- b3253 -->
 La IA responsable se incorpora desde el diseño. Definimos el uso adecuado de datos, los accesos, la supervisión humana, la evaluación, el escalamiento, la trazabilidad y la responsabilidad según el caso de uso y su perfil de riesgo.
 
-<!-- b3176 -->
+<!-- b3254 -->
 POR QUÉ AL PRINCIPIO
 
-<!-- b3177 -->
+<!-- b3255 -->
 ## Un control añadido después no cambia cómo se decide.
 
-<!-- b3178 -->
+<!-- b3256 -->
 Cuando los límites se escriben una vez que la solución ya funciona, se convierten en una capa de revisión que frena el trabajo y que la gente aprende a rodear. Definidos antes, son parte de cómo está construida: el sistema no puede hacer aquello para lo que no tiene permiso.
 
-<!-- b3179 -->
+<!-- b3257 -->
 No todos los casos necesitan lo mismo. Un asistente que redacta un borrador interno y un agente que actúa sobre un sistema de producción tienen perfiles de riesgo distintos, y por tanto controles distintos. Lo que no cambia es que estén decididos y escritos antes de construir.
 
-<!-- b3180 -->
+<!-- b3258 -->
 QUÉ SE DEFINE EN CADA CASO
 
-<!-- b3181 -->
+<!-- b3259 -->
 ## Ocho decisiones, siempre las mismas.
 
-<!-- b3182 -->
+<!-- b3260 -->
 ## Uso y acceso a los datos
 
-<!-- b3183 -->
+<!-- b3261 -->
 Qué información entra, de dónde sale, quién puede consultarla y para qué. Se define antes de construir, no cuando ya está en marcha.
 
-<!-- b3184 -->
+<!-- b3262 -->
 ## Privacidad y seguridad
 
-<!-- b3185 -->
+<!-- b3263 -->
 Tratamiento de datos personales y sensibles, cifrado, retención y aislamiento según el entorno de cada empresa.
 
-<!-- b3186 -->
+<!-- b3264 -->
 ## Evaluación de resultados
 
-<!-- b3187 -->
+<!-- b3265 -->
 Qué se considera una respuesta aceptable y cómo se comprueba. Sin un umbral definido, «funciona bien» es una opinión.
 
-<!-- b3188 -->
+<!-- b3266 -->
 04
 
-<!-- b3189 -->
+<!-- b3267 -->
 ## Validación humana
 
-<!-- b3190 -->
+<!-- b3268 -->
 Dónde una persona revisa, aprueba o corrige antes de que algo tenga efecto. Cuanto mayor el riesgo, más cerca del final está ese punto.
 
-<!-- b3191 -->
+<!-- b3269 -->
 05
 
-<!-- b3192 -->
+<!-- b3270 -->
 ## Escalamiento y excepciones
 
-<!-- b3193 -->
+<!-- b3271 -->
 Qué pasa con los casos que no encajan: a quién llegan, en cuánto tiempo y con qué información.
 
-<!-- b3194 -->
+<!-- b3272 -->
 06
 
-<!-- b3195 -->
+<!-- b3273 -->
 ## Trazabilidad
 
-<!-- b3196 -->
+<!-- b3274 -->
 Qué se registra de cada decisión asistida, para poder reconstruir después por qué ocurrió lo que ocurrió.
 
-<!-- b3197 -->
+<!-- b3275 -->
 07
 
-<!-- b3198 -->
+<!-- b3276 -->
 ## Responsables con nombre
 
-<!-- b3199 -->
+<!-- b3277 -->
 Quién responde por la operación y quién por el resultado de negocio. Un control sin responsable es un documento.
 
-<!-- b3200 -->
+<!-- b3278 -->
 08
 
-<!-- b3201 -->
+<!-- b3279 -->
 ## Seguimiento continuo
 
-<!-- b3202 -->
+<!-- b3280 -->
 Con qué frecuencia se revisa el comportamiento, quién lo revisa y qué dispara un cambio.
 
-<!-- b3203 -->
+<!-- b3281 -->
 LA RESPONSABILIDAD NO SE DELEGA EN EL SISTEMA
 
-<!-- b3204 -->
+<!-- b3282 -->
 ## La IA amplía la capacidad; las personas mantienen la dirección.
 
-<!-- b3205 -->
+<!-- b3283 -->
 Cuéntanos el caso y su perfil de riesgo. Te decimos qué controles necesita antes de escribir una línea de código.
 
 ---

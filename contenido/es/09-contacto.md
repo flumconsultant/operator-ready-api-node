@@ -4,60 +4,60 @@
 
 **En Google** (no se ve en la página):
 
-<!-- b3403 -->
-- **Título:** Contacto — Empecemos por lo que quieres cambiar | BECOME
-<!-- b3404 -->
-- **Descripción:** Comparte el reto, el outcome que buscas y el contexto de tu organización. Lo revisamos y te proponemos el siguiente paso de tu transformación con IA.
+<!-- b3460 -->
+- **Título:** Contacto | BECOME
+<!-- b3461 -->
+- **Descripción:** Comparte el reto, el resultado que buscas y el contexto de tu organización. Lo revisamos y orientamos la primera conversación.
 
-<!-- b3405 -->
+<!-- b3462 -->
 CONTACTO
 
-<!-- b3406 -->
+<!-- b3463 -->
 # Empecemos por lo que quieres cambiar.
 
-<!-- b3407 -->
-Comparte brevemente el reto, el outcome que buscas y el contexto de tu organización. Lo revisaremos para entender tu punto de partida y proponerte el siguiente paso más adecuado.
+<!-- b3464 -->
+Comparte el reto, el resultado que buscas y el contexto de tu organización. Lo revisaremos para entender tu punto de partida y orientar la primera conversación.
 
-<!-- b3408 -->
+<!-- b3465 -->
 ## Cuéntanos el contexto esencial.
 
-<!-- b3409 -->
-No necesitas tener la solución definida. Queremos entender el problema, la prioridad y las restricciones actuales.
+<!-- b3466 -->
+No necesitas tener la solución definida. Queremos entender qué necesita cambiar, qué prioridad tiene y qué restricciones debemos considerar.
 
-<!-- b3410 -->
-7 preguntas · menos de dos minutos · sin compromiso
+<!-- b3467 -->
+Menos de dos minutos.
 
-<!-- b3411 -->
-¿Prefieres hablarlo directamente?
+<!-- b3468 -->
+¿Prefieres agendar directamente?
 
-<!-- b3412 -->
-Treinta minutos con Carlos Andrés Ramírez para revisar tu punto de partida y decirte, con criterio, qué haría falta. Sin presentación comercial.
+<!-- b3469 -->
+Reserva una conversación de 30 minutos con el equipo BECOME para revisar el reto, el contexto y el punto de partida más adecuado.
 
-<!-- b3413 -->
+<!-- b3470 -->
 Se abre en Calendly, en una pestaña nueva.
 
-<!-- b3414 -->
+<!-- b3471 -->
 QUÉ OCURRE DESPUÉS
 
-<!-- b3415 -->
-## Tres pasos, y el siguiente siempre es transparente.
+<!-- b3472 -->
+## Qué ocurre después de que escribes.
 
-<!-- b3416 -->
-### Leemos tu contexto
+<!-- b3473 -->
+### Revisamos tu contexto
 
-<!-- b3417 -->
-Lo mapeamos a las etapas del framework BECOME para saber por dónde entra.
+<!-- b3474 -->
+Entendemos el problema, el resultado que buscas y las restricciones que existen hoy.
 
-<!-- b3418 -->
-### Conversación de 30 minutos
+<!-- b3475 -->
+### Conversamos sobre el reto
 
-<!-- b3419 -->
-Centrada en el resultado de negocio y en las restricciones que tienes hoy.
+<!-- b3476 -->
+Una conversación de 30 minutos centrada en lo que necesitas cambiar.
 
-<!-- b3420 -->
-### Definimos el primer paso
+<!-- b3477 -->
+### Definimos el punto de partida
 
-<!-- b3421 -->
-BECOME NOW™, BECOME DISCOVER™ o BECOME EMBED™. El que corresponda, no el más grande.
+<!-- b3478 -->
+Puede ser BECOME NOW™, DISCOVER™, EMBED™ o una recomendación sobre qué resolver primero.
 
 ---

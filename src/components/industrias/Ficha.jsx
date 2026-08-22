@@ -43,6 +43,8 @@ const T = {
     volver: 'Industrias',
     contextoKicker: 'El punto de partida',
     oportunidadesKicker: 'Dónde vemos oportunidad',
+    casosKicker: 'Casos ilustrativos',
+    casosTitular: 'Qué se construye, cuando el detalle operativo ya permite nombrarlo.',
     workflowsKicker: 'Workflows que se rediseñan',
     tecnologiaKicker: 'Qué tecnología, y con qué control',
     metricasKicker: 'Qué se mide',
@@ -64,6 +66,8 @@ const T = {
     volver: 'Industries',
     contextoKicker: 'The starting point',
     oportunidadesKicker: 'Where we see opportunity',
+    casosKicker: 'Illustrative cases',
+    casosTitular: 'What gets built, once the operating detail is specific enough to name it.',
     workflowsKicker: 'Workflows we redesign',
     tecnologiaKicker: 'Which technology, and under what control',
     metricasKicker: 'What gets measured',
@@ -171,6 +175,24 @@ export default function FichaIndustria({ lang = 'es', slug }) {
           ))}
         </Cols>
       </Section>
+
+      {/* Los casos ilustrativos solo existen en las industrias donde hay
+          suficiente detalle operativo para nombrarlos sin inventar. Van
+          rotulados como ilustrativos porque eso es lo que son: ninguno
+          describe un cliente. */}
+      {c.casos && (
+        <Section band="sunken">
+          <Kicker>{t.casosKicker}</Kicker>
+          <Headline>{t.casosTitular}</Headline>
+          <Cols min="240px" style={{ marginTop: 'var(--space-9)' }}>
+            {c.casos.map((caso) => (
+              <Reveal as="div" key={caso} style={{ borderTop: '1px solid var(--border-strong)', paddingTop: 'var(--space-5)' }}>
+                <p style={{ margin: 0, font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--text-heading)' }}>{caso}</p>
+              </Reveal>
+            ))}
+          </Cols>
+        </Section>
+      )}
 
       <Section band="light">
         <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1.2fr)', gap: 'var(--space-9)' }}>

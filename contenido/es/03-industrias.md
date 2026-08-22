@@ -4,258 +4,492 @@
 
 **En Google** (no se ve en la página):
 
-<!-- b0998 -->
-- **Título:** IA y transformación por industria | BECOME
-<!-- b0999 -->
-- **Descripción:** Cómo se aplica la IA en servicios financieros, minería y energía, retail, travel, real estate y salud: dónde está el valor, qué workflows cambian y qué se mide.
+<!-- b0995 -->
+- **Título:** IA por industria: banca, minería, retail y más | BECOME
+<!-- b0996 -->
+- **Descripción:** IA aplicada a banca, minería, retail, hotelería, inmobiliario, construcción y salud, con procesos y métricas propios de cada industria.
 
-<!-- b1000 -->
+<!-- b0997 -->
 INDUSTRIAS
 
-<!-- b1001 -->
+<!-- b0998 -->
 # La IA cambia la tecnología. La industria define dónde está el valor.
 
-<!-- b1002 -->
+<!-- b0999 -->
 Las capacidades son transversales. El valor no. Lo que decide el resultado es qué decisiones, qué procesos y qué riesgos definen tu industria.
 
-<!-- b1003 -->
+<!-- b1000 -->
 DÓNDE ESTÁ EL VALOR
 
-<!-- b1004 -->
+<!-- b1001 -->
 ## No empezamos por la herramienta.
 
-<!-- b1005 -->
+<!-- b1002 -->
 Antes de hablar de modelos, miramos una industria por seis lentes. Son las mismas seis en todos los sectores: lo que cambia entre uno y otro es la respuesta, no la pregunta.
 
-<!-- b1006 -->
+<!-- b1003 -->
 ### DECISIONES
 
-<!-- b1007 -->
+<!-- b1004 -->
 Qué decisiones se toman tarde, con información incompleta o con criterio distinto según quién las tome.
 
-<!-- b1008 -->
+<!-- b1005 -->
 ### WORKFLOWS
 
-<!-- b1009 -->
+<!-- b1006 -->
 Qué procesos concentran esperas, entregas entre equipos y trabajo que se rehace.
 
-<!-- b1010 -->
+<!-- b1007 -->
 ### CONOCIMIENTO
 
-<!-- b1011 -->
+<!-- b1008 -->
 Qué sabe la organización que hoy no está disponible en el momento en que hace falta.
 
-<!-- b1012 -->
+<!-- b1009 -->
 ### EXPERIENCIA
 
-<!-- b1013 -->
+<!-- b1010 -->
 Qué momentos del cliente o del usuario se degradan por volumen y no por falta de criterio.
 
-<!-- b1014 -->
+<!-- b1011 -->
 ### CRECIMIENTO
 
-<!-- b1015 -->
+<!-- b1012 -->
 Qué parte de la propuesta de valor cambiaría si la IA formara parte del producto y no solo del proceso.
 
-<!-- b1016 -->
+<!-- b1013 -->
 ### RIESGO
 
-<!-- b1017 -->
+<!-- b1014 -->
 Qué exposición aparece —o se reduce— cuando una capacidad empieza a operar dentro del proceso.
 
-<!-- b1018 -->
+<!-- b1015 -->
 SEIS INDUSTRIAS
 
-<!-- b1019 -->
+<!-- b1016 -->
 ## Encuentra la tuya y empieza por su problema, no por su tecnología.
 
+<!-- b1017 -->
+Crédito, fraude, operaciones, siniestros, cumplimiento, cobranza y canales digitales.
+
+<!-- b1018 -->
+Planeamiento, mina, concentradora, mantenimiento, seguridad, logística y operaciones intensivas en activos.
+
+<!-- b1019 -->
+Surtido, inventario, precios, promociones, e-commerce, tiendas, distribución y postventa.
+
 <!-- b1020 -->
-Banca, seguros, fintech y gestión de activos.
+Reservas, revenue, atención al huésped, operación hotelera, eventos, reputación y fidelización.
 
 <!-- b1021 -->
-Operaciones intensivas en activos, seguridad y cumplimiento.
+### Inmobiliario y construcción
 
 <!-- b1022 -->
-Surtido, precio, contenido y servicio a velocidad semanal.
+Terrenos, proyectos, ventas, contratos, obra, valorizaciones, entrega y postventa.
 
 <!-- b1023 -->
-Servicio, incidencias y experiencia bajo picos de volumen.
+### Salud y farmacéutica
 
 <!-- b1024 -->
-### Real Estate y Construcción
+Citas, admisión, autorizaciones, facturación, abastecimiento, documentación y operaciones no clínicas.
 
 <!-- b1025 -->
-Proyectos que se deciden en contratos, expedientes y permisos.
-
-<!-- b1026 -->
-### Healthcare y Life Sciences
-
-<!-- b1027 -->
-Los procesos administrativos y documentales que rodean la atención.
-
-<!-- b1028 -->
 Si tu industria no está aquí, el método no cambia. Las lentes son las mismas y la conversación empieza igual.
 
-<!-- b1029 -->
+<!-- b1026 -->
 EMPIEZA POR DENTRO
 
-<!-- b1030 -->
+<!-- b1027 -->
 ## Empieza por el problema que vale la pena transformar.
 
-<!-- b1031 -->
+<!-- b1028 -->
 Cuéntanos qué decisión, qué proceso o qué experiencia tiene que cambiar en tu industria. Respondemos con el punto de partida adecuado, no con una secuencia comercial.
 
 ---
 
-## `/es/industrias/healthcare-life-sciences`
+## `/es/industrias/banca-seguros-fintech`
 
 **En Google** (no se ve en la página):
 
+<!-- b1029 -->
+- **Título:** IA para banca, seguros y fintech | BECOME
+<!-- b1030 -->
+- **Descripción:** IA aplicada a crédito, fraude, operaciones, KYC, AML, siniestros, cobranza, conciliaciones y canales digitales, con trazabilidad y supervisión humana.
+
+<!-- b1031 -->
+BANCA, SEGUROS Y FINTECH
+
 <!-- b1032 -->
-- **Título:** IA para salud y life sciences | BECOME
+# La ventaja no está en tener más datos. Está en decidir mejor con ellos.
+
 <!-- b1033 -->
-- **Descripción:** IA aplicada a los procesos administrativos que rodean la atención: admisión, autorizaciones, facturación, compras y formación. Sin diagnóstico ni tratamiento.
+Banca, seguros, fintech y gestión de activos operan sobre datos, reglas y decisiones. La IA no cambia el producto: cambia el tiempo, el criterio y la trazabilidad con que se decide.
 
 <!-- b1034 -->
-HEALTHCARE Y LIFE SCIENCES
+Pocas industrias reúnen tanta información y tienen tan poco tiempo para usarla. Un expediente de crédito, una reclamación, un caso de cumplimiento o una revisión de cartera juntan documentos, sistemas y criterios que hoy conectan personas, no procesos. La IA encaja bien aquí porque el trabajo ya es leer, comparar y decidir.
 
 <!-- b1035 -->
-# Antes de llegar al paciente, la organización tiene mucho que resolver.
+Y encaja mal cuando se instala sin control. En un sector supervisado, una capacidad que no puede explicarse ni auditarse no es una ventaja: es una exposición. Por eso el trabajo empieza por dónde se decide y quién responde, no por qué herramienta se compra.
 
 <!-- b1036 -->
-Trabajamos sobre los procesos administrativos, documentales y operativos que rodean la atención. No sobre el diagnóstico ni sobre el tratamiento.
+## La oportunidad está entre el documento que entra y la decisión que debe poder explicarse.
 
 <!-- b1037 -->
-## Dónde está el límite, dicho antes que nada
+### Originación y evaluación crediticia
 
 <!-- b1038 -->
-BECOME no desarrolla ni valida capacidades de diagnóstico, tratamiento, triaje clínico o interpretación de estudios, y no asesora sobre la conformidad regulatoria de dispositivos médicos. Cuando un proceso roza una decisión clínica, ese límite se define en el diseño y la decisión permanece íntegramente en el profesional de salud.
+Preparar expedientes, validar completitud, contrastar documentos, detectar inconsistencias y presentar al analista un caso mejor estructurado.
 
 <!-- b1039 -->
-Una institución de salud o una empresa de life sciences dedica una parte enorme de su esfuerzo a trabajo que no es clínico: admisión, autorizaciones, facturación, documentación interna, compras, formación del personal, atención administrativa al usuario. Ahí la IA aplicada tiene un efecto directo y verificable.
+### Operaciones alrededor del core bancario
 
 <!-- b1040 -->
-Y es también donde el riesgo se puede acotar con honestidad. Un proceso administrativo se puede medir, auditar y corregir sin tocar una decisión clínica. Empezar por ahí no es empezar por lo fácil: es empezar por donde se puede sostener lo que se promete.
+Asistir excepciones, incidencias, conciliaciones, ajustes y consultas que hoy obligan a navegar varios sistemas y procedimientos.
 
 <!-- b1041 -->
-## La primera oportunidad está alrededor de la atención, no dentro de la decisión clínica.
+### Fraude
 
 <!-- b1042 -->
-### Admisión y autorizaciones
+Consolidar antecedentes, priorizar alertas y preparar el contexto que acelera la investigación.
 
 <!-- b1043 -->
-Reunir y verificar la documentación administrativa de un caso antes de la revisión.
+### KYC, AML y cumplimiento
 
 <!-- b1044 -->
-### Facturación y conciliación
+Revisar documentación, recuperar políticas y normativa, preparar evidencias y dejar trazabilidad de lo consultado.
 
 <!-- b1045 -->
-Comparar prestaciones, cobertura y condiciones, y marcar las diferencias.
+### Cobranza
 
 <!-- b1046 -->
-### Documentación y procedimientos internos
+Priorizar casos, resumir el historial y preparar la siguiente gestión dentro de las políticas definidas.
 
 <!-- b1047 -->
-Procedimientos, políticas y normativa consultables con la fuente citada.
+### Seguros
 
 <!-- b1048 -->
-### Compras y cadena de suministro
+Ordenar expedientes, contrastar coberturas e identificar faltantes en suscripción, renovación o siniestros.
 
 <!-- b1049 -->
-Comparar propuestas, condiciones y antecedentes de proveedores.
+### Reclamos y consumos no reconocidos
 
 <!-- b1050 -->
-### Atención administrativa
+Recuperar movimientos, canal, historial y documentación para preparar la atención.
 
 <!-- b1051 -->
-Resolver consultas de horarios, requisitos y coberturas, con límites explícitos y derivación a una persona.
+### Conciliaciones
 
 <!-- b1052 -->
-### Formación del personal
+Comparar fuentes, identificar diferencias y preparar las regularizaciones.
 
 <!-- b1053 -->
-Programas sobre los procesos y documentos reales de cada área, con criterios de validación.
+## Crédito, siniestros y cumplimiento cambian cuando el expediente llega leído, no decidido.
 
 <!-- b1054 -->
-## Admisión, autorización y facturación pueden avanzar sin invadir el acto clínico.
-
+- — Originación y evaluación de crédito
 <!-- b1055 -->
-- — Admisión y gestión de autorizaciones
+- — Suscripción y renovación de pólizas
 <!-- b1056 -->
-- — Facturación, cobertura y conciliación
+- — Gestión de siniestros y reclamaciones
 <!-- b1057 -->
-- — Gestión documental y de procedimientos internos
+- — KYC, AML y monitoreo continuo
 <!-- b1058 -->
-- — Compras y cadena de suministro
+- — Reporte regulatorio y auditoría interna
 <!-- b1059 -->
-- — Atención administrativa al usuario
+- — Servicio al cliente, cobranza y retención
+
 <!-- b1060 -->
-- — Formación y habilitación del personal
+## Si el sistema no puede citar qué leyó, no debe influir en la decisión.
 
 <!-- b1061 -->
-## El sistema debe saber cuándo una consulta deja de ser administrativa.
+Extracción sobre documentos no estructurados, búsqueda sobre normativa y política interna con la fuente citada, agentes acotados a un paso del proceso, y registro de qué consultó el sistema antes de proponer. La supervisión humana no es una capa que se añade después: es parte del diseño del workflow.
 
 <!-- b1062 -->
-Extracción sobre documentación administrativa, búsqueda sobre procedimientos internos con la fuente citada, y asistentes con alcance declarado y derivación obligatoria cuando la consulta deja de ser administrativa. El tratamiento de datos personales de salud se define antes de construir, no después.
+## Un expediente que tarda menos no sirve si nadie puede explicar por qué se aprobó.
 
 <!-- b1063 -->
-## Recuperar tiempo asistencial empieza por medir el trabajo documental que lo consume.
+### TIEMPO DE CICLO
 
 <!-- b1064 -->
-### TIEMPO DE TRAMITACIÓN
+Cuánto tarda un expediente desde que entra hasta que hay decisión.
 
 <!-- b1065 -->
-Cuánto tarda un trámite administrativo de principio a fin.
+### COMPLETITUD A LA PRIMERA
 
 <!-- b1066 -->
-### EXPEDIENTES COMPLETOS
+Qué proporción de casos llega a revisión sin faltantes.
 
 <!-- b1067 -->
-Qué proporción llega a revisión sin faltantes.
+### RETRABAJO
 
 <!-- b1068 -->
-### RETRABAJO EN FACTURACIÓN
+Cuántas veces vuelve un caso al paso anterior.
 
 <!-- b1069 -->
-Cuántas correcciones se hacen después de emitir.
+### EXCEPCIONES
 
 <!-- b1070 -->
-### RESPUESTA ADMINISTRATIVA
+Cuántas hay, quién las resuelve y en cuánto tiempo.
 
 <!-- b1071 -->
-Cuánto tarda una consulta de usuario en resolverse.
+### TRAZABILIDAD
 
 <!-- b1072 -->
-### HORAS RECUPERADAS
+Qué proporción de decisiones tiene registrado en qué se basó.
 
 <!-- b1073 -->
-Cuánto tiempo del personal dejaba de dedicarse a tareas documentales.
+## Empieza donde el volumen es alto y la excepción todavía tiene dueño.
 
 <!-- b1074 -->
-## Empieza donde el trámite retrasa la atención sin formar parte de ella.
-
+- 01 Un programa BECOME NOW™ con el equipo de riesgo, finanzas o legal, sobre sus propios expedientes.
 <!-- b1075 -->
-- 01 Un programa BECOME NOW™ con administración, compras o recursos humanos, sobre sus propios procesos.
+- 02 Un BECOME DISCOVER™ acotado a un proceso concreto —originación o siniestros— para decidir dónde está el valor y qué controles hacen falta.
 <!-- b1076 -->
-- 02 Un BECOME DISCOVER™ para priorizar entre trámite, facturación y atención administrativa.
+- 03 Un BECOME EMBED™ sobre el workflow ya priorizado, con supervisión y trazabilidad definidas desde el diseño.
+
 <!-- b1077 -->
-- 03 Un BECOME EMBED™ sobre el proceso administrativo priorizado, con el tratamiento de datos definido desde el diseño.
+### BECOME DISCOVER™ — Discovery de transformación AI-native
 
 <!-- b1078 -->
-### BECOME NOW™ — Capacitación aplicada en IA
-
-<!-- b1079 -->
 - Medir y gobernar el valor de la IA
+<!-- b1079 -->
+- IA aplicada a Finanzas
 <!-- b1080 -->
-- IA aplicada a Operaciones
+- IA aplicada a Legal, Compliance y Risk
+
 <!-- b1081 -->
-- IA aplicada a Recursos Humanos
+## Empieza por la decisión que hoy tarda demasiado.
 
 <!-- b1082 -->
-## Empieza por el trámite que hoy consume el tiempo de quien atiende.
+Tráenos un expediente, la decisión que habilita y los controles que hoy deben revisarse a mano. Identificaremos qué puede prepararse con IA, qué debe seguir bajo criterio profesional y cómo conservar la evidencia de principio a fin.
+
+---
+
+## `/es/industrias/inmobiliario-construccion`
+
+**En Google** (no se ve en la página):
 
 <!-- b1083 -->
-Cuéntanos qué trámite administrativo consume hoy tiempo del personal, retrasa al usuario o genera correcciones. Trabajaremos sobre ese proceso y sus datos, dejando fuera desde el inicio cualquier decisión de diagnóstico, tratamiento o triaje.
+- **Título:** IA para inmobiliarias y construcción | BECOME
+<!-- b1084 -->
+- **Descripción:** IA aplicada a terrenos, factibilidad, ventas, separaciones, minutas, contratos, BIM, RFIs, metrados, valorizaciones, cambios, entrega y postventa.
+
+<!-- b1085 -->
+INMOBILIARIO Y CONSTRUCCIÓN
+
+<!-- b1086 -->
+# Un proyecto cambia todos los días. La información también.
+
+<!-- b1087 -->
+Contratos, expedientes técnicos, permisos y valorizaciones concentran el riesgo del proyecto. La IA aporta justo donde hoy se lee por muestreo.
+
+<!-- b1088 -->
+Un proyecto inmobiliario o de construcción avanza sobre documentos: contratos, adendas, expedientes técnicos, permisos, valorizaciones, órdenes de cambio. El riesgo aparece cuando algo estaba escrito y nadie llegó a leerlo a tiempo.
+
+<!-- b1089 -->
+Es además una industria de coordinación: propietario, constructora, supervisión, proveedores y autoridad trabajan sobre versiones distintas de la misma verdad. La IA no reemplaza esa coordinación; hace que quien coordina llegue con el caso ya leído.
+
+<!-- b1090 -->
+## El valor aparece cuando una obligación escrita se detecta antes de convertirse en demora.
+
+<!-- b1091 -->
+### Terrenos y factibilidad
+
+<!-- b1092 -->
+Ordenar antecedentes, parámetros, documentos, restricciones y supuestos de un terreno antes de decidir.
+
+<!-- b1093 -->
+### Desarrollo y expedientes
+
+<!-- b1094 -->
+Controlar completitud, observaciones, versiones y pendientes del expediente.
+
+<!-- b1095 -->
+### Inventario comercial
+
+<!-- b1096 -->
+Consultar unidades, precios, disponibilidad, características, estacionamientos y promociones vigentes.
+
+<!-- b1097 -->
+### Leads
+
+<!-- b1098 -->
+Resumir las interacciones de un interesado y preparar la siguiente acción comercial.
+
+<!-- b1099 -->
+### Separación y cierre
+
+<!-- b1100 -->
+Dar visibilidad al paso entre separación, cuota inicial, carta de aprobación, minuta y banco.
+
+<!-- b1101 -->
+### Entrega
+
+<!-- b1102 -->
+Ordenar citas, documentación y pendientes de entrega.
+
+<!-- b1103 -->
+### Postventa
+
+<!-- b1104 -->
+Clasificar observaciones, recuperar antecedentes y dar seguimiento al responsable.
+
+<!-- b1105 -->
+### Planeamiento y producción de obra
+
+<!-- b1106 -->
+Preparar avance, restricciones, frentes, compromisos y desviaciones.
+
+<!-- b1107 -->
+### BIM
+
+<!-- b1108 -->
+Facilitar la consulta y la trazabilidad entre modelos, planos, documentos y cambios.
+
+<!-- b1109 -->
+### RFIs y consultas técnicas
+
+<!-- b1110 -->
+Recuperar especificaciones, planos y antecedentes antes de preparar la respuesta.
+
+<!-- b1111 -->
+### Metrados
+
+<!-- b1112 -->
+Organizar el sustento, las versiones y su trazabilidad.
+
+<!-- b1113 -->
+### Valorizaciones
+
+<!-- b1114 -->
+Preparar avance, metrados, sustento y observaciones.
+
+<!-- b1115 -->
+### Administración contractual
+
+<!-- b1116 -->
+Encontrar obligaciones, comunicaciones, hitos y plazos dentro del contrato.
+
+<!-- b1117 -->
+### Cambios y adicionales
+
+<!-- b1118 -->
+Comparar versiones y preparar el expediente de sustento.
+
+<!-- b1119 -->
+### Subcontratos, compras y procura
+
+<!-- b1120 -->
+Comparar propuestas, entregables, obligaciones, cumplimiento y comparativos técnicos y comerciales.
+
+<!-- b1121 -->
+### Cierre de obra
+
+<!-- b1122 -->
+Ordenar punch lists, dossiers, as-built, manuales, garantías y pendientes.
+
+<!-- b1123 -->
+CASOS ILUSTRATIVOS
+
+<!-- b1124 -->
+## Qué se construye, cuando el detalle operativo ya permite nombrarlo.
+
+<!-- b1125 -->
+Copiloto comercial inmobiliario.
+
+<!-- b1126 -->
+Agente de expediente de venta.
+
+<!-- b1127 -->
+Asistente de RFI.
+
+<!-- b1128 -->
+Asistente de valorización.
+
+<!-- b1129 -->
+Agente de postventa.
+
+<!-- b1130 -->
+Asistente de conocimiento de proyecto.
+
+<!-- b1131 -->
+## Contratos, permisos y cambios necesitan una misma lectura del proyecto.
+
+<!-- b1132 -->
+- — Evaluación y cierre de contratos
+<!-- b1133 -->
+- — Preparación y seguimiento de permisos
+<!-- b1134 -->
+- — Gestión de órdenes de cambio
+<!-- b1135 -->
+- — Valorizaciones y control de avance
+<!-- b1136 -->
+- — Licitación y homologación de proveedores
+<!-- b1137 -->
+- — Venta y postventa inmobiliaria
+
+<!-- b1138 -->
+## Comparar versiones ayuda; la conclusión legal o técnica sigue teniendo firma.
+
+<!-- b1139 -->
+Extracción y comparación entre versiones de documentos extensos, búsqueda sobre normativa aplicable y expedientes previos con la fuente citada, y revisión asistida que señala hallazgos para que una persona los valide. La conclusión legal o técnica sigue siendo de un profesional.
+
+<!-- b1140 -->
+## Una revisión más rápida importa si evita una observación, un cambio o una disputa.
+
+<!-- b1141 -->
+### TIEMPO DE REVISIÓN
+
+<!-- b1142 -->
+Cuánto tarda revisar un contrato o un expediente completo.
+
+<!-- b1143 -->
+### HALLAZGOS ANTES DE FIRMA
+
+<!-- b1144 -->
+Cuántos se detectan a tiempo y no después.
+
+<!-- b1145 -->
+### OBSERVACIONES DE PERMISO
+
+<!-- b1146 -->
+Cuántas se evitan por documentación completa.
+
+<!-- b1147 -->
+### CIERRE DE ÓRDENES DE CAMBIO
+
+<!-- b1148 -->
+Cuánto tarda una desde que se levanta hasta que se aprueba.
+
+<!-- b1149 -->
+### RESPUESTA COMERCIAL
+
+<!-- b1150 -->
+Cuánto tarda una consulta de cliente en tener respuesta con sustento.
+
+<!-- b1151 -->
+## Empieza donde una versión equivocada cuesta más.
+
+<!-- b1152 -->
+- 01 Un programa BECOME NOW™ con legal, control de proyectos o comercial, sobre sus propios documentos.
+<!-- b1153 -->
+- 02 Un BECOME DISCOVER™ sobre el punto del proyecto donde el riesgo documental es mayor.
+<!-- b1154 -->
+- 03 Un BECOME EMBED™ para dejar operando la revisión asistida dentro del flujo real de aprobación.
+
+<!-- b1155 -->
+### BECOME DISCOVER™ — Discovery de transformación AI-native
+
+<!-- b1156 -->
+- IA aplicada a Legal, Compliance y Risk
+<!-- b1157 -->
+- IA aplicada a Project Management y PMO
+
+<!-- b1158 -->
+## Empieza por el documento que hoy nadie alcanza a leer entero.
+
+<!-- b1159 -->
+Muéstranos el documento que más riesgo concentra y el flujo que lo revisa, observa y aprueba. Identificaremos dónde la IA puede comparar, recuperar precedentes o señalar faltantes sin sustituir la conclusión del profesional responsable.
 
 ---
 
@@ -263,724 +497,643 @@ Cuéntanos qué trámite administrativo consume hoy tiempo del personal, retrasa
 
 **En Google** (no se ve en la página):
 
-<!-- b1084 -->
-- **Título:** IA para minería y energía | BECOME
-<!-- b1085 -->
-- **Descripción:** IA aplicada en operaciones intensivas en activos: conocimiento técnico, mantenimiento, informes de turno, permisos y HSE, con la decisión siempre en la persona.
+<!-- b1160 -->
+- **Título:** IA para minería y operaciones mineras | BECOME
+<!-- b1161 -->
+- **Descripción:** IA aplicada a planeamiento mina, perforación y voladura, carguío y acarreo, chancado, molienda, flotación, mantenimiento y paradas de planta.
 
-<!-- b1086 -->
+<!-- b1162 -->
 MINERÍA Y ENERGÍA
 
-<!-- b1087 -->
-# El valor no está en el dato. Está en la decisión que nadie toma a tiempo.
+<!-- b1163 -->
+# La operación ya genera la señal. El reto es convertirla en acción a tiempo.
 
-<!-- b1088 -->
+<!-- b1164 -->
 Una operación intensiva en activos genera más información de la que alcanza a usar. La oportunidad vive en el intervalo entre lo que la operación ya sabe y el momento en que alguien actúa.
 
-<!-- b1089 -->
+<!-- b1165 -->
 Una faena o una planta produce señales continuas: sensores, mantenimiento, turnos, permisos, incidentes, proveedores. Casi todo se registra y muy poco llega a tiempo a quien decide. El cuello de botella pocas veces es el modelo: es que el conocimiento vive en informes, correos y personas con veinte años de oficio.
 
-<!-- b1090 -->
+<!-- b1166 -->
 Es además un entorno donde la seguridad y la licencia para operar no son un apartado del proyecto: son la condición. Cualquier capacidad que se instale tiene que dejar claro qué decide una persona, qué no decide un sistema y cómo queda registrado.
 
-<!-- b1091 -->
+<!-- b1167 -->
 ## La operación ya produce la señal. El valor aparece cuando llega antes que la desviación.
 
-<!-- b1092 -->
-### Conocimiento técnico accesible
+<!-- b1168 -->
+### Geología y planeamiento mina
 
-<!-- b1093 -->
-Manuales, procedimientos, informes de turno y estudios consultables en lenguaje natural, con la fuente citada.
+<!-- b1169 -->
+Consolidar antecedentes, restricciones, planes, desviaciones y supuestos antes de una decisión de planeamiento.
 
-<!-- b1094 -->
-### Preparación de mantenimiento
+<!-- b1170 -->
+### Perforación y voladura
 
-<!-- b1095 -->
-Reunir historial, órdenes previas y recomendaciones antes de la planificación, no durante.
+<!-- b1171 -->
+Ordenar diseños, cumplimiento, resultados y lecciones aprendidas de disparos anteriores.
 
-<!-- b1096 -->
-### Informes de turno y reportabilidad
+<!-- b1172 -->
+### Carguío y acarreo
 
-<!-- b1097 -->
-Convertir registros dispersos en un informe consistente, con el mismo criterio en todos los turnos.
+<!-- b1173 -->
+Preparar el análisis de demoras, disponibilidad, tiempos de ciclo y eventos de flota.
 
-<!-- b1098 -->
-### Permisos, cumplimiento y HSE
+<!-- b1174 -->
+### Chancado
 
-<!-- b1099 -->
-Revisar documentación contra los requisitos y señalar lo que falta antes de que detenga el trabajo.
+<!-- b1175 -->
+Recuperar historial, procedimientos y eventos para preparar el análisis de restricciones y detenciones.
 
-<!-- b1100 -->
-### Compras y contratos de servicio
+<!-- b1176 -->
+### Molienda y flotación
 
-<!-- b1101 -->
-Comparar propuestas, condiciones y antecedentes sobre un mismo marco.
+<!-- b1177 -->
+Consolidar información operacional y antecedentes para apoyar el análisis de variabilidad.
 
-<!-- b1102 -->
-### Ingeniería y estudios
+<!-- b1178 -->
+### Planta concentradora
 
-<!-- b1103 -->
-Recuperar precedentes internos: qué se evaluó antes, con qué supuestos y qué se decidió.
+<!-- b1179 -->
+Dar acceso rápido a procedimientos, bitácoras, reportes, manuales y precedentes.
 
-<!-- b1104 -->
+<!-- b1180 -->
+### Mantenimiento y confiabilidad
+
+<!-- b1181 -->
+Reunir órdenes de trabajo, historial, manuales, fallas anteriores, repuestos y backlog antes de una intervención.
+
+<!-- b1182 -->
+### Paradas de planta
+
+<!-- b1183 -->
+Preparar alcance, ruta crítica, permisos, contratistas, riesgos, materiales y pendientes.
+
+<!-- b1184 -->
+### Reportes de guardia
+
+<!-- b1185 -->
+Convertir registros dispersos en reportes consistentes y comparables entre turnos.
+
+<!-- b1186 -->
+### Relaves, agua y cumplimiento
+
+<!-- b1187 -->
+Recuperar documentación, inspecciones y compromisos con trazabilidad.
+
+<!-- b1188 -->
+### Logística y transporte de concentrado
+
+<!-- b1189 -->
+Consolidar incidencias, programación y restricciones.
+
+<!-- b1190 -->
+### Contratos y servicios
+
+<!-- b1191 -->
+Comparar propuestas, hitos, valorizaciones y cumplimiento.
+
+<!-- b1192 -->
+CASOS ILUSTRATIVOS
+
+<!-- b1193 -->
+## Qué se construye, cuando el detalle operativo ya permite nombrarlo.
+
+<!-- b1194 -->
+Copiloto de guardia.
+
+<!-- b1195 -->
+Asistente de mantenimiento.
+
+<!-- b1196 -->
+Agente de preparación de parada.
+
+<!-- b1197 -->
+Asistente de conocimiento de concentradora.
+
+<!-- b1198 -->
+Analista asistido de demoras de carguío y acarreo.
+
+<!-- b1199 -->
 ## El turno, la parada y el permiso son donde el conocimiento se vuelve acción.
 
-<!-- b1105 -->
+<!-- b1200 -->
 - — Planificación y ejecución de mantenimiento
-<!-- b1106 -->
+<!-- b1201 -->
 - — Gestión de turnos y reportabilidad operativa
-<!-- b1107 -->
+<!-- b1202 -->
 - — Permisos, HSE y gestión de incidentes
-<!-- b1108 -->
+<!-- b1203 -->
 - — Compras, contratos y gestión de proveedores
-<!-- b1109 -->
+<!-- b1204 -->
 - — Estudios de ingeniería y gestión de precedentes
-<!-- b1110 -->
+<!-- b1205 -->
 - — Relacionamiento comunitario y reporte de sostenibilidad
 
-<!-- b1111 -->
+<!-- b1206 -->
 ## En seguridad, la IA prepara evidencia; la decisión nunca sale de la persona.
 
-<!-- b1112 -->
+<!-- b1207 -->
 Búsqueda sobre documentación técnica extensa con la fuente citada, extracción sobre informes y órdenes de trabajo, y asistentes acotados a un procedimiento concreto. Donde una recomendación puede afectar la seguridad, el sistema prepara la evidencia y la decisión queda íntegramente en la persona responsable.
 
-<!-- b1113 -->
+<!-- b1208 -->
 ## La mejora se mide entre la señal registrada y la acción en terreno.
 
-<!-- b1114 -->
+<!-- b1209 -->
 ### SEÑAL A DECISIÓN
 
-<!-- b1115 -->
+<!-- b1210 -->
 Cuánto pasa entre que algo se registra y alguien actúa.
 
-<!-- b1116 -->
+<!-- b1211 -->
 ### CONSISTENCIA DE REPORTE
 
-<!-- b1117 -->
+<!-- b1212 -->
 Qué proporción de informes se produce con el mismo criterio.
 
-<!-- b1118 -->
+<!-- b1213 -->
 ### HORAS RECUPERADAS
 
-<!-- b1119 -->
+<!-- b1214 -->
 Cuánto tiempo de ingeniería dejaba de dedicarse a buscar información.
 
-<!-- b1120 -->
+<!-- b1215 -->
 ### PREPARACIÓN DE PARADA
 
-<!-- b1121 -->
+<!-- b1216 -->
 Cuánto tarda alistar una intervención programada.
 
-<!-- b1122 -->
+<!-- b1217 -->
 ### OBSERVACIONES DOCUMENTALES
 
-<!-- b1123 -->
+<!-- b1218 -->
 Cuántas incidencias de documentación aparecen en permisos y auditorías.
 
-<!-- b1124 -->
+<!-- b1219 -->
 ## Empieza por el punto donde el conocimiento llega después de la decisión.
 
-<!-- b1125 -->
+<!-- b1220 -->
 - 01 Un programa BECOME NOW™ con operaciones, mantenimiento o compras, sobre sus propios procedimientos.
-<!-- b1126 -->
+<!-- b1221 -->
 - 02 Un BECOME DISCOVER™ sobre un proceso donde el retraso de decisión sea medible.
-<!-- b1127 -->
+<!-- b1222 -->
 - 03 Un BECOME EMBED™ para dejar funcionando la capacidad priorizada, con supervisión explícita donde toca seguridad.
 
-<!-- b1128 -->
+<!-- b1223 -->
 ### BECOME DISCOVER™ — Discovery de transformación AI-native
 
-<!-- b1129 -->
+<!-- b1224 -->
 - IA aplicada a Operaciones
-<!-- b1130 -->
+<!-- b1225 -->
 - IA aplicada a Supply Chain y Compras
 
-<!-- b1131 -->
+<!-- b1226 -->
 ## Empieza por la información que ya tienes y no llega a tiempo.
 
-<!-- b1132 -->
+<!-- b1227 -->
 Muéstranos un proceso donde manuales, órdenes, informes o permisos ya existen, pero no llegan a tiempo al turno que debe actuar. Diseñaremos el punto de acceso, la trazabilidad y el límite humano antes de hablar de automatización.
 
 ---
 
-## `/es/industrias/real-estate-construction`
+## `/es/industrias/retail-consumo-masivo`
 
 **En Google** (no se ve en la página):
 
-<!-- b1133 -->
-- **Título:** IA para real estate y construcción | BECOME
-<!-- b1134 -->
-- **Descripción:** IA aplicada en proyectos inmobiliarios y de construcción: contratos y adendas, expedientes técnicos y permisos, órdenes de cambio, licitaciones y postventa.
-
-<!-- b1135 -->
-REAL ESTATE Y CONSTRUCCIÓN
-
-<!-- b1136 -->
-# El proyecto se decide en documentos que nadie tiene tiempo de leer.
-
-<!-- b1137 -->
-Contratos, expedientes técnicos, permisos y valorizaciones concentran el riesgo del proyecto. La IA aporta justo donde hoy se lee por muestreo.
-
-<!-- b1138 -->
-Un proyecto inmobiliario o de construcción avanza sobre documentos: contratos, adendas, expedientes técnicos, permisos, valorizaciones, órdenes de cambio. El riesgo aparece cuando algo estaba escrito y nadie llegó a leerlo a tiempo.
-
-<!-- b1139 -->
-Es además una industria de coordinación: propietario, constructora, supervisión, proveedores y autoridad trabajan sobre versiones distintas de la misma verdad. La IA no reemplaza esa coordinación; hace que quien coordina llegue con el caso ya leído.
-
-<!-- b1140 -->
-## El valor aparece cuando una obligación escrita se detecta antes de convertirse en demora.
-
-<!-- b1141 -->
-### Revisión de contratos y adendas
-
-<!-- b1142 -->
-Localizar obligaciones, plazos, penalidades y diferencias entre versiones.
-
-<!-- b1143 -->
-### Expedientes técnicos y permisos
-
-<!-- b1144 -->
-Comparar la documentación contra los requisitos y señalar lo que falta antes de presentar.
-
-<!-- b1145 -->
-### Órdenes de cambio y valorizaciones
-
-<!-- b1146 -->
-Reunir el sustento y preparar la revisión con las diferencias marcadas.
-
-<!-- b1147 -->
-### Comercial y postventa inmobiliaria
-
-<!-- b1148 -->
-Responder sobre proyecto, unidades y condiciones con la documentación vigente.
-
-<!-- b1149 -->
-### Licitaciones y proveedores
-
-<!-- b1150 -->
-Comparar propuestas técnicas y económicas sobre un mismo marco.
-
-<!-- b1151 -->
-### Conocimiento de proyecto
-
-<!-- b1152 -->
-Precedentes internos: qué se decidió en proyectos anteriores y con qué supuestos.
-
-<!-- b1153 -->
-## Contratos, permisos y cambios necesitan una misma lectura del proyecto.
-
-<!-- b1154 -->
-- — Evaluación y cierre de contratos
-<!-- b1155 -->
-- — Preparación y seguimiento de permisos
-<!-- b1156 -->
-- — Gestión de órdenes de cambio
-<!-- b1157 -->
-- — Valorizaciones y control de avance
-<!-- b1158 -->
-- — Licitación y homologación de proveedores
-<!-- b1159 -->
-- — Venta y postventa inmobiliaria
-
-<!-- b1160 -->
-## Comparar versiones ayuda; la conclusión legal o técnica sigue teniendo firma.
-
-<!-- b1161 -->
-Extracción y comparación entre versiones de documentos extensos, búsqueda sobre normativa aplicable y expedientes previos con la fuente citada, y revisión asistida que señala hallazgos para que una persona los valide. La conclusión legal o técnica sigue siendo de un profesional.
-
-<!-- b1162 -->
-## Una revisión más rápida importa si evita una observación, un cambio o una disputa.
-
-<!-- b1163 -->
-### TIEMPO DE REVISIÓN
-
-<!-- b1164 -->
-Cuánto tarda revisar un contrato o un expediente completo.
-
-<!-- b1165 -->
-### HALLAZGOS ANTES DE FIRMA
-
-<!-- b1166 -->
-Cuántos se detectan a tiempo y no después.
-
-<!-- b1167 -->
-### OBSERVACIONES DE PERMISO
-
-<!-- b1168 -->
-Cuántas se evitan por documentación completa.
-
-<!-- b1169 -->
-### CIERRE DE ÓRDENES DE CAMBIO
-
-<!-- b1170 -->
-Cuánto tarda una desde que se levanta hasta que se aprueba.
-
-<!-- b1171 -->
-### RESPUESTA COMERCIAL
-
-<!-- b1172 -->
-Cuánto tarda una consulta de cliente en tener respuesta con sustento.
-
-<!-- b1173 -->
-## Empieza donde una versión equivocada cuesta más.
-
-<!-- b1174 -->
-- 01 Un programa BECOME NOW™ con legal, control de proyectos o comercial, sobre sus propios documentos.
-<!-- b1175 -->
-- 02 Un BECOME DISCOVER™ sobre el punto del proyecto donde el riesgo documental es mayor.
-<!-- b1176 -->
-- 03 Un BECOME EMBED™ para dejar operando la revisión asistida dentro del flujo real de aprobación.
-
-<!-- b1177 -->
-### BECOME DISCOVER™ — Discovery de transformación AI-native
-
-<!-- b1178 -->
-- IA aplicada a Legal, Compliance y Risk
-<!-- b1179 -->
-- IA aplicada a Project Management y PMO
-
-<!-- b1180 -->
-## Empieza por el documento que hoy nadie alcanza a leer entero.
-
-<!-- b1181 -->
-Muéstranos el documento que más riesgo concentra y el flujo que lo revisa, observa y aprueba. Identificaremos dónde la IA puede comparar, recuperar precedentes o señalar faltantes sin sustituir la conclusión del profesional responsable.
-
----
-
-## `/es/industrias/retail-consumo`
-
-**En Google** (no se ve en la página):
-
-<!-- b1182 -->
-- **Título:** IA para retail y consumo | BECOME
-<!-- b1183 -->
-- **Descripción:** IA aplicada en retail: contenido de producto a escala, decisiones comerciales semanales, atención al cliente y campañas, con reglas de marca verificables.
-
-<!-- b1184 -->
-RETAIL Y CONSUMO
-
-<!-- b1185 -->
-# La demanda cambia más rápido que la capacidad de responder.
-
-<!-- b1186 -->
-Surtido, precio, contenido y servicio se deciden semana a semana. La IA aporta cuando acorta ese ciclo sin perder el criterio comercial.
-
-<!-- b1187 -->
-En retail y consumo el problema casi nunca es la falta de datos: es que decidir surtido, precio o contenido exige reunir cinco fuentes distintas y a alguien con criterio para leerlas. Ese alguien es el cuello de botella, y no se resuelve contratando más gente.
-
-<!-- b1188 -->
-La otra mitad es el volumen de contenido. Fichas, campañas, respuestas, adaptaciones por canal y por mercado: trabajo repetitivo con un estándar de marca que hoy solo existe en la cabeza de un equipo pequeño. Escribirlo, y hacerlo aplicable, es la mitad de la transformación.
-
-<!-- b1189 -->
-## La ventaja vive en decidir y publicar al ritmo al que cambia el mercado.
-
-<!-- b1190 -->
-### Contenido de producto a escala
-
-<!-- b1191 -->
-Fichas, descripciones y adaptaciones por canal con el mismo tono y las mismas reglas de marca.
-
-<!-- b1192 -->
-### Preparación de decisiones comerciales
-
-<!-- b1193 -->
-Reunir venta, stock, precio y contexto de mercado en un mismo resumen para la reunión semanal.
-
-<!-- b1194 -->
-### Atención al cliente
-
-<!-- b1195 -->
-Resolver sobre la documentación real de producto, pedidos y políticas, con derivación clara a una persona.
-
-<!-- b1196 -->
-### Campañas y comunicación
-
-<!-- b1197 -->
-Producir variantes por segmento y canal a partir de un mismo mensaje aprobado.
-
-<!-- b1198 -->
-### Surtido y proveedores
-
-<!-- b1199 -->
-Comparar propuestas, condiciones y desempeño histórico sin rehacer el análisis cada vez.
-
-<!-- b1200 -->
-### Conocimiento de tienda
-
-<!-- b1201 -->
-Procedimientos, promociones y excepciones consultables por el equipo en el punto de venta.
-
-<!-- b1202 -->
-## Surtido, contenido y servicio comparten el mismo reto: escala con criterio.
-
-<!-- b1203 -->
-- — Alta y publicación de producto
-<!-- b1204 -->
-- — Planificación comercial semanal
-<!-- b1205 -->
-- — Producción y adaptación de campañas
-<!-- b1206 -->
-- — Atención al cliente y postventa
-<!-- b1207 -->
-- — Negociación y evaluación de proveedores
-<!-- b1208 -->
-- — Operación de tienda y comunicación interna
-
-<!-- b1209 -->
-## La IA puede multiplicar piezas. Las reglas de marca deciden si puede publicarlas.
-
-<!-- b1210 -->
-Generación con reglas de marca explícitas y revisión humana antes de publicar, búsqueda sobre catálogo y políticas, y agentes de atención con un alcance definido y una salida clara hacia una persona. El estándar de marca deja de ser criterio tácito y pasa a ser una instrucción verificable.
-
-<!-- b1211 -->
-## Velocidad sin consistencia solo crea retrabajo a escala.
-
-<!-- b1212 -->
-### TIEMPO DE PUBLICACIÓN
-
-<!-- b1213 -->
-Cuánto tarda una ficha o una campaña desde el encargo hasta el aire.
-
-<!-- b1214 -->
-### APROBACIÓN A LA PRIMERA
-
-<!-- b1215 -->
-Qué proporción del contenido pasa revisión sin correcciones.
-
-<!-- b1216 -->
-### PREPARACIÓN DE LA REUNIÓN
-
-<!-- b1217 -->
-Cuánto tiempo cuesta llegar con el análisis listo.
-
-<!-- b1218 -->
-### RESOLUCIÓN SIN ESCALAR
-
-<!-- b1219 -->
-Qué proporción de consultas se cierra sin pasar a una persona.
-
-<!-- b1220 -->
-### CONSISTENCIA DE MARCA
-
-<!-- b1221 -->
-Cuántas desviaciones detecta la revisión.
-
-<!-- b1222 -->
-## Empieza por el ciclo semanal que siempre llega tarde.
-
-<!-- b1223 -->
-- 01 Un programa BECOME NOW™ con marketing, comercial o atención, sobre sus propios materiales.
-<!-- b1224 -->
-- 02 Un BECOME DISCOVER™ si lo que falta es decidir dónde invertir primero entre contenido, decisión comercial y servicio.
-<!-- b1225 -->
-- 03 Un BECOME EMBED™ para dejar funcionando el flujo de contenido o el agente de atención dentro de la operación.
-
-<!-- b1226 -->
-### BECOME EMBED™ — Sprint de construcción e incorporación
-
-<!-- b1227 -->
-- Crear productos y servicios con IA
 <!-- b1228 -->
-- IA aplicada a Marketing y Comunicaciones
+- **Título:** IA para retail y consumo masivo | BECOME
 <!-- b1229 -->
-- IA aplicada a Customer Service y CX
+- **Descripción:** IA aplicada a surtido, inventario, precios, promociones, catálogo, e-commerce, delivery, retiro en tienda, devoluciones y atención al cliente.
 
 <!-- b1230 -->
-## Empieza por el ciclo que hoy no alcanza a cerrar.
+RETAIL Y CONSUMO MASIVO
 
 <!-- b1231 -->
+# Cuando el mercado cambia cada semana, decidir tarde cuesta venta.
+
+<!-- b1232 -->
+Surtido, precio, contenido y servicio se deciden semana a semana. La IA aporta cuando acorta ese ciclo sin perder el criterio comercial.
+
+<!-- b1233 -->
+En retail y consumo el problema casi nunca es la falta de datos: es que decidir surtido, precio o contenido exige reunir cinco fuentes distintas y a alguien con criterio para leerlas. Ese alguien es el cuello de botella, y no se resuelve contratando más gente.
+
+<!-- b1234 -->
+La otra mitad es el volumen de contenido. Fichas, campañas, respuestas, adaptaciones por canal y por mercado: trabajo repetitivo con un estándar de marca que hoy solo existe en la cabeza de un equipo pequeño. Escribirlo, y hacerlo aplicable, es la mitad de la transformación.
+
+<!-- b1235 -->
+## La ventaja vive en decidir y publicar al ritmo al que cambia el mercado.
+
+<!-- b1236 -->
+### Contenido de producto a escala
+
+<!-- b1237 -->
+Fichas, descripciones y adaptaciones por canal con el mismo tono y las mismas reglas de marca.
+
+<!-- b1238 -->
+### Preparación de decisiones comerciales
+
+<!-- b1239 -->
+Reunir venta, stock, precio y contexto de mercado en un mismo resumen para la reunión semanal.
+
+<!-- b1240 -->
+### Atención al cliente
+
+<!-- b1241 -->
+Resolver sobre la documentación real de producto, pedidos y políticas, con derivación clara a una persona.
+
+<!-- b1242 -->
+### Campañas y comunicación
+
+<!-- b1243 -->
+Producir variantes por segmento y canal a partir de un mismo mensaje aprobado.
+
+<!-- b1244 -->
+### Surtido y proveedores
+
+<!-- b1245 -->
+Comparar propuestas, condiciones y desempeño histórico sin rehacer el análisis cada vez.
+
+<!-- b1246 -->
+### Conocimiento de tienda
+
+<!-- b1247 -->
+Procedimientos, promociones y excepciones consultables por el equipo en el punto de venta.
+
+<!-- b1248 -->
+## Surtido, contenido y servicio comparten el mismo reto: escala con criterio.
+
+<!-- b1249 -->
+- — Alta y publicación de producto
+<!-- b1250 -->
+- — Planificación comercial semanal
+<!-- b1251 -->
+- — Producción y adaptación de campañas
+<!-- b1252 -->
+- — Atención al cliente y postventa
+<!-- b1253 -->
+- — Negociación y evaluación de proveedores
+<!-- b1254 -->
+- — Operación de tienda y comunicación interna
+
+<!-- b1255 -->
+## La IA puede multiplicar piezas. Las reglas de marca deciden si puede publicarlas.
+
+<!-- b1256 -->
+Generación con reglas de marca explícitas y revisión humana antes de publicar, búsqueda sobre catálogo y políticas, y agentes de atención con un alcance definido y una salida clara hacia una persona. El estándar de marca deja de ser criterio tácito y pasa a ser una instrucción verificable.
+
+<!-- b1257 -->
+## Velocidad sin consistencia solo crea retrabajo a escala.
+
+<!-- b1258 -->
+### TIEMPO DE PUBLICACIÓN
+
+<!-- b1259 -->
+Cuánto tarda una ficha o una campaña desde el encargo hasta el aire.
+
+<!-- b1260 -->
+### APROBACIÓN A LA PRIMERA
+
+<!-- b1261 -->
+Qué proporción del contenido pasa revisión sin correcciones.
+
+<!-- b1262 -->
+### PREPARACIÓN DE LA REUNIÓN
+
+<!-- b1263 -->
+Cuánto tiempo cuesta llegar con el análisis listo.
+
+<!-- b1264 -->
+### RESOLUCIÓN SIN ESCALAR
+
+<!-- b1265 -->
+Qué proporción de consultas se cierra sin pasar a una persona.
+
+<!-- b1266 -->
+### CONSISTENCIA DE MARCA
+
+<!-- b1267 -->
+Cuántas desviaciones detecta la revisión.
+
+<!-- b1268 -->
+## Empieza por el ciclo semanal que siempre llega tarde.
+
+<!-- b1269 -->
+- 01 Un programa BECOME NOW™ con marketing, comercial o atención, sobre sus propios materiales.
+<!-- b1270 -->
+- 02 Un BECOME DISCOVER™ si lo que falta es decidir dónde invertir primero entre contenido, decisión comercial y servicio.
+<!-- b1271 -->
+- 03 Un BECOME EMBED™ para dejar funcionando el flujo de contenido o el agente de atención dentro de la operación.
+
+<!-- b1272 -->
+### BECOME EMBED™ — Sprint de construcción e incorporación
+
+<!-- b1273 -->
+- Crear productos y servicios con IA
+<!-- b1274 -->
+- IA aplicada a Marketing y Comunicaciones
+<!-- b1275 -->
+- IA aplicada a Customer Service y CX
+
+<!-- b1276 -->
+## Empieza por el ciclo que hoy no alcanza a cerrar.
+
+<!-- b1277 -->
 Cuéntanos qué se repite cada semana: fichas que no llegan, análisis comerciales que empiezan tarde o consultas que escalan por falta de información. Elegiremos un ciclo donde velocidad, consistencia y resultado puedan medirse juntos.
 
 ---
 
-## `/es/industrias/servicios-financieros`
+## `/es/industrias/salud-farmaceutica`
 
 **En Google** (no se ve en la página):
 
-<!-- b1232 -->
-- **Título:** IA para banca y seguros | BECOME
-<!-- b1233 -->
-- **Descripción:** IA aplicada en servicios financieros: expedientes, crédito y riesgo, KYC, siniestros y cumplimiento, con supervisión humana y trazabilidad desde el diseño.
-
-<!-- b1234 -->
-SERVICIOS FINANCIEROS
-
-<!-- b1235 -->
-# El producto es información. La ventaja es qué tan rápido se convierte en decisión.
-
-<!-- b1236 -->
-Banca, seguros, fintech y gestión de activos operan sobre datos, reglas y decisiones. La IA no cambia el producto: cambia el tiempo, el criterio y la trazabilidad con que se decide.
-
-<!-- b1237 -->
-Pocas industrias reúnen tanta información y tienen tan poco tiempo para usarla. Un expediente de crédito, una reclamación, un caso de cumplimiento o una revisión de cartera juntan documentos, sistemas y criterios que hoy conectan personas, no procesos. La IA encaja bien aquí porque el trabajo ya es leer, comparar y decidir.
-
-<!-- b1238 -->
-Y encaja mal cuando se instala sin control. En un sector supervisado, una capacidad que no puede explicarse ni auditarse no es una ventaja: es una exposición. Por eso el trabajo empieza por dónde se decide y quién responde, no por qué herramienta se compra.
-
-<!-- b1239 -->
-## La oportunidad está entre el documento que entra y la decisión que debe poder explicarse.
-
-<!-- b1240 -->
-### Análisis de expedientes
-
-<!-- b1241 -->
-Extraer, comparar y resumir contratos, estados financieros y anexos para que el analista empiece con el caso ya leído.
-
-<!-- b1242 -->
-### Decisiones de crédito y riesgo
-
-<!-- b1243 -->
-Reunir la evidencia, señalar inconsistencias y dejar registrada la justificación junto a la decisión.
-
-<!-- b1244 -->
-### Onboarding y KYC
-
-<!-- b1245 -->
-Verificar la consistencia de la documentación y preparar el expediente para revisión humana.
-
-<!-- b1246 -->
-### Reclamaciones y siniestros
-
-<!-- b1247 -->
-Clasificar, contrastar contra la póliza y preparar la respuesta, con las excepciones enrutadas a quien decide.
-
-<!-- b1248 -->
-### Cumplimiento y reporte
-
-<!-- b1249 -->
-Consultar normativa y políticas internas dejando rastro de qué se leyó para llegar a una conclusión.
-
-<!-- b1250 -->
-### Atención y postventa
-
-<!-- b1251 -->
-Responder sobre la documentación real del producto, con límites explícitos sobre qué no se contesta.
-
-<!-- b1252 -->
-## Crédito, siniestros y cumplimiento cambian cuando el expediente llega leído, no decidido.
-
-<!-- b1253 -->
-- — Originación y evaluación de crédito
-<!-- b1254 -->
-- — Suscripción y renovación de pólizas
-<!-- b1255 -->
-- — Gestión de siniestros y reclamaciones
-<!-- b1256 -->
-- — KYC, AML y monitoreo continuo
-<!-- b1257 -->
-- — Reporte regulatorio y auditoría interna
-<!-- b1258 -->
-- — Servicio al cliente, cobranza y retención
-
-<!-- b1259 -->
-## Si el sistema no puede citar qué leyó, no debe influir en la decisión.
-
-<!-- b1260 -->
-Extracción sobre documentos no estructurados, búsqueda sobre normativa y política interna con la fuente citada, agentes acotados a un paso del proceso, y registro de qué consultó el sistema antes de proponer. La supervisión humana no es una capa que se añade después: es parte del diseño del workflow.
-
-<!-- b1261 -->
-## Un expediente que tarda menos no sirve si nadie puede explicar por qué se aprobó.
-
-<!-- b1262 -->
-### TIEMPO DE CICLO
-
-<!-- b1263 -->
-Cuánto tarda un expediente desde que entra hasta que hay decisión.
-
-<!-- b1264 -->
-### COMPLETITUD A LA PRIMERA
-
-<!-- b1265 -->
-Qué proporción de casos llega a revisión sin faltantes.
-
-<!-- b1266 -->
-### RETRABAJO
-
-<!-- b1267 -->
-Cuántas veces vuelve un caso al paso anterior.
-
-<!-- b1268 -->
-### EXCEPCIONES
-
-<!-- b1269 -->
-Cuántas hay, quién las resuelve y en cuánto tiempo.
-
-<!-- b1270 -->
-### TRAZABILIDAD
-
-<!-- b1271 -->
-Qué proporción de decisiones tiene registrado en qué se basó.
-
-<!-- b1272 -->
-## Empieza donde el volumen es alto y la excepción todavía tiene dueño.
-
-<!-- b1273 -->
-- 01 Un programa BECOME NOW™ con el equipo de riesgo, finanzas o legal, sobre sus propios expedientes.
-<!-- b1274 -->
-- 02 Un BECOME DISCOVER™ acotado a un proceso concreto —originación o siniestros— para decidir dónde está el valor y qué controles hacen falta.
-<!-- b1275 -->
-- 03 Un BECOME EMBED™ sobre el workflow ya priorizado, con supervisión y trazabilidad definidas desde el diseño.
-
-<!-- b1276 -->
-### BECOME DISCOVER™ — Discovery de transformación AI-native
-
-<!-- b1277 -->
-- Medir y gobernar el valor de la IA
 <!-- b1278 -->
-- IA aplicada a Finanzas
+- **Título:** IA para salud y farmacéutica | BECOME
 <!-- b1279 -->
-- IA aplicada a Legal, Compliance y Risk
+- **Descripción:** IA aplicada a citas, admisión, autorizaciones, facturación, reembolsos, abastecimiento, documentación y operaciones no clínicas.
 
 <!-- b1280 -->
-## Empieza por la decisión que hoy tarda demasiado.
+SALUD Y FARMACÉUTICA
 
 <!-- b1281 -->
-Tráenos un expediente, la decisión que habilita y los controles que hoy deben revisarse a mano. Identificaremos qué puede prepararse con IA, qué debe seguir bajo criterio profesional y cómo conservar la evidencia de principio a fin.
+# Antes y alrededor de la atención hay una operación enorme que también puede mejorar.
+
+<!-- b1282 -->
+Trabajamos sobre los procesos administrativos, documentales y operativos que rodean la atención. No sobre el diagnóstico ni sobre el tratamiento.
+
+<!-- b1283 -->
+## Dónde está el límite, dicho antes que nada
+
+<!-- b1284 -->
+BECOME no desarrolla ni valida capacidades de diagnóstico, tratamiento, triaje clínico o interpretación de estudios, y no asesora sobre la conformidad regulatoria de dispositivos médicos. Cuando un proceso roza una decisión clínica, ese límite se define en el diseño y la decisión permanece íntegramente en el profesional de salud.
+
+<!-- b1285 -->
+Una institución de salud o una empresa de life sciences dedica una parte enorme de su esfuerzo a trabajo que no es clínico: admisión, autorizaciones, facturación, documentación interna, compras, formación del personal, atención administrativa al usuario. Ahí la IA aplicada tiene un efecto directo y verificable.
+
+<!-- b1286 -->
+Y es también donde el riesgo se puede acotar con honestidad. Un proceso administrativo se puede medir, auditar y corregir sin tocar una decisión clínica. Empezar por ahí no es empezar por lo fácil: es empezar por donde se puede sostener lo que se promete.
+
+<!-- b1287 -->
+## La primera oportunidad está alrededor de la atención, no dentro de la decisión clínica.
+
+<!-- b1288 -->
+### Admisión y autorizaciones
+
+<!-- b1289 -->
+Reunir y verificar la documentación administrativa de un caso antes de la revisión.
+
+<!-- b1290 -->
+### Facturación y conciliación
+
+<!-- b1291 -->
+Comparar prestaciones, cobertura y condiciones, y marcar las diferencias.
+
+<!-- b1292 -->
+### Documentación y procedimientos internos
+
+<!-- b1293 -->
+Procedimientos, políticas y normativa consultables con la fuente citada.
+
+<!-- b1294 -->
+### Compras y cadena de suministro
+
+<!-- b1295 -->
+Comparar propuestas, condiciones y antecedentes de proveedores.
+
+<!-- b1296 -->
+### Atención administrativa
+
+<!-- b1297 -->
+Resolver consultas de horarios, requisitos y coberturas, con límites explícitos y derivación a una persona.
+
+<!-- b1298 -->
+### Formación del personal
+
+<!-- b1299 -->
+Programas sobre los procesos y documentos reales de cada área, con criterios de validación.
+
+<!-- b1300 -->
+## Admisión, autorización y facturación pueden avanzar sin invadir el acto clínico.
+
+<!-- b1301 -->
+- — Admisión y gestión de autorizaciones
+<!-- b1302 -->
+- — Facturación, cobertura y conciliación
+<!-- b1303 -->
+- — Gestión documental y de procedimientos internos
+<!-- b1304 -->
+- — Compras y cadena de suministro
+<!-- b1305 -->
+- — Atención administrativa al usuario
+<!-- b1306 -->
+- — Formación y habilitación del personal
+
+<!-- b1307 -->
+## El sistema debe saber cuándo una consulta deja de ser administrativa.
+
+<!-- b1308 -->
+Extracción sobre documentación administrativa, búsqueda sobre procedimientos internos con la fuente citada, y asistentes con alcance declarado y derivación obligatoria cuando la consulta deja de ser administrativa. El tratamiento de datos personales de salud se define antes de construir, no después.
+
+<!-- b1309 -->
+## Recuperar tiempo asistencial empieza por medir el trabajo documental que lo consume.
+
+<!-- b1310 -->
+### TIEMPO DE TRAMITACIÓN
+
+<!-- b1311 -->
+Cuánto tarda un trámite administrativo de principio a fin.
+
+<!-- b1312 -->
+### EXPEDIENTES COMPLETOS
+
+<!-- b1313 -->
+Qué proporción llega a revisión sin faltantes.
+
+<!-- b1314 -->
+### RETRABAJO EN FACTURACIÓN
+
+<!-- b1315 -->
+Cuántas correcciones se hacen después de emitir.
+
+<!-- b1316 -->
+### RESPUESTA ADMINISTRATIVA
+
+<!-- b1317 -->
+Cuánto tarda una consulta de usuario en resolverse.
+
+<!-- b1318 -->
+### HORAS RECUPERADAS
+
+<!-- b1319 -->
+Cuánto tiempo del personal dejaba de dedicarse a tareas documentales.
+
+<!-- b1320 -->
+## Empieza donde el trámite retrasa la atención sin formar parte de ella.
+
+<!-- b1321 -->
+- 01 Un programa BECOME NOW™ con administración, compras o recursos humanos, sobre sus propios procesos.
+<!-- b1322 -->
+- 02 Un BECOME DISCOVER™ para priorizar entre trámite, facturación y atención administrativa.
+<!-- b1323 -->
+- 03 Un BECOME EMBED™ sobre el proceso administrativo priorizado, con el tratamiento de datos definido desde el diseño.
+
+<!-- b1324 -->
+### BECOME NOW™ — Capacitación aplicada en IA
+
+<!-- b1325 -->
+- Medir y gobernar el valor de la IA
+<!-- b1326 -->
+- IA aplicada a Operaciones
+<!-- b1327 -->
+- IA aplicada a Recursos Humanos
+
+<!-- b1328 -->
+## Empieza por el trámite que hoy consume el tiempo de quien atiende.
+
+<!-- b1329 -->
+Cuéntanos qué trámite administrativo consume hoy tiempo del personal, retrasa al usuario o genera correcciones. Trabajaremos sobre ese proceso y sus datos, dejando fuera desde el inicio cualquier decisión de diagnóstico, tratamiento o triaje.
 
 ---
 
-## `/es/industrias/travel-hospitality`
+## `/es/industrias/turismo-hoteleria`
 
 **En Google** (no se ve en la página):
 
-<!-- b1282 -->
-- **Título:** IA para travel y hospitality | BECOME
-<!-- b1283 -->
-- **Descripción:** IA aplicada en hotelería, aerolíneas y turismo: atención previa a la reserva, cambios e incidencias, postventa y conocimiento operativo entre turnos.
+<!-- b1330 -->
+- **Título:** IA para turismo y hotelería | BECOME
+<!-- b1331 -->
+- **Descripción:** IA para reservas, revenue management, atención al huésped, check-in, operación hotelera, eventos, reputación y fidelización.
 
-<!-- b1284 -->
-TRAVEL Y HOSPITALITY
+<!-- b1332 -->
+TURISMO Y HOTELERÍA
 
-<!-- b1285 -->
-# La experiencia se decide en los momentos que nadie alcanza a atender.
+<!-- b1333 -->
+# La experiencia se gana o se pierde en cientos de momentos pequeños.
 
-<!-- b1286 -->
+<!-- b1334 -->
 Reservas, cambios, incidencias y postventa ocurren en picos. La IA sirve cuando sostiene el criterio del servicio justo donde hoy se pierde por volumen.
 
-<!-- b1287 -->
+<!-- b1335 -->
 Un hotel, una aerolínea o un operador vive de momentos: la consulta antes de reservar, el cambio de última hora, la incidencia durante el viaje, el reclamo después. Cada uno es corto, específico y depende de información repartida entre reservas, políticas, tarifas y proveedores.
 
-<!-- b1288 -->
+<!-- b1336 -->
 El servicio se degrada por volumen, no por falta de criterio. Y el criterio existe: está en las personas con más años. Convertirlo en algo consultable y aplicable en el momento es la transformación; cambiar el canal de atención, no.
 
-<!-- b1289 -->
+<!-- b1337 -->
 ## Cada minuto importa cuando la experiencia ya está ocurriendo.
 
-<!-- b1290 -->
+<!-- b1338 -->
 ### Atención previa a la reserva
 
-<!-- b1291 -->
+<!-- b1339 -->
 Responder sobre disponibilidad, condiciones y políticas con la información vigente.
 
-<!-- b1292 -->
+<!-- b1340 -->
 ### Cambios e incidencias
 
-<!-- b1293 -->
+<!-- b1341 -->
 Reunir el caso completo —reserva, política, historial— antes de que una persona decida.
 
-<!-- b1294 -->
+<!-- b1342 -->
 ### Postventa y reclamaciones
 
-<!-- b1295 -->
+<!-- b1343 -->
 Clasificar, contrastar contra la política y preparar la respuesta con la excepción marcada.
 
-<!-- b1296 -->
+<!-- b1344 -->
 ### Contenido y distribución
 
-<!-- b1297 -->
+<!-- b1345 -->
 Descripciones, condiciones y adaptaciones por canal y por mercado, con reglas propias.
 
-<!-- b1298 -->
+<!-- b1346 -->
 ### Conocimiento operativo
 
-<!-- b1299 -->
+<!-- b1347 -->
 Procedimientos, estándares y escalamientos consultables por el equipo en turno.
 
-<!-- b1300 -->
+<!-- b1348 -->
 ### Voz del huésped
 
-<!-- b1301 -->
+<!-- b1349 -->
 Convertir reseñas y encuestas en temas accionables por propiedad, ruta o temporada.
 
-<!-- b1302 -->
+<!-- b1350 -->
 ## La reserva, la incidencia y el cambio de turno no pueden perder el contexto.
 
-<!-- b1303 -->
+<!-- b1351 -->
 - — Consulta previa y conversión de reserva
-<!-- b1304 -->
+<!-- b1352 -->
 - — Gestión de cambios y cancelaciones
-<!-- b1305 -->
+<!-- b1353 -->
 - — Atención de incidencias en viaje o en estadía
-<!-- b1306 -->
+<!-- b1354 -->
 - — Reclamaciones y compensaciones
-<!-- b1307 -->
+<!-- b1355 -->
 - — Distribución de contenido y tarifas por canal
-<!-- b1308 -->
+<!-- b1356 -->
 - — Operación de turno y traspaso entre equipos
 
-<!-- b1309 -->
+<!-- b1357 -->
 ## Una política puede consultarse; una excepción siempre debe escalarse.
 
-<!-- b1310 -->
+<!-- b1358 -->
 Agentes con alcance acotado y salida explícita a una persona, búsqueda sobre políticas y condiciones vigentes, y clasificación de casos con la excepción señalada. Nada que comprometa una compensación o una excepción de política se resuelve sin decisión humana.
 
-<!-- b1311 -->
+<!-- b1359 -->
 ## La experiencia mejora cuando el primer contacto ya llega con el caso completo.
 
-<!-- b1312 -->
+<!-- b1360 -->
 ### PRIMERA RESPUESTA
 
-<!-- b1313 -->
+<!-- b1361 -->
 Cuánto tarda el primer contacto útil.
 
-<!-- b1314 -->
+<!-- b1362 -->
 ### RESOLUCIÓN SIN ESCALAR
 
-<!-- b1315 -->
+<!-- b1363 -->
 Qué proporción de casos se cierra en el primer nivel.
 
-<!-- b1316 -->
+<!-- b1364 -->
 ### TIEMPO DE RESOLUCIÓN
 
-<!-- b1317 -->
+<!-- b1365 -->
 Cuánto dura una incidencia de principio a fin.
 
-<!-- b1318 -->
+<!-- b1366 -->
 ### CONSISTENCIA ENTRE TURNOS
 
-<!-- b1319 -->
+<!-- b1367 -->
 Cuánto varía el criterio según quién atiende.
 
-<!-- b1320 -->
+<!-- b1368 -->
 ### TEMAS RECURRENTES
 
-<!-- b1321 -->
+<!-- b1369 -->
 Cuántos motivos repetidos se cierran por período.
 
-<!-- b1322 -->
+<!-- b1370 -->
 ## Empieza por el momento que concentra volumen y deteriora el servicio.
 
-<!-- b1323 -->
+<!-- b1371 -->
 - 01 Un programa BECOME NOW™ con atención, operaciones o revenue, sobre sus propios casos.
-<!-- b1324 -->
+<!-- b1372 -->
 - 02 Un BECOME DISCOVER™ si hay que decidir qué momento de la experiencia se transforma primero.
-<!-- b1325 -->
+<!-- b1373 -->
 - 03 Un BECOME EMBED™ para dejar el agente o el flujo de incidencias operando con sus límites definidos.
 
-<!-- b1326 -->
+<!-- b1374 -->
 ### BECOME EMBED™ — Sprint de construcción e incorporación
 
-<!-- b1327 -->
+<!-- b1375 -->
 - Crear productos y servicios con IA
-<!-- b1328 -->
+<!-- b1376 -->
 - IA aplicada a Customer Service y CX
-<!-- b1329 -->
+<!-- b1377 -->
 - IA aplicada a Operaciones
 
-<!-- b1330 -->
+<!-- b1378 -->
 ## Empieza por el momento en que hoy se pierde el servicio.
 
-<!-- b1331 -->
+<!-- b1379 -->
 Tráenos el momento que más presión concentra —antes de reservar, durante una incidencia o después de la experiencia— y los sistemas que hoy fragmentan el caso. Diseñaremos una respuesta más rápida sin automatizar excepciones ni compromisos que requieren a una persona.
 
 ---
