@@ -1,0 +1,34 @@
+{
+  "es": {
+    "kicker": "Industrias",
+    "h1": "La IA cambia la tecnología. La industria define dónde está el valor.",
+    "lead": "Las capacidades son transversales. El valor no. Lo que decide el resultado es qué decisiones, qué procesos y qué riesgos definen tu industria.",
+    "lentesKicker": "Dónde está el valor",
+    "lentes": "No empezamos por la herramienta.",
+    "lentesLead": "Antes de hablar de modelos, miramos una industria por seis lentes. Son las mismas seis en todos los sectores: lo que cambia entre uno y otro es la respuesta, no la pregunta.",
+    "listaKicker": "Seis industrias",
+    "lista": "Encuentra la tuya y empieza por su problema, no por su tecnología.",
+    "aviso": "Si tu industria no está aquí, el método no cambia. Las lentes son las mismas y la conversación empieza igual.",
+    "ctaKicker": "Empieza por dentro",
+    "cta": "Empieza por el problema que vale la pena transformar.",
+    "ctaTexto": "Cuéntanos qué decisión, qué proceso o qué experiencia tiene que cambiar en tu industria. Respondemos con el punto de partida adecuado, no con una secuencia comercial.",
+    "ctaBoton": "Hablemos de tu iniciativa",
+    "banner": "La tecnología puede ser la misma. El valor no."
+  },
+  "en": {
+    "kicker": "Industries",
+    "h1": "AI changes the technology. The industry defines where the value is.",
+    "lead": "Capabilities are horizontal. Value is not. What decides the outcome is which decisions, which processes and which risks define your industry.",
+    "lentesKicker": "Where the value is",
+    "lentes": "We do not start with the tool.",
+    "lentesLead": "Before talking about models, we look at an industry through six lenses. They are the same six in every sector: what changes between one and another is the answer, not the question.",
+    "listaKicker": "Six industries",
+    "lista": "Find yours and start with its problem, not with its technology.",
+    "aviso": "If your industry is not listed, the method does not change. The lenses are the same and the conversation starts the same way.",
+    "ctaKicker": "Start inside",
+    "cta": "Start with the problem worth transforming.",
+    "ctaTexto": "Tell us which decision, which process or which experience has to change in your industry. We reply with the right starting point, not with a sales sequence.",
+    "ctaBoton": "Let’s talk about your initiative",
+    "banner": "The technology can be the same. The value is not."
+  }
+}
