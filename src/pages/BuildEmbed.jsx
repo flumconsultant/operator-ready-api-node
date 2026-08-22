@@ -1,3 +1,4 @@
+import { listasDe } from '../content/paginas/index.js';
 import { campo } from '../content/paginas/index.js';
 import React from 'react';
 import SiteHeader from '../components/SiteHeader.jsx';
@@ -16,39 +17,17 @@ import { BajoElCapo } from '../components/tecnologia.jsx';
  * son lo que separa una demo de algo que sigue funcionando en marzo.
  */
 
-const BUILDABLE = [
-  ['flow', 'Proceso AI-native', 'Un proceso rediseñado de principio a fin, con personas y agentes trabajando juntos.'],
-  ['agents', 'Agente o copiloto', 'Una capacidad con límites de autonomía, integración y responsabilidad explícitos.'],
-  ['decision', 'Sistema de decisión asistida', 'El flujo de información que prepara una decisión de alto valor y conserva su trazabilidad.'],
-  ['product', 'AI-native product', 'Una experiencia nueva para clientes o colaboradores, con su operación detrás.'],
-];
+const LISTAS = listasDe('embed');
 
-const STAGES = [
-  ['O', 'Operating Model Design', 'Valida el diseño: roles, agentes, datos, decisiones, excepciones y controles.', 'Agentic Workflow Blueprint™ validado.'],
-  ['M', 'Make & Embed', 'Construye, integra y lleva a un entorno real con adopción acompañada.', 'Capacidad funcionando, con un responsable claro.'],
-  ['E', 'Expand & Evolve', 'Mide, gobierna, transfiere y decide si iterar, integrar, escalar o detener.', 'Scorecard y scale decision.'],
-];
+const BUILDABLE = LISTAS.BUILDABLE;
 
-const DELIVERABLES = [
-  'Proceso y diseño de la capacidad validados.',
-  'Agente, producto o sistema de decisión funcionando.',
-  'Modelo de supervisión humana y controles operativos.',
-  'Plan de adopción y transferencia de capacidades.',
-  'Cuadro de mando de desempeño, riesgo y valor.',
-];
+const STAGES = LISTAS.STAGES;
 
-const CONTROLS = [
-  ['risk', 'Límites de autonomía', 'Qué decide el sistema y qué conserva siempre una persona.'],
-  ['flow', 'Rutas de excepción', 'Qué ocurre con lo que no encaja, y quién es responsable de resolverlo.'],
-  ['quality', 'Criterios de calidad', 'Cómo se sabe que una salida es aceptable antes de que llegue al cliente.'],
-  ['balance', 'Permissions y trazabilidad', 'Quién puede hacer qué, y cómo se reconstruye una decisión después.'],
-];
+const DELIVERABLES = LISTAS.DELIVERABLES;
 
-const TOOLS = [
-  ['Agentic Workflow Blueprint™', 'Diseñar roles, agentes, datos, decisiones, excepciones y controles.'],
-  ['Embed Scorecard™', 'Medir uso, confianza, desempeño, control y valor.'],
-  ['Scale Readiness Gate™', 'Decidir si iterar, integrar, escalar o detener.'],
-];
+const CONTROLS = LISTAS.CONTROLS;
+
+const TOOLS = LISTAS.TOOLS;
 
 export default function BuildEmbed() {
   return (

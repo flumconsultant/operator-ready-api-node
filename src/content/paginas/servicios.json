@@ -4,36 +4,236 @@
   "titulo": "Servicios",
   "ruta": "/es/servicios",
   "campos": [
-    { "id": "kicker", "rotulo": "Antetítulo", "tipo": "linea", "maximo": 40, "valor": "Nuestros servicios" },
-    { "id": "h1", "rotulo": "Titular", "tipo": "linea", "maximo": 80,
+    {
+      "id": "kicker",
+      "rotulo": "Antetítulo",
+      "tipo": "linea",
+      "maximo": 40,
+      "valor": "Nuestros servicios"
+    },
+    {
+      "id": "h1",
+      "rotulo": "Titular",
+      "tipo": "linea",
+      "maximo": 80,
       "ayuda": "Es el h1: la frase por la que Google entiende esta página.",
-      "valor": "De la capacidad de hoy a la empresa que viene." },
-    { "id": "lead", "rotulo": "Entrada", "tipo": "parrafo", "maximo": 260,
-      "valor": "Tres formas de empezar: capacitar a tu equipo, definir la estrategia o construir la solución. Se contratan por separado o en secuencia." },
-    { "id": "ctaPrincipal", "rotulo": "Botón principal", "tipo": "linea", "maximo": 40, "valor": "Encuentra tu punto de partida" },
-    { "id": "ctaSecundario", "rotulo": "Botón secundario", "tipo": "linea", "maximo": 40, "valor": "Cuéntanos qué debe cambiar" },
-
-    { "id": "comparaKicker", "rotulo": "Antetítulo del comparador", "tipo": "linea", "maximo": 40, "valor": "Cuál necesitas" },
-    { "id": "comparaTitular", "rotulo": "Titular del comparador", "tipo": "linea", "maximo": 80, "valor": "Empieza por lo que necesitas resolver." },
-    { "id": "comparaLead", "rotulo": "Entrada del comparador", "tipo": "parrafo", "maximo": 300,
-      "valor": "Los tres se contratan por separado. BECOME NOW™ también puede integrarse como capa de adopción cuando DISCOVER™ o EMBED™ exigen desarrollar capacidades nuevas en los equipos." },
-
-    { "id": "ejeKicker", "rotulo": "Antetítulo del eje", "tipo": "linea", "maximo": 40, "valor": "Cómo se conectan" },
-    { "id": "ejeTitular", "rotulo": "Titular del eje", "tipo": "linea", "maximo": 80, "valor": "Un solo eje. Tres formas de entrar en él." },
-    { "id": "ejeLead", "rotulo": "Entrada del eje", "tipo": "parrafo", "maximo": 260,
-      "valor": "No hay que recorrerlo entero ni empezar por el principio. Cada servicio entra por el tramo donde hoy está el problema." },
-
-    { "id": "tresKicker", "rotulo": "Antetítulo de los tres", "tipo": "linea", "maximo": 40, "valor": "Los tres servicios" },
-    { "id": "tresTitular", "rotulo": "Titular de los tres", "tipo": "linea", "maximo": 110, "valor": "Capacita el presente. Diseña lo que sigue. Construye desde dentro." },
-    { "id": "tresCierre", "rotulo": "Nota bajo los tres", "tipo": "parrafo", "maximo": 260,
-      "valor": "BECOME NOW™ puede contratarse solo o integrarse como capa de adopción y construcción de capacidades dentro de los otros dos." },
-
-    { "id": "industriaKicker", "rotulo": "Antetítulo de industria", "tipo": "linea", "maximo": 40, "valor": "Tu industria" },
-    { "id": "industriaTitular", "rotulo": "Titular de industria", "tipo": "linea", "maximo": 90, "valor": "Los servicios son los mismos. Dónde está el valor, no." },
-
-    { "id": "cierreKicker", "rotulo": "Antetítulo del cierre", "tipo": "linea", "maximo": 60, "valor": "Your next operating model starts with a question" },
-    { "id": "cierreTitular", "rotulo": "Titular del cierre", "tipo": "linea", "maximo": 110, "valor": "No empieces por el servicio. Empieza por la decisión que necesitas tomar." },
-    { "id": "cierreCtaPrincipal", "rotulo": "Botón del cierre", "tipo": "linea", "maximo": 40, "valor": "Cuéntanos qué debe cambiar" },
-    { "id": "cierreCtaSecundario", "rotulo": "Botón secundario del cierre", "tipo": "linea", "maximo": 40, "valor": "Empieza por tu pregunta" }
-  ]
+      "valor": "De la capacidad de hoy a la empresa que viene."
+    },
+    {
+      "id": "lead",
+      "rotulo": "Entrada",
+      "tipo": "parrafo",
+      "maximo": 260,
+      "valor": "Tres formas de empezar: capacitar a tu equipo, definir la estrategia o construir la solución. Se contratan por separado o en secuencia."
+    },
+    {
+      "id": "ctaPrincipal",
+      "rotulo": "Botón principal",
+      "tipo": "linea",
+      "maximo": 40,
+      "valor": "Encuentra tu punto de partida"
+    },
+    {
+      "id": "ctaSecundario",
+      "rotulo": "Botón secundario",
+      "tipo": "linea",
+      "maximo": 40,
+      "valor": "Cuéntanos qué debe cambiar"
+    },
+    {
+      "id": "comparaKicker",
+      "rotulo": "Antetítulo del comparador",
+      "tipo": "linea",
+      "maximo": 40,
+      "valor": "Cuál necesitas"
+    },
+    {
+      "id": "comparaTitular",
+      "rotulo": "Titular del comparador",
+      "tipo": "linea",
+      "maximo": 80,
+      "valor": "Empieza por lo que necesitas resolver."
+    },
+    {
+      "id": "comparaLead",
+      "rotulo": "Entrada del comparador",
+      "tipo": "parrafo",
+      "maximo": 300,
+      "valor": "Los tres se contratan por separado. BECOME NOW™ también puede integrarse como capa de adopción cuando DISCOVER™ o EMBED™ exigen desarrollar capacidades nuevas en los equipos."
+    },
+    {
+      "id": "ejeKicker",
+      "rotulo": "Antetítulo del eje",
+      "tipo": "linea",
+      "maximo": 40,
+      "valor": "Cómo se conectan"
+    },
+    {
+      "id": "ejeTitular",
+      "rotulo": "Titular del eje",
+      "tipo": "linea",
+      "maximo": 80,
+      "valor": "Un solo eje. Tres formas de entrar en él."
+    },
+    {
+      "id": "ejeLead",
+      "rotulo": "Entrada del eje",
+      "tipo": "parrafo",
+      "maximo": 260,
+      "valor": "No hay que recorrerlo entero ni empezar por el principio. Cada servicio entra por el tramo donde hoy está el problema."
+    },
+    {
+      "id": "tresKicker",
+      "rotulo": "Antetítulo de los tres",
+      "tipo": "linea",
+      "maximo": 40,
+      "valor": "Los tres servicios"
+    },
+    {
+      "id": "tresTitular",
+      "rotulo": "Titular de los tres",
+      "tipo": "linea",
+      "maximo": 110,
+      "valor": "Capacita el presente. Diseña lo que sigue. Construye desde dentro."
+    },
+    {
+      "id": "tresCierre",
+      "rotulo": "Nota bajo los tres",
+      "tipo": "parrafo",
+      "maximo": 260,
+      "valor": "BECOME NOW™ puede contratarse solo o integrarse como capa de adopción y construcción de capacidades dentro de los otros dos."
+    },
+    {
+      "id": "industriaKicker",
+      "rotulo": "Antetítulo de industria",
+      "tipo": "linea",
+      "maximo": 40,
+      "valor": "Tu industria"
+    },
+    {
+      "id": "industriaTitular",
+      "rotulo": "Titular de industria",
+      "tipo": "linea",
+      "maximo": 90,
+      "valor": "Los servicios son los mismos. Dónde está el valor, no."
+    },
+    {
+      "id": "cierreKicker",
+      "rotulo": "Antetítulo del cierre",
+      "tipo": "linea",
+      "maximo": 60,
+      "valor": "Your next operating model starts with a question"
+    },
+    {
+      "id": "cierreTitular",
+      "rotulo": "Titular del cierre",
+      "tipo": "linea",
+      "maximo": 110,
+      "valor": "No empieces por el servicio. Empieza por la decisión que necesitas tomar."
+    },
+    {
+      "id": "cierreCtaPrincipal",
+      "rotulo": "Botón del cierre",
+      "tipo": "linea",
+      "maximo": 40,
+      "valor": "Cuéntanos qué debe cambiar"
+    },
+    {
+      "id": "cierreCtaSecundario",
+      "rotulo": "Botón secundario del cierre",
+      "tipo": "linea",
+      "maximo": 40,
+      "valor": "Empieza por tu pregunta"
+    }
+  ],
+  "listas": {
+    "JOURNEY": [
+      {
+        "n": "00",
+        "icon": "capability",
+        "step": "Enable",
+        "who": "BECOME NOW™",
+        "out": "Capacidades aplicadas, procesos y recursos reutilizables."
+      },
+      {
+        "n": "01",
+        "icon": "decision",
+        "step": "Define",
+        "who": "BECOME DISCOVER™",
+        "out": "Ambición, diagnóstico y decisiones prioritarias."
+      },
+      {
+        "n": "02",
+        "icon": "layers",
+        "step": "Design",
+        "who": "Punto de conexión",
+        "out": "Modelo operativo objetivo y diseño de la transformación."
+      },
+      {
+        "n": "03",
+        "icon": "build",
+        "step": "Build",
+        "who": "BECOME EMBED™",
+        "out": "Proceso, agente, copiloto, producto o sistema de decisión."
+      },
+      {
+        "n": "04",
+        "icon": "embed",
+        "step": "Embed",
+        "who": "BECOME EMBED™",
+        "out": "Responsable asignado, supervisión humana, controles y medición."
+      },
+      {
+        "n": "05",
+        "icon": "scale",
+        "step": "Scale",
+        "who": "Evolución posterior",
+        "out": "Decisión sobre escalar y lista de mejoras pendientes."
+      }
+    ],
+    "COMPARE": [
+      [
+        "Si hoy necesitas",
+        "Que un equipo trabaje mejor con IA sobre su propio trabajo.",
+        "Decidir dónde está el valor de la IA y qué debe cambiar.",
+        "Convertir una prioridad en una capacidad que opere."
+      ],
+      [
+        "Qué hacemos",
+        "Capacitación aplicada sobre procesos, documentos y herramientas reales.",
+        "Estrategia, priorización, modelo operativo objetivo y hoja de ruta.",
+        "Diseño, construcción, integración, control y transferencia."
+      ],
+      [
+        "Qué queda",
+        "Flujos de trabajo, asistentes, activos reutilizables, criterios de validación y plan de adopción.",
+        "Bolsas de valor, prioridades, modelo operativo objetivo, caso de negocio y hoja de ruta.",
+        "Capacidad funcionando, integraciones, controles, manual de operación, responsable y medición."
+      ],
+      [
+        "Duración",
+        "12, 18 o 24 horas lectivas, en 4, 6 u 8 sesiones.",
+        "8–12 semanas, según alcance.",
+        "8–12 semanas por capacidad priorizada."
+      ],
+      [
+        "Comienza con",
+        "El trabajo real del área y los casos que vale la pena llevar al programa.",
+        "Una ambición, una tensión de negocio o un dominio a transformar.",
+        "Una prioridad decidida y condiciones para construir."
+      ],
+      [
+        "Foco tecnológico",
+        "Las herramientas autorizadas del cliente: ChatGPT, Claude, Gemini, Microsoft Copilot y las de su propio entorno.",
+        "Panorama de IA, estrategia de modelos, madurez de datos, gobierno e implicaciones de arquitectura.",
+        "LLMs, agentes, APIs, datos, integraciones, orquestación, evaluación y observabilidad."
+      ],
+      [
+        "Siguiente paso",
+        "Ampliar a otra área, o priorizar un caso con DISCOVER™.",
+        "BECOME EMBED™ del primer caso priorizado.",
+        "Iterar, integrar, escalar o detener."
+      ]
+    ]
+  }
 }

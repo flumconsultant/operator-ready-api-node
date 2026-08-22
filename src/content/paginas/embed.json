@@ -179,5 +179,92 @@
       "maximo": 420,
       "valor": "Definiremos el camino de construcción correcto — o si todavía falta un paso antes."
     }
-  ]
+  ],
+  "listas": {
+    "BUILDABLE": [
+      [
+        "flow",
+        "Proceso AI-native",
+        "Un proceso rediseñado de principio a fin, con personas y agentes trabajando juntos."
+      ],
+      [
+        "agents",
+        "Agente o copiloto",
+        "Una capacidad con límites de autonomía, integración y responsabilidad explícitos."
+      ],
+      [
+        "decision",
+        "Sistema de decisión asistida",
+        "El flujo de información que prepara una decisión de alto valor y conserva su trazabilidad."
+      ],
+      [
+        "product",
+        "AI-native product",
+        "Una experiencia nueva para clientes o colaboradores, con su operación detrás."
+      ]
+    ],
+    "STAGES": [
+      [
+        "O",
+        "Operating Model Design",
+        "Valida el diseño: roles, agentes, datos, decisiones, excepciones y controles.",
+        "Agentic Workflow Blueprint™ validado."
+      ],
+      [
+        "M",
+        "Make & Embed",
+        "Construye, integra y lleva a un entorno real con adopción acompañada.",
+        "Capacidad funcionando, con un responsable claro."
+      ],
+      [
+        "E",
+        "Expand & Evolve",
+        "Mide, gobierna, transfiere y decide si iterar, integrar, escalar o detener.",
+        "Scorecard y scale decision."
+      ]
+    ],
+    "DELIVERABLES": [
+      "Proceso y diseño de la capacidad validados.",
+      "Agente, producto o sistema de decisión funcionando.",
+      "Modelo de supervisión humana y controles operativos.",
+      "Plan de adopción y transferencia de capacidades.",
+      "Cuadro de mando de desempeño, riesgo y valor."
+    ],
+    "CONTROLS": [
+      [
+        "risk",
+        "Límites de autonomía",
+        "Qué decide el sistema y qué conserva siempre una persona."
+      ],
+      [
+        "flow",
+        "Rutas de excepción",
+        "Qué ocurre con lo que no encaja, y quién es responsable de resolverlo."
+      ],
+      [
+        "quality",
+        "Criterios de calidad",
+        "Cómo se sabe que una salida es aceptable antes de que llegue al cliente."
+      ],
+      [
+        "balance",
+        "Permissions y trazabilidad",
+        "Quién puede hacer qué, y cómo se reconstruye una decisión después."
+      ]
+    ],
+    "TOOLS": [
+      [
+        "Agentic Workflow Blueprint™",
+        "Diseñar roles, agentes, datos, decisiones, excepciones y controles."
+      ],
+      [
+        "Embed Scorecard™",
+        "Medir uso, confianza, desempeño, control y valor."
+      ],
+      [
+        "Scale Readiness Gate™",
+        "Decidir si iterar, integrar, escalar o detener."
+      ]
+    ]
+  }
 }

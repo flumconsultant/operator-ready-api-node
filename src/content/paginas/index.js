@@ -32,6 +32,12 @@ export const PAGINAS = {
   nosotros, 'ia-responsable': iaResponsable, contacto, insights, 'become-now': becomeNow,
 };
 
+/** Las listas de una página: tarjetas, etapas, dominios. Son datos con
+ *  columnas mezcladas —texto junto a rutas de iconos y slugs— y por eso viven
+ *  aquí pero todavía no se editan desde el panel: un formulario que deje tocar
+ *  la ruta de un icono es un formulario que puede romper una imagen. */
+export const listasDe = (pagina) => PAGINAS[pagina]?.listas ?? {};
+
 /** El valor de un campo, o el de reserva si esa página aún no se migró. */
 export const campo = (pagina, id, reserva = '') =>
   PAGINAS[pagina]?.campos?.find((c) => c.id === id)?.valor ?? reserva;

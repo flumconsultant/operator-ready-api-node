@@ -1,3 +1,4 @@
+import { listasDe } from '../content/paginas/index.js';
 import React from 'react';
 import SiteHeader from '../components/SiteHeader.jsx';
 import SiteFooter from '../components/SiteFooter.jsx';
@@ -40,82 +41,25 @@ import { SOLUCIONES_MENU, INDUSTRIAS_MENU } from '../site.js';
  */
 
 /* Lo que hacemos, sin método de por medio. Es el primer bloque tras el hero. */
-const WHAT = [
-  {
-    icon: 'capability',
-    label: 'Capacitamos',
-    line: 'Cada área aprende a trabajar con IA sobre sus propios procesos y documentos.',
-    to: '/es/servicios/become-now',
-    cta: 'BECOME NOW™',
-  },
-  {
-    icon: 'decision',
-    label: 'Definimos',
-    line: 'Dónde está el valor, qué debe cambiar y cómo debe operar la empresa después.',
-    to: '/es/servicios/become-discover',
-    cta: 'BECOME DISCOVER™',
-  },
-  {
-    icon: 'build',
-    label: 'Construimos',
-    line: 'El proceso, el agente o el producto, dentro de la operación y con quien lo va a usar.',
-    to: '/es/servicios/become-embed',
-    cta: 'BECOME EMBED™',
-  },
-];
+const LISTAS = listasDe('home');
 
-const STAGES = [
-  ['B', 'Business Ambition', 'Define en qué debe convertirse la empresa y qué resultados importan.'],
-  ['E', 'Enterprise Discovery', 'Comprende cómo funciona hoy y qué limita el cambio.'],
-  ['C', 'Elección de capacidades', 'Prioriza dónde la IA puede crear valor diferencial.'],
-  ['O', 'Operating Model Design', 'Diseña el sistema futuro.'],
-  ['M', 'Make & Embed', 'Construye e incorpora la capacidad.'],
-  ['E', 'Expand & Evolve', 'Mide, gobierna, transfiere y escala.'],
-];
+const WHAT = LISTAS.WHAT;
+
+const STAGES = LISTAS.STAGES;
 
 /* Los cinco sistemas conservan su pictograma de marca: son un set propio y con
    nombre, no iconografía de interfaz. El resto de la web usa Phosphor. */
-const DOMAINS = [
-  ['People, inside.', 'Personas capaces de trabajar, decidir y colaborar con IA.', '/icons/people-inside-white.webp'],
-  ['Data, inside.', 'Datos estructurados y no estructurados preparados para alimentar modelos, RAG, búsqueda empresarial y decisiones.', '/icons/data-inside-white.webp'],
-  ['Agents, inside.', 'LLMs, copilotos y agentes de IA capaces de razonar, usar herramientas y ejecutar partes de un proceso dentro de límites definidos.', '/icons/agents-inside-white.webp'],
-  ['Products, inside.', 'Productos y experiencias AI-native que incorporan modelos, datos e inteligencia directamente en la propuesta de valor.', '/icons/products-inside-white.webp'],
-  ['Operations, inside.', 'Procesos rediseñados para combinar automatización, agentes, decisiones humanas, excepciones y controles.', '/icons/operations-inside-white.webp'],
-];
+const DOMAINS = LISTAS.DOMAINS;
 
-const OUTCOMES = [
-  ['speed', 'Velocidad', 'Ciclos de decisión y ejecución más cortos.'],
-  ['quality', 'Calidad', 'Trabajo más consistente, menos errores y menos retrabajo.'],
-  ['growth', 'Crecimiento', 'Nuevos productos, experiencias y fuentes de valor.'],
-  ['risk', 'Riesgo', 'Controles, responsabilidades y supervisión humana claros.'],
-  ['capability', 'Capacidad', 'Equipos capaces de operar y mejorar lo construido.'],
-];
+const OUTCOMES = LISTAS.OUTCOMES;
 
-const SCENARIOS = [
-  ['decision', 'Decision intelligence', 'Rediseñar una decisión de alto valor y su flujo de información.', 'Contexto compartido, rutas de excepción y responsabilidades de decisión explícitas.', '/images/46-strategy-session.webp', 'Equipo directivo trabajando sobre una decisión'],
-  ['flow', 'Agentic operations', 'Incorporar agentes en un proceso controlado de principio a fin.', 'Orquestación, human-in-the-loop y controles operativos.', '/images/19-tech-workspace.webp', 'Puesto de trabajo con operaciones asistidas por IA'],
-  ['product', 'AI-native product', 'Crear una nueva capacidad inteligente para clientes o colaboradores.', 'Capa de datos, responsable de producto y medición de valor.', '/images/50-next-gen.webp', 'Equipo construyendo un producto AI-native'],
-];
+const SCENARIOS = LISTAS.SCENARIOS;
 
-const PRINCIPLES = [
-  ['target', 'Business first', 'Comenzamos por el resultado de negocio, no por la herramienta.'],
-  ['together', 'Build with, not for', 'Trabajamos con los equipos del cliente para que la capacidad quede en sus manos, con confianza operativa.'],
-  ['fit', 'Adoption by design', 'Roles, controles, capacidades y medición forman parte de la solución desde el inicio.'],
-];
+const PRINCIPLES = LISTAS.PRINCIPLES;
 
-const CAPACIDADES = [
-  ['decision', 'Priorizar', 'Dónde está el valor, qué casos de uso, con qué caso de negocio y en qué orden.'],
-  ['flow', 'Rediseñar', 'Decisiones, procesos, roles, excepciones y controles.'],
-  ['build', 'Construir', 'Copilotos, agentes, recuperación sobre el conocimiento propio, integraciones y productos AI-native.'],
-  ['capability', 'Habilitar', 'Equipos capaces de trabajar y decidir con IA sobre su propio trabajo.'],
-  ['scale', 'Medir', 'Línea base, desempeño, riesgo, adopción y valor.'],
-];
+const CAPACIDADES = LISTAS.CAPACIDADES;
 
-const INSIGHTS = [
-  ['agents', 'The AI-native enterprise', 'Qué distingue a una empresa AI-native de una empresa con IA.'],
-  ['flow', 'Agentic work', 'Procesos, roles, agentes y responsabilidad humana.'],
-  ['operations', 'Operating-model reinvention', 'Las decisiones de diseño que determinan dónde se acumula el valor.'],
-];
+const INSIGHTS = LISTAS.INSIGHTS;
 
 export default function Home() {
   return (

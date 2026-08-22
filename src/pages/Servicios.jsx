@@ -1,3 +1,4 @@
+import { listasDe } from '../content/paginas/index.js';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import SiteHeader from '../components/SiteHeader.jsx';
@@ -19,47 +20,11 @@ import { Banner } from '../components/Media.jsx';
  * intercambiables.
  */
 
-const JOURNEY = [
-  { n: '00', icon: 'capability', step: 'Enable', who: 'BECOME NOW™', out: 'Capacidades aplicadas, procesos y recursos reutilizables.' },
-  { n: '01', icon: 'decision', step: 'Define', who: 'BECOME DISCOVER™', out: 'Ambición, diagnóstico y decisiones prioritarias.' },
-  { n: '02', icon: 'layers', step: 'Design', who: 'Punto de conexión', out: 'Modelo operativo objetivo y diseño de la transformación.' },
-  { n: '03', icon: 'build', step: 'Build', who: 'BECOME EMBED™', out: 'Proceso, agente, copiloto, producto o sistema de decisión.' },
-  { n: '04', icon: 'embed', step: 'Embed', who: 'BECOME EMBED™', out: 'Responsable asignado, supervisión humana, controles y medición.' },
-  { n: '05', icon: 'scale', step: 'Scale', who: 'Evolución posterior', out: 'Decisión sobre escalar y lista de mejoras pendientes.' },
-];
+const LISTAS = listasDe('servicios');
 
-const COMPARE = [
-  ['Si hoy necesitas',
-   'Que un equipo trabaje mejor con IA sobre su propio trabajo.',
-   'Decidir dónde está el valor de la IA y qué debe cambiar.',
-   'Convertir una prioridad en una capacidad que opere.'],
-  ['Qué hacemos',
-   'Capacitación aplicada sobre procesos, documentos y herramientas reales.',
-   'Estrategia, priorización, modelo operativo objetivo y hoja de ruta.',
-   'Diseño, construcción, integración, control y transferencia.'],
-  ['Qué queda',
-   'Flujos de trabajo, asistentes, activos reutilizables, criterios de validación y plan de adopción.',
-   'Bolsas de valor, prioridades, modelo operativo objetivo, caso de negocio y hoja de ruta.',
-   'Capacidad funcionando, integraciones, controles, manual de operación, responsable y medición.'],
-  ['Duración',
-   '12, 18 o 24 horas lectivas, en 4, 6 u 8 sesiones.',
-   '8–12 semanas, según alcance.',
-   '8–12 semanas por capacidad priorizada.'],
-  ['Comienza con',
-   'El trabajo real del área y los casos que vale la pena llevar al programa.',
-   'Una ambición, una tensión de negocio o un dominio a transformar.',
-   'Una prioridad decidida y condiciones para construir.'],
-  /* La fila de tecnología va aquí y no en una sección aparte: en una tabla de
-     comparación se lee como un criterio más de decisión, que es lo que es. */
-  ['Foco tecnológico',
-   'Las herramientas autorizadas del cliente: ChatGPT, Claude, Gemini, Microsoft Copilot y las de su propio entorno.',
-   'Panorama de IA, estrategia de modelos, madurez de datos, gobierno e implicaciones de arquitectura.',
-   'LLMs, agentes, APIs, datos, integraciones, orquestación, evaluación y observabilidad.'],
-  ['Siguiente paso',
-   'Ampliar a otra área, o priorizar un caso con DISCOVER™.',
-   'BECOME EMBED™ del primer caso priorizado.',
-   'Iterar, integrar, escalar o detener.'],
-];
+const JOURNEY = LISTAS.JOURNEY;
+
+const COMPARE = LISTAS.COMPARE;
 
 export default function Servicios() {
   return (

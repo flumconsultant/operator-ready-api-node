@@ -1,3 +1,4 @@
+import { listasDe } from '../content/paginas/index.js';
 import { campo } from '../content/paginas/index.js';
 import React from 'react';
 import SiteHeader from '../components/SiteHeader.jsx';
@@ -16,42 +17,17 @@ import { EstrategiaDeModelos } from '../components/tecnologia.jsx';
  * que necesita es reconocer que su situación es la que este engagement resuelve.
  */
 
-const STAGES = [
-  ['B', 'Business Ambition', 'Define en qué debe convertirse la empresa y qué resultados importan.', 'AI-native ambition y tesis estratégica.'],
-  ['E', 'Enterprise Discovery', 'Comprende cómo funciona hoy y qué limita el cambio.', 'Diagnóstico de la empresa y su preparación.'],
-  ['C', 'Elección de capacidades', 'Prioriza dónde la IA puede crear valor diferencial.', 'Dónde está el valor y un portafolio priorizado.'],
-  ['O', 'Operating Model Design', 'Diseña el sistema futuro de Personas, Datos, Agentes, Productos y Operaciones.', 'Modelo operativo objetivo y diseño de la solución.'],
-];
+const LISTAS = listasDe('discover');
 
-const DELIVERABLES = [
-  'AI-native ambition y tesis estratégica.',
-  'Diagnóstico de la empresa e Inside Readiness Index™.',
-  'Value pools y portafolio priorizado de capacidades.',
-  'Target operating model.',
-  'Diseño de la transformación, caso de negocio y hoja de ruta.',
-];
+const STAGES = LISTAS.STAGES;
 
-const TOOLS = [
-  ['Business Ambition Canvas™', 'Alinear al equipo ejecutivo alrededor de los resultados y las decisiones estratégicas.'],
-  ['Inside Readiness Index™', 'Evaluar la madurez en Personas, Datos, Agentes, Productos y Operaciones.'],
-  ['AI-Native Value Map™', 'Priorizar oportunidades por valor, viabilidad, velocidad y riesgo.'],
-  ['Inside Target State Canvas™', 'Definir el modelo operativo objetivo y el diseño de la transformación.'],
-];
+const DELIVERABLES = LISTAS.DELIVERABLES;
 
-const FIT = [
-  'Existe executive sponsorship.',
-  'Hay iniciativas de IA sin coherencia empresarial.',
-  'Un dominio de negocio necesita reinvención.',
-  'El liderazgo necesita un portafolio, un estado objetivo o una hoja de ruta.',
-  'La empresa involucrará a líderes de negocio, tecnología, datos y People.',
-];
+const TOOLS = LISTAS.TOOLS;
 
-const DECISIONS = [
-  'Dónde la IA puede crear valor empresarial diferencial.',
-  'Qué debe cambiar dentro para que ese valor sea posible.',
-  'Qué capacidad construir primero y con qué criterios.',
-  'Qué inversión, qué secuencia y qué gobernanza sostienen el plan.',
-];
+const FIT = LISTAS.FIT;
+
+const DECISIONS = LISTAS.DECISIONS;
 
 export default function Discovery() {
   return (
