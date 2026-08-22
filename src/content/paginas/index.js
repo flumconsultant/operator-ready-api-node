@@ -19,8 +19,10 @@
 
 import home from './home.json' with { type: 'json' };
 import servicios from './servicios.json' with { type: 'json' };
+import discover from './discover.json' with { type: 'json' };
+import embed from './embed.json' with { type: 'json' };
 
-export const PAGINAS = { home, servicios };
+export const PAGINAS = { home, servicios, discover, embed };
 
 /** El valor de un campo, o el de reserva si esa página aún no se migró. */
 export const campo = (pagina, id, reserva = '') =>

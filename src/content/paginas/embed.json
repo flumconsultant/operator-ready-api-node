@@ -1,0 +1,183 @@
+{
+  "_": "Los rótulos y textos de BECOME EMBED™. Lo que lleva enlaces o listas se queda en el componente: es estructura, no copia.",
+  "id": "embed",
+  "titulo": "BECOME EMBED™",
+  "ruta": "/es/servicios/become-embed",
+  "campos": [
+    {
+      "id": "s1kicker",
+      "rotulo": "Sección 1 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "BECOME Embed™"
+    },
+    {
+      "id": "s1headline",
+      "rotulo": "Sección 1 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Convierte una prioridad de IA en una capacidad lista para operar."
+    },
+    {
+      "id": "s1lead",
+      "rotulo": "Sección 1 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "Diseñamos y construimos copilotos, agentes de IA y procesos basados en LLMs conectados a los datos, herramientas y sistemas de tu organización."
+    },
+    {
+      "id": "s1body",
+      "rotulo": "Sección 1 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "Trabajamos desde la selección del modelo y la arquitectura hasta las APIs, integraciones, controles, evaluación, observabilidad y human-in-the-loop necesarios para operar con confianza. De ocho a doce semanas, con el equipo que va a usarla todos los días."
+    },
+    {
+      "id": "s2kicker",
+      "rotulo": "Sección 2 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "El problema"
+    },
+    {
+      "id": "s2headline",
+      "rotulo": "Sección 2 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Prototipos que nunca se convierten en capacidad operativa."
+    },
+    {
+      "id": "s2lead",
+      "rotulo": "Sección 2 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "El piloto funciona en la demo y desaparece en la operación. No falla el modelo: falla que se construyó al lado del trabajo real en vez de dentro."
+    },
+    {
+      "id": "s2body",
+      "rotulo": "Sección 2 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "Al terminar el proyecto nadie es dueño del resultado, el proceso sigue igual y no hay una medida contra la que decidir si merece escalarse."
+    },
+    {
+      "id": "s3kicker",
+      "rotulo": "Sección 3 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Qué puede construirse"
+    },
+    {
+      "id": "s3headline",
+      "rotulo": "Sección 3 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Cuatro formas de capacidad, un mismo estándar."
+    },
+    {
+      "id": "s4kicker",
+      "rotulo": "Sección 4 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "El recorrido"
+    },
+    {
+      "id": "s4headline",
+      "rotulo": "Sección 4 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "BECOME EMBED™ cubre O–M–E del framework."
+    },
+    {
+      "id": "s4body",
+      "rotulo": "Sección 4 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "Puede empezar desde un diseño que ya exista, si cumple los criterios mínimos; no exige haber hecho BECOME DISCOVER™ con nosotros."
+    },
+    {
+      "id": "s5kicker",
+      "rotulo": "Sección 5 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Supervisión humana y controles"
+    },
+    {
+      "id": "s5headline",
+      "rotulo": "Sección 5 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Lo que determina si un agente puede operar no es solo la calidad de sus respuestas."
+    },
+    {
+      "id": "s5lead",
+      "rotulo": "Sección 5 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "Es quién responde cuando se equivoca y qué pasa con los casos que no encajan. Esas cuatro decisiones se toman antes de escribir la primera línea."
+    },
+    {
+      "id": "s6kicker",
+      "rotulo": "Sección 6 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 79,
+      "valor": "Adopción y transferencia de capacidades"
+    },
+    {
+      "id": "s6headline",
+      "rotulo": "Sección 6 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "El trabajo termina cuando la capacidad pertenece a la empresa."
+    },
+    {
+      "id": "s6body",
+      "rotulo": "Sección 6 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "La transferencia no es una sesión de formación al final: el equipo que va a operar la capacidad participa en su diseño y en su construcción. Es la diferencia entre heredar algo y recibirlo."
+    },
+    {
+      "id": "s7kicker",
+      "rotulo": "Sección 7 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Proprietary tools"
+    },
+    {
+      "id": "s8kicker",
+      "rotulo": "Sección 8 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Entregables"
+    },
+    {
+      "id": "s8headline",
+      "rotulo": "Sección 8 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Qué queda al terminar el sprint."
+    },
+    {
+      "id": "s9kicker",
+      "rotulo": "Sección 9 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 83,
+      "valor": "Pasa del diseño a una capacidad incorporada"
+    },
+    {
+      "id": "s9headline",
+      "rotulo": "Sección 9 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Trae un proceso, una decisión o una oportunidad de producto prioritaria."
+    },
+    {
+      "id": "s9lead",
+      "rotulo": "Sección 9 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "Definiremos el camino de construcción correcto — o si todavía falta un paso antes."
+    }
+  ]
+}

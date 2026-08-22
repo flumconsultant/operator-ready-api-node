@@ -1,0 +1,190 @@
+{
+  "_": "Los rótulos y textos de BECOME DISCOVER™. Lo que lleva enlaces o listas se queda en el componente: es estructura, no copia.",
+  "id": "discover",
+  "titulo": "BECOME DISCOVER™",
+  "ruta": "/es/servicios/become-discover",
+  "campos": [
+    {
+      "id": "s1kicker",
+      "rotulo": "Sección 1 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 88,
+      "valor": "BECOME DISCOVER™ · Estrategia y modelo operativo"
+    },
+    {
+      "id": "s1headline",
+      "rotulo": "Sección 1 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Decide dónde está el valor de la IA y qué debe cambiar para capturarlo."
+    },
+    {
+      "id": "s1lead",
+      "rotulo": "Sección 1 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "De ocho a doce semanas para responder tres preguntas: dónde está el valor de la IA en tu negocio, qué se hace primero y cómo tiene que operar la empresa para sostenerlo."
+    },
+    {
+      "id": "s2kicker",
+      "rotulo": "Sección 2 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "El problema"
+    },
+    {
+      "id": "s2headline",
+      "rotulo": "Sección 2 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Actividad de IA sin dirección empresarial."
+    },
+    {
+      "id": "s2lead",
+      "rotulo": "Sección 2 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "No es un problema de tecnología: son muchas iniciativas y ninguna tesis. Sin una ambición compartida, cada área propone sus casos y nadie tiene un criterio único de valor."
+    },
+    {
+      "id": "s2body",
+      "rotulo": "Sección 2 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "El resultado es previsible: más pilotos, más gasto y la misma pregunta sin responder sobre dónde está el valor."
+    },
+    {
+      "id": "s3kicker",
+      "rotulo": "Sección 3 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Para quién es"
+    },
+    {
+      "id": "s3headline",
+      "rotulo": "Sección 3 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Cinco condiciones que hacen de BECOME DISCOVER™ el paso correcto."
+    },
+    {
+      "id": "s4kicker",
+      "rotulo": "Sección 4 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "El recorrido"
+    },
+    {
+      "id": "s4headline",
+      "rotulo": "Sección 4 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "BECOME DISCOVER™ cubre B–E–C–O del framework."
+    },
+    {
+      "id": "s4body",
+      "rotulo": "Sección 4 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "Las dos últimas etapas —Make &amp; Embed y Expand &amp; Evolve— son el territorio de BECOME EMBED™. Operating Model Design es el punto de transición visible entre los dos servicios."
+    },
+    {
+      "id": "s5kicker",
+      "rotulo": "Sección 5 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Working model"
+    },
+    {
+      "id": "s5headline",
+      "rotulo": "Sección 5 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Se hace con tu equipo, no sobre tu equipo."
+    },
+    {
+      "id": "s5body",
+      "rotulo": "Sección 5 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "Un responsable claro por proyecto y el equipo del cliente integrado desde la primera semana. Las decisiones y los riesgos se hacen visibles a medida que aparecen, no en la presentación final."
+    },
+    {
+      "id": "s5body2",
+      "rotulo": "Sección 5 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "DISCOVER™ requiere participación ejecutiva en las decisiones clave: prioridad, inversión, responsable y modelo operativo."
+    },
+    {
+      "id": "s6kicker",
+      "rotulo": "Sección 6 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Herramientas propias"
+    },
+    {
+      "id": "s7kicker",
+      "rotulo": "Sección 7 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Entregables"
+    },
+    {
+      "id": "s7headline",
+      "rotulo": "Sección 7 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Qué queda al terminar."
+    },
+    {
+      "id": "s8kicker",
+      "rotulo": "Sección 8 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Decisiones que puedes tomar"
+    },
+    {
+      "id": "s8headline",
+      "rotulo": "Sección 8 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Cuatro preguntas, respondidas con criterio explícito."
+    },
+    {
+      "id": "s8body",
+      "rotulo": "Sección 8 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "8–12 semanas, según alcance y disponibilidad ejecutiva."
+    },
+    {
+      "id": "s8body2",
+      "rotulo": "Sección 8 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "BECOME EMBED™ del primer caso priorizado."
+    },
+    {
+      "id": "s9kicker",
+      "rotulo": "Sección 9 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 81,
+      "valor": "Encuentra el punto correcto para comenzar"
+    },
+    {
+      "id": "s9headline",
+      "rotulo": "Sección 9 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Cuéntanos qué necesita cambiar en el negocio."
+    },
+    {
+      "id": "s9lead",
+      "rotulo": "Sección 9 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "Determinaremos si BECOME DISCOVER™ es el primer paso adecuado. Si no lo es, te lo diremos."
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import { campo } from '../content/paginas/index.js';
 import React from 'react';
 import SiteHeader from '../components/SiteHeader.jsx';
 import SiteFooter from '../components/SiteFooter.jsx';
@@ -58,18 +59,14 @@ export default function Discovery() {
       <SiteHeader />
 
       <Section band="dark" pad="var(--space-12)">
-        <Kicker dark>BECOME DISCOVER™ · Estrategia y modelo operativo</Kicker>
-        <Headline as="h1" dark>Decide dónde está el valor de la IA y qué debe cambiar para capturarlo.</Headline>
+        <Kicker dark>{campo('discover', 's1kicker')}</Kicker>
+        <Headline as="h1" dark>{campo('discover', 's1headline')}</Headline>
         {/* La frase de marca baja a subtítulo: como H1 era memorable y
             abstracta, y esta página tiene intención comercial. */}
         <p style={{ margin: 'var(--space-6) 0 0', font: 'var(--type-lead)', color: 'var(--electric-green)' }}>
           Define en qué debe convertirse tu empresa después.
         </p>
-        <Lead dark>
-          De ocho a doce semanas para responder tres preguntas: dónde está el
-          valor de la IA en tu negocio, qué se hace primero y cómo tiene que
-          operar la empresa para sostenerlo.
-        </Lead>
+        <Lead dark>{campo('discover', 's1lead')}</Lead>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
           <PrimaryCTA to="/es/contacto">Conversemos sobre BECOME DISCOVER™</PrimaryCTA>
           <GhostCTA to="/es/servicios" dark>Ver los dos servicios</GhostCTA>
@@ -78,23 +75,16 @@ export default function Discovery() {
 
       {/* 1 — El problema, antes que el servicio */}
       <Section band="light">
-        <Kicker>El problema</Kicker>
-        <Headline>Actividad de IA sin dirección empresarial.</Headline>
-        <Lead>
-          No es un problema de tecnología: son muchas iniciativas y ninguna tesis.
-          Sin una ambición compartida, cada área propone sus casos y nadie tiene un
-          criterio único de valor.
-        </Lead>
-        <Body>
-          El resultado es previsible: más pilotos, más gasto y la misma pregunta sin
-          responder sobre dónde está el valor.
-        </Body>
+        <Kicker>{campo('discover', 's2kicker')}</Kicker>
+        <Headline>{campo('discover', 's2headline')}</Headline>
+        <Lead>{campo('discover', 's2lead')}</Lead>
+        <Body>{campo('discover', 's2body')}</Body>
       </Section>
 
       {/* 2 — Para quién */}
       <Section band="dark">
-        <Kicker dark>Para quién es</Kicker>
-        <Headline dark>Cinco condiciones que hacen de BECOME DISCOVER™ el paso correcto.</Headline>
+        <Kicker dark>{campo('discover', 's3kicker')}</Kicker>
+        <Headline dark>{campo('discover', 's3headline')}</Headline>
         <Cols min="240px">
           {FIT.map((f, i) => (
             <Reveal as="div" key={f} style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
@@ -116,13 +106,9 @@ export default function Discovery() {
 
       {/* 3 — Etapas B–E–C–O */}
       <Section band="light">
-        <Kicker>El recorrido</Kicker>
-        <Headline>BECOME DISCOVER™ cubre B–E–C–O del framework.</Headline>
-        <Body>
-          Las dos últimas etapas —Make &amp; Embed y Expand &amp; Evolve— son el
-          territorio de BECOME EMBED™. Operating Model Design es el punto de
-          transición visible entre los dos servicios.
-        </Body>
+        <Kicker>{campo('discover', 's4kicker')}</Kicker>
+        <Headline>{campo('discover', 's4headline')}</Headline>
+        <Body>{campo('discover', 's4body')}</Body>
         <div style={{ marginTop: 'var(--space-10)' }}>
           {STAGES.map(([letter, name, work, out]) => (
             <Reveal
@@ -151,20 +137,13 @@ export default function Discovery() {
       <Section band="sunken">
         <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1.2fr)', gap: 'var(--space-9)' }}>
           <Reveal as="div">
-            <Kicker>Working model</Kicker>
-            <Headline>Se hace con tu equipo, no sobre tu equipo.</Headline>
-            <Body>
-              Un responsable claro por proyecto y el equipo del cliente integrado
-              desde la primera semana. Las decisiones y los riesgos se hacen visibles a medida
-              que aparecen, no en la presentación final.
-            </Body>
-            <Body>
-              DISCOVER™ requiere participación ejecutiva en las decisiones clave:
-              prioridad, inversión, responsable y modelo operativo.
-            </Body>
+            <Kicker>{campo('discover', 's5kicker')}</Kicker>
+            <Headline>{campo('discover', 's5headline')}</Headline>
+            <Body>{campo('discover', 's5body')}</Body>
+            <Body>{campo('discover', 's5body2')}</Body>
           </Reveal>
           <Reveal as="div">
-            <Kicker>Herramientas propias</Kicker>
+            <Kicker>{campo('discover', 's6kicker')}</Kicker>
             <div style={{ marginTop: 'var(--space-6)' }}>
               {TOOLS.map(([t, d], i) => <IndexRow key={t} index={i} term={t} def={d} />)}
             </div>
@@ -176,8 +155,8 @@ export default function Discovery() {
       <Section band="dark">
         <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 'var(--space-9)' }}>
           <Reveal as="div">
-            <Kicker dark>Entregables</Kicker>
-            <Headline dark>Qué queda al terminar.</Headline>
+            <Kicker dark>{campo('discover', 's7kicker')}</Kicker>
+            <Headline dark>{campo('discover', 's7headline')}</Headline>
             <ul style={{ listStyle: 'none', margin: 'var(--space-8) 0 0', padding: 0, display: 'grid', gap: 'var(--space-4)' }}>
               {DELIVERABLES.map((d) => (
                 <li key={d} style={{ display: 'flex', gap: 'var(--space-4)', paddingTop: 'var(--space-4)', borderTop: '1px solid var(--border-hairline-dark)' }}>
@@ -188,8 +167,8 @@ export default function Discovery() {
             </ul>
           </Reveal>
           <Reveal as="div">
-            <Kicker dark>Decisiones que puedes tomar</Kicker>
-            <Headline dark>Cuatro preguntas, respondidas con criterio explícito.</Headline>
+            <Kicker dark>{campo('discover', 's8kicker')}</Kicker>
+            <Headline dark>{campo('discover', 's8headline')}</Headline>
             <ul style={{ listStyle: 'none', margin: 'var(--space-8) 0 0', padding: 0, display: 'grid', gap: 'var(--space-4)' }}>
               {DECISIONS.map((d) => (
                 <li key={d} style={{ display: 'flex', gap: 'var(--space-4)', paddingTop: 'var(--space-4)', borderTop: '1px solid var(--border-hairline-dark)' }}>
@@ -211,23 +190,20 @@ export default function Discovery() {
         <Cols min="260px">
           <Card>
             <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>Duración</p>
-            <Body style={{ marginTop: 'var(--space-4)' }}>8–12 semanas, según alcance y disponibilidad ejecutiva.</Body>
+            <Body style={{ marginTop: 'var(--space-4)' }}>{campo('discover', 's8body')}</Body>
           </Card>
           <Card>
             <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>Siguiente paso</p>
-            <Body style={{ marginTop: 'var(--space-4)' }}>BECOME EMBED™ del primer caso priorizado.</Body>
+            <Body style={{ marginTop: 'var(--space-4)' }}>{campo('discover', 's8body2')}</Body>
             <TextCTA to="/es/servicios/become-embed">Explora BECOME EMBED™</TextCTA>
           </Card>
         </Cols>
       </Section>
 
       <Section band="darker" pad="var(--space-13)">
-        <Kicker dark>Encuentra el punto correcto para comenzar</Kicker>
-        <Headline dark>Cuéntanos qué necesita cambiar en el negocio.</Headline>
-        <Lead dark>
-          Determinaremos si BECOME DISCOVER™ es el primer paso adecuado. Si no lo es, te lo
-          diremos.
-        </Lead>
+        <Kicker dark>{campo('discover', 's9kicker')}</Kicker>
+        <Headline dark>{campo('discover', 's9headline')}</Headline>
+        <Lead dark>{campo('discover', 's9lead')}</Lead>
         <div style={{ marginTop: 'var(--space-8)' }}>
           <PrimaryCTA to="/es/contacto">Hablemos de BECOME DISCOVER™</PrimaryCTA>
         </div>

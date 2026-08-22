@@ -1,3 +1,4 @@
+import { campo } from '../content/paginas/index.js';
 import React from 'react';
 import SiteHeader from '../components/SiteHeader.jsx';
 import SiteFooter from '../components/SiteFooter.jsx';
@@ -55,18 +56,10 @@ export default function BuildEmbed() {
       <SiteHeader />
 
       <Section band="dark" pad="var(--space-12)">
-        <Kicker dark>BECOME Embed™</Kicker>
-        <Headline as="h1" dark>Convierte una prioridad de IA en una capacidad lista para operar.</Headline>
-        <Lead dark>
-          Diseñamos y construimos copilotos, agentes de IA y procesos basados en
-          LLMs conectados a los datos, herramientas y sistemas de tu organización.
-        </Lead>
-        <Body dark style={{ marginTop: 'var(--space-6)' }}>
-          Trabajamos desde la selección del modelo y la arquitectura hasta las
-          APIs, integraciones, controles, evaluación, observabilidad y
-          human-in-the-loop necesarios para operar con confianza. De ocho a doce
-          semanas, con el equipo que va a usarla todos los días.
-        </Body>
+        <Kicker dark>{campo('embed', 's1kicker')}</Kicker>
+        <Headline as="h1" dark>{campo('embed', 's1headline')}</Headline>
+        <Lead dark>{campo('embed', 's1lead')}</Lead>
+        <Body dark style={{ marginTop: 'var(--space-6)' }}>{campo('embed', 's1body')}</Body>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
           <PrimaryCTA to="/es/contacto">Conversemos sobre BECOME EMBED™</PrimaryCTA>
           <GhostCTA to="/es/servicios" dark>Ver los dos servicios</GhostCTA>
@@ -74,21 +67,15 @@ export default function BuildEmbed() {
       </Section>
 
       <Section band="light">
-        <Kicker>El problema</Kicker>
-        <Headline>Prototipos que nunca se convierten en capacidad operativa.</Headline>
-        <Lead>
-          El piloto funciona en la demo y desaparece en la operación. No falla el
-          modelo: falla que se construyó al lado del trabajo real en vez de dentro.
-        </Lead>
-        <Body>
-          Al terminar el proyecto nadie es dueño del resultado, el proceso sigue
-          igual y no hay una medida contra la que decidir si merece escalarse.
-        </Body>
+        <Kicker>{campo('embed', 's2kicker')}</Kicker>
+        <Headline>{campo('embed', 's2headline')}</Headline>
+        <Lead>{campo('embed', 's2lead')}</Lead>
+        <Body>{campo('embed', 's2body')}</Body>
       </Section>
 
       <Section band="dark">
-        <Kicker dark>Qué puede construirse</Kicker>
-        <Headline dark>Cuatro formas de capacidad, un mismo estándar.</Headline>
+        <Kicker dark>{campo('embed', 's3kicker')}</Kicker>
+        <Headline dark>{campo('embed', 's3headline')}</Headline>
         <Cols min="250px">
           {BUILDABLE.map(([icon, name, line]) => (
             <Card dark key={name}>
@@ -107,12 +94,9 @@ export default function BuildEmbed() {
       </Banner>
 
       <Section band="light">
-        <Kicker>El recorrido</Kicker>
-        <Headline>BECOME EMBED™ cubre O–M–E del framework.</Headline>
-        <Body>
-          Puede empezar desde un diseño que ya exista, si cumple los criterios
-          mínimos; no exige haber hecho BECOME DISCOVER™ con nosotros.
-        </Body>
+        <Kicker>{campo('embed', 's4kicker')}</Kicker>
+        <Headline>{campo('embed', 's4headline')}</Headline>
+        <Body>{campo('embed', 's4body')}</Body>
         <div style={{ marginTop: 'var(--space-10)' }}>
           {STAGES.map(([letter, name, work, out]) => (
             <Reveal
@@ -139,12 +123,9 @@ export default function BuildEmbed() {
       {/* Human-in-the-loop antes que la construcción: es lo que decide el destino */}
 
       <Section band="darker">
-        <Kicker dark>Supervisión humana y controles</Kicker>
-        <Headline dark>Lo que determina si un agente puede operar no es solo la calidad de sus respuestas.</Headline>
-        <Lead dark>
-          Es quién responde cuando se equivoca y qué pasa con los casos que no
-          encajan. Esas cuatro decisiones se toman antes de escribir la primera línea.
-        </Lead>
+        <Kicker dark>{campo('embed', 's5kicker')}</Kicker>
+        <Headline dark>{campo('embed', 's5headline')}</Headline>
+        <Lead dark>{campo('embed', 's5lead')}</Lead>
         <Cols min="250px">
           {CONTROLS.map(([icon, name, line]) => (
             <Reveal as="div" key={name} style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
@@ -159,17 +140,13 @@ export default function BuildEmbed() {
       <Section band="sunken">
         <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1.2fr)', gap: 'var(--space-9)' }}>
           <Reveal as="div">
-            <Kicker>Adopción y transferencia de capacidades</Kicker>
-            <Headline>El trabajo termina cuando la capacidad pertenece a la empresa.</Headline>
-            <Body>
-              La transferencia no es una sesión de formación al final: el equipo que
-              va a operar la capacidad participa en su diseño y en su construcción.
-              Es la diferencia entre heredar algo y recibirlo.
-            </Body>
+            <Kicker>{campo('embed', 's6kicker')}</Kicker>
+            <Headline>{campo('embed', 's6headline')}</Headline>
+            <Body>{campo('embed', 's6body')}</Body>
             <TextCTA to="/es/nosotros">Cómo trabajamos</TextCTA>
           </Reveal>
           <Reveal as="div">
-            <Kicker>Proprietary tools</Kicker>
+            <Kicker>{campo('embed', 's7kicker')}</Kicker>
             <div style={{ marginTop: 'var(--space-6)' }}>
               {TOOLS.map(([t, d], i) => <IndexRow key={t} index={i} term={t} def={d} />)}
             </div>
@@ -178,8 +155,8 @@ export default function BuildEmbed() {
       </Section>
 
       <Section band="dark">
-        <Kicker dark>Entregables</Kicker>
-        <Headline dark>Qué queda al terminar el sprint.</Headline>
+        <Kicker dark>{campo('embed', 's8kicker')}</Kicker>
+        <Headline dark>{campo('embed', 's8headline')}</Headline>
         <ul style={{ listStyle: 'none', margin: 'var(--space-8) 0 0', padding: 0, display: 'grid', gap: 'var(--space-4)', maxWidth: '62ch' }}>
           {DELIVERABLES.map((d) => (
             <li key={d} style={{ display: 'flex', gap: 'var(--space-4)', paddingTop: 'var(--space-4)', borderTop: '1px solid var(--border-hairline-dark)' }}>
@@ -195,9 +172,9 @@ export default function BuildEmbed() {
       </Section>
 
       <Section band="darker" pad="var(--space-13)">
-        <Kicker dark>Pasa del diseño a una capacidad incorporada</Kicker>
-        <Headline dark>Trae un proceso, una decisión o una oportunidad de producto prioritaria.</Headline>
-        <Lead dark>Definiremos el camino de construcción correcto — o si todavía falta un paso antes.</Lead>
+        <Kicker dark>{campo('embed', 's9kicker')}</Kicker>
+        <Headline dark>{campo('embed', 's9headline')}</Headline>
+        <Lead dark>{campo('embed', 's9lead')}</Lead>
         <div style={{ marginTop: 'var(--space-8)' }}>
           <PrimaryCTA to="/es/contacto">Inicia una conversación de Build</PrimaryCTA>
         </div>
