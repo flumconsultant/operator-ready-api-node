@@ -306,7 +306,13 @@ function contenido_claves(array $esq, $datos, string $lang): array {
     $etiqueta = (string) ($esq['etiqueta'] ?? '');
     $salida = [];
     if (($esq['forma'] ?? '') === 'mapa' && is_array($base)) {
-        foreach ($base as $k => $v) $salida[] = ['clave' => (string) $k, 'nombre' => (string) ($v[$etiqueta] ?? $k)];
+        /* El mapa puede tener el idioma DENTRO de cada elemento —los programas
+           NOW— o fuera, en el nombre del archivo —los casos de uso—. El rótulo
+           del desplegable sale de donde toque en cada caso. */
+        foreach ($base as $k => $v) {
+            $fuente = !empty($esq['porIdiomaDentro']) ? ($v[$lang] ?? $v['es'] ?? []) : $v;
+            $salida[] = ['clave' => (string) $k, 'nombre' => (string) ($fuente[$etiqueta] ?? $k)];
+        }
     } elseif (!empty($esq['coleccion']) && is_array($base)) {
         foreach ($base as $i => $v) $salida[] = ['clave' => (string) $i, 'nombre' => (string) ($v[$lang][$etiqueta] ?? $v['es'][$etiqueta] ?? ('Elemento ' . ($i + 1)))];
     } else {
@@ -365,7 +371,14 @@ if ($accion === 'guardar-contenido') {
         if (!isset($base[$clave]) || !is_array($base[$clave])) {
             responder(400, ['ok' => false, 'error' => 'clave', 'mensaje' => 'Ese elemento no existe.']);
         }
-        $destino =& $base[$clave];
+        if (!empty($esq['porIdiomaDentro'])) {
+            if (!isset($base[$clave][$lang]) || !is_array($base[$clave][$lang])) {
+                responder(400, ['ok' => false, 'error' => 'idioma', 'mensaje' => 'Ese elemento no tiene ese idioma.']);
+            }
+            $destino =& $base[$clave][$lang];
+        } else {
+            $destino =& $base[$clave];
+        }
     } elseif (!empty($esq['coleccion'])) {
         $i = (int) $clave;
         if (!isset($base[$i][$lang]) || !is_array($base[$i][$lang])) {
@@ -427,9 +440,32 @@ if ($accion === 'guardar-contenido') {
             foreach ((array) ($campo['partes'] ?? []) as $parte) {
                 $pid = (string) ($parte['id'] ?? '');
                 if ($pid === '') continue;
-                $nuevo[$pid] = $limitar($v[$pid] ?? '', (int) ($parte['maximo'] ?? 0));
+                $ptipo = (string) ($parte['tipo'] ?? 'linea');
+                $ptope = $parte['maximo'] ?? 0;
+                /* Un bloque puede llevar listas dentro —«el problema» es un
+                   titular más varios párrafos— y sin esto había que inventar un
+                   tipo nuevo por cada combinación de bloque y lista. */
+                if ($ptipo === 'lista') {
+                    $lista = [];
+                    foreach ((array) ($v[$pid] ?? []) as $x) { $t = $limitar($x, (int) $ptope); if ($t !== '') $lista[] = $t; }
+                    $nuevo[$pid] = $lista;
+                } elseif ($ptipo === 'pares' || $ptipo === 'tupla') {
+                    $cols = (array) ($parte['columnas'] ?? []);
+                    $ancho = count($cols) ?: 2;
+                    $topes = is_array($ptope) ? $ptope : array_fill(0, $ancho, (int) $ptope);
+                    $lista = [];
+                    foreach ((array) ($v[$pid] ?? []) as $fila) {
+                        if (!is_array($fila)) continue;
+                        $f = [];
+                        for ($k = 0; $k < $ancho; $k++) $f[] = $limitar($fila[$k] ?? '', (int) ($topes[$k] ?? 0));
+                        if (implode('', $f) !== '') $lista[] = $f;
+                    }
+                    $nuevo[$pid] = $lista;
+                } else {
+                    $nuevo[$pid] = $limitar($v[$pid] ?? '', (int) $ptope);
+                }
             }
-            if (implode('', $nuevo) === '') $nuevo = null;
+            if (json_encode($nuevo) === json_encode(array_fill_keys(array_keys($nuevo), '')) ) $nuevo = null;
         } else {
             continue;
         }

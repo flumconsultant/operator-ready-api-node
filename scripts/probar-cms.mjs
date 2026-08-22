@@ -7,13 +7,16 @@ import { readFileSync, existsSync, statSync } from 'node:fs';
 import { chromium } from 'playwright';
 
 const leer = (f) => JSON.parse(readFileSync(f, 'utf8'));
-const ESQUEMAS = ['industrias', 'servicios', 'metodo'].map((id) => leer(`src/content/esquemas/${id}.json`));
+const ESQUEMAS = ['industrias', 'servicios', 'metodo', 'programas'].map((id) => leer(`src/content/esquemas/${id}.json`));
 let guardado = null;
 
 const archivoDe = (e, lang) => (e.archivosPorIdioma ? e.archivosPorIdioma[lang] : e.archivoDatos);
 const clavesDe = (e, datos, lang) => {
   const base = e.raiz ? datos[e.raiz] : datos;
-  if (e.forma === 'mapa') return Object.entries(base).map(([k, v]) => ({ clave: k, nombre: v[e.etiqueta] || k }));
+  if (e.forma === 'mapa') return Object.entries(base).map(([k, v]) => {
+    const f = e.porIdiomaDentro ? (v[lang] || v.es || {}) : v;
+    return { clave: k, nombre: f[e.etiqueta] || k };
+  });
   if (e.coleccion) return base.map((v, i) => ({ clave: String(i), nombre: v[lang]?.[e.etiqueta] || `Elemento ${i + 1}` }));
   return [{ clave: '', nombre: e.titulo }];
 };
@@ -97,7 +100,7 @@ const reordenado = JSON.stringify(enviado?.contexto?.[0]) === JSON.stringify(ant
 console.log(`6. el reordenar llegó al servidor: ${reordenado ? 'ok' : '✗'}`);
 console.log(`7. manda los ${Object.keys(enviado || {}).length} campos del esquema`);
 /* Y las otras dos formas: un mapa por slug y un bloque único por idioma. */
-for (const [id, rotulo] of [['servicios', 'Casos de uso'], ['metodo', 'Cómo transformamos']]) {
+for (const [id, rotulo] of [['servicios', 'Casos de uso'], ['metodo', 'Cómo transformamos'], ['programas', 'Programas NOW']]) {
   await pg.getByRole('button', { name: 'Volver' }).click();
   await pg.waitForTimeout(300);
   await pg.getByText(rotulo, { exact: true }).first().click();

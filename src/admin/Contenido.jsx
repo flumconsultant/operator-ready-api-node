@@ -118,7 +118,19 @@ function Campo({ campo, valor, alCambiar }) {
           {(campo.partes || []).map((p) => (
             <div key={p.id} style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
               <span style={{ font: 'var(--type-mono)', fontSize: 11, color: 'var(--text-faint)' }}>{p.rotulo}</span>
-              <Entrada valor={v[p.id]} tope={p.maximo} filas={p.tipo === 'parrafo' ? 4 : 0} alCambiar={(x) => alCambiar({ ...v, [p.id]: x })} />
+              {/* Un bloque puede llevar una lista dentro: «el problema» es un
+                  titular más varios párrafos. Se reutiliza el mismo editor de
+                  filas en vez de inventar un tipo por combinación. */}
+              {p.tipo === 'lista' ? (
+                <Filas filas={(v[p.id] || []).map((x) => [x])} columnas={[p.rotulo]} topes={[p.maximo]}
+                       alCambiar={(n) => alCambiar({ ...v, [p.id]: n.map((f) => f[0]) })} />
+              ) : p.tipo === 'pares' || p.tipo === 'tupla' ? (
+                <Filas filas={v[p.id] || []} columnas={p.columnas || ['Uno', 'Dos']}
+                       topes={Array.isArray(p.maximo) ? p.maximo : (p.columnas || ['', '']).map(() => p.maximo)}
+                       alCambiar={(n) => alCambiar({ ...v, [p.id]: n })} />
+              ) : (
+                <Entrada valor={v[p.id]} tope={p.maximo} filas={p.tipo === 'parrafo' ? 4 : 0} alCambiar={(x) => alCambiar({ ...v, [p.id]: x })} />
+              )}
             </div>
           ))}
         </div>
@@ -162,7 +174,7 @@ export default function Contenido() {
      solo bloque por idioma. La misma resolución que hace el servidor. */
   const dentro = (datos, esquema, cl, lang) => {
     const base = esquema.raiz ? datos?.[esquema.raiz] : datos;
-    if (esquema.forma === 'mapa') return base?.[cl];
+    if (esquema.forma === 'mapa') return esquema.porIdiomaDentro ? base?.[cl]?.[lang] : base?.[cl];
     if (esquema.coleccion) return base?.[Number(cl)]?.[lang];
     return base?.[lang];
   };
