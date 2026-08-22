@@ -82,6 +82,19 @@ export default function SiteHeader() {
   const triggers = React.useRef([]);
   const barRef = React.useRef(null);
   const closeTimer = React.useRef(0);
+  /* El alto real de la barra, medido. Los paneles anchos se cuelgan de aquí y
+     no del propio enlace (ver más abajo), así que necesitan saber dónde
+     termina. Se mide en vez de darlo por 72 px porque el mínimo son 72 pero el
+     contenido puede empujarlo, y un panel que empieza tres píxeles antes deja
+     una costura visible sobre la línea de la barra. */
+  const [altoBarra, setAltoBarra] = React.useState(72);
+  React.useEffect(() => {
+    const medir = () => setAltoBarra(barRef.current?.getBoundingClientRect().height || 72);
+    medir();
+    const ro = new ResizeObserver(medir);
+    if (barRef.current) ro.observe(barRef.current);
+    return () => ro.disconnect();
+  }, []);
 
   /* El panel se cerraba en cuanto el puntero salía del trigger, así que al
      bajar hacia las opciones desaparecía antes de llegar. Dos arreglos: el
@@ -277,17 +290,40 @@ export default function SiteHeader() {
                       onPointerLeave={closeDropSoon}
                       className="drop-panel"
                       style={{
-                        position: 'absolute', top: '100%', left: item.wide ? 'auto' : 0,
-                        right: item.wide ? 0 : 'auto',
+                        /* ---- Dónde se abre un panel ancho ----
+                           Antes se colgaba del borde derecho de su propio
+                           enlace y crecía 680 px hacia la izquierda. Con
+                           «Soluciones» y «Nosotros» —los dos últimos del menú—
+                           salía bien de casualidad: había sitio a su izquierda.
+                           «Industrias» entró en segunda posición y el panel se
+                           salió de la pantalla: medido, 235 px cortados a 1280
+                           y 155 a 1440. «Casos de uso» perdía otros 85.
+                           Ahora los tres se cuelgan de la MISMA vertical: el
+                           borde izquierdo de la columna de contenido, el mismo
+                           del logotipo. No puede cortarse por definición —esa
+                           vertical siempre está dentro de la pantalla—, se abre
+                           donde el ojo ya está acostumbrado a encontrar el
+                           principio de la página, y deja de depender de en qué
+                           posición del menú caiga la sección.
+                           Va en `fixed` y no en `absolute` porque la referencia
+                           ya no es el enlace: es la ventana. */
+                        ...(item.wide
+                          ? {
+                              position: 'fixed',
+                              top: altoBarra,
+                              left: 'max(0px, calc((100vw - var(--maxw-content)) / 2))',
+                              marginLeft: 'min(var(--gutter-page), 64px)',
+                            }
+                          : { position: 'absolute', top: '100%', left: 0, right: 'auto' }),
                         /* el padding superior hace de puente: no hay hueco muerto
                            entre el trigger y el panel */
-                        paddingTop: 14,
+                        paddingTop: item.wide ? 0 : 14,
                         /* Al abrir el tercer nivel el panel se ensancha y los
                            programas ocupan una columna DENTRO. Sacándolos a un
                            panel flotante a la derecha se salían de la pantalla:
                            el menú está a media barra y no hay 620 px libres. */
                         width: item.wide
-                          ? 'min(680px, 74vw)'
+                          ? 'min(680px, calc(100vw - 2 * min(var(--gutter-page), 64px)))'
                           : sub ? 'min(940px, 90vw)' : 'min(440px, 74vw)',
                       }}
                     >
