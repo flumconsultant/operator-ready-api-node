@@ -96,7 +96,7 @@ export const PAGES = {
     '/en/insights',
   ],
   '/es/contacto': [
-    'Contacto | BECOME',
+    'Contacto: consultoría de IA para empresas | BECOME',
     'Comparte el reto, el resultado que buscas y el contexto de tu organización. Lo revisamos y orientamos la primera conversación.',
     '/en/contact',
   ],
@@ -204,7 +204,7 @@ export const PAGES = {
     '/es/insights',
   ],
   '/en/contact': [
-    'Contact | BECOME',
+    'Contact: AI consulting for enterprises | BECOME',
     'Share the challenge, the outcome you are aiming for and your organisation’s context. We review it and shape the first conversation.',
     '/es/contacto',
   ],
