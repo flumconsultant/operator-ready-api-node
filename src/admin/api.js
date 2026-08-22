@@ -61,5 +61,7 @@ export const borrar = (datos) => llamar('borrar', datos);
 export const listarAutores = () => llamar('listar-autores');
 export const guardarAutor = (datos) => llamar('guardar-autor', datos);
 export const subirFoto = (datos) => llamar('subir-foto', datos);
+export const listarPaginas = () => llamar('listar-paginas');
+export const guardarPagina = (datos) => llamar('guardar-pagina', datos);
 export const suscriptores = () => llamar('suscriptores');
 export const diagnosticoCorreo = () => llamar('diagnostico-correo');

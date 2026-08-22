@@ -2,6 +2,7 @@ import React from 'react';
 import SiteHeader from '../components/SiteHeader.jsx';
 import SiteFooter from '../components/SiteFooter.jsx';
 import Reveal from '../components/Reveal.jsx';
+import { campo } from '../content/paginas';
 import {
   Section, Kicker, Headline, Lead, Body,
   PrimaryCTA, GhostCTA, TextCTA, Cols, Card, IndexRow,
@@ -124,7 +125,7 @@ export default function Home() {
       {/* 01 — Hero. Comprensible sin animación; el CTA es usable desde el primer
           momento. Un solo CTA principal por viewport. */}
       <Section band="dark" nodeState={0} pad="var(--space-14)">
-        <Kicker dark>AI-native transformation company</Kicker>
+        <Kicker dark>{campo('home', 'kicker')}</Kicker>
         {/* La línea de marca se queda EXACTAMENTE igual a la vista y deja de ser
             el h1. El motivo es medible: «BECOME WHAT COMES NEXT.» era el mismo
             h1 en /es y en /en —dos páginas distintas diciéndose lo mismo— y en
@@ -143,17 +144,12 @@ export default function Home() {
             maxWidth: '14ch',
           }}
         >
-          BECOME WHAT COMES NEXT.
+          {campo('home', 'marca')}
         </p>
-        <Lead as="h1" dark>
-          Convertimos la IA en una capacidad propia de tu empresa. Conectamos la
-          estrategia con personas, datos, agentes, productos y operaciones para
-          mejorar decisiones, rediseñar la forma de trabajar y crear nuevas
-          fuentes de valor.
-        </Lead>
+        <Lead as="h1" dark>{campo('home', 'promesa')}</Lead>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
-          <PrimaryCTA to="/es/contacto">Encuentra tu punto de partida</PrimaryCTA>
-          <a href="#que-hacemos" style={ghostAnchor}>Ver qué hacemos</a>
+          <PrimaryCTA to="/es/contacto">{campo('home', 'ctaPrincipal')}</PrimaryCTA>
+          <a href="#que-hacemos" style={ghostAnchor}>{campo('home', 'ctaSecundario')}</a>
         </div>
         <p
           style={{
@@ -162,8 +158,7 @@ export default function Home() {
             font: 'var(--type-body)', color: 'var(--slate-300)', maxWidth: '52ch',
           }}
         >
-          Para empresas que necesitan pasar de herramientas aisladas y pilotos a
-          resultados gobernados, adoptados y medibles.
+          {campo('home', 'paraQuien')}
         </p>
       </Section>
 

@@ -14,7 +14,8 @@
  * token de GitHub existe una sola vez, vive en el servidor y no sale de él;
  * las personas del equipo no llegan a verlo y no pueden hacer con él nada
  * distinto de lo que este archivo permite: leer, escribir y borrar artículos
- * dentro de src/content/insights.
+ * dentro de src/content/insights, y editar el texto de las páginas ya
+ * declaradas en src/content/paginas.
  *
  * ---- Por qué la sesión va firmada y no guardada ----
  *
@@ -39,6 +40,7 @@ const COOKIE           = 'become_panel';
 const RUTA_ARTICULOS   = 'src/content/insights';
 const RUTA_AUTORES     = 'src/content/autores';
 const RUTA_FOTOS       = 'assets/images/autores';
+const RUTA_PAGINAS     = 'src/content/paginas';
 const FOTO_MAX_BYTES   = 3_000_000;
 const INTENTOS_MAX     = 8;      // intentos de entrar...
 const INTENTOS_SECS    = 900;    // ...por cada cuarto de hora e IP
@@ -234,6 +236,95 @@ function archivo_valido(string $n): bool {
 }
 
 $rama = (string) $config['rama'];
+
+/* ---- Las páginas del sitio ------------------------------------------------
+ *
+ * Editar los textos del sitio, no solo los artículos. Se apoya en la misma
+ * validación de nombre que todo lo demás —solo `algo.json`, sin barras ni
+ * puntos dobles— así que este token no puede escribir fuera de esa carpeta por
+ * mucho que se le pida.
+ *
+ * Y guarda con una comprobación propia: solo se aceptan los campos que la
+ * página YA declara, y solo su texto. Nadie puede añadir un campo nuevo desde
+ * el navegador ni cambiar el rótulo, la ayuda o el límite: eso son decisiones
+ * de diseño y viven en el repositorio. Sin esta regla, el panel sería una
+ * forma de escribir JSON arbitrario dentro del sitio, que es exactamente lo
+ * que este archivo existe para impedir.
+ */
+if ($accion === 'listar-paginas') {
+    $r = github($config, 'contents/' . rawurlencode(RUTA_PAGINAS) . '?ref=' . rawurlencode($rama));
+    if ($r['codigo'] === 404) {
+        responder(200, ['ok' => true, 'paginas' => [],
+            'vacio_en' => RUTA_PAGINAS . ' @ ' . $config['repo'] . ':' . $rama]);
+    }
+    if ($r['codigo'] !== 200 || !is_array($r['datos'])) {
+        responder(502, ['ok' => false, 'error' => 'github', 'mensaje' => 'No se pudieron listar las páginas.']);
+    }
+    $paginas = [];
+    foreach ($r['datos'] as $e) {
+        if (($e['type'] ?? '') !== 'file' || !archivo_valido((string) $e['name'])) continue;
+        $f = github($config, 'contents/' . rawurlencode(RUTA_PAGINAS . '/' . $e['name']) . '?ref=' . rawurlencode($rama));
+        if ($f['codigo'] !== 200) continue;
+        $datos = json_decode((string) base64_decode(str_replace("\n", '', (string) ($f['datos']['content'] ?? ''))), true);
+        if (!is_array($datos)) continue;
+        $datos['_archivo'] = $e['name'];
+        $datos['_sha'] = $f['datos']['sha'] ?? '';
+        $paginas[] = $datos;
+    }
+    responder(200, ['ok' => true, 'paginas' => $paginas]);
+}
+
+if ($accion === 'guardar-pagina') {
+    $archivo = (string) ($cuerpo['archivo'] ?? '');
+    $valores = $cuerpo['valores'] ?? null;
+    if (!archivo_valido($archivo) || !is_array($valores)) {
+        responder(400, ['ok' => false, 'error' => 'peticion', 'mensaje' => 'Falta el archivo de la página o los valores.']);
+    }
+
+    $f = github($config, 'contents/' . rawurlencode(RUTA_PAGINAS . '/' . $archivo) . '?ref=' . rawurlencode($rama));
+    if ($f['codigo'] !== 200) {
+        responder(404, ['ok' => false, 'error' => 'no_existe', 'mensaje' => 'Esa página no existe en el repositorio.']);
+    }
+    $pagina = json_decode((string) base64_decode(str_replace("\n", '', (string) ($f['datos']['content'] ?? ''))), true);
+    if (!is_array($pagina) || !isset($pagina['campos']) || !is_array($pagina['campos'])) {
+        responder(500, ['ok' => false, 'error' => 'pagina_rota', 'mensaje' => 'La página guardada no tiene la forma esperada.']);
+    }
+
+    /* Solo el texto de los campos que ya existen, y respetando su límite. */
+    $cambiados = 0;
+    foreach ($pagina['campos'] as $i => $campo) {
+        $id = (string) ($campo['id'] ?? '');
+        if ($id === '' || !array_key_exists($id, $valores)) continue;
+        $nuevo = trim((string) $valores[$id]);
+        $tope = (int) ($campo['maximo'] ?? 0);
+        if ($tope > 0 && mb_strlen($nuevo) > $tope) {
+            responder(400, ['ok' => false, 'error' => 'demasiado_largo',
+                'mensaje' => 'El campo «' . ($campo['rotulo'] ?? $id) . '» pasa de ' . $tope . ' caracteres.']);
+        }
+        if ($nuevo === '') {
+            responder(400, ['ok' => false, 'error' => 'vacio',
+                'mensaje' => 'El campo «' . ($campo['rotulo'] ?? $id) . '» no puede quedar vacío.']);
+        }
+        if ($nuevo !== (string) ($campo['valor'] ?? '')) $cambiados++;
+        $pagina['campos'][$i]['valor'] = $nuevo;
+    }
+    if ($cambiados === 0) {
+        responder(200, ['ok' => true, 'sin_cambios' => true]);
+    }
+
+    unset($pagina['_archivo'], $pagina['_sha']);
+    $json = json_encode($pagina, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n";
+    $r = github($config, 'contents/' . rawurlencode(RUTA_PAGINAS . '/' . $archivo), 'PUT', [
+        'message' => 'Página «' . ($pagina['titulo'] ?? $archivo) . '» editada desde el panel',
+        'content' => base64_encode($json),
+        'sha'     => $f['datos']['sha'] ?? '',
+        'branch'  => $rama,
+    ]);
+    if ($r['codigo'] < 200 || $r['codigo'] >= 300) {
+        responder(502, ['ok' => false, 'error' => 'github', 'mensaje' => 'GitHub rechazó el guardado de la página.']);
+    }
+    responder(200, ['ok' => true, 'cambiados' => $cambiados]);
+}
 
 if ($accion === 'listar') {
     $r = github($config, 'contents/' . rawurlencode(RUTA_ARTICULOS) . '?ref=' . rawurlencode($rama));

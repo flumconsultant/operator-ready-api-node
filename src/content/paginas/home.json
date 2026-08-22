@@ -1,0 +1,56 @@
+{
+  "_": "La portada, como dato editable desde /admin. Cada campo lleva su rótulo y su límite para que quien edita sepa qué está tocando sin abrir el código.",
+  "id": "home",
+  "titulo": "Portada",
+  "ruta": "/es",
+  "campos": [
+    {
+      "id": "kicker",
+      "rotulo": "Antetítulo",
+      "ayuda": "Va encima de la línea de marca, en versales pequeñas.",
+      "tipo": "linea",
+      "maximo": 60,
+      "valor": "AI-native transformation company"
+    },
+    {
+      "id": "marca",
+      "rotulo": "Línea de marca",
+      "ayuda": "El titular grande. Cámbialo solo si cambia la marca: está en el vídeo, en las tarjetas sociales y en la memoria de quien ya te vio.",
+      "tipo": "linea",
+      "maximo": 40,
+      "valor": "BECOME WHAT COMES NEXT."
+    },
+    {
+      "id": "promesa",
+      "rotulo": "La promesa",
+      "ayuda": "Es el h1 de la página: la frase por la que Google entiende de qué va tu portada. Entre 150 y 260 caracteres.",
+      "tipo": "parrafo",
+      "maximo": 280,
+      "valor": "Convertimos la IA en una capacidad propia de tu empresa. Conectamos la estrategia con personas, datos, agentes, productos y operaciones para mejorar decisiones, rediseñar la forma de trabajar y crear nuevas fuentes de valor."
+    },
+    {
+      "id": "ctaPrincipal",
+      "rotulo": "Botón principal",
+      "ayuda": "Verbo y beneficio. No «Contacto».",
+      "tipo": "linea",
+      "maximo": 40,
+      "valor": "Encuentra tu punto de partida"
+    },
+    {
+      "id": "ctaSecundario",
+      "rotulo": "Enlace secundario",
+      "ayuda": "Lleva más abajo en la misma página.",
+      "tipo": "linea",
+      "maximo": 30,
+      "valor": "Ver qué hacemos"
+    },
+    {
+      "id": "paraQuien",
+      "rotulo": "Para quién es",
+      "ayuda": "La línea bajo el separador. Filtra: quien no se reconozca aquí, no es tu cliente.",
+      "tipo": "parrafo",
+      "maximo": 200,
+      "valor": "Para empresas que necesitan pasar de herramientas aisladas y pilotos a resultados gobernados, adoptados y medibles."
+    }
+  ]
+}

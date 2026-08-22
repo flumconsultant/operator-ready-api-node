@@ -4,6 +4,7 @@ import * as api from './api.js';
 import Editor, { ARTICULO_NUEVO, problemas } from './Editor.jsx';
 import Autores from './Autores.jsx';
 import Suscriptores from './Suscriptores.jsx';
+import Paginas from './Paginas.jsx';
 import { Etiqueta, Texto, Boton, Fila, Aviso, marco } from './piezas.jsx';
 
 /**
@@ -133,6 +134,59 @@ function Lista({ items, alAbrir, alNuevo, alRecargar, cargando, vacioEn }) {
   );
 }
 
+
+/* La navegación del panel.
+ *
+ * Antes eran botones que cambiaban de nombre según dónde estabas: el de
+ * «Suscriptores» pasaba a decir «Artículos» al entrar, así que el rótulo
+ * describía a dónde te llevaba y no dónde estabas. Con dos secciones se
+ * aguanta; con cinco es un laberinto.
+ *
+ * Ahora cada módulo tiene un sitio fijo y el activo se ve. La barra se
+ * desplaza en horizontal a propósito: quien administra esto lo hace desde el
+ * móvil, y apilar los módulos en vertical empujaría el contenido fuera de la
+ * pantalla antes de empezar a trabajar. */
+const MODULOS = [
+  ['articulos', 'Artículos'],
+  ['paginas', 'Páginas'],
+  ['autores', 'Autores'],
+  ['suscriptores', 'Suscriptores'],
+];
+
+function Modulos({ vista, alCambiar }) {
+  return (
+    <nav
+      aria-label="Secciones del panel"
+      style={{
+        display: 'flex', gap: 2, overflowX: 'auto', borderTop: marco.linea,
+        background: marco.papel, padding: '0 12px', WebkitOverflowScrolling: 'touch',
+      }}
+    >
+      {MODULOS.map(([id, rotulo]) => {
+        const activo = vista === id;
+        return (
+          <button
+            key={id}
+            type="button"
+            onClick={() => alCambiar(id)}
+            aria-current={activo ? 'page' : undefined}
+            style={{
+              appearance: 'none', border: 0, background: 'transparent', cursor: 'pointer',
+              font: 'var(--type-body)', fontSize: 14,
+              fontWeight: activo ? 600 : 400,
+              color: activo ? 'var(--text-heading)' : 'var(--text-faint)',
+              padding: '13px 14px', whiteSpace: 'nowrap',
+              borderBottom: `2px solid ${activo ? 'var(--text-accent)' : 'transparent'}`,
+            }}
+          >
+            {rotulo}
+          </button>
+        );
+      })}
+    </nav>
+  );
+}
+
 export default function Panel() {
   /* null = no se sabe todavía; false = no hay sesión; objeto = quién eres.
      El tercer estado importa: sin él, el panel enseñaría la pantalla de entrada
@@ -150,7 +204,7 @@ export default function Panel() {
      enlace la dirección. El sitemap ya la excluye; esto cubre el caso de que
      un rastreador llegue por otra vía. */
   React.useEffect(() => {
-    document.title = 'Artículos — BECOME';
+    document.title = 'Panel — BECOME';
     const m = document.createElement('meta');
     m.name = 'robots';
     m.content = 'noindex, nofollow';
@@ -261,7 +315,7 @@ export default function Panel() {
       <header style={{ borderBottom: marco.linea, background: marco.papel, position: 'sticky', top: 0, zIndex: 10 }}>
         <div style={{ maxWidth: 1400, margin: '0 auto', padding: '14px 24px', display: 'flex', gap: 16, alignItems: 'center', justifyContent: 'space-between' }}>
           <Fila gap={12}>
-            <strong style={{ fontFamily: 'var(--font-display)', letterSpacing: 'var(--track-label)' }}>BECOME · Artículos</strong>
+            <strong style={{ fontFamily: 'var(--font-display)', letterSpacing: 'var(--track-label)' }}>BECOME</strong>
             <span style={{ font: 'var(--type-mono)', fontSize: 12, color: 'var(--text-faint)' }}>{sesion.nombre}</span>
           </Fila>
           <Fila gap={8}>
@@ -275,25 +329,24 @@ export default function Panel() {
               </>
             ) : (
               <>
-                <Boton variante="quieto" onClick={() => setVista(vista === 'suscriptores' ? 'articulos' : 'suscriptores')}>
-                  {vista === 'suscriptores' ? 'Artículos' : 'Suscriptores'}
-                </Boton>
-                <Boton variante="quieto" onClick={() => setVista(vista === 'autores' ? 'articulos' : 'autores')}>
-                  {vista === 'autores' ? 'Artículos' : 'Autores'}
-                </Boton>
-                <Link to="/es/insights" style={{ font: 'var(--type-body)', fontSize: 14, color: 'var(--text-accent)' }}>Ver Insights</Link>
+                <Link to="/es" style={{ font: 'var(--type-body)', fontSize: 14, color: 'var(--text-accent)' }}>Ver el sitio</Link>
                 <Boton variante="quieto" onClick={cerrarSesion}>Salir</Boton>
               </>
             )}
           </Fila>
         </div>
+        {!abierto && <Modulos vista={vista} alCambiar={setVista} />}
       </header>
 
       <div style={{ maxWidth: 1400, margin: '0 auto', padding: '24px' }}>
         <Aviso tono="mal">{error}</Aviso>
         <Aviso tono="bien">{nota}</Aviso>
 
-        {vista === 'suscriptores' && !abierto ? (
+        {vista === 'paginas' && !abierto ? (
+          <div style={{ marginTop: 16 }}>
+            <Paginas />
+          </div>
+        ) : vista === 'suscriptores' && !abierto ? (
           <Suscriptores alCerrar={() => setVista('articulos')} />
         ) : vista === 'autores' && !abierto ? (
           <div style={{ marginTop: 16 }}>
