@@ -18,8 +18,9 @@
  */
 
 import home from './home.json' with { type: 'json' };
+import servicios from './servicios.json' with { type: 'json' };
 
-export const PAGINAS = { home };
+export const PAGINAS = { home, servicios };
 
 /** El valor de un campo, o el de reserva si esa página aún no se migró. */
 export const campo = (pagina, id, reserva = '') =>

@@ -1,0 +1,39 @@
+{
+  "_": "La página de servicios. Los rótulos de sección y sus entradas; las tarjetas de los tres servicios siguen en el componente porque cada una lleva su enlace y su precio de tiempo, que no son texto suelto.",
+  "id": "servicios",
+  "titulo": "Servicios",
+  "ruta": "/es/servicios",
+  "campos": [
+    { "id": "kicker", "rotulo": "Antetítulo", "tipo": "linea", "maximo": 40, "valor": "Nuestros servicios" },
+    { "id": "h1", "rotulo": "Titular", "tipo": "linea", "maximo": 80,
+      "ayuda": "Es el h1: la frase por la que Google entiende esta página.",
+      "valor": "De la capacidad de hoy a la empresa que viene." },
+    { "id": "lead", "rotulo": "Entrada", "tipo": "parrafo", "maximo": 260,
+      "valor": "Tres formas de empezar: capacitar a tu equipo, definir la estrategia o construir la solución. Se contratan por separado o en secuencia." },
+    { "id": "ctaPrincipal", "rotulo": "Botón principal", "tipo": "linea", "maximo": 40, "valor": "Encuentra tu punto de partida" },
+    { "id": "ctaSecundario", "rotulo": "Botón secundario", "tipo": "linea", "maximo": 40, "valor": "Cuéntanos qué debe cambiar" },
+
+    { "id": "comparaKicker", "rotulo": "Antetítulo del comparador", "tipo": "linea", "maximo": 40, "valor": "Cuál necesitas" },
+    { "id": "comparaTitular", "rotulo": "Titular del comparador", "tipo": "linea", "maximo": 80, "valor": "Empieza por lo que necesitas resolver." },
+    { "id": "comparaLead", "rotulo": "Entrada del comparador", "tipo": "parrafo", "maximo": 300,
+      "valor": "Los tres se contratan por separado. BECOME NOW™ también puede integrarse como capa de adopción cuando DISCOVER™ o EMBED™ exigen desarrollar capacidades nuevas en los equipos." },
+
+    { "id": "ejeKicker", "rotulo": "Antetítulo del eje", "tipo": "linea", "maximo": 40, "valor": "Cómo se conectan" },
+    { "id": "ejeTitular", "rotulo": "Titular del eje", "tipo": "linea", "maximo": 80, "valor": "Un solo eje. Tres formas de entrar en él." },
+    { "id": "ejeLead", "rotulo": "Entrada del eje", "tipo": "parrafo", "maximo": 260,
+      "valor": "No hay que recorrerlo entero ni empezar por el principio. Cada servicio entra por el tramo donde hoy está el problema." },
+
+    { "id": "tresKicker", "rotulo": "Antetítulo de los tres", "tipo": "linea", "maximo": 40, "valor": "Los tres servicios" },
+    { "id": "tresTitular", "rotulo": "Titular de los tres", "tipo": "linea", "maximo": 110, "valor": "Capacita el presente. Diseña lo que sigue. Construye desde dentro." },
+    { "id": "tresCierre", "rotulo": "Nota bajo los tres", "tipo": "parrafo", "maximo": 260,
+      "valor": "BECOME NOW™ puede contratarse solo o integrarse como capa de adopción y construcción de capacidades dentro de los otros dos." },
+
+    { "id": "industriaKicker", "rotulo": "Antetítulo de industria", "tipo": "linea", "maximo": 40, "valor": "Tu industria" },
+    { "id": "industriaTitular", "rotulo": "Titular de industria", "tipo": "linea", "maximo": 90, "valor": "Los servicios son los mismos. Dónde está el valor, no." },
+
+    { "id": "cierreKicker", "rotulo": "Antetítulo del cierre", "tipo": "linea", "maximo": 60, "valor": "Your next operating model starts with a question" },
+    { "id": "cierreTitular", "rotulo": "Titular del cierre", "tipo": "linea", "maximo": 110, "valor": "No empieces por el servicio. Empieza por la decisión que necesitas tomar." },
+    { "id": "cierreCtaPrincipal", "rotulo": "Botón del cierre", "tipo": "linea", "maximo": 40, "valor": "Cuéntanos qué debe cambiar" },
+    { "id": "cierreCtaSecundario", "rotulo": "Botón secundario del cierre", "tipo": "linea", "maximo": 40, "valor": "Empieza por tu pregunta" }
+  ]
+}

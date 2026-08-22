@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import SiteHeader from '../components/SiteHeader.jsx';
 import SiteFooter from '../components/SiteFooter.jsx';
 import Reveal from '../components/Reveal.jsx';
+import { campo } from '../content/paginas/index.js';
 import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, Card, Cols } from '../components/ui.jsx';
 import { Ico, IcoBadge } from '../components/icons.jsx';
 import { INDUSTRIAS_MENU } from '../site.js';
@@ -66,26 +67,19 @@ export default function Servicios() {
       <SiteHeader />
 
       <Section band="dark" pad="var(--space-12)">
-        <Kicker dark>Nuestros servicios</Kicker>
-        <Headline as="h1" dark>De la capacidad de hoy a la empresa que viene.</Headline>
-        <Lead dark>
-          Tres formas de empezar: capacitar a tu equipo, definir la estrategia
-          o construir la solución. Se contratan por separado o en secuencia.
-        </Lead>
+        <Kicker dark>{campo('servicios', 'kicker')}</Kicker>
+        <Headline as="h1" dark>{campo('servicios', 'h1')}</Headline>
+        <Lead dark>{campo('servicios', 'lead')}</Lead>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
-          <PrimaryCTA to="/es/casos-de-uso">Encuentra tu punto de partida</PrimaryCTA>
-          <GhostCTA to="/es/contacto" dark>Cuéntanos qué debe cambiar</GhostCTA>
+          <PrimaryCTA to="/es/casos-de-uso">{campo('servicios', 'ctaPrincipal')}</PrimaryCTA>
+          <GhostCTA to="/es/contacto" dark>{campo('servicios', 'ctaSecundario')}</GhostCTA>
         </div>
       </Section>
 
       <Section band="light" id="comparacion">
-        <Kicker>Cuál necesitas</Kicker>
-        <Headline as="h2">Empieza por lo que necesitas resolver.</Headline>
-        <Lead>
-          Los tres se contratan por separado. BECOME NOW™ también puede integrarse
-          como capa de adopción cuando DISCOVER™ o EMBED™ exigen desarrollar
-          capacidades nuevas en los equipos.
-        </Lead>
+        <Kicker>{campo('servicios', 'comparaKicker')}</Kicker>
+        <Headline as="h2">{campo('servicios', 'comparaTitular')}</Headline>
+        <Lead>{campo('servicios', 'comparaLead')}</Lead>
         <div style={{ marginTop: 'var(--space-10)', overflowX: 'auto' }}>
           <table style={{ width: '100%', minWidth: 880, borderCollapse: 'collapse', textAlign: 'left' }}>
             <thead>
@@ -112,12 +106,9 @@ export default function Servicios() {
 
       {/* El journey primero: los servicios se entienden como tramos de un eje */}
       <Section band="light">
-        <Kicker>Cómo se conectan</Kicker>
-        <Headline>Un solo eje. Tres formas de entrar en él.</Headline>
-        <Lead>
-          No hay que recorrerlo entero ni empezar por el principio. Cada servicio
-          entra por el tramo donde hoy está el problema.
-        </Lead>
+        <Kicker>{campo('servicios', 'ejeKicker')}</Kicker>
+        <Headline>{campo('servicios', 'ejeTitular')}</Headline>
+        <Lead>{campo('servicios', 'ejeLead')}</Lead>
         <div style={{ marginTop: 'var(--space-10)' }}>
           {JOURNEY.map((j) => (
             <Reveal
@@ -155,8 +146,8 @@ export default function Servicios() {
       </Banner>
 
       <Section band="dark">
-        <Kicker dark>Los tres servicios</Kicker>
-        <Headline dark>Capacita el presente. Diseña lo que sigue. Construye desde dentro.</Headline>
+        <Kicker dark>{campo('servicios', 'tresKicker')}</Kicker>
+        <Headline dark>{campo('servicios', 'tresTitular')}</Headline>
         <Cols min="280px">
           <Card dark>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
@@ -204,18 +195,15 @@ export default function Servicios() {
             <TextCTA to="/es/servicios/become-embed" dark>Explora BECOME EMBED™</TextCTA>
           </Card>
         </Cols>
-        <Body dark style={{ marginTop: 'var(--space-9)' }}>
-          BECOME NOW™ puede contratarse solo o integrarse como capa de adopción y
-          construcción de capacidades dentro de los otros dos.
-        </Body>
+        <Body dark style={{ marginTop: 'var(--space-9)' }}>{campo('servicios', 'tresCierre')}</Body>
       </Section>
 
       {/* El puente a industrias. Los tres servicios describen CÓMO se trabaja;
           quien acaba de leerlos se pregunta si eso aplica a su sector, y sin
           este bloque tendría que volver al menú para averiguarlo. */}
       <Section band="light">
-        <Kicker>Tu industria</Kicker>
-        <Headline>Los servicios son los mismos. Dónde está el valor, no.</Headline>
+        <Kicker>{campo('servicios', 'industriaKicker')}</Kicker>
+        <Headline>{campo('servicios', 'industriaTitular')}</Headline>
         <Body>
           El método no cambia entre sectores. Lo que cambia es qué decisiones
           pesan, qué procesos concentran el problema y qué riesgo hay que
@@ -235,11 +223,11 @@ export default function Servicios() {
       </Section>
 
       <Section band="darker" pad="var(--space-13)">
-        <Kicker dark>Your next operating model starts with a question</Kicker>
-        <Headline dark>No empieces por el servicio. Empieza por la decisión que necesitas tomar.</Headline>
+        <Kicker dark>{campo('servicios', 'cierreKicker')}</Kicker>
+        <Headline dark>{campo('servicios', 'cierreTitular')}</Headline>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
-          <PrimaryCTA to="/es/contacto">Cuéntanos qué debe cambiar</PrimaryCTA>
-          <GhostCTA to="/es/casos-de-uso" dark>Empieza por tu pregunta</GhostCTA>
+          <PrimaryCTA to="/es/contacto">{campo('servicios', 'cierreCtaPrincipal')}</PrimaryCTA>
+          <GhostCTA to="/es/casos-de-uso" dark>{campo('servicios', 'cierreCtaSecundario')}</GhostCTA>
         </div>
       </Section>
 
