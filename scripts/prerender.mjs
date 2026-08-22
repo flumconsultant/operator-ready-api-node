@@ -105,11 +105,13 @@ async function esquemaDe(pagina) {
 
     const texto = (el) => (el.innerText || el.textContent || '').replace(/\s+/g, ' ').trim();
 
-    for (const el of raiz.querySelectorAll('h1, h2, h3, p, li, figcaption, th, td')) {
+    /* `summary` estaba fuera: las preguntas de cada FAQ viven ahí, así que el
+       HTML servido llevaba las respuestas sin las preguntas. */
+    for (const el of raiz.querySelectorAll('h1, h2, h3, p, li, summary, figcaption, th, td')) {
       if (el.closest('header, footer, nav, [data-form-rail]')) continue;
       if (!visible(el) || flotante(el)) continue;
       /* Un <p> dentro de un <li> saldría dos veces, una por cada etiqueta. */
-      if (el.parentElement?.closest('li') && el.tagName !== 'LI') continue;
+      if (el.parentElement?.closest('li') && el.tagName !== 'LI' && el.tagName !== 'SUMMARY') continue;
       const t = texto(el);
       if (!t || t.length < 2) continue;
       const clave = el.tagName + '|' + t;

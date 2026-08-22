@@ -112,17 +112,22 @@ const Parrafos = ({ textos, dark, lead }) => (
   </div>
 );
 
+/* Píldoras: visualmente una fila de etiquetas, semánticamente una lista.
+   Eran <span> dentro de un <div>, y con eso el público del programa, los
+   procesos y los entregables no existían para quien no ejecuta JavaScript: el
+   HTML servido llevaba el titular «Para quién es» y debajo, nada. Un <ul> se ve
+   exactamente igual y sí se lee. */
 const Pildoras = ({ items, fuerte }) => (
-  <div style={{ marginTop: 'var(--space-6)', display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)' }}>
+  <ul style={{ listStyle: 'none', margin: 'var(--space-6) 0 0', padding: 0, display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)' }}>
     {(items || []).map((x) => (
-      <span key={x} style={{
+      <li key={x} style={{
         padding: fuerte ? '10px 16px' : '8px 14px',
         border: `1px solid ${fuerte ? 'var(--border-strong)' : 'var(--border-hairline)'}`,
         borderRadius: 'var(--radius-pill)', font: 'var(--type-body)',
         fontSize: 'var(--text-body-sm)', color: fuerte ? 'var(--text-heading)' : 'var(--text-body)',
-      }}>{x}</span>
+      }}>{x}</li>
     ))}
-  </div>
+  </ul>
 );
 
 export default function ProgramaBase({ lang = 'es' }) {

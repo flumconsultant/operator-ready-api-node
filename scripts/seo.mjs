@@ -623,7 +623,10 @@ function cuerpoDeArticulo(a, lang) {
 
   p.push(`<h1>${e(t.titulo)}</h1>`);
   if (t.entradilla) p.push(`<p>${e(t.entradilla)}</p>`);
-  p.push(`<p>${e(a.autor)} · <time datetime="${e(a.fecha)}">${e(a.fecha)}</time></p>`);
+  p.push(`<p>${e(a.autor)} · <time datetime="${e(a.fecha)}">${e(a.fecha)}</time>${
+    a.actualizado && a.actualizado !== a.fecha
+      ? ` · <time datetime="${e(a.actualizado)}">${e(a.actualizado)}</time>`
+      : ''}</p>`);
 
   for (const b of t.bloques || []) {
     const items = b.items || [];
@@ -661,6 +664,26 @@ function cuerpoDeArticulo(a, lang) {
       default: break;
     }
   }
+  /* Quién firma y con qué experiencia, también para quien no ejecuta
+     JavaScript. Los asistentes de IA y los rastreadores leen este HTML, no el
+     que monta React: si el bloque de autor solo existiera en el componente,
+     la señal de autoría que sostiene el artículo no llegaría a ninguno. */
+  const ficha = FICHAS[a.autor];
+  if (ficha) {
+    const f = ficha[lang] || {};
+    const linea = [ficha.nombre, f.rol].filter(Boolean).join(' — ');
+    p.push(`<section><h2>${lang === 'es' ? 'Sobre el autor' : 'About the author'}</h2><p>${e(linea)}</p>${
+      f.credencial ? `<p>${e(f.credencial)}</p>` : ''}${
+      ficha.linkedin ? `<p><a href="${e(ficha.linkedin)}" rel="noopener me">LinkedIn</a></p>` : ''}</section>`);
+  }
+
+  /* Las fuentes, cuando el artículo afirma algo que no es suyo. */
+  if (t.fuentes?.length) {
+    p.push(`<section><h2>${lang === 'es' ? 'Fuentes y lecturas' : 'Sources and further reading'}</h2><ul>${
+      t.fuentes.map((x) => `<li>${x.url ? `<a href="${e(x.url)}" rel="noopener nofollow">${e(x.titulo)}</a>` : e(x.titulo)}${
+        x.detalle ? ` — ${e(x.detalle)}` : ''}</li>`).join('')}</ul></section>`);
+  }
+
   return `<article>${p.join('')}</article>`;
 }
 

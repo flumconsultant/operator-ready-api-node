@@ -4,169 +4,169 @@
 
 **En Google** (no se ve en la página):
 
-<!-- b3200 -->
+<!-- b3556 -->
 - **Título:** BECOME | Transformación AI-native para empresas
-<!-- b3201 -->
+<!-- b3557 -->
 - **Descripción:** BECOME conecta negocio, transformación, tecnología y adopción para convertir la IA en capacidades que las empresas puedan operar y evolucionar.
 
-<!-- b3202 -->
+<!-- b3558 -->
 ABOUT BECOME
 
-<!-- b3203 -->
+<!-- b3559 -->
 # La próxima empresa ya existe dentro de la tuya.
 
-<!-- b3204 -->
+<!-- b3560 -->
 BECOME es una AI-native transformation company que conecta estrategia, modelo operativo, tecnología y adopción para convertir una ambición en capacidad real.
 
-<!-- b3205 -->
+<!-- b3561 -->
 QUÉ ES BECOME
 
-<!-- b3206 -->
+<!-- b3562 -->
 ## No llegamos para agregar otra herramienta.
 
-<!-- b3207 -->
+<!-- b3563 -->
 Ayudamos a las empresas a rediseñar cómo operan, deciden y crean valor alrededor de la IA. Trabajamos dentro del negocio para convertir una ambición en una capacidad propia, gobernable y capaz de evolucionar.
 
-<!-- b3208 -->
+<!-- b3564 -->
 CATEGORÍA
 
-<!-- b3209 -->
+<!-- b3565 -->
 AI-native transformation company.
 
-<!-- b3210 -->
+<!-- b3566 -->
 PROMESA
 
-<!-- b3211 -->
+<!-- b3567 -->
 Become what comes next.
 
-<!-- b3212 -->
+<!-- b3568 -->
 FILOSOFÍA
 
-<!-- b3213 -->
+<!-- b3569 -->
 The transformation happens inside.
 
-<!-- b3214 -->
+<!-- b3570 -->
 NUESTRA CREENCIA
 
-<!-- b3215 -->
+<!-- b3571 -->
 ## La transformación no se instala. Se construye dentro.
 
-<!-- b3216 -->
+<!-- b3572 -->
 Los pilotos aislados no cambian una empresa. El cambio ocurre cuando se rediseñan a la vez los procesos, los roles, quién decide, los datos, los controles, las capacidades y las métricas: un solo sistema, no siete proyectos.
 
-<!-- b3217 -->
+<!-- b3573 -->
 Por eso construimos con los equipos del cliente y les transferimos la responsabilidad desde el inicio.
 
-<!-- b3218 -->
+<!-- b3574 -->
 CÓMO TRABAJAMOS
 
-<!-- b3219 -->
+<!-- b3575 -->
 ## Comportamientos observables, no adjetivos aspiracionales.
 
-<!-- b3220 -->
+<!-- b3576 -->
 ### Think in outcomes
 
-<!-- b3221 -->
+<!-- b3577 -->
 Preguntamos qué decisión, qué comportamiento o qué resultado de negocio debe cambiar antes de hablar de tecnología.
 
-<!-- b3222 -->
+<!-- b3578 -->
 ### Go inside the system
 
-<!-- b3223 -->
+<!-- b3579 -->
 Buscamos la causa en el modelo operativo, no una solución superficial al síntoma.
 
-<!-- b3224 -->
+<!-- b3580 -->
 Diseñamos y construimos junto a quienes operarán la capacidad.
 
-<!-- b3225 -->
+<!-- b3581 -->
 ### Stay curious, stay precise
 
-<!-- b3226 -->
+<!-- b3582 -->
 Exploramos posibilidades sin confundir exploración con evidencia.
 
-<!-- b3227 -->
+<!-- b3583 -->
 ### Earn trust
 
-<!-- b3228 -->
+<!-- b3584 -->
 Hacemos visibles los límites, los riesgos, los supuestos, los controles y las decisiones.
 
-<!-- b3229 -->
+<!-- b3585 -->
 ### Leave capability behind
 
-<!-- b3230 -->
+<!-- b3586 -->
 El trabajo debe aumentar la autonomía del cliente, no su dependencia de BECOME.
 
-<!-- b3231 -->
+<!-- b3587 -->
 EL EQUIPO DE TRABAJO
 
-<!-- b3232 -->
+<!-- b3588 -->
 ## Un equipo senior y multidisciplinario alrededor del resultado.
 
-<!-- b3233 -->
+<!-- b3589 -->
 La composición combina negocio, transformación, producto, adopción, datos e IA según lo que el reto necesita. Cada engagement mantiene un responsable claro.
 
-<!-- b3234 -->
+<!-- b3590 -->
 - — Un responsable claro por engagement.
-<!-- b3235 -->
+<!-- b3591 -->
 - — Equipo del cliente involucrado desde el inicio.
-<!-- b3236 -->
+<!-- b3592 -->
 - — Decisiones, supuestos y riesgos visibles.
-<!-- b3237 -->
+<!-- b3593 -->
 - — Software funcional o artefactos utilizables, no solo presentaciones.
-<!-- b3238 -->
+<!-- b3594 -->
 - — Transferencia de conocimiento y capacidades incluida en el alcance.
-<!-- b3239 -->
+<!-- b3595 -->
 - — Gobierno y uso responsable incorporados al diseño, no añadidos al final.
 
-<!-- b3240 -->
+<!-- b3596 -->
 EQUIPO
 
-<!-- b3241 -->
+<!-- b3597 -->
 ## Las personas detrás de BECOME.
 
-<!-- b3242 -->
+<!-- b3598 -->
 Un equipo senior y multidisciplinario alrededor del resultado. Cada engagement mantiene un responsable claro.
 
-<!-- b3243 -->
+<!-- b3599 -->
 ### Carlos Andrés Ramírez
 
-<!-- b3244 -->
+<!-- b3600 -->
 Director de Transformación
 
-<!-- b3245 -->
+<!-- b3601 -->
 Especialista en reinvención de negocios y transformación con IA. Conecta estrategia, negocio y tecnología para convertir problemas complejos en nuevas capacidades y modelos de operación.
 
-<!-- b3246 -->
+<!-- b3602 -->
 Especialista en transformación y reinvención de negocios. Director de Programas Especializados y docente de Inteligencia Artificial en la Escuela de Postgrado de la UPC.
 
-<!-- b3247 -->
+<!-- b3603 -->
 ### Melissa Córdova
 
-<!-- b3248 -->
+<!-- b3604 -->
 Directora de Consultoría
 
-<!-- b3249 -->
+<!-- b3605 -->
 Especialista en transformación, influencia y adopción. Diseña programas y estrategias para convertir nuevas capacidades de IA en cambios que los equipos comprendan, adopten y lleven a la práctica.
 
-<!-- b3250 -->
+<!-- b3606 -->
 Especialista en transformación, influencia y adopción de inteligencia artificial. Docente de programas de Inteligencia Artificial en la Escuela de Postgrado de la UPC.
 
-<!-- b3251 -->
+<!-- b3607 -->
 ### Diego Serkovic
 
-<!-- b3252 -->
+<!-- b3608 -->
 Innovation & Growth Advisor
 
-<!-- b3253 -->
+<!-- b3609 -->
 Especialista en innovación, producto y crecimiento. Conecta estrategia, analítica y experimentación para convertir oportunidades en nuevos productos y sistemas de crecimiento.
 
-<!-- b3254 -->
+<!-- b3610 -->
 Especialista en innovación, crecimiento, desarrollo de productos y transformación digital, con experiencia ejecutiva y docente en programas de posgrado.
 
-<!-- b3255 -->
+<!-- b3611 -->
 LA PRÓXIMA CAPACIDAD SE CONSTRUYE DESDE DENTRO
 
-<!-- b3256 -->
+<!-- b3612 -->
 ## Cuéntanos qué necesita cambiar en tu empresa.
 
 ---
@@ -175,108 +175,108 @@ LA PRÓXIMA CAPACIDAD SE CONSTRUYE DESDE DENTRO
 
 **En Google** (no se ve en la página):
 
-<!-- b3257 -->
+<!-- b3613 -->
 - **Título:** IA responsable: cómo la controlamos | BECOME
-<!-- b3258 -->
+<!-- b3614 -->
 - **Descripción:** Uso de datos, supervisión humana, evaluación, escalamiento, trazabilidad y responsables con nombre. Ocho decisiones que se toman antes de construir.
 
-<!-- b3259 -->
+<!-- b3615 -->
 IA RESPONSABLE
 
-<!-- b3260 -->
+<!-- b3616 -->
 # Los controles se diseñan con la solución, no se añaden al final.
 
-<!-- b3261 -->
+<!-- b3617 -->
 La IA responsable se incorpora desde el diseño. Definimos el uso adecuado de datos, los accesos, la supervisión humana, la evaluación, el escalamiento, la trazabilidad y la responsabilidad según el caso de uso y su perfil de riesgo.
 
-<!-- b3262 -->
+<!-- b3618 -->
 POR QUÉ AL PRINCIPIO
 
-<!-- b3263 -->
+<!-- b3619 -->
 ## Un control añadido después no cambia cómo se decide.
 
-<!-- b3264 -->
+<!-- b3620 -->
 Cuando los límites se escriben una vez que la solución ya funciona, se convierten en una capa de revisión que frena el trabajo y que la gente aprende a rodear. Definidos antes, son parte de cómo está construida: el sistema no puede hacer aquello para lo que no tiene permiso.
 
-<!-- b3265 -->
+<!-- b3621 -->
 No todos los casos necesitan lo mismo. Un asistente que redacta un borrador interno y un agente que actúa sobre un sistema de producción tienen perfiles de riesgo distintos, y por tanto controles distintos. Lo que no cambia es que estén decididos y escritos antes de construir.
 
-<!-- b3266 -->
+<!-- b3622 -->
 QUÉ SE DEFINE EN CADA CASO
 
-<!-- b3267 -->
+<!-- b3623 -->
 ## Ocho decisiones, siempre las mismas.
 
-<!-- b3268 -->
+<!-- b3624 -->
 ## Uso y acceso a los datos
 
-<!-- b3269 -->
+<!-- b3625 -->
 Qué información entra, de dónde sale, quién puede consultarla y para qué. Se define antes de construir, no cuando ya está en marcha.
 
-<!-- b3270 -->
+<!-- b3626 -->
 ## Privacidad y seguridad
 
-<!-- b3271 -->
+<!-- b3627 -->
 Tratamiento de datos personales y sensibles, cifrado, retención y aislamiento según el entorno de cada empresa.
 
-<!-- b3272 -->
+<!-- b3628 -->
 ## Evaluación de resultados
 
-<!-- b3273 -->
+<!-- b3629 -->
 Qué se considera una respuesta aceptable y cómo se comprueba. Sin un umbral definido, «funciona bien» es una opinión.
 
-<!-- b3274 -->
+<!-- b3630 -->
 04
 
-<!-- b3275 -->
+<!-- b3631 -->
 ## Validación humana
 
-<!-- b3276 -->
+<!-- b3632 -->
 Dónde una persona revisa, aprueba o corrige antes de que algo tenga efecto. Cuanto mayor el riesgo, más cerca del final está ese punto.
 
-<!-- b3277 -->
+<!-- b3633 -->
 05
 
-<!-- b3278 -->
+<!-- b3634 -->
 ## Escalamiento y excepciones
 
-<!-- b3279 -->
+<!-- b3635 -->
 Qué pasa con los casos que no encajan: a quién llegan, en cuánto tiempo y con qué información.
 
-<!-- b3280 -->
+<!-- b3636 -->
 06
 
-<!-- b3281 -->
+<!-- b3637 -->
 ## Trazabilidad
 
-<!-- b3282 -->
+<!-- b3638 -->
 Qué se registra de cada decisión asistida, para poder reconstruir después por qué ocurrió lo que ocurrió.
 
-<!-- b3283 -->
+<!-- b3639 -->
 07
 
-<!-- b3284 -->
+<!-- b3640 -->
 ## Responsables con nombre
 
-<!-- b3285 -->
+<!-- b3641 -->
 Quién responde por la operación y quién por el resultado de negocio. Un control sin responsable es un documento.
 
-<!-- b3286 -->
+<!-- b3642 -->
 08
 
-<!-- b3287 -->
+<!-- b3643 -->
 ## Seguimiento continuo
 
-<!-- b3288 -->
+<!-- b3644 -->
 Con qué frecuencia se revisa el comportamiento, quién lo revisa y qué dispara un cambio.
 
-<!-- b3289 -->
+<!-- b3645 -->
 LA RESPONSABILIDAD NO SE DELEGA EN EL SISTEMA
 
-<!-- b3290 -->
+<!-- b3646 -->
 ## La IA amplía la capacidad; las personas mantienen la dirección.
 
-<!-- b3291 -->
+<!-- b3647 -->
 Cuéntanos el caso y su perfil de riesgo. Te decimos qué controles necesita antes de escribir una línea de código.
 
 ---

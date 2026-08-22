@@ -221,123 +221,120 @@ VALUE, MADE VISIBLE
 Shorter decision and execution cycles.
 
 <!-- b0192 -->
-### Quality
-
-<!-- b0193 -->
 Consistent work, fewer errors and better outcomes.
 
-<!-- b0194 -->
+<!-- b0193 -->
 ### Growth
 
-<!-- b0195 -->
+<!-- b0194 -->
 New products, experiences and sources of value.
 
-<!-- b0196 -->
+<!-- b0195 -->
 ### Risk
 
-<!-- b0197 -->
+<!-- b0196 -->
 Clear controls, accountability and human oversight.
 
-<!-- b0198 -->
+<!-- b0197 -->
 ### Capability
 
-<!-- b0199 -->
+<!-- b0198 -->
 Teams able to operate and improve the system.
 
-<!-- b0200 -->
+<!-- b0199 -->
 Every engagement starts from a baseline and metrics agreed before we intervene. We measure change against that starting point.
 
-<!-- b0201 -->
+<!-- b0200 -->
 WHY BECOME
 
-<!-- b0202 -->
+<!-- b0201 -->
 ## Strategy that builds. Technology that embeds. Capability that stays.
 
-<!-- b0203 -->
+<!-- b0202 -->
 ### Business first
 
-<!-- b0204 -->
+<!-- b0203 -->
 We start from the enterprise outcome, not the tool.
 
-<!-- b0205 -->
+<!-- b0204 -->
 We work with client teams to build ownership and operational confidence.
 
-<!-- b0206 -->
+<!-- b0205 -->
 ### Adoption by design
 
-<!-- b0207 -->
+<!-- b0206 -->
 Roles, controls, skills and measurement are part of the solution from day one.
 
-<!-- b0208 -->
+<!-- b0207 -->
 The work is done when the capability belongs to the company.
 
-<!-- b0209 -->
+<!-- b0208 -->
 THE WORK WE ARE BUILT TO DO
 
-<!-- b0210 -->
+<!-- b0209 -->
 ## Three transformations we know how to lead.
 
-<!-- b0211 -->
+<!-- b0210 -->
 ILLUSTRATIVE SCENARIOS
 
-<!-- b0212 -->
+<!-- b0211 -->
 ### Decision intelligence
 
-<!-- b0213 -->
+<!-- b0212 -->
 Redesigning a high-value decision and its information flow.
 
-<!-- b0214 -->
+<!-- b0213 -->
 What changes inside: Shared context, exception paths and explicit decision rights.
 
-<!-- b0215 -->
+<!-- b0214 -->
 ### Agentic operations
 
-<!-- b0216 -->
+<!-- b0215 -->
 Embedding agents into a controlled end-to-end workflow.
 
-<!-- b0217 -->
+<!-- b0216 -->
 What changes inside: Orchestration, a human-in-the-loop model and operational controls.
 
-<!-- b0218 -->
+<!-- b0217 -->
 ### AI-native product
 
-<!-- b0219 -->
+<!-- b0218 -->
 Creating a new intelligent capability for customers or employees.
 
-<!-- b0220 -->
+<!-- b0219 -->
 What changes inside: Data layer, product ownership and value measurement.
 
-<!-- b0221 -->
+<!-- b0220 -->
 BECOME INSIGHTS
 
-<!-- b0222 -->
+<!-- b0221 -->
 ## Ideas for the company that comes next.
 
-<!-- b0223 -->
+<!-- b0222 -->
 ### The AI-native enterprise
 
-<!-- b0224 -->
+<!-- b0223 -->
 What sets an AI-native company apart from a company that just uses AI.
 
-<!-- b0225 -->
+<!-- b0224 -->
 ### Agentic work
 
-<!-- b0226 -->
+<!-- b0225 -->
 Workflows, roles, agents and human accountability.
 
-<!-- b0227 -->
+<!-- b0226 -->
 ### Operating-model reinvention
 
-<!-- b0228 -->
+<!-- b0227 -->
 The design decisions that determine where value accumulates.
 
-<!-- b0229 -->
+<!-- b0228 -->
 ## What should your company become next?
 
-<!-- b0230 -->
+<!-- b0229 -->
 Start with a conversation about the outcome, capability or workflow you need to transform. Under two minutes to tell us about it.
 
-<!-- b0231 -->
+<!-- b0230 -->
 Or email us at hello@meetbecome.com
 
 ---
