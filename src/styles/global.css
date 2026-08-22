@@ -392,3 +392,20 @@ label {
 
 /* El ancla no debe quedar debajo de la cabecera fija al saltar a ella */
 [id] { scroll-margin-top: 88px; }
+
+/* ---- El resumen sin JavaScript no se le enseña a quien sí lo tiene ------
+ *
+ * Cada página lleva dentro de #root un resumen en texto plano —títulos,
+ * párrafos, enlaces, sin una sola clase— para los rastreadores que no ejecutan
+ * JavaScript. Un navegador no distingue eso de contenido normal: lo pintaba, y
+ * durante el segundo largo que tarda la aplicación en arrancar el visitante veía
+ * un muro de texto sin maquetar. Desde el móvil parecía un sitio roto.
+ *
+ * La clase `con-js` la pone una línea al principio del <head>, así que existe
+ * antes del primer píxel. Sin JavaScript esa clase no aparece nunca y el resumen
+ * se lee entero, que es justo para quien se escribió.
+ *
+ * Se esconde con display:none y no moviéndolo fuera de la pantalla porque lo
+ * segundo lo dejaría en el orden de tabulación: quien navega con teclado
+ * recorrería enlaces invisibles durante el arranque. */
+html.con-js #root > [data-resumen-sin-js] { display: none; }

@@ -227,7 +227,7 @@ for (const ruta of rutas) {
       vacios += 1;
       console.warn(`prerender: ${ruta} salió con ${cuerpo.length} caracteres`);
     }
-    writeFileSync(destino, html.replace('<div id="root"></div>', `<div id="root">${cuerpo}</div>`));
+    writeFileSync(destino, html.replace('<div id="root"></div>', `<div id="root"><div data-resumen-sin-js>${cuerpo}</div></div>`));
     hechos += 1;
   } catch (e) {
     vacios += 1;

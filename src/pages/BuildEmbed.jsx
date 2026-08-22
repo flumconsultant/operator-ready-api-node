@@ -58,8 +58,8 @@ export default function BuildEmbed() {
         <Kicker dark>BECOME Embed™</Kicker>
         <Headline as="h1" dark>Convierte una prioridad de IA en una capacidad lista para operar.</Headline>
         <Lead dark>
-          Diseñamos y construimos copilots, AI agents y workflows basados en LLMs
-          conectados a los datos, herramientas y sistemas de tu organización.
+          Diseñamos y construimos copilotos, agentes de IA y procesos basados en
+          LLMs conectados a los datos, herramientas y sistemas de tu organización.
         </Lead>
         <Body dark style={{ marginTop: 'var(--space-6)' }}>
           Trabajamos desde la selección del modelo y la arquitectura hasta las

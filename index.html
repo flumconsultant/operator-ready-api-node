@@ -2,6 +2,26 @@
 <html lang="es">
   <head>
     <meta charset="utf-8" />
+
+    <!-- Lo primero que se ejecuta, y a propósito.
+
+         Dentro de #root viaja un resumen en texto plano de la página: títulos,
+         párrafos y enlaces sin una sola clase. Existe para los rastreadores que
+         NO ejecutan JavaScript —GPTBot, ClaudeBot, PerplexityBot— porque para
+         ellos una página vacía es una página que no dice nada.
+
+         El problema es que un navegador tampoco sabe que eso es un apaño: lo
+         pinta tal cual, y durante el segundo que tarda la aplicación en
+         arrancar el visitante ve un muro de texto sin maquetar. Parece un sitio
+         roto. Lo estaba viendo cualquiera que entrara desde el móvil.
+
+         Esta línea marca el documento como «aquí hay JavaScript», y el CSS
+         esconde ese resumen solo en ese caso. Quien ejecuta JavaScript ve la
+         página cargando —en blanco un instante, como cualquier aplicación— y
+         quien no lo ejecuta lo sigue leyendo entero. Va aquí arriba, antes de
+         que exista el <body>, para que la clase esté puesta cuando el navegador
+         pinte el primer píxel; puesta más tarde, el destello ocurriría igual. -->
+    <script>document.documentElement.className += ' con-js';</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/logo/favicon.svg" />
 

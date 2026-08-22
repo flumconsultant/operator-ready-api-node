@@ -59,7 +59,7 @@ export default function BecomeNow() {
 
       {/* La tensión */}
       <Section band="light">
-        <Kicker>The adoption gap</Kicker>
+        <Kicker>La brecha de adopción</Kicker>
         <Headline>Tener acceso a la IA no significa saber trabajar con ella.</Headline>
         <Lead>
           El problema no son las herramientas. Es que nadie las ha convertido en

@@ -768,7 +768,13 @@ ${jsonLd}
   const cuerpo = art ? cuerpoDeArticulo(art.a, art.lang) : '';
 
   return plantilla
-    .replace('<div id="root"></div>', `<div id="root">${cuerpo}</div>`)
+    /* Envuelto solo si hay algo que envolver. Sin esta condición, las páginas
+       que no son artículos salían de aquí con un envoltorio vacío, y entonces
+       el prerenderizado —que reconoce las páginas pendientes por su #root
+       vacío— dejaba de reconocerlas y no llenaba ninguna. Se vio al probarlo:
+       «0 páginas con su texto dentro del HTML». */
+    .replace('<div id="root"></div>',
+      cuerpo ? `<div id="root"><div data-resumen-sin-js>${cuerpo}</div></div>` : '<div id="root"></div>')
     .replace(/<html lang="[^"]*"/, `<html lang="${lang}"`)
     .replace(/<head>[\s\S]*?<\/head>/, `<head>${cabeza}${analitica}${
       /* Lo que Vite inyectó (css y js con hash) se conserva tal cual.

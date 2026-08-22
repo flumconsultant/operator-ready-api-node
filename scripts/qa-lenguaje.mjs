@@ -101,6 +101,11 @@ const DELIBERADOS = [
   'Adoption Scorecard',
   'Applied Workflow Canvas',
   'Agentic Workflow Blueprint',
+  /* La pila técnica de «Bajo el capó». Son las capas de una arquitectura, y
+     estos nombres no tienen equivalente asentado en castellano de ingeniería:
+     quien decide sobre esto los lee así en su propia documentación. */
+  'model routing', 'tool calling', 'workflow orchestration',
+  'Guardrails', 'Enterprise data', 'vector search', 'knowledge sources',
 ];
 
 /* ---- El texto visible de una página, sin etiquetas ---------------------- */
@@ -135,12 +140,39 @@ if (!paginas.length) {
 /* ---- La revisión -------------------------------------------------------- */
 const hallazgos = [];
 
+/* Dónde empieza y acaba cada término deliberado dentro de este texto.
+ *
+ * Antes esto miraba si un término deliberado aparecía CERCA —sesenta caracteres
+ * a cada lado— y en ese caso callaba. Parecía razonable y era un colador: en la
+ * portada, «BECOME conecta estrategia, personas, datos, LLMs, agents, productos
+ * y workflows» tenía «LLM» pegado delante, así que «agents» y «workflows»
+ * quedaban perdonados por vecindad. Dos anglicismos de verdad, en la frase más
+ * visible del sitio, y el QA daba cero.
+ *
+ * Ahora la única razón para perdonar una coincidencia es que ELLA MISMA forme
+ * parte del término deliberado. «Agents» dentro de «Agentic Workflow Blueprint»
+ * se calla; «agents» suelto, no, tenga al lado lo que tenga. */
+const zonasDeliberadas = (texto) => {
+  const zonas = [];
+  const bajo = texto.toLowerCase();
+  for (const d of DELIBERADOS) {
+    const dd = d.toLowerCase();
+    let i = bajo.indexOf(dd);
+    while (i !== -1) { zonas.push([i, i + dd.length]); i = bajo.indexOf(dd, i + 1); }
+  }
+  return zonas;
+};
+
 const revisar = (texto, ruta, reglas, nivel) => {
+  const zonas = zonasDeliberadas(texto);
   for (const [expresion, arreglo] of reglas) {
     for (const m of texto.matchAll(expresion)) {
-      const alrededor = texto.slice(Math.max(0, m.index - 60), m.index + 70);
-      if (DELIBERADOS.some((d) => alrededor.toLowerCase().includes(d.toLowerCase()))) continue;
-      hallazgos.push({ nivel, ruta, palabra: m[0], arreglo, alrededor: alrededor.trim() });
+      const [ini, fin] = [m.index, m.index + m[0].length];
+      if (zonas.some(([a, b]) => ini >= a && fin <= b)) continue;
+      hallazgos.push({
+        nivel, ruta, palabra: m[0], arreglo,
+        alrededor: texto.slice(Math.max(0, ini - 60), fin + 70).trim(),
+      });
     }
   }
 };

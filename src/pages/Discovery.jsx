@@ -33,7 +33,7 @@ const DELIVERABLES = [
 const TOOLS = [
   ['Business Ambition Canvas™', 'Alinear al equipo ejecutivo alrededor de los resultados y las decisiones estratégicas.'],
   ['Inside Readiness Index™', 'Evaluar la madurez en Personas, Datos, Agentes, Productos y Operaciones.'],
-  ['AI-Native Value Map™', 'Priorizar oportunidades por valor, feasibility, velocidad y riesgo.'],
+  ['AI-Native Value Map™', 'Priorizar oportunidades por valor, viabilidad, velocidad y riesgo.'],
   ['Inside Target State Canvas™', 'Definir el modelo operativo objetivo y el diseño de la transformación.'],
 ];
 

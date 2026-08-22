@@ -25,7 +25,7 @@ const T = {
     problemaLead:
       'Muchas organizaciones ya experimentan con ChatGPT, Claude, Gemini, copilotos y otros LLMs. El reto no es acceder a más modelos: es convertirlos en nuevas formas de decidir, trabajar y operar.',
     problemaCuerpo:
-      'BECOME conecta estrategia, personas, datos, LLMs, agents, productos y workflows para transformar experimentos aislados en capacidad empresarial.',
+      'BECOME conecta estrategia, personas, datos, LLMs, agentes, productos y procesos para transformar experimentos aislados en capacidad empresarial.',
 
     neutralKicker: 'Tecnología',
     neutralTitulo: 'Vendor-neutral by design.',
@@ -42,12 +42,12 @@ const T = {
     herramientasCuerpo:
       'Durante la Sesión 0 identificamos qué modelos y herramientas utiliza o autoriza la organización, y diseñamos los ejercicios sobre ese entorno.',
     herramientasIntro: 'Podemos trabajar sobre casos que involucren:',
-    herramientasLista: ['ChatGPT', 'Claude', 'Gemini', 'Microsoft Copilot', 'LLMs empresariales', 'AI assistants', 'AI agents', 'Herramientas internas conectadas mediante APIs'],
+    herramientasLista: ['ChatGPT', 'Claude', 'Gemini', 'Microsoft Copilot', 'LLMs empresariales', 'Asistentes de IA', 'Agentes de IA', 'Herramientas internas conectadas mediante APIs'],
     herramientasCierre: 'El objetivo no es dominar una interfaz. Es aprender a diseñar mejores procesos con IA.',
 
     adaptadaTitulo: 'Tecnología adaptada a tu entorno',
     adaptadaCuerpo:
-      'Los workflows pueden diseñarse utilizando ChatGPT, Claude, Gemini, Microsoft Copilot u otros LLMs y herramientas aprobadas por tu organización.',
+      'Los procesos pueden diseñarse utilizando ChatGPT, Claude, Gemini, Microsoft Copilot u otros LLMs y herramientas aprobadas por tu organización.',
     adaptadaCierre: 'No empezamos por la herramienta. Empezamos por el trabajo que necesita mejorar.',
 
     capoKicker: 'Bajo el capó',
@@ -65,7 +65,7 @@ const T = {
     modelosTitulo: 'La estrategia de IA también es una estrategia de modelos.',
     modelosLead: 'No todos los casos requieren el mismo LLM, nivel de autonomía o arquitectura.',
     modelosIntro: 'Durante DISCOVER analizamos dónde tiene sentido utilizar:',
-    modelosLista: ['Enterprise copilots', 'General-purpose LLMs', 'Multimodal models', 'AI agents', 'Custom workflows', 'Enterprise search / RAG', 'SaaS con IA ya contratado', 'Productos de IA a medida'],
+    modelosLista: ['Copilotos empresariales', 'LLMs de propósito general', 'Modelos multimodales', 'Agentes de IA', 'Procesos a medida', 'Búsqueda empresarial / RAG', 'SaaS con IA ya contratado', 'Productos de IA a medida'],
     modelosCierre: 'La decisión entre ecosistemas como OpenAI, Anthropic, Google, Microsoft u otras alternativas se evalúa según valor, datos, integración, riesgo, costo y ownership.',
   },
   en: {
