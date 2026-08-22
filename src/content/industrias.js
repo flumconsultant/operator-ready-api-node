@@ -532,7 +532,7 @@ export const INDUSTRIAS = [
     icon: 'scale',
     servicio: 'become-discover',
     soluciones: ['redisenar-procesos-criticos', 'agentes-de-ia-con-control', 'escalar-ia'],
-    programas: ['legal-compliance-risk', 'project-management-pmo'],
+    programas: ['finanzas-inmobiliarias', 'project-management-pmo'],
 
     es: {
       nombre: 'Inmobiliario y construcción',

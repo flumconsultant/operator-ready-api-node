@@ -969,7 +969,7 @@ How long a client question takes to get a substantiated answer.
 ### BECOME DISCOVER™ — AI-Native Transformation Discovery
 
 <!-- b1796 -->
-- AI applied to Legal, Compliance & Risk
+- AI applied to Real Estate Finance
 <!-- b1797 -->
 - AI applied to Project Management & PMO
 

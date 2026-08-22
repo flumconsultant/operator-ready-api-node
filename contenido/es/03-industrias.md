@@ -547,7 +547,7 @@ Cuánto tarda una consulta de cliente en tener respuesta con sustento.
 ### BECOME DISCOVER™ — Discovery de transformación AI-native
 
 <!-- b1202 -->
-- IA aplicada a Legal, Compliance y Risk
+- IA aplicada a Finanzas Inmobiliarias
 <!-- b1203 -->
 - IA aplicada a Project Management y PMO
 
