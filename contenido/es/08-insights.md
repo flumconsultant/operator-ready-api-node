@@ -4,129 +4,129 @@
 
 **En Google** (no se ve en la página):
 
-<!-- b3259 -->
+<!-- b3319 -->
 - **Título:** Insights sobre IA aplicada a la empresa | BECOME
-<!-- b3260 -->
+<!-- b3320 -->
 - **Descripción:** Perspectivas sobre modelos operativos AI-native, trabajo con agents, adopción y escalado responsable.
 
-<!-- b3261 -->
+<!-- b3321 -->
 BECOME INSIGHTS
 
-<!-- b3262 -->
+<!-- b3322 -->
 # Ideas para la empresa que viene después.
 
-<!-- b3263 -->
+<!-- b3323 -->
 Perspectivas sobre AI-native operating models, agentic work, decision intelligence, adoption y responsible scale.
 
-<!-- b3264 -->
+<!-- b3324 -->
 PUBLICADO
 
-<!-- b3265 -->
+<!-- b3325 -->
 ## Lo último que hemos escrito.
 
-<!-- b3266 -->
+<!-- b3326 -->
 ### Cómo rediseñar un proceso para que lo ejecute una IA
 
-<!-- b3267 -->
+<!-- b3327 -->
 Metieron un agente en medio del proceso y siguieron haciendo exactamente lo mismo. Solo que ahora hay un paso más: alguien copia lo que dice el agente a la hoja de siempre, por si acaso.
 
-<!-- b3268 -->
+<!-- b3328 -->
 21 de agosto de 2026 · 7 min
 
-<!-- b3269 -->
+<!-- b3329 -->
 ### Por qué tus pilotos de IA no llegan a producción
 
-<!-- b3270 -->
+<!-- b3330 -->
 El piloto salió bien. Y ese es exactamente el momento en el que se quedó parado.
 
-<!-- b3271 -->
+<!-- b3331 -->
 20 de agosto de 2026 · 7 min
 
-<!-- b3272 -->
+<!-- b3332 -->
 ### Quién responde cuando responde un agente
 
-<!-- b3273 -->
+<!-- b3333 -->
 La pregunta que decide si un agente llega a producción no es técnica. Es de quién es el resultado cuando sale mal.
 
-<!-- b3274 -->
+<!-- b3334 -->
 20 de agosto de 2026 · 4 min
 
-<!-- b3275 -->
+<!-- b3335 -->
 PILARES EDITORIALES
 
-<!-- b3276 -->
+<!-- b3336 -->
 ## Sobre qué vamos a escribir, y sobre qué no.
 
-<!-- b3277 -->
+<!-- b3337 -->
 Cinco líneas. Nada de noticias de modelos, comparativas de herramientas ni resúmenes de lo que ya dijo otro.
 
-<!-- b3278 -->
+<!-- b3338 -->
 ### The AI-native enterprise
 
-<!-- b3279 -->
+<!-- b3339 -->
 Estrategia, ambition y enterprise design. Qué distingue a una empresa AI-native de una empresa con IA.
 
-<!-- b3280 -->
+<!-- b3340 -->
 ### Agentic work
 
-<!-- b3281 -->
+<!-- b3341 -->
 Procesos, roles, agentes y responsabilidad humana. Cómo cambia el trabajo cuando parte lo hace un sistema.
 
-<!-- b3282 -->
+<!-- b3342 -->
 ### Operating-model reinvention
 
-<!-- b3283 -->
+<!-- b3343 -->
 Personas, Datos, Agentes, Productos y Operaciones. Las decisiones de diseño que determinan dónde se acumula el valor.
 
-<!-- b3284 -->
+<!-- b3344 -->
 ### Value and adoption
 
-<!-- b3285 -->
+<!-- b3345 -->
 Medición, confianza, gestión del cambio y transferencia de capacidades. Por qué la adopción es un problema de diseño, no de comunicación.
 
-<!-- b3286 -->
+<!-- b3346 -->
 ### Responsible scale
 
-<!-- b3287 -->
+<!-- b3347 -->
 Gobernanza, controles, riesgo y condiciones para escalar. Cuándo hacerlo y, sobre todo, cuándo no.
 
-<!-- b3288 -->
+<!-- b3348 -->
 FORMATOS
 
-<!-- b3289 -->
+<!-- b3349 -->
 ## Cada idea tiene su forma.
 
-<!-- b3290 -->
+<!-- b3350 -->
 ### Perspective
 
-<!-- b3291 -->
+<!-- b3351 -->
 Una tesis argumentada sobre hacia dónde va algo.
 
-<!-- b3292 -->
+<!-- b3352 -->
 ### Field Note
 
-<!-- b3293 -->
+<!-- b3353 -->
 Lo aprendido dentro de un problema concreto.
 
-<!-- b3294 -->
+<!-- b3354 -->
 ### Framework
 
-<!-- b3295 -->
+<!-- b3355 -->
 Una forma reutilizable de estructurar una decisión.
 
-<!-- b3296 -->
+<!-- b3356 -->
 ### Executive Brief
 
-<!-- b3297 -->
+<!-- b3357 -->
 Lo que un comité necesita saber, en su formato.
 
-<!-- b3298 -->
+<!-- b3358 -->
 ### Case Evidence
 
-<!-- b3299 -->
+<!-- b3359 -->
 Trabajo real, solo cuando el cliente lo aprueba.
 
-<!-- b3300 -->
+<!-- b3360 -->
 ## ¿Qué idea necesita convertirse en capacidad?
 
 ---

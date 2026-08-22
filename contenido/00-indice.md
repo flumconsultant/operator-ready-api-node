@@ -1,6 +1,6 @@
 # BECOME — el texto de la web, para revisarlo
 
-> 2026-08-22 · 82 páginas · 4001 bloques de texto
+> 2026-08-22 · 82 páginas · 4049 bloques de texto
 
 ## Cómo funciona
 

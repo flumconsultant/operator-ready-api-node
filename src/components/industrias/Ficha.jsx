@@ -242,7 +242,9 @@ export default function FichaIndustria({ lang = 'es', slug }) {
               <h3 style={{ margin: 'var(--space-5) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', lineHeight: 1.26, color: 'var(--text-heading)' }}>
                 {servicio.name}
               </h3>
-              <Body style={{ marginTop: 'var(--space-4)' }}>{servicio.line}</Body>
+              {/* La tarjeta tampoco repite el descriptor del servicio: era
+                  idéntico en las páginas que recomiendan el mismo, y el
+                  nombre ya dice de cuál se trata. */}
               <TextCTA to={servicio.to}>{servicio.name.split('—')[0].trim()}</TextCTA>
             </Card>
           )}
