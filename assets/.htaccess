@@ -111,6 +111,26 @@
   RedirectMatch 301 ^/en/solutions/?$                                /en/use-cases
   RedirectMatch 301 ^/en/solutions/(.+?)/?$                          /en/use-cases/$1
 
+  # ───────────────────────────────────────────────────────────────────────────
+  # Industrias: los nombres de sector, en el idioma del sector
+  # ───────────────────────────────────────────────────────────────────────────
+  # Las seis páginas se llamaban por su categoría interna («servicios
+  # financieros», «healthcare life sciences»). Ahora se llaman como las llama
+  # quien busca en Perú y LATAM. Cada regla absorbe también la barra final —el
+  # `/?$`— para que ninguna dirección antigua dé dos saltos.
+  #
+  # Minería no aparece aquí: su dirección no cambió, y una redirección de una
+  # dirección hacia sí misma es un bucle.
+  RedirectMatch 301 ^/es/industrias/servicios-financieros/?$      /es/industrias/banca-seguros-fintech
+  RedirectMatch 301 ^/es/industrias/retail-consumo/?$             /es/industrias/retail-consumo-masivo
+  RedirectMatch 301 ^/es/industrias/travel-hospitality/?$         /es/industrias/turismo-hoteleria
+  RedirectMatch 301 ^/es/industrias/real-estate-construction/?$   /es/industrias/inmobiliario-construccion
+  RedirectMatch 301 ^/es/industrias/healthcare-life-sciences/?$   /es/industrias/salud-farmaceutica
+
+  RedirectMatch 301 ^/en/industries/financial-services/?$         /en/industries/banking-insurance-fintech
+  RedirectMatch 301 ^/en/industries/retail-consumer/?$            /en/industries/retail-consumer-goods
+  RedirectMatch 301 ^/en/industries/healthcare-life-sciences/?$   /en/industries/healthcare-pharma
+
   # El apartado que dejó de llamarse «Framework».
   RedirectMatch 301 ^/es/framework/?$                                /es/como-transformamos
   RedirectMatch 301 ^/en/framework/?$                                /en/how-we-transform

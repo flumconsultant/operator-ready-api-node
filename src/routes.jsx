@@ -77,12 +77,12 @@ export const routes = [
      saber expandirla; declaradas, cada industria trae su título, su
      descripción y su hreflang desde seo-meta.js como cualquier otra página. */
   { path: '/en/industries', element: <Industries /> },
-  { path: '/en/industries/financial-services', element: <Industry slug="financial-services" /> },
+  { path: '/en/industries/banking-insurance-fintech', element: <Industry slug="banking-insurance-fintech" /> },
   { path: '/en/industries/mining-energy', element: <Industry slug="mining-energy" /> },
-  { path: '/en/industries/retail-consumer', element: <Industry slug="retail-consumer" /> },
+  { path: '/en/industries/retail-consumer-goods', element: <Industry slug="retail-consumer-goods" /> },
   { path: '/en/industries/travel-hospitality', element: <Industry slug="travel-hospitality" /> },
   { path: '/en/industries/real-estate-construction', element: <Industry slug="real-estate-construction" /> },
-  { path: '/en/industries/healthcare-life-sciences', element: <Industry slug="healthcare-life-sciences" /> },
+  { path: '/en/industries/healthcare-pharma', element: <Industry slug="healthcare-pharma" /> },
   { path: '/en/about', element: <NosotrosEN /> },
   { path: '/en/about/responsible-ai', element: <ResponsibleAI /> },
 
@@ -106,12 +106,12 @@ export const routes = [
   { path: '/es/como-transformamos', element: <ComoTransformamos /> },
 
   { path: '/es/industrias', element: <Industrias /> },
-  { path: '/es/industrias/servicios-financieros', element: <Industria slug="servicios-financieros" /> },
+  { path: '/es/industrias/banca-seguros-fintech', element: <Industria slug="banca-seguros-fintech" /> },
   { path: '/es/industrias/mineria-energia', element: <Industria slug="mineria-energia" /> },
-  { path: '/es/industrias/retail-consumo', element: <Industria slug="retail-consumo" /> },
-  { path: '/es/industrias/travel-hospitality', element: <Industria slug="travel-hospitality" /> },
-  { path: '/es/industrias/real-estate-construction', element: <Industria slug="real-estate-construction" /> },
-  { path: '/es/industrias/healthcare-life-sciences', element: <Industria slug="healthcare-life-sciences" /> },
+  { path: '/es/industrias/retail-consumo-masivo', element: <Industria slug="retail-consumo-masivo" /> },
+  { path: '/es/industrias/turismo-hoteleria', element: <Industria slug="turismo-hoteleria" /> },
+  { path: '/es/industrias/inmobiliario-construccion', element: <Industria slug="inmobiliario-construccion" /> },
+  { path: '/es/industrias/salud-farmaceutica', element: <Industria slug="salud-farmaceutica" /> },
   { path: '/es/nosotros', element: <Nosotros /> },
   { path: '/es/nosotros/ia-responsable', element: <IaResponsable /> },
 

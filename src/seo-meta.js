@@ -46,43 +46,43 @@ export const OG_IMAGE = `${SITE}/images/tarjetas/become.jpg`;
 export const PAGES = {
   /* ---------------------------------------------------------------- español */
   '/es': [
-    'BECOME — Consultoría de transformación con IA',
-    'BECOME transforma IA, LLMs y AI agents en capacidades empresariales: estrategia, adopción, workflows, tecnología y governance para organizaciones AI-native.',
+    'Consultoría de transformación con IA para empresas | BECOME',
+    'BECOME convierte la IA en capacidad empresarial: estrategia, capacitación, agentes, procesos y adopción para cambiar cómo una empresa decide y opera.',
     '/en',
   ],
   '/es/servicios': [
-    'Servicios de IA para empresas | BECOME',
-    'Tres formas de empezar: capacitar a tu equipo en IA, definir la estrategia o construir la solución. Por separado o en secuencia.',
+    'Servicios de IA para empresas: NOW, DISCOVER y EMBED | BECOME',
+    'Tres formas de avanzar con IA: capacitar equipos, definir la estrategia y el modelo operativo, o construir una capacidad dentro de la operación.',
     '/en/services',
   ],
   '/es/servicios/become-now': [
     'Capacitación en IA aplicada para empresas | BECOME NOW™',
-    'Programas de IA aplicada para empresas sobre workflows reales con ChatGPT, Claude, Gemini, Microsoft Copilot y otros LLMs autorizados.',
+    'Programas de IA aplicada para empresas sobre procesos reales con ChatGPT, Claude, Gemini, Microsoft Copilot y otros LLMs autorizados.',
     '/en/services/become-now',
   ],
   '/es/servicios/become-discover': [
     'Estrategia de IA y modelo operativo | BECOME DISCOVER™',
-    'Ocho a doce semanas para saber dónde está el valor de la IA en tu negocio, qué se hace primero y cómo debe operar la empresa.',
+    'Define dónde está el valor de la IA, qué capacidades priorizar y qué modelo operativo, gobernanza y hoja de ruta necesita tu empresa.',
     '/en/services/become-discover',
   ],
   '/es/servicios/become-embed': [
-    'Construcción de soluciones de IA | BECOME EMBED™',
-    'Diseñamos y construimos AI agents, copilots y workflows basados en LLMs con datos, APIs, integraciones, evaluación, governance y observabilidad.',
+    'Implementación de agentes y soluciones de IA | BECOME EMBED™',
+    'Diseñamos e implementamos agentes, copilotos y procesos basados en LLMs con datos, APIs, integraciones, controles, observabilidad y transferencia.',
     '/en/services/become-embed',
   ],
   '/es/como-transformamos': [
-    'Cómo transformamos con IA — El método | BECOME',
-    'Seis etapas de la ambición al valor, atravesando los cinco sistemas que deciden si la IA queda instalada: personas, datos, agents, productos y operaciones.',
+    'Metodología de transformación con IA | BECOME',
+    'El método BECOME para pasar de una ambición de IA a una capacidad operativa: cinco sistemas, seis etapas, controles y medición.',
     '/en/how-we-transform',
   ],
   '/es/nosotros': [
-    'Nosotros — Consultora AI-native | BECOME',
-    'BECOME conecta estrategia, diseño del modelo operativo, construcción y adopción en un solo sistema. Qué creemos y cómo trabajamos.',
+    'BECOME | Transformación AI-native para empresas',
+    'BECOME conecta negocio, transformación, tecnología y adopción para convertir la IA en capacidades que las empresas puedan operar y evolucionar.',
     '/en/about',
   ],
   '/es/casos-de-uso': [
-    'Casos de uso de IA en la empresa | BECOME',
-    'Seis necesidades de negocio y qué exige cada una: escalar más allá de los pilotos, preparar equipos, rediseñar procesos, AI agents con control y medir el valor.',
+    'Casos de uso de IA para empresas | BECOME',
+    'Cómo escalar pilotos, preparar equipos, rediseñar procesos, implementar agentes con control, crear productos con IA y medir su valor.',
     '/en/use-cases',
   ],
   '/es/nosotros/ia-responsable': [
@@ -91,13 +91,13 @@ export const PAGES = {
     '/en/about/responsible-ai',
   ],
   '/es/insights': [
-    'Insights sobre IA aplicada a la empresa | BECOME',
-    'Perspectivas sobre modelos operativos AI-native, trabajo con agents, adopción y escalado responsable.',
+    'Insights de IA para empresas | BECOME',
+    'Análisis de BECOME sobre agentes de IA, procesos, modelos operativos, adopción, gobernanza y creación de valor empresarial.',
     '/en/insights',
   ],
   '/es/contacto': [
-    'Contacto — Empecemos por lo que quieres cambiar | BECOME',
-    'Comparte el reto, el outcome que buscas y el contexto de tu organización. Lo revisamos y te proponemos el siguiente paso de tu transformación con IA.',
+    'Contacto | BECOME',
+    'Comparte el reto, el resultado que buscas y el contexto de tu organización. Lo revisamos y orientamos la primera conversación.',
     '/en/contact',
   ],
   '/es/privacidad': [
@@ -117,39 +117,39 @@ export const PAGES = {
   ],
 
   '/es/industrias': [
-    'IA y transformación por industria | BECOME',
-    'Cómo se aplica la IA en servicios financieros, minería y energía, retail, travel, real estate y salud: dónde está el valor, qué workflows cambian y qué se mide.',
+    'IA por industria: banca, minería, retail y más | BECOME',
+    'IA aplicada a banca, minería, retail, hotelería, inmobiliario, construcción y salud, con procesos y métricas propios de cada industria.',
     '/en/industries',
   ],
-  '/es/industrias/servicios-financieros': [
-    'IA para banca y seguros | BECOME',
-    'IA aplicada en servicios financieros: expedientes, crédito y riesgo, KYC, siniestros y cumplimiento, con supervisión humana y trazabilidad desde el diseño.',
-    '/en/industries/financial-services',
+  '/es/industrias/banca-seguros-fintech': [
+    'IA para banca, seguros y fintech | BECOME',
+    'IA aplicada a crédito, fraude, operaciones, KYC, AML, siniestros, cobranza, conciliaciones y canales digitales, con trazabilidad y supervisión humana.',
+    '/en/industries/banking-insurance-fintech',
   ],
   '/es/industrias/mineria-energia': [
-    'IA para minería y energía | BECOME',
-    'IA aplicada en operaciones intensivas en activos: conocimiento técnico, mantenimiento, informes de turno, permisos y HSE, con la decisión siempre en la persona.',
+    'IA para minería y operaciones mineras | BECOME',
+    'IA aplicada a planeamiento mina, perforación y voladura, carguío y acarreo, chancado, molienda, flotación, mantenimiento y paradas de planta.',
     '/en/industries/mining-energy',
   ],
-  '/es/industrias/retail-consumo': [
-    'IA para retail y consumo | BECOME',
-    'IA aplicada en retail: contenido de producto a escala, decisiones comerciales semanales, atención al cliente y campañas, con reglas de marca verificables.',
-    '/en/industries/retail-consumer',
+  '/es/industrias/retail-consumo-masivo': [
+    'IA para retail y consumo masivo | BECOME',
+    'IA aplicada a surtido, inventario, precios, promociones, catálogo, e-commerce, delivery, retiro en tienda, devoluciones y atención al cliente.',
+    '/en/industries/retail-consumer-goods',
   ],
-  '/es/industrias/travel-hospitality': [
-    'IA para travel y hospitality | BECOME',
-    'IA aplicada en hotelería, aerolíneas y turismo: atención previa a la reserva, cambios e incidencias, postventa y conocimiento operativo entre turnos.',
+  '/es/industrias/turismo-hoteleria': [
+    'IA para turismo y hotelería | BECOME',
+    'IA para reservas, revenue management, atención al huésped, check-in, operación hotelera, eventos, reputación y fidelización.',
     '/en/industries/travel-hospitality',
   ],
-  '/es/industrias/real-estate-construction': [
-    'IA para real estate y construcción | BECOME',
-    'IA aplicada en proyectos inmobiliarios y de construcción: contratos y adendas, expedientes técnicos y permisos, órdenes de cambio, licitaciones y postventa.',
+  '/es/industrias/inmobiliario-construccion': [
+    'IA para inmobiliarias y construcción | BECOME',
+    'IA aplicada a terrenos, factibilidad, ventas, separaciones, minutas, contratos, BIM, RFIs, metrados, valorizaciones, cambios, entrega y postventa.',
     '/en/industries/real-estate-construction',
   ],
-  '/es/industrias/healthcare-life-sciences': [
-    'IA para salud y life sciences | BECOME',
-    'IA aplicada a los procesos administrativos que rodean la atención: admisión, autorizaciones, facturación, compras y formación. Sin diagnóstico ni tratamiento.',
-    '/en/industries/healthcare-life-sciences',
+  '/es/industrias/salud-farmaceutica': [
+    'IA para salud y farmacéutica | BECOME',
+    'IA aplicada a citas, admisión, autorizaciones, facturación, reembolsos, abastecimiento, documentación y operaciones no clínicas.',
+    '/en/industries/healthcare-pharma',
   ],
 
   /* ---------------------------------------------------------------- inglés */
@@ -159,8 +159,8 @@ export const PAGES = {
     '/es',
   ],
   '/en/services': [
-    'AI services for companies | BECOME',
-    'Three ways to start: train your team on AI, define the strategy, or build the capability. Separately or in sequence.',
+    'AI services for companies: NOW, DISCOVER and EMBED | BECOME',
+    'Three ways to move forward with AI: train teams, define strategy and operating model, or build a capability inside the operation.',
     '/es/servicios',
   ],
   '/en/services/become-now': [
@@ -174,8 +174,8 @@ export const PAGES = {
     '/es/servicios/become-discover',
   ],
   '/en/services/become-embed': [
-    'Build AI capabilities that stay | BECOME EMBED™',
-    'We design and build AI agents, copilots and LLM-powered workflows with enterprise data, APIs, integrations, evaluation, governance and observability.',
+    'Implementing AI agents and solutions | BECOME EMBED™',
+    'We design and implement agents, copilots and LLM-based processes with data, APIs, integrations, controls, observability and handover.',
     '/es/servicios/become-embed',
   ],
   '/en/how-we-transform': [
@@ -204,8 +204,8 @@ export const PAGES = {
     '/es/insights',
   ],
   '/en/contact': [
-    'Contact — Start with what you want to change | BECOME',
-    'Share the challenge, the outcome you are aiming for and your organization’s context. We review it and recommend the next step for your AI transformation.',
+    'Contact | BECOME',
+    'Share the challenge, the outcome you are aiming for and your organisation’s context. We review it and shape the first conversation.',
     '/es/contacto',
   ],
   '/en/privacy': [
@@ -224,39 +224,39 @@ export const PAGES = {
     '/es/terminos',
   ],
   '/en/industries': [
-    'AI and transformation by industry | BECOME',
-    'How AI applies across financial services, mining and energy, retail, travel, real estate and healthcare: where the value sits and which workflows change.',
+    'AI by industry: banking, mining, retail and more | BECOME',
+    'AI applied to banking, mining, retail, hospitality, real estate, construction and healthcare, with the processes and metrics of each industry.',
     '/es/industrias',
   ],
-  '/en/industries/financial-services': [
-    'AI for banking and insurance | BECOME',
-    'Applied AI in financial services: file analysis, credit and risk, KYC, claims and compliance, with human oversight and traceability designed in from the start.',
-    '/es/industrias/servicios-financieros',
+  '/en/industries/banking-insurance-fintech': [
+    'AI for banking, insurance and fintech | BECOME',
+    'AI applied to credit, fraud, operations, KYC, AML, claims, collections, reconciliation and digital channels, with traceability and human oversight.',
+    '/es/industrias/banca-seguros-fintech',
   ],
   '/en/industries/mining-energy': [
-    'AI for mining and energy | BECOME',
-    'Applied AI in asset-intensive operations: technical knowledge, maintenance, shift reporting, permits and HSE, with the decision always left to the person.',
+    'AI for mining and energy operations | BECOME',
+    'AI applied to mine planning, drill and blast, loading and haulage, crushing, grinding, flotation, maintenance and plant shutdowns.',
     '/es/industrias/mineria-energia',
   ],
-  '/en/industries/retail-consumer': [
-    'AI for retail and consumer | BECOME',
-    'Applied AI in retail: product content at scale, weekly commercial decisions, customer service and campaigns, against verifiable brand rules.',
-    '/es/industrias/retail-consumo',
+  '/en/industries/retail-consumer-goods': [
+    'AI for retail and consumer goods | BECOME',
+    'AI applied to assortment, inventory, pricing, promotions, catalogue, e-commerce, delivery, click and collect, returns and customer service.',
+    '/es/industrias/retail-consumo-masivo',
   ],
   '/en/industries/travel-hospitality': [
     'AI for travel and hospitality | BECOME',
-    'Applied AI in hotels, airlines and tour operators: pre-booking service, changes and disruption, after-sales and operational knowledge across shifts.',
-    '/es/industrias/travel-hospitality',
+    'AI for bookings, revenue management, guest service, check-in, hotel operations, events, reputation and loyalty.',
+    '/es/industrias/turismo-hoteleria',
   ],
   '/en/industries/real-estate-construction': [
     'AI for real estate and construction | BECOME',
-    'Applied AI in property and construction projects: contracts and amendments, technical files and permits, change orders, tenders and after-sales.',
-    '/es/industrias/real-estate-construction',
+    'AI applied to land, feasibility, sales, reservations, contracts, BIM, RFIs, quantities, progress valuations, changes, handover and after-sales.',
+    '/es/industrias/inmobiliario-construccion',
   ],
-  '/en/industries/healthcare-life-sciences': [
-    'AI for healthcare and life sciences | BECOME',
-    'Applied AI for the administrative work around care: admissions, authorisations, billing, procurement and enablement. No diagnosis and no treatment.',
-    '/es/industrias/healthcare-life-sciences',
+  '/en/industries/healthcare-pharma': [
+    'AI for healthcare and pharma | BECOME',
+    'AI applied to scheduling, admissions, authorisations, billing, reimbursements, supply, documentation and non-clinical operations.',
+    '/es/industrias/salud-farmaceutica',
   ],
 };
 

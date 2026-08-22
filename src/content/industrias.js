@@ -42,16 +42,16 @@ export const INDUSTRIAS = [
 
   /* ------------------------------------------------ servicios financieros */
   {
-    slug: { es: 'servicios-financieros', en: 'financial-services' },
+    slug: { es: 'banca-seguros-fintech', en: 'banking-insurance-fintech' },
     icon: 'decision',
     servicio: 'become-discover',
     soluciones: ['redisenar-procesos-criticos', 'agentes-de-ia-con-control', 'medir-y-gobernar-valor'],
     programas: ['finanzas', 'legal-compliance-risk'],
 
     es: {
-      nombre: 'Servicios financieros',
-      menu: 'Banca, seguros, fintech y gestión de activos.',
-      h1: 'El producto es información. La ventaja es qué tan rápido se convierte en decisión.',
+      nombre: 'Banca, seguros y fintech',
+      menu: 'Crédito, fraude, operaciones, siniestros, cumplimiento, cobranza y canales digitales.',
+      h1: 'La ventaja no está en tener más datos. Está en decidir mejor con ellos.',
       lead: 'Banca, seguros, fintech y gestión de activos operan sobre datos, reglas y decisiones. La IA no cambia el producto: cambia el tiempo, el criterio y la trazabilidad con que se decide.',
       contexto: [
         'Pocas industrias reúnen tanta información y tienen tan poco tiempo para usarla. Un expediente de crédito, una reclamación, un caso de cumplimiento o una revisión de cartera juntan documentos, sistemas y criterios que hoy conectan personas, no procesos. La IA encaja bien aquí porque el trabajo ya es leer, comparar y decidir.',
@@ -96,9 +96,9 @@ export const INDUSTRIAS = [
     },
 
     en: {
-      nombre: 'Financial services',
-      menu: 'Banking, insurance, fintech and asset management.',
-      h1: 'The product is information. The advantage is how fast it becomes a decision.',
+      nombre: 'Banking, Insurance & Fintech',
+      menu: 'Credit, fraud, operations, claims, compliance, collections and digital channels.',
+      h1: 'The advantage is not having more data. It is deciding better with it.',
       lead: 'Banking, insurance, fintech and asset management run on data, rules and decisions. AI does not change the product — it changes the speed, the consistency and the traceability of every decision.',
       contexto: [
         'Few industries hold this much information and have this little time to use it. A credit file, a claim, a compliance case or a portfolio review pulls together documents, systems and judgment that today are connected by people, not by process. AI fits here because the work already is reading, comparing and deciding.',
@@ -152,9 +152,9 @@ export const INDUSTRIAS = [
     programas: ['operaciones', 'supply-chain-compras'],
 
     es: {
-      nombre: 'Minería y Energía',
-      menu: 'Operaciones intensivas en activos, seguridad y cumplimiento.',
-      h1: 'El valor no está en el dato. Está en la decisión que nadie toma a tiempo.',
+      nombre: 'Minería y energía',
+      menu: 'Planeamiento, mina, concentradora, mantenimiento, seguridad, logística y operaciones intensivas en activos.',
+      h1: 'La operación ya genera la señal. El reto es convertirla en acción a tiempo.',
       lead: 'Una operación intensiva en activos genera más información de la que alcanza a usar. La oportunidad vive en el intervalo entre lo que la operación ya sabe y el momento en que alguien actúa.',
       contexto: [
         'Una faena o una planta produce señales continuas: sensores, mantenimiento, turnos, permisos, incidentes, proveedores. Casi todo se registra y muy poco llega a tiempo a quien decide. El cuello de botella pocas veces es el modelo: es que el conocimiento vive en informes, correos y personas con veinte años de oficio.',
@@ -200,8 +200,8 @@ export const INDUSTRIAS = [
 
     en: {
       nombre: 'Mining & Energy',
-      menu: 'Asset-intensive operations, safety and compliance.',
-      h1: 'The value is not in the data. It is in the decision nobody makes in time.',
+      menu: 'Mine planning, operations, concentrator, maintenance, safety, logistics and asset-intensive work.',
+      h1: 'The operation already produces the signal. The challenge is acting on it in time.',
       lead: 'An asset-intensive operation generates more information than it can use. The opportunity lives in the gap between what the operation already knows and the moment someone acts on it.',
       contexto: [
         'A site or a plant produces continuous signals: sensors, maintenance, shifts, permits, incidents, suppliers. Almost all of it is recorded and very little reaches the decision-maker in time. The bottleneck is rarely the model — it is that the knowledge lives in reports, emails and people with twenty years on the job.',
@@ -248,16 +248,16 @@ export const INDUSTRIAS = [
 
   /* -------------------------------------------------------- retail y consumo */
   {
-    slug: { es: 'retail-consumo', en: 'retail-consumer' },
+    slug: { es: 'retail-consumo-masivo', en: 'retail-consumer-goods' },
     icon: 'product',
     servicio: 'become-embed',
     soluciones: ['productos-y-servicios-con-ia', 'redisenar-procesos-criticos', 'preparar-equipos-para-ia'],
     programas: ['marketing-comunicaciones', 'customer-service-cx'],
 
     es: {
-      nombre: 'Retail y Consumo',
-      menu: 'Surtido, precio, contenido y servicio a velocidad semanal.',
-      h1: 'La demanda cambia más rápido que la capacidad de responder.',
+      nombre: 'Retail y consumo masivo',
+      menu: 'Surtido, inventario, precios, promociones, e-commerce, tiendas, distribución y postventa.',
+      h1: 'Cuando el mercado cambia cada semana, decidir tarde cuesta venta.',
       lead: 'Surtido, precio, contenido y servicio se deciden semana a semana. La IA aporta cuando acorta ese ciclo sin perder el criterio comercial.',
       contexto: [
         'En retail y consumo el problema casi nunca es la falta de datos: es que decidir surtido, precio o contenido exige reunir cinco fuentes distintas y a alguien con criterio para leerlas. Ese alguien es el cuello de botella, y no se resuelve contratando más gente.',
@@ -302,9 +302,9 @@ export const INDUSTRIAS = [
     },
 
     en: {
-      nombre: 'Retail & Consumer',
-      menu: 'Assortment, pricing, content and service at weekly speed.',
-      h1: 'Demand moves faster than the ability to respond.',
+      nombre: 'Retail & Consumer Goods',
+      menu: 'Assortment, inventory, pricing, promotions, e-commerce, stores, distribution and after-sales.',
+      h1: 'When the market moves every week, deciding late costs sales.',
       lead: 'Assortment, pricing, content and service are decided week by week. AI contributes when it shortens that cycle without losing commercial judgment.',
       contexto: [
         'In retail and consumer the problem is almost never a lack of data: it is that deciding assortment, price or content means pulling together five different sources and finding someone with the judgment to read them. That someone is the bottleneck, and hiring more people does not fix it.',
@@ -351,16 +351,16 @@ export const INDUSTRIAS = [
 
   /* ------------------------------------------------------ travel y hotelería */
   {
-    slug: { es: 'travel-hospitality', en: 'travel-hospitality' },
+    slug: { es: 'turismo-hoteleria', en: 'travel-hospitality' },
     icon: 'capability',
     servicio: 'become-embed',
     soluciones: ['agentes-de-ia-con-control', 'productos-y-servicios-con-ia', 'preparar-equipos-para-ia'],
     programas: ['customer-service-cx', 'operaciones'],
 
     es: {
-      nombre: 'Travel y Hospitality',
-      menu: 'Servicio, incidencias y experiencia bajo picos de volumen.',
-      h1: 'La experiencia se decide en los momentos que nadie alcanza a atender.',
+      nombre: 'Turismo y hotelería',
+      menu: 'Reservas, revenue, atención al huésped, operación hotelera, eventos, reputación y fidelización.',
+      h1: 'La experiencia se gana o se pierde en cientos de momentos pequeños.',
       lead: 'Reservas, cambios, incidencias y postventa ocurren en picos. La IA sirve cuando sostiene el criterio del servicio justo donde hoy se pierde por volumen.',
       contexto: [
         'Un hotel, una aerolínea o un operador vive de momentos: la consulta antes de reservar, el cambio de última hora, la incidencia durante el viaje, el reclamo después. Cada uno es corto, específico y depende de información repartida entre reservas, políticas, tarifas y proveedores.',
@@ -406,8 +406,8 @@ export const INDUSTRIAS = [
 
     en: {
       nombre: 'Travel & Hospitality',
-      menu: 'Service, disruption and experience under volume peaks.',
-      h1: 'Experience is decided in the moments nobody gets to.',
+      menu: 'Bookings, revenue, guest service, hotel operations, events, reputation and loyalty.',
+      h1: 'Experience is won or lost across hundreds of small moments.',
       lead: 'Bookings, changes, disruptions and after-sales arrive in peaks. AI helps when it holds the standard of service exactly where volume erodes it today.',
       contexto: [
         'A hotel, an airline or a tour operator lives on moments: the question before booking, the last-minute change, the disruption during the trip, the complaint afterwards. Each one is short, specific and depends on information spread across reservations, policies, fares and suppliers.',
@@ -454,16 +454,16 @@ export const INDUSTRIAS = [
 
   /* --------------------------------------------- real estate y construcción */
   {
-    slug: { es: 'real-estate-construction', en: 'real-estate-construction' },
+    slug: { es: 'inmobiliario-construccion', en: 'real-estate-construction' },
     icon: 'scale',
     servicio: 'become-discover',
     soluciones: ['redisenar-procesos-criticos', 'agentes-de-ia-con-control', 'escalar-ia'],
     programas: ['legal-compliance-risk', 'project-management-pmo'],
 
     es: {
-      nombre: 'Real Estate y Construcción',
-      menu: 'Proyectos que se deciden en contratos, expedientes y permisos.',
-      h1: 'El proyecto se decide en documentos que nadie tiene tiempo de leer.',
+      nombre: 'Inmobiliario y construcción',
+      menu: 'Terrenos, proyectos, ventas, contratos, obra, valorizaciones, entrega y postventa.',
+      h1: 'Un proyecto cambia todos los días. La información también.',
       lead: 'Contratos, expedientes técnicos, permisos y valorizaciones concentran el riesgo del proyecto. La IA aporta justo donde hoy se lee por muestreo.',
       contexto: [
         'Un proyecto inmobiliario o de construcción avanza sobre documentos: contratos, adendas, expedientes técnicos, permisos, valorizaciones, órdenes de cambio. El riesgo aparece cuando algo estaba escrito y nadie llegó a leerlo a tiempo.',
@@ -509,8 +509,8 @@ export const INDUSTRIAS = [
 
     en: {
       nombre: 'Real Estate & Construction',
-      menu: 'Projects decided in contracts, technical files and permits.',
-      h1: 'The project is decided in documents nobody has time to read.',
+      menu: 'Land, projects, sales, contracts, site work, progress valuations, handover and after-sales.',
+      h1: 'A project changes every day. So does the information about it.',
       lead: 'Contracts, technical files, permits and progress claims carry the project’s risk. AI contributes exactly where reading is done by sampling today.',
       contexto: [
         'A real estate or construction project advances on documents: contracts, amendments, technical files, permits, progress claims, change orders. Risk shows up when something was written down and nobody got to it in time.',
@@ -557,16 +557,16 @@ export const INDUSTRIAS = [
 
   /* ------------------------------------------- healthcare y life sciences */
   {
-    slug: { es: 'healthcare-life-sciences', en: 'healthcare-life-sciences' },
+    slug: { es: 'salud-farmaceutica', en: 'healthcare-pharma' },
     icon: 'agents',
     servicio: 'become-now',
     soluciones: ['preparar-equipos-para-ia', 'redisenar-procesos-criticos', 'medir-y-gobernar-valor'],
     programas: ['operaciones', 'recursos-humanos'],
 
     es: {
-      nombre: 'Healthcare y Life Sciences',
-      menu: 'Los procesos administrativos y documentales que rodean la atención.',
-      h1: 'Antes de llegar al paciente, la organización tiene mucho que resolver.',
+      nombre: 'Salud y farmacéutica',
+      menu: 'Citas, admisión, autorizaciones, facturación, abastecimiento, documentación y operaciones no clínicas.',
+      h1: 'Antes y alrededor de la atención hay una operación enorme que también puede mejorar.',
       lead: 'Trabajamos sobre los procesos administrativos, documentales y operativos que rodean la atención. No sobre el diagnóstico ni sobre el tratamiento.',
       /* El límite se declara arriba y se repite en su propio bloque. En esta
          industria, lo que NO se hace es información tan relevante como lo que
@@ -618,9 +618,9 @@ export const INDUSTRIAS = [
     },
 
     en: {
-      nombre: 'Healthcare & Life Sciences',
-      menu: 'The administrative and documentary work around care.',
-      h1: 'Before it reaches the patient, the organisation has a lot to resolve.',
+      nombre: 'Healthcare & Pharma',
+      menu: 'Scheduling, admissions, authorisations, billing, supply, documentation and non-clinical operations.',
+      h1: 'Around care there is a large operation that can improve too.',
       lead: 'We work on the administrative, documentary and operational processes that surround care. Not on diagnosis and not on treatment.',
       limite: {
         titulo: 'Where the line is, stated first',
