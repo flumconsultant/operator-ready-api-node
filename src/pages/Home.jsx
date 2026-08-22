@@ -125,7 +125,13 @@ export default function Home() {
           momento. Un solo CTA principal por viewport. */}
       <Section band="dark" nodeState={0} pad="var(--space-14)">
         <Kicker dark>AI-native transformation company</Kicker>
-        <h1
+        {/* La línea de marca se queda EXACTAMENTE igual a la vista y deja de ser
+            el h1. El motivo es medible: «BECOME WHAT COMES NEXT.» era el mismo
+            h1 en /es y en /en —dos páginas distintas diciéndose lo mismo— y en
+            la versión española estaba, además, en inglés. El h1 pasa a la frase
+            que sí describe esta página, en su idioma. La línea conserva su
+            tamaño, su tipografía y su sitio: no cambia un píxel. */}
+        <p
           style={{
             margin: 'var(--space-6) 0 0',
             fontFamily: 'var(--font-display)',
@@ -138,8 +144,8 @@ export default function Home() {
           }}
         >
           BECOME WHAT COMES NEXT.
-        </h1>
-        <Lead dark>
+        </p>
+        <Lead as="h1" dark>
           Convertimos la IA en una capacidad propia de tu empresa. Conectamos la
           estrategia con personas, datos, agentes, productos y operaciones para
           mejorar decisiones, rediseñar la forma de trabajar y crear nuevas

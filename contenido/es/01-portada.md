@@ -13,10 +13,10 @@
 AI-NATIVE TRANSFORMATION COMPANY
 
 <!-- b0004 -->
-# BECOME WHAT COMES NEXT.
+BECOME WHAT COMES NEXT.
 
 <!-- b0005 -->
-Convertimos la IA en una capacidad propia de tu empresa. Conectamos la estrategia con personas, datos, agentes, productos y operaciones para mejorar decisiones, rediseñar la forma de trabajar y crear nuevas fuentes de valor.
+# Convertimos la IA en una capacidad propia de tu empresa. Conectamos la estrategia con personas, datos, agentes, productos y operaciones para mejorar decisiones, rediseñar la forma de trabajar y crear nuevas fuentes de valor.
 
 <!-- b0006 -->
 Para empresas que necesitan pasar de herramientas aisladas y pilotos a resultados gobernados, adoptados y medibles.

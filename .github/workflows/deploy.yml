@@ -81,6 +81,13 @@ jobs:
       - name: QA de lenguaje del español publicado
         run: node scripts/qa-lenguaje.mjs
 
+      # Y el gate de publicación: títulos, descripciones y h1 únicos, h1 en el
+      # HTML servido, datos estructurados válidos, imágenes con alt y medidas, y
+      # las seis industrias enlazando de verdad. Va aquí por el mismo motivo que
+      # el QA: antes de subir, sobre el HTML que se iba a publicar.
+      - name: Gate de publicación
+        run: node scripts/gate-seo.mjs
+
       - name: Preparar las credenciales del correo
         # La contraseña del buzón no puede estar en el repositorio, y el
         # hosting compartido no tiene forma de leer variables de entorno desde

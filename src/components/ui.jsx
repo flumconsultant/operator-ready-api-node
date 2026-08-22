@@ -125,8 +125,11 @@ export const Headline = ({ children, dark, as = 'h2', size = 'var(--text-h1)', s
   );
 };
 
-export const Lead = ({ children, dark }) => (
-  <p
+/* `as` para los pocos sitios donde esta frase es, además, el titular de la
+   página: en la home la línea de marca se repetía como h1 en los dos idiomas y
+   el encabezado real es esta. El estilo no depende de la etiqueta. */
+export const Lead = ({ children, dark, as: Tag = 'p' }) => (
+  <Tag
     style={{
       margin: 'var(--space-6) 0 0',
       font: 'var(--type-lead)',
@@ -135,7 +138,7 @@ export const Lead = ({ children, dark }) => (
     }}
   >
     {children}
-  </p>
+  </Tag>
 );
 
 export const Body = ({ children, dark, style }) => (

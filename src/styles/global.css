@@ -31,6 +31,12 @@ textarea:focus-visible {
   outline-offset: 3px;
 }
 
+/* El contenedor principal recibe el foco al cambiar de página, para que el
+   teclado y el lector de pantalla empiecen en la página nueva. Es un foco
+   programático, no una parada de tabulación: dibujar un recuadro alrededor de
+   la página entera confundiría más de lo que ayuda. */
+[data-page-root]:focus { outline: none; }
+
 /* Al imprimir no hay scroll: los reveals que nunca entraron en viewport
    quedarían en opacity:0. framer-motion escribe estilo inline, de ahí !important. */
 @media print {
@@ -274,12 +280,24 @@ label {
 }
 
 /* Filas del índice editorial y etapas del framework */
-.row-hit { transition: border-color .3s ease, background .3s ease, padding-left .3s cubic-bezier(.2,.7,.2,1); }
+/* La duración vive en dos sitios a propósito: la de la regla base gobierna la
+   VUELTA al reposo y la de :hover la ida. Salir más rápido de lo que se entra
+   —dos tercios— es lo que hace que una interfaz se sienta atenta en vez de
+   perezosa.
+
+   Sobre `padding-left`, que es una propiedad de maquetación y en teoría hay que
+   evitar animar: se probó a moverlo a `transform` sobre los hijos de la fila, y
+   MEDIDO en esta página resultó peor —de 0-8 recálculos de maquetación por
+   ronda de hover a 12-22, y de 1 ms a 3 ms—, porque pasa de animarse un
+   elemento a animarse cada hijo. La teoría es buena y aquí no se cumple; manda
+   la medición. */
+.row-hit { transition: border-color .2s ease, background .2s ease, padding-left .2s cubic-bezier(.3,0,.8,.15); }
 .row-hit:hover,
 .row-hit:focus-within {
   border-color: var(--green-line) !important;
   background: rgba(0,255,136,.045);
   padding-left: var(--space-4);
+  transition: border-color .3s ease, background .3s ease, padding-left .3s cubic-bezier(.2,.7,.2,1);
 }
 .row-hit:hover h3 { color: var(--text-accent); }
 [data-band="--navy-900"] .row-hit:hover h3,
@@ -314,14 +332,21 @@ label {
   transition: color .2s ease;
 }
 .faq-item summary::-webkit-details-marker { display: none; }
+/* El signo declaraba una transición de `transform` y lo que cambiaba era el
+   CONTENIDO, de «+» a «−». El contenido no se interpola: la transición no
+   animaba nada y el cambio era un salto seco. Ahora es un solo signo que gira
+   45° —el «+» se convierte en «×»— y ahí la transición sí tiene qué animar.
+   Con prefers-reduced-motion el giro ocurre igual pero sin recorrido: el estado
+   se sigue distinguiendo, que es lo que no puede perderse. */
 .faq-item summary::after {
   content: "+";
   font: var(--type-mono);
   font-size: var(--text-h3);
   color: var(--text-accent);
+  transform-origin: center;
   transition: transform .25s cubic-bezier(.2,.7,.2,1);
 }
-.faq-item[open] summary::after { content: "−"; }
+.faq-item[open] summary::after { transform: rotate(45deg); }
 .faq-item summary:hover { color: var(--text-accent); }
 @media (prefers-reduced-motion: reduce) { .faq-item summary::after { transition: none; } }
 

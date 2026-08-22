@@ -51,7 +51,41 @@ function ScrollToAnchor() {
   const { pathname, hash } = useLocation();
 
   React.useEffect(() => {
-    if (!hash) { window.scrollTo({ top: 0 }); return undefined; }
+    if (!hash) {
+      window.scrollTo({ top: 0 });
+      /* Al navegar sin ancla, el foco se queda donde estaba: quien usa teclado
+         sigue tabulando por la página anterior aunque ya se esté viendo otra, y
+         quien usa lector de pantalla no se entera de que hubo un cambio. Se
+         manda el foco al contenido de la página nueva.
+
+         Y hay que ESPERAR a que exista. Las páginas se cargan bajo demanda, así
+         que en el fotograma siguiente al cambio de dirección el <main> que hay
+         en el documento todavía es el de la página anterior: enfocarlo ahí no
+         solo no sirve, es peor —cuando React lo desmonta, el foco cae al
+         <body>, que es exactamente donde estaba—. Se comprobó: enfocando en el
+         primer fotograma, el foco terminaba en BODY.
+
+         Por eso se guarda el <main> actual y se busca hasta que aparezca uno
+         DISTINTO, con un plazo de un segundo y medio para no quedarse mirando
+         indefinidamente si algo falla.
+
+         `preventScroll` porque el scroll ya lo acabamos de poner arriba, y sin
+         él el navegador lo movería otra vez para «enseñar» el elemento. */
+      const anterior = document.getElementById('contenido');
+      const limite = performance.now() + 1500;
+      let id = 0;
+      const buscar = () => {
+        const principal = document.getElementById('contenido');
+        if (principal && principal !== anterior) {
+          principal.setAttribute('tabindex', '-1');
+          principal.focus({ preventScroll: true });
+          return;
+        }
+        if (performance.now() < limite) id = requestAnimationFrame(buscar);
+      };
+      id = requestAnimationFrame(buscar);
+      return () => cancelAnimationFrame(id);
+    }
 
     const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const deadline = performance.now() + 1500;
