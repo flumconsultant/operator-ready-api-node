@@ -143,7 +143,7 @@ export default function Nosotros() {
       </Section>
 
       {/* 09 — equipo: personas reales, desde las fichas del panel */}
-      <Equipo lang="es" />
+      <Equipo lang="es" id="equipo" />
 
       <Section band="darker" pad="var(--space-13)">
         <Kicker dark>La próxima capacidad se construye desde dentro</Kicker>

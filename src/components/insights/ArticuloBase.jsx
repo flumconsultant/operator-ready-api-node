@@ -35,6 +35,11 @@ const COPIA = {
     cierre: '¿Qué idea necesita convertirse en capacidad?',
     cta: 'Contáctanos',
     siguiente: 'Sigue leyendo',
+    equipo: '/es/nosotros#equipo',
+    sobreAutor: 'Sobre el autor',
+    perfil: 'Ver perfil',
+    fuentes: 'Fuentes y lecturas',
+    actualizado: (f) => `Actualizado el ${f}`,
   },
   en: {
     volver: 'All insights',
@@ -45,6 +50,11 @@ const COPIA = {
     cierre: 'Which idea needs to become a capability?',
     cta: 'Get in touch',
     siguiente: 'Keep reading',
+    equipo: '/en/about#team',
+    sobreAutor: 'About the author',
+    perfil: 'View profile',
+    fuentes: 'Sources and further reading',
+    actualizado: (f) => `Updated on ${f}`,
   },
 };
 
@@ -58,11 +68,17 @@ const COLUMNA = { maxWidth: 'var(--maxw-articulo)', marginInline: 'auto' };
  * las iniciales es peor que el nombre solo, porque ocupa el sitio de una cara
  * sin serlo. Si algún día hay foto, aparece; mientras tanto, no se finge.
  */
-function Firma({ autor, fecha, minutos, lang, t }) {
+function Firma({ autor, fecha, actualizado, minutos, lang, t }) {
   const ficha = autorDe(autor);
+  /* La fecha de actualización solo aparece cuando el artículo se ha tocado de
+     verdad. Publicar siempre las dos, iguales, es ruido; y ponerla cuando no
+     hay cambio real es decirle a un buscador algo que no ha pasado. */
   const meta = (
     <>
       <time dateTime={fecha}>{fechaLegible(fecha, lang)}</time>
+      {actualizado && actualizado !== fecha
+        ? <> · <time dateTime={actualizado}>{t.actualizado(fechaLegible(actualizado, lang))}</time></>
+        : null}
       {' · '}{t.lectura(minutos)}
     </>
   );
@@ -70,7 +86,7 @@ function Firma({ autor, fecha, minutos, lang, t }) {
   if (!ficha?.foto) {
     return (
       <p style={{ margin: 'var(--space-8) 0 0', font: 'var(--type-mono)', color: 'var(--slate-400)' }}>
-        {meta}{autor ? ` · ${autor}` : ''}
+        {meta}{autor ? <> · <Link to={t.equipo} style={{ color: 'inherit' }} className="hv-link">{autor}</Link></> : null}
       </p>
     );
   }
@@ -87,11 +103,46 @@ function Firma({ autor, fecha, minutos, lang, t }) {
         style={{ width: 44, height: 44, borderRadius: '50%', objectFit: 'cover', flex: 'none', background: 'var(--navy-900)' }}
       />
       <div style={{ minWidth: 0 }}>
-        <p style={{ margin: 0, font: 'var(--type-body)', color: 'var(--slate-100)' }}>{autor}</p>
+        <p style={{ margin: 0, font: 'var(--type-body)', color: 'var(--slate-100)' }}>
+          <Link to={t.equipo} style={{ color: 'inherit' }} className="hv-link">{autor}</Link>
+        </p>
         <p style={{ margin: 0, font: 'var(--type-mono)', fontSize: 12, color: 'var(--slate-400)' }}>
           {ficha[lang]?.rol ? <>{ficha[lang].rol}{' · '}</> : null}{meta}
         </p>
       </div>
+    </div>
+  );
+}
+
+/**
+ * Sobre el autor.
+ *
+ * Sale de la misma ficha que firma el artículo y que alimenta el Person de los
+ * datos estructurados: cargo, credencial verificable y enlace a su perfil. No
+ * se escribe aquí nada que no esté en la ficha, para que corregir un cargo siga
+ * siendo una edición en el panel y no en el código.
+ */
+function SobreElAutor({ autor, lang, t }) {
+  const ficha = autorDe(autor);
+  if (!ficha) return null;
+  const f = ficha[lang] || {};
+  return (
+    <div style={{ marginTop: 'var(--space-11)', paddingTop: 'var(--space-6)', borderTop: '1px solid var(--border-strong)' }}>
+      <p style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+        {t.sobreAutor}
+      </p>
+      <p style={{ margin: 'var(--space-5) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--text-heading)' }}>
+        <Link to={t.equipo} style={{ color: 'inherit' }} className="hv-link">{ficha.nombre}</Link>
+        {f.rol ? ` — ${f.rol}` : ''}
+      </p>
+      {f.credencial && (
+        <p style={{ margin: 'var(--space-4) 0 0', font: 'var(--type-body)', color: 'var(--text-muted)', maxWidth: '62ch' }}>{f.credencial}</p>
+      )}
+      {ficha.linkedin && (
+        <p style={{ margin: 'var(--space-4) 0 0', font: 'var(--type-body)' }}>
+          <a href={ficha.linkedin} rel="noopener me" target="_blank" style={{ color: 'var(--text-accent)' }}>LinkedIn</a>
+        </p>
+      )}
     </div>
   );
 }
@@ -137,13 +188,37 @@ export default function ArticuloBase({ lang }) {
           <Kicker dark>{[pilar, formato].filter(Boolean).join(' · ')}</Kicker>
           <Headline as="h1" dark style={{ maxWidth: 'none' }}>{a.titulo}</Headline>
           {a.entradilla && <Lead dark>{a.entradilla}</Lead>}
-          <Firma autor={art.autor} fecha={art.fecha} minutos={minutos} lang={lang} t={t} />
+          <Firma autor={art.autor} fecha={art.fecha} actualizado={art.actualizado} minutos={minutos} lang={lang} t={t} />
         </div>
       </Section>
 
       <Section band="light">
         <div style={COLUMNA}>
           <Bloques bloques={a.bloques} lang={lang} />
+          {/* Quién firma, con qué experiencia y dónde verificarla. Un artículo
+              sin esto es una opinión anónima con nombre encima: el lector no
+              tiene forma de saber si quien escribe ha estado dentro del
+              problema. Las fuentes solo aparecen cuando el artículo hace
+              afirmaciones que no son suyas. */}
+          <SobreElAutor autor={art.autor} lang={lang} t={t} />
+          {a.fuentes?.length > 0 && (
+            <div style={{ marginTop: 'var(--space-10)', paddingTop: 'var(--space-6)', borderTop: '1px solid var(--border-strong)' }}>
+              <p style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+                {t.fuentes}
+              </p>
+              <ul style={{ listStyle: 'none', margin: 'var(--space-5) 0 0', padding: 0, display: 'grid', gap: 'var(--space-4)' }}>
+                {a.fuentes.map((f) => (
+                  <li key={f.url || f.titulo} style={{ font: 'var(--type-body)', color: 'var(--text-body)' }}>
+                    {f.url
+                      ? <a href={f.url} rel="noopener nofollow" target="_blank" style={{ color: 'var(--text-accent)' }}>{f.titulo}</a>
+                      : f.titulo}
+                    {f.detalle ? <span style={{ color: 'var(--text-muted)' }}>{` — ${f.detalle}`}</span> : null}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           {/* Al final y no al principio: se comparte lo que se ha terminado de
               leer, y una fila de botones antes del primer párrafo compite con
               el propio artículo por la atención. */}

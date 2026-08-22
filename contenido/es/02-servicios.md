@@ -270,10 +270,10 @@ BECOME NOW™ convierte herramientas de inteligencia artificial generativa en nu
 Trabajamos sobre procesos, documentos y retos reales utilizando el ecosistema autorizado por la empresa —por ejemplo, ChatGPT, Claude, Gemini, Microsoft Copilot y otros LLMs— en lugar de enseñar herramientas de forma aislada.
 
 <!-- b0319 -->
-Nada de ejemplos genéricos: la capacitación se construye sobre la realidad de tu empresa.
+Los casos parten de los procesos, documentos y retos reales de cada área.
 
 <!-- b0320 -->
-LEARN TODAY. APPLY TOMORROW. BUILD CAPACIDAD THAT STAYS.
+LEARN TODAY. APPLY TOMORROW. BUILD CAPABILITY THAT STAYS.
 
 <!-- b0321 -->
 THE ADOPTION GAP
@@ -336,7 +336,7 @@ BUSINESS PROCESS UNDERSTANDING SESSION
 ## Ningún programa comienza antes de entender el trabajo que debe mejorar.
 
 <!-- b0341 -->
-No es una reunión comercial: es donde se decide qué se va a enseñar.
+Es la sesión donde definimos qué trabajo debe mejorar, qué casos vale la pena llevar al programa y qué límites debemos respetar.
 
 <!-- b0342 -->
 ### Objetivos empresariales
@@ -413,10 +413,10 @@ El objetivo no es dominar una interfaz. Es aprender a diseñar mejores workflows
 CÓMO FUNCIONA CADA SESIÓN
 
 <!-- b0369 -->
-## Seis pasos. El último es el que casi nunca ocurre.
+## Cada sesión termina con transferencia.
 
 <!-- b0370 -->
-Cada sesión termina en transferencia: el activo queda documentado y se usa al día siguiente sin nosotros delante.
+El activo queda documentado para que el equipo pueda reutilizarlo al día siguiente, sin nosotros delante.
 
 <!-- b0371 -->
 ### Business challenge
@@ -705,202 +705,211 @@ NOW™ capacita para el trabajo de hoy. BECOME DISCOVER™ define en qué debe c
 - **Descripción:** Define dónde está el valor de la IA, qué capacidades priorizar y qué modelo operativo, gobernanza y hoja de ruta necesita tu empresa.
 
 <!-- b0471 -->
-# Define en qué debe convertirse tu empresa después.
+BECOME DISCOVER™ · ESTRATEGIA Y MODELO OPERATIVO
 
 <!-- b0472 -->
-De ocho a doce semanas para responder tres preguntas: dónde está el valor de la IA en tu negocio, qué se hace primero y cómo tiene que operar la empresa para sostenerlo.
+# Decide dónde está el valor de la IA y qué debe cambiar para capturarlo.
 
 <!-- b0473 -->
-EL PROBLEMA
+Define en qué debe convertirse tu empresa después.
 
 <!-- b0474 -->
-## Actividad de IA sin dirección empresarial.
+De ocho a doce semanas para responder tres preguntas: dónde está el valor de la IA en tu negocio, qué se hace primero y cómo tiene que operar la empresa para sostenerlo.
 
 <!-- b0475 -->
-No es un problema de tecnología: son muchas iniciativas y ninguna tesis. Sin una ambición compartida, cada área propone sus casos y nadie tiene un criterio único de valor.
+EL PROBLEMA
 
 <!-- b0476 -->
-El resultado es previsible: más pilotos, más gasto y la misma pregunta sin responder sobre dónde está el valor.
+## Actividad de IA sin dirección empresarial.
 
 <!-- b0477 -->
-## Cinco condiciones que hacen de BECOME DISCOVER™ el paso correcto.
+No es un problema de tecnología: son muchas iniciativas y ninguna tesis. Sin una ambición compartida, cada área propone sus casos y nadie tiene un criterio único de valor.
 
 <!-- b0478 -->
-Existe executive sponsorship.
+El resultado es previsible: más pilotos, más gasto y la misma pregunta sin responder sobre dónde está el valor.
 
 <!-- b0479 -->
-Hay iniciativas de IA sin coherencia empresarial.
+## Cinco condiciones que hacen de BECOME DISCOVER™ el paso correcto.
 
 <!-- b0480 -->
-Un dominio de negocio necesita reinvención.
+Existe executive sponsorship.
 
 <!-- b0481 -->
-El liderazgo necesita un portafolio, un estado objetivo o una hoja de ruta.
+Hay iniciativas de IA sin coherencia empresarial.
 
 <!-- b0482 -->
-La empresa involucrará a líderes de negocio, tecnología, datos y People.
+Un dominio de negocio necesita reinvención.
 
 <!-- b0483 -->
-Primero la dirección. Después la inversión.
+El liderazgo necesita un portafolio, un estado objetivo o una hoja de ruta.
 
 <!-- b0484 -->
-EL RECORRIDO
+La empresa involucrará a líderes de negocio, tecnología, datos y People.
 
 <!-- b0485 -->
-## BECOME DISCOVER™ cubre B–E–C–O del framework.
+Primero la dirección. Después la inversión.
 
 <!-- b0486 -->
-Las dos últimas etapas —Make & Embed y Expand & Evolve— son el territorio de BECOME EMBED™. Operating Model Design es el punto de transición visible entre los dos servicios.
+EL RECORRIDO
 
 <!-- b0487 -->
-### Business Ambition
+## BECOME DISCOVER™ cubre B–E–C–O del framework.
 
 <!-- b0488 -->
-Define en qué debe convertirse la empresa y qué resultados importan.
+Las dos últimas etapas —Make & Embed y Expand & Evolve— son el territorio de BECOME EMBED™. Operating Model Design es el punto de transición visible entre los dos servicios.
 
 <!-- b0489 -->
-Output: AI-native ambition y tesis estratégica.
+### Business Ambition
 
 <!-- b0490 -->
-### Enterprise Discovery
+Define en qué debe convertirse la empresa y qué resultados importan.
 
 <!-- b0491 -->
-Comprende cómo funciona hoy y qué limita el cambio.
+Output: AI-native ambition y tesis estratégica.
 
 <!-- b0492 -->
-Output: Diagnóstico de la empresa y su preparación.
+### Enterprise Discovery
 
 <!-- b0493 -->
-### Elección de capacidades
+Comprende cómo funciona hoy y qué limita el cambio.
 
 <!-- b0494 -->
-Prioriza dónde la IA puede crear valor diferencial.
+Output: Diagnóstico de la empresa y su preparación.
 
 <!-- b0495 -->
-Output: Dónde está el valor y un portafolio priorizado.
+### Elección de capacidades
 
 <!-- b0496 -->
-### Operating Model Design
+Prioriza dónde la IA puede crear valor diferencial.
 
 <!-- b0497 -->
-Diseña el sistema futuro de Personas, Datos, Agentes, Productos y Operaciones.
+Output: Dónde está el valor y un portafolio priorizado.
 
 <!-- b0498 -->
-Output: Modelo operativo objetivo y diseño de la solución.
+### Operating Model Design
 
 <!-- b0499 -->
-TECHNOLOGY LANDSCAPE
+Diseña el sistema futuro de Personas, Datos, Agentes, Productos y Operaciones.
 
 <!-- b0500 -->
-## La estrategia de IA también es una estrategia de modelos.
+Output: Modelo operativo objetivo y diseño de la solución.
 
 <!-- b0501 -->
-No todos los casos requieren el mismo LLM, nivel de autonomía o arquitectura.
+TECHNOLOGY LANDSCAPE
 
 <!-- b0502 -->
-Durante DISCOVER analizamos dónde tiene sentido utilizar:
+## La estrategia de IA también es una estrategia de modelos.
 
 <!-- b0503 -->
-- Enterprise copilots
+No todos los casos requieren el mismo LLM, nivel de autonomía o arquitectura.
+
 <!-- b0504 -->
-- General-purpose LLMs
+Durante DISCOVER analizamos dónde tiene sentido utilizar:
+
 <!-- b0505 -->
-- Multimodal models
+- Enterprise copilots
 <!-- b0506 -->
-- AI agents
+- General-purpose LLMs
 <!-- b0507 -->
-- Custom workflows
+- Multimodal models
 <!-- b0508 -->
-- Enterprise search / RAG
+- AI agents
 <!-- b0509 -->
-- SaaS con IA ya contratado
+- Custom workflows
 <!-- b0510 -->
+- Enterprise search / RAG
+<!-- b0511 -->
+- SaaS con IA ya contratado
+<!-- b0512 -->
 - Productos de IA a medida
 
-<!-- b0511 -->
+<!-- b0513 -->
 La decisión entre ecosistemas como OpenAI, Anthropic, Google, Microsoft u otras alternativas se evalúa según valor, datos, integración, riesgo, costo y ownership.
 
-<!-- b0512 -->
+<!-- b0514 -->
 WORKING MODEL
 
-<!-- b0513 -->
+<!-- b0515 -->
 ## Se hace con tu equipo, no sobre tu equipo.
 
-<!-- b0514 -->
-Un accountable lead por engagement y un client team integrado desde la primera semana. Las decisiones y los riesgos se hacen visibles a medida que aparecen, no en la presentación final.
-
-<!-- b0515 -->
-La participación ejecutiva no es opcional: sin las personas que deciden en la sala, el output es un documento, no una dirección.
-
 <!-- b0516 -->
-### Business Ambition Canvas™
+Un responsable claro por engagement y el equipo del cliente integrado desde la primera semana. Las decisiones y los riesgos se hacen visibles a medida que aparecen, no en la presentación final.
 
 <!-- b0517 -->
-Alinear al equipo ejecutivo alrededor de los resultados y las decisiones estratégicas.
+DISCOVER™ requiere participación ejecutiva en las decisiones clave: prioridad, inversión, responsable y modelo operativo.
 
 <!-- b0518 -->
-Evaluar la madurez en Personas, Datos, Agentes, Productos y Operaciones.
+HERRAMIENTAS PROPIAS
 
 <!-- b0519 -->
-Priorizar oportunidades por valor, feasibility, velocidad y riesgo.
+### Business Ambition Canvas™
 
 <!-- b0520 -->
-Definir el modelo operativo objetivo y el diseño de la transformación.
+Alinear al equipo ejecutivo alrededor de los resultados y las decisiones estratégicas.
 
 <!-- b0521 -->
-ENTREGABLES
+Evaluar la madurez en Personas, Datos, Agentes, Productos y Operaciones.
 
 <!-- b0522 -->
-## Qué queda al terminar.
+Priorizar oportunidades por valor, feasibility, velocidad y riesgo.
 
 <!-- b0523 -->
-- — AI-native ambition y tesis estratégica.
+Definir el modelo operativo objetivo y el diseño de la transformación.
+
 <!-- b0524 -->
-- — Diagnóstico de la empresa e Inside Readiness Index™.
+ENTREGABLES
+
 <!-- b0525 -->
-- — Value pools y portafolio priorizado de capacidades.
+## Qué queda al terminar.
+
 <!-- b0526 -->
-- — Target operating model.
+- — AI-native ambition y tesis estratégica.
 <!-- b0527 -->
+- — Diagnóstico de la empresa e Inside Readiness Index™.
+<!-- b0528 -->
+- — Value pools y portafolio priorizado de capacidades.
+<!-- b0529 -->
+- — Target operating model.
+<!-- b0530 -->
 - — Diseño de la transformación, caso de negocio y hoja de ruta.
 
-<!-- b0528 -->
+<!-- b0531 -->
 DECISIONES QUE PUEDES TOMAR
 
-<!-- b0529 -->
+<!-- b0532 -->
 ## Cuatro preguntas, respondidas con criterio explícito.
 
-<!-- b0530 -->
-- ? Dónde la IA puede crear valor empresarial diferencial.
-<!-- b0531 -->
-- ? Qué debe cambiar dentro para que ese valor sea posible.
-<!-- b0532 -->
-- ? Qué capacidad construir primero y con qué criterios.
 <!-- b0533 -->
+- ? Dónde la IA puede crear valor empresarial diferencial.
+<!-- b0534 -->
+- ? Qué debe cambiar dentro para que ese valor sea posible.
+<!-- b0535 -->
+- ? Qué capacidad construir primero y con qué criterios.
+<!-- b0536 -->
 - ? Qué inversión, qué secuencia y qué gobernanza sostienen el plan.
 
-<!-- b0534 -->
+<!-- b0537 -->
 Al terminar BECOME DISCOVER™, el liderazgo sabe dónde la IA puede crear valor, qué debe cambiar dentro de la empresa y qué capacidad debe construir primero.
 
-<!-- b0535 -->
+<!-- b0538 -->
 Duración
 
-<!-- b0536 -->
+<!-- b0539 -->
 8–12 semanas, según alcance y disponibilidad ejecutiva.
 
-<!-- b0537 -->
+<!-- b0540 -->
 Siguiente paso
 
-<!-- b0538 -->
+<!-- b0541 -->
 BECOME EMBED™ del primer caso priorizado.
 
-<!-- b0539 -->
+<!-- b0542 -->
 ENCUENTRA EL PUNTO CORRECTO PARA COMENZAR
 
-<!-- b0540 -->
+<!-- b0543 -->
 ## Cuéntanos qué necesita cambiar en el negocio.
 
-<!-- b0541 -->
+<!-- b0544 -->
 Determinaremos si BECOME DISCOVER™ es el primer paso adecuado. Si no lo es, te lo diremos.
 
 ---
@@ -909,221 +918,224 @@ Determinaremos si BECOME DISCOVER™ es el primer paso adecuado. Si no lo es, te
 
 **En Google** (no se ve en la página):
 
-<!-- b0542 -->
+<!-- b0545 -->
 - **Título:** Implementación de agentes y soluciones de IA | BECOME EMBED™
-<!-- b0543 -->
+<!-- b0546 -->
 - **Descripción:** Diseñamos e implementamos agentes, copilotos y procesos basados en LLMs con datos, APIs, integraciones, controles, observabilidad y transferencia.
 
-<!-- b0544 -->
+<!-- b0547 -->
 # Convierte una prioridad de IA en una capacidad lista para operar.
 
-<!-- b0545 -->
+<!-- b0548 -->
 Diseñamos y construimos copilots, AI agents y workflows basados en LLMs conectados a los datos, herramientas y sistemas de tu organización.
 
-<!-- b0546 -->
+<!-- b0549 -->
 Trabajamos desde la selección del modelo y la arquitectura hasta las APIs, integraciones, controles, evaluación, observabilidad y human-in-the-loop necesarios para operar con confianza. De ocho a doce semanas, con el equipo que va a usarla todos los días.
 
-<!-- b0547 -->
+<!-- b0550 -->
 EL PROBLEMA
 
-<!-- b0548 -->
-## Prototypes que nunca se convierten en capacidad operativa.
-
-<!-- b0549 -->
-El piloto funciona en la demo y desaparece en la operación. No falla el modelo: falla que se construyó al lado del trabajo real en vez de dentro.
-
-<!-- b0550 -->
-Al terminar el proyecto nadie es dueño del resultado, el proceso sigue igual y no hay una medida contra la que decidir si merece escalarse.
-
 <!-- b0551 -->
-QUÉ PUEDE CONSTRUIRSE
+## Prototipos que nunca se convierten en capacidad operativa.
 
 <!-- b0552 -->
-## Cuatro formas de capacidad, un mismo estándar.
+El piloto funciona en la demo y desaparece en la operación. No falla el modelo: falla que se construyó al lado del trabajo real en vez de dentro.
 
 <!-- b0553 -->
-### Proceso AI-native
+Al terminar el proyecto nadie es dueño del resultado, el proceso sigue igual y no hay una medida contra la que decidir si merece escalarse.
 
 <!-- b0554 -->
-Un proceso rediseñado de principio a fin, con personas y agentes trabajando juntos.
+QUÉ PUEDE CONSTRUIRSE
 
 <!-- b0555 -->
-### Agent o copilot
+## Cuatro formas de capacidad, un mismo estándar.
 
 <!-- b0556 -->
-Una capacidad con límites de autonomía, integración y accountability explícitos.
+### Proceso AI-native
 
 <!-- b0557 -->
-### Decision system
+Un proceso rediseñado de principio a fin, con personas y agentes trabajando juntos.
 
 <!-- b0558 -->
-El flujo de información y la decisión de alto valor que lo consume.
+### Agente o copiloto
 
 <!-- b0559 -->
-### AI-native product
+Una capacidad con límites de autonomía, integración y responsabilidad explícitos.
 
 <!-- b0560 -->
-Una experiencia nueva para clientes o colaboradores, con su operación detrás.
+### Sistema de decisión asistida
 
 <!-- b0561 -->
-Del diseño a la operación.
+El flujo de información que prepara una decisión de alto valor y conserva su trazabilidad.
 
 <!-- b0562 -->
-EL RECORRIDO
+### AI-native product
 
 <!-- b0563 -->
-## BECOME EMBED™ cubre O–M–E del framework.
+Una experiencia nueva para clientes o colaboradores, con su operación detrás.
 
 <!-- b0564 -->
-Puede empezar desde un diseño que ya exista, si cumple los criterios mínimos; no exige haber hecho BECOME DISCOVER™ con nosotros.
+Del diseño a la operación.
 
 <!-- b0565 -->
-### Operating Model Design
+EL RECORRIDO
 
 <!-- b0566 -->
-Valida el diseño: roles, agentes, datos, decisiones, excepciones y controles.
+## BECOME EMBED™ cubre O–M–E del framework.
 
 <!-- b0567 -->
-Output: Agentic Workflow Blueprint™ validado.
+Puede empezar desde un diseño que ya exista, si cumple los criterios mínimos; no exige haber hecho BECOME DISCOVER™ con nosotros.
 
 <!-- b0568 -->
-### Make & Embed
+### Operating Model Design
 
 <!-- b0569 -->
-Construye, integra y lleva a un entorno real con adopción acompañada.
+Valida el diseño: roles, agentes, datos, decisiones, excepciones y controles.
 
 <!-- b0570 -->
-Output: Capacidad funcionando, con un responsable claro.
+Output: Agentic Workflow Blueprint™ validado.
 
 <!-- b0571 -->
-### Expand & Evolve
+### Make & Embed
 
 <!-- b0572 -->
-Mide, gobierna, transfiere y decide si iterar, integrar, escalar o detener.
+Construye, integra y lleva a un entorno real con adopción acompañada.
 
 <!-- b0573 -->
-Output: Scorecard y scale decision.
+Output: Capacidad funcionando, con un responsable claro.
 
 <!-- b0574 -->
-BAJO EL CAPÓ
+### Expand & Evolve
 
 <!-- b0575 -->
-## Qué hay debajo de una capacidad AI-native.
+Mide, gobierna, transfiere y decide si iterar, integrar, escalar o detener.
 
 <!-- b0576 -->
-MODELS
+Output: Scorecard y scale decision.
 
 <!-- b0577 -->
-LLMs, foundation models y multimodal models. Según el caso, evaluamos alternativas como OpenAI, Anthropic, Google u otros proveedores.
+BAJO EL CAPÓ
 
 <!-- b0578 -->
-ORCHESTRATION
+## Qué hay debajo de una capacidad AI-native.
 
 <!-- b0579 -->
-Agents, model routing, tool calling, APIs, MCP y workflow orchestration.
+MODELS
 
 <!-- b0580 -->
-KNOWLEDGE
+LLMs, foundation models y multimodal models. Según el caso, evaluamos alternativas como OpenAI, Anthropic, Google u otros proveedores.
 
 <!-- b0581 -->
-Enterprise data, RAG, grounding, embeddings, vector search y knowledge sources.
+ORCHESTRATION
 
 <!-- b0582 -->
-INTEGRATIONS
+Agents, model routing, tool calling, APIs, MCP y workflow orchestration.
 
 <!-- b0583 -->
-APIs, aplicaciones empresariales, identidad, permisos y sistemas de negocio.
+KNOWLEDGE
 
 <!-- b0584 -->
-CONTROL
+Enterprise data, RAG, grounding, embeddings, vector search y knowledge sources.
 
 <!-- b0585 -->
-Guardrails, evaluaciones, human-in-the-loop, gestión de excepciones y puntos de aprobación.
+INTEGRATIONS
 
 <!-- b0586 -->
-OPERATIONS
+APIs, aplicaciones empresariales, identidad, permisos y sistemas de negocio.
 
 <!-- b0587 -->
-Observabilidad, tracing, monitoreo, versionado, cost governance y runbooks.
+CONTROL
 
 <!-- b0588 -->
-SUPERVISIÓN HUMANA Y CONTROLES
+Guardrails, evaluaciones, human-in-the-loop, gestión de excepciones y puntos de aprobación.
 
 <!-- b0589 -->
-## Lo que decide el destino de un agent no es la calidad de sus respuestas.
+OPERATIONS
 
 <!-- b0590 -->
-Es quién responde cuando se equivoca y qué pasa con los casos que no encajan. Esas cuatro decisiones se toman antes de escribir la primera línea.
+Observabilidad, tracing, monitoreo, versionado, cost governance y runbooks.
 
 <!-- b0591 -->
-### Autonomy boundaries
+SUPERVISIÓN HUMANA Y CONTROLES
 
 <!-- b0592 -->
-Qué decide el sistema y qué conserva siempre una persona.
+## Lo que determina si un agente puede operar no es solo la calidad de sus respuestas.
 
 <!-- b0593 -->
-### Exception paths
+Es quién responde cuando se equivoca y qué pasa con los casos que no encajan. Esas cuatro decisiones se toman antes de escribir la primera línea.
 
 <!-- b0594 -->
-Qué ocurre con lo que no encaja, y quién es responsable de resolverlo.
+### Autonomy boundaries
 
 <!-- b0595 -->
-### Quality criteria
+Qué decide el sistema y qué conserva siempre una persona.
 
 <!-- b0596 -->
-Cómo se sabe que una salida es aceptable antes de que llegue al cliente.
+### Exception paths
 
 <!-- b0597 -->
-### Permissions y trazabilidad
+Qué ocurre con lo que no encaja, y quién es responsable de resolverlo.
 
 <!-- b0598 -->
-Quién puede hacer qué, y cómo se reconstruye una decisión después.
+### Quality criteria
 
 <!-- b0599 -->
-ADOPCIÓN Y TRANSFERENCIA DE CAPACIDADES
+Cómo se sabe que una salida es aceptable antes de que llegue al cliente.
 
 <!-- b0600 -->
-## El trabajo termina cuando la capacidad pertenece a la empresa.
+### Permissions y trazabilidad
 
 <!-- b0601 -->
-La transferencia no es una sesión de formación al final: el equipo que va a operar la capacidad participa en su diseño y en su construcción. Es la diferencia entre heredar algo y recibirlo.
+Quién puede hacer qué, y cómo se reconstruye una decisión después.
 
 <!-- b0602 -->
-Diseñar roles, agentes, datos, decisiones, excepciones y controles.
+ADOPCIÓN Y TRANSFERENCIA DE CAPACIDADES
 
 <!-- b0603 -->
-Medir uso, confianza, desempeño, control y valor.
+## El trabajo termina cuando la capacidad pertenece a la empresa.
 
 <!-- b0604 -->
-Decidir si iterar, integrar, escalar o detener.
+La transferencia no es una sesión de formación al final: el equipo que va a operar la capacidad participa en su diseño y en su construcción. Es la diferencia entre heredar algo y recibirlo.
 
 <!-- b0605 -->
-ENTREGABLES
+PROPRIETARY TOOLS
 
 <!-- b0606 -->
-## Qué queda al terminar el sprint.
+Diseñar roles, agentes, datos, decisiones, excepciones y controles.
 
 <!-- b0607 -->
-- — Proceso y diseño de la capacidad validados.
+Medir uso, confianza, desempeño, control y valor.
+
 <!-- b0608 -->
-- — Agente, producto o sistema de decisión funcionando.
+Decidir si iterar, integrar, escalar o detener.
+
 <!-- b0609 -->
-- — Modelo de supervisión humana y controles operativos.
+ENTREGABLES
+
 <!-- b0610 -->
-- — Plan de adopción y transferencia de capacidades.
+## Qué queda al terminar el sprint.
+
 <!-- b0611 -->
+- — Proceso y diseño de la capacidad validados.
+<!-- b0612 -->
+- — Agente, producto o sistema de decisión funcionando.
+<!-- b0613 -->
+- — Modelo de supervisión humana y controles operativos.
+<!-- b0614 -->
+- — Plan de adopción y transferencia de capacidades.
+<!-- b0615 -->
 - — Cuadro de mando de desempeño, riesgo y valor.
 
-<!-- b0612 -->
+<!-- b0616 -->
 El sprint termina con una capacidad funcionando en un entorno real, con un responsable claro, controles y medición frente a resultados de negocio.
 
-<!-- b0613 -->
+<!-- b0617 -->
 PASA DEL DISEÑO A UNA CAPACIDAD INCORPORADA
 
-<!-- b0614 -->
+<!-- b0618 -->
 ## Trae un proceso, una decisión o una oportunidad de producto prioritaria.
 
-<!-- b0615 -->
+<!-- b0619 -->
 Definiremos el camino de construcción correcto — o si todavía falta un paso antes.
 
 ---

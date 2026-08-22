@@ -4,60 +4,60 @@
 
 **En Google** (no se ve en la página):
 
-<!-- b3460 -->
+<!-- b3468 -->
 - **Título:** Contacto | BECOME
-<!-- b3461 -->
+<!-- b3469 -->
 - **Descripción:** Comparte el reto, el resultado que buscas y el contexto de tu organización. Lo revisamos y orientamos la primera conversación.
 
-<!-- b3462 -->
+<!-- b3470 -->
 CONTACTO
 
-<!-- b3463 -->
+<!-- b3471 -->
 # Empecemos por lo que quieres cambiar.
 
-<!-- b3464 -->
+<!-- b3472 -->
 Comparte el reto, el resultado que buscas y el contexto de tu organización. Lo revisaremos para entender tu punto de partida y orientar la primera conversación.
 
-<!-- b3465 -->
+<!-- b3473 -->
 ## Cuéntanos el contexto esencial.
 
-<!-- b3466 -->
+<!-- b3474 -->
 No necesitas tener la solución definida. Queremos entender qué necesita cambiar, qué prioridad tiene y qué restricciones debemos considerar.
 
-<!-- b3467 -->
+<!-- b3475 -->
 Menos de dos minutos.
 
-<!-- b3468 -->
+<!-- b3476 -->
 ¿Prefieres agendar directamente?
 
-<!-- b3469 -->
+<!-- b3477 -->
 Reserva una conversación de 30 minutos con el equipo BECOME para revisar el reto, el contexto y el punto de partida más adecuado.
 
-<!-- b3470 -->
+<!-- b3478 -->
 Se abre en Calendly, en una pestaña nueva.
 
-<!-- b3471 -->
+<!-- b3479 -->
 QUÉ OCURRE DESPUÉS
 
-<!-- b3472 -->
+<!-- b3480 -->
 ## Qué ocurre después de que escribes.
 
-<!-- b3473 -->
+<!-- b3481 -->
 ### Revisamos tu contexto
 
-<!-- b3474 -->
+<!-- b3482 -->
 Entendemos el problema, el resultado que buscas y las restricciones que existen hoy.
 
-<!-- b3475 -->
+<!-- b3483 -->
 ### Conversamos sobre el reto
 
-<!-- b3476 -->
+<!-- b3484 -->
 Una conversación de 30 minutos centrada en lo que necesitas cambiar.
 
-<!-- b3477 -->
+<!-- b3485 -->
 ### Definimos el punto de partida
 
-<!-- b3478 -->
+<!-- b3486 -->
 Puede ser BECOME NOW™, DISCOVER™, EMBED™ o una recomendación sobre qué resolver primero.
 
 ---

@@ -11,10 +11,6 @@
     "descripcion": "Rediseñar un proceso no es insertar una IA en él. Es decidir antes qué puede hacer sola, qué necesita firma humana y quién responde si sale mal.",
     "bloques": [
       {
-        "tipo": "entradilla",
-        "texto": "Metieron un agente en medio del proceso y siguieron haciendo exactamente lo mismo. Solo que ahora hay un paso más: alguien copia lo que dice el agente a la hoja de siempre, por si acaso."
-      },
-      {
         "tipo": "parrafo",
         "texto": "«Rediseña antes de automatizar» es la frase que repite todo el mundo. Vendors, boutiques, notas de prensa sindicadas. La dicen con la seguridad de quien entrega una verdad y en realidad entrega una consigna: suena a método y no lo es, porque no dice qué se decide primero, quién lo decide, ni con qué criterio."
       },
@@ -129,10 +125,6 @@
     "entradilla": "They dropped an agent into the middle of the process and kept doing exactly the same thing. Except now there is one extra step: someone copies what the agent says into the usual spreadsheet, just in case.",
     "descripcion": "Redesigning a process isn't inserting an AI into it. It means deciding what it can do alone, what needs a signature, and who answers if it fails.",
     "bloques": [
-      {
-        "tipo": "entradilla",
-        "texto": "They dropped an agent into the middle of the process and kept doing exactly the same thing. Except now there is one extra step: someone copies what the agent says into the usual spreadsheet, just in case."
-      },
       {
         "tipo": "parrafo",
         "texto": "\"Redesign before you automate\" is the line everyone repeats. Vendors, boutiques, syndicated press releases. They say it with the confidence of someone handing over a truth, and what they actually hand over is a slogan. It sounds like a method and is not one, because it never says what gets decided first, who decides it, or against what criteria."

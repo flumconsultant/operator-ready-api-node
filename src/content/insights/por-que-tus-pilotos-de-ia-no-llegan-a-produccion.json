@@ -16,7 +16,7 @@
       },
       {
         "tipo": "parrafo",
-        "texto": "He visto pilotos perfectamente ejecutados morir en silencio. Sin reunión de cancelación, sin acta. Nadie los mata y nadie los financia, así que se quedan corriendo en un entorno de pruebas hasta que el equipo que los construyó se deshace. Al año siguiente el mismo caso de uso reaparece en el backlog con otro nombre y otro sponsor, y vuelve a empezar el teatrito."
+        "texto": "Un patrón frecuente: pilotos perfectamente ejecutados que mueren en silencio. Sin reunión de cancelación, sin acta. Nadie los mata y nadie los financia, así que se quedan corriendo en un entorno de pruebas hasta que el equipo que los construyó se deshace. Al año siguiente el mismo caso de uso reaparece en el backlog con otro nombre y otro sponsor, y el ciclo vuelve a empezar."
       },
       {
         "tipo": "parrafo",
@@ -61,7 +61,7 @@
       },
       {
         "tipo": "parrafo",
-        "texto": "Y hay una segunda cosa, bastante menos cómoda de decir. El piloto lleva dentro un incentivo perverso: mientras siga siendo piloto, nadie responde por su retorno. Se puede enseñar en el comité, se puede meter en la memoria anual, se puede maquillar el reporte de transformación. En cuanto entra en operación se convierte en una línea de coste con nombre y apellido, y alguien tiene que defenderla el año que viene delante de un CFO. Hay más gente de la que parece a quien le conviene que el piloto siga siendo piloto."
+        "texto": "Y hay una segunda cosa, bastante menos cómoda de decir. El piloto lleva dentro un incentivo perverso: mientras siga siendo piloto, nadie responde por su retorno. Se puede enseñar en el comité, se puede meter en la memoria anual, se puede presentar como avance en el reporte de transformación. En cuanto entra en operación se convierte en una línea de coste con nombre y apellido, y alguien tiene que defenderla el año que viene delante de un CFO. Hay más gente de la que parece a quien le conviene que el piloto siga siendo piloto."
       },
       {
         "tipo": "cita",

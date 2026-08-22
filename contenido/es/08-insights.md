@@ -4,129 +4,129 @@
 
 **En Google** (no se ve en la página):
 
-<!-- b3376 -->
+<!-- b3384 -->
 - **Título:** Insights de IA para empresas | BECOME
-<!-- b3377 -->
+<!-- b3385 -->
 - **Descripción:** Análisis de BECOME sobre agentes de IA, procesos, modelos operativos, adopción, gobernanza y creación de valor empresarial.
 
-<!-- b3378 -->
+<!-- b3386 -->
 BECOME INSIGHTS
 
-<!-- b3379 -->
+<!-- b3387 -->
 # Ideas para la empresa que viene después.
 
-<!-- b3380 -->
+<!-- b3388 -->
 Perspectivas sobre AI-native operating models, agentic work, decision intelligence, adoption y responsible scale.
 
-<!-- b3381 -->
+<!-- b3389 -->
 PUBLICADO
 
-<!-- b3382 -->
+<!-- b3390 -->
 ## Lo último que hemos escrito.
 
-<!-- b3383 -->
+<!-- b3391 -->
 ### Cómo rediseñar un proceso para que lo ejecute una IA
 
-<!-- b3384 -->
+<!-- b3392 -->
 Metieron un agente en medio del proceso y siguieron haciendo exactamente lo mismo. Solo que ahora hay un paso más: alguien copia lo que dice el agente a la hoja de siempre, por si acaso.
 
-<!-- b3385 -->
-21 de agosto de 2026 · 7 min
-
-<!-- b3386 -->
-### Por qué tus pilotos de IA no llegan a producción
-
-<!-- b3387 -->
-El piloto salió bien. Y ese es exactamente el momento en el que se quedó parado.
-
-<!-- b3388 -->
-20 de agosto de 2026 · 7 min
-
-<!-- b3389 -->
-### Quién responde cuando responde un agente
-
-<!-- b3390 -->
-La pregunta que decide si un agente llega a producción no es técnica. Es de quién es el resultado cuando sale mal.
-
-<!-- b3391 -->
-20 de agosto de 2026 · 4 min
-
-<!-- b3392 -->
-PILARES EDITORIALES
-
 <!-- b3393 -->
-## Sobre qué vamos a escribir, y sobre qué no.
+21 de agosto de 2026 · 6 min
 
 <!-- b3394 -->
-Cinco líneas. Nada de noticias de modelos, comparativas de herramientas ni resúmenes de lo que ya dijo otro.
+### Por qué tus pilotos de IA no llegan a producción
 
 <!-- b3395 -->
-### The AI-native enterprise
+El piloto salió bien. Y ese es exactamente el momento en el que se quedó parado.
 
 <!-- b3396 -->
-Estrategia, ambition y enterprise design. Qué distingue a una empresa AI-native de una empresa con IA.
+20 de agosto de 2026 · 7 min
 
 <!-- b3397 -->
-### Agentic work
+### Quién responde cuando responde un agente
 
 <!-- b3398 -->
-Procesos, roles, agentes y responsabilidad humana. Cómo cambia el trabajo cuando parte lo hace un sistema.
+La pregunta que decide si un agente llega a producción no es técnica. Es de quién es el resultado cuando sale mal.
 
 <!-- b3399 -->
-### Operating-model reinvention
+20 de agosto de 2026 · 4 min
 
 <!-- b3400 -->
-Personas, Datos, Agentes, Productos y Operaciones. Las decisiones de diseño que determinan dónde se acumula el valor.
+PILARES EDITORIALES
 
 <!-- b3401 -->
-### Value and adoption
+## Sobre qué vamos a escribir, y sobre qué no.
 
 <!-- b3402 -->
-Medición, confianza, gestión del cambio y transferencia de capacidades. Por qué la adopción es un problema de diseño, no de comunicación.
+Cinco líneas. Nada de noticias de modelos, comparativas de herramientas ni resúmenes de lo que ya dijo otro.
 
 <!-- b3403 -->
-### Responsible scale
+### The AI-native enterprise
 
 <!-- b3404 -->
-Gobernanza, controles, riesgo y condiciones para escalar. Cuándo hacerlo y, sobre todo, cuándo no.
+Estrategia, ambition y enterprise design. Qué distingue a una empresa AI-native de una empresa con IA.
 
 <!-- b3405 -->
-FORMATOS
+### Agentic work
 
 <!-- b3406 -->
-## Cada idea tiene su forma.
+Procesos, roles, agentes y responsabilidad humana. Cómo cambia el trabajo cuando parte lo hace un sistema.
 
 <!-- b3407 -->
-### Perspective
+### Operating-model reinvention
 
 <!-- b3408 -->
-Una tesis argumentada sobre hacia dónde va algo.
+Personas, Datos, Agentes, Productos y Operaciones. Las decisiones de diseño que determinan dónde se acumula el valor.
 
 <!-- b3409 -->
-### Field Note
+### Value and adoption
 
 <!-- b3410 -->
-Lo aprendido dentro de un problema concreto.
+Medición, confianza, gestión del cambio y transferencia de capacidades. Por qué la adopción es un problema de diseño, no de comunicación.
 
 <!-- b3411 -->
-### Framework
+### Responsible scale
 
 <!-- b3412 -->
-Una forma reutilizable de estructurar una decisión.
+Gobernanza, controles, riesgo y condiciones para escalar. Cuándo hacerlo y, sobre todo, cuándo no.
 
 <!-- b3413 -->
-### Executive Brief
+FORMATOS
 
 <!-- b3414 -->
-Lo que un comité necesita saber, en su formato.
+## Cada idea tiene su forma.
 
 <!-- b3415 -->
-### Case Evidence
+### Perspective
 
 <!-- b3416 -->
-Trabajo real, solo cuando el cliente lo aprueba.
+Una tesis argumentada sobre hacia dónde va algo.
 
 <!-- b3417 -->
+### Field Note
+
+<!-- b3418 -->
+Lo aprendido dentro de un problema concreto.
+
+<!-- b3419 -->
+### Framework
+
+<!-- b3420 -->
+Una forma reutilizable de estructurar una decisión.
+
+<!-- b3421 -->
+### Executive Brief
+
+<!-- b3422 -->
+Lo que un comité necesita saber, en su formato.
+
+<!-- b3423 -->
+### Case Evidence
+
+<!-- b3424 -->
+Trabajo real, solo cuando el cliente lo aprueba.
+
+<!-- b3425 -->
 ## ¿Qué idea necesita convertirse en capacidad?
 
 ---

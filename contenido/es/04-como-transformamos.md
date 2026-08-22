@@ -4,321 +4,321 @@
 
 **En Google** (no se ve en la página):
 
-<!-- b1765 -->
+<!-- b1772 -->
 - **Título:** Metodología de transformación con IA | BECOME
-<!-- b1766 -->
+<!-- b1773 -->
 - **Descripción:** El método BECOME para pasar de una ambición de IA a una capacidad operativa: cinco sistemas, seis etapas, controles y medición.
 
-<!-- b1767 -->
+<!-- b1774 -->
 BECOME TRANSFORMATION FRAMEWORK
 
-<!-- b1768 -->
+<!-- b1775 -->
 # La transformación sucede dentro.
 
-<!-- b1769 -->
+<!-- b1776 -->
 No añadimos IA por encima de la empresa. Rediseñamos desde dentro los cinco sistemas que deciden si el cambio queda instalado o se apaga con el piloto.
 
-<!-- b1770 -->
+<!-- b1777 -->
 LA TESIS
 
-<!-- b1771 -->
+<!-- b1778 -->
 ## Seis etapas y cinco sistemas.
 
-<!-- b1772 -->
+<!-- b1779 -->
 La mayoría de las iniciativas de IA no fracasan por el modelo. Fracasan porque se construyeron al lado del trabajo real: el proceso siguió igual, nadie quedó a cargo del resultado y no había una medida contra la que decidir si aquello servía.
 
-<!-- b1773 -->
+<!-- b1780 -->
 Este método existe para que ese rediseño tenga un orden. No son fases de consultoría para justificar un calendario: es la secuencia en que las decisiones dependen unas de otras. No se puede elegir una capacidad antes de saber dónde está el valor, ni medir lo que no se definió al principio.
 
-<!-- b1774 -->
+<!-- b1781 -->
 LOS CINCO SISTEMAS
 
-<!-- b1775 -->
+<!-- b1782 -->
 ## Lo que se transforma a la vez, no en paralelo.
 
-<!-- b1776 -->
+<!-- b1783 -->
 No son cinco proyectos simultáneos. En cada etapa se toman decisiones sobre los cinco, porque dejar uno fuera es exactamente lo que hace que el cambio no sobreviva al primer trimestre.
 
-<!-- b1777 -->
+<!-- b1784 -->
 ### People
 
-<!-- b1778 -->
+<!-- b1785 -->
 Personas capaces de trabajar, decidir y colaborar con IA: con criterio propio sobre qué se le puede pedir a un modelo y qué no, y con la responsabilidad del resultado.
 
-<!-- b1779 -->
+<!-- b1786 -->
 ### Data
 
-<!-- b1780 -->
+<!-- b1787 -->
 Datos estructurados y no estructurados preparados para alimentar modelos, búsqueda y decisiones, con permisos y trazabilidad definidos antes de usarlos.
 
-<!-- b1781 -->
+<!-- b1788 -->
 ### Agents
 
-<!-- b1782 -->
+<!-- b1789 -->
 Modelos, copilots y agentes capaces de razonar, usar herramientas y ejecutar partes de un workflow dentro de límites explícitos.
 
-<!-- b1783 -->
+<!-- b1790 -->
 ### Products
 
-<!-- b1784 -->
+<!-- b1791 -->
 Productos y experiencias que incorporan modelos, datos y agentes en la propuesta de valor, no solo en el proceso interno.
 
-<!-- b1785 -->
+<!-- b1792 -->
 Workflows rediseñados para combinar automatización, agentes, decisiones humanas, excepciones y controles en un solo proceso.
 
-<!-- b1786 -->
+<!-- b1793 -->
 LAS SEIS ETAPAS
 
-<!-- b1787 -->
+<!-- b1794 -->
 ## De la ambición al valor, en el orden en que se puede.
 
-<!-- b1788 -->
+<!-- b1795 -->
 ### Enmarcar el resultado
 
-<!-- b1789 -->
+<!-- b1796 -->
 Frame the outcome
 
-<!-- b1790 -->
+<!-- b1797 -->
 - — ¿Qué resultado de negocio tiene que cambiar, y para cuándo?
-<!-- b1791 -->
+<!-- b1798 -->
 - — ¿Quién responde por ese resultado hoy?
-<!-- b1792 -->
+<!-- b1799 -->
 - — ¿Cómo sabremos que cambió, sin discutirlo?
 
-<!-- b1793 -->
+<!-- b1800 -->
 Output: Un resultado declarado, con responsable y con la medida acordada antes de empezar.
 
-<!-- b1794 -->
+<!-- b1801 -->
 ### Entender el sistema
 
-<!-- b1795 -->
+<!-- b1802 -->
 Understand the system
 
-<!-- b1796 -->
+<!-- b1803 -->
 - — ¿Cómo funciona hoy el proceso, incluidas sus excepciones?
-<!-- b1797 -->
+<!-- b1804 -->
 - — ¿Dónde están el conocimiento, los datos y las decisiones?
-<!-- b1798 -->
+<!-- b1805 -->
 - — ¿Qué limita el cambio: la tecnología, el dato, el permiso o la costumbre?
 
-<!-- b1799 -->
+<!-- b1806 -->
 Output: Un diagnóstico del proceso real y de la preparación de los cinco sistemas.
 
-<!-- b1800 -->
+<!-- b1807 -->
 ### Encontrar el valor
 
-<!-- b1801 -->
+<!-- b1808 -->
 Find the value
 
-<!-- b1802 -->
+<!-- b1809 -->
 - — ¿Dónde crea valor la IA de forma diferencial y no solo visible?
-<!-- b1803 -->
+<!-- b1810 -->
 - — ¿Qué se hace primero y qué se deja para después, y por qué?
-<!-- b1804 -->
+<!-- b1811 -->
 - — ¿Cuál es el coste de no hacerlo?
 
-<!-- b1805 -->
+<!-- b1812 -->
 Output: Un portafolio priorizado por valor, viabilidad, velocidad y riesgo.
 
-<!-- b1806 -->
+<!-- b1813 -->
 04
 
-<!-- b1807 -->
+<!-- b1814 -->
 ### Elegir la capacidad
 
-<!-- b1808 -->
+<!-- b1815 -->
 Choose the capability
 
-<!-- b1809 -->
+<!-- b1816 -->
 - — ¿Qué capacidad concreta resuelve el problema priorizado?
-<!-- b1810 -->
+<!-- b1817 -->
 - — ¿Qué decide una persona y qué no decide un sistema?
-<!-- b1811 -->
+<!-- b1818 -->
 - — ¿Qué controles y qué evidencia hacen falta para operarla?
 
-<!-- b1812 -->
+<!-- b1819 -->
 Output: El diseño del modelo operativo objetivo y de la solución, con sus límites.
 
-<!-- b1813 -->
+<!-- b1820 -->
 05
 
-<!-- b1814 -->
+<!-- b1821 -->
 ### Construir e incorporar
 
-<!-- b1815 -->
+<!-- b1822 -->
 Build & embed
 
-<!-- b1816 -->
+<!-- b1823 -->
 - — ¿Cómo se construye dentro del trabajo real y no al lado?
-<!-- b1817 -->
+<!-- b1824 -->
 - — ¿Quién la usa cada día y qué necesita para confiar en ella?
-<!-- b1818 -->
+<!-- b1825 -->
 - — ¿Qué pasa cuando falla, y quién lo resuelve?
 
-<!-- b1819 -->
+<!-- b1826 -->
 Output: La capacidad funcionando dentro de la operación, con supervisión y excepciones definidas.
 
-<!-- b1820 -->
+<!-- b1827 -->
 06
 
-<!-- b1821 -->
+<!-- b1828 -->
 ### Medir y evolucionar
 
-<!-- b1822 -->
+<!-- b1829 -->
 Measure & evolve
 
-<!-- b1823 -->
+<!-- b1830 -->
 - — ¿Qué cambió en el negocio, contra la línea base acordada?
-<!-- b1824 -->
+<!-- b1831 -->
 - — ¿Se está usando, y con qué nivel de confianza?
-<!-- b1825 -->
+<!-- b1832 -->
 - — ¿Se itera, se integra, se escala o se detiene?
 
-<!-- b1826 -->
+<!-- b1833 -->
 Output: Un scorecard y una decisión de escala tomada con evidencia, con la opción real de parar.
 
-<!-- b1827 -->
+<!-- b1834 -->
 CÓMO TRABAJAMOS
 
-<!-- b1828 -->
+<!-- b1835 -->
 ## Cinco principios que no se negocian por velocidad.
 
-<!-- b1829 -->
+<!-- b1836 -->
 ### El valor antes que la tecnología
 
-<!-- b1830 -->
+<!-- b1837 -->
 La conversación no empieza por qué modelo se usa. Empieza por qué decisión, qué proceso o qué experiencia tiene que cambiar. La tecnología se elige después, y por eso se puede cambiar sin rehacer la estrategia.
 
-<!-- b1831 -->
+<!-- b1838 -->
 ### Construir con, no para
 
-<!-- b1832 -->
+<!-- b1839 -->
 El equipo que va a operar la capacidad participa en diseñarla. No por consenso: porque quien conoce las excepciones del proceso es quien lo ejecuta, y esas excepciones son las que deciden si algo funciona en la vida real.
 
-<!-- b1833 -->
+<!-- b1840 -->
 ### Adopción por diseño
 
-<!-- b1834 -->
+<!-- b1841 -->
 La adopción no es un plan de comunicación al final. Es una decisión de diseño desde el principio: qué se integra en la herramienta que ya se usa, qué se simplifica y qué se deja de pedir a las personas.
 
-<!-- b1835 -->
+<!-- b1842 -->
 ### Gobernanza desde el inicio
 
-<!-- b1836 -->
+<!-- b1843 -->
 Los límites, la supervisión humana, la trazabilidad y quién responde se definen antes de construir. Añadirlos después obliga a rehacer, y en un entorno supervisado obliga a rehacer con auditoría delante.
 
-<!-- b1837 -->
+<!-- b1844 -->
 ### La propiedad se queda dentro
 
-<!-- b1838 -->
+<!-- b1845 -->
 Al terminar, la empresa tiene el criterio, la documentación y las personas capaces de operar y evolucionar lo construido. Si para seguir hace falta volver a llamarnos, el trabajo no está terminado.
 
-<!-- b1839 -->
+<!-- b1846 -->
 POR DÓNDE SE ENTRA
 
-<!-- b1840 -->
+<!-- b1847 -->
 ## Tres puntos de entrada al mismo método.
 
-<!-- b1841 -->
+<!-- b1848 -->
 No hay una única puerta. Lo que decide cuál es la adecuada no es el presupuesto: es qué está resuelto y qué no.
 
-<!-- b1842 -->
+<!-- b1849 -->
 Etapas 01–02
 
-<!-- b1843 -->
+<!-- b1850 -->
 CAPACITACIÓN APLICADA
 
-<!-- b1844 -->
+<!-- b1851 -->
 Cuando el equipo ya usa herramientas de IA sin método común. Entra por People y Operations, sobre los procesos y documentos reales del área.
 
-<!-- b1845 -->
+<!-- b1852 -->
 Etapas 01–04
 
-<!-- b1846 -->
+<!-- b1853 -->
 ESTRATEGIA Y MODELO OPERATIVO
 
-<!-- b1847 -->
+<!-- b1854 -->
 Cuando falta decidir dónde está el valor y cómo debe operar la empresa para conseguirlo. Recorre de enmarcar el resultado a elegir la capacidad.
 
-<!-- b1848 -->
+<!-- b1855 -->
 Etapas 04–06
 
-<!-- b1849 -->
+<!-- b1856 -->
 CONSTRUCCIÓN E INCORPORACIÓN
 
-<!-- b1850 -->
+<!-- b1857 -->
 Cuando ya hay una capacidad priorizada y condiciones para construir. Diseña, construye, incorpora y prepara la decisión de escala.
 
-<!-- b1851 -->
+<!-- b1858 -->
 HERRAMIENTAS PROPIAS
 
-<!-- b1852 -->
+<!-- b1859 -->
 ## Siete herramientas, siete decisiones.
 
-<!-- b1853 -->
+<!-- b1860 -->
 No publicamos fórmulas ni ponderaciones. Lo que importa de una herramienta no es su fórmula: es qué decisión permite tomar.
 
-<!-- b1854 -->
+<!-- b1861 -->
 ### Business Ambition Canvas™
 
-<!-- b1855 -->
+<!-- b1862 -->
 Alinear al equipo ejecutivo alrededor de los resultados y las decisiones estratégicas.
 
-<!-- b1856 -->
+<!-- b1863 -->
 Evaluar la madurez en Personas, Datos, Agentes, Productos y Operaciones.
 
-<!-- b1857 -->
+<!-- b1864 -->
 Priorizar oportunidades por valor, viabilidad, velocidad y riesgo.
 
-<!-- b1858 -->
+<!-- b1865 -->
 Definir el modelo operativo objetivo y el diseño de la transformación.
 
-<!-- b1859 -->
+<!-- b1866 -->
 Diseñar roles, agentes, datos, decisiones, excepciones y controles.
 
-<!-- b1860 -->
+<!-- b1867 -->
 Medir uso, confianza, desempeño, control y valor.
 
-<!-- b1861 -->
+<!-- b1868 -->
 Decidir si iterar, integrar, escalar o detener.
 
-<!-- b1862 -->
+<!-- b1869 -->
 EL MISMO MÉTODO, TU INDUSTRIA
 
-<!-- b1863 -->
+<!-- b1870 -->
 ## Dónde aterriza todo esto.
 
-<!-- b1864 -->
+<!-- b1871 -->
 El método no cambia entre sectores. Lo que cambia es dónde está el valor, qué se mide y qué riesgo hay que acotar.
 
-<!-- b1865 -->
+<!-- b1872 -->
 Crédito, fraude, operaciones, siniestros, cumplimiento, cobranza y canales digitales.
 
-<!-- b1866 -->
+<!-- b1873 -->
 Planeamiento, mina, concentradora, mantenimiento, seguridad, logística y operaciones intensivas en activos.
 
-<!-- b1867 -->
+<!-- b1874 -->
 Surtido, inventario, precios, promociones, e-commerce, tiendas, distribución y postventa.
 
-<!-- b1868 -->
+<!-- b1875 -->
 Reservas, revenue, atención al huésped, operación hotelera, eventos, reputación y fidelización.
 
-<!-- b1869 -->
+<!-- b1876 -->
 ### Inmobiliario y construcción
 
-<!-- b1870 -->
+<!-- b1877 -->
 Terrenos, proyectos, ventas, contratos, obra, valorizaciones, entrega y postventa.
 
-<!-- b1871 -->
+<!-- b1878 -->
 ### Salud y farmacéutica
 
-<!-- b1872 -->
+<!-- b1879 -->
 Citas, admisión, autorizaciones, facturación, abastecimiento, documentación y operaciones no clínicas.
 
-<!-- b1873 -->
+<!-- b1880 -->
 APLICA EL MÉTODO A TU EMPRESA
 
-<!-- b1874 -->
+<!-- b1881 -->
 ## ¿En qué debe convertirse tu empresa después?
 
 ---
