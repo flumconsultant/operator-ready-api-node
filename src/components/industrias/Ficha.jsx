@@ -43,16 +43,11 @@ const T = {
     volver: 'Industrias',
     contextoKicker: 'El punto de partida',
     oportunidadesKicker: 'Dónde vemos oportunidad',
-    oportunidades: 'Seis frentes donde la IA cambia el trabajo, no solo la herramienta.',
     workflowsKicker: 'Workflows que se rediseñan',
-    workflows: 'El trabajo real donde ocurre el cambio.',
     tecnologiaKicker: 'Qué tecnología, y con qué control',
-    tecnologia: 'La capacidad se elige después del problema.',
     metricasKicker: 'Qué se mide',
-    metricas: 'Indicadores que dicen si algo cambió de verdad.',
     metricasNota: 'Son las magnitudes que proponemos medir en esta industria, y la línea base se establece antes de construir. No publicamos resultados de terceros.',
     empezarKicker: 'Cómo puede empezar BECOME',
-    empezar: 'Tres puntos de entrada, según qué esté resuelto.',
     enlacesKicker: 'Sigue por aquí',
     servicio: 'Servicio recomendado',
     solucionesTitulo: 'Lo que suele haber detrás',
@@ -64,22 +59,16 @@ const T = {
     otras: 'La pregunta es la misma. La respuesta cambia.',
     verTodas: 'Ver todas las industrias',
     ctaBoton: 'Hablemos de tu iniciativa',
-    ctaTexto: 'Cuéntanos el contexto de tu organización. Respondemos con el punto de partida adecuado, no con una secuencia comercial.',
   },
   en: {
     volver: 'Industries',
     contextoKicker: 'The starting point',
     oportunidadesKicker: 'Where we see opportunity',
-    oportunidades: 'Six fronts where AI changes the work, not just the tool.',
     workflowsKicker: 'Workflows we redesign',
-    workflows: 'The real work where the change happens.',
     tecnologiaKicker: 'Which technology, and under what control',
-    tecnologia: 'The capability is chosen after the problem.',
     metricasKicker: 'What gets measured',
-    metricas: 'Indicators that say whether something actually changed.',
     metricasNota: 'These are the measures we propose for this industry, and the baseline is set before anything is built. We do not publish third-party results.',
     empezarKicker: 'How BECOME can start',
-    empezar: 'Three entry points, depending on what is already resolved.',
     enlacesKicker: 'Continue here',
     servicio: 'Recommended service',
     solucionesTitulo: 'What is usually behind it',
@@ -91,7 +80,6 @@ const T = {
     otras: 'The question is the same. The answer changes.',
     verTodas: 'View all industries',
     ctaBoton: 'Let’s talk about your initiative',
-    ctaTexto: 'Tell us your organisation’s context. We reply with the right starting point, not with a sales sequence.',
   },
 };
 
@@ -171,7 +159,7 @@ export default function FichaIndustria({ lang = 'es', slug }) {
 
       <Section band="darker">
         <Kicker dark>{t.oportunidadesKicker}</Kicker>
-        <Headline dark>{t.oportunidades}</Headline>
+        <Headline dark>{c.oportunidadesTitular}</Headline>
         <Cols min="250px" style={{ marginTop: 'var(--space-10)' }}>
           {c.oportunidades.map(([titulo, linea]) => (
             <Reveal as="div" key={titulo} style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
@@ -188,7 +176,7 @@ export default function FichaIndustria({ lang = 'es', slug }) {
         <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1.2fr)', gap: 'var(--space-9)' }}>
           <Reveal as="div">
             <Kicker>{t.workflowsKicker}</Kicker>
-            <Headline>{t.workflows}</Headline>
+            <Headline>{c.workflowsTitular}</Headline>
           </Reveal>
           <Reveal as="ul" style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 'var(--space-4)' }}>
             {c.workflows.map((w) => (
@@ -203,7 +191,7 @@ export default function FichaIndustria({ lang = 'es', slug }) {
 
       <Section band="dark">
         <Kicker dark>{t.tecnologiaKicker}</Kicker>
-        <Headline dark>{t.tecnologia}</Headline>
+        <Headline dark>{c.tecnologiaTitular}</Headline>
         <Reveal as="p" style={{ margin: 'var(--space-6) 0 0', font: 'var(--type-lead)', color: 'var(--slate-100)', maxWidth: '62ch' }}>
           {c.tecnologia}
         </Reveal>
@@ -211,7 +199,7 @@ export default function FichaIndustria({ lang = 'es', slug }) {
 
       <Section band="light">
         <Kicker>{t.metricasKicker}</Kicker>
-        <Headline>{t.metricas}</Headline>
+        <Headline>{c.metricasTitular}</Headline>
         <Cols min="200px" style={{ marginTop: 'var(--space-9)' }}>
           {c.metricas.map(([titulo, linea]) => (
             <Reveal as="div" key={titulo} style={{ borderTop: '1px solid var(--border-strong)', paddingTop: 'var(--space-5)' }}>
@@ -229,7 +217,7 @@ export default function FichaIndustria({ lang = 'es', slug }) {
 
       <Section band="sunken">
         <Kicker>{t.empezarKicker}</Kicker>
-        <Headline>{t.empezar}</Headline>
+        <Headline>{c.empezarTitular}</Headline>
         <ol style={{ margin: 'var(--space-9) 0 0', padding: 0, listStyle: 'none', display: 'grid', gap: 'var(--space-5)', maxWidth: 'var(--maxw-prose)' }}>
           {c.empezar.map((paso, i) => (
             <Reveal as="li" key={i} index={i} style={{ display: 'flex', gap: 'var(--space-5)', paddingTop: 'var(--space-5)', borderTop: '1px solid var(--border-strong)' }}>
@@ -323,7 +311,7 @@ export default function FichaIndustria({ lang = 'es', slug }) {
       <Section band="darker" pad="var(--space-13)">
         <Kicker dark>{c.nombre}</Kicker>
         <Headline dark>{c.cierre}</Headline>
-        <Lead dark>{t.ctaTexto}</Lead>
+        <Lead dark>{c.cierreTexto}</Lead>
         <div style={{ marginTop: 'var(--space-8)' }}>
           <PrimaryCTA to={contacto}>{t.ctaBoton}</PrimaryCTA>
         </div>
