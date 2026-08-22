@@ -1,0 +1,235 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-08-22",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "value-adoption",
+  "formato": "field-note",
+  "es": {
+    "slug": "por-que-tu-equipo-no-usa-la-ia-que-le-diste",
+    "titulo": "Por qué tu equipo no usa la IA que le diste",
+    "entradilla": "Compraste las licencias. Y tres meses después el panel de uso dice la verdad que nadie enseña en el comité.",
+    "descripcion": "Tu equipo no adopta la IA por falta de formación: la usa a medias porque usarla bien no le conviene a nadie salvo a la empresa.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Compraste las licencias, hiciste el town hall de lanzamiento y prometiste que esto iba a liberar tiempo. Tres meses después el panel de uso dice la verdad: se abren doce de las cien cuentas activadas, y casi siempre son las mismas doce personas."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La respuesta estándar es capacitación. Un webinar más, una guía de prompts, un canal de Slack con casos de uso, quizás un ranking de quién más la usa este mes. Todo eso cuesta presupuesto, sube el número dos semanas, y luego el número vuelve a bajar. Porque el problema nunca fue que la gente no supiera usar la herramienta."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El problema es que usarla bien no le conviene a nadie salvo a la empresa. Y mientras esa cuenta no cuadre, ningún webinar la va a cuadrar."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Cómo consigo que mi equipo use de verdad las herramientas de IA?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "No se consigue explicando mejor la herramienta. Se consigue cambiando lo que pasa después de usarla bien, que hoy en la mayoría de equipos es exactamente nada bueno. Adoptar de verdad significa que alguien note una diferencia medible en cómo trabaja esa persona, y esa diferencia hoy no se traduce en nada que le sirva a quien la produjo."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El uso sube la semana del lanzamiento y baja a la mitad al mes siguiente, sin que nadie lo note hasta el corte trimestral.",
+          "Quien más la usa es junior, y quien menos, senior, porque el senior ya tiene un método que funciona y arriesgarlo no le compensa.",
+          "Nadie mide uso activo por tarea, solo licencias activadas, así que el número que se reporta arriba no dice nada de lo que pasa abajo.",
+          "El tiempo que la herramienta libera se llena con más trabajo del mismo tipo, no con nada distinto ni con menos horas.",
+          "Quien más rinde con IA es también quien más sospecha que su puesto se pueda hacer con menos gente."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema detrás",
+        "texto": "El conflicto de incentivos que nadie pone en la diapositiva."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Pídele a un analista que use IA para hacer su informe en la mitad de tiempo y estás pidiéndole, sin decirlo, que demuestre que sobra la mitad de su semana. Nadie firma eso voluntariamente. La reacción racional no es negarse en público: es usar la herramienta a medias, lo justo para no quedar mal en la encuesta de adopción, lo poco para que el ahorro de tiempo nunca se note."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay una segunda fricción, menos hablada. La curva de aprendizaje tiene un valle, y en ese valle el rendimiento baja antes de subir: los primeros prompts salen mal, la primera revisión tarda más que hacerlo a mano, el primer informe con IA necesita más correcciones que el anterior sin ella. Si esa caída se mide igual que cualquier otra caída de rendimiento, nadie cruza el valle. Y si el tiempo que la IA libera se rellena solo con más tareas de la misma cola, tampoco hay ninguna razón para acelerar: ir más rápido solo significa que el buzón se vacía y vuelve a llenarse."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Le pides a tu equipo que use una herramienta que puede volver prescindible su propio puesto, y esperas que la adopción salga del entusiasmo.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Qué hay que decidir",
+        "texto": "Cuatro respuestas que no están en ningún dashboard de licencias."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Seguridad",
+            "definicion": "Qué le pasa a quien demuestra que su tarea se hace en la mitad de tiempo. Si la respuesta implícita es que sobra gente, nadie va a demostrarlo."
+          },
+          {
+            "termino": "Tiempo liberado",
+            "definicion": "A dónde va la hora que la IA ahorra: a menos horas, a otra tarea de valor distinto, o de vuelta a la misma cola. Sin esa respuesta escrita, el equipo la rellena por defecto con más de lo mismo."
+          },
+          {
+            "termino": "Curva",
+            "definicion": "Quién absorbe el rendimiento más bajo de las primeras semanas mientras alguien aprende a usar la herramienta bien, y durante cuánto tiempo esa caída no cuenta en contra."
+          },
+          {
+            "termino": "Medida",
+            "definicion": "Uso activo por tarea, no licencias activadas. Lo segundo mide compra, no adopción, y es casi lo único que reporta cualquier panel."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Coge al equipo que menos usa la herramienta y pregúntale, sin la palabra «adopción» en la frase, qué pasaría si su jefe viera que su tarea ahora tarda la mitad. Si la respuesta incomoda a alguien, ahí tienes el motivo por el que el panel sigue plano. Y no era falta de formación."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cómo consigo que mi equipo use de verdad las herramientas de IA?",
+            "respuesta": "Cambiando lo que pasa después de que alguien la use bien, no explicándola mejor. Mientras usarla rápido se lea como una prueba de que sobra gente, el equipo la va a usar lo justo para no quedar mal en la encuesta. Hace falta decidir y comunicar a dónde va el tiempo liberado antes de pedir que se libere."
+          },
+          {
+            "pregunta": "¿Por qué mi equipo no usa las herramientas de IA que le di?",
+            "respuesta": "Casi nunca por falta de formación. Es porque demostrar que una tarea ahora tarda la mitad puede leerse como una amenaza directa al propio puesto, y nadie ofrece esa prueba de forma voluntaria. La adopción sube cuando queda claro qué gana la persona, no solo la empresa, con cada hora que la IA le devuelve."
+          },
+          {
+            "pregunta": "¿Cómo se mide la adopción real de la IA en un equipo?",
+            "respuesta": "Con uso activo por tarea, comparado semana a semana dentro del propio equipo, no con licencias activadas. Las licencias activadas miden una compra; el uso activo por tarea mide si alguien de verdad cambió su manera de trabajar. La mayoría de los paneles reportan la primera cifra porque es la fácil de sacar, no porque sea la que importa."
+          },
+          {
+            "pregunta": "¿Qué pasa con el tiempo que libera la IA en un equipo?",
+            "respuesta": "Casi siempre se rellena solo, con más tareas de la misma cola, y entonces nadie nota que hubo una ganancia porque el día sigue viéndose igual de lleno. Si esa hora no se destina a algo distinto y visible, decidido antes de medir la adopción, no hay ningún incentivo real para acelerar el trabajo con IA."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Hablemos de tu adopción",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "why-your-team-wont-use-the-ai-you-gave-them",
+    "titulo": "Why your team won't use the AI you gave them",
+    "entradilla": "You bought the licences. Three months in, the usage panel says the thing nobody puts on the slide.",
+    "descripcion": "Your team isn't undertrained, it's underincentivised: using AI well proves someone's job needs less time, and nobody signs up for that.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "You bought the licences, ran the launch town hall, and promised this would free up time. Three months in, the usage panel tells the truth: twelve of the hundred activated seats get opened, and it is almost always the same twelve people."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The standard response is training. Another webinar, a prompt guide, a Slack channel full of use cases, maybe a leaderboard of who used it most this month. All of it costs budget, bumps the number for two weeks, and then the number drifts back down. Because the problem was never that people didn't know how to use the tool."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The problem is that using it well doesn't pay off for anyone except the company. And no webinar fixes that account."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "Why won't my team actually use the AI tools I gave them?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "You don't get there by explaining the tool better. You get there by changing what happens after someone uses it well, which in most teams today is nothing good at all. Real adoption means someone notices a measurable difference in how that person works, and right now that difference doesn't translate into anything useful for whoever produced it."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Usage spikes launch week and halves the month after, and nobody notices until the quarterly review.",
+          "The heaviest users are junior, and the lightest are senior, because seniors already have a method that works and risking it doesn't pay.",
+          "Nobody tracks active use per task, only activated seats, so the number reported upward says nothing about what happens below.",
+          "The time the tool frees up gets filled with more of the same work, not with anything different or with fewer hours.",
+          "Whoever performs best with AI is also the one most convinced their role could be done with fewer people."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "The incentive conflict nobody puts on the slide."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ask an analyst to use AI to cut their report time in half and you are asking them, without saying so, to prove that half their week is spare. Nobody signs up for that voluntarily. The rational response isn't refusing in public: it's using the tool at half strength, just enough not to look bad in the adoption survey, just little enough that the time saved never shows."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "There is a second friction, talked about less. The learning curve has a dip, and in that dip performance drops before it climbs: the first prompts come out wrong, the first review takes longer than doing it by hand, the first AI-assisted report needs more fixes than the last one did without it. If that dip gets measured the same way as any other performance drop, nobody crosses it. And if the time AI frees up gets refilled automatically with more of the same queue, there is no reason to go faster either: moving quicker just means the inbox empties and fills back up."
+      },
+      {
+        "tipo": "cita",
+        "texto": "You are asking your team to use a tool that could make their own job unnecessary, and expecting adoption to come from enthusiasm.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "What has to be decided",
+        "texto": "Four answers no licence dashboard gives you."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Safety",
+            "definicion": "What happens to whoever proves their task now takes half the time. If the implicit answer is that headcount is spare, nobody is going to prove it."
+          },
+          {
+            "termino": "Freed time",
+            "definicion": "Where the saved hour goes: fewer hours, a different task with different value, or straight back into the same queue. Without that answer written down, the team fills it by default with more of the same."
+          },
+          {
+            "termino": "The dip",
+            "definicion": "Who absorbs the lower output of the first weeks while someone learns to use the tool properly, and for how long that dip doesn't count against them."
+          },
+          {
+            "termino": "The measure",
+            "definicion": "Active use per task, not activated seats. The second measures purchase, not adoption, and it's nearly all any dashboard reports."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take the team using the tool least and ask them, without the word 'adoption' anywhere in the sentence, what would happen if their manager saw their task now taking half the time. If the answer makes anyone uncomfortable, that's why the usage panel is still flat. And it was never about training."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Why won't my team actually use the AI tools I gave them?",
+            "respuesta": "Because of what happens after someone uses it well, not because of how it's explained. While using it fast reads as proof that headcount is spare, the team will use it just enough not to look bad in the survey. Adoption rises once it's clear what the person gains, not only the company, from every hour AI hands back."
+          },
+          {
+            "pregunta": "How do you measure real AI adoption on a team?",
+            "respuesta": "With active use per task, tracked week over week inside the team itself, not with activated seats. Activated seats measure a purchase; active use per task measures whether someone actually changed how they work. Most dashboards report the first number because it's the easy one to pull, not because it's the one that matters."
+          },
+          {
+            "pregunta": "What should happen to the time AI frees up on a team?",
+            "respuesta": "Left alone, it almost always gets refilled with more of the same queue, so nobody notices any gain because the day still looks just as full. Unless that hour gets pointed at something different and visible, decided before adoption gets measured, there is no real incentive to work faster with AI."
+          },
+          {
+            "pregunta": "Why do senior staff use AI less than junior staff?",
+            "respuesta": "Because seniors already have a working method, and risking it for an unproven tool costs them more than it costs a junior who has nothing established yet to protect. That gap closes only when using AI well is rewarded rather than read as evidence that the senior's own judgement was replaceable all along."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's talk about your adoption",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
