@@ -47,7 +47,7 @@ export default function Nosotros() {
           strategy, operating-model design, building and adoption in one system.
         </Lead>
         <div style={{ marginTop: 'var(--space-8)' }}>
-          <PrimaryCTA to="/en/framework">See how we work</PrimaryCTA>
+          <PrimaryCTA to="/en/how-we-transform">See how we work</PrimaryCTA>
         </div>
       </Section>
 

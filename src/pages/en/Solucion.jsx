@@ -92,7 +92,7 @@ export default function Solucion() {
           That’s why the work crosses all five: if one is left out, the change
           doesn’t survive the first quarter.
         </Body>
-        <TextCTA to="/en/framework" dark>Explore the BECOME Framework</TextCTA>
+        <TextCTA to="/en/how-we-transform" dark>How we transform</TextCTA>
       </Section>
 
       <Section band="light">

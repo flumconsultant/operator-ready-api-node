@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import SiteHeader from '../components/SiteHeader.jsx';
 import SiteFooter from '../components/SiteFooter.jsx';
 import Reveal from '../components/Reveal.jsx';
 import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, Card, Cols } from '../components/ui.jsx';
 import { Ico, IcoBadge } from '../components/icons.jsx';
+import { INDUSTRIAS_MENU } from '../site.js';
 import { Banner } from '../components/Media.jsx';
 
 /**
@@ -205,6 +207,30 @@ export default function Servicios() {
             <TextCTA to="/es/contacto">Hablemos de esa revisión</TextCTA>
           </Card>
         </Cols>
+      </Section>
+
+      {/* El puente a industrias. Los tres servicios describen CÓMO se trabaja;
+          quien acaba de leerlos se pregunta si eso aplica a su sector, y sin
+          este bloque tendría que volver al menú para averiguarlo. */}
+      <Section band="light">
+        <Kicker>Tu industria</Kicker>
+        <Headline>Los servicios son los mismos. Dónde está el valor, no.</Headline>
+        <Body>
+          El método no cambia entre sectores. Lo que cambia es qué decisiones
+          pesan, qué workflows concentran el problema y qué riesgo hay que
+          acotar antes de construir.
+        </Body>
+        <Cols min="220px" style={{ marginTop: 'var(--space-9)' }}>
+          {INDUSTRIAS_MENU.map((i, n) => (
+            <Reveal as="div" key={i.slug} index={n} style={{ borderTop: '1px solid var(--border-strong)', paddingTop: 'var(--space-5)' }}>
+              <h3 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', lineHeight: 1.26 }}>
+                <Link to={i.to} style={{ color: 'var(--text-heading)', textDecoration: 'none' }} className="hv-link">{i.label}</Link>
+              </h3>
+              <Body style={{ marginTop: 'var(--space-4)' }}>{i.line}</Body>
+            </Reveal>
+          ))}
+        </Cols>
+        <TextCTA to="/es/industrias">Ver todas las industrias</TextCTA>
       </Section>
 
       <Section band="darker" pad="var(--space-13)">

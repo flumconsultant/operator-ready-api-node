@@ -82,8 +82,14 @@ textarea:focus-visible {
 }
 
 /* Cabecera: nav completo en desktop, burger por debajo de 1180px */
-@media (max-width: 1180px) { [data-nav] { display: none !important; } }
-@media (min-width: 1181px) { [data-burger] { display: none !important; } }
+/* El corte sube de 1180 a 1300. El menú pasó de cuatro entradas a seis y la
+   llamada a la acción de «Contáctanos» a una frase entera: medido en el
+   navegador, la barra no cabe por debajo de 1300 px y lo que ocurre entonces no
+   es que se apriete, es que la última entrada y el botón se salen de la barra.
+   Por debajo de ese ancho el menú completo se abre desde el botón, que además
+   es donde caben las seis secciones con sus descripciones. */
+@media (max-width: 1299px) { [data-nav] { display: none !important; } }
+@media (min-width: 1300px) { [data-burger] { display: none !important; } }
 
 /* Por debajo de 720px, el CTA de píldora y el selector ES/EN no caben junto al
    wordmark: la barra desbordaba y empujaba el burger fuera de pantalla, dejando
@@ -214,6 +220,11 @@ label {
 .hv-nav:hover, .hv-nav:focus-visible { color: var(--electric-green) !important; }
 .hv-foot:hover, .hv-foot:focus-visible { color: var(--electric-green) !important; }
 .hv-lang:hover, .hv-lang:focus-visible { color: var(--electric-green) !important; }
+/* Los enlaces dentro de una tarjeta: el color de reposo también viene en
+   línea, así que la regla necesita el mismo !important que las de arriba.
+   El subrayado aparece solo al apuntar; en reposo, una lista de seis enlaces
+   subrayados dentro de una tarjeta se lee como un párrafo roto. */
+.hv-link:hover, .hv-link:focus-visible { color: var(--text-accent) !important; text-decoration: underline; }
 .cta-primary:hover { background: var(--neon-green); }
 .cta-ghost:hover { border-color: var(--green-line); color: var(--electric-green); }
 .cta-text:hover { color: var(--accent-hover); border-color: var(--green-line); }

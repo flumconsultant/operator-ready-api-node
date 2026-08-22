@@ -12,7 +12,7 @@ import { Figure, Split } from '../../components/Media.jsx';
 import ScrollStage from '../../components/ScrollStage.jsx';
 import GradientField from '../../components/GradientField.jsx';
 import StateTransition from '../../components/StateTransition.jsx';
-import { SOLUCIONES_MENU } from '../../site.en.js';
+import { SOLUCIONES_MENU, INDUSTRIAS_MENU } from '../../site.en.js';
 
 /**
  * Home — English.
@@ -194,11 +194,11 @@ export default function Home() {
           ))}
         </Cols>
 
-        <TextCTA to="/en/framework" dark>Explore the BECOME Framework</TextCTA>
+        <TextCTA to="/en/how-we-transform" dark>How we transform</TextCTA>
       </Section>
 
       <Section band="darker" nodeState={2}>
-        <Kicker dark>The journey</Kicker>
+        <Kicker dark>How we transform</Kicker>
         <Headline dark>Six stages. One path from ambition to value.</Headline>
         <ol style={{ listStyle: 'none', margin: 'var(--space-10) 0 0', padding: 0, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 'var(--space-6)' }}>
           {STAGES.map(([letter, name], i) => (
@@ -217,7 +217,7 @@ export default function Home() {
           decision: readiness, value, design, adoption and scale.
         </Body>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
-          <GhostCTA to="/en/framework" dark>See the framework and its tools</GhostCTA>
+          <GhostCTA to="/en/how-we-transform" dark>How we transform</GhostCTA>
           <PrimaryCTA to="/en/contact">Start with your stage</PrimaryCTA>
         </div>
       </Section>
@@ -282,6 +282,24 @@ export default function Home() {
       </Section>
 
       <VendorNeutral lang="en" />
+
+      {/* Industries: the question that follows the three services is whether
+          any of it applies to the reader's own context. */}
+      <Section band="light">
+        <Kicker>Industries</Kicker>
+        <Headline>The technology can be the same. The value is not.</Headline>
+        <Lead>
+          AI capabilities are horizontal; value is not. What decides the outcome
+          is which decisions, which processes and which risks define your
+          industry.
+        </Lead>
+        <div style={{ marginTop: 'var(--space-10)' }}>
+          {INDUSTRIAS_MENU.map((i, n) => (
+            <IndexRow key={i.slug} index={n} icon={i.icon} to={i.to} num={String(n + 1).padStart(2, '0')} term={i.label} def={i.line} />
+          ))}
+        </div>
+        <TextCTA to="/en/industries">Explore your industry</TextCTA>
+      </Section>
 
       <Section band="sunken">
         <Kicker>Start with your question</Kicker>

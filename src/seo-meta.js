@@ -59,10 +59,10 @@ export const PAGES = {
     'Diseñamos y construimos AI agents, copilots y workflows basados en LLMs con datos, APIs, integraciones, evaluación, governance y observabilidad.',
     '/en/services/become-embed',
   ],
-  '/es/framework': [
-    'BECOME Framework — Cómo trabajamos | BECOME',
+  '/es/como-transformamos': [
+    'Cómo transformamos con IA — El método | BECOME',
     'Seis etapas de la ambición al valor, atravesando los cinco sistemas que deciden si la IA queda instalada: personas, datos, agents, productos y operaciones.',
-    '/en/framework',
+    '/en/how-we-transform',
   ],
   '/es/nosotros': [
     'Nosotros — Consultora AI-native | BECOME',
@@ -105,6 +105,42 @@ export const PAGES = {
     '/en/cookies',
   ],
 
+  '/es/industrias': [
+    'IA y transformación por industria | BECOME',
+    'Cómo se aplica la IA en servicios financieros, minería y energía, retail, travel, real estate y salud: dónde está el valor, qué workflows cambian y qué se mide.',
+    '/en/industries',
+  ],
+  '/es/industrias/servicios-financieros': [
+    'IA para banca y seguros | BECOME',
+    'IA aplicada en servicios financieros: expedientes, crédito y riesgo, KYC, siniestros y cumplimiento, con supervisión humana y trazabilidad desde el diseño.',
+    '/en/industries/financial-services',
+  ],
+  '/es/industrias/mineria-energia': [
+    'IA para minería y energía | BECOME',
+    'IA aplicada en operaciones intensivas en activos: conocimiento técnico, mantenimiento, informes de turno, permisos y HSE, con la decisión siempre en la persona.',
+    '/en/industries/mining-energy',
+  ],
+  '/es/industrias/retail-consumo': [
+    'IA para retail y consumo | BECOME',
+    'IA aplicada en retail: contenido de producto a escala, decisiones comerciales semanales, atención al cliente y campañas, con reglas de marca verificables.',
+    '/en/industries/retail-consumer',
+  ],
+  '/es/industrias/travel-hospitality': [
+    'IA para travel y hospitality | BECOME',
+    'IA aplicada en hotelería, aerolíneas y turismo: atención previa a la reserva, cambios e incidencias, postventa y conocimiento operativo entre turnos.',
+    '/en/industries/travel-hospitality',
+  ],
+  '/es/industrias/real-estate-construction': [
+    'IA para real estate y construcción | BECOME',
+    'IA aplicada en proyectos inmobiliarios y de construcción: contratos y adendas, expedientes técnicos y permisos, órdenes de cambio, licitaciones y postventa.',
+    '/en/industries/real-estate-construction',
+  ],
+  '/es/industrias/healthcare-life-sciences': [
+    'IA para salud y life sciences | BECOME',
+    'IA aplicada a los procesos administrativos que rodean la atención: admisión, autorizaciones, facturación, compras y formación. Sin diagnóstico ni tratamiento.',
+    '/en/industries/healthcare-life-sciences',
+  ],
+
   /* ---------------------------------------------------------------- inglés */
   '/en': [
     'BECOME — AI-native transformation company',
@@ -131,10 +167,10 @@ export const PAGES = {
     'We design and build AI agents, copilots and LLM-powered workflows with enterprise data, APIs, integrations, evaluation, governance and observability.',
     '/es/servicios/become-embed',
   ],
-  '/en/framework': [
-    'BECOME Framework — How we work | BECOME',
+  '/en/how-we-transform': [
+    'How we transform with AI — The method | BECOME',
     'Six stages from ambition to value, crossing the five systems that decide whether AI stays installed: people, data, agents, products and operations.',
-    '/es/framework',
+    '/es/como-transformamos',
   ],
   '/en/about': [
     'About — AI-native transformation company | BECOME',
@@ -175,6 +211,41 @@ export const PAGES = {
     'Terms of use | BECOME',
     'The conditions under which BECOME (FLUM E.I.R.L.) offers the content, services and forms on meetbecome.com: intellectual property, liability and law.',
     '/es/terminos',
+  ],
+  '/en/industries': [
+    'AI and transformation by industry | BECOME',
+    'How AI applies across financial services, mining and energy, retail, travel, real estate and healthcare: where the value sits and which workflows change.',
+    '/es/industrias',
+  ],
+  '/en/industries/financial-services': [
+    'AI for banking and insurance | BECOME',
+    'Applied AI in financial services: file analysis, credit and risk, KYC, claims and compliance, with human oversight and traceability designed in from the start.',
+    '/es/industrias/servicios-financieros',
+  ],
+  '/en/industries/mining-energy': [
+    'AI for mining and energy | BECOME',
+    'Applied AI in asset-intensive operations: technical knowledge, maintenance, shift reporting, permits and HSE, with the decision always left to the person.',
+    '/es/industrias/mineria-energia',
+  ],
+  '/en/industries/retail-consumer': [
+    'AI for retail and consumer | BECOME',
+    'Applied AI in retail: product content at scale, weekly commercial decisions, customer service and campaigns, against verifiable brand rules.',
+    '/es/industrias/retail-consumo',
+  ],
+  '/en/industries/travel-hospitality': [
+    'AI for travel and hospitality | BECOME',
+    'Applied AI in hotels, airlines and tour operators: pre-booking service, changes and disruption, after-sales and operational knowledge across shifts.',
+    '/es/industrias/travel-hospitality',
+  ],
+  '/en/industries/real-estate-construction': [
+    'AI for real estate and construction | BECOME',
+    'Applied AI in property and construction projects: contracts and amendments, technical files and permits, change orders, tenders and after-sales.',
+    '/es/industrias/real-estate-construction',
+  ],
+  '/en/industries/healthcare-life-sciences': [
+    'AI for healthcare and life sciences | BECOME',
+    'Applied AI for the administrative work around care: admissions, authorisations, billing, procurement and enablement. No diagnosis and no treatment.',
+    '/es/industrias/healthcare-life-sciences',
   ],
 };
 

@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { INDUSTRIAS_MENU } from '../../site.en.js';
 import SiteHeader from '../../components/SiteHeader.jsx';
 import SiteFooter from '../../components/SiteFooter.jsx';
 import Reveal from '../../components/Reveal.jsx';
@@ -193,6 +195,29 @@ export default function Servicios() {
             <TextCTA to="/en/contact">Talk about the gate</TextCTA>
           </Card>
         </Cols>
+      </Section>
+
+      {/* The bridge to industries: the three services describe HOW we work, and the
+          next question is whether it applies to the reader’s own sector. */}
+      <Section band="light">
+        <Kicker>Your industry</Kicker>
+        <Headline>The services are the same. Where the value sits is not.</Headline>
+        <Body>
+          The method does not change between sectors. What changes is which
+          decisions carry weight, which workflows concentrate the problem and
+          which risk has to be bounded before anything is built.
+        </Body>
+        <Cols min="220px" style={{ marginTop: 'var(--space-9)' }}>
+          {INDUSTRIAS_MENU.map((i, n) => (
+            <Reveal as="div" key={i.slug} index={n} style={{ borderTop: '1px solid var(--border-strong)', paddingTop: 'var(--space-5)' }}>
+              <h3 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', lineHeight: 1.26 }}>
+                <Link to={i.to} style={{ color: 'var(--text-heading)', textDecoration: 'none' }} className="hv-link">{i.label}</Link>
+              </h3>
+              <Body style={{ marginTop: 'var(--space-4)' }}>{i.line}</Body>
+            </Reveal>
+          ))}
+        </Cols>
+        <TextCTA to="/en/industries">View all industries</TextCTA>
       </Section>
 
       <Section band="darker" pad="var(--space-13)">

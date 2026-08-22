@@ -16,7 +16,9 @@ const HomeEN = lazy(() => import('./pages/en/Home.jsx'));
 const ServiciosEN = lazy(() => import('./pages/en/Servicios.jsx'));
 const DiscoveryEN = lazy(() => import('./pages/en/Discovery.jsx'));
 const BuildEmbedEN = lazy(() => import('./pages/en/BuildEmbed.jsx'));
-const FrameworkEN = lazy(() => import('./pages/en/Framework.jsx'));
+const HowWeTransform = lazy(() => import('./pages/en/HowWeTransform.jsx'));
+const Industries = lazy(() => import('./pages/en/Industries.jsx'));
+const Industry = lazy(() => import('./pages/en/Industry.jsx'));
 const BecomeNowEN = lazy(() => import('./pages/en/BecomeNow.jsx'));
 const ProgramEN = lazy(() => import('./pages/en/Program.jsx'));
 const NosotrosEN = lazy(() => import('./pages/en/Nosotros.jsx'));
@@ -26,7 +28,9 @@ const ContactoEN = lazy(() => import('./pages/en/Contacto.jsx'));
 const SolucionesEN = lazy(() => import('./pages/en/Soluciones.jsx'));
 const SolucionEN = lazy(() => import('./pages/en/Solucion.jsx'));
 const LegalEN = lazy(() => import('./pages/en/Legal.jsx'));
-const Framework = lazy(() => import('./pages/Framework.jsx'));
+const ComoTransformamos = lazy(() => import('./pages/ComoTransformamos.jsx'));
+const Industrias = lazy(() => import('./pages/Industrias.jsx'));
+const Industria = lazy(() => import('./pages/Industria.jsx'));
 const Discovery = lazy(() => import('./pages/Discovery.jsx'));
 const BuildEmbed = lazy(() => import('./pages/BuildEmbed.jsx'));
 const Nosotros = lazy(() => import('./pages/Nosotros.jsx'));
@@ -66,7 +70,19 @@ export const routes = [
   { path: '/en/services/become-discover', element: <DiscoveryEN /> },
   { path: '/en/services/become-embed', element: <BuildEmbedEN /> },
 
-  { path: '/en/framework', element: <FrameworkEN /> },
+  { path: '/en/how-we-transform', element: <HowWeTransform /> },
+
+  /* Industrias: una ruta declarada por industria, no una con :slug.
+     Con parámetro serían una sola entrada y el generador de SEO tendría que
+     saber expandirla; declaradas, cada industria trae su título, su
+     descripción y su hreflang desde seo-meta.js como cualquier otra página. */
+  { path: '/en/industries', element: <Industries /> },
+  { path: '/en/industries/financial-services', element: <Industry slug="financial-services" /> },
+  { path: '/en/industries/mining-energy', element: <Industry slug="mining-energy" /> },
+  { path: '/en/industries/retail-consumer', element: <Industry slug="retail-consumer" /> },
+  { path: '/en/industries/travel-hospitality', element: <Industry slug="travel-hospitality" /> },
+  { path: '/en/industries/real-estate-construction', element: <Industry slug="real-estate-construction" /> },
+  { path: '/en/industries/healthcare-life-sciences', element: <Industry slug="healthcare-life-sciences" /> },
   { path: '/en/about', element: <NosotrosEN /> },
   { path: '/en/about/responsible-ai', element: <ResponsibleAI /> },
 
@@ -87,7 +103,15 @@ export const routes = [
   { path: '/es/servicios/become-discover', element: <Discovery /> },
   { path: '/es/servicios/become-embed', element: <BuildEmbed /> },
 
-  { path: '/es/framework', element: <Framework /> },
+  { path: '/es/como-transformamos', element: <ComoTransformamos /> },
+
+  { path: '/es/industrias', element: <Industrias /> },
+  { path: '/es/industrias/servicios-financieros', element: <Industria slug="servicios-financieros" /> },
+  { path: '/es/industrias/mineria-energia', element: <Industria slug="mineria-energia" /> },
+  { path: '/es/industrias/retail-consumo', element: <Industria slug="retail-consumo" /> },
+  { path: '/es/industrias/travel-hospitality', element: <Industria slug="travel-hospitality" /> },
+  { path: '/es/industrias/real-estate-construction', element: <Industria slug="real-estate-construction" /> },
+  { path: '/es/industrias/healthcare-life-sciences', element: <Industria slug="healthcare-life-sciences" /> },
   { path: '/es/nosotros', element: <Nosotros /> },
   { path: '/es/nosotros/ia-responsable', element: <IaResponsable /> },
 

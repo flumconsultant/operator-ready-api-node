@@ -41,6 +41,16 @@ const enCasos = await import('../src/content/soluciones.en.js');
 /* Cada solución tiene una dirección distinta en cada idioma; sin este mapa, el
    hreflang apuntaría a /en/solutions/escalar-ia, que no existe. */
 const { SLUG_ES_A_EN, SLUG_EN_A_ES } = await import('../src/content/soluciones-slugs.js');
+const { POR_SLUG: INDUSTRIA_POR_SLUG } = await import('../src/content/industrias.js');
+
+/** La industria que sirve una ruta, o null si la ruta no es una industria. */
+function industriaDeRuta(path) {
+  const m = /^\/(es\/industrias|en\/industries)\/([a-z0-9-]+)$/.exec(path);
+  if (!m) return null;
+  const lang = path.startsWith('/en') ? 'en' : 'es';
+  const ind = INDUSTRIA_POR_SLUG[lang][m[2]];
+  return ind ? ind[lang] : null;
+}
 const { IMAGENES: CATALOGO } = await import('../src/content/imagenes.js');
 /* Las fichas de autor se leen del directorio y no por import.meta.glob, que
    solo existe dentro de Vite. */
@@ -402,6 +412,23 @@ function datosEstructurados(path, meta) {
 
   if (/^\/(es\/servicios|en\/services)\/(become-discover|become-embed)$/.test(path)) {
     return [servicio(meta.title.split('|')[0].trim(), meta.description, url), ...base];
+  }
+
+  /* Las páginas de industria también declaran un Service, con `serviceType`
+     puesto al nombre de la industria. Sin ese campo, las seis se describirían
+     igual —«transformación con IA»— y la única señal de que una habla de banca
+     y otra de minería sería el texto libre, que es justo lo que un asistente no
+     puede usar para desambiguar. */
+  const ind = industriaDeRuta(path);
+  if (ind) {
+    return [
+      {
+        ...servicio(meta.title.split('|')[0].trim(), meta.description, url),
+        serviceType: ind.nombre,
+        inLanguage: langOf(path),
+      },
+      ...base,
+    ];
   }
   return base;
 }

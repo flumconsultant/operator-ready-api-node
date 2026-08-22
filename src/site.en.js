@@ -15,6 +15,7 @@
  */
 
 import { PROGRAM_GROUPS, PROGRAMS } from './content/become-now.js';
+import { INDUSTRIAS, RAIZ, urlIndustria } from './content/industrias.js';
 
 export const HOME = '/en';
 
@@ -107,6 +108,17 @@ export const SOLUCIONES_MENU = [
   },
 ].map((c) => ({ ...c, to: `/en/solutions/${c.slug}` }));
 
+/* Las industrias salen del contenido compartido: la lista es la misma en los
+   dos idiomas y solo cambia el texto, así que una industria nueva no se añade
+   aquí. */
+export const INDUSTRIAS_MENU = INDUSTRIAS.map((i) => ({
+  slug: i.slug.en,
+  icon: i.icon,
+  to: urlIndustria(i, 'en'),
+  label: i.en.nombre,
+  line: i.en.menu,
+}));
+
 export const NAV = [
   {
     label: 'Services',
@@ -116,6 +128,24 @@ export const NAV = [
       groups: s.groups, heading: s.heading, more: s.more,
     })),
   },
+  {
+    label: 'Industries',
+    to: '/en/industries',
+    heading: 'The technology can be the same. The value is not.',
+    items: INDUSTRIAS_MENU.map((i) => ({ to: i.to, label: i.label, line: i.line })),
+    more: { to: '/en/industries', label: 'View all industries' },
+    wide: true,
+  },
+  {
+    label: 'Use cases',
+    to: '/en/solutions',
+    heading: 'What needs to change in your company?',
+    items: SOLUCIONES_MENU.map((c) => ({ to: c.to, label: c.label, line: c.line })),
+    more: { to: '/en/solutions', label: 'View all use cases' },
+    wide: true,
+  },
+  { label: 'How we transform', to: '/en/how-we-transform' },
+  { label: 'Insights', to: '/en/insights' },
   {
     label: 'About',
     to: '/en/about',
@@ -132,18 +162,9 @@ export const NAV = [
     more: { to: '/en/about', label: 'See everything about BECOME' },
     wide: true,
   },
-  {
-    label: 'Solutions',
-    to: '/en/solutions',
-    heading: 'What needs to change in your company?',
-    items: SOLUCIONES_MENU.map((c) => ({ to: c.to, label: c.label, line: c.line })),
-    more: { to: '/en/solutions', label: 'View all solutions' },
-    wide: true,
-  },
-  { label: 'Insights', to: '/en/insights' },
 ];
 
-export const CONTACT = { to: '/en/contact', label: 'Contact us' };
+export const CONTACT = { to: '/en/contact', label: 'Let’s talk about your initiative' };
 
 export const FOOTER = [
   { title: 'Services', links: SERVICES.map((s) => ({ to: s.to, label: s.name })) },
@@ -154,13 +175,18 @@ export const FOOTER = [
       label: (PROGRAM_MENU_EN[slug] || PROGRAMS[slug].menu).replace('AI applied to ', ''),
     })).concat([{ to: '/en/services/become-now', label: 'View all programs' }]),
   },
-  { title: 'Solutions', links: SOLUCIONES_MENU.map((c) => ({ to: c.to, label: c.label })) },
+  { title: 'Use cases', links: SOLUCIONES_MENU.map((c) => ({ to: c.to, label: c.label })) },
+  {
+    title: 'Industries',
+    links: INDUSTRIAS_MENU.map((i) => ({ to: i.to, label: i.label }))
+      .concat([{ to: RAIZ.en, label: 'View all industries' }]),
+  },
   {
     title: 'BECOME',
     links: [
       { to: '/en/about', label: 'About' },
       { to: '/en/about/responsible-ai', label: 'Responsible AI' },
-      { to: '/en/framework', label: 'BECOME Framework' },
+      { to: '/en/how-we-transform', label: 'How we transform' },
       { to: '/en/insights', label: 'Insights' },
     ],
   },

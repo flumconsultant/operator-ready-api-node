@@ -1,0 +1,633 @@
+/**
+ * Las seis industrias: contenido completo en los dos idiomas.
+ *
+ * ---- Por qué industria NO es lo mismo que área funcional ----
+ *
+ * En este sitio ya existe `/es/servicios/become-now/finanzas`: un programa de
+ * capacitación para el ÁREA de finanzas, sea cual sea la empresa. Y ahora
+ * existe `/es/industrias/servicios-financieros`: cómo se transforma una empresa
+ * cuyo NEGOCIO es financiero. Son dos cosas distintas y confundirlas produce
+ * dos páginas compitiendo por lo mismo, que es de los pocos errores de SEO que
+ * se castigan de verdad.
+ *
+ * La regla que las separa: un programa habla de una función dentro de
+ * cualquier empresa; una industria habla del negocio entero de un sector. Por
+ * eso ninguna página de industria repite el contenido de un programa: lo
+ * enlaza.
+ *
+ * ---- Por qué el contenido vive aquí y no en los componentes ----
+ *
+ * Doce páginas —seis industrias por dos idiomas— con la misma estructura. Como
+ * componentes serían doce archivos que se desincronizan a la tercera edición.
+ * Aquí la estructura se define una vez y lo que cambia es el texto.
+ *
+ * ---- Y por qué los enlaces se guardan como slug y no como URL ----
+ *
+ * Los slugs de las soluciones NO son iguales en los dos idiomas
+ * (`escalar-ia` / `scale-ai-beyond-pilots`). Guardando la URL completa habría
+ * que escribir cada enlace dos veces y acordarse de las dos al renombrar. Se
+ * guarda el slug español, que es el canónico del repositorio, y cada idioma
+ * resuelve el suyo con el mapa que ya existe.
+ *
+ * ---- Lo que este archivo NO puede contener ----
+ *
+ * Ni un cliente, ni un resultado, ni una cifra, ni una alianza, ni una
+ * afirmación regulatoria. Nada de eso se ha verificado, y una industria se lee
+ * precisamente como la página donde una consultora demuestra experiencia: es
+ * donde más tienta inventar y donde más caro sale. Lo que sí hay es criterio,
+ * que es lo que se puede sostener.
+ */
+
+export const INDUSTRIAS = [
+
+  /* ------------------------------------------------ servicios financieros */
+  {
+    slug: { es: 'servicios-financieros', en: 'financial-services' },
+    icon: 'decision',
+    servicio: 'become-discover',
+    soluciones: ['redisenar-procesos-criticos', 'agentes-de-ia-con-control', 'medir-y-gobernar-valor'],
+    programas: ['finanzas', 'legal-compliance-risk'],
+
+    es: {
+      nombre: 'Servicios financieros',
+      menu: 'Banca, seguros, fintech y gestión de activos.',
+      h1: 'El producto es información. La ventaja es qué tan rápido se convierte en decisión.',
+      lead: 'Banca, seguros, fintech y gestión de activos operan sobre datos, reglas y decisiones. La IA no cambia el producto: cambia el tiempo, el criterio y la trazabilidad con que se decide.',
+      contexto: [
+        'Pocas industrias reúnen tanta información y tienen tan poco tiempo para usarla. Un expediente de crédito, una reclamación, un caso de cumplimiento o una revisión de cartera juntan documentos, sistemas y criterios que hoy conectan personas, no procesos. La IA encaja bien aquí porque el trabajo ya es leer, comparar y decidir.',
+        'Y encaja mal cuando se instala sin control. En un sector supervisado, una capacidad que no puede explicarse ni auditarse no es una ventaja: es una exposición. Por eso el trabajo empieza por dónde se decide y quién responde, no por qué herramienta se compra.',
+      ],
+      oportunidades: [
+        ['Análisis de expedientes', 'Extraer, comparar y resumir contratos, estados financieros y anexos para que el analista empiece con el caso ya leído.'],
+        ['Decisiones de crédito y riesgo', 'Reunir la evidencia, señalar inconsistencias y dejar registrada la justificación junto a la decisión.'],
+        ['Onboarding y KYC', 'Verificar la consistencia de la documentación y preparar el expediente para revisión humana.'],
+        ['Reclamaciones y siniestros', 'Clasificar, contrastar contra la póliza y preparar la respuesta, con las excepciones enrutadas a quien decide.'],
+        ['Cumplimiento y reporte', 'Consultar normativa y políticas internas dejando rastro de qué se leyó para llegar a una conclusión.'],
+        ['Atención y postventa', 'Responder sobre la documentación real del producto, con límites explícitos sobre qué no se contesta.'],
+      ],
+      workflows: [
+        'Originación y evaluación de crédito',
+        'Suscripción y renovación de pólizas',
+        'Gestión de siniestros y reclamaciones',
+        'KYC, AML y monitoreo continuo',
+        'Reporte regulatorio y auditoría interna',
+        'Servicio al cliente, cobranza y retención',
+      ],
+      tecnologia: 'Extracción sobre documentos no estructurados, búsqueda sobre normativa y política interna con la fuente citada, agentes acotados a un paso del proceso, y registro de qué consultó el sistema antes de proponer. La supervisión humana no es una capa que se añade después: es parte del diseño del workflow.',
+      metricas: [
+        ['Tiempo de ciclo', 'Cuánto tarda un expediente desde que entra hasta que hay decisión.'],
+        ['Completitud a la primera', 'Qué proporción de casos llega a revisión sin faltantes.'],
+        ['Retrabajo', 'Cuántas veces vuelve un caso al paso anterior.'],
+        ['Excepciones', 'Cuántas hay, quién las resuelve y en cuánto tiempo.'],
+        ['Trazabilidad', 'Qué proporción de decisiones tiene registrado en qué se basó.'],
+      ],
+      empezar: [
+        'Un programa BECOME NOW™ con el equipo de riesgo, finanzas o legal, sobre sus propios expedientes.',
+        'Un BECOME DISCOVER™ acotado a un proceso concreto —originación o siniestros— para decidir dónde está el valor y qué controles hacen falta.',
+        'Un BECOME EMBED™ sobre el workflow ya priorizado, con supervisión y trazabilidad definidas desde el diseño.',
+      ],
+      cierre: 'Empieza por la decisión que hoy tarda demasiado.',
+    },
+
+    en: {
+      nombre: 'Financial services',
+      menu: 'Banking, insurance, fintech and asset management.',
+      h1: 'The product is information. The advantage is how fast it becomes a decision.',
+      lead: 'Banking, insurance, fintech and asset management run on data, rules and decisions. AI does not change the product — it changes the speed, the consistency and the traceability of every decision.',
+      contexto: [
+        'Few industries hold this much information and have this little time to use it. A credit file, a claim, a compliance case or a portfolio review pulls together documents, systems and judgment that today are connected by people, not by process. AI fits here because the work already is reading, comparing and deciding.',
+        'And it fits badly when it is installed without control. In a supervised sector, a capability that cannot be explained or audited is not an advantage — it is exposure. So the work starts with where decisions are made and who answers for them, not with which tool to buy.',
+      ],
+      oportunidades: [
+        ['File and document analysis', 'Extract, compare and summarise contracts, financial statements and annexes so the analyst starts with the case already read.'],
+        ['Credit and risk decisions', 'Assemble the evidence, flag inconsistencies and record the rationale alongside the decision.'],
+        ['Onboarding and KYC', 'Check documentation for consistency and prepare the file for human review.'],
+        ['Claims handling', 'Classify, check against the policy and draft the response, with exceptions routed to whoever decides.'],
+        ['Compliance and reporting', 'Search regulation and internal policy while keeping a record of what was consulted to reach a conclusion.'],
+        ['Service and after-sales', 'Answer from the product’s actual documentation, with explicit limits on what is not answered.'],
+      ],
+      workflows: [
+        'Credit origination and assessment',
+        'Underwriting and policy renewal',
+        'Claims management',
+        'KYC, AML and ongoing monitoring',
+        'Regulatory reporting and internal audit',
+        'Customer service, collections and retention',
+      ],
+      tecnologia: 'Extraction over unstructured documents, retrieval over regulation and internal policy with the source cited, agents scoped to one step of the process, and a record of what the system consulted before it proposed anything. Human oversight is not a layer added afterwards: it is part of the workflow design.',
+      metricas: [
+        ['Cycle time', 'How long a file takes from intake to decision.'],
+        ['First-pass completeness', 'What share of cases reaches review with nothing missing.'],
+        ['Rework', 'How often a case goes back a step.'],
+        ['Exceptions', 'How many there are, who resolves them and how fast.'],
+        ['Traceability', 'What share of decisions has a record of what they were based on.'],
+      ],
+      empezar: [
+        'A BECOME NOW™ program with the risk, finance or legal team, on their own files.',
+        'A BECOME DISCOVER™ scoped to one process — origination or claims — to decide where the value is and which controls are required.',
+        'A BECOME EMBED™ on the prioritised workflow, with oversight and traceability designed in from the start.',
+      ],
+      cierre: 'Start with the decision that takes too long today.',
+    },
+  },
+
+  /* ------------------------------------------------------ minería y energía */
+  {
+    slug: { es: 'mineria-energia', en: 'mining-energy' },
+    icon: 'flow',
+    servicio: 'become-discover',
+    soluciones: ['redisenar-procesos-criticos', 'escalar-ia', 'preparar-equipos-para-ia'],
+    programas: ['operaciones', 'supply-chain-compras'],
+
+    es: {
+      nombre: 'Minería y Energía',
+      menu: 'Operaciones intensivas en activos, seguridad y cumplimiento.',
+      h1: 'El valor no está en el dato. Está en la decisión que nadie toma a tiempo.',
+      lead: 'Una operación intensiva en activos genera más información de la que alcanza a usar. La oportunidad vive en el intervalo entre lo que la operación ya sabe y el momento en que alguien actúa.',
+      contexto: [
+        'Una faena o una planta produce señales continuas: sensores, mantenimiento, turnos, permisos, incidentes, proveedores. Casi todo se registra y muy poco llega a tiempo a quien decide. El cuello de botella pocas veces es el modelo: es que el conocimiento vive en informes, correos y personas con veinte años de oficio.',
+        'Es además un entorno donde la seguridad y la licencia para operar no son un apartado del proyecto: son la condición. Cualquier capacidad que se instale tiene que dejar claro qué decide una persona, qué no decide un sistema y cómo queda registrado.',
+      ],
+      oportunidades: [
+        ['Conocimiento técnico accesible', 'Manuales, procedimientos, informes de turno y estudios consultables en lenguaje natural, con la fuente citada.'],
+        ['Preparación de mantenimiento', 'Reunir historial, órdenes previas y recomendaciones antes de la planificación, no durante.'],
+        ['Informes de turno y reportabilidad', 'Convertir registros dispersos en un informe consistente, con el mismo criterio en todos los turnos.'],
+        ['Permisos, cumplimiento y HSE', 'Revisar documentación contra los requisitos y señalar lo que falta antes de que detenga el trabajo.'],
+        ['Compras y contratos de servicio', 'Comparar propuestas, condiciones y antecedentes sobre un mismo marco.'],
+        ['Ingeniería y estudios', 'Recuperar precedentes internos: qué se evaluó antes, con qué supuestos y qué se decidió.'],
+      ],
+      workflows: [
+        'Planificación y ejecución de mantenimiento',
+        'Gestión de turnos y reportabilidad operativa',
+        'Permisos, HSE y gestión de incidentes',
+        'Compras, contratos y gestión de proveedores',
+        'Estudios de ingeniería y gestión de precedentes',
+        'Relacionamiento comunitario y reporte de sostenibilidad',
+      ],
+      tecnologia: 'Búsqueda sobre documentación técnica extensa con la fuente citada, extracción sobre informes y órdenes de trabajo, y asistentes acotados a un procedimiento concreto. Donde una recomendación puede afectar la seguridad, el sistema prepara la evidencia y la decisión queda íntegramente en la persona responsable.',
+      metricas: [
+        ['Señal a decisión', 'Cuánto pasa entre que algo se registra y alguien actúa.'],
+        ['Consistencia de reporte', 'Qué proporción de informes se produce con el mismo criterio.'],
+        ['Horas recuperadas', 'Cuánto tiempo de ingeniería dejaba de dedicarse a buscar información.'],
+        ['Preparación de parada', 'Cuánto tarda alistar una intervención programada.'],
+        ['Observaciones documentales', 'Cuántas incidencias de documentación aparecen en permisos y auditorías.'],
+      ],
+      empezar: [
+        'Un programa BECOME NOW™ con operaciones, mantenimiento o compras, sobre sus propios procedimientos.',
+        'Un BECOME DISCOVER™ sobre un proceso donde el retraso de decisión sea medible.',
+        'Un BECOME EMBED™ para dejar funcionando la capacidad priorizada, con supervisión explícita donde toca seguridad.',
+      ],
+      cierre: 'Empieza por la información que ya tienes y no llega a tiempo.',
+    },
+
+    en: {
+      nombre: 'Mining & Energy',
+      menu: 'Asset-intensive operations, safety and compliance.',
+      h1: 'The value is not in the data. It is in the decision nobody makes in time.',
+      lead: 'An asset-intensive operation generates more information than it can use. The opportunity lives in the gap between what the operation already knows and the moment someone acts on it.',
+      contexto: [
+        'A site or a plant produces continuous signals: sensors, maintenance, shifts, permits, incidents, suppliers. Almost all of it is recorded and very little reaches the decision-maker in time. The bottleneck is rarely the model — it is that the knowledge lives in reports, emails and people with twenty years on the job.',
+        'It is also an environment where safety and licence to operate are not a section of the project: they are the condition. Any capability installed here has to make clear what a person decides, what a system does not decide, and how it is all recorded.',
+      ],
+      oportunidades: [
+        ['Technical knowledge on demand', 'Manuals, procedures, shift reports and studies searchable in plain language, with the source cited.'],
+        ['Maintenance preparation', 'Assemble history, previous work orders and recommendations before planning, not during it.'],
+        ['Shift reporting', 'Turn scattered records into a consistent report, with the same criteria across every shift.'],
+        ['Permits, compliance and HSE', 'Check documentation against requirements and flag what is missing before it stops the work.'],
+        ['Procurement and service contracts', 'Compare proposals, terms and track record within one frame.'],
+        ['Engineering and studies', 'Recover internal precedent: what was assessed before, on what assumptions, and what was decided.'],
+      ],
+      workflows: [
+        'Maintenance planning and execution',
+        'Shift management and operational reporting',
+        'Permits, HSE and incident management',
+        'Procurement, contracts and supplier management',
+        'Engineering studies and precedent management',
+        'Community relations and sustainability reporting',
+      ],
+      tecnologia: 'Retrieval over large technical corpora with the source cited, extraction over reports and work orders, and assistants scoped to a single procedure. Where a recommendation could affect safety, the system prepares the evidence and the decision stays entirely with the accountable person.',
+      metricas: [
+        ['Signal to decision', 'How long between something being recorded and someone acting.'],
+        ['Reporting consistency', 'What share of reports is produced to the same standard.'],
+        ['Hours recovered', 'How much engineering time was going into looking for information.'],
+        ['Shutdown readiness', 'How long it takes to prepare a planned intervention.'],
+        ['Documentation findings', 'How many documentation issues appear in permits and audits.'],
+      ],
+      empezar: [
+        'A BECOME NOW™ program with operations, maintenance or procurement, on their own procedures.',
+        'A BECOME DISCOVER™ on a process where decision delay is measurable.',
+        'A BECOME EMBED™ to leave the prioritised capability running, with explicit oversight wherever safety is involved.',
+      ],
+      cierre: 'Start with the information you already have that arrives too late.',
+    },
+  },
+
+  /* -------------------------------------------------------- retail y consumo */
+  {
+    slug: { es: 'retail-consumo', en: 'retail-consumer' },
+    icon: 'product',
+    servicio: 'become-embed',
+    soluciones: ['productos-y-servicios-con-ia', 'redisenar-procesos-criticos', 'preparar-equipos-para-ia'],
+    programas: ['marketing-comunicaciones', 'customer-service-cx'],
+
+    es: {
+      nombre: 'Retail y Consumo',
+      menu: 'Surtido, precio, contenido y servicio a velocidad semanal.',
+      h1: 'La demanda cambia más rápido que la capacidad de responder.',
+      lead: 'Surtido, precio, contenido y servicio se deciden semana a semana. La IA aporta cuando acorta ese ciclo sin perder el criterio comercial.',
+      contexto: [
+        'En retail y consumo el problema casi nunca es la falta de datos: es que decidir surtido, precio o contenido exige reunir cinco fuentes distintas y a alguien con criterio para leerlas. Ese alguien es el cuello de botella, y no se resuelve contratando más gente.',
+        'La otra mitad es el volumen de contenido. Fichas, campañas, respuestas, adaptaciones por canal y por mercado: trabajo repetitivo con un estándar de marca que hoy solo existe en la cabeza de un equipo pequeño. Escribirlo, y hacerlo aplicable, es la mitad de la transformación.',
+      ],
+      oportunidades: [
+        ['Contenido de producto a escala', 'Fichas, descripciones y adaptaciones por canal con el mismo tono y las mismas reglas de marca.'],
+        ['Preparación de decisiones comerciales', 'Reunir venta, stock, precio y contexto de mercado en un mismo resumen para la reunión semanal.'],
+        ['Atención al cliente', 'Resolver sobre la documentación real de producto, pedidos y políticas, con derivación clara a una persona.'],
+        ['Campañas y comunicación', 'Producir variantes por segmento y canal a partir de un mismo mensaje aprobado.'],
+        ['Surtido y proveedores', 'Comparar propuestas, condiciones y desempeño histórico sin rehacer el análisis cada vez.'],
+        ['Conocimiento de tienda', 'Procedimientos, promociones y excepciones consultables por el equipo en el punto de venta.'],
+      ],
+      workflows: [
+        'Alta y publicación de producto',
+        'Planificación comercial semanal',
+        'Producción y adaptación de campañas',
+        'Atención al cliente y postventa',
+        'Negociación y evaluación de proveedores',
+        'Operación de tienda y comunicación interna',
+      ],
+      tecnologia: 'Generación con reglas de marca explícitas y revisión humana antes de publicar, búsqueda sobre catálogo y políticas, y agentes de atención con un alcance definido y una salida clara hacia una persona. El estándar de marca deja de ser criterio tácito y pasa a ser una instrucción verificable.',
+      metricas: [
+        ['Tiempo de publicación', 'Cuánto tarda una ficha o una campaña desde el encargo hasta el aire.'],
+        ['Aprobación a la primera', 'Qué proporción del contenido pasa revisión sin correcciones.'],
+        ['Preparación de la reunión', 'Cuánto tiempo cuesta llegar con el análisis listo.'],
+        ['Resolución sin escalar', 'Qué proporción de consultas se cierra sin pasar a una persona.'],
+        ['Consistencia de marca', 'Cuántas desviaciones detecta la revisión.'],
+      ],
+      empezar: [
+        'Un programa BECOME NOW™ con marketing, comercial o atención, sobre sus propios materiales.',
+        'Un BECOME DISCOVER™ si lo que falta es decidir dónde invertir primero entre contenido, decisión comercial y servicio.',
+        'Un BECOME EMBED™ para dejar funcionando el flujo de contenido o el agente de atención dentro de la operación.',
+      ],
+      cierre: 'Empieza por el ciclo que hoy no alcanza a cerrar.',
+    },
+
+    en: {
+      nombre: 'Retail & Consumer',
+      menu: 'Assortment, pricing, content and service at weekly speed.',
+      h1: 'Demand moves faster than the ability to respond.',
+      lead: 'Assortment, pricing, content and service are decided week by week. AI contributes when it shortens that cycle without losing commercial judgment.',
+      contexto: [
+        'In retail and consumer the problem is almost never a lack of data: it is that deciding assortment, price or content means pulling together five different sources and finding someone with the judgment to read them. That someone is the bottleneck, and hiring more people does not fix it.',
+        'The other half is content volume. Product pages, campaigns, replies, adaptations per channel and per market: repetitive work against a brand standard that today only exists in a small team’s heads. Writing that standard down, and making it applicable, is half the transformation.',
+      ],
+      oportunidades: [
+        ['Product content at scale', 'Product pages, descriptions and channel adaptations with the same voice and the same brand rules.'],
+        ['Commercial decision prep', 'Bring sales, stock, price and market context into one brief for the weekly meeting.'],
+        ['Customer service', 'Resolve from real product, order and policy documentation, with a clear handover to a person.'],
+        ['Campaigns and communication', 'Produce segment and channel variants from one approved message.'],
+        ['Assortment and suppliers', 'Compare proposals, terms and track record without rebuilding the analysis each time.'],
+        ['Store knowledge', 'Procedures, promotions and exceptions searchable by the team at the point of sale.'],
+      ],
+      workflows: [
+        'Product setup and publication',
+        'Weekly commercial planning',
+        'Campaign production and adaptation',
+        'Customer service and after-sales',
+        'Supplier negotiation and evaluation',
+        'Store operations and internal communication',
+      ],
+      tecnologia: 'Generation against explicit brand rules with human review before publishing, retrieval over catalogue and policy, and service agents with a defined scope and a clear exit to a person. The brand standard stops being tacit judgment and becomes a verifiable instruction.',
+      metricas: [
+        ['Time to publish', 'How long a product page or campaign takes from brief to live.'],
+        ['First-pass approval', 'What share of content clears review without corrections.'],
+        ['Meeting preparation', 'How long it takes to arrive with the analysis ready.'],
+        ['Resolved without escalation', 'What share of queries closes without reaching a person.'],
+        ['Brand consistency', 'How many deviations review catches.'],
+      ],
+      empezar: [
+        'A BECOME NOW™ program with marketing, commercial or service, on their own materials.',
+        'A BECOME DISCOVER™ if what is missing is deciding where to invest first across content, commercial decisions and service.',
+        'A BECOME EMBED™ to leave the content flow or the service agent running inside the operation.',
+      ],
+      cierre: 'Start with the cycle you cannot close today.',
+    },
+  },
+
+  /* ------------------------------------------------------ travel y hotelería */
+  {
+    slug: { es: 'travel-hospitality', en: 'travel-hospitality' },
+    icon: 'capability',
+    servicio: 'become-embed',
+    soluciones: ['agentes-de-ia-con-control', 'productos-y-servicios-con-ia', 'preparar-equipos-para-ia'],
+    programas: ['customer-service-cx', 'operaciones'],
+
+    es: {
+      nombre: 'Travel y Hospitality',
+      menu: 'Servicio, incidencias y experiencia bajo picos de volumen.',
+      h1: 'La experiencia se decide en los momentos que nadie alcanza a atender.',
+      lead: 'Reservas, cambios, incidencias y postventa ocurren en picos. La IA sirve cuando sostiene el criterio del servicio justo donde hoy se pierde por volumen.',
+      contexto: [
+        'Un hotel, una aerolínea o un operador vive de momentos: la consulta antes de reservar, el cambio de última hora, la incidencia durante el viaje, el reclamo después. Cada uno es corto, específico y depende de información repartida entre reservas, políticas, tarifas y proveedores.',
+        'El servicio se degrada por volumen, no por falta de criterio. Y el criterio existe: está en las personas con más años. Convertirlo en algo consultable y aplicable en el momento es la transformación; cambiar el canal de atención, no.',
+      ],
+      oportunidades: [
+        ['Atención previa a la reserva', 'Responder sobre disponibilidad, condiciones y políticas con la información vigente.'],
+        ['Cambios e incidencias', 'Reunir el caso completo —reserva, política, historial— antes de que una persona decida.'],
+        ['Postventa y reclamaciones', 'Clasificar, contrastar contra la política y preparar la respuesta con la excepción marcada.'],
+        ['Contenido y distribución', 'Descripciones, condiciones y adaptaciones por canal y por mercado, con reglas propias.'],
+        ['Conocimiento operativo', 'Procedimientos, estándares y escalamientos consultables por el equipo en turno.'],
+        ['Voz del huésped', 'Convertir reseñas y encuestas en temas accionables por propiedad, ruta o temporada.'],
+      ],
+      workflows: [
+        'Consulta previa y conversión de reserva',
+        'Gestión de cambios y cancelaciones',
+        'Atención de incidencias en viaje o en estadía',
+        'Reclamaciones y compensaciones',
+        'Distribución de contenido y tarifas por canal',
+        'Operación de turno y traspaso entre equipos',
+      ],
+      tecnologia: 'Agentes con alcance acotado y salida explícita a una persona, búsqueda sobre políticas y condiciones vigentes, y clasificación de casos con la excepción señalada. Nada que comprometa una compensación o una excepción de política se resuelve sin decisión humana.',
+      metricas: [
+        ['Primera respuesta', 'Cuánto tarda el primer contacto útil.'],
+        ['Resolución sin escalar', 'Qué proporción de casos se cierra en el primer nivel.'],
+        ['Tiempo de resolución', 'Cuánto dura una incidencia de principio a fin.'],
+        ['Consistencia entre turnos', 'Cuánto varía el criterio según quién atiende.'],
+        ['Temas recurrentes', 'Cuántos motivos repetidos se cierran por período.'],
+      ],
+      empezar: [
+        'Un programa BECOME NOW™ con atención, operaciones o revenue, sobre sus propios casos.',
+        'Un BECOME DISCOVER™ si hay que decidir qué momento de la experiencia se transforma primero.',
+        'Un BECOME EMBED™ para dejar el agente o el flujo de incidencias operando con sus límites definidos.',
+      ],
+      cierre: 'Empieza por el momento en que hoy se pierde el servicio.',
+    },
+
+    en: {
+      nombre: 'Travel & Hospitality',
+      menu: 'Service, disruption and experience under volume peaks.',
+      h1: 'Experience is decided in the moments nobody gets to.',
+      lead: 'Bookings, changes, disruptions and after-sales arrive in peaks. AI helps when it holds the standard of service exactly where volume erodes it today.',
+      contexto: [
+        'A hotel, an airline or a tour operator lives on moments: the question before booking, the last-minute change, the disruption during the trip, the complaint afterwards. Each one is short, specific and depends on information spread across reservations, policies, fares and suppliers.',
+        'Service degrades because of volume, not because judgment is missing. And the judgment exists: it sits with the most experienced people. Turning it into something searchable and applicable in the moment is the transformation; changing the service channel is not.',
+      ],
+      oportunidades: [
+        ['Pre-booking service', 'Answer on availability, terms and policy from current information.'],
+        ['Changes and disruption', 'Assemble the whole case — booking, policy, history — before a person decides.'],
+        ['After-sales and complaints', 'Classify, check against policy and draft the response with the exception flagged.'],
+        ['Content and distribution', 'Descriptions, terms and channel or market adaptations, against your own rules.'],
+        ['Operational knowledge', 'Procedures, standards and escalations searchable by the team on shift.'],
+        ['Voice of the guest', 'Turn reviews and surveys into actionable themes by property, route or season.'],
+      ],
+      workflows: [
+        'Pre-booking enquiry and conversion',
+        'Change and cancellation handling',
+        'In-trip and in-stay disruption',
+        'Complaints and compensation',
+        'Content and fare distribution by channel',
+        'Shift operations and team handover',
+      ],
+      tecnologia: 'Agents with a bounded scope and an explicit exit to a person, retrieval over current policy and terms, and case classification with the exception flagged. Nothing that commits a compensation or a policy exception is resolved without a human decision.',
+      metricas: [
+        ['First response', 'How long the first useful contact takes.'],
+        ['Resolved without escalation', 'What share of cases closes at first level.'],
+        ['Resolution time', 'How long a case runs end to end.'],
+        ['Consistency across shifts', 'How much the standard varies with who is on duty.'],
+        ['Recurring themes', 'How many repeat causes are closed each period.'],
+      ],
+      empezar: [
+        'A BECOME NOW™ program with service, operations or revenue, on their own cases.',
+        'A BECOME DISCOVER™ if the decision is which moment of the experience to transform first.',
+        'A BECOME EMBED™ to leave the agent or the disruption flow running within defined limits.',
+      ],
+      cierre: 'Start with the moment where service breaks today.',
+    },
+  },
+
+  /* --------------------------------------------- real estate y construcción */
+  {
+    slug: { es: 'real-estate-construction', en: 'real-estate-construction' },
+    icon: 'scale',
+    servicio: 'become-discover',
+    soluciones: ['redisenar-procesos-criticos', 'agentes-de-ia-con-control', 'escalar-ia'],
+    programas: ['legal-compliance-risk', 'project-management-pmo'],
+
+    es: {
+      nombre: 'Real Estate y Construcción',
+      menu: 'Proyectos que se deciden en contratos, expedientes y permisos.',
+      h1: 'El proyecto se decide en documentos que nadie tiene tiempo de leer.',
+      lead: 'Contratos, expedientes técnicos, permisos y valorizaciones concentran el riesgo del proyecto. La IA aporta justo donde hoy se lee por muestreo.',
+      contexto: [
+        'Un proyecto inmobiliario o de construcción avanza sobre documentos: contratos, adendas, expedientes técnicos, permisos, valorizaciones, órdenes de cambio. El riesgo aparece cuando algo estaba escrito y nadie llegó a leerlo a tiempo.',
+        'Es además una industria de coordinación: propietario, constructora, supervisión, proveedores y autoridad trabajan sobre versiones distintas de la misma verdad. La IA no reemplaza esa coordinación; hace que quien coordina llegue con el caso ya leído.',
+      ],
+      oportunidades: [
+        ['Revisión de contratos y adendas', 'Localizar obligaciones, plazos, penalidades y diferencias entre versiones.'],
+        ['Expedientes técnicos y permisos', 'Comparar la documentación contra los requisitos y señalar lo que falta antes de presentar.'],
+        ['Órdenes de cambio y valorizaciones', 'Reunir el sustento y preparar la revisión con las diferencias marcadas.'],
+        ['Comercial y postventa inmobiliaria', 'Responder sobre proyecto, unidades y condiciones con la documentación vigente.'],
+        ['Licitaciones y proveedores', 'Comparar propuestas técnicas y económicas sobre un mismo marco.'],
+        ['Conocimiento de proyecto', 'Precedentes internos: qué se decidió en proyectos anteriores y con qué supuestos.'],
+      ],
+      workflows: [
+        'Evaluación y cierre de contratos',
+        'Preparación y seguimiento de permisos',
+        'Gestión de órdenes de cambio',
+        'Valorizaciones y control de avance',
+        'Licitación y homologación de proveedores',
+        'Venta y postventa inmobiliaria',
+      ],
+      tecnologia: 'Extracción y comparación entre versiones de documentos extensos, búsqueda sobre normativa aplicable y expedientes previos con la fuente citada, y revisión asistida que señala hallazgos para que una persona los valide. La conclusión legal o técnica sigue siendo de un profesional.',
+      metricas: [
+        ['Tiempo de revisión', 'Cuánto tarda revisar un contrato o un expediente completo.'],
+        ['Hallazgos antes de firma', 'Cuántos se detectan a tiempo y no después.'],
+        ['Observaciones de permiso', 'Cuántas se evitan por documentación completa.'],
+        ['Cierre de órdenes de cambio', 'Cuánto tarda una desde que se levanta hasta que se aprueba.'],
+        ['Respuesta comercial', 'Cuánto tarda una consulta de cliente en tener respuesta con sustento.'],
+      ],
+      empezar: [
+        'Un programa BECOME NOW™ con legal, control de proyectos o comercial, sobre sus propios documentos.',
+        'Un BECOME DISCOVER™ sobre el punto del proyecto donde el riesgo documental es mayor.',
+        'Un BECOME EMBED™ para dejar operando la revisión asistida dentro del flujo real de aprobación.',
+      ],
+      cierre: 'Empieza por el documento que hoy nadie alcanza a leer entero.',
+    },
+
+    en: {
+      nombre: 'Real Estate & Construction',
+      menu: 'Projects decided in contracts, technical files and permits.',
+      h1: 'The project is decided in documents nobody has time to read.',
+      lead: 'Contracts, technical files, permits and progress claims carry the project’s risk. AI contributes exactly where reading is done by sampling today.',
+      contexto: [
+        'A real estate or construction project advances on documents: contracts, amendments, technical files, permits, progress claims, change orders. Risk shows up when something was written down and nobody got to it in time.',
+        'It is also an industry of coordination: owner, contractor, supervision, suppliers and authority all work on different versions of the same truth. AI does not replace that coordination; it means whoever coordinates arrives with the case already read.',
+      ],
+      oportunidades: [
+        ['Contract and amendment review', 'Locate obligations, deadlines, penalties and differences between versions.'],
+        ['Technical files and permits', 'Check documentation against requirements and flag what is missing before submission.'],
+        ['Change orders and progress claims', 'Assemble the supporting evidence and prepare the review with differences marked.'],
+        ['Sales and property after-sales', 'Answer on the project, the units and the terms from current documentation.'],
+        ['Tenders and suppliers', 'Compare technical and commercial proposals within one frame.'],
+        ['Project knowledge', 'Internal precedent: what was decided on previous projects and on what assumptions.'],
+      ],
+      workflows: [
+        'Contract assessment and close',
+        'Permit preparation and follow-up',
+        'Change order management',
+        'Progress claims and control',
+        'Tendering and supplier qualification',
+        'Property sales and after-sales',
+      ],
+      tecnologia: 'Extraction and version comparison across long documents, retrieval over applicable regulation and prior files with the source cited, and assisted review that surfaces findings for a person to validate. The legal or technical conclusion still belongs to a professional.',
+      metricas: [
+        ['Review time', 'How long a full contract or file review takes.'],
+        ['Findings before signature', 'How many are caught in time rather than afterwards.'],
+        ['Permit observations', 'How many are avoided through complete documentation.'],
+        ['Change order closure', 'How long one takes from raised to approved.'],
+        ['Commercial response', 'How long a client question takes to get a substantiated answer.'],
+      ],
+      empezar: [
+        'A BECOME NOW™ program with legal, project control or sales, on their own documents.',
+        'A BECOME DISCOVER™ on the point of the project where documentary risk is highest.',
+        'A BECOME EMBED™ to leave assisted review running inside the real approval flow.',
+      ],
+      cierre: 'Start with the document nobody gets to read in full today.',
+    },
+  },
+
+  /* ------------------------------------------- healthcare y life sciences */
+  {
+    slug: { es: 'healthcare-life-sciences', en: 'healthcare-life-sciences' },
+    icon: 'agents',
+    servicio: 'become-now',
+    soluciones: ['preparar-equipos-para-ia', 'redisenar-procesos-criticos', 'medir-y-gobernar-valor'],
+    programas: ['operaciones', 'recursos-humanos'],
+
+    es: {
+      nombre: 'Healthcare y Life Sciences',
+      menu: 'Los procesos administrativos y documentales que rodean la atención.',
+      h1: 'Antes de llegar al paciente, la organización tiene mucho que resolver.',
+      lead: 'Trabajamos sobre los procesos administrativos, documentales y operativos que rodean la atención. No sobre el diagnóstico ni sobre el tratamiento.',
+      /* El límite se declara arriba y se repite en su propio bloque. En esta
+         industria, lo que NO se hace es información tan relevante como lo que
+         sí, y dejarlo implícito sería dejar que se asuma lo contrario. */
+      limite: {
+        titulo: 'Dónde está el límite, dicho antes que nada',
+        texto: 'BECOME no desarrolla ni valida capacidades de diagnóstico, tratamiento, triaje clínico o interpretación de estudios, y no asesora sobre la conformidad regulatoria de dispositivos médicos. Cuando un proceso roza una decisión clínica, ese límite se define en el diseño y la decisión permanece íntegramente en el profesional de salud.',
+      },
+      contexto: [
+        'Una institución de salud o una empresa de life sciences dedica una parte enorme de su esfuerzo a trabajo que no es clínico: admisión, autorizaciones, facturación, documentación interna, compras, formación del personal, atención administrativa al usuario. Ahí la IA aplicada tiene un efecto directo y verificable.',
+        'Y es también donde el riesgo se puede acotar con honestidad. Un proceso administrativo se puede medir, auditar y corregir sin tocar una decisión clínica. Empezar por ahí no es empezar por lo fácil: es empezar por donde se puede sostener lo que se promete.',
+      ],
+      oportunidades: [
+        ['Admisión y autorizaciones', 'Reunir y verificar la documentación administrativa de un caso antes de la revisión.'],
+        ['Facturación y conciliación', 'Comparar prestaciones, cobertura y condiciones, y marcar las diferencias.'],
+        ['Documentación y procedimientos internos', 'Procedimientos, políticas y normativa consultables con la fuente citada.'],
+        ['Compras y cadena de suministro', 'Comparar propuestas, condiciones y antecedentes de proveedores.'],
+        ['Atención administrativa', 'Resolver consultas de horarios, requisitos y coberturas, con límites explícitos y derivación a una persona.'],
+        ['Formación del personal', 'Programas sobre los procesos y documentos reales de cada área, con criterios de validación.'],
+      ],
+      workflows: [
+        'Admisión y gestión de autorizaciones',
+        'Facturación, cobertura y conciliación',
+        'Gestión documental y de procedimientos internos',
+        'Compras y cadena de suministro',
+        'Atención administrativa al usuario',
+        'Formación y habilitación del personal',
+      ],
+      tecnologia: 'Extracción sobre documentación administrativa, búsqueda sobre procedimientos internos con la fuente citada, y asistentes con alcance declarado y derivación obligatoria cuando la consulta deja de ser administrativa. El tratamiento de datos personales de salud se define antes de construir, no después.',
+      metricas: [
+        ['Tiempo de tramitación', 'Cuánto tarda un trámite administrativo de principio a fin.'],
+        ['Expedientes completos', 'Qué proporción llega a revisión sin faltantes.'],
+        ['Retrabajo en facturación', 'Cuántas correcciones se hacen después de emitir.'],
+        ['Respuesta administrativa', 'Cuánto tarda una consulta de usuario en resolverse.'],
+        ['Horas recuperadas', 'Cuánto tiempo del personal dejaba de dedicarse a tareas documentales.'],
+      ],
+      empezar: [
+        'Un programa BECOME NOW™ con administración, compras o recursos humanos, sobre sus propios procesos.',
+        'Un BECOME DISCOVER™ para priorizar entre trámite, facturación y atención administrativa.',
+        'Un BECOME EMBED™ sobre el proceso administrativo priorizado, con el tratamiento de datos definido desde el diseño.',
+      ],
+      cierre: 'Empieza por el trámite que hoy consume el tiempo de quien atiende.',
+    },
+
+    en: {
+      nombre: 'Healthcare & Life Sciences',
+      menu: 'The administrative and documentary work around care.',
+      h1: 'Before it reaches the patient, the organisation has a lot to resolve.',
+      lead: 'We work on the administrative, documentary and operational processes that surround care. Not on diagnosis and not on treatment.',
+      limite: {
+        titulo: 'Where the line is, stated first',
+        texto: 'BECOME does not develop or validate diagnostic, treatment, clinical triage or study-interpretation capabilities, and does not advise on the regulatory conformity of medical devices. Where a process borders a clinical decision, that boundary is set in the design and the decision remains entirely with the health professional.',
+      },
+      contexto: [
+        'A health institution or a life sciences company spends an enormous share of its effort on work that is not clinical: admissions, authorisations, billing, internal documentation, procurement, staff training, administrative support. That is where applied AI has a direct and verifiable effect.',
+        'It is also where risk can be bounded honestly. An administrative process can be measured, audited and corrected without touching a clinical decision. Starting there is not starting with the easy part: it is starting where what you promise can be sustained.',
+      ],
+      oportunidades: [
+        ['Admissions and authorisations', 'Assemble and check a case’s administrative documentation before review.'],
+        ['Billing and reconciliation', 'Compare services, coverage and terms, and flag the differences.'],
+        ['Internal documentation and procedures', 'Procedures, policies and regulation searchable with the source cited.'],
+        ['Procurement and supply chain', 'Compare proposals, terms and supplier track record.'],
+        ['Administrative support', 'Resolve questions on schedules, requirements and coverage, with explicit limits and handover to a person.'],
+        ['Staff enablement', 'Programs built on each area’s real processes and documents, with validation criteria.'],
+      ],
+      workflows: [
+        'Admissions and authorisation management',
+        'Billing, coverage and reconciliation',
+        'Document and procedure management',
+        'Procurement and supply chain',
+        'Administrative user support',
+        'Staff training and enablement',
+      ],
+      tecnologia: 'Extraction over administrative documentation, retrieval over internal procedures with the source cited, and assistants with a declared scope and mandatory handover the moment a question stops being administrative. How personal health data is handled is defined before anything is built, not after.',
+      metricas: [
+        ['Processing time', 'How long an administrative procedure takes end to end.'],
+        ['Complete files', 'What share reaches review with nothing missing.'],
+        ['Billing rework', 'How many corrections happen after issuing.'],
+        ['Administrative response', 'How long a user question takes to resolve.'],
+        ['Hours recovered', 'How much staff time was going into documentary tasks.'],
+      ],
+      empezar: [
+        'A BECOME NOW™ program with administration, procurement or HR, on their own processes.',
+        'A BECOME DISCOVER™ to prioritise across processing, billing and administrative support.',
+        'A BECOME EMBED™ on the prioritised administrative process, with data handling designed in from the start.',
+      ],
+      cierre: 'Start with the procedure that consumes the time of the people who care for patients.',
+    },
+  },
+];
+
+/** Índice por slug en cada idioma, para resolver una ruta en un paso. */
+export const POR_SLUG = {
+  es: Object.fromEntries(INDUSTRIAS.map((i) => [i.slug.es, i])),
+  en: Object.fromEntries(INDUSTRIAS.map((i) => [i.slug.en, i])),
+};
+
+export const RAIZ = { es: '/es/industrias', en: '/en/industries' };
+
+export const urlIndustria = (ind, lang) => `${RAIZ[lang]}/${ind.slug[lang]}`;
+
+/**
+ * Las seis lentes del hub: por dónde se mira una industria antes de mirar una
+ * herramienta. Son las mismas seis en todas las industrias a propósito: lo que
+ * cambia entre sectores es la respuesta, no la pregunta.
+ */
+export const LENTES = {
+  es: [
+    ['Decisiones', 'Qué decisiones se toman tarde, con información incompleta o con criterio distinto según quién las tome.'],
+    ['Workflows', 'Qué procesos concentran esperas, entregas entre equipos y trabajo que se rehace.'],
+    ['Conocimiento', 'Qué sabe la organización que hoy no está disponible en el momento en que hace falta.'],
+    ['Experiencia', 'Qué momentos del cliente o del usuario se degradan por volumen y no por falta de criterio.'],
+    ['Crecimiento', 'Qué parte de la propuesta de valor cambiaría si la IA formara parte del producto y no solo del proceso.'],
+    ['Riesgo', 'Qué exposición aparece —o se reduce— cuando una capacidad empieza a operar dentro del proceso.'],
+  ],
+  en: [
+    ['Decisions', 'Which decisions are made late, on incomplete information, or to a different standard depending on who makes them.'],
+    ['Workflows', 'Which processes concentrate waiting, handovers between teams and rework.'],
+    ['Knowledge', 'What the organisation knows that is not available at the moment it is needed.'],
+    ['Experience', 'Which customer or user moments degrade because of volume rather than a lack of judgment.'],
+    ['Growth', 'Which part of the value proposition would change if AI were part of the product and not only of the process.'],
+    ['Risk', 'What exposure appears — or reduces — once a capability starts operating inside the process.'],
+  ],
+};

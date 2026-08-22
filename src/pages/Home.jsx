@@ -12,7 +12,7 @@ import { Figure, Split } from '../components/Media.jsx';
 import ScrollStage from '../components/ScrollStage.jsx';
 import GradientField from '../components/GradientField.jsx';
 import StateTransition from '../components/StateTransition.jsx';
-import { SOLUCIONES_MENU } from '../site.js';
+import { SOLUCIONES_MENU, INDUSTRIAS_MENU } from '../site.js';
 
 /**
  * Home.
@@ -226,11 +226,11 @@ export default function Home() {
           ))}
         </Cols>
 
-        <TextCTA to="/es/framework" dark>Explora el BECOME Framework</TextCTA>
+        <TextCTA to="/es/como-transformamos" dark>Cómo transformamos</TextCTA>
       </Section>
 
       <Section band="darker" nodeState={2}>
-        <Kicker dark>El recorrido</Kicker>
+        <Kicker dark>Cómo transformamos</Kicker>
         <Headline dark>Seis etapas. Un camino de la ambición al valor.</Headline>
         {/* Tira compacta: la descripción de cada etapa vive en /framework. En la
             home estaba entera, y era el bloque que más pantallas costaba a
@@ -254,7 +254,7 @@ export default function Home() {
           concreta: preparación, valor, diseño, adopción y escala.
         </Body>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
-          <GhostCTA to="/es/framework" dark>Ver el framework y sus herramientas</GhostCTA>
+          <GhostCTA to="/es/como-transformamos" dark>Cómo transformamos</GhostCTA>
           <PrimaryCTA to="/es/contacto">Empieza por tu etapa</PrimaryCTA>
         </div>
       </Section>
@@ -325,6 +325,26 @@ export default function Home() {
       {/* 05b — Vendor-neutral. Después de los tres servicios a propósito: la
           pregunta «¿y con qué lo hacen?» aparece justo al terminar de leerlos. */}
       <VendorNeutral lang="es" />
+
+      {/* 05c — Industrias. Va entre los servicios y los casos de uso a
+          propósito: quien acaba de leer las tres formas de trabajar se
+          pregunta si eso aplica a SU contexto, y esa es la pregunta que
+          responde este bloque. Después ya puede elegir por problema. */}
+      <Section band="light">
+        <Kicker>Industrias</Kicker>
+        <Headline>La tecnología puede ser la misma. El valor no.</Headline>
+        <Lead>
+          Las capacidades de IA son transversales; el valor no lo es. Lo que
+          decide el resultado es qué decisiones, qué procesos y qué riesgos
+          definen tu industria.
+        </Lead>
+        <div style={{ marginTop: 'var(--space-10)' }}>
+          {INDUSTRIAS_MENU.map((i, n) => (
+            <IndexRow key={i.slug} index={n} icon={i.icon} to={i.to} num={String(n + 1).padStart(2, '0')} term={i.label} def={i.line} />
+          ))}
+        </div>
+        <TextCTA to="/es/industrias">Explora tu industria</TextCTA>
+      </Section>
 
       {/* 06 — Casos de uso como preguntas. */}
       <Section band="sunken">

@@ -15,6 +15,7 @@
  */
 
 import { PROGRAM_GROUPS, PROGRAMS } from './content/become-now.js';
+import { INDUSTRIAS, RAIZ, urlIndustria } from './content/industrias.js';
 
 export const HOME = '/es';
 
@@ -107,9 +108,30 @@ export const SOLUCIONES_MENU = [
   },
 ].map((c) => ({ ...c, to: `/es/soluciones/${c.slug}` }));
 
+/* ---- industrias ----
+   El menú las lista con un descriptor de una línea, igual que las soluciones.
+   Sin él, «Real Estate y Construcción» en un desplegable no dice nada que la
+   palabra no dijera ya, y quien duda de si su empresa encaja se va sin abrir.
+
+   La lista sale del contenido y no se escribe aquí: una industria nueva es una
+   entrada más en src/content/industrias.js, no una edición en cuatro sitios. */
+export const INDUSTRIAS_MENU = INDUSTRIAS.map((i) => ({
+  slug: i.slug.es,
+  icon: i.icon,
+  to: urlIndustria(i, 'es'),
+  label: i.es.nombre,
+  line: i.es.menu,
+}));
+
 /* ---- menú principal ----
-   Orden canónico del documento. Nada de Home, Framework, Metodología ni Blog:
-   el framework se descubre desde la home, los servicios y el pie. */
+   Seis ángulos, y cada uno responde a una pregunta distinta de quien llega:
+   Servicios («cómo trabajo con vosotros»), Industrias («cómo aplica a mi
+   contexto»), Casos de uso («qué problema resolvéis»), Cómo transformamos
+   («con qué método»), Insights y Nosotros.
+
+   Nosotros va al final y no en tercer lugar: es la pregunta que se hace
+   después de las otras cuatro, no antes. La Home sigue sin ser un ítem: el
+   acceso global es el logotipo. */
 export const NAV = [
   {
     label: 'Servicios',
@@ -120,6 +142,27 @@ export const NAV = [
       groups: s.groups, heading: s.heading, more: s.more,
     })),
   },
+  {
+    label: 'Industrias',
+    to: '/es/industrias',
+    heading: 'La tecnología puede ser la misma. El valor no.',
+    items: INDUSTRIAS_MENU.map((i) => ({ to: i.to, label: i.label, line: i.line })),
+    more: { to: '/es/industrias', label: 'Ver todas las industrias' },
+    wide: true,
+  },
+  {
+    label: 'Casos de uso',
+    to: '/es/soluciones',
+    heading: '¿Qué necesita cambiar en tu empresa?',
+    items: SOLUCIONES_MENU.map((c) => ({ to: c.to, label: c.label, line: c.line })),
+    more: { to: '/es/soluciones', label: 'Ver todos los casos de uso' },
+    wide: true,
+  },
+  /* «Cómo transformamos» y no «Framework»: en un menú, quien entra por primera
+     vez no busca un framework, busca entender cómo se trabaja. El nombre propio
+     del método vive dentro de la página, que es donde sí aporta. */
+  { label: 'Cómo transformamos', to: '/es/como-transformamos' },
+  { label: 'Insights', to: '/es/insights' },
   {
     label: 'Nosotros',
     to: '/es/nosotros',
@@ -142,18 +185,12 @@ export const NAV = [
     more: { to: '/es/nosotros', label: 'Ver todo sobre BECOME' },
     wide: true,
   },
-  {
-    label: 'Soluciones',
-    to: '/es/soluciones',
-    heading: '¿Qué necesita cambiar en tu empresa?',
-    items: SOLUCIONES_MENU.map((c) => ({ to: c.to, label: c.label, line: c.line })),
-    more: { to: '/es/soluciones', label: 'Ver todas las soluciones' },
-    wide: true,
-  },
-  { label: 'Insights', to: '/es/insights' },
 ];
 
-export const CONTACT = { to: '/es/contacto', label: 'Contáctanos' };
+/* La llamada a la acción de la cabecera. «Contáctanos» pide un trámite;
+   «Hablemos de tu iniciativa» nombra lo que la persona trae y por qué querría
+   escribir. Es el mismo enlace y la misma página: cambia qué promete. */
+export const CONTACT = { to: '/es/contacto', label: 'Hablemos de tu iniciativa' };
 
 /* ---- pie: el mapa completo, para que la cabecera no tenga que serlo ---- */
 export const FOOTER = [
@@ -165,13 +202,18 @@ export const FOOTER = [
       label: PROGRAMS[slug].menu.replace('IA aplicada a ', ''),
     })).concat([{ to: '/es/servicios/become-now', label: 'Ver todos los programas' }]),
   },
-  { title: 'Soluciones', links: SOLUCIONES_MENU.map((c) => ({ to: c.to, label: c.label })) },
+  { title: 'Casos de uso', links: SOLUCIONES_MENU.map((c) => ({ to: c.to, label: c.label })) },
+  {
+    title: 'Industrias',
+    links: INDUSTRIAS_MENU.map((i) => ({ to: i.to, label: i.label }))
+      .concat([{ to: RAIZ.es, label: 'Ver todas las industrias' }]),
+  },
   {
     title: 'BECOME',
     links: [
       { to: '/es/nosotros', label: 'Nosotros' },
       { to: '/es/nosotros/ia-responsable', label: 'IA responsable' },
-      { to: '/es/framework', label: 'BECOME Framework' },
+      { to: '/es/como-transformamos', label: 'Cómo transformamos' },
       { to: '/es/insights', label: 'Insights' },
     ],
   },
@@ -197,11 +239,17 @@ export const FOOTER = [
    Los enlaces viejos siguen funcionando en vez de dar 404. */
 export const LEGACY_REDIRECTS = {
   '/': HOME,
-  '/como-trabajamos': '/es/framework',
+  '/como-trabajamos': '/es/como-transformamos',
   '/discovery': '/es/servicios/become-discover',
   '/build-embed': '/es/servicios/become-embed',
   '/casos': '/es/soluciones',
   '/insights': '/es/insights',
   '/nosotros': '/es/nosotros',
   '/contacto': '/es/contacto',
+  /* El apartado se llamaba «Framework» hasta que el nombre pasó a ser lo que
+     hace y no lo que es. Las dos direcciones antiguas siguen resolviendo: se
+     habían compartido y enlazado, y un 404 por un cambio de nombre es una
+     pérdida que no hace falta asumir. */
+  '/es/framework': '/es/como-transformamos',
+  '/en/framework': '/en/how-we-transform',
 };

@@ -103,7 +103,7 @@ export default function Solucion() {
           Por eso el trabajo cruza las cinco: si una queda fuera, el cambio no
           sobrevive al primer trimestre.
         </Body>
-        <TextCTA to="/es/framework" dark>Explora el BECOME Framework</TextCTA>
+        <TextCTA to="/es/como-transformamos" dark>Cómo transformamos</TextCTA>
       </Section>
 
       <Section band="light">
