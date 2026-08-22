@@ -1,0 +1,74 @@
+# Relanza el despliegue cuando no termina bien.
+#
+# El fallo que motiva esto no es del código: es del FTP del hosting compartido,
+# que unos días responde en ochenta segundos y otros se queda colgado. Cuando se
+# cuelga lo suficiente, el despliegue muere por tiempo y el sitio se queda en la
+# versión anterior hasta que una persona se da cuenta y pulsa «Re-run all jobs».
+#
+# Eso es exactamente lo que pasó el 22 de agosto con el artículo del día: la
+# corrección estuvo disponible a un clic durante una hora, y nadie la pulsó
+# porque nadie sabía que hacía falta. Esto pulsa el botón.
+#
+# Solo reintenta lo que puede arreglarse reintentando: un tropiezo de red. Si el
+# despliegue falla por una causa real —el build roto, un secreto caducado— el
+# segundo intento fallará igual y el tercero no se pide, así que el problema
+# acaba visible en vez de tapado por reintentos infinitos.
+
+name: Reintentar el despliegue
+
+on:
+  workflow_run:
+    workflows: ['Desplegar a Hostinger']
+    types: [completed]
+
+permissions:
+  actions: write
+
+jobs:
+  reintentar:
+    # Tres condiciones, y las tres importan:
+    #
+    #   · Que no haya terminado bien. Incluye 'cancelled', que es como GitHub
+    #     marca un paso que agota su plazo — y es justamente el caso que nos
+    #     dejó sin artículo. Un despliegue cancelado A MANO también entra aquí:
+    #     es el precio de cubrir el caso que importa, y volver a desplegar lo
+    #     que ya está en main no rompe nada.
+    #   · Que sea una rama que despliega. Un fallo en otra rama no publica nada.
+    #   · Que no lleve ya tres intentos. Sin esto, un fallo permanente se
+    #     reintentaría para siempre: cada reintento vuelve a disparar este
+    #     workflow al terminar.
+    if: >-
+      github.event.workflow_run.conclusion != 'success'
+      && (github.event.workflow_run.head_branch == 'main'
+          || github.event.workflow_run.head_branch == 'claude/insights-diario')
+      && github.event.workflow_run.run_attempt < 3
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Volver a lanzar el despliegue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+          INTENTO: ${{ github.event.workflow_run.run_attempt }}
+          CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+        run: |
+          set -euo pipefail
+          echo "El despliegue $RUN_ID terminó como '$CONCLUSION' en el intento $INTENTO."
+
+          # Cuarenta y cinco segundos antes de reintentar. Cuando el FTP del
+          # hosting está estrangulando conexiones, volver de inmediato es pedir
+          # el mismo rechazo; unos segundos después suele aceptar.
+          sleep 45
+
+          # /rerun y no /rerun-failed-jobs: un trabajo cancelado por tiempo no
+          # cuenta como «failed» para esa segunda ruta, que respondería que no
+          # hay nada que reintentar. Este despliegue tiene un solo trabajo, así
+          # que relanzarlo entero no cuesta nada de más.
+          gh api --method POST \
+            "repos/${GITHUB_REPOSITORY}/actions/runs/${RUN_ID}/rerun" \
+            && echo "Relanzado. Será el intento $((INTENTO + 1))."
+
+      - name: Avisar si ya no quedan reintentos
+        if: ${{ github.event.workflow_run.run_attempt >= 2 }}
+        run: |
+          echo "::warning::Este era el último reintento automático del despliegue ${{ github.event.workflow_run.id }}. Si vuelve a fallar, el problema no es la red: míralo en la pestaña Actions."

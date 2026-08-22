@@ -51,6 +51,12 @@ jobs:
           node-version: '22'
           cache: npm
 
+      # Antes de compilar nada, porque un fallo de plazos que se descubre a los
+      # veinte minutos se descubre en gris y no se ve. Ver el comentario largo
+      # dentro del propio script.
+      - name: Comprobar que los plazos del despliegue cuadran
+        run: node scripts/comprobar-plazos.mjs
+
       - name: Instalar dependencias
         run: npm ci
 

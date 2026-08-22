@@ -1,0 +1,86 @@
+# Comprueba a diario que la web sirve lo que el repositorio da por publicado.
+#
+# Las otras dos capas evitan que el despliegue falle. Esta comprueba el
+# resultado, que no es lo mismo: un despliegue puede terminar en verde y dejar
+# el sitio sin actualizar —ya pasó, subiendo los archivos a public_html/public_html—,
+# y un despliegue que nunca llega a arrancar no falla, simplemente no ocurre.
+#
+# La pregunta que hace es la única que importa: ¿está en la web lo que el
+# repositorio dice que está publicado? Si la respuesta es no, relanza el
+# despliegue y vuelve a preguntar. Si sigue siendo no, falla en rojo, y GitHub
+# manda el correo.
+#
+# No usa secretos ni credenciales: lee los artículos del repositorio y pide las
+# páginas al dominio público.
+
+name: Centinela de publicación
+
+on:
+  schedule:
+    # 13:30 UTC — dos horas y media después de que la rutina escriba el artículo
+    # del día (11:00 UTC) y con margen de sobra para que el despliegue termine y
+    # para los dos reintentos automáticos. Antes de esa hora, un fallo aquí
+    # sería solo impaciencia.
+    - cron: '30 13 * * *'
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: centinela
+  cancel-in-progress: false
+
+jobs:
+  vigilar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: ¿Está publicado lo que dice el repositorio?
+        id: primera
+        continue-on-error: true
+        run: node scripts/centinela.mjs
+
+      # Solo si la primera respuesta fue que no.
+      - name: Relanzar el despliegue
+        if: steps.primera.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          echo "::warning::El sitio no está sirviendo todo lo publicado. Relanzando el despliegue."
+          gh workflow run deploy.yml --ref main
+
+      - name: Esperar a que termine
+        if: steps.primera.outcome == 'failure'
+        run: |
+          # Un despliegue completo tarda unos seis minutos entre compilar,
+          # prerenderizar y subir. Diez da margen sin agotar el trabajo.
+          sleep 600
+
+      - name: Volver a comprobar
+        if: steps.primera.outcome == 'failure'
+        run: |
+          set -euo pipefail
+          node scripts/centinela.mjs
+          echo "El despliegue de rescate funcionó: el sitio ya sirve todo lo publicado."
+
+      - name: Resumen
+        if: always()
+        run: |
+          if [ "${{ steps.primera.outcome }}" = "success" ]; then
+            echo "### Centinela: todo publicado" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "La web sirve todos los artículos que el repositorio da por publicados." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "### Centinela: hubo que relanzar el despliegue" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "El sitio no estaba sirviendo todo lo publicado. Se lanzó un despliegue de rescate;" >> "$GITHUB_STEP_SUMMARY"
+            echo "el resultado está en el paso «Volver a comprobar»." >> "$GITHUB_STEP_SUMMARY"
+          fi

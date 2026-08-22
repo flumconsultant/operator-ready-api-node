@@ -9,7 +9,9 @@
     "start": "node index.js",
     "design:export": "node scripts/design-export.mjs && node scripts/design-export-react.mjs",
     "tarjetas": "node scripts/tarjeta-social.mjs",
-    "seo:auditar": "node scripts/auditar-seo.mjs"
+    "seo:auditar": "node scripts/auditar-seo.mjs",
+    "plazos": "node scripts/comprobar-plazos.mjs",
+    "centinela": "node scripts/centinela.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
