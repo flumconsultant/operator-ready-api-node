@@ -94,6 +94,117 @@ for (const ruta of rutas) {
   if (sinAlt) di(`${sinAlt} <img> sin alt`);
 }
 
+/* ------------------------------------------------------------------------
+   Comprobaciones de sitio, no de página.
+
+   Las de arriba miran cada página por separado, y hay fallos que ninguna
+   página tiene: los tiene la relación entre ellas. Las tres de aquí abajo
+   salieron de una auditoría que esta misma herramienta había dado por buena,
+   y por eso están: para que no vuelvan a colarse.
+------------------------------------------------------------------------ */
+
+/* 1. Páginas a las que no llega ningún enlace SIN JavaScript.
+      GPTBot, ClaudeBot y PerplexityBot no ejecutan JavaScript: para ellos una
+      página a la que no apunta ningún <a> del HTML sencillamente no existe.
+      Llegaron a ser diez, entre ellas las dos portadas. */
+{
+  const cuerpo = (f) => {
+    const h = readFileSync(f, 'utf8');
+    const i = h.indexOf('<div id="root">');
+    return i < 0 ? '' : h.slice(i, h.indexOf('</div></body>', i));
+  };
+  const entrantes = new Map(rutas.map((r) => [r, 0]));
+  for (const r of rutas) {
+    const f = `dist/_pages${r === '/' ? '/index' : r}.html`;
+    if (!existsSync(f)) continue;
+    for (const m of cuerpo(f).matchAll(/href="(\/[^"#?]*)"/g)) {
+      if (entrantes.has(m[1])) entrantes.set(m[1], entrantes.get(m[1]) + 1);
+    }
+  }
+  for (const [r, n] of entrantes) {
+    if (n === 0) fallos.push([r, 'ningún enlace apunta aquí en el HTML sin JavaScript']);
+  }
+}
+
+/* 2. Cadenas de redirección: A→B→C.
+      Cada salto diluye lo que se traslada, y hay rastreadores que dejan de
+      seguir a partir del segundo.
+      No basta con mirar el destino de cada regla: la cadena que apareció de
+      verdad la formaban dos reglas que por separado estaban bien —una cambiaba
+      el tramo y la otra el slug— y el resultado de la primera caía en la
+      segunda. Así que se prueban DIRECCIONES: las que aparecen literalmente en
+      las reglas y las del sitemap, cada una recorrida como la recorrería el
+      servidor. */
+if (existsSync('dist/.htaccess')) {
+  const reglas = [...readFileSync('dist/.htaccess', 'utf8').matchAll(/^\s*RedirectMatch\s+301\s+(\S+)\s+(\S+)\s*$/gm)]
+    .map(([, patron, destino]) => [new RegExp(patron), destino]);
+  const salto = (u) => {
+    for (const [re, destino] of reglas) {
+      if (re.test(u)) return u.replace(re, destino);
+    }
+    return null;
+  };
+  /* Las direcciones de prueba.
+     El primer intento las sacaba solo del literal de cada regla, y tenía un
+     punto ciego que se vio al probarlo: si borras una regla, desaparece
+     también su caso de prueba, así que el fallo que causa esa ausencia no se
+     detecta nunca. Justo el fallo que había.
+     Ahora se combinan las dos mitades por separado: los TRAMOS que aparecen en
+     las reglas (de dónde y a dónde) y los SLUGS finales. Cada tramo con cada
+     slug. Así `/es/soluciones/pilotos-que-no-escalan` se prueba aunque ninguna
+     regla la mencione, que es exactamente lo que hacía falta. */
+  const muestras = new Set(rutas);
+  const literales = [];
+  for (const [re, destino] of reglas) {
+    const limpia = (x) => x
+      .replace(/^\^/, '')
+      .replace(/\(\/\.\*\)\?\\?\$$/, '')
+      .replace(/\/\?\\?\$$/, '')
+      .replace(/\\?\$$/, '')
+      .replace(/\$1$/, '')
+      .replace(/\\/g, '')
+      .replace(/\/$/, '');
+    literales.push(limpia(re.source), limpia(destino));
+  }
+  const tramos = new Set();
+  const slugs = new Set();
+  for (const l of literales) {
+    if (!/^\/[a-z0-9/-]*$/i.test(l) || l.length < 2) continue;
+    muestras.add(l);
+    const corte = l.lastIndexOf('/');
+    if (corte > 0) { tramos.add(l.slice(0, corte)); slugs.add(l.slice(corte + 1)); }
+  }
+  for (const t of tramos) for (const sl of slugs) muestras.add(`${t}/${sl}`);
+  for (const u of muestras) {
+    const cadena = [u];
+    let actual = u;
+    for (let i = 0; i < 4; i++) {
+      const siguiente = salto(actual);
+      if (!siguiente || siguiente === actual) break;
+      cadena.push(siguiente);
+      actual = siguiente;
+    }
+    if (cadena.length > 2) {
+      fallos.push([u, `${cadena.length - 1} saltos: ${cadena.join(' → ')}`]);
+    } else if (cadena.length === 2 && rutas.includes(u)) {
+      fallos.push([u, `está en el sitemap y redirige a ${cadena[1]}`]);
+    }
+  }
+}
+
+/* 3. El index.html de respaldo, que es lo que se sirve cuando la dirección no
+      existe, no puede ser indexable ni declarar un canonical: si lo hace,
+      cada errata del dominio se publica como una copia de la portada. */
+if (existsSync('dist/index.html')) {
+  const h = readFileSync('dist/index.html', 'utf8');
+  if (!/name="robots"[^>]*noindex/.test(h)) {
+    fallos.push(['/index.html', 'el respaldo de rutas desconocidas es indexable (falta noindex)']);
+  }
+  if (/rel="canonical"/.test(h)) {
+    fallos.push(['/index.html', 'el respaldo declara un canonical que no le corresponde']);
+  }
+}
+
 const robotsTxt = existsSync('dist/robots.txt') ? readFileSync('dist/robots.txt', 'utf8') : '';
 if (!robotsTxt) fallos.push(['/robots.txt', 'no existe']);
 else if (!/Sitemap:/i.test(robotsTxt)) fallos.push(['/robots.txt', 'no declara el sitemap']);

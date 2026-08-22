@@ -118,21 +118,38 @@ async function esquemaDe(pagina) {
       salida.push({ etiqueta: el.tagName.toLowerCase(), texto: t });
     }
 
-    /* Los enlaces internos del cuerpo: son las rutas por las que un rastreador
-       que no ejecuta JavaScript llega al resto del sitio. Las del menú y el pie
-       se añaden aparte, una vez, para no repetirlas en las 72 páginas. */
+    /* ---- Los enlaces, que son por donde se llega al resto del sitio ----
+     *
+     * Se recogen en dos listas: los del CUERPO —contextuales, los que dicen
+     * algo sobre esta página en concreto— y los del MENÚ Y EL PIE, que son los
+     * mismos en todas.
+     *
+     * Los del menú y el pie estaban descartados. El comentario que había aquí
+     * decía que «se añaden aparte, una vez», y no era verdad: nada los añadía
+     * después. El resultado, medido sobre las 88 páginas: diez rutas sin un
+     * solo enlace entrante para quien no ejecuta JavaScript —las dos homes, las
+     * seis legales y las dos de IA responsable—. Para GPTBot o PerplexityBot,
+     * que no ejecutan JavaScript, esas diez páginas sencillamente no existían:
+     * no había forma de llegar a ellas navegando.
+     *
+     * Repetirlos en las 88 páginas no es un problema: es exactamente lo que
+     * hace la navegación de cualquier sitio, y son cuarenta enlaces.
+     *
+     * Y el texto puede venir de `aria-label`. El logotipo es un enlace a la
+     * home con una imagen dentro y ningún texto; exigir texto visible es lo que
+     * dejaba huérfanas a /es y /en, que son las dos páginas más importantes. */
     const enlaces = [];
+    const navegacion = [];
     for (const a of raiz.querySelectorAll('a[href^="/"]')) {
-      if (a.closest('header, footer')) continue;
       if (!visible(a) || flotante(a)) continue;
-      const t = texto(a);
+      const t = texto(a) || (a.getAttribute('aria-label') || '').trim();
       const href = a.getAttribute('href');
       if (!t || !href || vistos.has('A|' + href)) continue;
       vistos.add('A|' + href);
-      enlaces.push({ href, texto: t });
+      (a.closest('header, footer') ? navegacion : enlaces).push({ href, texto: t });
     }
 
-    return { bloques: salida, enlaces };
+    return { bloques: salida, enlaces, navegacion };
   });
 }
 
@@ -149,10 +166,15 @@ function aHtml(esquema) {
   const html = trozos
     .join('')
     .replace(/(<li>.*?<\/li>)+/g, (m) => `<ul>${m}</ul>`);
-  const nav = esquema.enlaces.length
-    ? `<nav><ul>${esquema.enlaces.map((e) => `<li><a href="${escapa(e.href)}">${escapa(e.texto)}</a></li>`).join('')}</ul></nav>`
-    : '';
-  return html + nav;
+  const lista = (enlaces, etiqueta) => (enlaces?.length
+    ? `<nav aria-label="${etiqueta}"><ul>${enlaces
+        .map((e) => `<li><a href="${escapa(e.href)}">${escapa(e.texto)}</a></li>`)
+        .join('')}</ul></nav>`
+    : '');
+  /* Primero los del cuerpo y después los del menú: el orden en el documento es
+     el orden en que se leen, y los contextuales dicen más sobre esta página
+     que la navegación, que es idéntica en las 88. */
+  return html + lista(esquema.enlaces, 'En esta página') + lista(esquema.navegacion, 'Navegación del sitio');
 }
 
 /* ------------------------------------------------------------------ marcha */

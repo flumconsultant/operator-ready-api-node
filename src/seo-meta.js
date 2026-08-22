@@ -22,7 +22,18 @@ export const SITE = 'https://meetbecome.com';
 export const BRAND = 'BECOME';
 
 /* La imagen que acompaña al enlace cuando se comparte en redes o mensajería. */
-export const OG_IMAGE = `${SITE}/images/01-neural-network.webp`;
+/* La imagen que se ve al compartir cualquier página que no sea un artículo.
+ *
+ * En JPEG y no en WebP. WhatsApp no dibuja una vista previa en WebP y LinkedIn
+ * la dibuja unas veces sí y otras no: el enlace aparece desnudo, y un enlace
+ * desnudo se pulsa mucho menos. Daba igual lo bien que estuviera la imagen si
+ * el sitio donde se comparte no la enseña.
+ *
+ * Es la misma tarjeta que llevan los artículos —misma retícula, misma
+ * tipografía, mismo pie— generada con `scripts/tarjeta-social.mjs`, para que
+ * compartir cualquier página se reconozca como BECOME antes de leer el
+ * nombre. */
+export const OG_IMAGE = `${SITE}/images/tarjetas/become.jpg`;
 
 /**
  * Cada entrada: [título, descripción, ruta equivalente en el otro idioma].

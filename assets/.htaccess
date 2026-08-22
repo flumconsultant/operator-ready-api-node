@@ -78,6 +78,26 @@
   RedirectMatch 301 ^/en/use-cases/demostrar-valor-en-90-dias/?$     /en/use-cases/measure-and-govern-ai-value
   RedirectMatch 301 ^/en/use-cases/por-donde-empezar-con-ia/?$       /en/use-cases
 
+  # Las mismas seis, pero bajo el tramo INTERMEDIO. Sin estas doce reglas, una
+  # dirección de la primera versión daba dos saltos: la genérica de abajo le
+  # cambiaba el tramo y el resultado volvía a caer en una de las reglas de
+  # arriba. Dos saltos no rompen nada para una persona, pero cada uno diluye lo
+  # que se traslada y hay rastreadores que dejan de seguir a partir del
+  # segundo. Van antes que la genérica porque la primera que casa gana.
+  RedirectMatch 301 ^/es/soluciones/pilotos-que-no-escalan/?$      /es/casos-de-uso/escalar-ia
+  RedirectMatch 301 ^/es/soluciones/redisenar-workflow-critico/?$  /es/casos-de-uso/redisenar-procesos-criticos
+  RedirectMatch 301 ^/es/soluciones/construir-agent-o-copilot/?$   /es/casos-de-uso/agentes-de-ia-con-control
+  RedirectMatch 301 ^/es/soluciones/experiencia-ai-native/?$       /es/casos-de-uso/productos-y-servicios-con-ia
+  RedirectMatch 301 ^/es/soluciones/demostrar-valor-en-90-dias/?$  /es/casos-de-uso/medir-y-gobernar-valor
+  RedirectMatch 301 ^/es/soluciones/por-donde-empezar-con-ia/?$    /es/casos-de-uso
+
+  RedirectMatch 301 ^/en/solutions/pilotos-que-no-escalan/?$       /en/use-cases/scale-ai-beyond-pilots
+  RedirectMatch 301 ^/en/solutions/redisenar-workflow-critico/?$   /en/use-cases/redesign-critical-workflows
+  RedirectMatch 301 ^/en/solutions/construir-agent-o-copilot/?$    /en/use-cases/deploy-governed-ai-agents
+  RedirectMatch 301 ^/en/solutions/experiencia-ai-native/?$        /en/use-cases/build-ai-enabled-products
+  RedirectMatch 301 ^/en/solutions/demostrar-valor-en-90-dias/?$   /en/use-cases/measure-and-govern-ai-value
+  RedirectMatch 301 ^/en/solutions/por-donde-empezar-con-ia/?$     /en/use-cases
+
   # Y el tramo intermedio —«soluciones»— entero, con el slug intacto.
   RedirectMatch 301 ^/es/soluciones(/.*)?$                           /es/casos-de-uso$1
   RedirectMatch 301 ^/en/solutions(/.*)?$                            /en/use-cases$1
@@ -85,6 +105,19 @@
   # El apartado que dejó de llamarse «Framework».
   RedirectMatch 301 ^/es/framework/?$                                /es/como-transformamos
   RedirectMatch 301 ^/en/framework/?$                                /en/how-we-transform
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # Barra final
+  # ───────────────────────────────────────────────────────────────────────────
+  # /es/servicios/ y /es/servicios son la misma página para una persona y dos
+  # direcciones distintas para un buscador. Y la de la barra era además la peor
+  # de las dos: la regla de _pages busca «_pages/es/servicios/.html», no lo
+  # encuentra, y la petición acababa en el index.html genérico —en español,
+  # con el título de la plantilla y canonical a la home—. Cualquier enlace
+  # externo escrito con barra aterrizaba ahí.
+  # La condición de directorio real deja fuera /assets/ y demás carpetas.
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.+)/$ /$1 [L,R=301]
 
   # La raíz no tiene página propia: el sitio empieza en /es. La redirección la
   # hace el servidor y no React para que los buscadores vean un 301 de verdad

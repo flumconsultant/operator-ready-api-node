@@ -27,6 +27,7 @@
  * añade, no sustituye.
  */
 import { readFileSync, writeFileSync, mkdirSync, rmSync, readdirSync, existsSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -342,7 +343,24 @@ function datosEstructurados(path, meta) {
   }
 
   if (path === '/es' || path === '/en') {
-    return [ORG, { '@context': 'https://schema.org', '@type': 'WebSite', name: BRAND, url: SITE }];
+    /* Organization y WebSite describen la EMPRESA y el SITIO. Faltaba la
+       tercera: qué es esta página. Las otras 86 la declaran, y las dos más
+       importantes no lo hacían. Migas no llevan, y es correcto: la home es el
+       primer escalón, no cuelga de nada. */
+    return [
+      ORG,
+      { '@context': 'https://schema.org', '@type': 'WebSite', name: BRAND, url: SITE },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        url,
+        name: meta.title,
+        description: meta.description,
+        inLanguage: langOf(path),
+        isPartOf: { '@type': 'WebSite', name: BRAND, url: SITE },
+        publisher: { '@type': 'Organization', name: BRAND, url: SITE },
+      },
+    ];
   }
   /* La página de equipo: las personas también en datos estructurados.
      No es decoración. Un asistente que resume «quién es BECOME» no ejecuta
@@ -384,8 +402,12 @@ function datosEstructurados(path, meta) {
     ];
   }
 
-  if (path === '/es/servicios/become-now') return [faqPage(esNow.FAQ)];
-  if (path === '/en/services/become-now') return [faqPage(enNow.FAQ)];
+  /* La FAQ de BECOME NOW™ se AÑADE al bloque de siempre; antes lo sustituía, y
+     las dos páginas se quedaban sin WebPage. Se resuelve más abajo, junto al
+     resto, para no volver a construir aquí las migas. */
+  const faqDeLaPagina = path === '/es/servicios/become-now' ? faqPage(esNow.FAQ)
+    : path === '/en/services/become-now' ? faqPage(enNow.FAQ)
+    : null;
   /* Todas las demás páginas: WebPage y migas. Sin esto, 58 de las 72 rutas se
      publicaban sin un solo dato estructurado, y el único modo que tenía un
      asistente de saber que /es/servicios/become-now cuelga de /es/servicios
@@ -409,6 +431,8 @@ function datosEstructurados(path, meta) {
     },
     ...(migasAqui ? [migasAqui] : []),
   ];
+
+  if (faqDeLaPagina) return [faqDeLaPagina, ...base];
 
   if (/^\/(es\/servicios|en\/services)\/(become-discover|become-embed)$/.test(path)) {
     return [servicio(meta.title.split('|')[0].trim(), meta.description, url), ...base];
@@ -649,8 +673,12 @@ ${meta.tipoOg === 'article' && meta.publicado ? `    <meta property="article:pub
     <meta property="og:title" content="${escapa(meta.title)}" />
     <meta property="og:description" content="${escapa(meta.description)}" />
     <meta property="og:image" content="${imagenOg}" />
-    <meta property="og:image:width" content="1600" />
-    <meta property="og:image:height" content="900" />
+    <!-- 1200x630 es la medida real de las tarjetas y la que piden LinkedIn, X y
+         WhatsApp. Declaraba 1600x900, que no era el tamaño de ninguna: una
+         medida que no coincide hace que algunos clientes recorten por su
+         cuenta, y recortan por donde les conviene a ellos. -->
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapa(meta.title)}" />
@@ -732,17 +760,54 @@ const priority = (p) => {
 
 const today = new Date().toISOString().slice(0, 10);
 
+/**
+ * La fecha de un `lastmod`, sacada de cuándo cambió el contenido de verdad.
+ *
+ * Antes iba la fecha del build para todas: cada despliegue declaraba las 82
+ * páginas modificadas hoy, tocara lo que tocara el despliegue. Un sitemap que
+ * dice que todo cambió cada día no aporta ninguna señal —dice lo mismo que no
+ * poner fecha— y un buscador acaba dejando de mirarlo. Los artículos ya
+ * llevaban la suya real; el resto, no.
+ *
+ * Ahora sale del último commit que tocó el archivo fuente de esa página. Es la
+ * fecha en la que su contenido cambió por última vez, que es literalmente lo
+ * que el campo significa.
+ *
+ * Si git no está disponible —un despliegue desde un paquete, por ejemplo— se
+ * cae a la fecha del build, que es lo que había: peor señal, nunca un error.
+ */
+const fechasPorArchivo = new Map();
+function fechaDeArchivo(archivo) {
+  if (!archivo) return today;
+  if (fechasPorArchivo.has(archivo)) return fechasPorArchivo.get(archivo);
+  let fecha = today;
+  try {
+    const salida = execFileSync('git', ['log', '-1', '--format=%cs', '--', archivo], {
+      cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+    if (/^\d{4}-\d{2}-\d{2}$/.test(salida)) fecha = salida;
+  } catch { /* sin git: la fecha del build */ }
+  fechasPorArchivo.set(archivo, fecha);
+  return fecha;
+}
+
 const urls = paths.map((p) => {
   const meta = PAGES[p] ? { alt: PAGES[p][2] } : dinamicas[p];
   const lang = langOf(p);
+  /* Las tres, igual que en la cabecera de cada página. El x-default faltaba
+     aquí y sí estaba en el <head>: dos fuentes diciendo cosas distintas sobre
+     el mismo grupo de idiomas es exactamente lo que hace que un buscador
+     ignore las dos. Apunta siempre al español, que es el idioma del negocio. */
+  const español = lang === 'es' ? p : meta.alt;
   const alternos = [
     `      <xhtml:link rel="alternate" hreflang="${lang}" href="${SITE}${p}"/>`,
     `      <xhtml:link rel="alternate" hreflang="${lang === 'es' ? 'en' : 'es'}" href="${SITE}${meta.alt}"/>`,
+    `      <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${español}"/>`,
   ].join('\n');
   return `  <url>
     <loc>${SITE}${p}</loc>
 ${alternos}
-    <lastmod>${meta.lastmod || today}</lastmod>
+    <lastmod>${meta.lastmod || fechaDeArchivo(fuentePorPatron[patronDe(p) ?? ''])}</lastmod>
     <priority>${priority(p)}</priority>
   </url>`;
 }).join('\n');
@@ -850,6 +915,45 @@ Disallow: /admin
 
 Sitemap: ${SITE}/sitemap.xml
 `);
+
+/**
+ * El index.html que queda: el que se sirve cuando la dirección NO existe.
+ *
+ * ---- Por qué hay que tocarlo ----
+ *
+ * Cada ruta del sitio se sirve desde su propio `_pages/<ruta>.html`. El
+ * index.html solo aparece cuando la dirección pedida no tiene ninguno: una
+ * errata, un enlace externo mal copiado, una página retirada. El servidor
+ * responde 200 y devuelve esta plantilla.
+ *
+ * Y la plantilla venía con el canonical de la home y su título. Es decir: cada
+ * dirección inventada del dominio se presentaba como una copia de /es, en
+ * español, indexable. Es el patrón que se llama soft-404, y multiplica el
+ * mismo contenido por tantas direcciones rotas como alguien escriba.
+ *
+ * ---- Qué se hace ----
+ *
+ * Se le quita el canonical —una página que no sabe qué es no puede declarar
+ * cuál es su versión buena— y se le pone `noindex`. Para quien navega no
+ * cambia nada: la aplicación arranca igual y el enrutador lo lleva a la home
+ * del idioma que corresponda.
+ *
+ * Se hace AQUÍ, después de escribir las 88, y no en la plantilla de origen: si
+ * el `noindex` estuviera en `index.html` antes de generar, se copiaría en las
+ * 88 páginas y el sitio entero desaparecería de Google. Ese es exactamente el
+ * tipo de error que no se nota hasta que el tráfico cae.
+ */
+{
+  const fallback = read('dist/index.html')
+    .replace(/\s*<link rel="canonical"[^>]*>/g, '')
+    .replace(/<head>/, '<head>\n    <meta name="robots" content="noindex, follow" />');
+  if (/name="robots"/.test(fallback) && !/rel="canonical"/.test(fallback)) {
+    writeFileSync(join(ROOT, 'dist/index.html'), fallback);
+  } else {
+    console.error('seo: no se ha podido preparar el index.html de respaldo.');
+    process.exit(1);
+  }
+}
 
 /* El manifiesto era para esto y ya cumplió: describe la estructura interna del
    proyecto y no tiene por qué acabar publicado en el servidor. */
