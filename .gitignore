@@ -4,3 +4,7 @@ dist/
 
 # Guiones de verificación de una sola sesión (Playwright, medición de páginas)
 _*.mjs
+
+# El .zip del contenido se genera con scripts/exportar-contenido.mjs; los .md sí
+# se versionan, para poder ver qué cambió entre una revisión de texto y otra.
+contenido/*.zip
