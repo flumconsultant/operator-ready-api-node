@@ -117,19 +117,26 @@ const tituloConMarca = (texto, marca = ` | ${BRAND}`, max = 60) =>
 
 const dinamicas = {};
 
-for (const [slug, p] of Object.entries(esNow.PROGRAMS)) {
-  dinamicas[`/es/servicios/become-now/${slug}`] = {
-    title: tituloConMarca(p.menu, ' — BECOME NOW™'),
-    description: recorta(p.body, 155),
-    alt: `/en/services/become-now/${slug}`,
-  };
-}
-for (const [slug, p] of Object.entries(enNow.PROGRAMS)) {
-  dinamicas[`/en/services/become-now/${slug}`] = {
-    title: tituloConMarca(p.menu, ' — BECOME NOW™'),
-    description: recorta(p.body, 155),
-    alt: `/es/servicios/become-now/${slug}`,
-  };
+/* El título y la descripción de cada programa están escritos uno a uno, con su
+   propia palabra clave y su propia intención. Antes salían de una plantilla
+   —el nombre del menú más la marca— y las catorce se parecían tanto entre sí
+   como el resto de la página.
+   Si un programa todavía no tuviera los suyos, se cae a la plantilla anterior:
+   una página sin título es peor que una con un título repetido. */
+const { COPY_PROGRAMAS } = await import('../src/content/become-now-programas.js');
+
+for (const [lang, tramo, otro, fuente] of [
+  ['es', '/es/servicios/become-now', '/en/services/become-now', esNow],
+  ['en', '/en/services/become-now', '/es/servicios/become-now', enNow],
+]) {
+  for (const [slug, p] of Object.entries(fuente.PROGRAMS)) {
+    const propio = COPY_PROGRAMAS[slug]?.[lang];
+    dinamicas[`${tramo}/${slug}`] = {
+      title: propio?.seoTitulo || tituloConMarca(p.menu, ' — BECOME NOW™'),
+      description: recorta(propio?.seoDesc || p.body, 155),
+      alt: `${otro}/${slug}`,
+    };
+  }
 }
 for (const [slug, c] of Object.entries(esCasos.SOLUCION_CONTENIDO)) {
   dinamicas[`/es/casos-de-uso/${slug}`] = {

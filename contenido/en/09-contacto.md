@@ -4,60 +4,60 @@
 
 **En Google** (no se ve en la página):
 
-<!-- b2854 -->
+<!-- b3234 -->
 - **Título:** Contact — Start with what you want to change | BECOME
-<!-- b2855 -->
+<!-- b3235 -->
 - **Descripción:** Share the challenge, the outcome you are aiming for and your organization’s context. We review it and recommend the next step for your AI transformation.
 
-<!-- b2856 -->
+<!-- b3236 -->
 CONTACT
 
-<!-- b2857 -->
+<!-- b3237 -->
 # Start with what you want to change.
 
-<!-- b2858 -->
+<!-- b3238 -->
 Share the challenge, the outcome you are aiming for and the context of your organization. We will review it to understand your starting point and recommend the most appropriate next step.
 
-<!-- b2859 -->
+<!-- b3239 -->
 ## Share the essential context.
 
-<!-- b2860 -->
+<!-- b3240 -->
 You don’t need to have the solution defined. We want to understand the problem, the priority and the current constraints.
 
-<!-- b2861 -->
+<!-- b3241 -->
 7 questions · under two minutes · no commitment
 
-<!-- b2862 -->
+<!-- b3242 -->
 Would you rather talk it through?
 
-<!-- b2863 -->
+<!-- b3243 -->
 Thirty minutes with Carlos Andrés Ramírez to look at your starting point and tell you, with judgment, what it would take. No sales deck.
 
-<!-- b2864 -->
+<!-- b3244 -->
 Opens Calendly in a new tab.
 
-<!-- b2865 -->
+<!-- b3245 -->
 WHAT HAPPENS NEXT
 
-<!-- b2866 -->
+<!-- b3246 -->
 ## Three steps, and none of them is a sales sequence.
 
-<!-- b2867 -->
+<!-- b3247 -->
 ### We read your context
 
-<!-- b2868 -->
+<!-- b3248 -->
 We map it to the stages of the BECOME framework to know where it comes in.
 
-<!-- b2869 -->
+<!-- b3249 -->
 ### 30-minute conversation
 
-<!-- b2870 -->
+<!-- b3250 -->
 Focused on the business outcome and the constraints you have today.
 
-<!-- b2871 -->
+<!-- b3251 -->
 ### We define the first step
 
-<!-- b2872 -->
+<!-- b3252 -->
 BECOME NOW™, BECOME DISCOVER™ or BECOME EMBED™. Whichever fits, not the biggest one.
 
 ---

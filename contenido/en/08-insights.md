@@ -4,129 +4,129 @@
 
 **En Google** (no se ve en la página):
 
-<!-- b2793 -->
+<!-- b3173 -->
 - **Título:** Insights on applied enterprise AI | BECOME
-<!-- b2794 -->
+<!-- b3174 -->
 - **Descripción:** Perspectives on AI-native operating models, agentic work, adoption and responsible scale.
 
-<!-- b2795 -->
+<!-- b3175 -->
 BECOME INSIGHTS
 
-<!-- b2796 -->
+<!-- b3176 -->
 # Ideas for the company that comes next.
 
-<!-- b2797 -->
+<!-- b3177 -->
 Perspectives on AI-native operating models, agentic work, decision intelligence, adoption and responsible scale.
 
-<!-- b2798 -->
+<!-- b3178 -->
 PUBLISHED
 
-<!-- b2799 -->
+<!-- b3179 -->
 ## The latest we’ve written.
 
-<!-- b2800 -->
+<!-- b3180 -->
 ### How to redesign a process for an AI to run
 
-<!-- b2801 -->
+<!-- b3181 -->
 They dropped an agent into the middle of the process and kept doing exactly the same thing. Except now there is one extra step: someone copies what the agent says into the usual spreadsheet, just in case.
 
-<!-- b2802 -->
+<!-- b3182 -->
 21 August 2026 · 6 min
 
-<!-- b2803 -->
+<!-- b3183 -->
 ### Why your AI pilots never reach production
 
-<!-- b2804 -->
+<!-- b3184 -->
 The pilot worked. And that is precisely the moment it stopped moving.
 
-<!-- b2805 -->
+<!-- b3185 -->
 20 August 2026 · 6 min
 
-<!-- b2806 -->
+<!-- b3186 -->
 ### Who answers when an agent answers
 
-<!-- b2807 -->
+<!-- b3187 -->
 The question that decides whether an agent reaches production isn’t technical. It’s who owns the outcome when it goes wrong.
 
-<!-- b2808 -->
+<!-- b3188 -->
 20 August 2026 · 4 min
 
-<!-- b2809 -->
+<!-- b3189 -->
 EDITORIAL PILLARS
 
-<!-- b2810 -->
+<!-- b3190 -->
 ## What we’re going to write about, and what we won’t.
 
-<!-- b2811 -->
+<!-- b3191 -->
 Five lines. No model news, no tool comparisons, no summaries of what someone else already said.
 
-<!-- b2812 -->
+<!-- b3192 -->
 ### The AI-native enterprise
 
-<!-- b2813 -->
+<!-- b3193 -->
 Strategy, ambition and enterprise design. What sets an AI-native company apart from a company that just uses AI.
 
-<!-- b2814 -->
+<!-- b3194 -->
 ### Agentic work
 
-<!-- b2815 -->
+<!-- b3195 -->
 Workflows, roles, agents and human accountability. How work changes when part of it is done by a system.
 
-<!-- b2816 -->
+<!-- b3196 -->
 ### Operating-model reinvention
 
-<!-- b2817 -->
+<!-- b3197 -->
 People, Data, Agents, Products and Operations. The design decisions that determine where value accumulates.
 
-<!-- b2818 -->
+<!-- b3198 -->
 ### Value and adoption
 
-<!-- b2819 -->
+<!-- b3199 -->
 Measurement, trust, change and capability transfer. Why adoption is a design problem, not a communication one.
 
-<!-- b2820 -->
+<!-- b3200 -->
 ### Responsible scale
 
-<!-- b2821 -->
+<!-- b3201 -->
 Governance, controls, risk and scale readiness. When to scale and, above all, when not to.
 
-<!-- b2822 -->
+<!-- b3202 -->
 FORMATS
 
-<!-- b2823 -->
+<!-- b3203 -->
 ## Every idea has its own shape.
 
-<!-- b2824 -->
+<!-- b3204 -->
 ### Perspective
 
-<!-- b2825 -->
+<!-- b3205 -->
 An argued thesis on where something is headed.
 
-<!-- b2826 -->
+<!-- b3206 -->
 ### Field Note
 
-<!-- b2827 -->
+<!-- b3207 -->
 What we learned inside a specific problem.
 
-<!-- b2828 -->
+<!-- b3208 -->
 ### Framework
 
-<!-- b2829 -->
+<!-- b3209 -->
 A reusable way to structure a decision.
 
-<!-- b2830 -->
+<!-- b3210 -->
 ### Executive Brief
 
-<!-- b2831 -->
+<!-- b3211 -->
 What a committee needs to know, in its format.
 
-<!-- b2832 -->
+<!-- b3212 -->
 ### Case Evidence
 
-<!-- b2833 -->
+<!-- b3213 -->
 Real work, only when the client approves it.
 
-<!-- b2834 -->
+<!-- b3214 -->
 ## Which idea needs to become a capability?
 
 ---

@@ -4,343 +4,343 @@
 
 **En Google** (no se ve en la página):
 
-<!-- b1866 -->
+<!-- b1897 -->
 - **Título:** AI use cases for companies | BECOME
-<!-- b1867 -->
+<!-- b1898 -->
 - **Descripción:** Six business needs and what each takes: scaling beyond pilots, preparing teams, redesigning workflows, governed AI agents and measuring value.
 
-<!-- b1868 -->
+<!-- b1899 -->
 # Don’t look for a solution. Start with what needs to change.
 
-<!-- b1869 -->
+<!-- b1900 -->
 Pick the situation closest to yours. We’ll show you what capability you need, what has to change inside, and the best place to start.
 
-<!-- b1870 -->
+<!-- b1901 -->
 WHAT DO YOU NEED TO TRANSFORM?
 
-<!-- b1871 -->
+<!-- b1902 -->
 ## Six questions you’ll recognize before any technical name.
 
-<!-- b1872 -->
+<!-- b1903 -->
 ### Scale AI beyond pilots
 
-<!-- b1873 -->
+<!-- b1904 -->
 Turn a prioritized opportunity into a secure, adopted and measurable capability.
 
-<!-- b1874 -->
+<!-- b1905 -->
 ### Build AI-enabled products and services
 
-<!-- b1875 -->
+<!-- b1906 -->
 Design and build a product or experience that creates new value for customers or teams.
 
-<!-- b1876 -->
+<!-- b1907 -->
 ### Measure and govern AI value
 
-<!-- b1877 -->
+<!-- b1908 -->
 Define the baseline, the owners and the controls that make the result hold.
 
-<!-- b1878 -->
+<!-- b1909 -->
 From symptom to decision.
 
-<!-- b1879 -->
+<!-- b1910 -->
 ORIENTATION MAP
 
-<!-- b1880 -->
+<!-- b1911 -->
 ## From symptom to decision.
 
-<!-- b1881 -->
+<!-- b1912 -->
 BECOME DISCOVER™ when strategy or target state is missing. BECOME EMBED™ when a capability is already prioritized and conditions are ready to build.
 
-<!-- b1882 -->
+<!-- b1913 -->
 QUESTION
 
-<!-- b1883 -->
+<!-- b1914 -->
 WHAT USUALLY HAPPENS
 
-<!-- b1884 -->
+<!-- b1915 -->
 WHAT’S NEEDED
 
-<!-- b1885 -->
+<!-- b1916 -->
 ENGAGEMENT
 
-<!-- b1886 -->
+<!-- b1917 -->
 Isolated prototypes with no owner, integration or adoption.
 
-<!-- b1887 -->
+<!-- b1918 -->
 A systemic diagnosis, a target state and a decision on what to scale.
 
-<!-- b1888 -->
+<!-- b1919 -->
 BECOME DISCOVER™ → BECOME EMBED™
 
-<!-- b1889 -->
+<!-- b1920 -->
 Everyone uses AI their own way, with uneven results.
 
-<!-- b1890 -->
+<!-- b1921 -->
 A shared method built on the team’s real processes, with criteria and controls.
 
-<!-- b1891 -->
+<!-- b1922 -->
 A slow, fragmented or decision-heavy process.
 
-<!-- b1892 -->
+<!-- b1923 -->
 End-to-end redesign with roles, agents, data and controls.
 
-<!-- b1893 -->
+<!-- b1924 -->
 BECOME DISCOVER™ + BECOME EMBED™
 
-<!-- b1894 -->
+<!-- b1925 -->
 There’s an idea or a concrete need, but no operating design.
 
-<!-- b1895 -->
+<!-- b1926 -->
 Design, autonomy boundaries, human oversight, build and adoption.
 
-<!-- b1896 -->
+<!-- b1927 -->
 Want AI to become part of your value proposition?
 
-<!-- b1897 -->
+<!-- b1928 -->
 You’re looking for new value for customers or collaborators.
 
-<!-- b1898 -->
+<!-- b1929 -->
 Product thesis, experience design, data and agent architecture, and validation.
 
-<!-- b1899 -->
+<!-- b1930 -->
 BECOME EMBED™ or the full sequence
 
-<!-- b1900 -->
+<!-- b1931 -->
 Need to measure and govern AI value?
 
-<!-- b1901 -->
+<!-- b1932 -->
 Activity gets reported, but not results, and nobody answers for the decisions.
 
-<!-- b1902 -->
+<!-- b1933 -->
 Baseline, owners, review cadence and controls.
 
-<!-- b1903 -->
+<!-- b1934 -->
 BECOME DISCOVER™ or BECOME EMBED™
 
-<!-- b1904 -->
+<!-- b1935 -->
 FIND YOUR STARTING POINT
 
-<!-- b1905 -->
+<!-- b1936 -->
 ## Don’t start with the service. Start with the decision you need to make.
 
 ---
 
 ## `/en/use-cases/build-ai-enabled-products`
 
-<!-- b1906 -->
+<!-- b1937 -->
 # Want to create an AI-native experience?
 
-<!-- b1907 -->
+<!-- b1938 -->
 If you’re looking for a new experience for customers or collaborators, you need to design the value, the intelligent behavior and the operation that sustains it.
 
-<!-- b1908 -->
+<!-- b1939 -->
 - — The idea depends on AI, but its user value is still generic.
-<!-- b1909 -->
+<!-- b1940 -->
 - — The product experience doesn’t define trust, explanation or escalation.
-<!-- b1910 -->
+<!-- b1941 -->
 - — It’s unclear what data and knowledge make the experience possible.
-<!-- b1911 -->
+<!-- b1942 -->
 - — The team needs to validate desirability, feasibility and viability.
 
-<!-- b1912 -->
+<!-- b1943 -->
 An AI-native experience isn’t designed as a screen with a model behind it. Intelligent behavior is part of the product: what it knows, what it explains, when it hands off control and who operates it in production.
 
-<!-- b1913 -->
+<!-- b1944 -->
 We connect product thesis, user journey, intelligence, data, agent behavior, controls and operational ownership; prototype, validate and build the scope that can prove real value.
 
-<!-- b1914 -->
+<!-- b1945 -->
 A validated, embeddable AI-native product or service capability.
 
-<!-- b1915 -->
+<!-- b1946 -->
 BECOME EMBED™ or the full sequence
 
-<!-- b1916 -->
+<!-- b1947 -->
 If the product thesis is still open, BECOME DISCOVER™ closes it before we build.
 
-<!-- b1917 -->
+<!-- b1948 -->
 ## Want to create an AI-native experience?
 
 ---
 
 ## `/en/use-cases/deploy-governed-ai-agents`
 
-<!-- b1918 -->
+<!-- b1949 -->
 # Want to build an agent or copilot?
 
-<!-- b1919 -->
+<!-- b1950 -->
 We design the workflow before selecting the model. We define what the agent should do, which data and tools it can access, which LLM it needs, when human approval is required and how it will be evaluated before and after go-live. A solution may combine ChatGPT/OpenAI, Claude/Anthropic, Gemini/Google or other models, together with APIs, RAG, tool calling, MCP and enterprise integrations.
 
-<!-- b1920 -->
+<!-- b1951 -->
 - — The team knows the task, but not the operating model.
-<!-- b1921 -->
+<!-- b1952 -->
 - — It’s unclear what the agent decides and what the person keeps.
-<!-- b1922 -->
+<!-- b1953 -->
 - — Exception paths, permissions or quality criteria are missing.
-<!-- b1923 -->
+<!-- b1954 -->
 - — The prototype isn’t integrated into the real workflow.
 
-<!-- b1924 -->
+<!-- b1955 -->
 An agent without an operating model is a demo with permissions. What decides its fate isn’t the quality of its answers, but who responds when it gets something wrong and what happens to the cases that don’t fit.
 
-<!-- b1925 -->
+<!-- b1956 -->
 We validate the blueprint, design human-in-the-loop oversight and controls, build and integrate the agent or copilot, support adoption, and measure trust, performance, control and value.
 
-<!-- b1926 -->
+<!-- b1957 -->
 An agent or copilot that participates in real work with explicit ownership.
 
-<!-- b1927 -->
+<!-- b1958 -->
 Subject to readiness: if the opportunity doesn’t yet have a validatable blueprint, we first run a short readiness gate.
 
-<!-- b1928 -->
+<!-- b1959 -->
 ## Want to build an agent or copilot?
 
 ---
 
 ## `/en/use-cases/measure-and-govern-ai-value`
 
-<!-- b1929 -->
+<!-- b1960 -->
 # Need to measure and govern AI value?
 
-<!-- b1930 -->
+<!-- b1961 -->
 If you have to demonstrate results, reduce risk and clarify who owns each decision, you need to measure against a baseline and govern what is already running.
 
-<!-- b1931 -->
+<!-- b1962 -->
 - — Activity gets reported — users, pilots, licences — but not results.
-<!-- b1932 -->
+<!-- b1963 -->
 - — There’s no baseline, so any improvement is arguable.
-<!-- b1933 -->
+<!-- b1964 -->
 - — Nobody knows who answers for it when a system gets something wrong.
-<!-- b1934 -->
+<!-- b1965 -->
 - — Leadership needs to decide on investment from evidence, not demos.
-<!-- b1935 -->
+<!-- b1966 -->
 - — There are no criteria for what gets scaled and what gets stopped.
 
-<!-- b1936 -->
+<!-- b1967 -->
 Without a baseline there is no improvement to prove, only opinions about a demo. And with no named owners, control becomes a document nobody applies. Measurement and governance aren’t admin work at the end: they’re what separates a capability from an expensive experiment.
 
-<!-- b1937 -->
+<!-- b1968 -->
 We define what value means in your case, measure the starting point, assign owners and a review cadence, and set the controls — human oversight, traceability, quality and escalation — that make the result hold.
 
-<!-- b1938 -->
+<!-- b1969 -->
 Measurement that survives a hard question, and a governance model with names rather than good intentions.
 
-<!-- b1939 -->
+<!-- b1970 -->
 BECOME DISCOVER™ or BECOME EMBED™
 
-<!-- b1940 -->
+<!-- b1971 -->
 If what’s missing is the criteria, it starts in Discover. If something is already running and what’s missing is measuring and governing it, it belongs inside Embed.
 
-<!-- b1941 -->
+<!-- b1972 -->
 ## Need to measure and govern AI value?
 
 ---
 
 ## `/en/use-cases/prepare-teams-for-ai`
 
-<!-- b1942 -->
+<!-- b1973 -->
 If your teams already use AI tools with no shared method, that scattered use has to become a common way of working, with criteria and controls.
 
-<!-- b1943 -->
+<!-- b1974 -->
 - — Everyone uses AI their own way, with uneven results.
-<!-- b1944 -->
+<!-- b1975 -->
 - — General training happened and day-to-day work didn’t change.
-<!-- b1945 -->
+<!-- b1976 -->
 - — Nobody knows what a tool can reasonably be asked to do, and what it can’t.
-<!-- b1946 -->
+<!-- b1977 -->
 - — What works in one team never reaches the others.
-<!-- b1947 -->
+<!-- b1978 -->
 - — There’s no shared standard for what counts as an acceptable output.
 
-<!-- b1948 -->
+<!-- b1979 -->
 A generic course teaches a tool; the work doesn’t change because nobody looked at the team’s real process. Capability appears when each team works on its own documents, its own cases and its own constraints — and keeps something reusable.
 
-<!-- b1949 -->
+<!-- b1980 -->
 We start from the work each area does today: we map its process, pick the priority cases, work on its real documents, and leave assistants, templates and validation criteria that stay in the company.
 
-<!-- b1950 -->
+<!-- b1981 -->
 - Applied Workflow Canvas
-<!-- b1951 -->
+<!-- b1982 -->
 - Adoption Scorecard
 
-<!-- b1952 -->
+<!-- b1983 -->
 Teams working with AI on their own processes, with a reusable library and shared quality criteria.
 
-<!-- b1953 -->
+<!-- b1984 -->
 It’s the service built for this. If deciding where to invest as a company is also missing, Discover orders that decision before or alongside it.
 
-<!-- b1954 -->
+<!-- b1985 -->
 Turn a prioritized opportunity into a secure, adopted and measurable capability.
 
 ---
 
 ## `/en/use-cases/redesign-critical-workflows`
 
-<!-- b1955 -->
+<!-- b1986 -->
 If you’re looking to improve a critical operation, you need to redesign the workflow end-to-end — not automate isolated tasks.
 
-<!-- b1956 -->
+<!-- b1987 -->
 - — Multiple handoffs and rework exist.
-<!-- b1957 -->
+<!-- b1988 -->
 - — Decisions depend on fragmented information.
-<!-- b1958 -->
+<!-- b1989 -->
 - — Specialists spend time on repetitive tasks.
-<!-- b1959 -->
+<!-- b1990 -->
 - — Exceptions have no owner or consistent criteria.
-<!-- b1960 -->
+<!-- b1991 -->
 - — The process is slow, variable or hard to audit.
 
-<!-- b1961 -->
+<!-- b1992 -->
 Automating a task inside a process that doesn’t change just moves the bottleneck. Time recovered in one step is lost in the next, because the decisions, the data and the exceptions stay exactly where they were.
 
-<!-- b1962 -->
+<!-- b1993 -->
 We redesign events, decisions, roles, agent tasks, data, exceptions, human oversight, controls and metrics as a single workflow; then we build and validate the priority capability.
 
-<!-- b1963 -->
+<!-- b1994 -->
 A faster, more consistent, controlled workflow capable of learning.
 
-<!-- b1964 -->
+<!-- b1995 -->
 BECOME DISCOVER™ + BECOME EMBED™
 
-<!-- b1965 -->
+<!-- b1996 -->
 The redesign needs a systems view, and the improvement is only real once the new workflow runs in production.
 
-<!-- b1966 -->
+<!-- b1997 -->
 Turn a prioritized opportunity into a secure, adopted and measurable capability.
 
 ---
 
 ## `/en/use-cases/scale-ai-beyond-pilots`
 
-<!-- b1967 -->
+<!-- b1998 -->
 If your prototypes work in a demo but not in operation, you need to identify what’s missing around the technology before scaling.
 
-<!-- b1968 -->
+<!-- b1999 -->
 - — No operational owner exists after the pilot.
-<!-- b1969 -->
+<!-- b2000 -->
 - — The real workflow didn’t change.
-<!-- b1970 -->
+<!-- b2001 -->
 - — Data, integrations or controls depend on manual work.
-<!-- b1971 -->
+<!-- b2002 -->
 - — Users try the solution but don’t adopt it.
-<!-- b1972 -->
+<!-- b2003 -->
 - — There’s no baseline or scale-readiness criteria.
 
-<!-- b1973 -->
+<!-- b2004 -->
 The pilot doesn’t fail because of the model. It fails because it was built alongside the real work instead of inside it: no one owns the result, the process stayed the same, and there’s no measure to decide against.
 
-<!-- b1974 -->
+<!-- b2005 -->
 We assess the pilot as part of a People, Data, Agents, Products and Operations system; decide whether it should stop, be redesigned or become a capability; then build the conditions for adoption and scale.
 
-<!-- b1975 -->
+<!-- b2006 -->
 An informed decision and, where warranted, a capability ready to operate.
 
-<!-- b1976 -->
+<!-- b2007 -->
 BECOME DISCOVER™ → BECOME EMBED™
 
-<!-- b1977 -->
+<!-- b2008 -->
 The diagnosis is strategic and the solution is operational. Skipping the first usually produces a second, equally isolated pilot.
 
-<!-- b1978 -->
+<!-- b2009 -->
 Turn a prioritized opportunity into a secure, adopted and measurable capability.
 
 ---
