@@ -41,6 +41,7 @@ const RUTA_ARTICULOS   = 'src/content/insights';
 const RUTA_AUTORES     = 'src/content/autores';
 const RUTA_FOTOS       = 'assets/images/autores';
 const RUTA_PAGINAS     = 'src/content/paginas';
+const RUTA_ESQUEMAS    = 'src/content/esquemas';
 const FOTO_MAX_BYTES   = 3_000_000;
 const INTENTOS_MAX     = 8;      // intentos de entrar...
 const INTENTOS_SECS    = 900;    // ...por cada cuarto de hora e IP
@@ -236,6 +237,160 @@ function archivo_valido(string $n): bool {
 }
 
 $rama = (string) $config['rama'];
+
+/* ---- Contenido declarado por esquema ---------------------------------------
+ *
+ * Industrias, servicios, el método: colecciones con listas dentro, en dos
+ * idiomas. Demasiado para el formulario plano de las páginas.
+ *
+ * La regla de seguridad es la misma de siempre y aquí es más importante: el
+ * navegador NO dice qué archivo escribir. Dice qué esquema usar, y el esquema
+ * —que vive en el repositorio y solo se cambia con un commit— dice a qué
+ * archivo apunta y qué campos tiene. Si alguien pide guardar un campo que el
+ * esquema no declara, ese campo se ignora; si pide un esquema que no existe,
+ * no pasa nada. No hay forma de escribir fuera de lo declarado.
+ *
+ * Y el archivo de datos tiene que estar bajo src/content y acabar en .json: un
+ * esquema mal escrito no puede convertirse en permiso para tocar otra cosa.
+ */
+function esquema_leer(array $config, string $rama, string $id) {
+    if (!preg_match('/^[a-z][a-z0-9-]{0,40}$/', $id)) return null;
+    $r = github($config, 'contents/' . rawurlencode(RUTA_ESQUEMAS . '/' . $id . '.json') . '?ref=' . rawurlencode($rama));
+    if ($r['codigo'] !== 200) return null;
+    $e = json_decode((string) base64_decode(str_replace("\n", '', (string) ($r['datos']['content'] ?? ''))), true);
+    if (!is_array($e) || empty($e['archivoDatos']) || empty($e['campos'])) return null;
+    $destino = (string) $e['archivoDatos'];
+    if (!preg_match('#^src/content/[a-z0-9./-]+\.json$#', $destino) || str_contains($destino, '..')) return null;
+    return $e;
+}
+
+if ($accion === 'listar-esquemas') {
+    $r = github($config, 'contents/' . rawurlencode(RUTA_ESQUEMAS) . '?ref=' . rawurlencode($rama));
+    if ($r['codigo'] === 404) responder(200, ['ok' => true, 'esquemas' => []]);
+    if ($r['codigo'] !== 200 || !is_array($r['datos'])) {
+        responder(502, ['ok' => false, 'error' => 'github', 'mensaje' => 'No se pudieron listar los esquemas.']);
+    }
+    $lista = [];
+    foreach ($r['datos'] as $e) {
+        if (($e['type'] ?? '') !== 'file' || !archivo_valido((string) $e['name'])) continue;
+        $id = substr((string) $e['name'], 0, -5);
+        $esq = esquema_leer($config, $rama, $id);
+        if ($esq) $lista[] = ['id' => $id, 'titulo' => $esq['titulo'] ?? $id, 'campos' => count($esq['campos'])];
+    }
+    responder(200, ['ok' => true, 'esquemas' => $lista]);
+}
+
+if ($accion === 'abrir-esquema') {
+    $id  = (string) ($cuerpo['esquema'] ?? $_GET['esquema'] ?? '');
+    $esq = esquema_leer($config, $rama, $id);
+    if (!$esq) responder(404, ['ok' => false, 'error' => 'sin_esquema', 'mensaje' => 'Ese esquema no existe.']);
+    $d = github($config, 'contents/' . rawurlencode((string) $esq['archivoDatos']) . '?ref=' . rawurlencode($rama));
+    if ($d['codigo'] !== 200) responder(404, ['ok' => false, 'error' => 'sin_datos', 'mensaje' => 'El esquema apunta a un archivo que no existe.']);
+    $datos = json_decode((string) base64_decode(str_replace("\n", '', (string) ($d['datos']['content'] ?? ''))), true);
+    responder(200, ['ok' => true, 'esquema' => $esq, 'datos' => $datos, 'sha' => $d['datos']['sha'] ?? '']);
+}
+
+if ($accion === 'guardar-contenido') {
+    $id     = (string) ($cuerpo['esquema'] ?? '');
+    $indice = $cuerpo['indice'] ?? null;      // qué elemento de la colección
+    $lang   = (string) ($cuerpo['idioma'] ?? '');
+    $vals   = $cuerpo['valores'] ?? null;
+    $esq    = esquema_leer($config, $rama, $id);
+    if (!$esq || !is_array($vals)) {
+        responder(400, ['ok' => false, 'error' => 'peticion', 'mensaje' => 'Falta el esquema o los valores.']);
+    }
+    if (!in_array($lang, (array) ($esq['idiomas'] ?? ['es']), true)) {
+        responder(400, ['ok' => false, 'error' => 'idioma', 'mensaje' => 'Ese idioma no está declarado en el esquema.']);
+    }
+
+    $d = github($config, 'contents/' . rawurlencode((string) $esq['archivoDatos']) . '?ref=' . rawurlencode($rama));
+    if ($d['codigo'] !== 200) responder(404, ['ok' => false, 'error' => 'sin_datos', 'mensaje' => 'No se encontró el archivo de datos.']);
+    $datos = json_decode((string) base64_decode(str_replace("\n", '', (string) ($d['datos']['content'] ?? ''))), true);
+    if (!is_array($datos)) responder(500, ['ok' => false, 'error' => 'datos_rotos', 'mensaje' => 'El archivo de datos no se pudo leer.']);
+
+    if (!empty($esq['coleccion'])) {
+        $i = (int) $indice;
+        if (!isset($datos[$i][$lang]) || !is_array($datos[$i][$lang])) {
+            responder(400, ['ok' => false, 'error' => 'indice', 'mensaje' => 'Ese elemento no existe.']);
+        }
+        $destino =& $datos[$i][$lang];
+    } else {
+        if (!isset($datos[$lang]) || !is_array($datos[$lang])) {
+            responder(400, ['ok' => false, 'error' => 'idioma', 'mensaje' => 'Ese idioma no está en los datos.']);
+        }
+        $destino =& $datos[$lang];
+    }
+
+    $cambiados = 0;
+    foreach ($esq['campos'] as $campo) {
+        $cid = (string) ($campo['id'] ?? '');
+        if ($cid === '' || !array_key_exists($cid, $vals)) continue;
+        $tipo = (string) ($campo['tipo'] ?? 'linea');
+        $tope = $campo['maximo'] ?? 0;
+        $v = $vals[$cid];
+        $rotulo = (string) ($campo['rotulo'] ?? $cid);
+
+        $limitar = function ($texto, $max) use ($rotulo) {
+            $t = trim((string) $texto);
+            if ($max > 0 && mb_strlen($t) > $max) {
+                responder(400, ['ok' => false, 'error' => 'largo',
+                    'mensaje' => 'En «' . $rotulo . '» hay un texto de ' . mb_strlen($t) . ' caracteres y el máximo es ' . $max . '.']);
+            }
+            return $t;
+        };
+
+        if ($tipo === 'linea' || $tipo === 'parrafo') {
+            $nuevo = $limitar($v, (int) $tope);
+            if ($nuevo === '' && empty($campo['opcional'])) {
+                responder(400, ['ok' => false, 'error' => 'vacio', 'mensaje' => 'El campo «' . $rotulo . '» no puede quedar vacío.']);
+            }
+        } elseif ($tipo === 'lista') {
+            if (!is_array($v)) continue;
+            $nuevo = [];
+            foreach ($v as $x) { $t = $limitar($x, (int) $tope); if ($t !== '') $nuevo[] = $t; }
+        } elseif ($tipo === 'pares' || $tipo === 'trios') {
+            if (!is_array($v)) continue;
+            $anchura = $tipo === 'pares' ? 2 : 3;
+            $topes = is_array($tope) ? $tope : array_fill(0, $anchura, (int) $tope);
+            $nuevo = [];
+            foreach ($v as $fila) {
+                if (!is_array($fila)) continue;
+                $f = [];
+                for ($k = 0; $k < $anchura; $k++) $f[] = $limitar($fila[$k] ?? '', (int) ($topes[$k] ?? 0));
+                if (implode('', $f) !== '') $nuevo[] = $f;
+            }
+        } elseif ($tipo === 'bloque') {
+            if (!is_array($v)) continue;
+            $nuevo = [];
+            foreach ((array) ($campo['partes'] ?? []) as $parte) {
+                $pid = (string) ($parte['id'] ?? '');
+                if ($pid === '') continue;
+                $nuevo[$pid] = $limitar($v[$pid] ?? '', (int) ($parte['maximo'] ?? 0));
+            }
+            if (implode('', $nuevo) === '') $nuevo = null;
+        } else {
+            continue;
+        }
+
+        $antes = $destino[$cid] ?? null;
+        if (json_encode($antes) !== json_encode($nuevo)) $cambiados++;
+        if ($nuevo === null) unset($destino[$cid]); else $destino[$cid] = $nuevo;
+    }
+
+    if ($cambiados === 0) responder(200, ['ok' => true, 'sin_cambios' => true]);
+
+    $json = json_encode($datos, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n";
+    $r = github($config, 'contents/' . rawurlencode((string) $esq['archivoDatos']), 'PUT', [
+        'message' => ($esq['titulo'] ?? $id) . ' editado desde el panel (' . $lang . ')',
+        'content' => base64_encode($json),
+        'sha'     => $d['datos']['sha'] ?? '',
+        'branch'  => $rama,
+    ]);
+    if ($r['codigo'] < 200 || $r['codigo'] >= 300) {
+        responder(502, ['ok' => false, 'error' => 'github', 'mensaje' => 'GitHub rechazó el guardado.']);
+    }
+    responder(200, ['ok' => true, 'cambiados' => $cambiados]);
+}
 
 /* ---- Las páginas del sitio ------------------------------------------------
  *

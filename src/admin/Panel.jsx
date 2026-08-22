@@ -5,6 +5,7 @@ import Editor, { ARTICULO_NUEVO, problemas } from './Editor.jsx';
 import Autores from './Autores.jsx';
 import Suscriptores from './Suscriptores.jsx';
 import Paginas from './Paginas.jsx';
+import Contenido from './Contenido.jsx';
 import { Etiqueta, Texto, Boton, Fila, Aviso, marco } from './piezas.jsx';
 
 /**
@@ -149,6 +150,7 @@ function Lista({ items, alAbrir, alNuevo, alRecargar, cargando, vacioEn }) {
 const MODULOS = [
   ['articulos', 'Artículos'],
   ['paginas', 'Páginas'],
+  ['contenido', 'Contenido'],
   ['autores', 'Autores'],
   ['suscriptores', 'Suscriptores'],
 ];
@@ -342,7 +344,11 @@ export default function Panel() {
         <Aviso tono="mal">{error}</Aviso>
         <Aviso tono="bien">{nota}</Aviso>
 
-        {vista === 'paginas' && !abierto ? (
+        {vista === 'contenido' && !abierto ? (
+          <div style={{ marginTop: 16 }}>
+            <Contenido />
+          </div>
+        ) : vista === 'paginas' && !abierto ? (
           <div style={{ marginTop: 16 }}>
             <Paginas />
           </div>

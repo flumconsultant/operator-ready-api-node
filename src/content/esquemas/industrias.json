@@ -1,0 +1,181 @@
+{
+  "_": "Qué se puede editar de las industrias desde el panel, y cómo. El panel no sabe qué es una industria: lee esto y dibuja. Lo que no esté declarado aquí no se puede tocar desde el navegador, y eso es a propósito.",
+  "id": "industrias",
+  "titulo": "Industrias",
+  "archivoDatos": "src/content/industrias.json",
+  "coleccion": true,
+  "etiqueta": "nombre",
+  "idiomas": [
+    "es",
+    "en"
+  ],
+  "campos": [
+    {
+      "id": "nombre",
+      "rotulo": "Nombre",
+      "tipo": "linea",
+      "maximo": 40,
+      "ayuda": "Cómo se llama la industria en el menú y en los títulos."
+    },
+    {
+      "id": "menu",
+      "rotulo": "Descripción en el menú",
+      "tipo": "linea",
+      "maximo": 110,
+      "ayuda": "La línea que acompaña al nombre en el menú de industrias."
+    },
+    {
+      "id": "h1",
+      "rotulo": "Titular de la página",
+      "tipo": "linea",
+      "maximo": 110,
+      "ayuda": "Es el h1: la frase por la que Google entiende de qué va esta página."
+    },
+    {
+      "id": "lead",
+      "rotulo": "Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "ayuda": "El párrafo que sigue al titular. Plantea el problema, no la solución."
+    },
+    {
+      "id": "contexto",
+      "rotulo": "Contexto",
+      "tipo": "lista",
+      "maximo": 400,
+      "ayuda": "Uno o dos párrafos sobre cómo trabaja hoy esta industria."
+    },
+    {
+      "id": "oportunidadesTitular",
+      "rotulo": "Titular de oportunidades",
+      "tipo": "linea",
+      "maximo": 120
+    },
+    {
+      "id": "oportunidades",
+      "rotulo": "Oportunidades",
+      "tipo": "pares",
+      "maximo": [
+        70,
+        260
+      ],
+      "columnas": [
+        "Dónde",
+        "Qué cambia"
+      ],
+      "ayuda": "El área y qué mejora concretamente en ella."
+    },
+    {
+      "id": "workflowsTitular",
+      "rotulo": "Titular de procesos",
+      "tipo": "linea",
+      "maximo": 120
+    },
+    {
+      "id": "workflows",
+      "rotulo": "Procesos",
+      "tipo": "lista",
+      "maximo": 90
+    },
+    {
+      "id": "casos",
+      "rotulo": "Casos",
+      "tipo": "lista",
+      "maximo": 90,
+      "opcional": true,
+      "ayuda": "No todas las industrias lo tienen. Vacío significa que la sección no sale."
+    },
+    {
+      "id": "capacidades",
+      "rotulo": "Qué puede hacer BECOME aquí",
+      "tipo": "trios",
+      "maximo": [
+        80,
+        260,
+        40
+      ],
+      "columnas": [
+        "Capacidad",
+        "Qué implica",
+        "Servicio"
+      ],
+      "ayuda": "El servicio debe escribirse igual que en la página de servicios."
+    },
+    {
+      "id": "tecnologiaTitular",
+      "rotulo": "Titular de tecnología",
+      "tipo": "linea",
+      "maximo": 120
+    },
+    {
+      "id": "tecnologia",
+      "rotulo": "Tecnología",
+      "tipo": "parrafo",
+      "maximo": 420
+    },
+    {
+      "id": "metricasTitular",
+      "rotulo": "Titular de métricas",
+      "tipo": "linea",
+      "maximo": 120
+    },
+    {
+      "id": "metricas",
+      "rotulo": "Métricas",
+      "tipo": "pares",
+      "maximo": [
+        50,
+        200
+      ],
+      "columnas": [
+        "Métrica",
+        "Qué mide"
+      ]
+    },
+    {
+      "id": "empezarTitular",
+      "rotulo": "Titular de por dónde empezar",
+      "tipo": "linea",
+      "maximo": 120
+    },
+    {
+      "id": "empezar",
+      "rotulo": "Por dónde empezar",
+      "tipo": "lista",
+      "maximo": 240
+    },
+    {
+      "id": "cierre",
+      "rotulo": "Cierre",
+      "tipo": "linea",
+      "maximo": 120
+    },
+    {
+      "id": "cierreTexto",
+      "rotulo": "Texto de cierre",
+      "tipo": "parrafo",
+      "maximo": 400
+    },
+    {
+      "id": "limite",
+      "rotulo": "Dónde está el límite",
+      "tipo": "bloque",
+      "opcional": true,
+      "ayuda": "Solo lo llevan las industrias donde hace falta decir qué NO hace BECOME. En salud es obligatorio.",
+      "partes": [
+        {
+          "id": "titulo",
+          "rotulo": "Titular",
+          "tipo": "linea",
+          "maximo": 80
+        },
+        {
+          "id": "texto",
+          "rotulo": "Texto",
+          "tipo": "parrafo",
+          "maximo": 600
+        }
+      ]
+    }
+  ]
+}
