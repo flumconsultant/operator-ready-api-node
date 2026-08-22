@@ -72,7 +72,7 @@ export default function Soluciones() {
           <table style={{ width: '100%', minWidth: 720, borderCollapse: 'collapse', textAlign: 'left' }}>
             <thead>
               <tr>
-                {['Pregunta', 'Lo que suele ocurrir', 'Lo que se necesita', 'Engagement'].map((h) => (
+                {['Pregunta', 'Lo que suele ocurrir', 'Lo que se necesita', 'Servicio'].map((h) => (
                   <th
                     key={h}
                     scope="col"

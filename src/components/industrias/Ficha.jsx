@@ -45,7 +45,7 @@ const T = {
     oportunidadesKicker: 'Dónde vemos oportunidad',
     casosKicker: 'Casos ilustrativos',
     casosTitular: 'Qué se construye, cuando el detalle operativo ya permite nombrarlo.',
-    workflowsKicker: 'Workflows que se rediseñan',
+    workflowsKicker: 'Procesos que se rediseñan',
     tecnologiaKicker: 'Qué tecnología, y con qué control',
     metricasKicker: 'Qué se mide',
     metricasNota: 'Son las magnitudes que proponemos medir en esta industria, y la línea base se establece antes de construir. No publicamos resultados de terceros.',

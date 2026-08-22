@@ -17,19 +17,19 @@ import Listado from '../components/insights/Listado.jsx';
  */
 
 const PILLARS = [
-  ['The AI-native enterprise', 'Estrategia, ambition y enterprise design. Qué distingue a una empresa AI-native de una empresa con IA.'],
-  ['Agentic work', 'Procesos, roles, agentes y responsabilidad humana. Cómo cambia el trabajo cuando parte lo hace un sistema.'],
-  ['Operating-model reinvention', 'Personas, Datos, Agentes, Productos y Operaciones. Las decisiones de diseño que determinan dónde se acumula el valor.'],
-  ['Value and adoption', 'Medición, confianza, gestión del cambio y transferencia de capacidades. Por qué la adopción es un problema de diseño, no de comunicación.'],
-  ['Responsible scale', 'Gobernanza, controles, riesgo y condiciones para escalar. Cuándo hacerlo y, sobre todo, cuándo no.'],
+  ['La empresa AI-native', 'Estrategia, ambición y diseño empresarial. Qué distingue a una empresa AI-native de una empresa con IA.'],
+  ['Trabajo con agentes', 'Procesos, roles, agentes y responsabilidad humana. Cómo cambia el trabajo cuando parte lo hace un sistema.'],
+  ['Reinvención del modelo operativo', 'Personas, Datos, Agentes, Productos y Operaciones. Las decisiones de diseño que determinan dónde se acumula el valor.'],
+  ['Valor y adopción', 'Medición, confianza, gestión del cambio y transferencia de capacidades. Por qué la adopción es un problema de diseño, no de comunicación.'],
+  ['Escalado responsable', 'Gobernanza, controles, riesgo y condiciones para escalar. Cuándo hacerlo y, sobre todo, cuándo no.'],
 ];
 
 const FORMATS = [
-  ['Perspective', 'Una tesis argumentada sobre hacia dónde va algo.'],
-  ['Field Note', 'Lo aprendido dentro de un problema concreto.'],
+  ['Perspectiva', 'Una tesis argumentada sobre hacia dónde va algo.'],
+  ['Nota de campo', 'Lo aprendido dentro de un problema concreto.'],
   ['Framework', 'Una forma reutilizable de estructurar una decisión.'],
-  ['Executive Brief', 'Lo que un comité necesita saber, en su formato.'],
-  ['Case Evidence', 'Trabajo real, solo cuando el cliente lo aprueba.'],
+  ['Informe ejecutivo', 'Lo que un comité necesita saber, en su formato.'],
+  ['Evidencia de caso', 'Trabajo real, solo cuando el cliente lo aprueba.'],
 ];
 
 export default function Insights() {
@@ -41,8 +41,8 @@ export default function Insights() {
         <Kicker dark>BECOME Insights</Kicker>
         <Headline as="h1" dark>Ideas para la empresa que viene después.</Headline>
         <Lead dark>
-          Perspectivas sobre AI-native operating models, agentic work, decision
-          intelligence, adoption y responsible scale.
+          Análisis sobre modelos operativos AI-native, agentes, rediseño de
+          procesos, adopción y medición de valor.
         </Lead>
       </Section>
 

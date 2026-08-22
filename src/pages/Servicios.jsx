@@ -39,7 +39,7 @@ const COMPARE = [
   ['Qué queda',
    'Flujos de trabajo, asistentes, activos reutilizables, criterios de validación y plan de adopción.',
    'Bolsas de valor, prioridades, modelo operativo objetivo, caso de negocio y hoja de ruta.',
-   'Capacidad funcionando, integraciones, controles, runbook, responsable y medición.'],
+   'Capacidad funcionando, integraciones, controles, manual de operación, responsable y medición.'],
   ['Duración',
    '12, 18 o 24 horas lectivas, en 4, 6 u 8 sesiones.',
    '8–12 semanas, según alcance.',

@@ -9,19 +9,19 @@
  */
 
 export const PILARES = {
-  'ai-native': { es: 'The AI-native enterprise', en: 'The AI-native enterprise' },
-  'agentic-work': { es: 'Agentic work', en: 'Agentic work' },
-  'operating-model': { es: 'Operating-model reinvention', en: 'Operating-model reinvention' },
-  'value-adoption': { es: 'Value and adoption', en: 'Value and adoption' },
-  'responsible-scale': { es: 'Responsible scale', en: 'Responsible scale' },
+  'ai-native': { es: 'La empresa AI-native', en: 'The AI-native enterprise' },
+  'agentic-work': { es: 'Trabajo con agentes', en: 'Agentic work' },
+  'operating-model': { es: 'Reinvención del modelo operativo', en: 'Operating-model reinvention' },
+  'value-adoption': { es: 'Valor y adopción', en: 'Value and adoption' },
+  'responsible-scale': { es: 'Escalado responsable', en: 'Responsible scale' },
 };
 
 export const FORMATOS = {
-  perspective: { es: 'Perspective', en: 'Perspective' },
-  'field-note': { es: 'Field Note', en: 'Field Note' },
+  perspective: { es: 'Perspectiva', en: 'Perspective' },
+  'field-note': { es: 'Nota de campo', en: 'Field Note' },
   framework: { es: 'Framework', en: 'Framework' },
-  'executive-brief': { es: 'Executive Brief', en: 'Executive Brief' },
-  'case-evidence': { es: 'Case Evidence', en: 'Case Evidence' },
+  'executive-brief': { es: 'Informe ejecutivo', en: 'Executive Brief' },
+  'case-evidence': { es: 'Evidencia de caso', en: 'Case Evidence' },
 };
 
 /* Una fecha en un artículo es una señal de vigencia: quien la lee decide si

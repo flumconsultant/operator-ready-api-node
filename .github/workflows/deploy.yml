@@ -73,6 +73,14 @@ jobs:
       - name: Compilar
         run: npm run build
 
+      # El QA de lenguaje va después del prerenderizado y antes de subir nada:
+      # revisa el HTML que se va a publicar, que es el único sitio donde se
+      # puede saber qué lee una persona. Si encuentra una palabra importada o
+      # un anglicismo accidental, el despliegue se detiene aquí y el sitio sigue
+      # sirviendo la versión anterior, que es preferible a publicar media lengua.
+      - name: QA de lenguaje del español publicado
+        run: node scripts/qa-lenguaje.mjs
+
       - name: Preparar las credenciales del correo
         # La contraseña del buzón no puede estar en el repositorio, y el
         # hosting compartido no tiene forma de leer variables de entorno desde

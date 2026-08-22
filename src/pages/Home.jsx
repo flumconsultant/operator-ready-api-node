@@ -363,7 +363,7 @@ export default function Home() {
           ))}
         </Cols>
         <Body dark style={{ marginTop: 'var(--space-9)' }}>
-          Cada engagement parte de una línea base y de métricas acordadas antes de
+          Cada proyecto parte de una línea base y de métricas acordadas antes de
           intervenir. Medimos el cambio contra ese punto de partida.
         </Body>
       </Section>

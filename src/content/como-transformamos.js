@@ -26,6 +26,7 @@ export const CT = {
     lead: 'No añadimos IA por encima de la empresa. Rediseñamos desde dentro los cinco sistemas que deciden si el cambio queda instalado o se apaga con el piloto.',
 
     estados: 'La C de BECOME es la empresa de hoy: el círculo no cierra, y ese hueco es lo que hoy no funciona. La O es la empresa en la que se convierte, con el círculo completo. Entre las dos, el recorrido: eso es el trabajo de estas seis etapas.',
+    salida: 'Resultado:',
     tesisKicker: 'La tesis',
     tesis: 'Seis etapas y cinco sistemas.',
     tesisTexto: [
@@ -39,9 +40,9 @@ export const CT = {
     SISTEMAS: [
       ['People', 'Personas capaces de trabajar, decidir y colaborar con IA: con criterio propio sobre qué se le puede pedir a un modelo y qué no, y con la responsabilidad del resultado.', '/icons/people-inside-white.webp'],
       ['Data', 'Datos estructurados y no estructurados preparados para alimentar modelos, búsqueda y decisiones, con permisos y trazabilidad definidos antes de usarlos.', '/icons/data-inside-white.webp'],
-      ['Agents', 'Modelos, copilots y agentes capaces de razonar, usar herramientas y ejecutar partes de un workflow dentro de límites explícitos.', '/icons/agents-inside-white.webp'],
+      ['Agents', 'Modelos, copilotos y agentes capaces de razonar, usar herramientas y ejecutar partes de un proceso dentro de límites explícitos.', '/icons/agents-inside-white.webp'],
       ['Products', 'Productos y experiencias que incorporan modelos, datos y agentes en la propuesta de valor, no solo en el proceso interno.', '/icons/products-inside-white.webp'],
-      ['Operations', 'Workflows rediseñados para combinar automatización, agentes, decisiones humanas, excepciones y controles en un solo proceso.', '/icons/operations-inside-white.webp'],
+      ['Operations', 'Procesos rediseñados para combinar automatización, agentes, decisiones humanas, excepciones y controles en un solo proceso.', '/icons/operations-inside-white.webp'],
     ],
 
     etapasKicker: 'Las seis etapas',
@@ -109,6 +110,7 @@ export const CT = {
     lead: 'We do not add AI on top of the company. We redesign, from the inside, the five systems that decide whether the change stays installed or dies with the pilot.',
 
     estados: 'The C in BECOME is the company as it is today: the circle does not close, and that gap is what is not working. The O is the company it becomes, with the circle complete. The path between them is the work these six stages do.',
+    salida: 'Output:',
     tesisKicker: 'The thesis',
     tesis: 'Six stages and five systems.',
     tesisTexto: [

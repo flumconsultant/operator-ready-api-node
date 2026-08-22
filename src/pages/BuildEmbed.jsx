@@ -37,9 +37,9 @@ const DELIVERABLES = [
 ];
 
 const CONTROLS = [
-  ['risk', 'Autonomy boundaries', 'Qué decide el sistema y qué conserva siempre una persona.'],
-  ['flow', 'Exception paths', 'Qué ocurre con lo que no encaja, y quién es responsable de resolverlo.'],
-  ['quality', 'Quality criteria', 'Cómo se sabe que una salida es aceptable antes de que llegue al cliente.'],
+  ['risk', 'Límites de autonomía', 'Qué decide el sistema y qué conserva siempre una persona.'],
+  ['flow', 'Rutas de excepción', 'Qué ocurre con lo que no encaja, y quién es responsable de resolverlo.'],
+  ['quality', 'Criterios de calidad', 'Cómo se sabe que una salida es aceptable antes de que llegue al cliente.'],
   ['balance', 'Permissions y trazabilidad', 'Quién puede hacer qué, y cómo se reconstruye una decisión después.'],
 ];
 
@@ -127,7 +127,7 @@ export default function BuildEmbed() {
               <h3 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)' }}>{name}</h3>
               <p style={{ margin: 0, font: 'var(--type-body)', color: 'var(--text-body)' }}>{work}</p>
               <p style={{ margin: 0, font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: 'var(--text-muted)' }}>
-                <span style={{ color: 'var(--text-accent)' }}>Output: </span>{out}
+                <span style={{ color: 'var(--text-accent)' }}>Resultado: </span>{out}
               </p>
             </Reveal>
           ))}

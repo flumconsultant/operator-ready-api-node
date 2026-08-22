@@ -72,13 +72,13 @@ export const INDUSTRIAS = [
       workflows: [
         'Originación y evaluación de crédito',
         'Suscripción y renovación de pólizas',
-        'Gestión de siniestros y reclamaciones',
+        'Gestión de siniestros y reclamos',
         'KYC, AML y monitoreo continuo',
         'Reporte regulatorio y auditoría interna',
         'Servicio al cliente, cobranza y retención',
       ],
       tecnologiaTitular: "Si el sistema no puede citar qué leyó, no debe influir en la decisión.",
-      tecnologia: 'Extracción sobre documentos no estructurados, búsqueda sobre normativa y política interna con la fuente citada, agentes acotados a un paso del proceso, y registro de qué consultó el sistema antes de proponer. La supervisión humana no es una capa que se añade después: es parte del diseño del workflow.',
+      tecnologia: 'Extracción sobre documentos no estructurados, búsqueda sobre normativa y política interna con la fuente citada, agentes acotados a un paso del proceso, y registro de qué consultó el sistema antes de proponer. La supervisión humana no es una capa que se añade después: es parte del diseño del proceso.',
       metricasTitular: "Un expediente que tarda menos no sirve si nadie puede explicar por qué se aprobó.",
       metricas: [
         ['Tiempo de ciclo', 'Cuánto tarda un expediente desde que entra hasta que hay decisión.'],
@@ -91,7 +91,7 @@ export const INDUSTRIAS = [
       empezar: [
         'Un programa BECOME NOW™ con el equipo de riesgo, finanzas o legal, sobre sus propios expedientes.',
         'Un BECOME DISCOVER™ acotado a un proceso concreto —originación o siniestros— para decidir dónde está el valor y qué controles hacen falta.',
-        'Un BECOME EMBED™ sobre el workflow ya priorizado, con supervisión y trazabilidad definidas desde el diseño.',
+        'Un BECOME EMBED™ sobre el proceso ya priorizado, con supervisión y trazabilidad definidas desde el diseño.',
       ],
       cierre: 'Empieza por la decisión que hoy tarda demasiado.',
       cierreTexto: "Tráenos un expediente, la decisión que habilita y los controles que hoy deben revisarse a mano. Identificaremos qué puede prepararse con IA, qué debe seguir bajo criterio profesional y cómo conservar la evidencia de principio a fin.",
@@ -161,7 +161,7 @@ export const INDUSTRIAS = [
       h1: 'La operación ya genera la señal. El reto es convertirla en acción a tiempo.',
       lead: 'Una operación intensiva en activos genera más información de la que alcanza a usar. La oportunidad vive en el intervalo entre lo que la operación ya sabe y el momento en que alguien actúa.',
       contexto: [
-        'Una faena o una planta produce señales continuas: sensores, mantenimiento, turnos, permisos, incidentes, proveedores. Casi todo se registra y muy poco llega a tiempo a quien decide. El cuello de botella pocas veces es el modelo: es que el conocimiento vive en informes, correos y personas con veinte años de oficio.',
+        'Una operación minera o una planta produce señales continuas: sensores, mantenimiento, turnos, permisos, incidentes, proveedores. Casi todo se registra y muy poco llega a tiempo a quien decide. El cuello de botella pocas veces es el modelo: es que el conocimiento vive en informes, correos y personas con veinte años de oficio.',
         'Es además un entorno donde la seguridad y la licencia para operar no son un apartado del proyecto: son la condición. Cualquier capacidad que se instale tiene que dejar claro qué decide una persona, qué no decide un sistema y cómo queda registrado.',
       ],
       oportunidadesTitular: "La operación ya produce la señal. El valor aparece cuando llega antes que la desviación.",
@@ -191,7 +191,7 @@ export const INDUSTRIAS = [
       ],
       tecnologiaTitular: "En seguridad, la IA prepara evidencia; la decisión nunca sale de la persona.",
       tecnologia: 'Búsqueda sobre documentación técnica extensa con la fuente citada, extracción sobre informes y órdenes de trabajo, y asistentes acotados a un procedimiento concreto. Donde una recomendación puede afectar la seguridad, el sistema prepara la evidencia y la decisión queda íntegramente en la persona responsable.',
-      metricasTitular: "La mejora se mide entre la señal registrada y la acción en terreno.",
+      metricasTitular: "La mejora se mide entre la señal registrada y la acción operativa.",
       metricas: [
         ['Señal a decisión', 'Cuánto pasa entre que algo se registra y alguien actúa.'],
         ['Consistencia de reporte', 'Qué proporción de informes se produce con el mismo criterio.'],
@@ -278,8 +278,8 @@ export const INDUSTRIAS = [
       h1: 'Cuando el mercado cambia cada semana, decidir tarde cuesta venta.',
       lead: 'Surtido, precio, contenido y servicio se deciden semana a semana. La IA aporta cuando acorta ese ciclo sin perder el criterio comercial.',
       contexto: [
-        'En retail y consumo el problema casi nunca es la falta de datos: es que decidir surtido, precio o contenido exige reunir cinco fuentes distintas y a alguien con criterio para leerlas. Ese alguien es el cuello de botella, y no se resuelve contratando más gente.',
-        'La otra mitad es el volumen de contenido. Fichas, campañas, respuestas, adaptaciones por canal y por mercado: trabajo repetitivo con un estándar de marca que hoy solo existe en la cabeza de un equipo pequeño. Escribirlo, y hacerlo aplicable, es la mitad de la transformación.',
+        'En retail y consumo el problema casi nunca es la falta de datos: es que decidir surtido, precio o contenido exige reunir cinco fuentes distintas y a alguien con criterio para leerlas. El cuello de botella aparece cuando el criterio necesario para decidir o publicar no escala al mismo ritmo que el volumen.',
+        'La otra mitad es el volumen de contenido. Fichas, campañas, respuestas, adaptaciones por canal y por mercado: trabajo repetitivo con un estándar de marca que todavía depende de conocimiento tácito difícil de reutilizar a escala. Escribirlo, y hacerlo aplicable, es la mitad de la transformación.',
       ],
       oportunidadesTitular: "La ventaja vive en decidir y publicar al ritmo al que cambia el mercado.",
       oportunidades: [
@@ -388,7 +388,7 @@ export const INDUSTRIAS = [
       oportunidades: [
         ['Atención previa a la reserva', 'Responder sobre disponibilidad, condiciones y políticas con la información vigente.'],
         ['Cambios e incidencias', 'Reunir el caso completo —reserva, política, historial— antes de que una persona decida.'],
-        ['Postventa y reclamaciones', 'Clasificar, contrastar contra la política y preparar la respuesta con la excepción marcada.'],
+        ['Postventa y reclamos', 'Clasificar, contrastar contra la política y preparar la respuesta con la excepción marcada.'],
         ['Contenido y distribución', 'Descripciones, condiciones y adaptaciones por canal y por mercado, con reglas propias.'],
         ['Conocimiento operativo', 'Procedimientos, estándares y escalamientos consultables por el equipo en turno.'],
         ['Voz del huésped', 'Convertir reseñas y encuestas en temas accionables por propiedad, ruta o temporada.'],
@@ -398,7 +398,7 @@ export const INDUSTRIAS = [
         'Consulta previa y conversión de reserva',
         'Gestión de cambios y cancelaciones',
         'Atención de incidencias en viaje o en estadía',
-        'Reclamaciones y compensaciones',
+        'Reclamos y compensaciones',
         'Distribución de contenido y tarifas por canal',
         'Operación de turno y traspaso entre equipos',
       ],
@@ -616,7 +616,7 @@ export const INDUSTRIAS = [
         texto: 'BECOME no desarrolla ni valida capacidades de diagnóstico, tratamiento, triaje clínico o interpretación de estudios, y no asesora sobre la conformidad regulatoria de dispositivos médicos. Cuando un proceso roza una decisión clínica, ese límite se define en el diseño y la decisión permanece íntegramente en el profesional de salud.',
       },
       contexto: [
-        'Una institución de salud o una empresa de life sciences dedica una parte enorme de su esfuerzo a trabajo que no es clínico: admisión, autorizaciones, facturación, documentación interna, compras, formación del personal, atención administrativa al usuario. Ahí la IA aplicada tiene un efecto directo y verificable.',
+        'Una institución de salud o una empresa farmacéutica dedica una parte enorme de su esfuerzo a trabajo que no es clínico: admisión, autorizaciones, facturación, documentación interna, compras, formación del personal, atención administrativa al usuario. Ahí la IA aplicada tiene un efecto directo y verificable.',
         'Y es también donde el riesgo se puede acotar con honestidad. Un proceso administrativo se puede medir, auditar y corregir sin tocar una decisión clínica. Empezar por ahí no es empezar por lo fácil: es empezar por donde se puede sostener lo que se promete.',
       ],
       oportunidadesTitular: "La primera oportunidad está alrededor de la atención, no dentro de la decisión clínica.",
@@ -728,7 +728,7 @@ export const urlIndustria = (ind, lang) => `${RAIZ[lang]}/${ind.slug[lang]}`;
 export const LENTES = {
   es: [
     ['Decisiones', 'Qué decisiones se toman tarde, con información incompleta o con criterio distinto según quién las tome.'],
-    ['Workflows', 'Qué procesos concentran esperas, entregas entre equipos y trabajo que se rehace.'],
+    ['Procesos', 'Qué procesos concentran esperas, entregas entre equipos y trabajo que se rehace.'],
     ['Conocimiento', 'Qué sabe la organización que hoy no está disponible en el momento en que hace falta.'],
     ['Experiencia', 'Qué momentos del cliente o del usuario se degradan por volumen y no por falta de criterio.'],
     ['Crecimiento', 'Qué parte de la propuesta de valor cambiaría si la IA formara parte del producto y no solo del proceso.'],

@@ -27,7 +27,7 @@ const CULTURE = [
 ];
 
 const DELIVERY = [
-  'Un responsable claro por engagement.',
+  'Un responsable claro por proyecto.',
   'Equipo del cliente involucrado desde el inicio.',
   'Decisiones, supuestos y riesgos visibles.',
   'Software funcional o artefactos utilizables, no solo presentaciones.',
@@ -127,7 +127,7 @@ export default function Nosotros() {
             <Headline>Un equipo senior y multidisciplinario alrededor del resultado.</Headline>
             <Body>
               La composición combina negocio, transformación, producto, adopción,
-              datos e IA según lo que el reto necesita. Cada engagement mantiene un
+              datos e IA según lo que el reto necesita. Cada proyecto mantiene un
               responsable claro.
             </Body>
           </Reveal>

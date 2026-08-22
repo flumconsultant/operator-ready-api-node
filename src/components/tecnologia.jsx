@@ -23,7 +23,7 @@ const T = {
     problemaKicker: 'El punto de partida',
     problemaTitulo: 'Más IA no significa más transformación.',
     problemaLead:
-      'Muchas organizaciones ya experimentan con ChatGPT, Claude, Gemini, copilots y otros LLMs. El reto no es acceder a más modelos: es convertirlos en nuevas formas de decidir, trabajar y operar.',
+      'Muchas organizaciones ya experimentan con ChatGPT, Claude, Gemini, copilotos y otros LLMs. El reto no es acceder a más modelos: es convertirlos en nuevas formas de decidir, trabajar y operar.',
     problemaCuerpo:
       'BECOME conecta estrategia, personas, datos, LLMs, agents, productos y workflows para transformar experimentos aislados en capacidad empresarial.',
 
@@ -43,7 +43,7 @@ const T = {
       'Durante la Sesión 0 identificamos qué modelos y herramientas utiliza o autoriza la organización, y diseñamos los ejercicios sobre ese entorno.',
     herramientasIntro: 'Podemos trabajar sobre casos que involucren:',
     herramientasLista: ['ChatGPT', 'Claude', 'Gemini', 'Microsoft Copilot', 'LLMs empresariales', 'AI assistants', 'AI agents', 'Herramientas internas conectadas mediante APIs'],
-    herramientasCierre: 'El objetivo no es dominar una interfaz. Es aprender a diseñar mejores workflows con IA.',
+    herramientasCierre: 'El objetivo no es dominar una interfaz. Es aprender a diseñar mejores procesos con IA.',
 
     adaptadaTitulo: 'Tecnología adaptada a tu entorno',
     adaptadaCuerpo:
@@ -53,12 +53,12 @@ const T = {
     capoKicker: 'Bajo el capó',
     capoTitulo: 'Qué hay debajo de una capacidad AI-native.',
     capoCapas: [
-      ['Models', 'LLMs, foundation models y multimodal models. Según el caso, evaluamos alternativas como OpenAI, Anthropic, Google u otros proveedores.'],
+      ['Models', 'LLMs, modelos fundacionales y multimodales. Según el caso, evaluamos alternativas como OpenAI, Anthropic, Google u otros proveedores.'],
       ['Orchestration', 'Agents, model routing, tool calling, APIs, MCP y workflow orchestration.'],
       ['Knowledge', 'Enterprise data, RAG, grounding, embeddings, vector search y knowledge sources.'],
       ['Integrations', 'APIs, aplicaciones empresariales, identidad, permisos y sistemas de negocio.'],
       ['Control', 'Guardrails, evaluaciones, human-in-the-loop, gestión de excepciones y puntos de aprobación.'],
-      ['Operations', 'Observabilidad, tracing, monitoreo, versionado, cost governance y runbooks.'],
+      ['Operations', 'Observabilidad, trazas, monitoreo, versionado, control de costos de modelos y manuales de operación.'],
     ],
 
     modelosKicker: 'Technology landscape',

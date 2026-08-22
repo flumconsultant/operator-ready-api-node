@@ -86,7 +86,7 @@ export default function Solucion() {
           </Card>
           <Card>
             <p style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
-              Engagement recomendado
+              Servicio recomendado
             </p>
             <p style={{ margin: 'var(--space-5) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)' }}>
               {c.engagement}

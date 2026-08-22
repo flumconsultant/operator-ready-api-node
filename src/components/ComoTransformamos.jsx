@@ -143,7 +143,7 @@ export default function ComoTransformamos({ lang = 'es' }) {
                   ))}
                 </ul>
                 <p style={{ margin: 'var(--space-6) 0 0', paddingTop: 'var(--space-5)', borderTop: '1px solid var(--border-hairline)', font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: 'var(--text-muted)' }}>
-                  <span style={{ color: 'var(--text-accent)' }}>Output: </span>{salida}
+                  <span style={{ color: 'var(--text-accent)' }}>{t.salida} </span>{salida}
                 </p>
               </div>
             </Reveal>

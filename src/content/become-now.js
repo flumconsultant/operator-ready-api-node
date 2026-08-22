@@ -146,7 +146,7 @@ export const PROGRAMS = {
     body: 'Programa aplicado a recruitment, onboarding, learning, employee experience, performance y people analytics.',
     who: ['Human Resources', 'Talent Acquisition', 'Learning and Development', 'People Analytics', 'Employee Experience', 'HR Business Partners'],
     route: [
-      ['IA responsable para Recursos Humanos', 'HR Copilot con límites de uso y human review.'],
+      ['IA responsable para Recursos Humanos', 'HR Copilot con límites de uso y revisión humana.'],
       ['Recruitment y perfiles', 'Job Profile and Interview Assistant.'],
       ['Onboarding', 'Onboarding Journey Assistant.'],
       ['Learning y desarrollo', 'Learning Path Designer.'],
@@ -157,7 +157,7 @@ export const PROGRAMS = {
       'No delegar decisiones de contratación a un LLM.',
       'Evitar el uso de datos personales no autorizados.',
       'Revisar bias y criterios discriminatorios.',
-      'Mantener human accountability.',
+      'Mantener la responsabilidad humana.',
       'Documentar fuentes y decisiones.',
     ],
     deliverables: ['Biblioteca de perfiles', 'Interview guide', 'Onboarding assistant', 'Learning plan', 'Feedback templates', 'People insight brief', 'Responsible AI guide para HR'],
@@ -197,7 +197,7 @@ export const PROGRAMS = {
       ['Reporting ejecutivo', 'Legal and Risk Executive Brief.'],
     ],
     guardrails: [
-      'El output no reemplaza asesoría legal.',
+      'El entregable no reemplaza asesoría legal.',
       'Toda interpretación requiere revisión profesional.',
       'Las fuentes deben mantenerse trazables.',
       'La información confidencial solo se utiliza en entornos autorizados.',
@@ -283,17 +283,17 @@ export const PROGRAMS = {
     menu: 'IA aplicada a Technology & Engineering',
     area: 'Technology & Engineering',
     h1: 'Construye criterio para trabajar con LLMs, agents y sistemas de IA.',
-    body: 'El programa conecta el uso práctico de ChatGPT, Claude, Gemini y otros foundation models con los conceptos necesarios para diseñar soluciones empresariales: APIs, context engineering, RAG, tool calling, MCP, evaluaciones, guardrails y observabilidad. No buscamos convertir a todos en AI engineers: buscamos que los equipos técnicos puedan tomar mejores decisiones sobre cómo construir, integrar y gobernar IA. Se aplica a requirements, architecture, coding, testing, documentation, incidents y engineering knowledge.',
+    body: 'El programa conecta el uso práctico de ChatGPT, Claude, Gemini y otros modelos fundacionales con los conceptos necesarios para diseñar soluciones empresariales: APIs, context engineering, RAG, tool calling, MCP, evaluaciones, controles y observabilidad. No buscamos convertir a todos en AI engineers: buscamos que los equipos técnicos puedan tomar mejores decisiones sobre cómo construir, integrar y gobernar IA. Se aplica a requirements, architecture, coding, testing, documentation, incidents y engineering knowledge.',
     who: ['Software Engineering', 'Architecture', 'QA', 'DevOps', 'IT Operations', 'Technology Leadership'],
     route: [
-      ['LLMs, foundation models y prompt engineering', 'Engineering Copilot con reglas de uso, límites y criterios de revisión.'],
+      ['LLMs, modelos fundacionales y prompt engineering', 'Engineering Copilot con reglas de uso, límites y criterios de revisión.'],
       ['Context engineering, RAG y embeddings', 'Asistente conectado al conocimiento técnico del equipo mediante vector search y grounding.'],
       ['APIs, tool calling y MCP', 'Requirements assistant que consulta sistemas reales en vez de responder de memoria.'],
-      ['Agentic workflows y model routing', 'Workflow de coding y code review con pasos automáticos y puntos de revisión humana.'],
-      ['Evaluaciones, guardrails y testing', 'Test design assistant y batería de evals para medir el comportamiento antes de confiar en él.'],
-      ['Observabilidad, incidentes y cost governance', 'Sistema de conocimiento técnico con tracing, monitoreo y runbooks.'],
+      ['Procesos con agentes y enrutamiento de modelos', 'Proceso de codificación y revisión de código con pasos automáticos y puntos de revisión humana.'],
+      ['Evaluaciones, controles y pruebas', 'Test design assistant y batería de evals para medir el comportamiento antes de confiar en él.'],
+      ['Observabilidad, incidentes y control de costos', 'Sistema de conocimiento técnico con trazas, monitoreo y manuales de operación.'],
     ],
-    deliverables: ['Engineering prompt library', 'Context and RAG design', 'Requirement templates', 'Code-review checklist', 'Evaluation set (evals)', 'Guardrails y human-in-the-loop', 'Incident runbook', 'Documentation assistant'],
+    deliverables: ['Engineering prompt library', 'Context and RAG design', 'Requirement templates', 'Code-review checklist', 'Evaluation set (evals)', 'Controles y human-in-the-loop', 'Manual de incidentes', 'Documentation assistant'],
     cta: 'Adapta este programa a Technology',
   },
 };
@@ -321,9 +321,9 @@ export const EXISTING_MATERIAL = [
 export const SESSION_ZERO = [
   ['Objetivos empresariales', 'Qué espera mejorar el área, qué indicadores importan, qué presión originó la capacitación y qué resultados debe producir.'],
   ['Procesos actuales', 'Actividades recurrentes, decisiones importantes, cuellos de botella, handoffs, retrabajos, excepciones y dependencias entre áreas.'],
-  ['Información y herramientas', 'Documentos, data sources, spreadsheets, sistemas, reportes, licencias disponibles de ChatGPT, Claude o Gemini y restricciones de acceso.'],
+  ['Información y herramientas', 'Documentos, fuentes de datos, hojas de cálculo, sistemas, reportes, licencias disponibles de ChatGPT, Claude o Gemini y restricciones de acceso.'],
   ['Usuarios y nivel de adopción', 'Roles participantes, experiencia previa, frecuencia de uso, confianza y diferencias entre perfiles.'],
-  ['Seguridad y responsible use', 'Información sensible, datos personales, propiedad intelectual, reglas internas, herramientas autorizadas y criterios de human review.'],
+  ['Seguridad y uso responsable', 'Información sensible, datos personales, propiedad intelectual, reglas internas, herramientas autorizadas y criterios de revisión humana.'],
   ['Selección de casos', 'Qué procesos se trabajan, qué agentes se construyen, qué entregables se esperan y con qué criterios se validan.'],
 ];
 
@@ -354,14 +354,14 @@ export const IS_IS_NOT = [
   ['Un programa construido sobre los procesos de la empresa.', 'Una lista de prompts mágicos.'],
   ['Trabajo con documentos, datos y formatos existentes.', 'Una demostración desconectada de la operación.'],
   ['Construcción de asistentes, agentes y flujos de trabajo reutilizables.', 'Una automatización completa de sistemas.'],
-  ['Criterios de validación y human review.', 'Un reemplazo del criterio profesional.'],
+  ['Criterios de validación y revisión humana.', 'Un reemplazo del criterio profesional.'],
   ['Capacidades que pueden utilizarse desde el día siguiente.', 'Teoría sin aplicación.'],
   ['Un programa adaptable a ChatGPT, Claude o Gemini.', 'Una capacitación atada a una sola plataforma.'],
 ];
 
 export const INDICATORS = [
   ['Adopción', 'Participantes activos, frecuencia de uso, flujos de trabajo reutilizados y casos incorporados al trabajo habitual.'],
-  ['Productividad', 'Tiempo de preparación y de respuesta, reducción de tareas manuales y velocidad para producir un primer output útil.'],
+  ['Productividad', 'Tiempo de preparación y de respuesta, reducción de tareas manuales y velocidad para producir un primer resultado útil.'],
   ['Calidad', 'Consistencia, errores detectados, cumplimiento del formato, retrabajo y nivel de trazabilidad.'],
   ['Confianza', 'Capacidad para verificar resultados, claridad sobre los límites y uso adecuado de la información.'],
   ['Valor', 'Procesos mejorados, decisiones habilitadas, capacidades instaladas y casos preparados para BECOME EMBED™.'],

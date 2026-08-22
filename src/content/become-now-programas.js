@@ -98,7 +98,7 @@ export const COPY_PROGRAMAS = {
         'Taxonomía inicial de motivos, fricciones y escalamiento.',
         'Plantillas de respuesta por tipo de caso.',
         'Pauta de calidad con criterios de revisión humana.',
-        'Workflow de síntesis de Voice of Customer.',
+        'Proceso de síntesis de la voz del cliente.',
         'Backlog de mejoras del journey sustentado en evidencia.',
       ],
       medicion: {
@@ -276,7 +276,7 @@ export const COPY_PROGRAMAS = {
         ],
       },
       sesion: {
-        titular: 'Cada output debe poder rastrearse hasta una fuente, una transformación y un criterio.',
+        titular: 'Cada entregable debe poder rastrearse hasta una fuente, una transformación y un criterio.',
         parrafos: [
           'El equipo compara resultados con cálculos conocidos, documenta consultas y revisa si la narrativa distingue correlación, causalidad, dato y supuesto. Lo reutilizable no es una respuesta: es el procedimiento que permite volver a producirla.',
         ],
@@ -295,7 +295,7 @@ export const COPY_PROGRAMAS = {
       medicion: {
         titular: '',
         parrafos: [
-          'Los indicadores pueden incluir tiempo hasta el primer análisis útil, errores detectados antes de publicar, reproducibilidad, retrabajo, cobertura de fuentes y claridad de supuestos. No se mide “cantidad de outputs” como sustituto de calidad.',
+          'Los indicadores pueden incluir tiempo hasta el primer análisis útil, errores detectados antes de publicar, reproducibilidad, retrabajo, cobertura de fuentes y claridad de supuestos. No se mide “cantidad de entregables” como sustituto de calidad.',
         ],
       },
       faq: [
@@ -427,7 +427,7 @@ export const COPY_PROGRAMAS = {
       problema: {
         titular: 'Demasiado tiempo reuniendo el número. Muy poco explicando qué significa.',
         parrafos: [
-          'Finanzas trabaja entre hojas, reportes, correos y versiones que no siempre llegan al mismo tiempo. La IA puede acelerar la revisión y la narrativa, pero un output convincente no reemplaza una cifra conciliada ni un supuesto aprobado.',
+          'Finanzas trabaja entre hojas, reportes, correos y versiones que no siempre llegan al mismo tiempo. La IA puede acelerar la revisión y la narrativa, pero un entregable convincente no reemplaza una cifra conciliada ni un supuesto aprobado.',
           'El programa separa con claridad lo que el modelo puede organizar, comparar o explicar de lo que debe calcularse, conciliarse y aprobarse en los sistemas financieros.',
         ],
       },
@@ -496,7 +496,7 @@ export const COPY_PROGRAMAS = {
         ],
         [
           '¿Se adapta a nuestro ERP y plan de cuentas?',
-          'La capacitación usa outputs y estructuras autorizadas; una integración directa se evalúa aparte.',
+          'La capacitación usa entregables y estructuras autorizadas; una integración directa se evalúa aparte.',
         ],
         [
           '¿Podemos incluir FP&A, Tesorería o Contabilidad?',
@@ -817,7 +817,7 @@ export const COPY_PROGRAMAS = {
         ],
       },
       ruta: {
-        bajada: 'Seis sesiones para aumentar cobertura sin diluir accountability.',
+        bajada: 'Seis sesiones para aumentar cobertura sin diluir responsabilidad.',
         pasos: [
           ['IA responsable en Legal y Risk', 'Copilot con alcance, fuentes y límites.'],
           [
@@ -845,7 +845,7 @@ export const COPY_PROGRAMAS = {
       sesion: {
         titular: 'Ninguna conclusión queda separada de su fuente.',
         parrafos: [
-          'Los outputs se revisan por cobertura, precisión, vigencia, trazabilidad y tratamiento de excepciones. Toda interpretación requiere validación profesional; el activo documenta también cuándo escalar y cuándo abstenerse.',
+          'Los entregables se revisan por cobertura, precisión, vigencia, trazabilidad y tratamiento de excepciones. Toda interpretación requiere validación profesional; el activo documenta también cuándo escalar y cuándo abstenerse.',
         ],
       },
       tecnologia: [
@@ -867,7 +867,7 @@ export const COPY_PROGRAMAS = {
       },
       faq: [
         [
-          '¿El output reemplaza asesoría legal?',
+          '¿El entregable reemplaza asesoría legal?',
           'No. Es apoyo para revisión y preparación; el criterio profesional no se delega.',
         ],
         [
@@ -880,11 +880,11 @@ export const COPY_PROGRAMAS = {
         ],
         [
           '¿Puede decidir el nivel de riesgo?',
-          'Puede organizar evidencia y aplicar criterios acordados, pero la decisión y accountability permanecen en el equipo.',
+          'Puede organizar evidencia y aplicar criterios acordados, pero la decisión y responsabilidad permanecen en el equipo.',
         ],
       ],
       otros: {
-        texto: 'Para obligaciones de proveedores, revisa Supply Chain y Compras. Para contratos de proyectos, Finanzas Inmobiliarias. Para governance técnico, Technology & Engineering.',
+        texto: 'Para obligaciones de proveedores, revisa Supply Chain y Compras. Para contratos de proyectos, Finanzas Inmobiliarias. Para gobernanza técnico, Technology & Engineering.',
         programas: ['finanzas-inmobiliarias', 'supply-chain-compras', 'technology-engineering'],
         servicios: [],
       },
@@ -982,7 +982,7 @@ export const COPY_PROGRAMAS = {
         titular: 'Más contenido no significa más sistema.',
         parrafos: [
           'La IA reduce el tiempo del primer borrador, pero también multiplica piezas parecidas, insights sin fuente y adaptaciones que pierden la intención. Cuando cada persona usa su propio prompt, la velocidad individual crece y la coherencia del equipo disminuye.',
-          'El programa convierte research, creación, revisión y aprendizaje en workflows compartidos. El objetivo no es publicar automáticamente; es aumentar la capacidad del equipo para pensar, producir y decidir con contexto.',
+          'El programa convierte research, creación, revisión y aprendizaje en procesos compartidos. El objetivo no es publicar automáticamente; es aumentar la capacidad del equipo para pensar, producir y decidir con contexto.',
         ],
       },
       sesion0: {
@@ -1021,7 +1021,7 @@ export const COPY_PROGRAMAS = {
         ],
       },
       sesion: {
-        titular: 'El output se evalúa con el brief, no con el gusto del modelo.',
+        titular: 'El entregable se evalúa con el brief, no con el gusto del modelo.',
         parrafos: [
           'Cada pieza o análisis se compara con objetivo, audiencia, evidencia, voz, canal y restricciones. Los prompts aislados se convierten en plantillas y criterios que el equipo puede reutilizar y mejorar.',
         ],
@@ -1040,7 +1040,7 @@ export const COPY_PROGRAMAS = {
       medicion: {
         titular: '',
         parrafos: [
-          'Se puede medir tiempo de research y primera versión, consistencia de marca, iteraciones de revisión, reutilización de workflows, hallazgos sustentados y velocidad para convertir performance en una nueva prueba.',
+          'Se puede medir tiempo de research y primera versión, consistencia de marca, iteraciones de revisión, reutilización de procesos, hallazgos sustentados y velocidad para convertir performance en una nueva prueba.',
         ],
       },
       faq: [
@@ -1054,7 +1054,7 @@ export const COPY_PROGRAMAS = {
         ],
         [
           '¿Publicará automáticamente?',
-          'No dentro del programa estándar. Primero se construyen y validan los workflows.',
+          'No dentro del programa estándar. Primero se construyen y validan los procesos.',
         ],
         [
           '¿Incluye generación de imágenes?',
@@ -1231,7 +1231,7 @@ export const COPY_PROGRAMAS = {
       faq: [
         [
           '¿El programa automatiza procesos?',
-          'No por defecto. Primero desarrolla capacidad y valida el workflow; una automatización productiva corresponde a BECOME EMBED™.',
+          'No por defecto. Primero desarrolla capacidad y valida el proceso; una automatización productiva corresponde a BECOME EMBED™.',
         ],
         [
           '¿Sirve si los procesos no están bien documentados?',
@@ -1247,7 +1247,7 @@ export const COPY_PROGRAMAS = {
         ],
       ],
       otros: {
-        texto: 'Para proveedores e inventarios, revisa Supply Chain y Compras. Para portafolios de iniciativas, Project Management y PMO. Para construir el workflow productivo, BECOME EMBED™.',
+        texto: 'Para proveedores e inventarios, revisa Supply Chain y Compras. Para portafolios de iniciativas, Project Management y PMO. Para construir el proceso productivo, BECOME EMBED™.',
         programas: ['project-management-pmo', 'supply-chain-compras'],
         servicios: ['become-embed'],
       },
@@ -1395,7 +1395,7 @@ export const COPY_PROGRAMAS = {
       sesion: {
         titular: 'Cada recomendación debe declarar qué evidencia la sostiene.',
         parrafos: [
-          'Los outputs se revisan por trazabilidad, claridad del problema, calidad de hipótesis, viabilidad de prueba y coherencia con la estrategia. El modelo puede proponer; el equipo conserva la decisión.',
+          'Los entregables se revisan por trazabilidad, claridad del problema, calidad de hipótesis, viabilidad de prueba y coherencia con la estrategia. El modelo puede proponer; el equipo conserva la decisión.',
         ],
       },
       tecnologia: [
@@ -1548,13 +1548,13 @@ export const COPY_PROGRAMAS = {
       sesion0: {
         titular: 'La Sesión 0 define una única lectura del avance.',
         parrafos: [
-          'Revisamos charter, plan, hitos, RAID log, minutas, reportes, governance, herramientas y criterios de salud. Acordamos definiciones de avance, semáforos, escalamiento, materialidad y evidencia mínima para actualizar un compromiso.',
+          'Revisamos charter, plan, hitos, RAID log, minutas, reportes, gobernanza, herramientas y criterios de salud. Acordamos definiciones de avance, semáforos, escalamiento, materialidad y evidencia mínima para actualizar un compromiso.',
         ],
       },
       ruta: {
         bajada: 'Seis sesiones para convertir seguimiento en control útil.',
         pasos: [
-          ['IA para Project Management', 'Copilot alineado al método y governance.'],
+          ['IA para Project Management', 'Copilot alineado al método y gobernanza.'],
           [
             'Charter y planificación',
             'Asistente para alcance, hitos, supuestos y criterios de éxito.',
@@ -1572,7 +1572,7 @@ export const COPY_PROGRAMAS = {
         ],
       },
       sesion: {
-        titular: 'Un buen output permite saber quién debe hacer qué y por qué.',
+        titular: 'Un buen entregable permite saber quién debe hacer qué y por qué.',
         parrafos: [
           'Se valida contra fuentes del proyecto, reglas de status, ownership y fechas. Los activos no actualizan el plan por sí solos: preparan una actualización verificable y muestran las contradicciones que requieren decisión.',
         ],
@@ -1597,11 +1597,11 @@ export const COPY_PROGRAMAS = {
       faq: [
         [
           '¿Actualiza automáticamente la herramienta de proyectos?',
-          'No dentro del programa estándar. Primero se valida el workflow y la calidad de sus inputs.',
+          'No dentro del programa estándar. Primero se valida el proceso y la calidad de sus inputs.',
         ],
         [
           '¿Funciona con agile y waterfall?',
-          'Sí. La malla se adapta al método, governance y lenguaje existentes.',
+          'Sí. La malla se adapta al método, gobernanza y lenguaje existentes.',
         ],
         [
           '¿Puede generar minutas?',
@@ -1711,7 +1711,7 @@ export const COPY_PROGRAMAS = {
         titular: 'La eficiencia puede crecer mientras también crece el riesgo de tratar personas como patrones.',
         parrafos: [
           'La IA puede redactar perfiles, resumir feedback y proponer rutas de aprendizaje. También puede reproducir sesgos, inferir información que no corresponde o convertir una recomendación en una decisión opaca.',
-          'BECOME NOW™ enseña a utilizarla como apoyo de preparación, organización y comunicación, manteniendo datos personales, fairness y accountability dentro del diseño del workflow.',
+          'BECOME NOW™ enseña a utilizarla como apoyo de preparación, organización y comunicación, manteniendo datos personales, fairness y responsabilidad dentro del diseño del proceso.',
         ],
       },
       sesion0: {
@@ -1766,7 +1766,7 @@ export const COPY_PROGRAMAS = {
       medicion: {
         titular: '',
         parrafos: [
-          'Los indicadores pueden incluir tiempo de preparación, consistencia, retrabajo, reutilización, comprensión del colaborador y cumplimiento del human review. Ninguna métrica de eficiencia justifica delegar una decisión sobre personas.',
+          'Los indicadores pueden incluir tiempo de preparación, consistencia, retrabajo, reutilización, comprensión del colaborador y cumplimiento del revisión humana. Ninguna métrica de eficiencia justifica delegar una decisión sobre personas.',
         ],
       },
       faq: [
@@ -1893,7 +1893,7 @@ export const COPY_PROGRAMAS = {
         titular: 'La IA puede producir una recomendación antes de revelar sus supuestos.',
         parrafos: [
           'Un memo bien escrito puede ocultar una fuente débil. Un escenario completo puede omitir la variable que más importa. Para el liderazgo, el valor no está en obtener una respuesta más rápido, sino en ampliar opciones, hacer visibles los trade-offs y preparar una mejor conversación de decisión.',
-          'El programa construye una disciplina ejecutiva para preguntar, contrastar y comunicar con IA sin externalizar accountability.',
+          'El programa construye una disciplina ejecutiva para preguntar, contrastar y comunicar con IA sin externalizar responsabilidad.',
         ],
       },
       sesion0: {
@@ -1934,7 +1934,7 @@ export const COPY_PROGRAMAS = {
       sesion: {
         titular: 'El modelo debe mejorar la calidad de la pregunta antes que la elegancia de la respuesta.',
         parrafos: [
-          'Cada output se somete a fuentes contradictorias, supuestos alternativos y criterios de decisión. El equipo documenta qué cambió en su juicio y qué información aún necesita.',
+          'Cada entregable se somete a fuentes contradictorias, supuestos alternativos y criterios de decisión. El equipo documenta qué cambió en su juicio y qué información aún necesita.',
         ],
       },
       tecnologia: [
@@ -2077,7 +2077,7 @@ export const COPY_PROGRAMAS = {
         titular: 'La cadena cambia antes de que el reporte termine de explicarla.',
         parrafos: [
           'Una ruptura, un atraso o una variación de demanda aparece en sistemas distintos y se interpreta desde funciones diferentes. La IA puede ayudar a conectar señales y preparar escenarios, pero no debe inventar disponibilidad, condiciones ni desempeño de un proveedor.',
-          'El programa convierte información dispersa en workflows de análisis y comunicación con criterios comunes para Compras, Planeamiento y Operaciones.',
+          'El programa convierte información dispersa en procesos de análisis y comunicación con criterios comunes para Compras, Planeamiento y Operaciones.',
         ],
       },
       sesion0: {
@@ -2106,7 +2106,7 @@ export const COPY_PROGRAMAS = {
       sesion: {
         titular: 'Una recomendación debe conservar la fecha, la fuente y la restricción operativa.',
         parrafos: [
-          'Los outputs se validan por precisión, cobertura, vigencia, cumplimiento de políticas y tratamiento de excepciones. El activo muestra cuándo necesita información adicional y cuándo debe escalar.',
+          'Los entregables se validan por precisión, cobertura, vigencia, cumplimiento de políticas y tratamiento de excepciones. El activo muestra cuándo necesita información adicional y cuándo debe escalar.',
         ],
       },
       tecnologia: [
@@ -2123,7 +2123,7 @@ export const COPY_PROGRAMAS = {
       medicion: {
         titular: '',
         parrafos: [
-          'El baseline puede incluir tiempo de consolidación, excepciones detectadas, cobertura de riesgo, consistencia de evaluación, retrabajo y velocidad de escalamiento. Las decisiones de compra permanecen bajo governance del cliente.',
+          'El baseline puede incluir tiempo de consolidación, excepciones detectadas, cobertura de riesgo, consistencia de evaluación, retrabajo y velocidad de escalamiento. Las decisiones de compra permanecen bajo gobernanza del cliente.',
         ],
       },
       faq: [
@@ -2232,9 +2232,9 @@ export const COPY_PROGRAMAS = {
   'technology-engineering': {
     es: {
       seoTitulo: 'IA para Technology & Engineering | BECOME NOW™',
-      seoDesc: 'Programa para diseñar, evaluar y gobernar soluciones con LLMs, RAG, tool calling, agents, guardrails y observabilidad.',
+      seoDesc: 'Programa para diseñar, evaluar y gobernar soluciones con LLMs, RAG, tool calling, agentes, controles y observabilidad.',
       eyebrow: 'BECOME NOW™ · TECHNOLOGY & ENGINEERING',
-      h1: 'Construye criterio para trabajar con LLMs, agents y sistemas de IA.',
+      h1: 'Construye criterio para trabajar con LLMs, agentes y sistemas de IA.',
       lead: 'Programa para equipos técnicos que necesitan tomar mejores decisiones sobre arquitectura, desarrollo, evaluación, integración y operación de capacidades basadas en IA.',
       problema: {
         titular: 'Una demo puede funcionar mucho antes de que exista un sistema confiable.',
@@ -2246,14 +2246,14 @@ export const COPY_PROGRAMAS = {
       sesion0: {
         titular: 'La Sesión 0 define un caso técnico y sus restricciones operativas.',
         parrafos: [
-          'Revisamos arquitectura, repositorios, APIs, fuentes de conocimiento, entornos, seguridad, SLAs, costos, stack y estándares. Acordamos dataset de evaluación, comportamientos esperados, amenazas, observabilidad y puntos de human review.',
+          'Revisamos arquitectura, repositorios, APIs, fuentes de conocimiento, entornos, seguridad, SLAs, costos, stack y estándares. Acordamos dataset de evaluación, comportamientos esperados, amenazas, observabilidad y puntos de revisión humana.',
         ],
       },
       ruta: {
         bajada: 'Seis sesiones desde el modelo hasta la operación.',
         pasos: [
           [
-            'Foundation models y prompting',
+            'Modelos fundacionales y prompting',
             'Engineering Copilot con criterios de revisión.',
           ],
           [
@@ -2265,16 +2265,16 @@ export const COPY_PROGRAMAS = {
             'Flujo que consulta sistemas en vez de responder de memoria.',
           ],
           [
-            'Agentic workflows y model routing',
+            'Agentic procesos y model routing',
             'Orquestación con límites y aprobación humana.',
           ],
           [
-            'Evaluaciones, guardrails y testing',
+            'Evaluaciones, controles y testing',
             'Suite de evals y criterios de release.',
           ],
           [
             'Observabilidad, incidentes y costos',
-            'Runbook con tracing, monitoreo y ownership.',
+            'Manual de operación con trazas, monitoreo y responsable asignado.',
           ],
         ],
       },
@@ -2293,7 +2293,7 @@ export const COPY_PROGRAMAS = {
         'Blueprint de tool calling / MCP.',
         'Agentic Workflow Blueprint™.',
         'Dataset y suite inicial de evaluaciones.',
-        'Runbook de observabilidad, incidentes y cost governance.',
+        'Manual de operación de observabilidad, incidentes y control de costos.',
       ],
       medicion: {
         titular: '',
@@ -2311,12 +2311,12 @@ export const COPY_PROGRAMAS = {
           'No. La ruta se adapta al stack y puede comparar alternativas.',
         ],
         [
-          '¿Incluye agents?',
+          '¿Incluye agentes?',
           'Sí, cuando el caso justifica autonomía, herramientas y controles.',
         ],
         [
           '¿El resultado queda en producción?',
-          'No necesariamente. El programa instala capacidad y prototipos controlados; producción corresponde a un engagement de implementación.',
+          'No necesariamente. El programa instala capacidad y prototipos controlados; producción corresponde a un proyecto de implementación.',
         ],
       ],
       otros: {
@@ -2421,13 +2421,13 @@ export const COPY_PROGRAMAS = {
         titular: 'El vendedor conoce al cliente. El sistema no siempre conserva ese contexto.',
         parrafos: [
           'Notas, correos, CRM, propuestas y conversaciones contienen señales sobre necesidad, timing y objeciones. Cuando están fragmentadas, cada reunión empieza reconstruyendo la historia y cada propuesta depende demasiado de quién la prepara.',
-          'BECOME NOW™ transforma ese conocimiento en workflows comerciales reutilizables sin inventar datos, automatizar relaciones ni convertir personalización en texto genérico.',
+          'BECOME NOW™ transforma ese conocimiento en procesos comerciales reutilizables sin inventar datos, automatizar relaciones ni convertir personalización en texto genérico.',
         ],
       },
       sesion0: {
         titular: 'La Sesión 0 reconstruye el proceso comercial y sus criterios de avance.',
         parrafos: [
-          'Revisamos ICP, ofertas, playbook, etapas, campos de CRM, casos ganados y perdidos, propuestas, objeciones, reuniones y governance. Acordamos fuentes autorizadas, señales de calificación, tono, claims permitidos y revisión antes de contactar al cliente.',
+          'Revisamos ICP, ofertas, playbook, etapas, campos de CRM, casos ganados y perdidos, propuestas, objeciones, reuniones y gobernanza. Acordamos fuentes autorizadas, señales de calificación, tono, claims permitidos y revisión antes de contactar al cliente.',
         ],
       },
       ruta: {
@@ -2460,7 +2460,7 @@ export const COPY_PROGRAMAS = {
         ],
       },
       sesion: {
-        titular: 'El output debe sonar informado, no automatizado.',
+        titular: 'El entregable debe sonar informado, no automatizado.',
         parrafos: [
           'Se valida contra datos de la cuenta, playbook, claims autorizados, etapa y objetivo. El equipo revisa qué información es un hecho, qué es una hipótesis y qué debe confirmarse con el cliente.',
         ],
@@ -2479,7 +2479,7 @@ export const COPY_PROGRAMAS = {
       medicion: {
         titular: '',
         parrafos: [
-          'Se puede medir tiempo de preparación, campos completos, consistencia de calificación, iteraciones de propuesta, seguimiento oportuno y adopción del workflow. Revenue y conversión dependen de múltiples factores y no se atribuyen al programa sin diseño de medición.',
+          'Se puede medir tiempo de preparación, campos completos, consistencia de calificación, iteraciones de propuesta, seguimiento oportuno y adopción del proceso. Revenue y conversión dependen de múltiples factores y no se atribuyen al programa sin diseño de medición.',
         ],
       },
       faq: [

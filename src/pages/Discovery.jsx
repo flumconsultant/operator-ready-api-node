@@ -137,7 +137,7 @@ export default function Discovery() {
               <h3 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)' }}>{name}</h3>
               <p style={{ margin: 0, font: 'var(--type-body)', color: 'var(--text-body)' }}>{work}</p>
               <p style={{ margin: 0, font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: 'var(--text-muted)' }}>
-                <span style={{ color: 'var(--text-accent)' }}>Output: </span>{out}
+                <span style={{ color: 'var(--text-accent)' }}>Resultado: </span>{out}
               </p>
             </Reveal>
           ))}
@@ -154,7 +154,7 @@ export default function Discovery() {
             <Kicker>Working model</Kicker>
             <Headline>Se hace con tu equipo, no sobre tu equipo.</Headline>
             <Body>
-              Un responsable claro por engagement y el equipo del cliente integrado
+              Un responsable claro por proyecto y el equipo del cliente integrado
               desde la primera semana. Las decisiones y los riesgos se hacen visibles a medida
               que aparecen, no en la presentación final.
             </Body>

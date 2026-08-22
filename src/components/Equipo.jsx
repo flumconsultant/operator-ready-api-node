@@ -30,7 +30,7 @@ const T = {
   es: {
     kicker: 'Equipo',
     titulo: 'Las personas detrás de BECOME.',
-    lead: 'Un equipo senior y multidisciplinario alrededor del resultado. Cada engagement mantiene un responsable claro.',
+    lead: 'Un equipo senior y multidisciplinario alrededor del resultado. Cada proyecto mantiene un responsable claro.',
     linkedin: 'Conoce más en LinkedIn',
     sinFoto: 'Foto pendiente',
     contexto: 'Perfil de',
