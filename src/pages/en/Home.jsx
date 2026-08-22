@@ -11,7 +11,6 @@ import { Ico, IcoBadge } from '../../components/icons.jsx';
 import { Figure, Split } from '../../components/Media.jsx';
 import ScrollStage from '../../components/ScrollStage.jsx';
 import GradientField from '../../components/GradientField.jsx';
-import StateTransition from '../../components/StateTransition.jsx';
 import { SOLUCIONES_MENU, INDUSTRIAS_MENU } from '../../site.en.js';
 
 /**
@@ -163,67 +162,8 @@ export default function Home() {
         ]}
       />
 
-      <Section band="light" id="purpose">
-        <Kicker>Our purpose</Kicker>
-        <Headline>Making AI a capability of the enterprise, not a collection of initiatives.</Headline>
-
-        <div style={{ marginTop: 'var(--space-12)', display: 'grid', justifyItems: 'center' }}>
-          <StateTransition dark={false} />
-        </div>
-
-        <TextCTA to="/en/about">Meet BECOME</TextCTA>
-      </Section>
-
-      <Section band="dark" nodeState={1}>
-        <Kicker dark>How we become</Kicker>
-        <Headline dark>We don’t bolt AI on from outside. We redesign the enterprise from within.</Headline>
-        <Lead dark>
-          At every stage we transform the five systems that decide whether AI stays
-          an experiment or becomes a capability of the enterprise.
-        </Lead>
-
-        <Cols min="230px" style={{ marginTop: 'var(--space-11)' }}>
-          {DOMAINS.map(([name, line, icon]) => (
-            <Reveal as="div" key={name} className="icon-hit row-hit" style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
-              <img src={icon} alt="" loading="lazy" decoding="async" width="34" height="34" style={{ width: 34, height: 34, display: 'block' }} />
-              <h3 style={{ margin: 'var(--space-5) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--white)' }}>
-                {name}
-              </h3>
-              <Body dark style={{ marginTop: 'var(--space-4)' }}>{line}</Body>
-            </Reveal>
-          ))}
-        </Cols>
-
-        <TextCTA to="/en/how-we-transform" dark>How we transform</TextCTA>
-      </Section>
-
-      <Section band="darker" nodeState={2}>
-        <Kicker dark>How we transform</Kicker>
-        <Headline dark>Six stages. One path from ambition to value.</Headline>
-        <ol style={{ listStyle: 'none', margin: 'var(--space-10) 0 0', padding: 0, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 'var(--space-6)' }}>
-          {STAGES.map(([letter, name], i) => (
-            <Reveal as="li" key={name} className="row-hit" style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
-              <span aria-hidden="true" className="stage-letter" style={{ fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h1)', lineHeight: 1, color: 'var(--electric-green)' }}>
-                {letter}
-              </span>
-              <p style={{ margin: 'var(--space-4) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: 'var(--white)' }}>
-                <span className="sr-only">{`Stage ${i + 1}: `}</span>{name}
-              </p>
-            </Reveal>
-          ))}
-        </ol>
-        <Body dark style={{ marginTop: 'var(--space-9)' }}>
-          Each stage is backed by a proprietary tool that unlocks a specific
-          decision: readiness, value, design, adoption and scale.
-        </Body>
-        <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
-          <GhostCTA to="/en/how-we-transform" dark>How we transform</GhostCTA>
-          <PrimaryCTA to="/en/contact">Start with your stage</PrimaryCTA>
-        </div>
-      </Section>
-
       <Section band="light">
-        <Kicker>Our offer</Kicker>
+        <Kicker>Our services</Kicker>
         <Headline>Enable the present. Design what’s next. Build from within.</Headline>
 
         <Reveal as="p" style={{ margin: 'var(--space-9) 0 0', font: 'var(--type-mono)', letterSpacing: 'var(--track-mono)', color: 'var(--text-accent)' }}>
@@ -281,7 +221,28 @@ export default function Home() {
         </div>
       </Section>
 
-      <VendorNeutral lang="en" />
+      <Section band="dark" nodeState={1}>
+        <Kicker dark>How we become</Kicker>
+        <Headline dark>We don’t bolt AI on from outside. We redesign the enterprise from within.</Headline>
+        <Lead dark>
+          At every stage we transform the five systems that decide whether AI stays
+          an experiment or becomes a capability of the enterprise.
+        </Lead>
+
+        <Cols min="230px" style={{ marginTop: 'var(--space-11)' }}>
+          {DOMAINS.map(([name, line, icon]) => (
+            <Reveal as="div" key={name} className="icon-hit row-hit" style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
+              <img src={icon} alt="" loading="lazy" decoding="async" width="34" height="34" style={{ width: 34, height: 34, display: 'block' }} />
+              <h3 style={{ margin: 'var(--space-5) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--white)' }}>
+                {name}
+              </h3>
+              <Body dark style={{ marginTop: 'var(--space-4)' }}>{line}</Body>
+            </Reveal>
+          ))}
+        </Cols>
+
+        <TextCTA to="/en/how-we-transform" dark>How we transform</TextCTA>
+      </Section>
 
       {/* Industries: the question that follows the three services is whether
           any of it applies to the reader's own context. */}
@@ -302,7 +263,7 @@ export default function Home() {
       </Section>
 
       <Section band="sunken">
-        <Kicker>Start with your question</Kicker>
+        <Kicker>Start with the problem</Kicker>
         <Headline>What do you need to transform right now?</Headline>
         <Lead>Start with the situation, not the name of the solution.</Lead>
         <div style={{ marginTop: 'var(--space-10)' }}>
@@ -312,6 +273,34 @@ export default function Home() {
         </div>
         <TextCTA to="/en/use-cases">See all use cases</TextCTA>
       </Section>
+
+      <Section band="darker" nodeState={2}>
+        <Kicker dark>How we transform</Kicker>
+        <Headline dark>Six stages. One path from ambition to value.</Headline>
+        <ol style={{ listStyle: 'none', margin: 'var(--space-10) 0 0', padding: 0, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 'var(--space-6)' }}>
+          {STAGES.map(([letter, name], i) => (
+            <Reveal as="li" key={name} className="row-hit" style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
+              <span aria-hidden="true" className="stage-letter" style={{ fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h1)', lineHeight: 1, color: 'var(--electric-green)' }}>
+                {letter}
+              </span>
+              <p style={{ margin: 'var(--space-4) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: 'var(--white)' }}>
+                <span className="sr-only">{`Stage ${i + 1}: `}</span>{name}
+              </p>
+            </Reveal>
+          ))}
+        </ol>
+        <Body dark style={{ marginTop: 'var(--space-9)' }}>
+          Each stage is backed by a proprietary tool that unlocks a specific
+          decision: readiness, value, design, adoption and scale.
+        </Body>
+        <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
+          <GhostCTA to="/en/how-we-transform" dark>How we transform</GhostCTA>
+          <PrimaryCTA to="/en/contact">Start with your stage</PrimaryCTA>
+        </div>
+      </Section>
+
+
+      <VendorNeutral lang="en" />
 
       <Section band="dark" nodeState={3}>
         <Kicker dark>Value, made visible</Kicker>
@@ -326,8 +315,8 @@ export default function Home() {
           ))}
         </Cols>
         <Body dark style={{ marginTop: 'var(--space-9)' }}>
-          We don’t publish client figures yet. When we do, they’ll come with
-          baseline and attribution.
+          Every engagement starts from a baseline and metrics agreed before we
+          intervene. We measure change against that starting point.
         </Body>
       </Section>
 
@@ -358,9 +347,9 @@ export default function Home() {
       <Section band="darker" nodeState={4}>
         <Kicker dark>The work we are built to do</Kicker>
         <Headline dark>Three transformations we know how to lead.</Headline>
-        <Body dark style={{ marginTop: 'var(--space-6)' }}>
-          These are scenarios, not client cases.
-        </Body>
+        <p style={{ margin: 'var(--space-6) 0 0', font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--slate-300)' }}>
+          Illustrative scenarios
+        </p>
         <Cols min="260px">
           {SCENARIOS.map(([icon, name, tension, inside, img, alt]) => (
             <Reveal as="article" key={name} data-lift="" style={{ background: 'var(--navy-850)', border: '1px solid var(--border-hairline-dark)' }}>

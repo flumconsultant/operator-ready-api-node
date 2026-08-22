@@ -19,24 +19,45 @@ import { Banner } from '../components/Media.jsx';
  */
 
 const JOURNEY = [
-  { n: '00', icon: 'capability', step: 'Enable', who: 'BECOME NOW™', q: '¿Sabe el equipo trabajar con IA hoy?', out: 'Capacidades aplicadas, procesos y recursos reutilizables.' },
-  { n: '01', icon: 'decision', step: 'Define', who: 'BECOME DISCOVER™', q: '¿Dónde está el valor y qué debe cambiar?', out: 'Ambición, diagnóstico y decisiones prioritarias.' },
-  { n: '02', icon: 'layers', step: 'Design', who: 'Punto de conexión', q: '¿Cómo debe operar el modelo futuro?', out: 'Modelo operativo objetivo y diseño de la transformación.' },
-  { n: '03', icon: 'build', step: 'Build', who: 'BECOME EMBED™', q: '¿Qué capacidad debe existir y cómo funcionará?', out: 'Proceso, agente, copiloto, producto o sistema de decisión.' },
-  { n: '04', icon: 'embed', step: 'Embed', who: 'BECOME EMBED™', q: '¿Cómo se incorpora con adopción y control?', out: 'Responsable asignado, supervisión humana, controles y medición.' },
-  { n: '05', icon: 'scale', step: 'Scale', who: 'Evolución posterior', q: '¿Está lista para expandirse?', out: 'Decisión sobre escalar y lista de mejoras pendientes.' },
+  { n: '00', icon: 'capability', step: 'Enable', who: 'BECOME NOW™', out: 'Capacidades aplicadas, procesos y recursos reutilizables.' },
+  { n: '01', icon: 'decision', step: 'Define', who: 'BECOME DISCOVER™', out: 'Ambición, diagnóstico y decisiones prioritarias.' },
+  { n: '02', icon: 'layers', step: 'Design', who: 'Punto de conexión', out: 'Modelo operativo objetivo y diseño de la transformación.' },
+  { n: '03', icon: 'build', step: 'Build', who: 'BECOME EMBED™', out: 'Proceso, agente, copiloto, producto o sistema de decisión.' },
+  { n: '04', icon: 'embed', step: 'Embed', who: 'BECOME EMBED™', out: 'Responsable asignado, supervisión humana, controles y medición.' },
+  { n: '05', icon: 'scale', step: 'Scale', who: 'Evolución posterior', out: 'Decisión sobre escalar y lista de mejoras pendientes.' },
 ];
 
 const COMPARE = [
-  ['Úsalo cuando', 'Falta claridad estratégica, priorización o diseño del modelo futuro.', 'Existe una oportunidad priorizada y condiciones para construir.'],
-  ['Duración', '8–12 semanas.', '8–12 semanas por capacidad.'],
-  ['Comienza con', 'Ambición, tensión empresarial o dominio a transformar.', 'Un diseño que se pueda validar, un proceso o una oportunidad priorizada.'],
-  ['Termina con', 'Estrategia, portafolio, estado objetivo, caso de negocio y hoja de ruta.', 'Capacidad funcionando, adoptada, controlada y medida.'],
-  ['Framework', 'B–E–C–O.', 'O–M–E.'],
+  ['Si hoy necesitas',
+   'Que un equipo trabaje mejor con IA sobre su propio trabajo.',
+   'Decidir dónde está el valor de la IA y qué debe cambiar.',
+   'Convertir una prioridad en una capacidad que opere.'],
+  ['Qué hacemos',
+   'Capacitación aplicada sobre procesos, documentos y herramientas reales.',
+   'Estrategia, priorización, modelo operativo objetivo y hoja de ruta.',
+   'Diseño, construcción, integración, control y transferencia.'],
+  ['Qué queda',
+   'Flujos de trabajo, asistentes, activos reutilizables, criterios de validación y plan de adopción.',
+   'Bolsas de valor, prioridades, modelo operativo objetivo, caso de negocio y hoja de ruta.',
+   'Capacidad funcionando, integraciones, controles, runbook, responsable y medición.'],
+  ['Duración',
+   '12, 18 o 24 horas lectivas, en 4, 6 u 8 sesiones.',
+   '8–12 semanas, según alcance.',
+   '8–12 semanas por capacidad priorizada.'],
+  ['Comienza con',
+   'El trabajo real del área y los casos que vale la pena llevar al programa.',
+   'Una ambición, una tensión de negocio o un dominio a transformar.',
+   'Una prioridad decidida y condiciones para construir.'],
   /* La fila de tecnología va aquí y no en una sección aparte: en una tabla de
      comparación se lee como un criterio más de decisión, que es lo que es. */
-  ['Foco tecnológico', 'AI landscape, estrategia de modelos, casos de uso, madurez de datos, governance e implicaciones de arquitectura.', 'LLMs, agents, APIs, datos, integraciones, orquestación, evaluación y observabilidad.'],
-  ['Siguiente paso', 'BECOME EMBED™ del primer caso priorizado.', 'Iterar, integrar, escalar o detener.'],
+  ['Foco tecnológico',
+   'Las herramientas autorizadas del cliente: ChatGPT, Claude, Gemini, Microsoft Copilot y las de su propio entorno.',
+   'Panorama de IA, estrategia de modelos, madurez de datos, gobierno e implicaciones de arquitectura.',
+   'LLMs, agentes, APIs, datos, integraciones, orquestación, evaluación y observabilidad.'],
+  ['Siguiente paso',
+   'Ampliar a otra área, o priorizar un caso con DISCOVER™.',
+   'BECOME EMBED™ del primer caso priorizado.',
+   'Iterar, integrar, escalar o detener.'],
 ];
 
 export default function Servicios() {
@@ -53,14 +74,50 @@ export default function Servicios() {
         </Lead>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
           <PrimaryCTA to="/es/casos-de-uso">Encuentra tu punto de partida</PrimaryCTA>
-          <GhostCTA to="/es/contacto" dark>Conversemos</GhostCTA>
+          <GhostCTA to="/es/contacto" dark>Cuéntanos qué debe cambiar</GhostCTA>
+        </div>
+      </Section>
+
+      <Section band="light" id="comparacion">
+        <Kicker>Cuál necesitas</Kicker>
+        <Headline as="h2">Empieza por lo que necesitas resolver.</Headline>
+        <Lead>
+          Los tres se contratan por separado. BECOME NOW™ también puede integrarse
+          como capa de adopción cuando DISCOVER™ o EMBED™ exigen desarrollar
+          capacidades nuevas en los equipos.
+        </Lead>
+        <div style={{ marginTop: 'var(--space-10)', overflowX: 'auto' }}>
+          <table style={{ width: '100%', minWidth: 880, borderCollapse: 'collapse', textAlign: 'left' }}>
+            <thead>
+              <tr>
+                <th scope="col" style={{ ...th, width: '16%' }} />
+                <th scope="col" style={th}>BECOME NOW™<span style={sub}>Capacitación en IA aplicada</span></th>
+                <th scope="col" style={th}>BECOME DISCOVER™<span style={sub}>Estrategia y modelo operativo</span></th>
+                <th scope="col" style={th}>BECOME EMBED™<span style={sub}>Construcción e implementación</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              {COMPARE.map(([label, ahora, discover, embed]) => (
+                <tr key={label}>
+                  <th scope="row" style={{ ...td, color: 'var(--text-muted)', font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase' }}>{label}</th>
+                  <td style={td}>{ahora}</td>
+                  <td style={td}>{discover}</td>
+                  <td style={td}>{embed}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </Section>
 
       {/* El journey primero: los servicios se entienden como tramos de un eje */}
       <Section band="light">
-        <Kicker>El recorrido</Kicker>
-        <Headline>Un solo eje. Tres engagements que lo recorren.</Headline>
+        <Kicker>Cómo se conectan</Kicker>
+        <Headline>Un solo eje. Tres formas de entrar en él.</Headline>
+        <Lead>
+          No hay que recorrerlo entero ni empezar por el principio. Cada servicio
+          entra por el tramo donde hoy está el problema.
+        </Lead>
         <div style={{ marginTop: 'var(--space-10)' }}>
           {JOURNEY.map((j) => (
             <Reveal
@@ -69,7 +126,7 @@ export default function Servicios() {
               data-cols
               style={{
                 display: 'grid',
-                gridTemplateColumns: '34px 52px minmax(0,1fr) minmax(0,1.1fr) minmax(0,1.1fr)',
+                gridTemplateColumns: '34px 52px minmax(0,1fr) minmax(0,1.6fr)',
                 gap: 'var(--space-6)',
                 padding: 'var(--space-6) 0',
                 borderTop: '1px solid var(--border-hairline)',
@@ -84,11 +141,11 @@ export default function Servicios() {
                 </h3>
                 <p style={{ margin: '6px 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: 'var(--text-faint)' }}>{j.who}</p>
               </div>
-              <p style={{ margin: 0, font: 'var(--type-body)', color: 'var(--text-body)' }}>{j.q}</p>
-              <p style={{ margin: 0, font: 'var(--type-body)', color: 'var(--text-muted)' }}>{j.out}</p>
+              <p style={{ margin: 0, font: 'var(--type-body)', color: 'var(--text-body)' }}>{j.out}</p>
             </Reveal>
           ))}
         </div>
+        <TextCTA to="/es/como-transformamos">Conoce el método completo</TextCTA>
       </Section>
 
       <Banner variant="corridor" seed={67} height="clamp(280px, 36vw, 440px)">
@@ -98,20 +155,20 @@ export default function Servicios() {
       </Banner>
 
       <Section band="dark">
-        <Kicker dark>Our offer</Kicker>
+        <Kicker dark>Los tres servicios</Kicker>
         <Headline dark>Capacita el presente. Diseña lo que sigue. Construye desde dentro.</Headline>
         <Cols min="280px">
           <Card dark>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
               <Ico name="capability" size={24} style={{ color: 'var(--electric-green)' }} />
-              <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--electric-green)' }}>Aplícalo desde mañana</p>
+              <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--electric-green)' }}>12, 18 o 24 horas lectivas</p>
             </div>
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--white)' }}>
               BECOME NOW™
             </h3>
             <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--electric-green)' }}>Capacitación en IA aplicada</p>
             <Body dark style={{ marginTop: 'var(--space-5)' }}>
-              Capacitación in company en ChatGPT, Claude y Gemini, construida sobre los
+              Capacitación aplicada en ChatGPT, Claude y Gemini, construida sobre los
               procesos, documentos y desafíos reales de cada área.
             </Body>
             <TextCTA to="/es/servicios/become-now" dark>Explora BECOME NOW™</TextCTA>
@@ -126,8 +183,8 @@ export default function Servicios() {
             </h3>
             <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--electric-green)' }}>Estrategia y modelo operativo</p>
             <Body dark style={{ marginTop: 'var(--space-5)' }}>
-              Alinea la ambición. Diagnostica la empresa. Identifica el valor. Diseña
-              el operating model y el roadmap necesarios para avanzar.
+              Alinea la ambición, identifica dónde está el valor y diseña el modelo
+              operativo y la hoja de ruta necesarios para avanzar.
             </Body>
             <TextCTA to="/es/servicios/become-discover" dark>Explora BECOME DISCOVER™</TextCTA>
           </Card>
@@ -139,7 +196,7 @@ export default function Servicios() {
             <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--white)' }}>
               BECOME EMBED™
             </h3>
-            <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--electric-green)' }}>Construcción e implantación</p>
+            <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--electric-green)' }}>Construcción e implementación</p>
             <Body dark style={{ marginTop: 'var(--space-5)' }}>
               Diseña, construye e incorpora un proceso, un agente o un producto AI-native
               dentro de la operación, con adopción, controles y medición desde el inicio.
@@ -148,65 +205,9 @@ export default function Servicios() {
           </Card>
         </Cols>
         <Body dark style={{ marginTop: 'var(--space-9)' }}>
-          BECOME NOW™ puede contratarse solo o integrarse como capa de adoption y
+          BECOME NOW™ puede contratarse solo o integrarse como capa de adopción y
           construcción de capacidades dentro de los otros dos.
         </Body>
-      </Section>
-
-      <Section band="light" id="comparacion">
-        <Kicker>Comparación</Kicker>
-        <Headline>Cuál necesitas y por qué.</Headline>
-        <div style={{ marginTop: 'var(--space-10)', overflowX: 'auto' }}>
-          <table style={{ width: '100%', minWidth: 720, borderCollapse: 'collapse', textAlign: 'left' }}>
-            <thead>
-              <tr>
-                <th scope="col" style={{ ...th, width: '18%' }} />
-                <th scope="col" style={th}>BECOME DISCOVER™<span style={{ display: 'block', marginTop: 4, font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', textTransform: 'none', letterSpacing: 'normal', color: 'var(--text-muted)' }}>Estrategia y modelo operativo</span></th>
-                <th scope="col" style={th}>BECOME EMBED™<span style={{ display: 'block', marginTop: 4, font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', textTransform: 'none', letterSpacing: 'normal', color: 'var(--text-muted)' }}>Construcción e implantación</span></th>
-              </tr>
-            </thead>
-            <tbody>
-              {COMPARE.map(([label, a, b]) => (
-                <tr key={label}>
-                  <th scope="row" style={{ ...td, color: 'var(--text-muted)', font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase' }}>{label}</th>
-                  <td style={td}>{a}</td>
-                  <td style={td}>{b}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </Section>
-
-      <Section band="sunken" id="cual-necesito">
-        <Kicker>¿Cuál necesito?</Kicker>
-        <Headline>En una frase.</Headline>
-        <Cols min="260px">
-          <Card>
-            <IcoBadge name="decision" />
-            <Body style={{ color: 'var(--text-body)' }}>
-              Si buscas <strong>definir dirección, priorizar inversiones o diseñar el
-              operating model</strong>, necesitas BECOME DISCOVER™.
-            </Body>
-            <TextCTA to="/es/servicios/become-discover">Ir a BECOME DISCOVER™</TextCTA>
-          </Card>
-          <Card>
-            <IcoBadge name="build" />
-            <Body style={{ color: 'var(--text-body)' }}>
-              Si ya sabes <strong>qué capacidad construir</strong> y necesitas llevarla
-              a la operación, necesitas BECOME EMBED™.
-            </Body>
-            <TextCTA to="/es/servicios/become-embed">Ir a BECOME EMBED™</TextCTA>
-          </Card>
-          <Card>
-            <IcoBadge name="signpost" />
-            <Body style={{ color: 'var(--text-body)' }}>
-              Si tienes una oportunidad pero <strong>todavía no un diseño validado</strong>,
-              hacemos una revisión corta antes de recomendar BECOME EMBED™.
-            </Body>
-            <TextCTA to="/es/contacto">Hablemos de esa revisión</TextCTA>
-          </Card>
-        </Cols>
       </Section>
 
       {/* El puente a industrias. Los tres servicios describen CÓMO se trabaja;
@@ -217,7 +218,7 @@ export default function Servicios() {
         <Headline>Los servicios son los mismos. Dónde está el valor, no.</Headline>
         <Body>
           El método no cambia entre sectores. Lo que cambia es qué decisiones
-          pesan, qué workflows concentran el problema y qué riesgo hay que
+          pesan, qué procesos concentran el problema y qué riesgo hay que
           acotar antes de construir.
         </Body>
         <Cols min="220px" style={{ marginTop: 'var(--space-9)' }}>
@@ -247,6 +248,11 @@ export default function Servicios() {
   );
 }
 
+const sub = {
+  display: 'block', marginTop: 4,
+  font: 'var(--type-body)', fontSize: 'var(--text-body-sm)',
+  textTransform: 'none', letterSpacing: 'normal', color: 'var(--text-muted)',
+};
 const th = {
   padding: 'var(--space-4) var(--space-5) var(--space-4) 0',
   borderBottom: '1px solid var(--border-strong)',

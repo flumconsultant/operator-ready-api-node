@@ -11,7 +11,6 @@ import { Ico, IcoBadge } from '../components/icons.jsx';
 import { Figure, Split } from '../components/Media.jsx';
 import ScrollStage from '../components/ScrollStage.jsx';
 import GradientField from '../components/GradientField.jsx';
-import StateTransition from '../components/StateTransition.jsx';
 import { SOLUCIONES_MENU, INDUSTRIAS_MENU } from '../site.js';
 
 /**
@@ -77,30 +76,30 @@ const STAGES = [
    nombre, no iconografía de interfaz. El resto de la web usa Phosphor. */
 const DOMAINS = [
   ['People, inside.', 'Personas capaces de trabajar, decidir y colaborar con IA.', '/icons/people-inside-white.webp'],
-  ['Data, inside.', 'Datos estructurados y no estructurados preparados para alimentar modelos, RAG, enterprise search y decisiones.', '/icons/data-inside-white.webp'],
-  ['Agents, inside.', 'LLMs, copilots y AI agents capaces de razonar, utilizar herramientas y ejecutar partes de un workflow dentro de límites definidos.', '/icons/agents-inside-white.webp'],
-  ['Products, inside.', 'Productos y experiencias AI-native que incorporan modelos, datos y agents directamente en la propuesta de valor.', '/icons/products-inside-white.webp'],
-  ['Operations, inside.', 'Workflows rediseñados para combinar automatización, AI agents, decisiones humanas, excepciones y controles.', '/icons/operations-inside-white.webp'],
+  ['Data, inside.', 'Datos estructurados y no estructurados preparados para alimentar modelos, RAG, búsqueda empresarial y decisiones.', '/icons/data-inside-white.webp'],
+  ['Agents, inside.', 'LLMs, copilotos y agentes de IA capaces de razonar, usar herramientas y ejecutar partes de un proceso dentro de límites definidos.', '/icons/agents-inside-white.webp'],
+  ['Products, inside.', 'Productos y experiencias AI-native que incorporan modelos, datos e inteligencia directamente en la propuesta de valor.', '/icons/products-inside-white.webp'],
+  ['Operations, inside.', 'Procesos rediseñados para combinar automatización, agentes, decisiones humanas, excepciones y controles.', '/icons/operations-inside-white.webp'],
 ];
 
 const OUTCOMES = [
-  ['speed', 'Speed', 'Ciclos de decisión y ejecución más cortos.'],
-  ['quality', 'Quality', 'Trabajo consistente, menos errores y mejores resultados.'],
-  ['growth', 'Growth', 'Nuevos products, experiences y fuentes de valor.'],
-  ['risk', 'Risk', 'Controles, accountability y human oversight claros.'],
-  ['capability', 'Capacidad', 'Equipos capaces de operar y mejorar el sistema.'],
+  ['speed', 'Velocidad', 'Ciclos de decisión y ejecución más cortos.'],
+  ['quality', 'Calidad', 'Trabajo más consistente, menos errores y menos retrabajo.'],
+  ['growth', 'Crecimiento', 'Nuevos productos, experiencias y fuentes de valor.'],
+  ['risk', 'Riesgo', 'Controles, responsabilidades y supervisión humana claros.'],
+  ['capability', 'Capacidad', 'Equipos capaces de operar y mejorar lo construido.'],
 ];
 
 const SCENARIOS = [
-  ['decision', 'Decision intelligence', 'Rediseñar una decisión de alto valor y su flujo de información.', 'Contexto compartido, rutas de excepción y decision rights explícitos.', '/images/46-strategy-session.webp', 'Equipo directivo trabajando sobre una decisión'],
-  ['flow', 'Agentic operations', 'Incorporar agentes en un proceso controlado de principio a fin.', 'Orquestación, human-in-the-loop model y controles operativos.', '/images/19-tech-workspace.webp', 'Puesto de trabajo con operaciones asistidas por IA'],
+  ['decision', 'Decision intelligence', 'Rediseñar una decisión de alto valor y su flujo de información.', 'Contexto compartido, rutas de excepción y responsabilidades de decisión explícitas.', '/images/46-strategy-session.webp', 'Equipo directivo trabajando sobre una decisión'],
+  ['flow', 'Agentic operations', 'Incorporar agentes en un proceso controlado de principio a fin.', 'Orquestación, human-in-the-loop y controles operativos.', '/images/19-tech-workspace.webp', 'Puesto de trabajo con operaciones asistidas por IA'],
   ['product', 'AI-native product', 'Crear una nueva capacidad inteligente para clientes o colaboradores.', 'Capa de datos, responsable de producto y medición de valor.', '/images/50-next-gen.webp', 'Equipo construyendo un producto AI-native'],
 ];
 
 const PRINCIPLES = [
   ['target', 'Business first', 'Comenzamos por el resultado de negocio, no por la herramienta.'],
   ['together', 'Build with, not for', 'Trabajamos con los equipos del cliente para que la capacidad quede en sus manos, con confianza operativa.'],
-  ['fit', 'Adoption by design', 'Roles, controles, skills y medición forman parte de la solución desde el inicio.'],
+  ['fit', 'Adoption by design', 'Roles, controles, capacidades y medición forman parte de la solución desde el inicio.'],
 ];
 
 const INSIGHTS = [
@@ -190,22 +189,72 @@ export default function Home() {
         ]}
       />
 
-      {/* 03 — Nuestro propósito. Declaración breve, no sección institucional. */}
-      <Section band="light" id="proposito">
-        <Kicker>Our purpose</Kicker>
-        <Headline>Hacer de la IA una capacidad de la empresa, no una colección de iniciativas.</Headline>
+      {/* 03 — Los tres servicios. Suben aquí a propósito: quien acaba de leer
+          el problema quiere saber qué puede contratar, no cómo trabajamos. El
+          método viene después. */}
+      <Section band="light">
+        <Kicker>Nuestros servicios</Kicker>
+        <Headline>Capacita el presente. Diseña lo que sigue. Construye desde dentro.</Headline>
 
-        {/* La C y la O de BECOME como los dos estados de la misma empresa. La
-            marca explicándose a sí misma, no un adorno. */}
-        <div style={{ marginTop: 'var(--space-12)', display: 'grid', justifyItems: 'center' }}>
-          <StateTransition dark={false} />
+        <Reveal as="p" style={{ margin: 'var(--space-9) 0 0', font: 'var(--type-mono)', letterSpacing: 'var(--track-mono)', color: 'var(--text-accent)' }}>
+          ENABLE → DEFINE → DESIGN → BUILD → EMBED → SCALE
+        </Reveal>
+
+        <Cols min="280px">
+          <Card>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
+              <Ico name="capability" size={24} style={{ color: 'var(--text-accent)' }} />
+              <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>Aplícalo desde mañana</p>
+            </div>
+            <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-heading)' }}>
+              BECOME NOW™
+            </h3>
+            <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--text-accent)' }}>Capacitación en IA aplicada</p>
+            <Body>
+              Capacitación aplicada para que cada área use ChatGPT, Claude y Gemini sobre
+              sus propios procesos, documentos y desafíos.
+            </Body>
+            <TextCTA to="/es/servicios/become-now">Explora BECOME NOW™</TextCTA>
+          </Card>
+          <Card>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
+              <Ico name="decision" size={24} style={{ color: 'var(--text-accent)' }} />
+              <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>8–12 semanas</p>
+            </div>
+            <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-heading)' }}>
+              BECOME DISCOVER™
+            </h3>
+            <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--text-accent)' }}>Estrategia y modelo operativo</p>
+            <Body>
+              Dónde está el valor de la IA en tu empresa, qué se hace primero y cómo
+              hay que operar para conseguirlo.
+            </Body>
+            <TextCTA to="/es/servicios/become-discover">Explora BECOME DISCOVER™</TextCTA>
+          </Card>
+          <Card>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
+              <Ico name="build" size={24} style={{ color: 'var(--text-accent)' }} />
+              <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>8–12 semanas por capacidad</p>
+            </div>
+            <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-heading)' }}>
+              BECOME EMBED™
+            </h3>
+            <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--text-accent)' }}>Construcción e implementación</p>
+            <Body>
+              Construye e incorpora una capacidad AI-native con adopción, controles y
+              medición.
+            </Body>
+            <TextCTA to="/es/servicios/become-embed">Explora BECOME EMBED™</TextCTA>
+          </Card>
+        </Cols>
+
+        <div style={{ marginTop: 'var(--space-10)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
+          <GhostCTA to="/es/servicios#comparacion">Compara los tres</GhostCTA>
+          <PrimaryCTA to="/es/contacto">Cuéntanos qué debe cambiar</PrimaryCTA>
         </div>
-
-        <TextCTA to="/es/nosotros">Conoce BECOME</TextCTA>
       </Section>
 
-      {/* 04 — Cómo lo hacemos. Los cinco dominios como un sistema, no como
-          cinco feature cards; y las seis etapas como recorrido, no seis cards. */}
+      {/* 04 — Qué cambia dentro: los cinco sistemas. */}
       <Section band="dark" nodeState={1}>
         <Kicker dark>How we become</Kicker>
         <Headline dark>No añadimos IA desde fuera. Rediseñamos la empresa desde dentro.</Headline>
@@ -229,6 +278,42 @@ export default function Home() {
         <TextCTA to="/es/como-transformamos" dark>Cómo transformamos</TextCTA>
       </Section>
 
+      {/* 05 — Industrias. Va entre los servicios y los casos de uso a
+          propósito: quien acaba de leer las tres formas de trabajar se
+          pregunta si eso aplica a SU contexto, y esa es la pregunta que
+          responde este bloque. Después ya puede elegir por problema. */}
+      <Section band="light">
+        <Kicker>Industrias</Kicker>
+        <Headline>La tecnología puede ser la misma. El valor no.</Headline>
+        <Lead>
+          Las capacidades de IA son transversales; el valor no lo es. Lo que
+          decide el resultado es qué decisiones, qué procesos y qué riesgos
+          definen tu industria.
+        </Lead>
+        <div style={{ marginTop: 'var(--space-10)' }}>
+          {INDUSTRIAS_MENU.map((i, n) => (
+            <IndexRow key={i.slug} index={n} icon={i.icon} to={i.to} num={String(n + 1).padStart(2, '0')} term={i.label} def={i.line} />
+          ))}
+        </div>
+        <TextCTA to="/es/industrias">Explora tu industria</TextCTA>
+      </Section>
+
+      {/* 06 — Casos de uso como preguntas. */}
+      <Section band="sunken">
+        <Kicker>Empieza por el problema</Kicker>
+        <Headline>¿Qué necesitas transformar ahora?</Headline>
+        <Lead>Empieza por la situación, no por el nombre de la solución.</Lead>
+        <div style={{ marginTop: 'var(--space-10)' }}>
+          {SOLUCIONES_MENU.map((c, i) => (
+            <IndexRow key={c.slug} index={i} icon={c.icon} to={c.to} num={String(i + 1).padStart(2, '0')} term={c.label} def={c.q} />
+          ))}
+        </div>
+        <TextCTA to="/es/casos-de-uso">Ver todos los casos de uso</TextCTA>
+      </Section>
+
+      {/* 07 — Cómo transformamos: el método viene después de que alguien
+          ya sabe qué puede contratar y en qué industria o problema se
+          reconoce. Primero la oferta, luego el método. */}
       <Section band="darker" nodeState={2}>
         <Kicker dark>Cómo transformamos</Kicker>
         <Headline dark>Seis etapas. Un camino de la ambición al valor.</Headline>
@@ -259,105 +344,10 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* 05 — Los tres servicios encadenados, no tres cards sueltas. */}
-      <Section band="light">
-        <Kicker>Our offer</Kicker>
-        <Headline>Capacita el presente. Diseña lo que sigue. Construye desde dentro.</Headline>
-
-        <Reveal as="p" style={{ margin: 'var(--space-9) 0 0', font: 'var(--type-mono)', letterSpacing: 'var(--track-mono)', color: 'var(--text-accent)' }}>
-          ENABLE → DEFINE → DESIGN → BUILD → EMBED → SCALE
-        </Reveal>
-
-        <Cols min="280px">
-          <Card>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
-              <Ico name="capability" size={24} style={{ color: 'var(--text-accent)' }} />
-              <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>Aplícalo desde mañana</p>
-            </div>
-            <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-heading)' }}>
-              BECOME NOW™
-            </h3>
-            <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--text-accent)' }}>Capacitación en IA aplicada</p>
-            <Body>
-              Capacitación in company para que cada área use ChatGPT, Claude y Gemini
-              sobre sus propios procesos, documentos y desafíos.
-            </Body>
-            <TextCTA to="/es/servicios/become-now">Explora BECOME NOW™</TextCTA>
-          </Card>
-          <Card>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
-              <Ico name="decision" size={24} style={{ color: 'var(--text-accent)' }} />
-              <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>8–12 semanas</p>
-            </div>
-            <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-heading)' }}>
-              BECOME DISCOVER™
-            </h3>
-            <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--text-accent)' }}>Estrategia y modelo operativo</p>
-            <Body>
-              Dónde está el valor de la IA en tu empresa, qué se hace primero y cómo
-              hay que operar para conseguirlo.
-            </Body>
-            <TextCTA to="/es/servicios/become-discover">Explora BECOME DISCOVER™</TextCTA>
-          </Card>
-          <Card>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
-              <Ico name="build" size={24} style={{ color: 'var(--text-accent)' }} />
-              <p style={{ margin: 0, font: 'var(--type-mono)', color: 'var(--text-accent)' }}>8–12 semanas por capacidad</p>
-            </div>
-            <h3 style={{ margin: 'var(--space-4) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-heading)' }}>
-              BECOME EMBED™
-            </h3>
-            <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--text-accent)' }}>Construcción e implantación</p>
-            <Body>
-              Construye e incorpora una capacidad AI-native con adopción, controles y
-              medición.
-            </Body>
-            <TextCTA to="/es/servicios/become-embed">Explora BECOME EMBED™</TextCTA>
-          </Card>
-        </Cols>
-
-        <div style={{ marginTop: 'var(--space-10)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
-          <GhostCTA to="/es/servicios#comparacion">Compara los tres</GhostCTA>
-          <PrimaryCTA to="/es/contacto">Cuéntanos qué debe cambiar</PrimaryCTA>
-        </div>
-      </Section>
-
-      {/* 05b — Vendor-neutral. Después de los tres servicios a propósito: la
-          pregunta «¿y con qué lo hacen?» aparece justo al terminar de leerlos. */}
+      {/* 07b — Vendor-neutral. Después del método a propósito: la pregunta
+          «¿y con qué lo hacen?» aparece cuando ya se entiende el trabajo. */}
       <VendorNeutral lang="es" />
 
-      {/* 05c — Industrias. Va entre los servicios y los casos de uso a
-          propósito: quien acaba de leer las tres formas de trabajar se
-          pregunta si eso aplica a SU contexto, y esa es la pregunta que
-          responde este bloque. Después ya puede elegir por problema. */}
-      <Section band="light">
-        <Kicker>Industrias</Kicker>
-        <Headline>La tecnología puede ser la misma. El valor no.</Headline>
-        <Lead>
-          Las capacidades de IA son transversales; el valor no lo es. Lo que
-          decide el resultado es qué decisiones, qué procesos y qué riesgos
-          definen tu industria.
-        </Lead>
-        <div style={{ marginTop: 'var(--space-10)' }}>
-          {INDUSTRIAS_MENU.map((i, n) => (
-            <IndexRow key={i.slug} index={n} icon={i.icon} to={i.to} num={String(n + 1).padStart(2, '0')} term={i.label} def={i.line} />
-          ))}
-        </div>
-        <TextCTA to="/es/industrias">Explora tu industria</TextCTA>
-      </Section>
-
-      {/* 06 — Casos de uso como preguntas. */}
-      <Section band="sunken">
-        <Kicker>Start with your question</Kicker>
-        <Headline>¿Qué necesitas transformar ahora?</Headline>
-        <Lead>Empieza por la situación, no por el nombre de la solución.</Lead>
-        <div style={{ marginTop: 'var(--space-10)' }}>
-          {SOLUCIONES_MENU.map((c, i) => (
-            <IndexRow key={c.slug} index={i} icon={c.icon} to={c.to} num={String(i + 1).padStart(2, '0')} term={c.label} def={c.q} />
-          ))}
-        </div>
-        <TextCTA to="/es/casos-de-uso">Ver todos los casos de uso</TextCTA>
-      </Section>
 
       {/* 08 — Outcomes. Sistema de medición, no métricas inventadas. */}
       <Section band="dark" nodeState={3}>
@@ -373,8 +363,8 @@ export default function Home() {
           ))}
         </Cols>
         <Body dark style={{ marginTop: 'var(--space-9)' }}>
-          Todavía no publicamos cifras de cliente. Cuando las haya irán con baseline
-          y atribución.
+          Cada engagement parte de una línea base y de métricas acordadas antes de
+          intervenir. Medimos el cambio contra ese punto de partida.
         </Body>
       </Section>
 
@@ -408,9 +398,9 @@ export default function Home() {
       <Section band="darker" nodeState={4}>
         <Kicker dark>The work we are built to do</Kicker>
         <Headline dark>Tres transformaciones que sabemos conducir.</Headline>
-        <Body dark style={{ marginTop: 'var(--space-6)' }}>
-          Son escenarios, no casos de cliente.
-        </Body>
+        <p style={{ margin: 'var(--space-6) 0 0', font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--slate-300)' }}>
+          Escenarios ilustrativos
+        </p>
         <Cols min="260px">
           {SCENARIOS.map(([icon, name, tension, inside, img, alt]) => (
             <Reveal as="article" key={name} data-lift="" style={{ background: 'var(--navy-850)', border: '1px solid var(--border-hairline-dark)' }}>

@@ -31,9 +31,9 @@ const FIELDS = [
 ];
 
 const NEXT = [
-  ['signpost', 'We read your context', 'We map it to the stages of the BECOME framework to know where it comes in.'],
-  ['calendar', '30-minute conversation', 'Focused on the business outcome and the constraints you have today.'],
-  ['target', 'We define the first step', 'BECOME NOW™, BECOME DISCOVER™ or BECOME EMBED™. Whichever fits, not the biggest one.'],
+  ['signpost', 'We review your context', 'We take in the problem, the outcome you want and the constraints you have today.'],
+  ['calendar', 'We talk through the challenge', 'A 30-minute conversation focused on what you need to change.'],
+  ['target', 'We define the starting point', 'BECOME NOW™, BECOME DISCOVER™ or BECOME EMBED™. Whichever fits, not the biggest one.'],
 ];
 
 export default function Contacto() {

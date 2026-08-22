@@ -50,9 +50,9 @@ const FIELDS = [
 ];
 
 const NEXT = [
-  ['signpost', 'Leemos tu contexto', 'Lo mapeamos a las etapas del framework BECOME para saber por dónde entra.'],
-  ['calendar', 'Conversación de 30 minutos', 'Centrada en el resultado de negocio y en las restricciones que tienes hoy.'],
-  ['target', 'Definimos el primer paso', 'BECOME NOW™, BECOME DISCOVER™ o BECOME EMBED™. El que corresponda, no el más grande.'],
+  ['signpost', 'Revisamos tu contexto', 'Entendemos el problema, el resultado que buscas y las restricciones que existen hoy.'],
+  ['calendar', 'Conversamos sobre el reto', 'Una conversación de 30 minutos centrada en lo que necesitas cambiar.'],
+  ['target', 'Definimos el punto de partida', 'Puede ser BECOME NOW™, DISCOVER™, EMBED™ o una recomendación sobre qué resolver primero.'],
 ];
 
 export default function Contacto() {
@@ -64,9 +64,9 @@ export default function Contacto() {
         <Kicker dark>Contacto</Kicker>
         <Headline as="h1" dark>Empecemos por lo que quieres cambiar.</Headline>
         <Lead dark>
-          Comparte brevemente el reto, el outcome que buscas y el contexto de tu
+          Comparte el reto, el resultado que buscas y el contexto de tu
           organización. Lo revisaremos para entender tu punto de partida y
-          proponerte el siguiente paso más adecuado.
+          orientar la primera conversación.
         </Lead>
       </Section>
 
@@ -74,11 +74,11 @@ export default function Contacto() {
         <ConversationalForm
           formName="Diagnóstico inicial BECOME"
           title="Cuéntanos el contexto esencial."
-          lead="No necesitas tener la solución definida. Queremos entender el problema, la prioridad y las restricciones actuales."
+          lead="No necesitas tener la solución definida. Queremos entender qué necesita cambiar, qué prioridad tiene y qué restricciones debemos considerar."
           launchLabel="Empezar"
           fields={FIELDS}
           submitLabel="Enviar contexto"
-          confirmation="Gracias. Ya tenemos el contexto inicial. Revisaremos lo que compartiste para identificar el punto de partida más adecuado, y si vemos encaje te propondremos una conversación centrada en el outcome, las restricciones y el siguiente paso."
+          confirmation="Gracias. Ya tenemos el contexto inicial. Revisaremos lo que compartiste para identificar el punto de partida más adecuado y te propondremos una conversación centrada en el resultado, las restricciones y el siguiente paso."
           dark={false}
           formId="contacto"
         />
@@ -94,7 +94,7 @@ export default function Contacto() {
 
       <Section band="sunken">
         <Kicker>Qué ocurre después</Kicker>
-        <Headline>Tres pasos, y el siguiente siempre es transparente.</Headline>
+        <Headline>Qué ocurre después de que escribes.</Headline>
         <div data-cols style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'var(--space-8)', marginTop: 'var(--space-10)' }}>
           {NEXT.map(([icon, title, line], i) => (
             <Reveal as="div" key={title} style={{ borderTop: '1px solid var(--border-strong)', paddingTop: 'var(--space-5)' }}>
@@ -111,7 +111,7 @@ export default function Contacto() {
         </div>
 
         <div style={{ marginTop: 'var(--space-10)', paddingTop: 'var(--space-6)', borderTop: '1px solid var(--border-hairline)', display: 'flex', gap: 'var(--space-6)', alignItems: 'center', flexWrap: 'wrap' }}>
-          <GhostCTA to="/es/casos-de-uso">Mira antes por dónde empezar</GhostCTA>
+          <GhostCTA to="/es/casos-de-uso">Ver los casos de uso de IA</GhostCTA>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, font: 'var(--type-body)', color: 'var(--text-muted)' }}>
             <Ico name="chat" size={20} style={{ color: 'var(--text-accent)' }} />
             O escríbenos a{' '}

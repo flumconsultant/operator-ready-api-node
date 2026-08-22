@@ -46,20 +46,20 @@ const DIAS_SILENCIO = 7;
 const T = {
   es: {
     boton: 'Agenda 30 min',
-    aria: 'Agendar una llamada de 30 minutos con Carlos Andrés Ramírez, se abre en una pestaña nueva',
+    aria: 'Agendar una conversación de 30 minutos con el equipo BECOME, se abre en una pestaña nueva',
     cerrar: 'Ocultar',
-    tituloCta: '¿Prefieres hablarlo directamente?',
-    textoCta: 'Treinta minutos con Carlos Andrés Ramírez para revisar tu punto de partida y decirte, con criterio, qué haría falta. Sin presentación comercial.',
-    botonCta: 'Agendar 30 minutos',
+    tituloCta: '¿Prefieres agendar directamente?',
+    textoCta: 'Reserva una conversación de 30 minutos con el equipo BECOME para revisar el reto, el contexto y el punto de partida más adecuado.',
+    botonCta: 'Ver disponibilidad',
     nota: 'Se abre en Calendly, en una pestaña nueva.',
   },
   en: {
     boton: 'Book 30 min',
-    aria: 'Book a 30-minute call with Carlos Andrés Ramírez, opens in a new tab',
+    aria: 'Book a 30-minute conversation with the BECOME team, opens in a new tab',
     cerrar: 'Hide',
-    tituloCta: 'Would you rather talk it through?',
-    textoCta: 'Thirty minutes with Carlos Andrés Ramírez to look at your starting point and tell you, with judgment, what it would take. No sales deck.',
-    botonCta: 'Book 30 minutes',
+    tituloCta: 'Would you rather book directly?',
+    textoCta: 'Book a 30-minute conversation with the BECOME team to review the challenge, the context and the most suitable starting point.',
+    botonCta: 'See availability',
     nota: 'Opens Calendly in a new tab.',
   },
 };

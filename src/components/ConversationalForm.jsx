@@ -114,7 +114,7 @@ const STRINGS = {
     closeForm: 'Cerrar el formulario',
     close: 'Cerrar',
     startDefault: 'Empezar',
-    hint: (n) => `${n} preguntas · menos de dos minutos · sin compromiso`,
+    hint: () => 'Menos de dos minutos.',
   },
   en: {
     required: 'This field is required.',
@@ -171,7 +171,7 @@ const STRINGS = {
     closeForm: 'Close the form',
     close: 'Close',
     startDefault: 'Start',
-    hint: (n) => `${n} questions · under two minutes · no commitment`,
+    hint: () => 'Under two minutes.',
   },
 };
 
@@ -902,9 +902,10 @@ function colors(dark, stage) {
 /**
  * La invitación: lo único que ve la página hasta que alguien decide entrar.
  *
- * Dice cuánto cuesta (dos minutos, siete preguntas) antes de pedir el primer
- * dato. Un formulario que no declara su longitud la declara igualmente — a
- * mitad de camino, y para entonces ya es un motivo para abandonar.
+ * Dice cuánto cuesta antes de pedir el primer dato. Un formulario que no
+ * declara su longitud la declara igualmente — a mitad de camino, y para
+ * entonces ya es un motivo para abandonar. El número de preguntas se retiró:
+ * contar preguntas convierte el envío en un trámite antes de empezarlo.
  */
 function Launcher({ dark, title, lead, count, launchLabel, onOpen, btnRef, t }) {
   const c = colors(dark);

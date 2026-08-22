@@ -5,16 +5,8 @@ import Reveal from '../../components/Reveal.jsx';
 import { Ico } from '../../components/icons.jsx';
 import { Split } from '../../components/Media.jsx';
 import Equipo from '../../components/Equipo.jsx';
-import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, Cols, IndexRow } from '../../components/ui.jsx';
+import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, Cols } from '../../components/ui.jsx';
 
-const DNA = [
-  ['target', 'Business-first', 'We start from the outcome and the business decision, not the tool.'],
-  ['native', 'AI-native', 'We design ways of working that build in intelligence from the start.'],
-  ['system', 'Systems-minded', 'We connect strategy, people, data, agents, products, operations and governance.'],
-  ['build', 'Builder', 'We turn direction and blueprint into capabilities that work.'],
-  ['accountable', 'Human-accountable', 'AI extends capacity; people keep direction, oversight and accountability.'],
-  ['embed', 'Embedded', 'We work with the client’s team so the capability stays and evolves.'],
-];
 
 const CULTURE = [
   ['outcome', 'Think in outcomes', 'We ask what decision, behavior or business result must change before we talk technology.'],
@@ -74,36 +66,6 @@ export default function Nosotros() {
         </Cols>
       </Section>
 
-      <Section id="purpose" band="dark">
-        <Kicker dark>Our purpose</Kicker>
-        <Headline dark>Help companies become what the future requires.</Headline>
-        <Lead dark>
-          We turn AI into an internal capability to operate better, decide with
-          more intelligence and create new forms of value. Transformation matters
-          when it gets installed in the people, the data, the agents, the products
-          and the operations of the company.
-        </Lead>
-
-        <div id="vision-mission" data-cols style={{ scrollMarginTop: '96px', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 'var(--space-9)', marginTop: 'var(--space-11)' }}>
-          <Reveal as="div" style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
-            <p style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--electric-green)' }}>Our vision</p>
-            <Body dark style={{ marginTop: 'var(--space-5)' }}>
-              A future where companies don’t just use AI, but evolve how they
-              work, learn and compete — with intelligence built in, human
-              accountability, and the capacity to keep transforming themselves.
-            </Body>
-          </Reveal>
-          <Reveal as="div" style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
-            <p style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--electric-green)' }}>Our mission</p>
-            <Body dark style={{ marginTop: 'var(--space-5)' }}>
-              Turn business ambitions into embedded AI-native capabilities,
-              connecting Strategy, People, Data, Agents, Products and Operations from
-              defining the value through adoption and scale.
-            </Body>
-          </Reveal>
-        </div>
-      </Section>
-
       <Section band="light">
         <Split
           src="/images/17-team-collab.webp"
@@ -125,16 +87,8 @@ export default function Nosotros() {
         </Split>
       </Section>
 
-      <Section id="culture-dna" band="sunken">
-        <Kicker>Our DNA</Kicker>
-        <Headline>Six traits, and how they show up in the work.</Headline>
-        <div style={{ marginTop: 'var(--space-10)' }}>
-          {DNA.map(([icon, trait, how], i) => <IndexRow key={trait} index={i} icon={icon} term={trait} def={how} />)}
-        </div>
-      </Section>
-
       <Section band="darker">
-        <Kicker dark>Our culture</Kicker>
+        <Kicker dark>How we work</Kicker>
         <Headline dark>Observable behaviors, not aspirational adjectives.</Headline>
         <Cols min="300px">
           {CULTURE.map(([icon, name, line]) => (
@@ -150,12 +104,12 @@ export default function Nosotros() {
       <Section id="how-we-work" band="light">
         <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 'var(--space-9)' }}>
           <Reveal as="div">
-            <Kicker>How we work</Kicker>
-            <Headline>Small, senior teams around a shared outcome.</Headline>
+            <Kicker>The delivery team</Kicker>
+            <Headline>A senior, multidisciplinary team around the outcome.</Headline>
             <Body>
-              Business strategy, product, design, data, AI, engineering and change
-              working together. The mix changes with the engagement; the
-              accountability doesn’t.
+              The mix combines business, transformation, product, adoption, data and
+              AI according to what the challenge needs. Every engagement keeps one
+              clear owner.
             </Body>
           </Reveal>
           <Reveal as="ul" style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 'var(--space-4)' }}>

@@ -30,7 +30,7 @@ const T = {
   es: {
     kicker: 'Equipo',
     titulo: 'Las personas detrás de BECOME.',
-    lead: 'Un equipo pequeño y senior. Cada quien responde por lo suyo y lo firma con su nombre.',
+    lead: 'Un equipo senior y multidisciplinario alrededor del resultado. Cada engagement mantiene un responsable claro.',
     linkedin: 'Conoce más en LinkedIn',
     sinFoto: 'Foto pendiente',
     contexto: 'Perfil de',
@@ -38,7 +38,7 @@ const T = {
   en: {
     kicker: 'Team',
     titulo: 'The people behind BECOME.',
-    lead: 'A small, senior team. Each of us owns our part and signs it with our name.',
+    lead: 'A senior, multidisciplinary team built around the outcome. Every engagement keeps one clear owner.',
     linkedin: 'More on LinkedIn',
     sinFoto: 'Photo pending',
     contexto: 'Portrait of',

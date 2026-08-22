@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import StateTransition from './StateTransition.jsx';
 import SiteHeader from './SiteHeader.jsx';
 import SiteFooter from './SiteFooter.jsx';
 import Reveal from './Reveal.jsx';
@@ -79,6 +80,16 @@ export default function ComoTransformamos({ lang = 'es' }) {
             </Reveal>
           ))}
         </div>
+
+        {/* La C y la O de BECOME como los dos estados de la misma empresa. En la
+            home aparecía sin explicación y se leía como lenguaje interno; aquí
+            está donde el método la explica. */}
+        <figure style={{ margin: 'var(--space-12) 0 0', display: 'grid', justifyItems: 'center', gap: 'var(--space-6)' }}>
+          <StateTransition dark={false} />
+          <figcaption style={{ margin: 0, maxWidth: 'var(--maxw-prose)', font: 'var(--type-body)', color: 'var(--text-muted)', textAlign: 'center' }}>
+            {t.estados}
+          </figcaption>
+        </figure>
       </Section>
 
       <Section band="darker">

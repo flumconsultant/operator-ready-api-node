@@ -25,6 +25,7 @@ export const CT = {
     h1: 'La transformación sucede dentro.',
     lead: 'No añadimos IA por encima de la empresa. Rediseñamos desde dentro los cinco sistemas que deciden si el cambio queda instalado o se apaga con el piloto.',
 
+    estados: 'La C de BECOME es la empresa de hoy: el círculo no cierra, y ese hueco es lo que hoy no funciona. La O es la empresa en la que se convierte, con el círculo completo. Entre las dos, el recorrido: eso es el trabajo de estas seis etapas.',
     tesisKicker: 'La tesis',
     tesis: 'Seis etapas y cinco sistemas.',
     tesisTexto: [
@@ -107,6 +108,7 @@ export const CT = {
     h1: 'Transformation happens inside.',
     lead: 'We do not add AI on top of the company. We redesign, from the inside, the five systems that decide whether the change stays installed or dies with the pilot.',
 
+    estados: 'The C in BECOME is the company as it is today: the circle does not close, and that gap is what is not working. The O is the company it becomes, with the circle complete. The path between them is the work these six stages do.',
     tesisKicker: 'The thesis',
     tesis: 'Six stages and five systems.',
     tesisTexto: [

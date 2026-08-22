@@ -5,7 +5,7 @@ import Reveal from '../components/Reveal.jsx';
 import { Ico } from '../components/icons.jsx';
 import { Split } from '../components/Media.jsx';
 import Equipo from '../components/Equipo.jsx';
-import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, Cols, IndexRow } from '../components/ui.jsx';
+import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, Cols } from '../components/ui.jsx';
 
 /**
  * Nosotros (§12 del documento).
@@ -16,14 +16,6 @@ import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, Cols, IndexRow } fro
  * corrige desde el panel y no desde el código.
  */
 
-const DNA = [
-  ['target', 'Business-first', 'Comenzamos por el resultado y la decisión de negocio, no por la herramienta.'],
-  ['native', 'AI-native', 'Diseñamos modelos de trabajo que incorporan inteligencia desde su origen.'],
-  ['system', 'Systems-minded', 'Conectamos estrategia, personas, datos, agentes, productos, operaciones y gobernanza.'],
-  ['build', 'Builder', 'Convertimos la dirección y el diseño en capacidades que funcionan.'],
-  ['accountable', 'Human-accountable', 'La IA amplía la capacidad; las personas mantienen dirección, supervisión y responsabilidad.'],
-  ['embed', 'Embedded', 'Trabajamos con el equipo del cliente para que la capacidad permanezca y evolucione.'],
-];
 
 const CULTURE = [
   ['outcome', 'Think in outcomes', 'Preguntamos qué decisión, qué comportamiento o qué resultado de negocio debe cambiar antes de hablar de tecnología.'],
@@ -35,12 +27,12 @@ const CULTURE = [
 ];
 
 const DELIVERY = [
-  'Un accountable lead por engagement.',
-  'Client team integrado desde el inicio.',
-  'Decisiones y riesgos visibles.',
-  'Working software o artefactos utilizables, no solo presentaciones.',
-  'Transferencia de capacidades incluida en el alcance.',
-  'Gobernanza e IA responsable incorporadas al diseño, no añadidas al final.',
+  'Un responsable claro por engagement.',
+  'Equipo del cliente involucrado desde el inicio.',
+  'Decisiones, supuestos y riesgos visibles.',
+  'Software funcional o artefactos utilizables, no solo presentaciones.',
+  'Transferencia de conocimiento y capacidades incluida en el alcance.',
+  'Gobierno y uso responsable incorporados al diseño, no añadidos al final.',
 ];
 
 export default function Nosotros() {
@@ -52,8 +44,9 @@ export default function Nosotros() {
         <Kicker dark>About BECOME</Kicker>
         <Headline as="h1" dark>La próxima empresa ya existe dentro de la tuya.</Headline>
         <Lead dark>
-          BECOME es una AI-native transformation company creada para conectar
-          strategy, operating-model design, building y adoption en un solo sistema.
+          BECOME es una AI-native transformation company que conecta estrategia,
+          modelo operativo, tecnología y adopción para convertir una ambición en
+          capacidad real.
         </Lead>
         <div style={{ marginTop: 'var(--space-8)' }}>
           <PrimaryCTA to="/es/como-transformamos">Conoce cómo trabajamos</PrimaryCTA>
@@ -84,45 +77,6 @@ export default function Nosotros() {
         </Cols>
       </Section>
 
-      {/* 02, 03, 04 — propósito, visión, misión */}
-      <Section band="dark" id="proposito">
-        <Kicker dark>Nuestro propósito</Kicker>
-        <Headline dark>Ayudar a las empresas a convertirse en aquello que el futuro exige.</Headline>
-        <Lead dark>
-          Hacemos de la IA una capacidad interna para operar mejor, decidir con
-          mayor inteligencia y crear nuevas formas de valor. La transformación
-          importa cuando queda instalada en las personas, los datos, los agentes,
-          los productos y las operaciones de la empresa.
-        </Lead>
-
-        <div id="vision-mision" data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 'var(--space-9)', marginTop: 'var(--space-11)', scrollMarginTop: '96px' }}>
-          <Reveal as="div" style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
-            <p style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--electric-green)' }}>Nuestra visión</p>
-            <Body dark style={{ marginTop: 'var(--space-5)' }}>
-              Un futuro en el que las empresas no solo usen IA, sino que evolucionen
-              la forma en que trabajan, aprenden y compiten; con inteligencia
-              incorporada, responsabilidad humana y capacidad propia para seguir
-              transformándose.
-            </Body>
-          </Reveal>
-          <Reveal as="div" style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
-            <p style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--electric-green)' }}>Nuestra misión</p>
-            <Body dark style={{ marginTop: 'var(--space-5)' }}>
-              Convertir la ambición de la empresa en capacidades AI-native
-              incorporadas, conectando la estrategia con Personas, Datos, Agentes,
-              Productos y Operaciones, desde la definición del valor hasta la
-              adopción y la escala.
-            </Body>
-          </Reveal>
-        </div>
-      </Section>
-
-      {/* 05 — creencia.
-          El titular vive dentro de la columna de texto, no encima del bloque.
-          La altura de una fila la fija la imagen; con solo dos párrafos al lado,
-          el texto quedaba flotando en el centro de una fila mucho más alta y la
-          sección se leía medio vacía. Con el titular dentro, las dos columnas
-          miden casi lo mismo y el aire vuelve a ser intencionado. */}
       <Section band="light">
         <Split
           src="/images/17-team-collab.webp"
@@ -146,17 +100,11 @@ export default function Nosotros() {
       </Section>
 
       {/* 06 — ADN */}
-      <Section band="sunken" id="cultura-adn">
-        <Kicker>Nuestro ADN</Kicker>
-        <Headline>Seis rasgos, y cómo se notan en el trabajo.</Headline>
-        <div style={{ marginTop: 'var(--space-10)' }}>
-          {DNA.map(([icon, trait, how], i) => <IndexRow key={trait} index={i} icon={icon} term={trait} def={how} />)}
-        </div>
-      </Section>
-
-      {/* 07 — cultura como comportamientos, no adjetivos */}
+      {/* Cómo trabajamos, en comportamientos observables. Antes era una capa
+         aparte llamada «cultura»: para una firma joven, seis adjetivos
+         institucionales pesan más de lo que prueban. */}
       <Section band="darker">
-        <Kicker dark>Nuestra cultura</Kicker>
+        <Kicker dark>Cómo trabajamos</Kicker>
         <Headline dark>Comportamientos observables, no adjetivos aspiracionales.</Headline>
         {/* 300px fuerza tres columnas: con 260 caben cuatro y los seis
             comportamientos quedaban en 4 + 2, con la segunda fila medio vacía. */}
@@ -175,12 +123,12 @@ export default function Nosotros() {
       <Section id="como-trabajamos" band="light">
         <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 'var(--space-9)' }}>
           <Reveal as="div">
-            <Kicker>Cómo trabajamos</Kicker>
-            <Headline>Equipos pequeños y con experiencia alrededor de un resultado común.</Headline>
+            <Kicker>El equipo de trabajo</Kicker>
+            <Headline>Un equipo senior y multidisciplinario alrededor del resultado.</Headline>
             <Body>
-              Business strategy, product, design, data, AI, engineering y change
-              trabajando juntos. La composición cambia según el engagement; el
-              accountability no.
+              La composición combina negocio, transformación, producto, adopción,
+              datos e IA según lo que el reto necesita. Cada engagement mantiene un
+              responsable claro.
             </Body>
           </Reveal>
           <Reveal as="ul" style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 'var(--space-4)' }}>
