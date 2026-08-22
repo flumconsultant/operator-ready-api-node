@@ -9,6 +9,7 @@ import Compartir from './Compartir.jsx';
 import Formulario from '../suscripcion/Formulario.jsx';
 import { SITE } from '../../seo-meta.js';
 import { autorDe } from '../../content/autores.js';
+import { CAPACIDAD_POR_PILAR, ROTULO_CAPACIDAD } from '../../content/capacidad-por-pilar.js';
 import { ARTICULOS, PILARES, FORMATOS, fechaLegible, minutosDeLectura } from '../../content/insights.js';
 
 /**
@@ -195,6 +196,28 @@ export default function ArticuloBase({ lang }) {
       <Section band="light">
         <div style={COLUMNA}>
           <Bloques bloques={a.bloques} lang={lang} />
+          {/* De la idea a la operación. Nombra la capacidad, no vende el
+              servicio: un artículo que termina en una oferta deja de ser un
+              artículo, y uno que no dice qué se hace con la tesis deja al
+              lector de acuerdo y sin siguiente paso. */}
+          {CAPACIDAD_POR_PILAR[art.pilar]?.[lang] && (
+            <div style={{ marginTop: 'var(--space-11)', padding: 'var(--space-7)', background: 'var(--white)', border: '1px solid var(--border-strong)' }}>
+              <p style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+                {ROTULO_CAPACIDAD[lang]}
+              </p>
+              <p style={{ margin: 'var(--space-5) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--text-body)', maxWidth: '62ch' }}>
+                {CAPACIDAD_POR_PILAR[art.pilar][lang].texto}
+              </p>
+              <div style={{ marginTop: 'var(--space-5)', display: 'flex', gap: 'var(--space-7)', flexWrap: 'wrap' }}>
+                {CAPACIDAD_POR_PILAR[art.pilar][lang].enlaces.map(([etiqueta, destino]) => (
+                  <Link key={destino} to={destino} className="hv-link" style={{ font: 'var(--type-body)', color: 'var(--text-accent)', textDecoration: 'none' }}>
+                    {etiqueta}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Quién firma, con qué experiencia y dónde verificarla. Un artículo
               sin esto es una opinión anónima con nombre encima: el lector no
               tiene forma de saber si quien escribe ha estado dentro del

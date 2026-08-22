@@ -76,7 +76,24 @@ export default function Solucion() {
           </Card>
           <Card>
             <p style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
-              Recommended engagement
+              Which capability comes in
+            </p>
+            {/* Qué capacidad de BECOME interviene, y no solo qué servicio se
+                contrata. Son dos preguntas distintas: el servicio dice cómo se
+                compra; la capacidad dice qué sabe hacer quien lo entrega. Sin
+                esto, la página nombra un producto sin decir qué hay dentro. */}
+            <ul style={{ listStyle: 'none', margin: 'var(--space-5) 0 0', padding: 0, display: 'grid', gap: 'var(--space-5)' }}>
+              {c.capacidades.map(([nivel, linea]) => (
+                <li key={nivel}>
+                  <p style={{ margin: 0, font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--text-heading)' }}>{nivel}</p>
+                  <p style={{ margin: '4px 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: 'var(--text-muted)' }}>{linea}</p>
+                </li>
+              ))}
+            </ul>
+          </Card>
+          <Card>
+            <p style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+              Recommended service
             </p>
             <p style={{ margin: 'var(--space-5) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)' }}>
               {c.engagement}

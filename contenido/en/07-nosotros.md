@@ -4,169 +4,169 @@
 
 **En Google** (no se ve en la página):
 
-<!-- b3809 -->
+<!-- b3845 -->
 - **Título:** About — AI-native transformation company | BECOME
-<!-- b3810 -->
+<!-- b3846 -->
 - **Descripción:** BECOME connects strategy, operating-model design, building and adoption in one system. What we believe and how we work.
 
-<!-- b3811 -->
+<!-- b3847 -->
 ABOUT BECOME
 
-<!-- b3812 -->
+<!-- b3848 -->
 # The next company already exists inside yours.
 
-<!-- b3813 -->
+<!-- b3849 -->
 BECOME is an AI-native transformation company built to connect strategy, operating-model design, building and adoption in one system.
 
-<!-- b3814 -->
+<!-- b3850 -->
 WHAT BECOME IS
 
-<!-- b3815 -->
+<!-- b3851 -->
 ## We don’t show up to add another tool.
 
-<!-- b3816 -->
+<!-- b3852 -->
 We help companies redesign how they operate, decide and create value around AI. We work inside the business to turn an ambition into a capability of its own — governable and able to evolve.
 
-<!-- b3817 -->
+<!-- b3853 -->
 CATEGORY
 
-<!-- b3818 -->
+<!-- b3854 -->
 AI-native transformation company.
 
-<!-- b3819 -->
+<!-- b3855 -->
 PROMISE
 
-<!-- b3820 -->
+<!-- b3856 -->
 Become what comes next.
 
-<!-- b3821 -->
+<!-- b3857 -->
 PHILOSOPHY
 
-<!-- b3822 -->
+<!-- b3858 -->
 The transformation happens inside.
 
-<!-- b3823 -->
+<!-- b3859 -->
 WHAT WE BELIEVE
 
-<!-- b3824 -->
+<!-- b3860 -->
 ## Transformation doesn’t get installed. It gets built inside.
 
-<!-- b3825 -->
+<!-- b3861 -->
 Isolated pilots don’t change a company. Change happens when workflows, roles, decision rights, data, controls, skills and measures are redesigned as a single operating system.
 
-<!-- b3826 -->
+<!-- b3862 -->
 That’s why we build with the client’s teams and transfer ownership from the start.
 
-<!-- b3827 -->
+<!-- b3863 -->
 HOW WE WORK
 
-<!-- b3828 -->
+<!-- b3864 -->
 ## Observable behaviors, not aspirational adjectives.
 
-<!-- b3829 -->
+<!-- b3865 -->
 ### Think in outcomes
 
-<!-- b3830 -->
+<!-- b3866 -->
 We ask what decision, behavior or business result must change before we talk technology.
 
-<!-- b3831 -->
+<!-- b3867 -->
 ### Go inside the system
 
-<!-- b3832 -->
+<!-- b3868 -->
 We look for the cause inside the operating model, not a surface fix for the symptom.
 
-<!-- b3833 -->
+<!-- b3869 -->
 We design and build together with the people who will operate the capability.
 
-<!-- b3834 -->
+<!-- b3870 -->
 ### Stay curious, stay precise
 
-<!-- b3835 -->
+<!-- b3871 -->
 We explore possibilities without mistaking exploration for evidence.
 
-<!-- b3836 -->
+<!-- b3872 -->
 ### Earn trust
 
-<!-- b3837 -->
+<!-- b3873 -->
 We make limits, risks, assumptions, controls and decisions visible.
 
-<!-- b3838 -->
+<!-- b3874 -->
 ### Leave capability behind
 
-<!-- b3839 -->
+<!-- b3875 -->
 The work must increase the client’s autonomy, not their dependence on BECOME.
 
-<!-- b3840 -->
+<!-- b3876 -->
 THE DELIVERY TEAM
 
-<!-- b3841 -->
+<!-- b3877 -->
 ## A senior, multidisciplinary team around the outcome.
 
-<!-- b3842 -->
+<!-- b3878 -->
 The mix combines business, transformation, product, adoption, data and AI according to what the challenge needs. Every engagement keeps one clear owner.
 
-<!-- b3843 -->
+<!-- b3879 -->
 - — One accountable lead per engagement.
-<!-- b3844 -->
+<!-- b3880 -->
 - — Client team integrated from the start.
-<!-- b3845 -->
+<!-- b3881 -->
 - — Decisions and risks kept visible.
-<!-- b3846 -->
+<!-- b3882 -->
 - — Working software or usable artifacts, not just presentations.
-<!-- b3847 -->
+<!-- b3883 -->
 - — Capability transfer included in scope.
-<!-- b3848 -->
+<!-- b3884 -->
 - — Governance and responsible AI built into delivery.
 
-<!-- b3849 -->
+<!-- b3885 -->
 TEAM
 
-<!-- b3850 -->
+<!-- b3886 -->
 ## The people behind BECOME.
 
-<!-- b3851 -->
+<!-- b3887 -->
 A senior, multidisciplinary team built around the outcome. Every engagement keeps one clear owner.
 
-<!-- b3852 -->
+<!-- b3888 -->
 ### Carlos Andrés Ramírez
 
-<!-- b3853 -->
+<!-- b3889 -->
 Transformation Director
 
-<!-- b3854 -->
+<!-- b3890 -->
 Specialist in business reinvention and AI transformation. Connects strategy, business and technology to turn complex problems into new capabilities and operating models.
 
-<!-- b3855 -->
+<!-- b3891 -->
 Specialist in business transformation and reinvention. Director of Specialised Programmes and lecturer in Artificial Intelligence at UPC's Graduate School.
 
-<!-- b3856 -->
+<!-- b3892 -->
 ### Melissa Córdova
 
-<!-- b3857 -->
+<!-- b3893 -->
 Consulting Director
 
-<!-- b3858 -->
+<!-- b3894 -->
 Specialist in transformation, influence and adoption. Designs programmes and strategies that turn new AI capabilities into change teams understand, adopt and put into practice.
 
-<!-- b3859 -->
+<!-- b3895 -->
 Specialist in transformation, influence and artificial-intelligence adoption. Lecturer on Artificial Intelligence programmes at UPC's Graduate School.
 
-<!-- b3860 -->
+<!-- b3896 -->
 ### Diego Serkovic
 
-<!-- b3861 -->
+<!-- b3897 -->
 Innovation & Growth Advisor
 
-<!-- b3862 -->
+<!-- b3898 -->
 Specialist in innovation, product and growth. Connects strategy, analytics and experimentation to turn opportunities into new products and growth systems.
 
-<!-- b3863 -->
+<!-- b3899 -->
 Specialist in innovation, growth, product development and digital transformation, with executive and teaching experience in graduate programmes.
 
-<!-- b3864 -->
+<!-- b3900 -->
 THE NEXT CAPABILITY IS BUILT FROM THE INSIDE
 
-<!-- b3865 -->
+<!-- b3901 -->
 ## Tell us what needs to change in your company.
 
 ---
@@ -175,108 +175,108 @@ THE NEXT CAPABILITY IS BUILT FROM THE INSIDE
 
 **En Google** (no se ve en la página):
 
-<!-- b3866 -->
+<!-- b3902 -->
 - **Título:** Responsible AI: how we control it | BECOME
-<!-- b3867 -->
+<!-- b3903 -->
 - **Descripción:** Data use, human oversight, evaluation, escalation, traceability and named owners. Eight decisions made before anything gets built.
 
-<!-- b3868 -->
+<!-- b3904 -->
 RESPONSIBLE AI
 
-<!-- b3869 -->
+<!-- b3905 -->
 # Controls get designed with the solution, not bolted on at the end.
 
-<!-- b3870 -->
+<!-- b3906 -->
 Responsible AI is designed into the work. We define appropriate data use, access, human oversight, evaluation, escalation, traceability and ownership according to the use case and its risk profile.
 
-<!-- b3871 -->
+<!-- b3907 -->
 WHY UP FRONT
 
-<!-- b3872 -->
+<!-- b3908 -->
 ## A control added afterwards doesn’t change how decisions get made.
 
-<!-- b3873 -->
+<!-- b3909 -->
 When boundaries get written after the solution already works, they become a review layer that slows the work down and that people learn to route around. Defined up front, they’re part of how it’s built: the system can’t do what it has no permission to do.
 
-<!-- b3874 -->
+<!-- b3910 -->
 Not every case needs the same thing. An assistant drafting an internal memo and an agent acting on a production system carry different risk profiles, and therefore different controls. What doesn’t change is that they’re decided and written down before anything gets built.
 
-<!-- b3875 -->
+<!-- b3911 -->
 WHAT GETS DEFINED IN EVERY CASE
 
-<!-- b3876 -->
+<!-- b3912 -->
 ## Eight decisions, always the same ones.
 
-<!-- b3877 -->
+<!-- b3913 -->
 ## Data use and access
 
-<!-- b3878 -->
+<!-- b3914 -->
 What information goes in, where it comes from, who can see it and what for. Defined before building, not once it’s already running.
 
-<!-- b3879 -->
+<!-- b3915 -->
 ## Privacy and security
 
-<!-- b3880 -->
+<!-- b3916 -->
 Handling of personal and sensitive data, encryption, retention and isolation to fit each company’s environment.
 
-<!-- b3881 -->
+<!-- b3917 -->
 ## Output evaluation
 
-<!-- b3882 -->
+<!-- b3918 -->
 What counts as an acceptable answer and how that gets checked. Without a threshold, “it works well” is an opinion.
 
-<!-- b3883 -->
+<!-- b3919 -->
 04
 
-<!-- b3884 -->
+<!-- b3920 -->
 ## Human validation
 
-<!-- b3885 -->
+<!-- b3921 -->
 Where a person reviews, approves or corrects before anything takes effect. The higher the risk, the closer that point sits to the end.
 
-<!-- b3886 -->
+<!-- b3922 -->
 05
 
-<!-- b3887 -->
+<!-- b3923 -->
 ## Escalation and exceptions
 
-<!-- b3888 -->
+<!-- b3924 -->
 What happens to the cases that don’t fit: who they reach, how fast, and with what context.
 
-<!-- b3889 -->
+<!-- b3925 -->
 06
 
-<!-- b3890 -->
+<!-- b3926 -->
 ## Traceability
 
-<!-- b3891 -->
+<!-- b3927 -->
 What gets recorded about each assisted decision, so it’s possible to reconstruct afterwards why what happened happened.
 
-<!-- b3892 -->
+<!-- b3928 -->
 07
 
-<!-- b3893 -->
+<!-- b3929 -->
 ## Named owners
 
-<!-- b3894 -->
+<!-- b3930 -->
 Who answers for the operation and who for the business result. A control with no owner is a document.
 
-<!-- b3895 -->
+<!-- b3931 -->
 08
 
-<!-- b3896 -->
+<!-- b3932 -->
 ## Continuous monitoring
 
-<!-- b3897 -->
+<!-- b3933 -->
 How often behavior gets reviewed, who reviews it, and what triggers a change.
 
-<!-- b3898 -->
+<!-- b3934 -->
 ACCOUNTABILITY ISN’T DELEGATED TO THE SYSTEM
 
-<!-- b3899 -->
+<!-- b3935 -->
 ## AI extends capability; people keep direction and accountability.
 
-<!-- b3900 -->
+<!-- b3936 -->
 Tell us the case and its risk profile. We’ll tell you which controls it needs before a line of code gets written.
 
 ---

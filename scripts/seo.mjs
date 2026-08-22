@@ -35,6 +35,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => readFileSync(join(ROOT, p), 'utf8');
 
 const { SITE, BRAND, OG_IMAGE, PAGES, langOf } = await import('../src/seo-meta.js');
+const { CAPACIDAD_POR_PILAR, ROTULO_CAPACIDAD } = await import('../src/content/capacidad-por-pilar.js');
 const esNow = await import('../src/content/become-now.js');
 const enNow = await import('../src/content/become-now.en.js');
 const esCasos = await import('../src/content/soluciones.js');
@@ -664,6 +665,15 @@ function cuerpoDeArticulo(a, lang) {
       default: break;
     }
   }
+  /* De la idea a la operación: qué capacidad de BECOME toca esta tesis. Va en
+     el HTML servido y no solo en el componente porque un asistente de IA que
+     resume el artículo debería poder decir también qué se hace con él. */
+  const cap = CAPACIDAD_POR_PILAR[a.pilar]?.[lang];
+  if (cap) {
+    p.push(`<section><h2>${e(ROTULO_CAPACIDAD[lang])}</h2><p>${e(cap.texto)}</p><ul>${
+      cap.enlaces.map(([etiqueta, destino]) => `<li><a href="${e(destino)}">${e(etiqueta)}</a></li>`).join('')}</ul></section>`);
+  }
+
   /* Quién firma y con qué experiencia, también para quien no ejecuta
      JavaScript. Los asistentes de IA y los rastreadores leen este HTML, no el
      que monta React: si el bloque de autor solo existiera en el componente,
