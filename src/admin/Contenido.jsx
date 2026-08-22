@@ -94,7 +94,7 @@ function Filas({ filas, columnas, topes, alCambiar }) {
   );
 }
 
-function Campo({ campo, valor, alCambiar }) {
+export function Campo({ campo, valor, alCambiar }) {
   const { tipo, rotulo, ayuda, maximo } = campo;
   const cuerpo = () => {
     if (tipo === 'linea') return <Entrada valor={valor} tope={maximo} alCambiar={alCambiar} />;

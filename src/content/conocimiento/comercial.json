@@ -1,0 +1,21 @@
+{
+  "_": "Qué puede decir un agente sobre dinero y plazos, y qué tiene que derivar a una conversación. Sin esto, un agente inventa un precio o se calla ante la pregunta más frecuente que existe.",
+  "id": "comercial",
+  "titulo": "Precios y condiciones",
+  "pregunta": "¿Qué puede decir el agente sobre precio, plazo y alcance, y dónde tiene que parar?",
+  "campos": [
+    { "id": "puedeDecir", "rotulo": "Lo que el agente SÍ puede decir", "tipo": "lista", "maximo": 300,
+      "ayuda": "Duraciones, formatos, cómo se contrata. Todo lo que ya es público en el sitio.",
+      "valor": [] },
+    { "id": "noPuedeDecir", "rotulo": "Lo que el agente NO puede decir", "tipo": "lista", "maximo": 300,
+      "ayuda": "Cifras concretas, descuentos, plazos comprometidos. Aquí el agente deriva a ti.",
+      "valor": [] },
+    { "id": "comoDeriva", "rotulo": "Cómo deriva", "tipo": "parrafo", "maximo": 400,
+      "ayuda": "La frase exacta con la que pasa la conversación a una persona. Que no suene a puerta cerrada.",
+      "valor": "" },
+    { "id": "rangos", "rotulo": "Rangos de inversión", "tipo": "pares", "maximo": [40, 200],
+      "columnas": ["Servicio", "Rango y qué lo mueve"],
+      "ayuda": "Solo si quieres que se digan. Vacío significa que el agente nunca habla de cifras.",
+      "valor": [] }
+  ]
+}

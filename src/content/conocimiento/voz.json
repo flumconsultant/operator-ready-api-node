@@ -1,0 +1,19 @@
+{
+  "_": "El porqué de la voz. El guardián de lenguaje ya sabe QUÉ palabras no van; esto explica POR QUÉ, que es lo que un agente necesita para escribir bien en una situación nueva que ninguna regla previó.",
+  "id": "voz",
+  "titulo": "Cómo habla BECOME",
+  "pregunta": "¿Por qué BECOME escribe así y no de otra manera?",
+  "campos": [
+    { "id": "principio", "rotulo": "El principio", "tipo": "parrafo", "maximo": 500,
+      "ayuda": "Una idea que explique el resto. Si un agente solo pudiera leer una frase sobre tu tono, ¿cuál sería?",
+      "valor": "" },
+    { "id": "siempre", "rotulo": "Siempre", "tipo": "lista", "maximo": 220, "valor": [] },
+    { "id": "nunca", "rotulo": "Nunca", "tipo": "lista", "maximo": 220,
+      "ayuda": "Las palabras concretas ya las bloquea el guardián de lenguaje. Aquí van los hábitos: superlativos, promesas de plazo, tecnicismo gratuito.",
+      "valor": [] },
+    { "id": "ejemplos", "rotulo": "Antes y después", "tipo": "pares", "maximo": [300, 300],
+      "columnas": ["Cómo NO se dice", "Cómo se dice"],
+      "ayuda": "Dos o tres pares valen más que una página de reglas. Un modelo aprende de ejemplos mucho mejor que de adjetivos.",
+      "valor": [] }
+  ]
+}

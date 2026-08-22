@@ -83,6 +83,13 @@ jobs:
       - name: El catálogo cuadra con lo que hay
         run: node scripts/catalogo.mjs
 
+      # Tras compilar, porque escribe en dist/. Avisa de lo que falta por
+      # escribir y no detiene nada: un hueco de conocimiento solo lo puede
+      # llenar una persona, y parar el sitio por eso sería castigar al sitio
+      # por algo que no depende de él.
+      - name: Compilar el conocimiento
+        run: node scripts/conocimiento.mjs
+
       - name: QA de lenguaje del español publicado
         run: node scripts/qa-lenguaje.mjs
 

@@ -1,0 +1,23 @@
+{
+  "_": "Quién es BECOME y, sobre todo, qué NO hace. Es lo primero que lee un agente antes de responder nada.",
+  "id": "identidad",
+  "titulo": "Identidad y fronteras",
+  "pregunta": "¿Qué es BECOME, para quién, y qué no hace?",
+  "campos": [
+    { "id": "queEs", "rotulo": "Qué es BECOME", "tipo": "parrafo", "maximo": 600,
+      "ayuda": "En dos o tres frases, como se lo dirías a alguien en un ascensor. Sin adjetivos.",
+      "valor": "BECOME es una consultora de transformación AI-native. Convierte la IA en una capacidad propia de la empresa: conecta la estrategia con personas, datos, agentes, productos y operaciones para mejorar decisiones, rediseñar la forma de trabajar y crear nuevas fuentes de valor." },
+    { "id": "paraQuien", "rotulo": "Para quién", "tipo": "parrafo", "maximo": 500,
+      "ayuda": "Tamaño de empresa, rol de quien contrata, en qué momento están. Quien no se reconozca aquí no es tu cliente.",
+      "valor": "Empresas que necesitan pasar de herramientas aisladas y pilotos a resultados gobernados, adoptados y medibles." },
+    { "id": "noHacemos", "rotulo": "Qué NO hace BECOME", "tipo": "lista", "maximo": 220,
+      "ayuda": "La frontera. Cada línea evita que un agente prometa algo que no vendes, y evita una reunión perdida.",
+      "valor": [] },
+    { "id": "diferencia", "rotulo": "En qué se diferencia", "tipo": "parrafo", "maximo": 600,
+      "ayuda": "Frente a una consultora tradicional y frente a una agencia de IA. Sin superlativos: qué haces distinto, en concreto.",
+      "valor": "" },
+    { "id": "prueba", "rotulo": "Qué lo demuestra", "tipo": "lista", "maximo": 260,
+      "ayuda": "Hechos comprobables, no afirmaciones. Un agente que cita un hecho convence; uno que se autoelogia, no.",
+      "valor": [] }
+  ]
+}

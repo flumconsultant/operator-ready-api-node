@@ -1,0 +1,12 @@
+{
+  "_": "Las preguntas que te hacen de verdad, con la respuesta que darías tú. No las de producto —esas están en cada programa— sino las de venta.",
+  "id": "preguntas",
+  "titulo": "Preguntas frecuentes reales",
+  "pregunta": "¿Qué te preguntan en la primera conversación y qué respondes?",
+  "campos": [
+    { "id": "faq", "rotulo": "Preguntas y respuestas", "tipo": "pares", "maximo": [140, 700],
+      "columnas": ["Pregunta", "Cómo la respondes tú"],
+      "ayuda": "Escríbelas como las dices hablando, no como las escribirías en un folleto. Un agente copia el registro.",
+      "valor": [] }
+  ]
+}

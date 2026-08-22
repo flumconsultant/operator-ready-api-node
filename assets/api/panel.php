@@ -42,6 +42,7 @@ const RUTA_AUTORES     = 'src/content/autores';
 const RUTA_FOTOS       = 'assets/images/autores';
 const RUTA_PAGINAS     = 'src/content/paginas';
 const RUTA_ESQUEMAS    = 'src/content/esquemas';
+const RUTA_CONOCIMIENTO = 'src/content/conocimiento';
 const FOTO_MAX_BYTES   = 3_000_000;
 const INTENTOS_MAX     = 8;      // intentos de entrar...
 const INTENTOS_SECS    = 900;    // ...por cada cuarto de hora e IP
@@ -504,11 +505,20 @@ if ($accion === 'guardar-contenido') {
  * forma de escribir JSON arbitrario dentro del sitio, que es exactamente lo
  * que este archivo existe para impedir.
  */
+/* Dos carpetas con la misma forma —páginas del sitio y conocimiento— y una
+   sola pareja de acciones. La carpeta llega del navegador, así que se elige de
+   una lista cerrada: fuera de estas dos no hay nada que escribir. */
+function carpeta_declarada(string $c): string {
+    return ['paginas' => RUTA_PAGINAS, 'conocimiento' => RUTA_CONOCIMIENTO][$c] ?? '';
+}
+
 if ($accion === 'listar-paginas') {
-    $r = github($config, 'contents/' . rawurlencode(RUTA_PAGINAS) . '?ref=' . rawurlencode($rama));
+    $carpeta = carpeta_declarada((string) ($cuerpo['carpeta'] ?? $_GET['carpeta'] ?? 'paginas'));
+    if ($carpeta === '') responder(400, ['ok' => false, 'error' => 'carpeta', 'mensaje' => 'Esa carpeta no existe.']);
+    $r = github($config, 'contents/' . rawurlencode($carpeta) . '?ref=' . rawurlencode($rama));
     if ($r['codigo'] === 404) {
         responder(200, ['ok' => true, 'paginas' => [],
-            'vacio_en' => RUTA_PAGINAS . ' @ ' . $config['repo'] . ':' . $rama]);
+            'vacio_en' => $carpeta . ' @ ' . $config['repo'] . ':' . $rama]);
     }
     if ($r['codigo'] !== 200 || !is_array($r['datos'])) {
         responder(502, ['ok' => false, 'error' => 'github', 'mensaje' => 'No se pudieron listar las páginas.']);
@@ -516,7 +526,7 @@ if ($accion === 'listar-paginas') {
     $paginas = [];
     foreach ($r['datos'] as $e) {
         if (($e['type'] ?? '') !== 'file' || !archivo_valido((string) $e['name'])) continue;
-        $f = github($config, 'contents/' . rawurlencode(RUTA_PAGINAS . '/' . $e['name']) . '?ref=' . rawurlencode($rama));
+        $f = github($config, 'contents/' . rawurlencode($carpeta . '/' . $e['name']) . '?ref=' . rawurlencode($rama));
         if ($f['codigo'] !== 200) continue;
         $datos = json_decode((string) base64_decode(str_replace("\n", '', (string) ($f['datos']['content'] ?? ''))), true);
         if (!is_array($datos)) continue;
@@ -528,13 +538,15 @@ if ($accion === 'listar-paginas') {
 }
 
 if ($accion === 'guardar-pagina') {
+    $carpeta = carpeta_declarada((string) ($cuerpo['carpeta'] ?? 'paginas'));
+    if ($carpeta === '') responder(400, ['ok' => false, 'error' => 'carpeta', 'mensaje' => 'Esa carpeta no existe.']);
     $archivo = (string) ($cuerpo['archivo'] ?? '');
     $valores = $cuerpo['valores'] ?? null;
     if (!archivo_valido($archivo) || !is_array($valores)) {
         responder(400, ['ok' => false, 'error' => 'peticion', 'mensaje' => 'Falta el archivo de la página o los valores.']);
     }
 
-    $f = github($config, 'contents/' . rawurlencode(RUTA_PAGINAS . '/' . $archivo) . '?ref=' . rawurlencode($rama));
+    $f = github($config, 'contents/' . rawurlencode($carpeta . '/' . $archivo) . '?ref=' . rawurlencode($rama));
     if ($f['codigo'] !== 200) {
         responder(404, ['ok' => false, 'error' => 'no_existe', 'mensaje' => 'Esa página no existe en el repositorio.']);
     }
@@ -548,17 +560,46 @@ if ($accion === 'guardar-pagina') {
     foreach ($pagina['campos'] as $i => $campo) {
         $id = (string) ($campo['id'] ?? '');
         if ($id === '' || !array_key_exists($id, $valores)) continue;
-        $nuevo = trim((string) $valores[$id]);
-        $tope = (int) ($campo['maximo'] ?? 0);
-        if ($tope > 0 && mb_strlen($nuevo) > $tope) {
-            responder(400, ['ok' => false, 'error' => 'demasiado_largo',
-                'mensaje' => 'El campo «' . ($campo['rotulo'] ?? $id) . '» pasa de ' . $tope . ' caracteres.']);
+        $rotulo = (string) ($campo['rotulo'] ?? $id);
+        $tipo = (string) ($campo['tipo'] ?? 'linea');
+        $tope = $campo['maximo'] ?? 0;
+        $v = $valores[$id];
+
+        $limitar = function ($texto, $max) use ($rotulo) {
+            $t = trim((string) $texto);
+            if ($max > 0 && mb_strlen($t) > $max) {
+                responder(400, ['ok' => false, 'error' => 'demasiado_largo',
+                    'mensaje' => 'En «' . $rotulo . '» hay un texto de ' . mb_strlen($t) . ' caracteres y el máximo es ' . $max . '.']);
+            }
+            return $t;
+        };
+
+        /* Los documentos de conocimiento llevan listas y tablas, no solo
+           líneas. Y aquí un campo vacío SÍ se acepta: el conocimiento se
+           rellena poco a poco y obligar a completarlo de una vez sería
+           obligar a inventarlo. */
+        if ($tipo === 'lista') {
+            $nuevo = [];
+            foreach ((array) $v as $x) { $t = $limitar($x, (int) $tope); if ($t !== '') $nuevo[] = $t; }
+        } elseif ($tipo === 'pares' || $tipo === 'trios' || $tipo === 'tupla') {
+            $cols = (array) ($campo['columnas'] ?? []);
+            $ancho = count($cols) ?: ($tipo === 'trios' ? 3 : 2);
+            $topes = is_array($tope) ? $tope : array_fill(0, $ancho, (int) $tope);
+            $nuevo = [];
+            foreach ((array) $v as $fila) {
+                if (!is_array($fila)) continue;
+                $f = [];
+                for ($k = 0; $k < $ancho; $k++) $f[] = $limitar($fila[$k] ?? '', (int) ($topes[$k] ?? 0));
+                if (implode('', $f) !== '') $nuevo[] = $f;
+            }
+        } else {
+            $nuevo = $limitar($v, (int) $tope);
+            if ($nuevo === '' && empty($campo['opcional']) && ($carpeta === RUTA_PAGINAS)) {
+                responder(400, ['ok' => false, 'error' => 'vacio',
+                    'mensaje' => 'El campo «' . $rotulo . '» no puede quedar vacío.']);
+            }
         }
-        if ($nuevo === '') {
-            responder(400, ['ok' => false, 'error' => 'vacio',
-                'mensaje' => 'El campo «' . ($campo['rotulo'] ?? $id) . '» no puede quedar vacío.']);
-        }
-        if ($nuevo !== (string) ($campo['valor'] ?? '')) $cambiados++;
+        if (json_encode($nuevo) !== json_encode($campo['valor'] ?? null)) $cambiados++;
         $pagina['campos'][$i]['valor'] = $nuevo;
     }
     if ($cambiados === 0) {
@@ -567,7 +608,7 @@ if ($accion === 'guardar-pagina') {
 
     unset($pagina['_archivo'], $pagina['_sha']);
     $json = json_encode($pagina, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n";
-    $r = github($config, 'contents/' . rawurlencode(RUTA_PAGINAS . '/' . $archivo), 'PUT', [
+    $r = github($config, 'contents/' . rawurlencode($carpeta . '/' . $archivo), 'PUT', [
         'message' => 'Página «' . ($pagina['titulo'] ?? $archivo) . '» editada desde el panel',
         'content' => base64_encode($json),
         'sha'     => $f['datos']['sha'] ?? '',

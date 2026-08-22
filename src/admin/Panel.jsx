@@ -151,6 +151,7 @@ const MODULOS = [
   ['articulos', 'Artículos'],
   ['paginas', 'Páginas'],
   ['contenido', 'Contenido'],
+  ['conocimiento', 'Conocimiento'],
   ['autores', 'Autores'],
   ['suscriptores', 'Suscriptores'],
 ];
@@ -344,7 +345,12 @@ export default function Panel() {
         <Aviso tono="mal">{error}</Aviso>
         <Aviso tono="bien">{nota}</Aviso>
 
-        {vista === 'contenido' && !abierto ? (
+        {vista === 'conocimiento' && !abierto ? (
+          <div style={{ marginTop: 16 }}>
+            <Paginas carpeta="conocimiento" titulo="Conocimiento de BECOME"
+                     vacio="Aquí vive lo que un agente necesita saber para hablar por BECOME: quién eres, qué no haces, qué respondes. Cada documento lleva escrita la pregunta que contesta." />
+          </div>
+        ) : vista === 'contenido' && !abierto ? (
           <div style={{ marginTop: 16 }}>
             <Contenido />
           </div>

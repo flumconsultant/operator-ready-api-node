@@ -1,0 +1,12 @@
+{
+  "_": "Las objeciones y cómo se responden. Un agente que no las tiene escritas improvisa justo en el momento en que más caro sale.",
+  "id": "objeciones",
+  "titulo": "Objeciones",
+  "pregunta": "¿Qué te dicen para no contratar, y qué contestas?",
+  "campos": [
+    { "id": "objeciones", "rotulo": "Objeción y respuesta", "tipo": "trios", "maximo": [120, 600, 200],
+      "columnas": ["Lo que dicen", "Qué respondes", "Qué NO decir"],
+      "ayuda": "La tercera columna es la importante: lo que suena defensivo, lo que promete de más, lo que ya probaste que no funciona.",
+      "valor": [] }
+  ]
+}

@@ -1,6 +1,7 @@
 import React from 'react';
-import * as api from './api';
-import { Boton, Aviso, marco } from './piezas';
+import * as api from './api.js';
+import { Boton, Aviso, marco } from './piezas.jsx';
+import { Campo } from './Contenido.jsx';
 
 /**
  * Editar los textos del sitio, no solo los artículos.
@@ -24,53 +25,12 @@ import { Boton, Aviso, marco } from './piezas';
  * eso el contador avisa antes de llegar al tope, no cuando ya se pasó.
  */
 
-const contador = (largo, tope) => {
-  const queda = tope - largo;
-  if (queda < 0) return { color: 'var(--text-error, #A32B20)', texto: `${largo}/${tope} · te pasas por ${-queda}` };
-  if (queda <= tope * 0.1) return { color: '#8A5A00', texto: `${largo}/${tope} · quedan ${queda}` };
-  return { color: 'var(--text-faint)', texto: `${largo}/${tope}` };
-};
+/* El editor de campos es el del módulo de Contenido: sabe dibujar líneas,
+   párrafos, listas y tablas, que es lo que llevan los documentos de
+   conocimiento. Tener dos editores era tener dos sitios donde el contador
+   puede decir un número distinto del límite que aplica el servidor. */
 
-function Campo({ campo, valor, alCambiar }) {
-  const c = contador(valor.length, campo.maximo || 0);
-  const comun = {
-    width: '100%',
-    boxSizing: 'border-box',
-    padding: '10px 12px',
-    font: 'var(--type-body)',
-    fontSize: 15,
-    lineHeight: 1.5,
-    color: 'var(--text-heading)',
-    background: 'var(--white)',
-    border: '1px solid var(--border-hairline)',
-    borderRadius: 2,
-    resize: 'vertical',
-  };
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'baseline', justifyContent: 'space-between' }}>
-        <label htmlFor={`c-${campo.id}`} style={{ font: 'var(--type-body)', fontSize: 14, fontWeight: 600, color: 'var(--text-heading)' }}>
-          {campo.rotulo}
-        </label>
-        <span style={{ font: 'var(--type-mono)', fontSize: 12, color: c.color, fontVariantNumeric: 'tabular-nums' }}>
-          {c.texto}
-        </span>
-      </div>
-      {campo.ayuda && (
-        <p style={{ margin: 0, font: 'var(--type-body)', fontSize: 13, color: 'var(--text-faint)', lineHeight: 1.45 }}>
-          {campo.ayuda}
-        </p>
-      )}
-      {campo.tipo === 'parrafo' ? (
-        <textarea id={`c-${campo.id}`} rows={4} value={valor} onChange={(e) => alCambiar(e.target.value)} style={comun} />
-      ) : (
-        <input id={`c-${campo.id}`} type="text" value={valor} onChange={(e) => alCambiar(e.target.value)} style={comun} />
-      )}
-    </div>
-  );
-}
-
-export default function Paginas({ alCerrar }) {
+export default function Paginas({ alCerrar, carpeta = 'paginas', titulo = 'Páginas del sitio', vacio }) {
   const [paginas, setPaginas] = React.useState([]);
   const [cargando, setCargando] = React.useState(true);
   const [abierta, setAbierta] = React.useState(null);
@@ -81,31 +41,39 @@ export default function Paginas({ alCerrar }) {
 
   const cargar = React.useCallback(async () => {
     setCargando(true); setError('');
-    try { const d = await api.listarPaginas(); setPaginas(d.paginas || []); }
+    try { const d = await api.listarPaginas(carpeta); setPaginas(d.paginas || []); }
     catch (e) { setError(e.message); }
     finally { setCargando(false); }
-  }, []);
+  }, [carpeta]);
 
   React.useEffect(() => { cargar(); }, [cargar]);
 
   const abrir = (p) => {
     setAbierta(p);
-    setValores(Object.fromEntries((p.campos || []).map((c) => [c.id, String(c.valor ?? '')])));
+    setValores(Object.fromEntries((p.campos || []).map((c) => [
+      c.id,
+      structuredClone(c.valor ?? (['lista','pares','trios','tupla'].includes(c.tipo) ? [] : '')),
+    ])));
     setNota(''); setError('');
   };
 
   /* Se avisa de lo que está mal ANTES de intentar guardar, y con el nombre del
      campo. El servidor lo vuelve a comprobar —nunca se confía en el navegador—
      pero enterarse por un error del servidor es enterarse tarde. */
+  /* En las páginas del sitio un campo vacío es un hueco en una página real, y
+     por eso se impide. En el conocimiento no: se rellena poco a poco, y exigir
+     que esté completo para guardar sería exigir que se invente. */
   const problemas = (abierta?.campos || []).filter((c) => {
+    if (typeof valores[c.id] !== 'string') return false;
     const v = (valores[c.id] ?? '').trim();
-    return v === '' || (c.maximo && v.length > c.maximo);
+    if (v === '') return carpeta === 'paginas';
+    return typeof c.maximo === 'number' && v.length > c.maximo;
   });
 
   const guardar = async () => {
     setGuardando(true); setError(''); setNota('');
     try {
-      const d = await api.guardarPagina({ archivo: abierta._archivo, valores });
+      const d = await api.guardarPagina({ carpeta, archivo: abierta._archivo, valores });
       if (d.sin_cambios) setNota('No había nada que cambiar.');
       else {
         setNota(`Guardado. ${d.cambiados === 1 ? 'Un campo' : `${d.cambiados} campos`}. Estará en la web en unos minutos, cuando termine el despliegue.`);
@@ -123,7 +91,7 @@ export default function Paginas({ alCerrar }) {
             <h2 style={{ margin: 0, fontFamily: 'var(--font-display)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)' }}>
               {abierta.titulo}
             </h2>
-            <p style={{ margin: '2px 0 0', font: 'var(--type-mono)', fontSize: 12, color: 'var(--text-faint)' }}>{abierta.ruta}</p>
+            <p style={{ margin: '2px 0 0', font: 'var(--type-mono)', fontSize: 12, color: 'var(--text-faint)' }}>{abierta.ruta || abierta.pregunta}</p>
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
             <Boton onClick={() => setAbierta(null)} disabled={guardando}>Volver</Boton>
@@ -143,7 +111,7 @@ export default function Paginas({ alCerrar }) {
 
         <div style={{ background: marco.papel, border: marco.linea, borderRadius: 2, padding: 20, display: 'flex', flexDirection: 'column', gap: 22 }}>
           {(abierta.campos || []).map((c) => (
-            <Campo key={c.id} campo={c} valor={valores[c.id] ?? ''} alCambiar={(v) => setValores({ ...valores, [c.id]: v })} />
+            <Campo key={c.id} campo={c} valor={valores[c.id]} alCambiar={(v) => setValores({ ...valores, [c.id]: v })} />
           ))}
         </div>
       </div>
@@ -154,7 +122,7 @@ export default function Paginas({ alCerrar }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center', justifyContent: 'space-between' }}>
         <h2 style={{ margin: 0, fontFamily: 'var(--font-display)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)' }}>
-          Páginas del sitio
+          {titulo}
         </h2>
         <div style={{ display: 'flex', gap: 8 }}>
           <Boton onClick={cargar} disabled={cargando}>{cargando ? 'Cargando…' : 'Recargar'}</Boton>
@@ -167,7 +135,7 @@ export default function Paginas({ alCerrar }) {
       {!cargando && paginas.length === 0 && (
         <div style={{ background: marco.papel, border: marco.linea, borderRadius: 2, padding: 24 }}>
           <p style={{ margin: 0, color: 'var(--text-faint)' }}>
-            Todavía no hay ninguna página migrada. Las páginas se van pasando de una en una: cada una que llega aquí se puede editar sin tocar código.
+            {vacio || 'Todavía no hay ninguna página migrada. Las páginas se van pasando de una en una: cada una que llega aquí se puede editar sin tocar código.'}
           </p>
         </div>
       )}
@@ -185,9 +153,9 @@ export default function Paginas({ alCerrar }) {
             }}
           >
             <strong style={{ fontFamily: 'var(--font-display)', fontSize: 16, color: 'var(--text-heading)' }}>{p.titulo}</strong>
-            <span style={{ font: 'var(--type-mono)', fontSize: 12, color: 'var(--text-faint)' }}>{p.ruta}</span>
+            {p.ruta && <span style={{ font: 'var(--type-mono)', fontSize: 12, color: 'var(--text-faint)' }}>{p.ruta}</span>}
             <span style={{ font: 'var(--type-body)', fontSize: 13, color: 'var(--text-faint)', marginTop: 4 }}>
-              {(p.campos || []).length} {(p.campos || []).length === 1 ? 'campo' : 'campos'} editables
+              {p.pregunta || `${(p.campos || []).length} ${(p.campos || []).length === 1 ? 'campo' : 'campos'} editables`}
             </span>
           </button>
         ))}

@@ -61,7 +61,7 @@ export const borrar = (datos) => llamar('borrar', datos);
 export const listarAutores = () => llamar('listar-autores');
 export const guardarAutor = (datos) => llamar('guardar-autor', datos);
 export const subirFoto = (datos) => llamar('subir-foto', datos);
-export const listarPaginas = () => llamar('listar-paginas');
+export const listarPaginas = (carpeta = 'paginas') => llamar('listar-paginas', { carpeta });
 export const listarEsquemas = () => llamar('listar-esquemas');
 export const abrirEsquema = (esquema, idioma) => llamar('abrir-esquema', { esquema, idioma });
 export const guardarContenido = (datos) => llamar('guardar-contenido', datos);
