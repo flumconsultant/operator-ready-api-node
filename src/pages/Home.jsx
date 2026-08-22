@@ -102,6 +102,14 @@ const PRINCIPLES = [
   ['fit', 'Adoption by design', 'Roles, controles, capacidades y medición forman parte de la solución desde el inicio.'],
 ];
 
+const CAPACIDADES = [
+  ['decision', 'Priorizar', 'Dónde está el valor, qué casos de uso, con qué caso de negocio y en qué orden.'],
+  ['flow', 'Rediseñar', 'Decisiones, procesos, roles, excepciones y controles.'],
+  ['build', 'Construir', 'Copilotos, agentes, recuperación sobre el conocimiento propio, integraciones y productos AI-native.'],
+  ['capability', 'Habilitar', 'Equipos capaces de trabajar y decidir con IA sobre su propio trabajo.'],
+  ['scale', 'Medir', 'Línea base, desempeño, riesgo, adopción y valor.'],
+];
+
 const INSIGHTS = [
   ['agents', 'The AI-native enterprise', 'Qué distingue a una empresa AI-native de una empresa con IA.'],
   ['flow', 'Agentic work', 'Procesos, roles, agentes y responsabilidad humana.'],
@@ -252,6 +260,32 @@ export default function Home() {
           <GhostCTA to="/es/servicios#comparacion">Compara los tres</GhostCTA>
           <PrimaryCTA to="/es/contacto">Cuéntanos qué debe cambiar</PrimaryCTA>
         </div>
+      </Section>
+
+      {/* 03b — Qué puede construir BECOME.
+          Va pegado a los tres servicios porque contesta la pregunta que deja
+          leerlos: «vale, ¿y qué sabéis hacer exactamente?». No es una cuarta
+          línea de servicio —la arquitectura comercial sigue siendo NOW,
+          DISCOVER y EMBED—: es la amplitud de lo que esos tres cubren. */}
+      <Section band="sunken">
+        <Kicker>Qué puede construir BECOME</Kicker>
+        <Headline>Estrategia cuando falta dirección. Capacidad cuando falta ejecución.</Headline>
+        <Lead>
+          Trabajamos desde la decisión de dónde invertir hasta la capacidad que
+          queda funcionando dentro de la empresa.
+        </Lead>
+        <Cols min="200px" style={{ marginTop: 'var(--space-10)' }}>
+          {CAPACIDADES.map(([icon, nombre, linea]) => (
+            <Reveal as="div" key={nombre} className="icon-hit row-hit" style={{ borderTop: '1px solid var(--border-strong)', paddingTop: 'var(--space-5)' }}>
+              <Ico name={icon} size={26} style={{ color: 'var(--text-accent)' }} />
+              <h3 style={{ margin: 'var(--space-5) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)' }}>
+                {nombre}
+              </h3>
+              <Body>{linea}</Body>
+            </Reveal>
+          ))}
+        </Cols>
+        <TextCTA to="/es/como-transformamos">Conoce cómo transformamos</TextCTA>
       </Section>
 
       {/* 04 — Qué cambia dentro: los cinco sistemas. */}

@@ -43,6 +43,8 @@ const T = {
     volver: 'Industrias',
     contextoKicker: 'El punto de partida',
     oportunidadesKicker: 'Dónde vemos oportunidad',
+    capacidadesKicker: 'Qué puede hacer BECOME aquí',
+    capacidadesTitular: 'De la oportunidad a una capacidad que la empresa puede operar.',
     casosKicker: 'Casos ilustrativos',
     casosTitular: 'Qué se construye, cuando el detalle operativo ya permite nombrarlo.',
     workflowsKicker: 'Procesos que se rediseñan',
@@ -66,6 +68,8 @@ const T = {
     volver: 'Industries',
     contextoKicker: 'The starting point',
     oportunidadesKicker: 'Where we see opportunity',
+    capacidadesKicker: 'What BECOME can do here',
+    capacidadesTitular: 'From the opportunity to a capability the company can operate.',
     casosKicker: 'Illustrative cases',
     casosTitular: 'What gets built, once the operating detail is specific enough to name it.',
     workflowsKicker: 'Workflows we redesign',
@@ -208,6 +212,44 @@ export default function FichaIndustria({ lang = 'es', slug }) {
               </li>
             ))}
           </Reveal>
+        </div>
+      </Section>
+
+      {/* Qué puede hacer BECOME aquí.
+          Va después de las oportunidades y antes de la tecnología a propósito:
+          quien acaba de leer dónde está el problema se pregunta quién lo
+          resuelve, no con qué se resuelve. Y no es el mismo texto en las seis
+          páginas: si lo fuera, no diría nada de esta industria. */}
+      <Section band="sunken">
+        <Kicker>{t.capacidadesKicker}</Kicker>
+        <Headline>{t.capacidadesTitular}</Headline>
+        <div style={{ marginTop: 'var(--space-10)' }}>
+          {c.capacidades.map(([titulo, linea, servicio], i) => (
+            <Reveal
+              as="div"
+              key={titulo}
+              index={i}
+              data-cols
+              className="row-hit"
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '52px minmax(0,1fr) minmax(0,1.4fr)',
+                gap: 'var(--space-6)',
+                padding: 'var(--space-6) 0',
+                borderTop: '1px solid var(--border-hairline)',
+                alignItems: 'start',
+              }}
+            >
+              <span style={{ font: 'var(--type-mono)', color: 'var(--text-faint)' }}>{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', lineHeight: 1.26, color: 'var(--text-heading)' }}>
+                  {titulo}
+                </h3>
+                <p style={{ margin: '6px 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-sm)', color: 'var(--text-accent)' }}>{servicio}</p>
+              </div>
+              <Body style={{ marginTop: 0 }}>{linea}</Body>
+            </Reveal>
+          ))}
         </div>
       </Section>
 

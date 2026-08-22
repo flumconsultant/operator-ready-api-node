@@ -6,309 +6,309 @@
 
 **En Google** (no se ve en la página):
 
-<!-- b4098 -->
+<!-- b4259 -->
 - **Título:** Privacy policy | BECOME
-<!-- b4099 -->
+<!-- b4260 -->
 - **Descripción:** How BECOME (FLUM E.I.R.L.) collects, uses, stores and shares the personal data received through meetbecome.com, and how to exercise your data rights.
 
-<!-- b4100 -->
+<!-- b4261 -->
 # Privacy Policy
 
-<!-- b4101 -->
+<!-- b4262 -->
 How FLUM E.I.R.L. handles the personal data it receives through this site.
 
-<!-- b4102 -->
+<!-- b4263 -->
 Last updated: 2026-08-20 · FLUM E.I.R.L. · RUC 20616001711
 
-<!-- b4103 -->
+<!-- b4264 -->
 ## Who is responsible
 
-<!-- b4104 -->
+<!-- b4265 -->
 FLUM E.I.R.L., tax ID (RUC) 20616001711, registered at Av. José Gálvez Barrenechea 200, La Victoria, Lima, Perú, owner of the BECOME brand, controls the personal data described here.
 
-<!-- b4105 -->
+<!-- b4266 -->
 Privacy and data-rights contact: privacidad@meetbecome.com.
 
-<!-- b4106 -->
+<!-- b4267 -->
 Personal-data bank: “Prospectos y contactos comerciales”, entered in Peru's National Register of Personal Data Protection under code PJ-2026-4289, per certificate INS-2026-4832 dated 2026-08-20.
 
-<!-- b4107 -->
+<!-- b4268 -->
 ## What this covers
 
-<!-- b4108 -->
+<!-- b4269 -->
 Personal data we receive through:
 
-<!-- b4109 -->
+<!-- b4270 -->
 - — meetbecome.com and its pages.
-<!-- b4110 -->
+<!-- b4271 -->
 - — The contact form.
-<!-- b4111 -->
+<!-- b4272 -->
 - — The article subscription.
-<!-- b4112 -->
+<!-- b4273 -->
 - — Meetings and business communications.
-<!-- b4113 -->
+<!-- b4274 -->
 - — Professional interactions related to BECOME.
 
-<!-- b4114 -->
+<!-- b4275 -->
 ## What we collect
 
-<!-- b4115 -->
+<!-- b4276 -->
 Depending on the interaction:
 
-<!-- b4116 -->
+<!-- b4277 -->
 - — Identification and contact: name, business email, phone if you give it, country or city.
-<!-- b4117 -->
+<!-- b4278 -->
 - — Professional data: company, role, area, industry.
-<!-- b4118 -->
+<!-- b4279 -->
 - — Your enquiry: objective or need, stage, timing, service preference and anything you include voluntarily.
-<!-- b4119 -->
+<!-- b4280 -->
 - — Technical data: IP address and time of submission, logged by the server to limit form abuse.
-<!-- b4120 -->
+<!-- b4281 -->
 - — Communications: emails, replies and subscription preferences.
 
-<!-- b4121 -->
+<!-- b4282 -->
 We do not request sensitive data through the public form. We use Google Analytics to measure traffic, only if you accept it, and we do not combine that data with the form or the mailing list: we build no profiles of identified people.
 
-<!-- b4122 -->
+<!-- b4283 -->
 ## Where it comes from
 
-<!-- b4123 -->
+<!-- b4284 -->
 Directly from you or an authorized representative of your company. We do not use purchased, scraped or transferred databases.
 
-<!-- b4124 -->
+<!-- b4285 -->
 ## Why we use it and how long we keep it
 
-<!-- b4125 -->
+<!-- b4286 -->
 PURPOSE
 
-<!-- b4126 -->
+<!-- b4287 -->
 BASIS
 
-<!-- b4127 -->
+<!-- b4288 -->
 RETENTION
 
-<!-- b4128 -->
+<!-- b4289 -->
 Answer your enquiry and recommend a starting point
 
-<!-- b4129 -->
+<!-- b4290 -->
 Your consent and the pre-contractual steps you requested
 
-<!-- b4130 -->
+<!-- b4291 -->
 Up to 24 months after the last interaction, unless a contract or a deletion request applies
 
-<!-- b4131 -->
+<!-- b4292 -->
 Prepare meetings, proposals and the follow-up you asked for
 
-<!-- b4132 -->
+<!-- b4293 -->
 Your consent and pre-contractual steps
 
-<!-- b4133 -->
+<!-- b4294 -->
 Up to 24 months after the last interaction, or while negotiations continue
 
-<!-- b4134 -->
+<!-- b4295 -->
 Deliver contracted services
 
-<!-- b4135 -->
+<!-- b4296 -->
 Contract performance and legal obligations
 
-<!-- b4136 -->
+<!-- b4297 -->
 For the relationship and applicable legal periods
 
-<!-- b4137 -->
+<!-- b4298 -->
 Send you the articles you asked to receive
 
-<!-- b4138 -->
+<!-- b4299 -->
 Your consent, confirmed by email
 
-<!-- b4139 -->
+<!-- b4300 -->
 Until you unsubscribe or after 24 months of inactivity, whichever comes first
 
-<!-- b4140 -->
+<!-- b4301 -->
 Prevent abuse of the form and the subscription
 
-<!-- b4141 -->
+<!-- b4302 -->
 System protection
 
-<!-- b4142 -->
+<!-- b4303 -->
 Up to 12 months
 
-<!-- b4143 -->
+<!-- b4304 -->
 Handle rights, complaints and regulatory duties
 
-<!-- b4144 -->
+<!-- b4305 -->
 Legal obligation
 
-<!-- b4145 -->
+<!-- b4306 -->
 For the procedure and the period needed to evidence compliance
 
-<!-- b4146 -->
+<!-- b4307 -->
 Once the purpose ends, data is deleted, anonymized or restricted where retention is legally required.
 
-<!-- b4147 -->
+<!-- b4308 -->
 ## The emails we send
 
-<!-- b4148 -->
+<!-- b4309 -->
 We send articles only to people who asked for them and then confirmed their address by clicking a link. That second step exists so nobody can subscribe someone else.
 
-<!-- b4149 -->
+<!-- b4310 -->
 Consent is freely given, prior, explicit and informed, requested separately from answering your enquiry, never pre-ticked, and you can withdraw it at any time through the unsubscribe link in every email.
 
-<!-- b4150 -->
+<!-- b4311 -->
 Withdrawing it does not affect a reply to an enquiry or a contractual relationship.
 
-<!-- b4151 -->
+<!-- b4312 -->
 ## Who we share it with
 
-<!-- b4152 -->
+<!-- b4313 -->
 We use these providers, and only these:
 
-<!-- b4153 -->
+<!-- b4314 -->
 PROVIDER
 
-<!-- b4154 -->
+<!-- b4315 -->
 WHAT DATA
 
-<!-- b4155 -->
+<!-- b4316 -->
 COUNTRY
 
-<!-- b4156 -->
+<!-- b4317 -->
 Hostinger International, Ltd.
 
-<!-- b4157 -->
+<!-- b4318 -->
 Web hosting, email and database
 
-<!-- b4158 -->
+<!-- b4319 -->
 All form and mailing-list data
 
-<!-- b4159 -->
+<!-- b4320 -->
 United States (Arizona) and other countries where Hostinger or its infrastructure providers operate
 
-<!-- b4160 -->
+<!-- b4321 -->
 Google Ireland Limited / Google LLC
 
-<!-- b4161 -->
+<!-- b4322 -->
 Site analytics (Google Analytics 4)
 
-<!-- b4162 -->
+<!-- b4323 -->
 Page views, truncated IP address, device type, browser and country. No form or mailing-list data
 
-<!-- b4163 -->
+<!-- b4324 -->
 Ireland and the United States
 
-<!-- b4164 -->
+<!-- b4325 -->
 GitHub, Inc.
 
-<!-- b4165 -->
+<!-- b4326 -->
 Code and published-content hosting
 
-<!-- b4166 -->
+<!-- b4327 -->
 No visitor personal data. Only articles, images and author profiles
 
-<!-- b4167 -->
+<!-- b4328 -->
 United States
 
-<!-- b4168 -->
+<!-- b4329 -->
 They must process data only on our instructions, with appropriate security and confidentiality obligations.
 
-<!-- b4169 -->
+<!-- b4330 -->
 Data may also be disclosed to competent authorities under a valid requirement, or in a corporate reorganization subject to confidentiality and continued protection.
 
-<!-- b4170 -->
+<!-- b4331 -->
 We do not sell personal data.
 
-<!-- b4171 -->
+<!-- b4332 -->
 ## International transfers
 
-<!-- b4172 -->
+<!-- b4333 -->
 There is an international transfer, and it is worth stating plainly. Data you send through the form and your subscription address are hosted on the infrastructure of Hostinger International, Ltd., on servers located mainly in the United States, including the state of Arizona, as well as in other countries where Hostinger or its infrastructure providers operate.
 
-<!-- b4173 -->
+<!-- b4334 -->
 Hostinger acts as processor: it hosts the data and processes it only on our instructions. FLUM E.I.R.L. remains the controller, that is, the party deciding why and how the data is processed.
 
-<!-- b4174 -->
+<!-- b4335 -->
 The transfer relies on being necessary to carry out the relationship you started — answering your enquiry or sending you the articles — and the provider is under contractual security and confidentiality obligations. You may object, and if you do we will stop processing your data entirely, because without hosting there is no way to keep it.
 
-<!-- b4175 -->
+<!-- b4336 -->
 GitHub, Inc., in the United States, hosts the site code and published content. It receives no visitor personal data.
 
-<!-- b4176 -->
+<!-- b4337 -->
 ## Automated decisions
 
-<!-- b4177 -->
+<!-- b4338 -->
 We do not make decisions with legal or similarly significant effects on a person based solely on automated processing. We use AI tools to prepare content, but business recommendations and relevant decisions are made by a person.
 
-<!-- b4178 -->
+<!-- b4339 -->
 ## Security
 
-<!-- b4179 -->
+<!-- b4340 -->
 We apply measures proportionate to the risk:
 
-<!-- b4180 -->
+<!-- b4341 -->
 - — Encryption in transit (HTTPS) across the site.
-<!-- b4181 -->
+<!-- b4342 -->
 - — Access control and least privilege in the administration panel.
-<!-- b4182 -->
+<!-- b4343 -->
 - — Passwords stored as hashes, never in readable form.
-<!-- b4183 -->
+<!-- b4344 -->
 - — Rate limiting on forms and on panel sign-in.
-<!-- b4184 -->
+<!-- b4345 -->
 - — Logging of sends and failures so an incident can be investigated.
-<!-- b4185 -->
+<!-- b4346 -->
 - — Backups of published content.
 
-<!-- b4186 -->
+<!-- b4347 -->
 No system is infallible. If an incident requires notification, we will follow our response procedure, make regulatory notifications within the applicable period and inform affected individuals where appropriate.
 
-<!-- b4187 -->
+<!-- b4348 -->
 ## Your rights
 
-<!-- b4188 -->
+<!-- b4349 -->
 You may request information about the processing, access to your data, rectification or updating, cancellation or deletion, objection, and withdrawal of consent.
 
-<!-- b4189 -->
+<!-- b4350 -->
 Write to privacidad@meetbecome.com with the subject “Personal Data Rights” and include:
 
-<!-- b4190 -->
+<!-- b4351 -->
 - — Full name.
-<!-- b4191 -->
+<!-- b4352 -->
 - — Which right you are exercising.
-<!-- b4192 -->
+<!-- b4353 -->
 - — A clear description of your request.
-<!-- b4193 -->
+<!-- b4354 -->
 - — How you want to receive the response.
-<!-- b4194 -->
+<!-- b4355 -->
 - — Reasonable information to verify your identity.
-<!-- b4195 -->
+<!-- b4356 -->
 - — Proof of representation, if acting for someone else.
 
-<!-- b4196 -->
+<!-- b4357 -->
 Reference periods: up to 20 business days for access; up to 10 business days for rectification, cancellation or objection.
 
-<!-- b4197 -->
+<!-- b4358 -->
 If you believe your request was not properly handled, you may contact the National Authority for Personal Data Protection, Ministry of Justice and Human Rights of Peru.
 
-<!-- b4198 -->
+<!-- b4359 -->
 ## Children and sensitive data
 
-<!-- b4199 -->
+<!-- b4360 -->
 This site is not directed to children and we do not intentionally collect their data. We do not request sensitive data either; if you send it unprompted, we will assess deleting it.
 
-<!-- b4200 -->
+<!-- b4361 -->
 ## Changes
 
-<!-- b4201 -->
+<!-- b4362 -->
 We may update this Policy for regulatory, technological or operational reasons. The current version shows its date. If a change materially affects purposes or your rights, we will communicate it and, where appropriate, request new consent.
 
-<!-- b4202 -->
+<!-- b4363 -->
 ## Contact
 
-<!-- b4203 -->
+<!-- b4364 -->
 - — Controller: FLUM E.I.R.L.
-<!-- b4204 -->
+<!-- b4365 -->
 - — Privacy and data rights: privacidad@meetbecome.com
-<!-- b4205 -->
+<!-- b4366 -->
 - — Address: Av. José Gálvez Barrenechea 200, La Victoria, Lima, Perú
-<!-- b4206 -->
+<!-- b4367 -->
 - — Supervisory authority: National Authority for Personal Data Protection, Ministry of Justice and Human Rights of Peru
 
 ---
@@ -317,210 +317,210 @@ We may update this Policy for regulatory, technological or operational reasons. 
 
 **En Google** (no se ve en la página):
 
-<!-- b4207 -->
+<!-- b4368 -->
 - **Título:** Terms of use | BECOME
-<!-- b4208 -->
+<!-- b4369 -->
 - **Descripción:** The conditions under which BECOME (FLUM E.I.R.L.) offers the content, services and forms on meetbecome.com: intellectual property, liability and law.
 
-<!-- b4209 -->
+<!-- b4370 -->
 # Terms of Use
 
-<!-- b4210 -->
+<!-- b4371 -->
 The conditions under which this site offers its content.
 
-<!-- b4211 -->
+<!-- b4372 -->
 Last updated: 2026-08-20 · FLUM E.I.R.L. · RUC 20616001711
 
-<!-- b4212 -->
+<!-- b4373 -->
 ## Who operates this website
 
-<!-- b4213 -->
+<!-- b4374 -->
 meetbecome.com is operated under the BECOME brand by FLUM E.I.R.L., tax ID (RUC) 20616001711, registered at Av. José Gálvez Barrenechea 200, La Victoria, Lima, Perú.
 
-<!-- b4214 -->
+<!-- b4375 -->
 Questions about these Terms: legal@meetbecome.com.
 
-<!-- b4215 -->
+<!-- b4376 -->
 ## What these Terms cover
 
-<!-- b4216 -->
+<!-- b4377 -->
 They govern access to and use of this website: its pages, content, forms, articles and downloadable materials.
 
-<!-- b4217 -->
+<!-- b4378 -->
 The site is intended for business professionals interested in AI-native transformation, capability building, strategy, operations, data and AI agents.
 
-<!-- b4218 -->
+<!-- b4379 -->
 Using the site means you are aware of these Terms. If you disagree, do not use it. Mandatory legal rules prevail over any incompatible provision.
 
-<!-- b4219 -->
+<!-- b4380 -->
 ## The content is informational
 
-<!-- b4220 -->
+<!-- b4381 -->
 What we publish here is for general informational, educational and commercial purposes. On its own it is not:
 
-<!-- b4221 -->
+<!-- b4382 -->
 - — A binding offer.
-<!-- b4222 -->
+<!-- b4383 -->
 - — A final quotation.
-<!-- b4223 -->
+<!-- b4384 -->
 - — A guarantee of results.
-<!-- b4224 -->
+<!-- b4385 -->
 - — Legal, tax, accounting, financial, investment or cybersecurity advice.
-<!-- b4225 -->
+<!-- b4386 -->
 - — A recommendation to make a critical decision without professional review.
 
-<!-- b4226 -->
+<!-- b4387 -->
 Services are governed by the proposal, contract or statement of work accepted by both parties. In case of conflict, that document prevails over the website.
 
-<!-- b4227 -->
+<!-- b4388 -->
 ## What you may do
 
-<!-- b4228 -->
+<!-- b4389 -->
 - — Browse the site.
-<!-- b4229 -->
+<!-- b4390 -->
 - — Read and share links to public content.
-<!-- b4230 -->
+<!-- b4391 -->
 - — Download materials where that option is enabled.
-<!-- b4231 -->
+<!-- b4392 -->
 - — Contact us for information or to explore a possible business relationship.
 
-<!-- b4232 -->
+<!-- b4393 -->
 ## What is not allowed
 
-<!-- b4233 -->
+<!-- b4394 -->
 - — Attempting unauthorized access to systems, accounts, databases or infrastructure.
-<!-- b4234 -->
+<!-- b4395 -->
 - — Interfering with the site's security, availability or operation.
-<!-- b4235 -->
+<!-- b4396 -->
 - — Introducing malicious code or abusive automated mechanisms.
-<!-- b4236 -->
+<!-- b4397 -->
 - — Scraping content at scale in violation of law, these Terms or third-party rights.
-<!-- b4237 -->
+<!-- b4398 -->
 - — Impersonating others or submitting deliberately false information.
-<!-- b4238 -->
+<!-- b4399 -->
 - — Using the site for unlawful, deceptive or unsolicited communications.
-<!-- b4239 -->
+<!-- b4400 -->
 - — Copying, modifying, selling or exploiting content outside permitted uses.
-<!-- b4240 -->
+<!-- b4401 -->
 - — Using BECOME marks or materials to imply a relationship, certification or authorization that does not exist.
 
-<!-- b4241 -->
+<!-- b4402 -->
 ## Intellectual property
 
-<!-- b4242 -->
+<!-- b4403 -->
 Unless stated otherwise, the design, copy, diagrams, methods, frameworks, trademarks and other website content belong to FLUM E.I.R.L. or are used under authorization.
 
-<!-- b4243 -->
+<!-- b4404 -->
 BECOME NOW™, BECOME DISCOVER™, BECOME EMBED™, the BECOME framework and its distinctive elements may not be reproduced, adapted, sold or presented as another party's work without prior written authorization.
 
-<!-- b4244 -->
+<!-- b4405 -->
 Reading or downloading material transfers no intellectual-property rights: it grants a personal or internal, non-exclusive, non-transferable and revocable right of use, unless the material states another licence.
 
-<!-- b4245 -->
+<!-- b4406 -->
 ## Third-party brands and platforms
 
-<!-- b4246 -->
+<!-- b4407 -->
 ChatGPT, Claude, Gemini and other platforms mentioned belong to their respective owners. Mentioning them implies no affiliation, sponsorship or certification, does not make us their representative and does not modify their terms. Their availability, features, pricing and policies change without our involvement.
 
-<!-- b4247 -->
+<!-- b4408 -->
 ## AI-related content
 
-<!-- b4248 -->
+<!-- b4409 -->
 AI systems can produce incomplete, inaccurate, outdated or contextually inappropriate output. Before using AI in a decision, a process or a product, consider:
 
-<!-- b4249 -->
+<!-- b4410 -->
 - — Data quality and authorization.
-<!-- b4250 -->
+<!-- b4411 -->
 - — Security and privacy.
-<!-- b4251 -->
+<!-- b4412 -->
 - — Intellectual property.
-<!-- b4252 -->
+<!-- b4413 -->
 - — Evaluation of outputs.
-<!-- b4253 -->
+<!-- b4414 -->
 - — Human oversight.
-<!-- b4254 -->
+<!-- b4415 -->
 - — Traceability.
-<!-- b4255 -->
+<!-- b4416 -->
 - — Regulatory compliance.
-<!-- b4256 -->
+<!-- b4417 -->
 - — Operational ownership.
 
-<!-- b4257 -->
+<!-- b4418 -->
 No content on this site replaces assessment of the specific use case and its risk profile.
 
-<!-- b4258 -->
+<!-- b4419 -->
 ## What you send us
 
-<!-- b4259 -->
+<!-- b4420 -->
 By using the form you confirm that the information is materially accurate, that it may be used to respond to you and evaluate a possible business relationship, and that it does not infringe third-party rights.
 
-<!-- b4260 -->
+<!-- b4421 -->
 The public form must not be used to send:
 
-<!-- b4261 -->
+<!-- b4422 -->
 - — Sensitive personal data.
-<!-- b4262 -->
+<!-- b4423 -->
 - — Credentials or passwords.
-<!-- b4263 -->
+<!-- b4424 -->
 - — Trade secrets.
-<!-- b4264 -->
+<!-- b4425 -->
 - — Information covered by confidentiality obligations.
-<!-- b4265 -->
+<!-- b4426 -->
 - — Client, employee or third-party data without authorization.
-<!-- b4266 -->
+<!-- b4427 -->
 - — Regulated information requiring a specific secure channel.
 
-<!-- b4267 -->
+<!-- b4428 -->
 If confidential information needs to be shared, we agree beforehand on the channel, the controls and, where appropriate, a confidentiality agreement.
 
-<!-- b4268 -->
+<!-- b4429 -->
 ## External links
 
-<!-- b4269 -->
+<!-- b4430 -->
 The site may link to third-party pages. We do not control their content, availability, security or privacy practices. A link is not an endorsement or a guarantee unless expressly stated.
 
-<!-- b4270 -->
+<!-- b4431 -->
 ## Availability
 
-<!-- b4271 -->
+<!-- b4432 -->
 We aim to keep the site available and reasonably secure, but do not guarantee permanent, uninterrupted or error-free operation. It may be suspended for maintenance, updates, security, provider failures or force majeure.
 
-<!-- b4272 -->
+<!-- b4433 -->
 ## Liability
 
-<!-- b4273 -->
+<!-- b4434 -->
 To the extent permitted by law, we are not responsible for decisions made solely from general website information, nor for harm arising from use contrary to these Terms, from relying on content without professional validation, from third-party service failures, from events outside our reasonable control, or from incorrect information you provided.
 
-<!-- b4274 -->
+<!-- b4435 -->
 Nothing above excludes liability that cannot lawfully be limited, or mandatory rights that apply to you.
 
-<!-- b4275 -->
+<!-- b4436 -->
 ## Privacy and cookies
 
-<!-- b4276 -->
+<!-- b4437 -->
 Personal data is handled according to the Privacy Policy and the Cookie Policy published on this site.
 
-<!-- b4277 -->
+<!-- b4438 -->
 ## Changes
 
-<!-- b4278 -->
+<!-- b4439 -->
 We may update these Terms for legal, operational or service reasons. The current version shows its last-updated date, and material changes will be communicated reasonably on the site.
 
-<!-- b4279 -->
+<!-- b4440 -->
 ## Governing law
 
-<!-- b4280 -->
+<!-- b4441 -->
 These Terms are governed by Peruvian law, without limiting mandatory rights that may apply under other legislation.
 
-<!-- b4281 -->
+<!-- b4442 -->
 We will seek to resolve any dispute in good faith. Failing that, the parties submit to the courts of Lima, Peru, unless mandatory law requires another venue.
 
-<!-- b4282 -->
+<!-- b4443 -->
 ## Contact
 
-<!-- b4283 -->
+<!-- b4444 -->
 - — Email: legal@meetbecome.com
-<!-- b4284 -->
+<!-- b4445 -->
 - — Address: Av. José Gálvez Barrenechea 200, La Victoria, Lima, Perú
 
 ---
@@ -529,129 +529,129 @@ We will seek to resolve any dispute in good faith. Failing that, the parties sub
 
 **En Google** (no se ve en la página):
 
-<!-- b4285 -->
+<!-- b4446 -->
 - **Título:** Cookie Policy | BECOME
-<!-- b4286 -->
+<!-- b4447 -->
 - **Descripción:** What this site stores in your browser, how long each item lasts, and how to accept or reject Google Analytics measurement in one click.
 
-<!-- b4287 -->
+<!-- b4448 -->
 # Cookie Policy
 
-<!-- b4288 -->
+<!-- b4449 -->
 What this site stores in your browser. It is less than you expect.
 
-<!-- b4289 -->
+<!-- b4450 -->
 Last updated: 2026-08-20 · FLUM E.I.R.L. · RUC 20616001711
 
-<!-- b4290 -->
+<!-- b4451 -->
 ## The short version
 
-<!-- b4291 -->
+<!-- b4452 -->
 This site uses Google Analytics to know which pages get read and where from. There are no advertising pixels, no marketing cookies, and we do not share your behaviour with advertisers.
 
-<!-- b4292 -->
+<!-- b4453 -->
 Measurement does not switch itself on: the tag starts with every permission denied and writes no cookie at all until you accept. Rejecting takes one click, the same as accepting, and the site works the same.
 
-<!-- b4293 -->
+<!-- b4454 -->
 You can change your mind at any time from “Cookie settings” in the footer of any page. If you reject after having accepted, any cookies created in the meantime are deleted right then.
 
-<!-- b4294 -->
+<!-- b4455 -->
 ## What we store and why
 
-<!-- b4295 -->
+<!-- b4456 -->
 The first three are necessary and always present. The Google ones appear only if you accept measurement:
 
-<!-- b4296 -->
+<!-- b4457 -->
 NAME
 
-<!-- b4297 -->
+<!-- b4458 -->
 TYPE
 
-<!-- b4298 -->
+<!-- b4459 -->
 CATEGORY
 
-<!-- b4299 -->
+<!-- b4460 -->
 PURPOSE
 
-<!-- b4300 -->
+<!-- b4461 -->
 DURATION
 
-<!-- b4301 -->
+<!-- b4462 -->
 become.formulario
 
-<!-- b4302 -->
+<!-- b4463 -->
 Local storage
 
-<!-- b4303 -->
+<!-- b4464 -->
 Strictly necessary
 
-<!-- b4304 -->
+<!-- b4465 -->
 Keep what you are typing in the form so it is not lost if you reload or close the page by accident
 
-<!-- b4305 -->
+<!-- b4466 -->
 Until the form is sent or browser data is cleared
 
-<!-- b4306 -->
+<!-- b4467 -->
 become.suscripcion
 
-<!-- b4307 -->
+<!-- b4468 -->
 Remember that you dismissed the subscription notice, so it is not shown again
 
-<!-- b4308 -->
+<!-- b4469 -->
 90 days
 
-<!-- b4309 -->
+<!-- b4470 -->
 become.consentimiento
 
-<!-- b4310 -->
+<!-- b4471 -->
 Remember whether you accepted or rejected measurement, so you are not asked again on every page
 
-<!-- b4311 -->
+<!-- b4472 -->
 Until you clear browser data
 
-<!-- b4312 -->
+<!-- b4473 -->
 _ga, _ga_G-VXPXSDD12K
 
-<!-- b4313 -->
+<!-- b4474 -->
 Cookie
 
-<!-- b4314 -->
+<!-- b4475 -->
 Measurement — only if you accept
 
-<!-- b4315 -->
+<!-- b4476 -->
 Google Analytics. Tell a new visit from a returning one and follow a session across pages, so we know which content gets read. If you do not accept, they are never created
 
-<!-- b4316 -->
+<!-- b4477 -->
 2 years (_ga) and 2 years (_ga_…)
 
-<!-- b4317 -->
+<!-- b4478 -->
 become_panel
 
-<!-- b4318 -->
+<!-- b4479 -->
 Keep the session of whoever administers the site. Created only on signing into the panel; a visitor never receives it
 
-<!-- b4319 -->
+<!-- b4480 -->
 12 hours
 
-<!-- b4320 -->
+<!-- b4481 -->
 ## How to delete it
 
-<!-- b4321 -->
+<!-- b4482 -->
 All of the above can be cleared from your browser settings, under site data. You do not need to ask us or wait for a reply. Clearing it breaks nothing: at most you lose a half-written form draft.
 
-<!-- b4322 -->
+<!-- b4483 -->
 ## Where the measurement data goes
 
-<!-- b4323 -->
+<!-- b4484 -->
 To Google Ireland Limited and Google LLC, in the United States. What is sent is the page viewed, your truncated IP address, device type, browser and country. Nothing you type into the form and no subscription address is ever sent.
 
-<!-- b4324 -->
+<!-- b4485 -->
 The basis for that transfer is your consent, which is why you can withdraw it at any time without giving a reason.
 
-<!-- b4325 -->
+<!-- b4486 -->
 ## If this changes
 
-<!-- b4326 -->
+<!-- b4487 -->
 If we add any other non-essential technology, this page will say so before it is switched on and we will ask you again, with the options equally visible. What we will never do is switch something on before asking.
 
 ---

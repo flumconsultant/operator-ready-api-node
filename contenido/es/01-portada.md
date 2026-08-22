@@ -25,7 +25,7 @@ Para empresas que necesitan pasar de herramientas aisladas y pilotos a resultado
 ## Más IA no significa más transformación.
 
 <!-- b0008 -->
-Muchas organizaciones ya experimentan con ChatGPT, Claude, Gemini, copilots y otros LLMs. El reto no es acceder a más modelos: es convertirlos en nuevas formas de decidir, trabajar y operar.
+Muchas organizaciones ya experimentan con ChatGPT, Claude, Gemini, copilotos y otros LLMs. El reto no es acceder a más modelos: es convertirlos en nuevas formas de decidir, trabajar y operar.
 
 <!-- b0009 -->
 BECOME conecta estrategia, personas, datos, LLMs, agents, productos y workflows para transformar experimentos aislados en capacidad empresarial.
@@ -91,262 +91,298 @@ Construcción e implementación
 Construye e incorpora una capacidad AI-native con adopción, controles y medición.
 
 <!-- b0030 -->
-HOW WE BECOME
+QUÉ PUEDE CONSTRUIR BECOME
 
 <!-- b0031 -->
-## No añadimos IA desde fuera. Rediseñamos la empresa desde dentro.
+## Estrategia cuando falta dirección. Capacidad cuando falta ejecución.
 
 <!-- b0032 -->
-En cada etapa transformamos los cinco sistemas que deciden si la IA es un experimento o una capacidad de la empresa.
+Trabajamos desde la decisión de dónde invertir hasta la capacidad que queda funcionando dentro de la empresa.
 
 <!-- b0033 -->
-### People, inside.
+### Priorizar
 
 <!-- b0034 -->
-Personas capaces de trabajar, decidir y colaborar con IA.
+Dónde está el valor, qué casos de uso, con qué caso de negocio y en qué orden.
 
 <!-- b0035 -->
-### Data, inside.
+### Rediseñar
 
 <!-- b0036 -->
-Datos estructurados y no estructurados preparados para alimentar modelos, RAG, búsqueda empresarial y decisiones.
+Decisiones, procesos, roles, excepciones y controles.
 
 <!-- b0037 -->
-### Agents, inside.
+### Construir
 
 <!-- b0038 -->
-LLMs, copilotos y agentes de IA capaces de razonar, usar herramientas y ejecutar partes de un proceso dentro de límites definidos.
+Copilotos, agentes, recuperación sobre el conocimiento propio, integraciones y productos AI-native.
 
 <!-- b0039 -->
-### Products, inside.
+### Habilitar
 
 <!-- b0040 -->
-Productos y experiencias AI-native que incorporan modelos, datos e inteligencia directamente en la propuesta de valor.
+Equipos capaces de trabajar y decidir con IA sobre su propio trabajo.
 
 <!-- b0041 -->
-### Operations, inside.
+### Medir
 
 <!-- b0042 -->
-Procesos rediseñados para combinar automatización, agentes, decisiones humanas, excepciones y controles.
+Línea base, desempeño, riesgo, adopción y valor.
 
 <!-- b0043 -->
-INDUSTRIAS
+HOW WE BECOME
 
 <!-- b0044 -->
-## La tecnología puede ser la misma. El valor no.
+## No añadimos IA desde fuera. Rediseñamos la empresa desde dentro.
 
 <!-- b0045 -->
-Las capacidades de IA son transversales; el valor no lo es. Lo que decide el resultado es qué decisiones, qué procesos y qué riesgos definen tu industria.
+En cada etapa transformamos los cinco sistemas que deciden si la IA es un experimento o una capacidad de la empresa.
 
 <!-- b0046 -->
-Crédito, fraude, operaciones, siniestros, cumplimiento, cobranza y canales digitales.
+### People, inside.
 
 <!-- b0047 -->
-Planeamiento, mina, concentradora, mantenimiento, seguridad, logística y operaciones intensivas en activos.
+Personas capaces de trabajar, decidir y colaborar con IA.
 
 <!-- b0048 -->
-Surtido, inventario, precios, promociones, e-commerce, tiendas, distribución y postventa.
+### Data, inside.
 
 <!-- b0049 -->
-Reservas, revenue, atención al huésped, operación hotelera, eventos, reputación y fidelización.
+Datos estructurados y no estructurados preparados para alimentar modelos, RAG, búsqueda empresarial y decisiones.
 
 <!-- b0050 -->
-### Inmobiliario y construcción
+### Agents, inside.
 
 <!-- b0051 -->
-Terrenos, proyectos, ventas, contratos, obra, valorizaciones, entrega y postventa.
+LLMs, copilotos y agentes de IA capaces de razonar, usar herramientas y ejecutar partes de un proceso dentro de límites definidos.
 
 <!-- b0052 -->
-### Salud y farmacéutica
+### Products, inside.
 
 <!-- b0053 -->
-Citas, admisión, autorizaciones, facturación, abastecimiento, documentación y operaciones no clínicas.
+Productos y experiencias AI-native que incorporan modelos, datos e inteligencia directamente en la propuesta de valor.
 
 <!-- b0054 -->
-EMPIEZA POR EL PROBLEMA
+### Operations, inside.
 
 <!-- b0055 -->
-## ¿Qué necesitas transformar ahora?
+Procesos rediseñados para combinar automatización, agentes, decisiones humanas, excepciones y controles.
 
 <!-- b0056 -->
-Empieza por la situación, no por el nombre de la solución.
+INDUSTRIAS
 
 <!-- b0057 -->
-¿Tienes pilotos que no escalan?
+## La tecnología puede ser la misma. El valor no.
 
 <!-- b0058 -->
-¿Necesitas preparar a tus equipos para trabajar con IA?
+Las capacidades de IA son transversales; el valor no lo es. Lo que decide el resultado es qué decisiones, qué procesos y qué riesgos definen tu industria.
 
 <!-- b0059 -->
-¿Necesitas rediseñar un proceso crítico?
+Crédito, fraude, operaciones, siniestros, cumplimiento, cobranza y canales digitales.
 
 <!-- b0060 -->
-¿Quieres incorporar agentes de IA sin perder el control?
+Planeamiento, mina, concentradora, mantenimiento, seguridad, logística y operaciones intensivas en activos.
 
 <!-- b0061 -->
-### Crear productos y servicios con IA
+Surtido, inventario, precios, promociones, e-commerce, tiendas, distribución y postventa.
 
 <!-- b0062 -->
-¿Quieres que la IA forme parte de tu propuesta de valor?
+Reservas, revenue, atención al huésped, operación hotelera, eventos, reputación y fidelización.
 
 <!-- b0063 -->
-### Medir y gobernar el valor de la IA
+### Inmobiliario y construcción
 
 <!-- b0064 -->
-¿Necesitas medir y gobernar el valor de la IA?
+Terrenos, proyectos, ventas, contratos, obra, valorizaciones, entrega y postventa.
 
 <!-- b0065 -->
-CÓMO TRANSFORMAMOS
+### Salud y farmacéutica
 
 <!-- b0066 -->
-## Seis etapas. Un camino de la ambición al valor.
+Citas, admisión, autorizaciones, facturación, abastecimiento, documentación y operaciones no clínicas.
 
 <!-- b0067 -->
-- B Etapa 1: Business Ambition
+EMPIEZA POR EL PROBLEMA
+
 <!-- b0068 -->
-- E Etapa 2: Enterprise Discovery
+## ¿Qué necesitas transformar ahora?
+
 <!-- b0069 -->
-- C Etapa 3: Elección de capacidades
+Empieza por la situación, no por el nombre de la solución.
+
 <!-- b0070 -->
-- O Etapa 4: Operating Model Design
+¿Tienes pilotos que no escalan?
+
 <!-- b0071 -->
-- M Etapa 5: Make & Embed
+¿Necesitas preparar a tus equipos para trabajar con IA?
+
 <!-- b0072 -->
-- E Etapa 6: Expand & Evolve
+¿Necesitas rediseñar un proceso crítico?
 
 <!-- b0073 -->
-Cada etapa se apoya en una herramienta propia que desbloquea una decisión concreta: preparación, valor, diseño, adopción y escala.
+¿Quieres incorporar agentes de IA sin perder el control?
 
 <!-- b0074 -->
-VALUE, MADE VISIBLE
+### Crear productos y servicios con IA
 
 <!-- b0075 -->
-## Mide lo que cambia, no cuánta IA implementas.
+¿Quieres que la IA forme parte de tu propuesta de valor?
 
 <!-- b0076 -->
-### Velocidad
+### Medir y gobernar el valor de la IA
 
 <!-- b0077 -->
-Ciclos de decisión y ejecución más cortos.
+¿Necesitas medir y gobernar el valor de la IA?
 
 <!-- b0078 -->
-### Calidad
+CÓMO TRANSFORMAMOS
 
 <!-- b0079 -->
-Trabajo más consistente, menos errores y menos retrabajo.
+## Seis etapas. Un camino de la ambición al valor.
 
 <!-- b0080 -->
-### Crecimiento
-
+- B Etapa 1: Business Ambition
 <!-- b0081 -->
-Nuevos productos, experiencias y fuentes de valor.
-
+- E Etapa 2: Enterprise Discovery
 <!-- b0082 -->
-### Riesgo
-
+- C Etapa 3: Elección de capacidades
 <!-- b0083 -->
-Controles, responsabilidades y supervisión humana claros.
-
+- O Etapa 4: Operating Model Design
 <!-- b0084 -->
-### Capacidad
-
+- M Etapa 5: Make & Embed
 <!-- b0085 -->
-Equipos capaces de operar y mejorar lo construido.
+- E Etapa 6: Expand & Evolve
 
 <!-- b0086 -->
-Cada engagement parte de una línea base y de métricas acordadas antes de intervenir. Medimos el cambio contra ese punto de partida.
+Cada etapa se apoya en una herramienta propia que desbloquea una decisión concreta: preparación, valor, diseño, adopción y escala.
 
 <!-- b0087 -->
-POR QUÉ BECOME
+VALUE, MADE VISIBLE
 
 <!-- b0088 -->
-## Strategy that builds. Technology that embeds. Capability that stays.
+## Mide lo que cambia, no cuánta IA implementas.
 
 <!-- b0089 -->
-### Business first
+### Velocidad
 
 <!-- b0090 -->
-Comenzamos por el resultado de negocio, no por la herramienta.
+Ciclos de decisión y ejecución más cortos.
 
 <!-- b0091 -->
-Trabajamos con los equipos del cliente para que la capacidad quede en sus manos, con confianza operativa.
+### Calidad
 
 <!-- b0092 -->
-### Adoption by design
+Trabajo más consistente, menos errores y menos retrabajo.
 
 <!-- b0093 -->
-Roles, controles, capacidades y medición forman parte de la solución desde el inicio.
+### Crecimiento
 
 <!-- b0094 -->
-El trabajo termina cuando la capacidad pertenece a la empresa.
+Nuevos productos, experiencias y fuentes de valor.
 
 <!-- b0095 -->
-THE WORK WE ARE BUILT TO DO
+### Riesgo
 
 <!-- b0096 -->
-## Tres transformaciones que sabemos conducir.
+Controles, responsabilidades y supervisión humana claros.
 
 <!-- b0097 -->
-ESCENARIOS ILUSTRATIVOS
+### Capacidad
 
 <!-- b0098 -->
-### Decision intelligence
+Equipos capaces de operar y mejorar lo construido.
 
 <!-- b0099 -->
-Rediseñar una decisión de alto valor y su flujo de información.
+Cada proyecto parte de una línea base y de métricas acordadas antes de intervenir. Medimos el cambio contra ese punto de partida.
 
 <!-- b0100 -->
-Qué cambia dentro: Contexto compartido, rutas de excepción y responsabilidades de decisión explícitas.
+POR QUÉ BECOME
 
 <!-- b0101 -->
-### Agentic operations
+## Strategy that builds. Technology that embeds. Capability that stays.
 
 <!-- b0102 -->
-Incorporar agentes en un proceso controlado de principio a fin.
+### Business first
 
 <!-- b0103 -->
-Qué cambia dentro: Orquestación, human-in-the-loop y controles operativos.
+Comenzamos por el resultado de negocio, no por la herramienta.
 
 <!-- b0104 -->
-### AI-native product
+Trabajamos con los equipos del cliente para que la capacidad quede en sus manos, con confianza operativa.
 
 <!-- b0105 -->
-Crear una nueva capacidad inteligente para clientes o colaboradores.
+### Adoption by design
 
 <!-- b0106 -->
-Qué cambia dentro: Capa de datos, responsable de producto y medición de valor.
+Roles, controles, capacidades y medición forman parte de la solución desde el inicio.
 
 <!-- b0107 -->
-BECOME INSIGHTS
+El trabajo termina cuando la capacidad pertenece a la empresa.
 
 <!-- b0108 -->
-## Ideas para la empresa que viene después.
+THE WORK WE ARE BUILT TO DO
 
 <!-- b0109 -->
-### The AI-native enterprise
+## Tres transformaciones que sabemos conducir.
 
 <!-- b0110 -->
-Qué distingue a una empresa AI-native de una empresa con IA.
+ESCENARIOS ILUSTRATIVOS
 
 <!-- b0111 -->
-### Agentic work
+Rediseñar una decisión de alto valor y su flujo de información.
 
 <!-- b0112 -->
-Procesos, roles, agentes y responsabilidad humana.
+Qué cambia dentro: Contexto compartido, rutas de excepción y responsabilidades de decisión explícitas.
 
 <!-- b0113 -->
-### Operating-model reinvention
+### Agentic operations
 
 <!-- b0114 -->
-Las decisiones de diseño que determinan dónde se acumula el valor.
+Incorporar agentes en un proceso controlado de principio a fin.
 
 <!-- b0115 -->
-## ¿En qué debe convertirse tu empresa después?
+Qué cambia dentro: Orquestación, human-in-the-loop y controles operativos.
 
 <!-- b0116 -->
-Empieza con una conversación sobre el resultado, la capacidad o el proceso que necesitas transformar. Menos de dos minutos para contárnoslo.
+### AI-native product
 
 <!-- b0117 -->
+Crear una nueva capacidad inteligente para clientes o colaboradores.
+
+<!-- b0118 -->
+Qué cambia dentro: Capa de datos, responsable de producto y medición de valor.
+
+<!-- b0119 -->
+BECOME INSIGHTS
+
+<!-- b0120 -->
+## Ideas para la empresa que viene después.
+
+<!-- b0121 -->
+### The AI-native enterprise
+
+<!-- b0122 -->
+Qué distingue a una empresa AI-native de una empresa con IA.
+
+<!-- b0123 -->
+### Agentic work
+
+<!-- b0124 -->
+Procesos, roles, agentes y responsabilidad humana.
+
+<!-- b0125 -->
+### Operating-model reinvention
+
+<!-- b0126 -->
+Las decisiones de diseño que determinan dónde se acumula el valor.
+
+<!-- b0127 -->
+## ¿En qué debe convertirse tu empresa después?
+
+<!-- b0128 -->
+Empieza con una conversación sobre el resultado, la capacidad o el proceso que necesitas transformar. Menos de dos minutos para contárnoslo.
+
+<!-- b0129 -->
 O escríbenos a hello@meetbecome.com
 
 ---

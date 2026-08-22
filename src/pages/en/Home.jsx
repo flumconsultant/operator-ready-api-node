@@ -85,6 +85,14 @@ const PRINCIPLES = [
   ['fit', 'Adoption by design', 'Roles, controls, skills and measurement are part of the solution from day one.'],
 ];
 
+const CAPABILITIES = [
+  ['decision', 'Prioritise', 'Where the value sits, which use cases, on what business case and in which order.'],
+  ['flow', 'Redesign', 'Decisions, processes, roles, exceptions and controls.'],
+  ['build', 'Build', 'Copilots, agents, retrieval over your own knowledge, integrations and AI-native products.'],
+  ['capability', 'Enable', 'Teams able to work and decide with AI on their own work.'],
+  ['scale', 'Measure', 'Baseline, performance, risk, adoption and value.'],
+];
+
 const INSIGHTS = [
   ['agents', 'The AI-native enterprise', 'What sets an AI-native company apart from a company that just uses AI.'],
   ['flow', 'Agentic work', 'Workflows, roles, agents and human accountability.'],
@@ -219,6 +227,27 @@ export default function Home() {
           <GhostCTA to="/en/services#comparison">Compare all three</GhostCTA>
           <PrimaryCTA to="/en/contact">Tell us what needs to change</PrimaryCTA>
         </div>
+      </Section>
+
+      <Section band="sunken">
+        <Kicker>What BECOME can build</Kicker>
+        <Headline>Strategy when direction is missing. Capability when execution is.</Headline>
+        <Lead>
+          We work from the decision about where to invest through to the
+          capability that keeps running inside the company.
+        </Lead>
+        <Cols min="200px" style={{ marginTop: 'var(--space-10)' }}>
+          {CAPABILITIES.map(([icon, name, line]) => (
+            <Reveal as="div" key={name} className="icon-hit row-hit" style={{ borderTop: '1px solid var(--border-strong)', paddingTop: 'var(--space-5)' }}>
+              <Ico name={icon} size={26} style={{ color: 'var(--text-accent)' }} />
+              <h3 style={{ margin: 'var(--space-5) 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)' }}>
+                {name}
+              </h3>
+              <Body>{line}</Body>
+            </Reveal>
+          ))}
+        </Cols>
+        <TextCTA to="/en/how-we-transform">See how we transform</TextCTA>
       </Section>
 
       <Section band="dark" nodeState={1}>

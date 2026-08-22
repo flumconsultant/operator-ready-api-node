@@ -4,246 +4,243 @@
 
 **En Google** (no se ve en la página):
 
-<!-- b0231 -->
+<!-- b0254 -->
 - **Título:** Servicios de IA para empresas: NOW, DISCOVER y EMBED | BECOME
-<!-- b0232 -->
+<!-- b0255 -->
 - **Descripción:** Tres formas de avanzar con IA: capacitar equipos, definir la estrategia y el modelo operativo, o construir una capacidad dentro de la operación.
 
-<!-- b0233 -->
+<!-- b0256 -->
 NUESTROS SERVICIOS
 
-<!-- b0234 -->
+<!-- b0257 -->
 # De la capacidad de hoy a la empresa que viene.
 
-<!-- b0235 -->
+<!-- b0258 -->
 Tres formas de empezar: capacitar a tu equipo, definir la estrategia o construir la solución. Se contratan por separado o en secuencia.
 
-<!-- b0236 -->
+<!-- b0259 -->
 CUÁL NECESITAS
 
-<!-- b0237 -->
+<!-- b0260 -->
 ## Empieza por lo que necesitas resolver.
 
-<!-- b0238 -->
+<!-- b0261 -->
 Los tres se contratan por separado. BECOME NOW™ también puede integrarse como capa de adopción cuando DISCOVER™ o EMBED™ exigen desarrollar capacidades nuevas en los equipos.
 
-<!-- b0239 -->
+<!-- b0262 -->
 BECOME NOW™ Capacitación en IA aplicada
 
-<!-- b0240 -->
+<!-- b0263 -->
 BECOME DISCOVER™ Estrategia y modelo operativo
 
-<!-- b0241 -->
+<!-- b0264 -->
 BECOME EMBED™ Construcción e implementación
 
-<!-- b0242 -->
+<!-- b0265 -->
 SI HOY NECESITAS
 
-<!-- b0243 -->
+<!-- b0266 -->
 Que un equipo trabaje mejor con IA sobre su propio trabajo.
 
-<!-- b0244 -->
+<!-- b0267 -->
 Decidir dónde está el valor de la IA y qué debe cambiar.
 
-<!-- b0245 -->
+<!-- b0268 -->
 Convertir una prioridad en una capacidad que opere.
 
-<!-- b0246 -->
+<!-- b0269 -->
 QUÉ HACEMOS
 
-<!-- b0247 -->
+<!-- b0270 -->
 Capacitación aplicada sobre procesos, documentos y herramientas reales.
 
-<!-- b0248 -->
+<!-- b0271 -->
 Estrategia, priorización, modelo operativo objetivo y hoja de ruta.
 
-<!-- b0249 -->
+<!-- b0272 -->
 Diseño, construcción, integración, control y transferencia.
 
-<!-- b0250 -->
+<!-- b0273 -->
 QUÉ QUEDA
 
-<!-- b0251 -->
+<!-- b0274 -->
 Flujos de trabajo, asistentes, activos reutilizables, criterios de validación y plan de adopción.
 
-<!-- b0252 -->
+<!-- b0275 -->
 Bolsas de valor, prioridades, modelo operativo objetivo, caso de negocio y hoja de ruta.
 
-<!-- b0253 -->
-Capacidad funcionando, integraciones, controles, runbook, responsable y medición.
-
-<!-- b0254 -->
-DURACIÓN
-
-<!-- b0255 -->
-12, 18 o 24 horas lectivas, en 4, 6 u 8 sesiones.
-
-<!-- b0256 -->
-8–12 semanas, según alcance.
-
-<!-- b0257 -->
-8–12 semanas por capacidad priorizada.
-
-<!-- b0258 -->
-COMIENZA CON
-
-<!-- b0259 -->
-El trabajo real del área y los casos que vale la pena llevar al programa.
-
-<!-- b0260 -->
-Una ambición, una tensión de negocio o un dominio a transformar.
-
-<!-- b0261 -->
-Una prioridad decidida y condiciones para construir.
-
-<!-- b0262 -->
-FOCO TECNOLÓGICO
-
-<!-- b0263 -->
-Las herramientas autorizadas del cliente: ChatGPT, Claude, Gemini, Microsoft Copilot y las de su propio entorno.
-
-<!-- b0264 -->
-Panorama de IA, estrategia de modelos, madurez de datos, gobierno e implicaciones de arquitectura.
-
-<!-- b0265 -->
-LLMs, agentes, APIs, datos, integraciones, orquestación, evaluación y observabilidad.
-
-<!-- b0266 -->
-SIGUIENTE PASO
-
-<!-- b0267 -->
-Ampliar a otra área, o priorizar un caso con DISCOVER™.
-
-<!-- b0268 -->
-BECOME EMBED™ del primer caso priorizado.
-
-<!-- b0269 -->
-Iterar, integrar, escalar o detener.
-
-<!-- b0270 -->
-CÓMO SE CONECTAN
-
-<!-- b0271 -->
-## Un solo eje. Tres formas de entrar en él.
-
-<!-- b0272 -->
-No hay que recorrerlo entero ni empezar por el principio. Cada servicio entra por el tramo donde hoy está el problema.
-
-<!-- b0273 -->
-### Enable
-
-<!-- b0274 -->
-Capacidades aplicadas, procesos y recursos reutilizables.
-
-<!-- b0275 -->
-### Define
-
 <!-- b0276 -->
-Ambición, diagnóstico y decisiones prioritarias.
+Capacidad funcionando, integraciones, controles, manual de operación, responsable y medición.
 
 <!-- b0277 -->
-### Design
+DURACIÓN
 
 <!-- b0278 -->
-Punto de conexión
+12, 18 o 24 horas lectivas, en 4, 6 u 8 sesiones.
 
 <!-- b0279 -->
-Modelo operativo objetivo y diseño de la transformación.
+8–12 semanas, según alcance.
 
 <!-- b0280 -->
-### Build
+8–12 semanas por capacidad priorizada.
 
 <!-- b0281 -->
-Proceso, agente, copiloto, producto o sistema de decisión.
+COMIENZA CON
 
 <!-- b0282 -->
-### Embed
+El trabajo real del área y los casos que vale la pena llevar al programa.
 
 <!-- b0283 -->
-Responsable asignado, supervisión humana, controles y medición.
+Una ambición, una tensión de negocio o un dominio a transformar.
 
 <!-- b0284 -->
-### Scale
+Una prioridad decidida y condiciones para construir.
 
 <!-- b0285 -->
-Evolución posterior
+FOCO TECNOLÓGICO
 
 <!-- b0286 -->
-Decisión sobre escalar y lista de mejoras pendientes.
+Las herramientas autorizadas del cliente: ChatGPT, Claude, Gemini, Microsoft Copilot y las de su propio entorno.
 
 <!-- b0287 -->
-Un eje. Tres formas de entrar en él.
+Panorama de IA, estrategia de modelos, madurez de datos, gobierno e implicaciones de arquitectura.
 
 <!-- b0288 -->
-LOS TRES SERVICIOS
+LLMs, agentes, APIs, datos, integraciones, orquestación, evaluación y observabilidad.
 
 <!-- b0289 -->
-## Capacita el presente. Diseña lo que sigue. Construye desde dentro.
+SIGUIENTE PASO
 
 <!-- b0290 -->
-12, 18 o 24 horas lectivas
+Ampliar a otra área, o priorizar un caso con DISCOVER™.
 
 <!-- b0291 -->
-Capacitación en IA aplicada
+BECOME EMBED™ del primer caso priorizado.
 
 <!-- b0292 -->
-Capacitación aplicada en ChatGPT, Claude y Gemini, construida sobre los procesos, documentos y desafíos reales de cada área.
+Iterar, integrar, escalar o detener.
 
 <!-- b0293 -->
-8–12 semanas
+CÓMO SE CONECTAN
 
 <!-- b0294 -->
-Estrategia y modelo operativo
+## Un solo eje. Tres formas de entrar en él.
 
 <!-- b0295 -->
-Alinea la ambición, identifica dónde está el valor y diseña el modelo operativo y la hoja de ruta necesarios para avanzar.
+No hay que recorrerlo entero ni empezar por el principio. Cada servicio entra por el tramo donde hoy está el problema.
 
 <!-- b0296 -->
-8–12 semanas por capacidad
+### Enable
 
 <!-- b0297 -->
-Construcción e implementación
+Capacidades aplicadas, procesos y recursos reutilizables.
 
 <!-- b0298 -->
-Diseña, construye e incorpora un proceso, un agente o un producto AI-native dentro de la operación, con adopción, controles y medición desde el inicio.
+### Define
 
 <!-- b0299 -->
-BECOME NOW™ puede contratarse solo o integrarse como capa de adopción y construcción de capacidades dentro de los otros dos.
+Ambición, diagnóstico y decisiones prioritarias.
 
 <!-- b0300 -->
-TU INDUSTRIA
+### Design
 
 <!-- b0301 -->
-## Los servicios son los mismos. Dónde está el valor, no.
+Punto de conexión
 
 <!-- b0302 -->
-El método no cambia entre sectores. Lo que cambia es qué decisiones pesan, qué procesos concentran el problema y qué riesgo hay que acotar antes de construir.
+Modelo operativo objetivo y diseño de la transformación.
 
 <!-- b0303 -->
-Crédito, fraude, operaciones, siniestros, cumplimiento, cobranza y canales digitales.
+Proceso, agente, copiloto, producto o sistema de decisión.
 
 <!-- b0304 -->
-Planeamiento, mina, concentradora, mantenimiento, seguridad, logística y operaciones intensivas en activos.
+### Embed
 
 <!-- b0305 -->
-Surtido, inventario, precios, promociones, e-commerce, tiendas, distribución y postventa.
+Responsable asignado, supervisión humana, controles y medición.
 
 <!-- b0306 -->
-Reservas, revenue, atención al huésped, operación hotelera, eventos, reputación y fidelización.
+### Scale
 
 <!-- b0307 -->
-### Inmobiliario y construcción
+Evolución posterior
 
 <!-- b0308 -->
-Terrenos, proyectos, ventas, contratos, obra, valorizaciones, entrega y postventa.
+Decisión sobre escalar y lista de mejoras pendientes.
 
 <!-- b0309 -->
-### Salud y farmacéutica
+Un eje. Tres formas de entrar en él.
 
 <!-- b0310 -->
-Citas, admisión, autorizaciones, facturación, abastecimiento, documentación y operaciones no clínicas.
+LOS TRES SERVICIOS
 
 <!-- b0311 -->
+## Capacita el presente. Diseña lo que sigue. Construye desde dentro.
+
+<!-- b0312 -->
+12, 18 o 24 horas lectivas
+
+<!-- b0313 -->
+Capacitación en IA aplicada
+
+<!-- b0314 -->
+Capacitación aplicada en ChatGPT, Claude y Gemini, construida sobre los procesos, documentos y desafíos reales de cada área.
+
+<!-- b0315 -->
+8–12 semanas
+
+<!-- b0316 -->
+Estrategia y modelo operativo
+
+<!-- b0317 -->
+Alinea la ambición, identifica dónde está el valor y diseña el modelo operativo y la hoja de ruta necesarios para avanzar.
+
+<!-- b0318 -->
+8–12 semanas por capacidad
+
+<!-- b0319 -->
+Construcción e implementación
+
+<!-- b0320 -->
+Diseña, construye e incorpora un proceso, un agente o un producto AI-native dentro de la operación, con adopción, controles y medición desde el inicio.
+
+<!-- b0321 -->
+BECOME NOW™ puede contratarse solo o integrarse como capa de adopción y construcción de capacidades dentro de los otros dos.
+
+<!-- b0322 -->
+TU INDUSTRIA
+
+<!-- b0323 -->
+## Los servicios son los mismos. Dónde está el valor, no.
+
+<!-- b0324 -->
+El método no cambia entre sectores. Lo que cambia es qué decisiones pesan, qué procesos concentran el problema y qué riesgo hay que acotar antes de construir.
+
+<!-- b0325 -->
+Crédito, fraude, operaciones, siniestros, cumplimiento, cobranza y canales digitales.
+
+<!-- b0326 -->
+Planeamiento, mina, concentradora, mantenimiento, seguridad, logística y operaciones intensivas en activos.
+
+<!-- b0327 -->
+Surtido, inventario, precios, promociones, e-commerce, tiendas, distribución y postventa.
+
+<!-- b0328 -->
+Reservas, revenue, atención al huésped, operación hotelera, eventos, reputación y fidelización.
+
+<!-- b0329 -->
+### Inmobiliario y construcción
+
+<!-- b0330 -->
+Terrenos, proyectos, ventas, contratos, obra, valorizaciones, entrega y postventa.
+
+<!-- b0331 -->
+### Salud y farmacéutica
+
+<!-- b0332 -->
+Citas, admisión, autorizaciones, facturación, abastecimiento, documentación y operaciones no clínicas.
+
+<!-- b0333 -->
 ## No empieces por el servicio. Empieza por la decisión que necesitas tomar.
 
 ---
@@ -252,445 +249,442 @@ Citas, admisión, autorizaciones, facturación, abastecimiento, documentación y
 
 **En Google** (no se ve en la página):
 
-<!-- b0312 -->
+<!-- b0334 -->
 - **Título:** Capacitación en IA aplicada para empresas | BECOME NOW™
-<!-- b0313 -->
+<!-- b0335 -->
 - **Descripción:** Programas de IA aplicada para empresas sobre procesos reales con ChatGPT, Claude, Gemini, Microsoft Copilot y otros LLMs autorizados.
 
-<!-- b0314 -->
+<!-- b0336 -->
 BECOME NOW™ — CAPACITACIÓN EN IA APLICADA
 
-<!-- b0315 -->
+<!-- b0337 -->
 # Lleva a tus equipos de usar IA a trabajar mejor con ella.
 
-<!-- b0316 -->
+<!-- b0338 -->
 BECOME NOW™ convierte herramientas de inteligencia artificial generativa en nuevas formas de trabajo aplicadas a cada función.
 
-<!-- b0317 -->
+<!-- b0339 -->
 Trabajamos sobre procesos, documentos y retos reales utilizando el ecosistema autorizado por la empresa —por ejemplo, ChatGPT, Claude, Gemini, Microsoft Copilot y otros LLMs— en lugar de enseñar herramientas de forma aislada.
 
-<!-- b0318 -->
+<!-- b0340 -->
 Los casos parten de los procesos, documentos y retos reales de cada área.
 
-<!-- b0319 -->
+<!-- b0341 -->
 LEARN TODAY. APPLY TOMORROW. BUILD CAPABILITY THAT STAYS.
 
-<!-- b0320 -->
+<!-- b0342 -->
 THE ADOPTION GAP
 
-<!-- b0321 -->
+<!-- b0343 -->
 ## Tener acceso a la IA no significa saber trabajar con ella.
 
-<!-- b0322 -->
+<!-- b0344 -->
 El problema no son las herramientas. Es que nadie las ha convertido en una forma común de trabajar.
 
-<!-- b0323 -->
+<!-- b0345 -->
 La empresa entrega licencias, pero la adopción sigue siendo baja.
 
-<!-- b0324 -->
+<!-- b0346 -->
 Los equipos utilizan IA para tareas aisladas.
 
-<!-- b0325 -->
+<!-- b0347 -->
 Nadie reutiliza lo que funciona.
 
-<!-- b0326 -->
+<!-- b0348 -->
 Los resultados no tienen criterios comunes de validación.
 
-<!-- b0327 -->
+<!-- b0349 -->
 Existen dudas sobre privacidad y manejo de información.
 
-<!-- b0328 -->
+<!-- b0350 -->
 Las capacitaciones anteriores fueron demasiado genéricas.
 
-<!-- b0329 -->
+<!-- b0351 -->
 Los equipos conocen la herramienta, pero no saben aplicarla a sus procesos.
 
-<!-- b0330 -->
+<!-- b0352 -->
 La empresa no puede demostrar productividad o valor.
 
-<!-- b0331 -->
+<!-- b0353 -->
 La adopción cambia cuando la capacitación entra al proceso real.
 
-<!-- b0332 -->
+<!-- b0354 -->
 BUILT AROUND YOUR WORK
 
-<!-- b0333 -->
+<!-- b0355 -->
 ## Primero entendemos cómo trabajan. Después diseñamos la capacitación.
 
-<!-- b0334 -->
+<!-- b0356 -->
 Antes de definir la malla conocemos el área, sus procesos, sus cuellos de botella y las herramientas que usa hoy. De ahí salen los casos, los asistentes y los procesos que se trabajan en las sesiones.
 
-<!-- b0335 -->
+<!-- b0357 -->
 NO PARTIMOS DE CERO. TRABAJAMOS CON LO QUE YA EXISTE:
 
-<!-- b0336 -->
+<!-- b0358 -->
 La información puede usarse en formato real, anonimizado o simulado, según los criterios de seguridad de la empresa.
 
-<!-- b0337 -->
+<!-- b0359 -->
 La capacitación entra al proceso real.
 
-<!-- b0338 -->
+<!-- b0360 -->
 BUSINESS PROCESS UNDERSTANDING SESSION
 
-<!-- b0339 -->
+<!-- b0361 -->
 ## Ningún programa comienza antes de entender el trabajo que debe mejorar.
 
-<!-- b0340 -->
+<!-- b0362 -->
 Es la sesión donde definimos qué trabajo debe mejorar, qué casos vale la pena llevar al programa y qué límites debemos respetar.
 
-<!-- b0341 -->
+<!-- b0363 -->
 ### Objetivos empresariales
 
-<!-- b0342 -->
+<!-- b0364 -->
 Qué espera mejorar el área, qué indicadores importan, qué presión originó la capacitación y qué resultados debe producir.
 
-<!-- b0343 -->
+<!-- b0365 -->
 ### Procesos actuales
 
-<!-- b0344 -->
+<!-- b0366 -->
 Actividades recurrentes, decisiones importantes, cuellos de botella, handoffs, retrabajos, excepciones y dependencias entre áreas.
 
-<!-- b0345 -->
+<!-- b0367 -->
 ### Información y herramientas
 
-<!-- b0346 -->
-Documentos, data sources, spreadsheets, sistemas, reportes, licencias disponibles de ChatGPT, Claude o Gemini y restricciones de acceso.
-
-<!-- b0347 -->
-### Usuarios y nivel de adopción
-
-<!-- b0348 -->
-Roles participantes, experiencia previa, frecuencia de uso, confianza y diferencias entre perfiles.
-
-<!-- b0349 -->
-### Seguridad y responsible use
-
-<!-- b0350 -->
-Información sensible, datos personales, propiedad intelectual, reglas internas, herramientas autorizadas y criterios de human review.
-
-<!-- b0351 -->
-### Selección de casos
-
-<!-- b0352 -->
-Qué procesos se trabajan, qué agentes se construyen, qué entregables se esperan y con qué criterios se validan.
-
-<!-- b0353 -->
-VENDOR-NEUTRAL
-
-<!-- b0354 -->
-## Las herramientas cambian. La capacidad permanece.
-
-<!-- b0355 -->
-No diseñamos el programa alrededor de una sola plataforma.
-
-<!-- b0356 -->
-Durante la Sesión 0 identificamos qué modelos y herramientas utiliza o autoriza la organización, y diseñamos los ejercicios sobre ese entorno.
-
-<!-- b0357 -->
-Podemos trabajar sobre casos que involucren:
-
-<!-- b0358 -->
-- ChatGPT
-<!-- b0359 -->
-- Claude
-<!-- b0360 -->
-- Gemini
-<!-- b0361 -->
-- Microsoft Copilot
-<!-- b0362 -->
-- LLMs empresariales
-<!-- b0363 -->
-- AI assistants
-<!-- b0364 -->
-- AI agents
-<!-- b0365 -->
-- Herramientas internas conectadas mediante APIs
-
-<!-- b0366 -->
-El objetivo no es dominar una interfaz. Es aprender a diseñar mejores workflows con IA.
-
-<!-- b0367 -->
-CÓMO FUNCIONA CADA SESIÓN
-
 <!-- b0368 -->
-## Cada sesión termina con transferencia.
+Documentos, fuentes de datos, hojas de cálculo, sistemas, reportes, licencias disponibles de ChatGPT, Claude o Gemini y restricciones de acceso.
 
 <!-- b0369 -->
-El activo queda documentado para que el equipo pueda reutilizarlo al día siguiente, sin nosotros delante.
+### Usuarios y nivel de adopción
 
 <!-- b0370 -->
-### Business challenge
+Roles participantes, experiencia previa, frecuencia de uso, confianza y diferencias entre perfiles.
 
 <!-- b0371 -->
-Se presenta el problema real que el área necesita resolver.
+### Seguridad y uso responsable
 
 <!-- b0372 -->
-### AI concept
+Información sensible, datos personales, propiedad intelectual, reglas internas, herramientas autorizadas y criterios de revisión humana.
 
 <!-- b0373 -->
-Se enseña únicamente el concepto de IA necesario para abordar ese problema.
+### Selección de casos
 
 <!-- b0374 -->
-### Applied demonstration
+Qué procesos se trabajan, qué agentes se construyen, qué entregables se esperan y con qué criterios se validan.
 
 <!-- b0375 -->
-Se demuestra con ChatGPT, Claude o Gemini sobre un caso cercano a la realidad del equipo.
+VENDOR-NEUTRAL
 
 <!-- b0376 -->
-### Build
+## Las herramientas cambian. La capacidad permanece.
 
 <!-- b0377 -->
-Cada participante configura un asistente, un agente, un flujo de trabajo o una plantilla reutilizable.
+No diseñamos el programa alrededor de una sola plataforma.
 
 <!-- b0378 -->
-### Validate
+Durante la Sesión 0 identificamos qué modelos y herramientas utiliza o autoriza la organización, y diseñamos los ejercicios sobre ese entorno.
 
 <!-- b0379 -->
-El resultado se compara con criterios definidos por el área.
+Podemos trabajar sobre casos que involucren:
 
 <!-- b0380 -->
-### Transfer
-
+- ChatGPT
 <!-- b0381 -->
-El activo queda documentado para poder usarse después de la capacitación.
-
+- Claude
 <!-- b0382 -->
-FORMATOS ADAPTABLES
-
+- Gemini
 <!-- b0383 -->
-## Tres puntos de partida, ninguno cerrado.
-
+- Microsoft Copilot
 <!-- b0384 -->
-Todo se ajusta a la empresa. Lo único que no cambia es la sesión previa de entendimiento.
-
+- LLMs empresariales
 <!-- b0385 -->
-12 horas lectivas
-
+- AI assistants
 <!-- b0386 -->
-### Programa Esencial
-
+- AI agents
 <!-- b0387 -->
-4 sesiones de 3 horas
+- Herramientas internas conectadas mediante APIs
 
 <!-- b0388 -->
-- Sesión previa de entendimiento
+El objetivo no es dominar una interfaz. Es aprender a diseñar mejores procesos con IA.
+
 <!-- b0389 -->
-- Cuatro casos o capacidades
+CÓMO FUNCIONA CADA SESIÓN
+
 <!-- b0390 -->
-- Biblioteca inicial de instrucciones
+## Cada sesión termina con transferencia.
+
 <!-- b0391 -->
-- Informe final
+El activo queda documentado para que el equipo pueda reutilizarlo al día siguiente, sin nosotros delante.
 
 <!-- b0392 -->
-18 horas lectivas
+### Business challenge
 
 <!-- b0393 -->
-### Programa Completo
+Se presenta el problema real que el área necesita resolver.
 
 <!-- b0394 -->
-6 sesiones de 3 horas
+### AI concept
 
 <!-- b0395 -->
-- Seis casos o capacidades
+Se enseña únicamente el concepto de IA necesario para abordar ese problema.
+
 <!-- b0396 -->
-- Biblioteca de flujos de trabajo
+### Applied demonstration
+
 <!-- b0397 -->
-- Protocolos de validación
+Se demuestra con ChatGPT, Claude o Gemini sobre un caso cercano a la realidad del equipo.
+
 <!-- b0398 -->
-- Medición posterior
+Cada participante configura un asistente, un agente, un flujo de trabajo o una plantilla reutilizable.
 
 <!-- b0399 -->
-24 horas lectivas
+### Validate
 
 <!-- b0400 -->
-### Programa Integral
+El resultado se compara con criterios definidos por el área.
 
 <!-- b0401 -->
-8 sesiones de 3 horas
+### Transfer
 
 <!-- b0402 -->
-- Seis sesiones formativas
+El activo queda documentado para poder usarse después de la capacitación.
+
 <!-- b0403 -->
-- Laboratorio sobre casos reales
+FORMATOS ADAPTABLES
+
 <!-- b0404 -->
-- Consultoría de implementación
+## Tres puntos de partida, ninguno cerrado.
+
 <!-- b0405 -->
-- Plan de adopción para el área
+Todo se ajusta a la empresa. Lo único que no cambia es la sesión previa de entendimiento.
 
 <!-- b0406 -->
-PROGRAMAS POR ÁREA
+12 horas lectivas
 
 <!-- b0407 -->
-## Catorce rutas de referencia. Ninguna es el programa final.
+### Programa Esencial
 
 <!-- b0408 -->
-Recorridos de referencia. El programa real se construye después de la Sesión 0, y puede ser para un área que no esté aquí.
+4 sesiones de 3 horas
 
 <!-- b0409 -->
-- Finanzas
+- Sesión previa de entendimiento
 <!-- b0410 -->
-- Finanzas Inmobiliarias
+- Cuatro casos o capacidades
 <!-- b0411 -->
-- Ventas
+- Biblioteca inicial de instrucciones
 <!-- b0412 -->
-- Marketing y Comunicaciones
+- Informe final
+
 <!-- b0413 -->
-- Customer Service y CX
+18 horas lectivas
+
 <!-- b0414 -->
-- Supply Chain y Compras
+### Programa Completo
+
 <!-- b0415 -->
-- Operaciones
+6 sesiones de 3 horas
+
 <!-- b0416 -->
-- Recursos Humanos
+- Seis casos o capacidades
 <!-- b0417 -->
-- Legal, Compliance y Risk
+- Biblioteca de flujos de trabajo
 <!-- b0418 -->
-- Project Management y PMO
+- Protocolos de validación
 <!-- b0419 -->
-- Product e Innovación
+- Medición posterior
 
 <!-- b0420 -->
-QUÉ ES Y QUÉ NO ES
+24 horas lectivas
 
 <!-- b0421 -->
-## La diferencia importa más que el temario.
+### Programa Integral
 
 <!-- b0422 -->
-SÍ ES
+8 sesiones de 3 horas
 
 <!-- b0423 -->
-NO ES
-
+- Seis sesiones formativas
 <!-- b0424 -->
-IA aplicada al trabajo real de cada área.
-
+- Laboratorio sobre casos reales
 <!-- b0425 -->
-Un curso genérico sobre ChatGPT.
-
+- Consultoría de implementación
 <!-- b0426 -->
-Un programa construido sobre los procesos de la empresa.
+- Plan de adopción para el área
 
 <!-- b0427 -->
-Una lista de prompts mágicos.
+PROGRAMAS POR ÁREA
 
 <!-- b0428 -->
-Trabajo con documentos, datos y formatos existentes.
+## Catorce rutas de referencia. Ninguna es el programa final.
 
 <!-- b0429 -->
-Una demostración desconectada de la operación.
+Recorridos de referencia. El programa real se construye después de la Sesión 0, y puede ser para un área que no esté aquí.
 
 <!-- b0430 -->
-Construcción de asistentes, agentes y flujos de trabajo reutilizables.
-
+- Finanzas
 <!-- b0431 -->
-Una automatización completa de sistemas.
-
+- Finanzas Inmobiliarias
 <!-- b0432 -->
-Criterios de validación y human review.
-
+- Ventas
 <!-- b0433 -->
-Un reemplazo del criterio profesional.
-
+- Marketing y Comunicaciones
 <!-- b0434 -->
-Capacidades que pueden utilizarse desde el día siguiente.
-
+- Customer Service y CX
 <!-- b0435 -->
-Teoría sin aplicación.
-
+- Supply Chain y Compras
 <!-- b0436 -->
-Un programa adaptable a ChatGPT, Claude o Gemini.
-
+- Operaciones
 <!-- b0437 -->
-Una capacitación atada a una sola plataforma.
-
+- Recursos Humanos
 <!-- b0438 -->
-INDICADORES
-
+- Legal, Compliance y Risk
 <!-- b0439 -->
-## Cómo se mide que sirvió.
-
+- Project Management y PMO
 <!-- b0440 -->
-### Adopción
+- Product e Innovación
 
 <!-- b0441 -->
-Participantes activos, frecuencia de uso, flujos de trabajo reutilizados y casos incorporados al trabajo habitual.
+QUÉ ES Y QUÉ NO ES
 
 <!-- b0442 -->
-### Productividad
+## La diferencia importa más que el temario.
 
 <!-- b0443 -->
-Tiempo de preparación y de respuesta, reducción de tareas manuales y velocidad para producir un primer output útil.
+SÍ ES
 
 <!-- b0444 -->
-### Calidad
+NO ES
 
 <!-- b0445 -->
-Consistencia, errores detectados, cumplimiento del formato, retrabajo y nivel de trazabilidad.
+IA aplicada al trabajo real de cada área.
 
 <!-- b0446 -->
-### Confianza
+Un curso genérico sobre ChatGPT.
 
 <!-- b0447 -->
-Capacidad para verificar resultados, claridad sobre los límites y uso adecuado de la información.
+Un programa construido sobre los procesos de la empresa.
 
 <!-- b0448 -->
-### Valor
+Una lista de prompts mágicos.
 
 <!-- b0449 -->
-Procesos mejorados, decisiones habilitadas, capacidades instaladas y casos preparados para BECOME EMBED™.
+Trabajo con documentos, datos y formatos existentes.
 
 <!-- b0450 -->
-No publicamos porcentajes de productividad sin haber establecido un baseline. Medir antes es parte del programa, no un extra.
+Una demostración desconectada de la operación.
 
 <!-- b0451 -->
-ENTREGABLES GENERALES
+Construcción de asistentes, agentes y flujos de trabajo reutilizables.
 
 <!-- b0452 -->
-## Lo que suelen preguntarnos antes de empezar.
+Una automatización completa de sistemas.
 
 <!-- b0453 -->
-No. Cada programa comienza con una sesión de entendimiento. La malla, los casos, los documentos y los ejercicios se adaptan a los procesos reales de la empresa.
+Criterios de validación y revisión humana.
 
 <!-- b0454 -->
-No. BECOME NOW™ es vendor-neutral. El programa puede trabajar con ChatGPT, Claude, Gemini, Microsoft Copilot u otros modelos y herramientas aprobados por la organización. La elección depende del stack, los casos de uso y las políticas internas.
+Un reemplazo del criterio profesional.
 
 <!-- b0455 -->
-La Sesión 0 define qué información, herramientas y entornos pueden utilizarse durante el programa. Los ejercicios deben respetar las políticas de seguridad, privacidad y uso de IA de cada organización.
+Capacidades que pueden utilizarse desde el día siguiente.
 
 <!-- b0456 -->
-No. Nuestro enfoque es vendor-neutral. La selección depende del caso de uso, tus datos, las políticas internas, el nivel de autonomía requerido, la arquitectura y el costo total de operación. Según el contexto evaluamos ecosistemas como OpenAI/ChatGPT, Anthropic/Claude, Google/Gemini, Microsoft Copilot y otras alternativas disponibles en el stack de la organización.
+Teoría sin aplicación.
 
 <!-- b0457 -->
-No necesariamente. La empresa puede trabajar con información real, anonimizada o simulada. El tratamiento se define durante la sesión de entendimiento.
+Un programa adaptable a ChatGPT, Claude o Gemini.
 
 <!-- b0458 -->
-No. Escribir buenas instrucciones es solo el punto de partida. El objetivo es construir asistentes, agentes, flujos de trabajo y entregables que mejoren el trabajo del área.
+Una capacitación atada a una sola plataforma.
 
 <!-- b0459 -->
-No. La malla se adapta al nivel de los participantes. Los programas funcionales están diseñados para equipos de negocio.
+INDICADORES
 
 <!-- b0460 -->
-El programa estándar se concentra en construcción de capacidades y configuración dentro de las herramientas autorizadas. Integraciones y desarrollos pueden abordarse después mediante BECOME EMBED™.
+## Cómo se mide que sirvió.
 
 <!-- b0461 -->
-El tamaño del grupo se define según el nivel de acompañamiento necesario. Se recomiendan grupos pequeños cuando cada participante debe construir y validar sus propios flujos de trabajo.
+### Adopción
 
 <!-- b0462 -->
-Sí. El catálogo muestra las rutas más frecuentes, pero BECOME puede diseñar programas para cualquier área, rol, industria o proceso específico.
+Participantes activos, frecuencia de uso, flujos de trabajo reutilizados y casos incorporados al trabajo habitual.
 
 <!-- b0463 -->
-Capacidades aplicables, una biblioteca reutilizable, flujos de trabajo documentados, criterios de validación y recomendaciones de adopción.
+### Productividad
 
 <!-- b0464 -->
-## Cuéntanos cómo trabaja tu equipo hoy.
+Tiempo de preparación y de respuesta, reducción de tareas manuales y velocidad para producir un primer resultado útil.
 
 <!-- b0465 -->
-Solo necesitamos el contexto esencial: qué necesitas cambiar, dónde estás hoy y qué resultado buscas. Con eso preparamos la sesión de entendimiento.
+### Calidad
 
 <!-- b0466 -->
-Menos de dos minutos.
+Consistencia, errores detectados, cumplimiento del formato, retrabajo y nivel de trazabilidad.
 
 <!-- b0467 -->
+### Confianza
+
+<!-- b0468 -->
+Capacidad para verificar resultados, claridad sobre los límites y uso adecuado de la información.
+
+<!-- b0469 -->
+### Valor
+
+<!-- b0470 -->
+Procesos mejorados, decisiones habilitadas, capacidades instaladas y casos preparados para BECOME EMBED™.
+
+<!-- b0471 -->
+No publicamos porcentajes de productividad sin haber establecido un baseline. Medir antes es parte del programa, no un extra.
+
+<!-- b0472 -->
+ENTREGABLES GENERALES
+
+<!-- b0473 -->
+## Lo que suelen preguntarnos antes de empezar.
+
+<!-- b0474 -->
+No. Cada programa comienza con una sesión de entendimiento. La malla, los casos, los documentos y los ejercicios se adaptan a los procesos reales de la empresa.
+
+<!-- b0475 -->
+No. BECOME NOW™ es vendor-neutral. El programa puede trabajar con ChatGPT, Claude, Gemini, Microsoft Copilot u otros modelos y herramientas aprobados por la organización. La elección depende del stack, los casos de uso y las políticas internas.
+
+<!-- b0476 -->
+La Sesión 0 define qué información, herramientas y entornos pueden utilizarse durante el programa. Los ejercicios deben respetar las políticas de seguridad, privacidad y uso de IA de cada organización.
+
+<!-- b0477 -->
+No. Nuestro enfoque es vendor-neutral. La selección depende del caso de uso, tus datos, las políticas internas, el nivel de autonomía requerido, la arquitectura y el costo total de operación. Según el contexto evaluamos ecosistemas como OpenAI/ChatGPT, Anthropic/Claude, Google/Gemini, Microsoft Copilot y otras alternativas disponibles en el stack de la organización.
+
+<!-- b0478 -->
+No necesariamente. La empresa puede trabajar con información real, anonimizada o simulada. El tratamiento se define durante la sesión de entendimiento.
+
+<!-- b0479 -->
+No. Escribir buenas instrucciones es solo el punto de partida. El objetivo es construir asistentes, agentes, flujos de trabajo y entregables que mejoren el trabajo del área.
+
+<!-- b0480 -->
+No. La malla se adapta al nivel de los participantes. Los programas funcionales están diseñados para equipos de negocio.
+
+<!-- b0481 -->
+El programa estándar se concentra en construcción de capacidades y configuración dentro de las herramientas autorizadas. Integraciones y desarrollos pueden abordarse después mediante BECOME EMBED™.
+
+<!-- b0482 -->
+El tamaño del grupo se define según el nivel de acompañamiento necesario. Se recomiendan grupos pequeños cuando cada participante debe construir y validar sus propios flujos de trabajo.
+
+<!-- b0483 -->
+Sí. El catálogo muestra las rutas más frecuentes, pero BECOME puede diseñar programas para cualquier área, rol, industria o proceso específico.
+
+<!-- b0484 -->
+Capacidades aplicables, una biblioteca reutilizable, flujos de trabajo documentados, criterios de validación y recomendaciones de adopción.
+
+<!-- b0485 -->
+## Cuéntanos cómo trabaja tu equipo hoy.
+
+<!-- b0486 -->
+Solo necesitamos el contexto esencial: qué necesitas cambiar, dónde estás hoy y qué resultado buscas. Con eso preparamos la sesión de entendimiento.
+
+<!-- b0487 -->
+Menos de dos minutos.
+
+<!-- b0488 -->
 NOW™ capacita para el trabajo de hoy. BECOME DISCOVER™ define en qué debe convertirse la empresa. BECOME EMBED™ construye lo que hará posible ese futuro. Puede contratarse solo o integrarse en los otros dos.
 
 ---
@@ -699,217 +693,217 @@ NOW™ capacita para el trabajo de hoy. BECOME DISCOVER™ define en qué debe c
 
 **En Google** (no se ve en la página):
 
-<!-- b0468 -->
+<!-- b0489 -->
 - **Título:** Estrategia de IA y modelo operativo | BECOME DISCOVER™
-<!-- b0469 -->
+<!-- b0490 -->
 - **Descripción:** Define dónde está el valor de la IA, qué capacidades priorizar y qué modelo operativo, gobernanza y hoja de ruta necesita tu empresa.
 
-<!-- b0470 -->
+<!-- b0491 -->
 BECOME DISCOVER™ · ESTRATEGIA Y MODELO OPERATIVO
 
-<!-- b0471 -->
+<!-- b0492 -->
 # Decide dónde está el valor de la IA y qué debe cambiar para capturarlo.
 
-<!-- b0472 -->
+<!-- b0493 -->
 Define en qué debe convertirse tu empresa después.
 
-<!-- b0473 -->
+<!-- b0494 -->
 De ocho a doce semanas para responder tres preguntas: dónde está el valor de la IA en tu negocio, qué se hace primero y cómo tiene que operar la empresa para sostenerlo.
 
-<!-- b0474 -->
+<!-- b0495 -->
 EL PROBLEMA
 
-<!-- b0475 -->
+<!-- b0496 -->
 ## Actividad de IA sin dirección empresarial.
 
-<!-- b0476 -->
+<!-- b0497 -->
 No es un problema de tecnología: son muchas iniciativas y ninguna tesis. Sin una ambición compartida, cada área propone sus casos y nadie tiene un criterio único de valor.
 
-<!-- b0477 -->
+<!-- b0498 -->
 El resultado es previsible: más pilotos, más gasto y la misma pregunta sin responder sobre dónde está el valor.
 
-<!-- b0478 -->
+<!-- b0499 -->
 ## Cinco condiciones que hacen de BECOME DISCOVER™ el paso correcto.
 
-<!-- b0479 -->
+<!-- b0500 -->
 Existe executive sponsorship.
 
-<!-- b0480 -->
+<!-- b0501 -->
 Hay iniciativas de IA sin coherencia empresarial.
 
-<!-- b0481 -->
+<!-- b0502 -->
 Un dominio de negocio necesita reinvención.
 
-<!-- b0482 -->
+<!-- b0503 -->
 El liderazgo necesita un portafolio, un estado objetivo o una hoja de ruta.
 
-<!-- b0483 -->
+<!-- b0504 -->
 La empresa involucrará a líderes de negocio, tecnología, datos y People.
 
-<!-- b0484 -->
+<!-- b0505 -->
 Primero la dirección. Después la inversión.
 
-<!-- b0485 -->
+<!-- b0506 -->
 EL RECORRIDO
 
-<!-- b0486 -->
+<!-- b0507 -->
 ## BECOME DISCOVER™ cubre B–E–C–O del framework.
 
-<!-- b0487 -->
+<!-- b0508 -->
 Las dos últimas etapas —Make & Embed y Expand & Evolve— son el territorio de BECOME EMBED™. Operating Model Design es el punto de transición visible entre los dos servicios.
 
-<!-- b0488 -->
+<!-- b0509 -->
 ### Business Ambition
 
-<!-- b0489 -->
+<!-- b0510 -->
 Define en qué debe convertirse la empresa y qué resultados importan.
 
-<!-- b0490 -->
-Output: AI-native ambition y tesis estratégica.
-
-<!-- b0491 -->
-### Enterprise Discovery
-
-<!-- b0492 -->
-Comprende cómo funciona hoy y qué limita el cambio.
-
-<!-- b0493 -->
-Output: Diagnóstico de la empresa y su preparación.
-
-<!-- b0494 -->
-### Elección de capacidades
-
-<!-- b0495 -->
-Prioriza dónde la IA puede crear valor diferencial.
-
-<!-- b0496 -->
-Output: Dónde está el valor y un portafolio priorizado.
-
-<!-- b0497 -->
-### Operating Model Design
-
-<!-- b0498 -->
-Diseña el sistema futuro de Personas, Datos, Agentes, Productos y Operaciones.
-
-<!-- b0499 -->
-Output: Modelo operativo objetivo y diseño de la solución.
-
-<!-- b0500 -->
-TECHNOLOGY LANDSCAPE
-
-<!-- b0501 -->
-## La estrategia de IA también es una estrategia de modelos.
-
-<!-- b0502 -->
-No todos los casos requieren el mismo LLM, nivel de autonomía o arquitectura.
-
-<!-- b0503 -->
-Durante DISCOVER analizamos dónde tiene sentido utilizar:
-
-<!-- b0504 -->
-- Enterprise copilots
-<!-- b0505 -->
-- General-purpose LLMs
-<!-- b0506 -->
-- Multimodal models
-<!-- b0507 -->
-- AI agents
-<!-- b0508 -->
-- Custom workflows
-<!-- b0509 -->
-- Enterprise search / RAG
-<!-- b0510 -->
-- SaaS con IA ya contratado
 <!-- b0511 -->
-- Productos de IA a medida
+Resultado: AI-native ambition y tesis estratégica.
 
 <!-- b0512 -->
-La decisión entre ecosistemas como OpenAI, Anthropic, Google, Microsoft u otras alternativas se evalúa según valor, datos, integración, riesgo, costo y ownership.
+### Enterprise Discovery
 
 <!-- b0513 -->
-WORKING MODEL
+Comprende cómo funciona hoy y qué limita el cambio.
 
 <!-- b0514 -->
-## Se hace con tu equipo, no sobre tu equipo.
+Resultado: Diagnóstico de la empresa y su preparación.
 
 <!-- b0515 -->
-Un responsable claro por engagement y el equipo del cliente integrado desde la primera semana. Las decisiones y los riesgos se hacen visibles a medida que aparecen, no en la presentación final.
+### Elección de capacidades
 
 <!-- b0516 -->
-DISCOVER™ requiere participación ejecutiva en las decisiones clave: prioridad, inversión, responsable y modelo operativo.
+Prioriza dónde la IA puede crear valor diferencial.
 
 <!-- b0517 -->
-HERRAMIENTAS PROPIAS
+Resultado: Dónde está el valor y un portafolio priorizado.
 
 <!-- b0518 -->
-### Business Ambition Canvas™
+### Operating Model Design
 
 <!-- b0519 -->
-Alinear al equipo ejecutivo alrededor de los resultados y las decisiones estratégicas.
+Diseña el sistema futuro de Personas, Datos, Agentes, Productos y Operaciones.
 
 <!-- b0520 -->
-Evaluar la madurez en Personas, Datos, Agentes, Productos y Operaciones.
+Resultado: Modelo operativo objetivo y diseño de la solución.
 
 <!-- b0521 -->
-Priorizar oportunidades por valor, feasibility, velocidad y riesgo.
+TECHNOLOGY LANDSCAPE
 
 <!-- b0522 -->
-Definir el modelo operativo objetivo y el diseño de la transformación.
+## La estrategia de IA también es una estrategia de modelos.
 
 <!-- b0523 -->
-ENTREGABLES
+No todos los casos requieren el mismo LLM, nivel de autonomía o arquitectura.
 
 <!-- b0524 -->
-## Qué queda al terminar.
+Durante DISCOVER analizamos dónde tiene sentido utilizar:
 
 <!-- b0525 -->
-- — AI-native ambition y tesis estratégica.
+- Enterprise copilots
 <!-- b0526 -->
-- — Diagnóstico de la empresa e Inside Readiness Index™.
+- General-purpose LLMs
 <!-- b0527 -->
-- — Value pools y portafolio priorizado de capacidades.
+- Multimodal models
 <!-- b0528 -->
-- — Target operating model.
+- AI agents
 <!-- b0529 -->
-- — Diseño de la transformación, caso de negocio y hoja de ruta.
-
+- Custom workflows
 <!-- b0530 -->
-DECISIONES QUE PUEDES TOMAR
-
+- Enterprise search / RAG
 <!-- b0531 -->
-## Cuatro preguntas, respondidas con criterio explícito.
-
+- SaaS con IA ya contratado
 <!-- b0532 -->
-- ? Dónde la IA puede crear valor empresarial diferencial.
+- Productos de IA a medida
+
 <!-- b0533 -->
-- ? Qué debe cambiar dentro para que ese valor sea posible.
+La decisión entre ecosistemas como OpenAI, Anthropic, Google, Microsoft u otras alternativas se evalúa según valor, datos, integración, riesgo, costo y ownership.
+
 <!-- b0534 -->
-- ? Qué capacidad construir primero y con qué criterios.
+WORKING MODEL
+
 <!-- b0535 -->
-- ? Qué inversión, qué secuencia y qué gobernanza sostienen el plan.
+## Se hace con tu equipo, no sobre tu equipo.
 
 <!-- b0536 -->
-Al terminar BECOME DISCOVER™, el liderazgo sabe dónde la IA puede crear valor, qué debe cambiar dentro de la empresa y qué capacidad debe construir primero.
+Un responsable claro por proyecto y el equipo del cliente integrado desde la primera semana. Las decisiones y los riesgos se hacen visibles a medida que aparecen, no en la presentación final.
 
 <!-- b0537 -->
-Duración
+DISCOVER™ requiere participación ejecutiva en las decisiones clave: prioridad, inversión, responsable y modelo operativo.
 
 <!-- b0538 -->
-8–12 semanas, según alcance y disponibilidad ejecutiva.
+HERRAMIENTAS PROPIAS
 
 <!-- b0539 -->
-Siguiente paso
+### Business Ambition Canvas™
 
 <!-- b0540 -->
-BECOME EMBED™ del primer caso priorizado.
+Alinear al equipo ejecutivo alrededor de los resultados y las decisiones estratégicas.
 
 <!-- b0541 -->
-ENCUENTRA EL PUNTO CORRECTO PARA COMENZAR
+Evaluar la madurez en Personas, Datos, Agentes, Productos y Operaciones.
 
 <!-- b0542 -->
-## Cuéntanos qué necesita cambiar en el negocio.
+Priorizar oportunidades por valor, feasibility, velocidad y riesgo.
 
 <!-- b0543 -->
+Definir el modelo operativo objetivo y el diseño de la transformación.
+
+<!-- b0544 -->
+ENTREGABLES
+
+<!-- b0545 -->
+## Qué queda al terminar.
+
+<!-- b0546 -->
+- — AI-native ambition y tesis estratégica.
+<!-- b0547 -->
+- — Diagnóstico de la empresa e Inside Readiness Index™.
+<!-- b0548 -->
+- — Value pools y portafolio priorizado de capacidades.
+<!-- b0549 -->
+- — Target operating model.
+<!-- b0550 -->
+- — Diseño de la transformación, caso de negocio y hoja de ruta.
+
+<!-- b0551 -->
+DECISIONES QUE PUEDES TOMAR
+
+<!-- b0552 -->
+## Cuatro preguntas, respondidas con criterio explícito.
+
+<!-- b0553 -->
+- ? Dónde la IA puede crear valor empresarial diferencial.
+<!-- b0554 -->
+- ? Qué debe cambiar dentro para que ese valor sea posible.
+<!-- b0555 -->
+- ? Qué capacidad construir primero y con qué criterios.
+<!-- b0556 -->
+- ? Qué inversión, qué secuencia y qué gobernanza sostienen el plan.
+
+<!-- b0557 -->
+Al terminar BECOME DISCOVER™, el liderazgo sabe dónde la IA puede crear valor, qué debe cambiar dentro de la empresa y qué capacidad debe construir primero.
+
+<!-- b0558 -->
+Duración
+
+<!-- b0559 -->
+8–12 semanas, según alcance y disponibilidad ejecutiva.
+
+<!-- b0560 -->
+Siguiente paso
+
+<!-- b0561 -->
+BECOME EMBED™ del primer caso priorizado.
+
+<!-- b0562 -->
+ENCUENTRA EL PUNTO CORRECTO PARA COMENZAR
+
+<!-- b0563 -->
+## Cuéntanos qué necesita cambiar en el negocio.
+
+<!-- b0564 -->
 Determinaremos si BECOME DISCOVER™ es el primer paso adecuado. Si no lo es, te lo diremos.
 
 ---
@@ -918,224 +912,224 @@ Determinaremos si BECOME DISCOVER™ es el primer paso adecuado. Si no lo es, te
 
 **En Google** (no se ve en la página):
 
-<!-- b0544 -->
+<!-- b0565 -->
 - **Título:** Implementación de agentes y soluciones de IA | BECOME EMBED™
-<!-- b0545 -->
+<!-- b0566 -->
 - **Descripción:** Diseñamos e implementamos agentes, copilotos y procesos basados en LLMs con datos, APIs, integraciones, controles, observabilidad y transferencia.
 
-<!-- b0546 -->
+<!-- b0567 -->
 # Convierte una prioridad de IA en una capacidad lista para operar.
 
-<!-- b0547 -->
+<!-- b0568 -->
 Diseñamos y construimos copilots, AI agents y workflows basados en LLMs conectados a los datos, herramientas y sistemas de tu organización.
 
-<!-- b0548 -->
+<!-- b0569 -->
 Trabajamos desde la selección del modelo y la arquitectura hasta las APIs, integraciones, controles, evaluación, observabilidad y human-in-the-loop necesarios para operar con confianza. De ocho a doce semanas, con el equipo que va a usarla todos los días.
 
-<!-- b0549 -->
+<!-- b0570 -->
 EL PROBLEMA
 
-<!-- b0550 -->
+<!-- b0571 -->
 ## Prototipos que nunca se convierten en capacidad operativa.
 
-<!-- b0551 -->
+<!-- b0572 -->
 El piloto funciona en la demo y desaparece en la operación. No falla el modelo: falla que se construyó al lado del trabajo real en vez de dentro.
 
-<!-- b0552 -->
+<!-- b0573 -->
 Al terminar el proyecto nadie es dueño del resultado, el proceso sigue igual y no hay una medida contra la que decidir si merece escalarse.
 
-<!-- b0553 -->
+<!-- b0574 -->
 QUÉ PUEDE CONSTRUIRSE
 
-<!-- b0554 -->
+<!-- b0575 -->
 ## Cuatro formas de capacidad, un mismo estándar.
 
-<!-- b0555 -->
+<!-- b0576 -->
 ### Proceso AI-native
 
-<!-- b0556 -->
+<!-- b0577 -->
 Un proceso rediseñado de principio a fin, con personas y agentes trabajando juntos.
 
-<!-- b0557 -->
+<!-- b0578 -->
 ### Agente o copiloto
 
-<!-- b0558 -->
+<!-- b0579 -->
 Una capacidad con límites de autonomía, integración y responsabilidad explícitos.
 
-<!-- b0559 -->
+<!-- b0580 -->
 ### Sistema de decisión asistida
 
-<!-- b0560 -->
+<!-- b0581 -->
 El flujo de información que prepara una decisión de alto valor y conserva su trazabilidad.
 
-<!-- b0561 -->
+<!-- b0582 -->
 ### AI-native product
 
-<!-- b0562 -->
+<!-- b0583 -->
 Una experiencia nueva para clientes o colaboradores, con su operación detrás.
 
-<!-- b0563 -->
+<!-- b0584 -->
 Del diseño a la operación.
 
-<!-- b0564 -->
+<!-- b0585 -->
 EL RECORRIDO
 
-<!-- b0565 -->
+<!-- b0586 -->
 ## BECOME EMBED™ cubre O–M–E del framework.
 
-<!-- b0566 -->
+<!-- b0587 -->
 Puede empezar desde un diseño que ya exista, si cumple los criterios mínimos; no exige haber hecho BECOME DISCOVER™ con nosotros.
 
-<!-- b0567 -->
+<!-- b0588 -->
 ### Operating Model Design
 
-<!-- b0568 -->
+<!-- b0589 -->
 Valida el diseño: roles, agentes, datos, decisiones, excepciones y controles.
 
-<!-- b0569 -->
-Output: Agentic Workflow Blueprint™ validado.
-
-<!-- b0570 -->
-### Make & Embed
-
-<!-- b0571 -->
-Construye, integra y lleva a un entorno real con adopción acompañada.
-
-<!-- b0572 -->
-Output: Capacidad funcionando, con un responsable claro.
-
-<!-- b0573 -->
-### Expand & Evolve
-
-<!-- b0574 -->
-Mide, gobierna, transfiere y decide si iterar, integrar, escalar o detener.
-
-<!-- b0575 -->
-Output: Scorecard y scale decision.
-
-<!-- b0576 -->
-BAJO EL CAPÓ
-
-<!-- b0577 -->
-## Qué hay debajo de una capacidad AI-native.
-
-<!-- b0578 -->
-MODELS
-
-<!-- b0579 -->
-LLMs, foundation models y multimodal models. Según el caso, evaluamos alternativas como OpenAI, Anthropic, Google u otros proveedores.
-
-<!-- b0580 -->
-ORCHESTRATION
-
-<!-- b0581 -->
-Agents, model routing, tool calling, APIs, MCP y workflow orchestration.
-
-<!-- b0582 -->
-KNOWLEDGE
-
-<!-- b0583 -->
-Enterprise data, RAG, grounding, embeddings, vector search y knowledge sources.
-
-<!-- b0584 -->
-INTEGRATIONS
-
-<!-- b0585 -->
-APIs, aplicaciones empresariales, identidad, permisos y sistemas de negocio.
-
-<!-- b0586 -->
-CONTROL
-
-<!-- b0587 -->
-Guardrails, evaluaciones, human-in-the-loop, gestión de excepciones y puntos de aprobación.
-
-<!-- b0588 -->
-OPERATIONS
-
-<!-- b0589 -->
-Observabilidad, tracing, monitoreo, versionado, cost governance y runbooks.
-
 <!-- b0590 -->
-SUPERVISIÓN HUMANA Y CONTROLES
+Resultado: Agentic Workflow Blueprint™ validado.
 
 <!-- b0591 -->
-## Lo que determina si un agente puede operar no es solo la calidad de sus respuestas.
+### Make & Embed
 
 <!-- b0592 -->
-Es quién responde cuando se equivoca y qué pasa con los casos que no encajan. Esas cuatro decisiones se toman antes de escribir la primera línea.
+Construye, integra y lleva a un entorno real con adopción acompañada.
 
 <!-- b0593 -->
-### Autonomy boundaries
+Resultado: Capacidad funcionando, con un responsable claro.
 
 <!-- b0594 -->
-Qué decide el sistema y qué conserva siempre una persona.
+### Expand & Evolve
 
 <!-- b0595 -->
-### Exception paths
+Mide, gobierna, transfiere y decide si iterar, integrar, escalar o detener.
 
 <!-- b0596 -->
-Qué ocurre con lo que no encaja, y quién es responsable de resolverlo.
+Resultado: Scorecard y scale decision.
 
 <!-- b0597 -->
-### Quality criteria
+BAJO EL CAPÓ
 
 <!-- b0598 -->
-Cómo se sabe que una salida es aceptable antes de que llegue al cliente.
+## Qué hay debajo de una capacidad AI-native.
 
 <!-- b0599 -->
-### Permissions y trazabilidad
+MODELS
 
 <!-- b0600 -->
-Quién puede hacer qué, y cómo se reconstruye una decisión después.
+LLMs, modelos fundacionales y multimodales. Según el caso, evaluamos alternativas como OpenAI, Anthropic, Google u otros proveedores.
 
 <!-- b0601 -->
-ADOPCIÓN Y TRANSFERENCIA DE CAPACIDADES
+ORCHESTRATION
 
 <!-- b0602 -->
-## El trabajo termina cuando la capacidad pertenece a la empresa.
+Agents, model routing, tool calling, APIs, MCP y workflow orchestration.
 
 <!-- b0603 -->
-La transferencia no es una sesión de formación al final: el equipo que va a operar la capacidad participa en su diseño y en su construcción. Es la diferencia entre heredar algo y recibirlo.
+KNOWLEDGE
 
 <!-- b0604 -->
-PROPRIETARY TOOLS
+Enterprise data, RAG, grounding, embeddings, vector search y knowledge sources.
 
 <!-- b0605 -->
-Diseñar roles, agentes, datos, decisiones, excepciones y controles.
+INTEGRATIONS
 
 <!-- b0606 -->
-Medir uso, confianza, desempeño, control y valor.
+APIs, aplicaciones empresariales, identidad, permisos y sistemas de negocio.
 
 <!-- b0607 -->
-Decidir si iterar, integrar, escalar o detener.
+CONTROL
 
 <!-- b0608 -->
-ENTREGABLES
+Guardrails, evaluaciones, human-in-the-loop, gestión de excepciones y puntos de aprobación.
 
 <!-- b0609 -->
-## Qué queda al terminar el sprint.
+OPERATIONS
 
 <!-- b0610 -->
-- — Proceso y diseño de la capacidad validados.
+Observabilidad, trazas, monitoreo, versionado, control de costos de modelos y manuales de operación.
+
 <!-- b0611 -->
-- — Agente, producto o sistema de decisión funcionando.
+SUPERVISIÓN HUMANA Y CONTROLES
+
 <!-- b0612 -->
-- — Modelo de supervisión humana y controles operativos.
+## Lo que determina si un agente puede operar no es solo la calidad de sus respuestas.
+
 <!-- b0613 -->
-- — Plan de adopción y transferencia de capacidades.
+Es quién responde cuando se equivoca y qué pasa con los casos que no encajan. Esas cuatro decisiones se toman antes de escribir la primera línea.
+
 <!-- b0614 -->
-- — Cuadro de mando de desempeño, riesgo y valor.
+### Límites de autonomía
 
 <!-- b0615 -->
-El sprint termina con una capacidad funcionando en un entorno real, con un responsable claro, controles y medición frente a resultados de negocio.
+Qué decide el sistema y qué conserva siempre una persona.
 
 <!-- b0616 -->
-PASA DEL DISEÑO A UNA CAPACIDAD INCORPORADA
+### Rutas de excepción
 
 <!-- b0617 -->
-## Trae un proceso, una decisión o una oportunidad de producto prioritaria.
+Qué ocurre con lo que no encaja, y quién es responsable de resolverlo.
 
 <!-- b0618 -->
+### Criterios de calidad
+
+<!-- b0619 -->
+Cómo se sabe que una salida es aceptable antes de que llegue al cliente.
+
+<!-- b0620 -->
+### Permissions y trazabilidad
+
+<!-- b0621 -->
+Quién puede hacer qué, y cómo se reconstruye una decisión después.
+
+<!-- b0622 -->
+ADOPCIÓN Y TRANSFERENCIA DE CAPACIDADES
+
+<!-- b0623 -->
+## El trabajo termina cuando la capacidad pertenece a la empresa.
+
+<!-- b0624 -->
+La transferencia no es una sesión de formación al final: el equipo que va a operar la capacidad participa en su diseño y en su construcción. Es la diferencia entre heredar algo y recibirlo.
+
+<!-- b0625 -->
+PROPRIETARY TOOLS
+
+<!-- b0626 -->
+Diseñar roles, agentes, datos, decisiones, excepciones y controles.
+
+<!-- b0627 -->
+Medir uso, confianza, desempeño, control y valor.
+
+<!-- b0628 -->
+Decidir si iterar, integrar, escalar o detener.
+
+<!-- b0629 -->
+ENTREGABLES
+
+<!-- b0630 -->
+## Qué queda al terminar el sprint.
+
+<!-- b0631 -->
+- — Proceso y diseño de la capacidad validados.
+<!-- b0632 -->
+- — Agente, producto o sistema de decisión funcionando.
+<!-- b0633 -->
+- — Modelo de supervisión humana y controles operativos.
+<!-- b0634 -->
+- — Plan de adopción y transferencia de capacidades.
+<!-- b0635 -->
+- — Cuadro de mando de desempeño, riesgo y valor.
+
+<!-- b0636 -->
+El sprint termina con una capacidad funcionando en un entorno real, con un responsable claro, controles y medición frente a resultados de negocio.
+
+<!-- b0637 -->
+PASA DEL DISEÑO A UNA CAPACIDAD INCORPORADA
+
+<!-- b0638 -->
+## Trae un proceso, una decisión o una oportunidad de producto prioritaria.
+
+<!-- b0639 -->
 Definiremos el camino de construcción correcto — o si todavía falta un paso antes.
 
 ---

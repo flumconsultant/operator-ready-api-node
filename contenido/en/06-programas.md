@@ -2,1751 +2,1751 @@
 
 ## `/en/services/become-now/customer-service-cx`
 
-<!-- b2941 -->
+<!-- b3092 -->
 BECOME NOW™ · CUSTOMER SERVICE & CX
 
-<!-- b2942 -->
+<!-- b3093 -->
 # Turn customer conversations into better answers, insight and service improvements.
 
-<!-- b2943 -->
+<!-- b3094 -->
 A program for service and experience teams that need to respond with more context, learn from every interaction and preserve empathy and judgment.
 
-<!-- b2944 -->
+<!-- b3095 -->
 ## Customers speak every day. The organization learns too slowly.
 
-<!-- b2945 -->
+<!-- b3096 -->
 Calls, chats, emails, surveys and complaints hold valuable signals, but they remain scattered across platforms, reports and individual judgment. The case gets resolved; the learning rarely makes its way back into knowledge, quality or journey design.
 
-<!-- b2946 -->
+<!-- b3097 -->
 BECOME NOW™ turns that work into a shared capability—without assuming every conversation should be automated.
 
-<!-- b2947 -->
+<!-- b3098 -->
 - Customer Service
-<!-- b2948 -->
+<!-- b3099 -->
 - Contact Center
-<!-- b2949 -->
+<!-- b3100 -->
 - Customer Experience
-<!-- b2950 -->
+<!-- b3101 -->
 - Service Design
-<!-- b2951 -->
+<!-- b3102 -->
 - Customer Operations
 
-<!-- b2952 -->
+<!-- b3103 -->
 ## Session 0 defines where AI may assist and where a person must step in.
 
-<!-- b2953 -->
+<!-- b3104 -->
 We review contact reasons, taxonomies, scripts, knowledge, quality standards, service levels, escalation rules and anonymized cases. We agree on tone, approval requirements and what makes a recommendation usable.
 
-<!-- b2954 -->
+<!-- b3105 -->
 ## Turn customer conversations into answers, insights and improvements.
 
-<!-- b2955 -->
+<!-- b3106 -->
 ### Session 1: AI for service and experience
 
-<!-- b2956 -->
+<!-- b3107 -->
 What stays installed: Customer Service Copilot with context and boundaries.
 
-<!-- b2957 -->
+<!-- b3108 -->
 ### Session 2: Voice of Customer
 
-<!-- b2958 -->
+<!-- b3109 -->
 What stays installed: Synthesizer for themes, friction and supporting evidence.
 
-<!-- b2959 -->
+<!-- b3110 -->
 ### Session 3: Knowledge management
 
-<!-- b2960 -->
+<!-- b3111 -->
 What stays installed: Assistant for retrieving and maintaining approved answers.
 
-<!-- b2961 -->
+<!-- b3112 -->
 ### Session 4: Complex cases
 
-<!-- b2962 -->
+<!-- b3113 -->
 What stays installed: Draft, review and escalation workflow.
 
-<!-- b2963 -->
+<!-- b3114 -->
 ### Session 5: Conversation quality
 
-<!-- b2964 -->
+<!-- b3115 -->
 What stays installed: Reviewer for accuracy, resolution, compliance and empathy.
 
-<!-- b2965 -->
+<!-- b3116 -->
 ### Session 6: Journey improvement
 
-<!-- b2966 -->
+<!-- b3117 -->
 What stays installed: Brief that turns contact patterns into prioritized changes.
 
-<!-- b2967 -->
+<!-- b3118 -->
 ## Outputs are tested against service standards, not fluency.
 
-<!-- b2968 -->
+<!-- b3119 -->
 The team checks accuracy, tone, sources, compliance, resolution and escalation. Each asset is documented with examples, limits and review steps.
 
-<!-- b2969 -->
+<!-- b3120 -->
 The program can use the approved LLM and controlled material from CRM, contact center, help desk, surveys or knowledge repositories. Production integrations are scoped separately.
 
-<!-- b2970 -->
+<!-- b3121 -->
 - Customer Service Copilot and usage guide.
-<!-- b2971 -->
+<!-- b3122 -->
 - Contact, friction and escalation taxonomy.
-<!-- b2972 -->
+<!-- b3123 -->
 - Response templates by case type.
-<!-- b2973 -->
+<!-- b3124 -->
 - Human-review quality rubric.
-<!-- b2974 -->
+<!-- b3125 -->
 - Voice of Customer synthesis workflow.
-<!-- b2975 -->
+<!-- b3126 -->
 - Evidence-based journey improvement backlog.
 
-<!-- b2976 -->
+<!-- b3127 -->
 Potential baselines include response preparation time, consistency, rework, correct escalation, knowledge coverage and time from feedback to action.
 
-<!-- b2977 -->
+<!-- b3128 -->
 Not necessarily. Most teams begin with an agent copilot and human approval.
 
-<!-- b2978 -->
+<!-- b3129 -->
 Yes, when policy and environment allow it; otherwise we anonymize or simulate cases.
 
-<!-- b2979 -->
+<!-- b3130 -->
 The program can expose gaps and maintenance rules, but it is not a full knowledge migration.
 
-<!-- b2980 -->
+<!-- b3131 -->
 By turning tone into observable criteria, examples and exclusions.
 
-<!-- b2981 -->
+<!-- b3132 -->
 Marketing & Communications
 
-<!-- b2982 -->
+<!-- b3133 -->
 ## Tell us which customer conversations carry the most work today.
 
 ---
 
 ## `/en/services/become-now/data-analytics`
 
-<!-- b2983 -->
+<!-- b3134 -->
 BECOME NOW™ · DATA & ANALYTICS
 
-<!-- b2984 -->
+<!-- b3135 -->
 # Accelerate analysis with LLMs without losing control of the data.
 
-<!-- b2985 -->
+<!-- b3136 -->
 A program for analysts and advanced business users who need faster exploration and clearer communication without mistaking a plausible answer for evidence.
 
-<!-- b2986 -->
+<!-- b3137 -->
 ## Analysis gets faster. Verification stays manual.
 
-<!-- b2987 -->
+<!-- b3138 -->
 LLMs can draft queries, suggest hypotheses and explain results. They can also hide assumptions, infer relationships or misread a metric definition. The real risk is an analysis nobody can reproduce.
 
-<!-- b2988 -->
+<!-- b3139 -->
 The program separates preparation, calculation, interpretation and narrative—and defines where deterministic analytical tools must remain in control.
 
-<!-- b2989 -->
+<!-- b3140 -->
 - Data Analysts
-<!-- b2990 -->
+<!-- b3141 -->
 - Business Intelligence
-<!-- b2991 -->
+<!-- b3142 -->
 - Business Analysts
-<!-- b2992 -->
+<!-- b3143 -->
 - Analytics
-<!-- b2993 -->
+<!-- b3144 -->
 - Controllers
-<!-- b2994 -->
+<!-- b3145 -->
 - Decision Support Teams
 
-<!-- b2995 -->
+<!-- b3146 -->
 ## Session 0 aligns sources, metric definitions and questions first.
 
-<!-- b2996 -->
+<!-- b3147 -->
 We review approved datasets, metric dictionaries, recurring analyses, BI tools, quality rules and the decisions that consume the output. We define test samples and standards for precision, reproducibility and traceability.
 
-<!-- b2997 -->
+<!-- b3148 -->
 ## Use LLMs to speed up analysis without losing control over the data.
 
-<!-- b2998 -->
+<!-- b3149 -->
 ### Session 1: LLMs for analysis
 
-<!-- b2999 -->
+<!-- b3150 -->
 What stays installed: Data Analysis Copilot with evidence rules.
 
-<!-- b3000 -->
+<!-- b3151 -->
 ### Session 2: Quality and preparation
 
-<!-- b3001 -->
+<!-- b3152 -->
 What stays installed: Assistant for profiling fields and documenting transformations.
 
-<!-- b3002 -->
+<!-- b3153 -->
 ### Session 3: Exploratory analysis
 
-<!-- b3003 -->
+<!-- b3154 -->
 What stays installed: Workflow for hypotheses and segmentation without premature conclusions.
 
-<!-- b3004 -->
+<!-- b3155 -->
 ### Session 4: Variance and scenarios
 
-<!-- b3005 -->
+<!-- b3156 -->
 What stays installed: Copilot that exposes drivers, assumptions and sensitivity.
 
-<!-- b3006 -->
+<!-- b3157 -->
 ### Session 5: Visualization and narrative
 
-<!-- b3007 -->
+<!-- b3158 -->
 What stays installed: Assistant that chooses the story after the analysis.
 
-<!-- b3008 -->
+<!-- b3159 -->
 ### Session 6: Decision support
 
-<!-- b3009 -->
+<!-- b3160 -->
 What stays installed: Executive pack with finding, evidence, uncertainty and next decision.
 
-<!-- b3010 -->
+<!-- b3161 -->
 ## Every output must trace back to a source, transformation and criterion.
 
-<!-- b3011 -->
+<!-- b3162 -->
 Results are compared with known calculations. The team documents queries and distinguishes correlation, causation, data and assumptions.
 
-<!-- b3012 -->
+<!-- b3163 -->
 The program may use controlled files, notebooks, SQL, spreadsheets and BI outputs with the approved model. It does not replace data governance or connect models to production by default.
 
-<!-- b3013 -->
+<!-- b3164 -->
 - Data Analysis Copilot.
-<!-- b3014 -->
+<!-- b3165 -->
 - Dataset quality checklist.
-<!-- b3015 -->
+<!-- b3166 -->
 - Validated analytical question library.
-<!-- b3016 -->
+<!-- b3167 -->
 - Variance and scenario template.
-<!-- b3017 -->
+<!-- b3168 -->
 - Evidence-based storytelling standard.
-<!-- b3018 -->
+<!-- b3169 -->
 - Reproducible Executive Decision Pack.
 
-<!-- b3019 -->
+<!-- b3170 -->
 Measures may include time to first useful analysis, errors caught before publication, reproducibility, rework, source coverage and assumption clarity.
 
-<!-- b3020 -->
+<!-- b3171 -->
 No. Depth is adapted to analysts and business users in Session 0.
 
-<!-- b3021 -->
+<!-- b3172 -->
 No. It assists parts of the work; critical calculations remain verifiable.
 
-<!-- b3022 -->
+<!-- b3173 -->
 Only under approved conditions; masked or simulated data are valid alternatives.
 
-<!-- b3023 -->
+<!-- b3174 -->
 With visible sources, reproducible steps, deterministic checks and analyst review.
 
-<!-- b3024 -->
+<!-- b3175 -->
 Finance
 
-<!-- b3025 -->
+<!-- b3176 -->
 ## Tell us which decisions rely on Data & Analytics today.
 
 ---
 
 ## `/en/services/become-now/finanzas`
 
-<!-- b3026 -->
+<!-- b3177 -->
 BECOME NOW™ · FINANCE
 
-<!-- b3027 -->
+<!-- b3178 -->
 # Turn AI into a working capability for Finance.
 
-<!-- b3028 -->
+<!-- b3179 -->
 A program built around reporting, close, reconciliation, planning, forecasting, cash management, variance analysis and executive communication.
 
-<!-- b3029 -->
+<!-- b3180 -->
 ## Too much time gathering the number. Too little time explaining it.
 
-<!-- b3030 -->
+<!-- b3181 -->
 Finance works across models, reports, emails and versions that do not arrive together. AI can accelerate review and narrative, but a confident output is not a reconciled figure or an approved assumption.
 
-<!-- b3031 -->
+<!-- b3182 -->
 The program separates what a model may organize, compare and explain from what must be calculated, reconciled and approved in financial systems.
 
-<!-- b3032 -->
+<!-- b3183 -->
 - Finance
-<!-- b3033 -->
+<!-- b3184 -->
 - FP&A
-<!-- b3034 -->
+<!-- b3185 -->
 - Accounting
-<!-- b3035 -->
+<!-- b3186 -->
 - Treasury
-<!-- b3036 -->
+<!-- b3187 -->
 - Management Control
-<!-- b3037 -->
+<!-- b3188 -->
 - Controllers
-<!-- b3038 -->
+<!-- b3189 -->
 - CFO Office
 
-<!-- b3039 -->
+<!-- b3190 -->
 ## Session 0 identifies the finance decision to improve and the controls that cannot move.
 
-<!-- b3040 -->
+<!-- b3191 -->
 We review close cycles, reports, chart of accounts, sources, planning models, forecast drivers, approvals and executive formats. We set tolerances, calculation rules, traceability and confidentiality boundaries.
 
-<!-- b3041 -->
+<!-- b3192 -->
 ## Turn AI into a new capability for the finance team.
 
-<!-- b3042 -->
+<!-- b3193 -->
 ### Session 1: AI and financial prompting
 
-<!-- b3043 -->
+<!-- b3194 -->
 What stays installed: Finance Assistant with defined scope and sources.
 
-<!-- b3044 -->
+<!-- b3195 -->
 ### Session 2: Reporting, close and reconciliation
 
-<!-- b3045 -->
+<!-- b3196 -->
 What stays installed: Consistency and exception reviewer.
 
-<!-- b3046 -->
+<!-- b3197 -->
 ### Session 3: Budget and forecast
 
-<!-- b3047 -->
+<!-- b3198 -->
 What stays installed: Copilot for drivers, assumptions and revised projections.
 
-<!-- b3048 -->
+<!-- b3199 -->
 ### Session 4: Cash flow and scenarios
 
-<!-- b3049 -->
+<!-- b3200 -->
 What stays installed: Documented simulator for cash, rates, timing and costs.
 
-<!-- b3050 -->
+<!-- b3201 -->
 ### Session 5: Variance analysis
 
-<!-- b3051 -->
+<!-- b3202 -->
 What stays installed: Radar that separates variance, cause, evidence and owner.
 
-<!-- b3052 -->
+<!-- b3203 -->
 ### Session 6: Executive communication
 
-<!-- b3053 -->
+<!-- b3204 -->
 What stays installed: Narrator that turns validated analysis into decisions and risks.
 
-<!-- b3054 -->
+<!-- b3205 -->
 ## The model explains. Financial rules verify.
 
-<!-- b3055 -->
+<!-- b3206 -->
 Every exercise records the source and period and separates data, calculation, assumption and interpretation. Each asset includes a review checklist and exclusions.
 
-<!-- b3056 -->
+<!-- b3207 -->
 Controlled files, ERP reports, Excel models and BI outputs may be used inside the approved environment. The program does not post entries, approve transactions or replace the ERP.
 
-<!-- b3057 -->
+<!-- b3208 -->
 - Finance Assistant and source protocol.
-<!-- b3058 -->
+<!-- b3209 -->
 - Close and reconciliation checklist.
-<!-- b3059 -->
+<!-- b3210 -->
 - Budget and forecast driver template.
-<!-- b3060 -->
+<!-- b3211 -->
 - Scenario model with visible assumptions.
-<!-- b3061 -->
+<!-- b3212 -->
 - Variance and cause radar.
-<!-- b3062 -->
+<!-- b3213 -->
 - Executive finance brief.
 
-<!-- b3063 -->
+<!-- b3214 -->
 Baselines may cover preparation hours, reconciliation rounds, explained variances, detected errors, scenario refresh time and report rework.
 
-<!-- b3064 -->
+<!-- b3215 -->
 It may assist, but critical calculations require deterministic formulas and controls.
 
-<!-- b3065 -->
+<!-- b3216 -->
 Yes through authorized structures and outputs; direct integration is separate.
 
-<!-- b3066 -->
+<!-- b3217 -->
 Yes. Session 0 prioritizes the most valuable cycles and roles.
 
-<!-- b3067 -->
+<!-- b3218 -->
 Real, anonymized or simulated data, according to policy.
 
-<!-- b3068 -->
+<!-- b3219 -->
 Real Estate Finance
 
-<!-- b3069 -->
+<!-- b3220 -->
 ## Tell us where Finance loses the most time today.
 
 ---
 
 ## `/en/services/become-now/finanzas-inmobiliarias`
 
-<!-- b3070 -->
+<!-- b3221 -->
 BECOME NOW™ · REAL ESTATE FINANCE
 
-<!-- b3071 -->
+<!-- b3222 -->
 # Spend less time assembling project information—and more time deciding.
 
-<!-- b3072 -->
+<!-- b3223 -->
 A program built around the financial work of real estate projects: contracts, sales, collections, costs, construction progress, debt, cash flow and investment scenarios.
 
-<!-- b3073 -->
+<!-- b3224 -->
 ## Project decisions live between documents and numbers that change at different speeds.
 
-<!-- b3074 -->
+<!-- b3225 -->
 A contract term may alter cash flow; a construction delay may shift drawdowns; a late collection may change funding needs. Analysis slows down when contracts, schedules, valuations and financial models are treated separately.
 
-<!-- b3075 -->
+<!-- b3226 -->
 The program uses AI to assemble context and surface questions without confusing extraction with legal validation or simulation with investment approval.
 
-<!-- b3076 -->
+<!-- b3227 -->
 - Real estate finance
-<!-- b3077 -->
+<!-- b3228 -->
 - Project control
-<!-- b3078 -->
+<!-- b3229 -->
 - Treasury
-<!-- b3079 -->
+<!-- b3230 -->
 - Accounting
-<!-- b3080 -->
+<!-- b3231 -->
 - Project Finance
-<!-- b3081 -->
+<!-- b3232 -->
 - Real-estate project management
 
-<!-- b3082 -->
+<!-- b3233 -->
 ## Session 0 selects one project, its sources and the decisions it must support.
 
-<!-- b3083 -->
+<!-- b3234 -->
 We review cash-flow models, budget, actuals, schedule, contracts, debt terms, sales and collections reports, valuations and committee criteria. Official versions and validation ownership are made explicit.
 
-<!-- b3084 -->
+<!-- b3235 -->
 ADAPTABLE PROCESSES
 
-<!-- b3085 -->
+<!-- b3236 -->
 ## What the program is built on.
 
-<!-- b3086 -->
+<!-- b3237 -->
 - Purchase agreements
-<!-- b3087 -->
+<!-- b3238 -->
 - Construction contracts
-<!-- b3088 -->
+<!-- b3239 -->
 - Financing conditions
-<!-- b3089 -->
+<!-- b3240 -->
 - Covenants
-<!-- b3090 -->
+<!-- b3241 -->
 - Sales and collections
-<!-- b3091 -->
+<!-- b3242 -->
 - Costs
-<!-- b3092 -->
+<!-- b3243 -->
 - Construction progress
-<!-- b3093 -->
+<!-- b3244 -->
 - Cash flow
-<!-- b3094 -->
+<!-- b3245 -->
 - Profitability
-<!-- b3095 -->
+<!-- b3246 -->
 - Reports to banks and investors
 
-<!-- b3096 -->
+<!-- b3247 -->
 ## Cut down the time spent gathering information. Increase the time spent deciding.
 
-<!-- b3097 -->
+<!-- b3248 -->
 ### Session 1: Financial instruction
 
-<!-- b3098 -->
+<!-- b3249 -->
 What stays installed: Project Finance Assistant.
 
-<!-- b3099 -->
+<!-- b3250 -->
 ### Session 2: Contracts and financing
 
-<!-- b3100 -->
+<!-- b3251 -->
 What stays installed: Reviewer for terms, milestones and obligations.
 
-<!-- b3101 -->
+<!-- b3252 -->
 ### Session 3: Reconciliation and data quality
 
-<!-- b3102 -->
+<!-- b3253 -->
 What stays installed: Consolidator for differences across sources.
 
-<!-- b3103 -->
+<!-- b3254 -->
 ### Session 4: Cash flow and investment scenarios
 
-<!-- b3104 -->
+<!-- b3255 -->
 What stays installed: Simulator with visible drivers.
 
-<!-- b3105 -->
+<!-- b3256 -->
 ### Session 5: Budget, actuals and alerts
 
-<!-- b3106 -->
+<!-- b3257 -->
 What stays installed: Variance radar by component and cause.
 
-<!-- b3107 -->
+<!-- b3258 -->
 ### Session 6: Decision synthesis
 
-<!-- b3108 -->
+<!-- b3259 -->
 What stays installed: Executive memo with evidence, risk and open questions.
 
-<!-- b3109 -->
+<!-- b3260 -->
 ## Every case connects at least one document to a financial consequence.
 
-<!-- b3110 -->
+<!-- b3261 -->
 Participants validate dates, amounts, units, conditions and source versions. Every output states what is known, assumed and still awaiting confirmation.
 
-<!-- b3111 -->
+<!-- b3262 -->
 The program can use models, PDFs, sales reports, schedules and controlled ERP or project-system outputs. It does not create a production single source of truth or execute financial actions.
 
-<!-- b3112 -->
+<!-- b3263 -->
 - Project Finance Assistant.
-<!-- b3113 -->
+<!-- b3264 -->
 - Contract and financing terms matrix.
-<!-- b3114 -->
+<!-- b3265 -->
 - Cross-source reconciliation protocol.
-<!-- b3115 -->
+<!-- b3266 -->
 - Scenario model with documented drivers.
-<!-- b3116 -->
+<!-- b3267 -->
 - Budget and actuals alert radar.
-<!-- b3117 -->
+<!-- b3268 -->
 - Investment committee memo.
 
-<!-- b3118 -->
+<!-- b3269 -->
 Potential measures include consolidation time, differences found, scenario refresh time, assumption traceability and committee preparation rework.
 
-<!-- b3119 -->
+<!-- b3270 -->
 No. It is built around real estate project documents and decisions.
 
-<!-- b3120 -->
+<!-- b3271 -->
 It can extract and compare terms; professional interpretation remains mandatory.
 
-<!-- b3121 -->
+<!-- b3272 -->
 It may assist review and scenarios; ownership of formulas and approval stays with the team.
 
-<!-- b3122 -->
+<!-- b3273 -->
 Yes when confidentiality and security requirements are met.
 
-<!-- b3123 -->
+<!-- b3274 -->
 Legal, Compliance & Risk
 
-<!-- b3124 -->
+<!-- b3275 -->
 Project Management & PMO
 
-<!-- b3125 -->
+<!-- b3276 -->
 Finance
 
-<!-- b3126 -->
+<!-- b3277 -->
 ## Tell us which project decision needs a better financial view.
 
 ---
 
 ## `/en/services/become-now/legal-compliance-risk`
 
-<!-- b3127 -->
+<!-- b3278 -->
 BECOME NOW™ · LEGAL, COMPLIANCE & RISK
 
-<!-- b3128 -->
+<!-- b3279 -->
 # Increase review and monitoring capacity without outsourcing professional judgment.
 
-<!-- b3129 -->
+<!-- b3280 -->
 A program for teams managing high document volumes where source, interpretation and human accountability must remain visible.
 
-<!-- b3130 -->
+<!-- b3281 -->
 ## Faster review has no value when the basis disappears.
 
-<!-- b3131 -->
+<!-- b3282 -->
 A summary may omit an exception. Similar clauses may be treated as equivalent. A confident answer may cite an obligation that does not exist. Quality depends on returning to the source and separating fact, assumption and interpretation.
 
-<!-- b3132 -->
+<!-- b3283 -->
 - Legal
-<!-- b3133 -->
+<!-- b3284 -->
 - Compliance
-<!-- b3134 -->
+<!-- b3285 -->
 - Risk
-<!-- b3135 -->
+<!-- b3286 -->
 - Internal Control
-<!-- b3136 -->
+<!-- b3287 -->
 - Corporate Affairs
-<!-- b3137 -->
+<!-- b3288 -->
 - Audit
 
-<!-- b3138 -->
+<!-- b3289 -->
 ## Session 0 defines approved sources, risk levels and mandatory review.
 
-<!-- b3139 -->
+<!-- b3290 -->
 We review contract types, obligation matrices, policies, regulatory sources, risk taxonomies, reports and incidents. Confidentiality, jurisdiction, validity, traceability and prohibited uses are agreed first.
 
-<!-- b3140 -->
+<!-- b3291 -->
 ## Expand your capacity to review, compare and monitor without delegating professional judgment.
 
-<!-- b3141 -->
+<!-- b3292 -->
 ### Session 1: Responsible AI for Legal and Risk
 
-<!-- b3142 -->
+<!-- b3293 -->
 What stays installed: Copilot with scope and limits.
 
-<!-- b3143 -->
+<!-- b3294 -->
 ### Session 2: Contract review
 
-<!-- b3144 -->
+<!-- b3295 -->
 What stays installed: Clause comparison against an approved playbook.
 
-<!-- b3145 -->
+<!-- b3296 -->
 ### Session 3: Obligations and regulation
 
-<!-- b3146 -->
+<!-- b3297 -->
 What stays installed: Mapper with source, validity and owner.
 
-<!-- b3147 -->
+<!-- b3298 -->
 ### Session 4: Policies and controls
 
-<!-- b3148 -->
+<!-- b3299 -->
 What stays installed: Assistant for requirements, controls and gaps.
 
-<!-- b3149 -->
+<!-- b3300 -->
 ### Session 5: Incidents and risks
 
-<!-- b3150 -->
+<!-- b3301 -->
 What stays installed: Synthesizer for chronology, fact, impact and action.
 
-<!-- b3151 -->
+<!-- b3302 -->
 ### Session 6: Executive reporting
 
-<!-- b3152 -->
+<!-- b3303 -->
 What stays installed: Brief with exposure, evidence and decision.
 
-<!-- b3153 -->
+<!-- b3304 -->
 ## No conclusion is detached from its source.
 
-<!-- b3154 -->
+<!-- b3305 -->
 Outputs are reviewed for coverage, accuracy, validity, traceability and exceptions. Interpretation always requires professional validation.
 
-<!-- b3155 -->
+<!-- b3306 -->
 Controlled documents, approved repositories and enterprise tools may be used. The program is not legal advice, real-time regulatory monitoring or an automatic connection of confidential content to public models.
 
-<!-- b3156 -->
+<!-- b3307 -->
 - Legal and Risk Copilot.
-<!-- b3157 -->
+<!-- b3308 -->
 - Contract review playbook.
-<!-- b3158 -->
+<!-- b3309 -->
 - Traceable obligation matrix.
-<!-- b3159 -->
+<!-- b3310 -->
 - Policy and control checklist.
-<!-- b3160 -->
+<!-- b3311 -->
 - Incident synthesis protocol.
-<!-- b3161 -->
+<!-- b3312 -->
 - Legal and Risk Executive Brief.
 
-<!-- b3162 -->
+<!-- b3313 -->
 Measures may include first-review time, clause coverage, verified citations, inconsistencies found, rework and correct escalation.
 
-<!-- b3163 -->
+<!-- b3314 -->
 No. It supports preparation and review; professional judgment remains accountable.
 
-<!-- b3164 -->
+<!-- b3315 -->
 By recording source, date, jurisdiction and validation owner.
 
-<!-- b3165 -->
+<!-- b3316 -->
 Only in approved environments; anonymized samples are also valid.
 
-<!-- b3166 -->
+<!-- b3317 -->
 It may organize evidence against criteria; the decision remains with the team.
 
-<!-- b3167 -->
+<!-- b3318 -->
 Real Estate Finance
 
-<!-- b3168 -->
+<!-- b3319 -->
 Supply Chain & Procurement
 
-<!-- b3169 -->
+<!-- b3320 -->
 ## Tell us which review consumes the most capacity today.
 
 ---
 
 ## `/en/services/become-now/marketing-comunicaciones`
 
-<!-- b3170 -->
+<!-- b3321 -->
 BECOME NOW™ · MARKETING & COMMUNICATIONS
 
-<!-- b3171 -->
+<!-- b3322 -->
 # Turn AI into a research, creation and optimization capability.
 
-<!-- b3172 -->
+<!-- b3323 -->
 A program for teams that need greater production speed without fragmenting strategy, brand voice or campaign learning.
 
-<!-- b3173 -->
+<!-- b3324 -->
 ## More content is not the same as a better system.
 
-<!-- b3174 -->
+<!-- b3325 -->
 AI shortens the first draft. It can also multiply generic assets, unsupported insight and channel adaptations that lose the central idea. Individual speed grows while team coherence falls.
 
-<!-- b3175 -->
+<!-- b3326 -->
 The program turns research, creation, review and learning into shared workflows—not automatic publishing.
 
-<!-- b3176 -->
+<!-- b3327 -->
 - Marketing
-<!-- b3177 -->
+<!-- b3328 -->
 - Brand
-<!-- b3178 -->
+<!-- b3329 -->
 - Communications
-<!-- b3179 -->
+<!-- b3330 -->
 - Content
-<!-- b3180 -->
+<!-- b3331 -->
 - Growth
-<!-- b3181 -->
+<!-- b3332 -->
 - Public Relations
-<!-- b3182 -->
+<!-- b3333 -->
 - Social Media
-<!-- b3183 -->
+<!-- b3334 -->
 - Employee Advocacy
 
-<!-- b3184 -->
+<!-- b3335 -->
 ## Session 0 connects objectives, audiences, channels and brand rules.
 
-<!-- b3185 -->
+<!-- b3336 -->
 We review strategy, briefs, research, voice, campaigns, message frameworks, reputation protocols and performance reports. Cases are validated for relevance, differentiation, evidence, brand fidelity and compliance.
 
-<!-- b3186 -->
+<!-- b3337 -->
 ## Turn AI into a research, creation and optimization capability.
 
-<!-- b3187 -->
+<!-- b3338 -->
 ### Session 1: AI for Marketing and Communications
 
-<!-- b3188 -->
+<!-- b3339 -->
 What stays installed: Copilot with business and brand context.
 
-<!-- b3189 -->
+<!-- b3340 -->
 ### Session 2: Research and consumer insight
 
-<!-- b3190 -->
+<!-- b3341 -->
 What stays installed: Source-aware insight synthesizer.
 
-<!-- b3191 -->
+<!-- b3342 -->
 ### Session 3: Content strategy
 
-<!-- b3192 -->
+<!-- b3343 -->
 What stays installed: Assistant connecting objective, audience, message and format.
 
-<!-- b3193 -->
+<!-- b3344 -->
 ### Session 4: Multichannel campaigns
 
-<!-- b3194 -->
+<!-- b3345 -->
 What stays installed: Adaptation system preserving one central idea.
 
-<!-- b3195 -->
+<!-- b3346 -->
 ### Session 5: Reputation and corporate communications
 
-<!-- b3196 -->
+<!-- b3347 -->
 What stays installed: Stakeholder and scenario assistant.
 
-<!-- b3197 -->
+<!-- b3348 -->
 ### Session 6: Performance and optimization
 
-<!-- b3198 -->
+<!-- b3349 -->
 What stays installed: Workflow from results to hypotheses and tests.
 
-<!-- b3199 -->
+<!-- b3350 -->
 ## The brief—not the model's taste—evaluates the output.
 
-<!-- b3200 -->
+<!-- b3351 -->
 Every asset is checked against objective, audience, evidence, voice, channel and constraints. One-off prompts become reusable templates and review standards.
 
-<!-- b3201 -->
+<!-- b3352 -->
 Approved LLMs, multimodal tools and controlled exports from research, social, analytics or content platforms may be used. Publishing and campaign automation are separate implementation scopes.
 
-<!-- b3202 -->
+<!-- b3353 -->
 - Marketing and Communications Copilot.
-<!-- b3203 -->
+<!-- b3354 -->
 - Source-aware research protocol.
-<!-- b3204 -->
+<!-- b3355 -->
 - Content strategy system.
-<!-- b3205 -->
+<!-- b3356 -->
 - Multichannel adaptation matrix.
-<!-- b3206 -->
+<!-- b3357 -->
 - Brand, reputation and compliance review guide.
-<!-- b3207 -->
+<!-- b3358 -->
 - Campaign Learning Brief.
 
-<!-- b3208 -->
+<!-- b3359 -->
 Measures may include research time, first-version time, brand consistency, review rounds, workflow reuse and speed from performance to next test.
 
-<!-- b3209 -->
+<!-- b3360 -->
 No. It covers research, strategy, reputation, measurement and learning.
 
-<!-- b3210 -->
+<!-- b3361 -->
 Yes, when voice is expressed through criteria, examples and exclusions.
 
-<!-- b3211 -->
+<!-- b3362 -->
 Not in the standard program. Workflows are validated first.
 
-<!-- b3212 -->
+<!-- b3363 -->
 Yes when relevant, with brand, rights and responsible-use review.
 
-<!-- b3213 -->
+<!-- b3364 -->
 Customer Service & CX
 
-<!-- b3214 -->
+<!-- b3365 -->
 Product & Innovation
 
-<!-- b3215 -->
+<!-- b3366 -->
 Sales
 
-<!-- b3216 -->
+<!-- b3367 -->
 ## Tell us which part of Marketing and Communications needs more system today.
 
 ---
 
 ## `/en/services/become-now/operaciones`
 
-<!-- b3217 -->
+<!-- b3368 -->
 BECOME NOW™ · OPERATIONS
 
-<!-- b3218 -->
+<!-- b3369 -->
 # Redesign operational work before automating it.
 
-<!-- b3219 -->
+<!-- b3370 -->
 A program for teams that need to make work visible, reduce variation and handle exceptions more consistently.
 
-<!-- b3220 -->
+<!-- b3371 -->
 ## The documented process and the real process are rarely identical.
 
-<!-- b3221 -->
+<!-- b3372 -->
 SOPs describe the expected path. Operations also live in handoffs, messages, tacit knowledge and incidents. When AI enters too early, it automates the ideal process and misses the work that consumes the most time.
 
-<!-- b3222 -->
+<!-- b3373 -->
 - Process Excellence
-<!-- b3223 -->
+<!-- b3374 -->
 - Shared Services
-<!-- b3224 -->
+<!-- b3375 -->
 - Back Office
-<!-- b3225 -->
+<!-- b3376 -->
 - Continuous Improvement
 
-<!-- b3226 -->
+<!-- b3377 -->
 ## Session 0 selects a process with volume, friction and usable evidence.
 
-<!-- b3227 -->
+<!-- b3378 -->
 We review SOPs, roles, inputs, outputs, timing, queues, handoffs, incidents, exceptions, controls and metrics. Human judgment, tolerable errors and stop conditions are made explicit.
 
-<!-- b3228 -->
+<!-- b3379 -->
 ## Redesign operational work before automating it.
 
-<!-- b3229 -->
+<!-- b3380 -->
 ### Session 1: AI for Operations
 
-<!-- b3230 -->
+<!-- b3381 -->
 What stays installed: Operations Copilot with context and boundaries.
 
-<!-- b3231 -->
+<!-- b3382 -->
 ### Session 2: Process understanding
 
-<!-- b3232 -->
+<!-- b3383 -->
 What stays installed: Assistant turning evidence into a verifiable map.
 
-<!-- b3233 -->
+<!-- b3384 -->
 ### Session 3: SOPs and knowledge
 
-<!-- b3234 -->
+<!-- b3385 -->
 What stays installed: Workflow for creating, finding and updating instructions.
 
-<!-- b3235 -->
+<!-- b3386 -->
 ### Session 4: Exceptions and incidents
 
-<!-- b3236 -->
+<!-- b3387 -->
 What stays installed: Assistant for classification, context and escalation.
 
-<!-- b3237 -->
+<!-- b3388 -->
 ### Session 5: Root cause and improvement
 
-<!-- b3238 -->
+<!-- b3389 -->
 What stays installed: Copilot separating symptom, cause and evidence.
 
-<!-- b3239 -->
+<!-- b3390 -->
 ### Session 6: Operational performance
 
-<!-- b3240 -->
+<!-- b3391 -->
 What stays installed: Brief connecting variance to action and owner.
 
-<!-- b3241 -->
+<!-- b3392 -->
 ## The asset is tested against exceptions, not just the happy path.
 
-<!-- b3242 -->
+<!-- b3393 -->
 Validation covers procedural accuracy, coverage, time, compliance, escalation and explainability. Unresolved issues remain visible as backlog.
 
-<!-- b3243 -->
+<!-- b3394 -->
 Controlled documents, tickets, logs and outputs from ERP, BPM or service management may be used. Production systems are not modified during the program.
 
-<!-- b3244 -->
+<!-- b3395 -->
 - Operations Copilot.
-<!-- b3245 -->
+<!-- b3396 -->
 - Process map with handoffs and exceptions.
-<!-- b3246 -->
+<!-- b3397 -->
 - SOP creation and review template.
-<!-- b3247 -->
+<!-- b3398 -->
 - Incident and escalation taxonomy.
-<!-- b3248 -->
+<!-- b3399 -->
 - Root-cause analysis protocol.
-<!-- b3249 -->
+<!-- b3400 -->
 - Operations Performance Brief.
 
-<!-- b3250 -->
+<!-- b3401 -->
 Potential baselines include cycle time, rework, SOP adherence, exception frequency, resolution time and escalation quality.
 
-<!-- b3251 -->
+<!-- b3402 -->
 Not by default. It builds and validates the workflow first.
 
-<!-- b3252 -->
+<!-- b3403 -->
 That gap can become the starting point.
 
-<!-- b3253 -->
+<!-- b3404 -->
 Yes. Their knowledge is critical to capturing real exceptions.
 
-<!-- b3254 -->
+<!-- b3405 -->
 Through approved sources, rules, exception tests and human review.
 
-<!-- b3255 -->
+<!-- b3406 -->
 Project Management & PMO
 
-<!-- b3256 -->
+<!-- b3407 -->
 Supply Chain & Procurement
 
-<!-- b3257 -->
+<!-- b3408 -->
 ## Tell us which operational process works differently from the documentation.
 
 ---
 
 ## `/en/services/become-now/product-innovacion`
 
-<!-- b3258 -->
+<!-- b3409 -->
 BECOME NOW™ · PRODUCT & INNOVATION
 
-<!-- b3259 -->
+<!-- b3410 -->
 # Accelerate product learning without accelerating the wrong decisions.
 
-<!-- b3260 -->
+<!-- b3411 -->
 A program for teams that need to synthesize evidence, frame stronger opportunities and shorten the distance between a product question and a useful test.
 
-<!-- b3261 -->
+<!-- b3412 -->
 ## AI produces answers before the team has framed the question.
 
-<!-- b3262 -->
+<!-- b3413 -->
 It can summarize interviews, draft a PRD or suggest features in seconds. When evidence is weak or the problem is poorly framed, it also accelerates solutions nobody needs.
 
-<!-- b3263 -->
+<!-- b3414 -->
 The program uses AI to extend product reasoning while keeping evidence, hypothesis, decision and experiment distinct.
 
-<!-- b3264 -->
+<!-- b3415 -->
 - Product Management
-<!-- b3265 -->
+<!-- b3416 -->
 - Product Owners
-<!-- b3266 -->
+<!-- b3417 -->
 - Innovation
-<!-- b3267 -->
+<!-- b3418 -->
 - UX Research
-<!-- b3268 -->
+<!-- b3419 -->
 - Service Design
-<!-- b3269 -->
+<!-- b3420 -->
 - Digital Business
 
-<!-- b3270 -->
+<!-- b3421 -->
 ## Session 0 selects a product decision and reconstructs its evidence.
 
-<!-- b3271 -->
+<!-- b3422 -->
 We review research, interviews, analytics, feedback, strategy, opportunities, backlog, PRDs, experiments and prioritization rules. Evidence standards and decision ownership are agreed first.
 
-<!-- b3272 -->
+<!-- b3423 -->
 ## Speed up product learning without speeding up the wrong decisions.
 
-<!-- b3273 -->
+<!-- b3424 -->
 ### Session 1: AI for Product and Innovation
 
-<!-- b3274 -->
+<!-- b3425 -->
 What stays installed: Product Copilot with context and principles.
 
-<!-- b3275 -->
+<!-- b3426 -->
 ### Session 2: Discovery and customer insight
 
-<!-- b3276 -->
+<!-- b3427 -->
 What stays installed: Synthesis preserving quotes and contradictions.
 
-<!-- b3277 -->
+<!-- b3428 -->
 ### Session 3: Problem framing
 
-<!-- b3278 -->
+<!-- b3429 -->
 What stays installed: Assistant for opportunity, user, context and outcome.
 
-<!-- b3279 -->
+<!-- b3430 -->
 ### Session 4: PRDs and backlog
 
-<!-- b3280 -->
+<!-- b3431 -->
 What stays installed: Workflow connecting evidence, requirements and dependencies.
 
-<!-- b3281 -->
+<!-- b3432 -->
 ### Session 5: Prototyping and experimentation
 
-<!-- b3282 -->
+<!-- b3433 -->
 What stays installed: Copilot for hypotheses, prototypes and test design.
 
-<!-- b3283 -->
+<!-- b3434 -->
 ### Session 6: Roadmap and communication
 
-<!-- b3284 -->
+<!-- b3435 -->
 What stays installed: Product Decision Brief with trade-offs.
 
-<!-- b3285 -->
+<!-- b3436 -->
 ## Every recommendation declares the evidence behind it.
 
-<!-- b3286 -->
+<!-- b3437 -->
 Outputs are reviewed for traceability, problem clarity, hypothesis quality, testability and strategic coherence. The model proposes; the team decides.
 
-<!-- b3287 -->
+<!-- b3438 -->
 Controlled exports and documents from research, analytics, backlog, design and roadmapping may be used. The program does not replace product tools or create production integrations.
 
-<!-- b3288 -->
+<!-- b3439 -->
 - Product Copilot.
-<!-- b3289 -->
+<!-- b3440 -->
 - Research synthesis protocol.
-<!-- b3290 -->
+<!-- b3441 -->
 - Opportunity Definition Canvas.
-<!-- b3291 -->
+<!-- b3442 -->
 - PRD and acceptance-criteria template.
-<!-- b3292 -->
+<!-- b3443 -->
 - Experiment Design Kit.
-<!-- b3293 -->
+<!-- b3444 -->
 - Product Decision Brief.
 
-<!-- b3294 -->
+<!-- b3445 -->
 Measures may include synthesis time, retrievable evidence, PRD rework, experiment-design speed, reopened decisions and asset reuse. Idea volume is not a learning metric.
 
-<!-- b3295 -->
+<!-- b3446 -->
 No. It organizes evidence and alternatives; prioritization stays with the team.
 
-<!-- b3296 -->
+<!-- b3447 -->
 Yes, while preserving each method's limits.
 
-<!-- b3297 -->
+<!-- b3448 -->
 It may accelerate first versions, whose value still requires a designed test.
 
-<!-- b3298 -->
+<!-- b3449 -->
 Yes. Assets are built around existing rituals and criteria.
 
-<!-- b3299 -->
+<!-- b3450 -->
 ## Tell us which product decision needs better evidence today.
 
 ---
 
 ## `/en/services/become-now/project-management-pmo`
 
-<!-- b3300 -->
+<!-- b3451 -->
 BECOME NOW™ · PROJECT MANAGEMENT & PMO
 
-<!-- b3301 -->
+<!-- b3452 -->
 # Reduce follow-up work. Increase visibility for decisions.
 
-<!-- b3302 -->
+<!-- b3453 -->
 A program for teams coordinating initiatives and turning scattered updates into visible commitments, risks and decisions.
 
-<!-- b3303 -->
+<!-- b3454 -->
 ## Status reporting takes more time than the decision it should enable.
 
-<!-- b3304 -->
+<!-- b3455 -->
 Project information sits across meetings, plans, tickets, email and decks. Manual consolidation creates long reports that arrive late and blur activity, progress, blockers and pending decisions.
 
-<!-- b3305 -->
+<!-- b3456 -->
 - Project Managers
-<!-- b3306 -->
+<!-- b3457 -->
 - Program Managers
-<!-- b3307 -->
+<!-- b3458 -->
 - PMO
-<!-- b3308 -->
+<!-- b3459 -->
 - Transformation Offices
-<!-- b3309 -->
+<!-- b3460 -->
 - Delivery Leads
-<!-- b3310 -->
+<!-- b3461 -->
 - Scrum Masters
 
-<!-- b3311 -->
+<!-- b3462 -->
 ## Session 0 establishes one shared reading of progress.
 
-<!-- b3312 -->
+<!-- b3463 -->
 We review charter, plans, milestones, RAID logs, minutes, governance, tools and health criteria. Progress, traffic lights, materiality and minimum evidence are defined.
 
-<!-- b3313 -->
+<!-- b3464 -->
 ## Reduce tracking overhead. Increase visibility to decide.
 
-<!-- b3314 -->
+<!-- b3465 -->
 ### Session 1: AI for Project Management
 
-<!-- b3315 -->
+<!-- b3466 -->
 What stays installed: Copilot aligned with method and governance.
 
-<!-- b3316 -->
+<!-- b3467 -->
 ### Session 2: Charter and planning
 
-<!-- b3317 -->
+<!-- b3468 -->
 What stays installed: Assistant for scope, milestones and assumptions.
 
-<!-- b3318 -->
+<!-- b3469 -->
 ### Session 3: Meetings and decisions
 
-<!-- b3319 -->
+<!-- b3470 -->
 What stays installed: Tracker for decision, owner, date and evidence.
 
-<!-- b3320 -->
+<!-- b3471 -->
 ### Session 4: Status and follow-up
 
-<!-- b3321 -->
+<!-- b3472 -->
 What stays installed: Assistant summarizing change rather than repeated activity.
 
-<!-- b3322 -->
+<!-- b3473 -->
 ### Session 5: Risks and dependencies
 
-<!-- b3323 -->
+<!-- b3474 -->
 What stays installed: Radar with cause, impact, trigger and action.
 
-<!-- b3324 -->
+<!-- b3475 -->
 ### Session 6: Portfolio communication
 
-<!-- b3325 -->
+<!-- b3476 -->
 What stays installed: Brief for comparing initiatives consistently.
 
-<!-- b3326 -->
+<!-- b3477 -->
 ## A useful output makes ownership and next action unmistakable.
 
-<!-- b3327 -->
+<!-- b3478 -->
 Results are checked against project sources, status rules, ownership and dates. Contradictions requiring a decision remain visible.
 
-<!-- b3328 -->
+<!-- b3479 -->
 Documents and exports from project, collaboration and portfolio tools may be used. Direct integrations with Jira, Asana, Monday, Planner or others are separate.
 
-<!-- b3329 -->
+<!-- b3480 -->
 - Project Management Copilot.
-<!-- b3330 -->
+<!-- b3481 -->
 - Charter and planning template.
-<!-- b3331 -->
+<!-- b3482 -->
 - Meeting and Decision Tracker.
-<!-- b3332 -->
+<!-- b3483 -->
 - Status-report standard.
-<!-- b3333 -->
+<!-- b3484 -->
 - Risk and Dependency Radar.
-<!-- b3334 -->
+<!-- b3485 -->
 - PMO Executive Brief.
 
-<!-- b3335 -->
+<!-- b3486 -->
 Measures may include consolidation hours, ownerless actions, late risks, returned reports, pending decisions and committee preparation time.
 
-<!-- b3336 -->
+<!-- b3487 -->
 Not in the standard program. Inputs and workflow quality are validated first.
 
-<!-- b3337 -->
+<!-- b3488 -->
 Yes. The journey adapts to current language and governance.
 
-<!-- b3338 -->
+<!-- b3489 -->
 Yes, with review of decisions, owners and dates.
 
-<!-- b3339 -->
+<!-- b3490 -->
 Yes, when initiatives have comparable criteria and minimum evidence.
 
-<!-- b3340 -->
+<!-- b3491 -->
 ## Tell us which project information is hardest to turn into a decision.
 
 ---
 
 ## `/en/services/become-now/recursos-humanos`
 
-<!-- b3341 -->
+<!-- b3492 -->
 BECOME NOW™ · HUMAN RESOURCES
 
-<!-- b3342 -->
+<!-- b3493 -->
 # Help HR work with more context while keeping judgment human.
 
-<!-- b3343 -->
+<!-- b3494 -->
 A program for People teams reducing document work, personalizing experiences and preparing stronger decisions without handing those decisions to a model.
 
-<!-- b3344 -->
+<!-- b3495 -->
 ## Efficiency can rise at the same time as the risk of treating people as patterns.
 
-<!-- b3345 -->
+<!-- b3496 -->
 AI can draft profiles, summarize feedback and suggest learning paths. It can also reproduce bias, infer inappropriate information or turn a suggestion into an opaque decision.
 
-<!-- b3346 -->
+<!-- b3497 -->
 The program keeps personal data, fairness and accountability inside the workflow design.
 
-<!-- b3347 -->
+<!-- b3498 -->
 - Human Resources
-<!-- b3348 -->
+<!-- b3499 -->
 - Talent Acquisition
-<!-- b3349 -->
+<!-- b3500 -->
 - Learning and Development
-<!-- b3350 -->
+<!-- b3501 -->
 - People Analytics
-<!-- b3351 -->
+<!-- b3502 -->
 - Employee Experience
-<!-- b3352 -->
+<!-- b3503 -->
 - HR Business Partners
 
-<!-- b3353 -->
+<!-- b3504 -->
 ## Session 0 classifies use cases by sensitivity before tools are taught.
 
-<!-- b3354 -->
+<!-- b3505 -->
 We review policies, profiles, competencies, journeys, learning material, feedback formats, surveys and metrics. Permitted data, human review, fairness and excluded cases are agreed.
 
-<!-- b3355 -->
+<!-- b3506 -->
 ## Help HR work with more context while keeping human judgment.
 
-<!-- b3356 -->
+<!-- b3507 -->
 ### Session 1: Responsible AI for HR
 
-<!-- b3357 -->
+<!-- b3508 -->
 What stays installed: HR Copilot with permitted uses and limits.
 
-<!-- b3358 -->
+<!-- b3509 -->
 ### Session 2: Recruitment and profiles
 
-<!-- b3359 -->
+<!-- b3510 -->
 What stays installed: Competency-based profile and interview assistant.
 
-<!-- b3360 -->
+<!-- b3511 -->
 ### Session 3: Onboarding
 
-<!-- b3361 -->
+<!-- b3512 -->
 What stays installed: Journey designer by role, moment and need.
 
-<!-- b3362 -->
+<!-- b3513 -->
 ### Session 4: Learning and development
 
-<!-- b3363 -->
+<!-- b3514 -->
 What stays installed: Assistant for paths and learning evidence.
 
-<!-- b3364 -->
+<!-- b3515 -->
 ### Session 5: Performance and feedback
 
-<!-- b3365 -->
+<!-- b3516 -->
 What stays installed: Copilot for preparing conversations—not ratings.
 
-<!-- b3366 -->
+<!-- b3517 -->
 ### Session 6: People insight and communication
 
-<!-- b3367 -->
+<!-- b3518 -->
 What stays installed: Aggregated synthesis with privacy and context.
 
-<!-- b3368 -->
+<!-- b3519 -->
 ## Every asset must preserve dignity, privacy and accountable ownership.
 
-<!-- b3369 -->
+<!-- b3520 -->
 Exercises are validated for relevance, inclusive language, factual basis, data minimization and explainability. Hiring, ratings, promotion and termination are not delegated.
 
-<!-- b3370 -->
+<!-- b3521 -->
 Controlled templates and exports from ATS, HRIS, LMS, surveys or policy repositories may be used. The program does not connect personal data or act inside those systems.
 
-<!-- b3371 -->
+<!-- b3522 -->
 - HR Copilot and permitted-use map.
-<!-- b3372 -->
+<!-- b3523 -->
 - Competency profile and interview kit.
-<!-- b3373 -->
+<!-- b3524 -->
 - Onboarding Journey Assistant.
-<!-- b3374 -->
+<!-- b3525 -->
 - Learning Path Designer.
-<!-- b3375 -->
+<!-- b3526 -->
 - Feedback preparation guide.
-<!-- b3376 -->
+<!-- b3527 -->
 - Aggregated people-insight protocol.
 
-<!-- b3377 -->
+<!-- b3528 -->
 Measures may include preparation time, consistency, rework, reuse, employee comprehension and human-review compliance.
 
-<!-- b3378 -->
+<!-- b3529 -->
 No. It may support profiles and questions; the decision is not delegated.
 
-<!-- b3379 -->
+<!-- b3530 -->
 Only with approved purpose, environment and minimization.
 
-<!-- b3380 -->
+<!-- b3531 -->
 Through prior criteria, testing, human review and documentation.
 
-<!-- b3381 -->
+<!-- b3532 -->
 Yes, from authorized information without inferring sensitive traits.
 
-<!-- b3382 -->
+<!-- b3533 -->
 Legal, Compliance & Risk
 
-<!-- b3383 -->
+<!-- b3534 -->
 Marketing & Communications
 
-<!-- b3384 -->
+<!-- b3535 -->
 ## Tell us where HR needs more capability—and more care.
 
 ---
 
 ## `/en/services/become-now/strategy-liderazgo`
 
-<!-- b3385 -->
+<!-- b3536 -->
 BECOME NOW™ · STRATEGY & LEADERSHIP
 
-<!-- b3386 -->
+<!-- b3537 -->
 # Use AI to expand analysis—not outsource the decision.
 
-<!-- b3387 -->
+<!-- b3538 -->
 A program for leaders researching markets, comparing scenarios, preparing decisions and communicating through incomplete information.
 
-<!-- b3388 -->
+<!-- b3539 -->
 ## AI can recommend before revealing what the recommendation assumes.
 
-<!-- b3389 -->
+<!-- b3540 -->
 A polished memo may hide a weak source. A complete scenario may omit the variable that matters most. Executive value comes from expanding options, exposing trade-offs and improving the decision conversation.
 
-<!-- b3390 -->
+<!-- b3541 -->
 - C-Level
-<!-- b3391 -->
+<!-- b3542 -->
 - Directors
-<!-- b3392 -->
+<!-- b3543 -->
 - Business Unit Leaders
-<!-- b3393 -->
+<!-- b3544 -->
 - Strategy
-<!-- b3394 -->
+<!-- b3545 -->
 - Transformation
-<!-- b3395 -->
+<!-- b3546 -->
 - Corporate Development
 
-<!-- b3396 -->
+<!-- b3547 -->
 ## Session 0 starts with live decisions, not a tool list.
 
-<!-- b3397 -->
+<!-- b3548 -->
 We review the strategic agenda, sources, committee formats, recurring decisions, risks, stakeholders and investment criteria. Cases must separate evidence, inference, assumption, scenario and choice.
 
-<!-- b3398 -->
+<!-- b3549 -->
 ## Use AI to widen the analysis, not to delegate the decision.
 
-<!-- b3399 -->
+<!-- b3550 -->
 ### Session 1: AI for executive work
 
-<!-- b3400 -->
+<!-- b3551 -->
 What stays installed: Executive Copilot with principles and limits.
 
-<!-- b3401 -->
+<!-- b3552 -->
 ### Session 2: Research and market intelligence
 
-<!-- b3402 -->
+<!-- b3553 -->
 What stays installed: Assistant contrasting sources and gaps.
 
-<!-- b3403 -->
+<!-- b3554 -->
 ### Session 3: Scenarios and strategic choices
 
-<!-- b3404 -->
+<!-- b3555 -->
 What stays installed: Copilot for drivers, signals and trade-offs.
 
-<!-- b3405 -->
+<!-- b3556 -->
 ### Session 4: Decision memos
 
-<!-- b3406 -->
+<!-- b3557 -->
 What stays installed: Assistant including alternatives and counterevidence.
 
-<!-- b3407 -->
+<!-- b3558 -->
 ### Session 5: Meetings and follow-through
 
-<!-- b3408 -->
+<!-- b3559 -->
 What stays installed: Decision and commitment tracker.
 
-<!-- b3409 -->
+<!-- b3560 -->
 ### Session 6: Portfolio communication
 
-<!-- b3410 -->
+<!-- b3561 -->
 What stays installed: Brief connecting priorities, capacity, risk and outcomes.
 
-<!-- b3411 -->
+<!-- b3562 -->
 ## The model should improve the question before polishing the answer.
 
-<!-- b3412 -->
+<!-- b3563 -->
 Outputs are challenged with contradictory sources, alternative assumptions and explicit criteria. Leaders document what changed in their judgment.
 
-<!-- b3413 -->
+<!-- b3564 -->
 Strategic documents, research, reports and committee material may be used under approved confidentiality rules. The program does not replace specialist sources or due diligence.
 
-<!-- b3414 -->
+<!-- b3565 -->
 - Executive AI Copilot.
-<!-- b3415 -->
+<!-- b3566 -->
 - Research protocol and source hierarchy.
-<!-- b3416 -->
+<!-- b3567 -->
 - Scenario Planning Canvas.
-<!-- b3417 -->
+<!-- b3568 -->
 - Decision-memo template.
-<!-- b3418 -->
+<!-- b3569 -->
 - Meeting and Commitment Tracker.
-<!-- b3419 -->
+<!-- b3570 -->
 - Strategy Portfolio Brief.
 
-<!-- b3420 -->
+<!-- b3571 -->
 Measures may include preparation time, sources contrasted, visible assumptions, alternatives considered, reopened decisions and tracked commitments.
 
-<!-- b3421 -->
+<!-- b3572 -->
 No. It is designed around executive decisions.
 
-<!-- b3422 -->
+<!-- b3573 -->
 It structures alternatives; leaders retain the choice.
 
-<!-- b3423 -->
+<!-- b3574 -->
 Every source carries a date and is checked against approved references.
 
-<!-- b3424 -->
+<!-- b3575 -->
 Yes. Cases can use its agenda, formats and recurring decisions.
 
-<!-- b3425 -->
+<!-- b3576 -->
 Project Management & PMO
 
-<!-- b3426 -->
+<!-- b3577 -->
 ## Tell us which decision needs more context and better questions.
 
 ---
 
 ## `/en/services/become-now/supply-chain-compras`
 
-<!-- b3427 -->
+<!-- b3578 -->
 BECOME NOW™ · SUPPLY CHAIN & PROCUREMENT
 
-<!-- b3428 -->
+<!-- b3579 -->
 # Turn data, exceptions and supplier signals into faster decisions.
 
-<!-- b3429 -->
+<!-- b3580 -->
 A program for teams bringing demand, inventory, supply and risk signals together without losing contractual control or traceability.
 
-<!-- b3430 -->
+<!-- b3581 -->
 ## The chain changes before the report finishes explaining it.
 
-<!-- b3431 -->
+<!-- b3582 -->
 A disruption, delay or demand shift appears in different systems and is interpreted by different teams. AI can connect signals and prepare scenarios, but it must not invent availability, terms or supplier performance.
 
-<!-- b3432 -->
+<!-- b3583 -->
 - Supply Chain
-<!-- b3433 -->
+<!-- b3584 -->
 - Procurement
-<!-- b3434 -->
+<!-- b3585 -->
 - Planning
-<!-- b3435 -->
+<!-- b3586 -->
 - Logistics
-<!-- b3436 -->
+<!-- b3587 -->
 - Inventory Management
-<!-- b3437 -->
+<!-- b3588 -->
 - Supplier Management
-<!-- b3438 -->
+<!-- b3589 -->
 - Sourcing
 
-<!-- b3439 -->
+<!-- b3590 -->
 ## Session 0 selects the decisions, sources and exceptions that matter most.
 
-<!-- b3440 -->
+<!-- b3591 -->
 We review forecasts, inventory, purchase orders, contracts, scorecards, incidents, lead times, policies and reports. Official data, tolerances and escalation triggers are agreed.
 
-<!-- b3441 -->
+<!-- b3592 -->
 ## Turn data, exceptions and suppliers into faster decisions.
 
-<!-- b3442 -->
+<!-- b3593 -->
 ### Session 1: AI for Supply Chain
 
-<!-- b3443 -->
+<!-- b3594 -->
 What stays installed: Copilot with categories and operating rules.
 
-<!-- b3444 -->
+<!-- b3595 -->
 ### Session 2: Demand and inventory
 
-<!-- b3445 -->
+<!-- b3596 -->
 What stays installed: Assistant for variation, drivers and coverage.
 
-<!-- b3446 -->
+<!-- b3597 -->
 ### Session 3: Supplier evaluation
 
-<!-- b3447 -->
+<!-- b3598 -->
 What stays installed: Evidence compared with approved criteria.
 
-<!-- b3448 -->
+<!-- b3599 -->
 ### Session 4: Procurement and contracts
 
-<!-- b3449 -->
+<!-- b3600 -->
 What stays installed: Reviewer for requirements, bids and terms.
 
-<!-- b3450 -->
+<!-- b3601 -->
 ### Session 5: Risk and exceptions
 
-<!-- b3451 -->
+<!-- b3602 -->
 What stays installed: Radar with trigger, impact, alternative and owner.
 
-<!-- b3452 -->
+<!-- b3603 -->
 ### Session 6: Control-tower communication
 
-<!-- b3453 -->
+<!-- b3604 -->
 What stays installed: Brief aligning decisions across teams.
 
-<!-- b3454 -->
+<!-- b3605 -->
 ## Every recommendation keeps its source, date and operating constraint.
 
-<!-- b3455 -->
+<!-- b3606 -->
 Outputs are validated for accuracy, coverage, currency, policy compliance and exceptions. Each asset knows when to request more information or escalate.
 
-<!-- b3456 -->
+<!-- b3607 -->
 Controlled exports and documents from ERP, procurement, planning, WMS or supplier platforms may be used. The program does not place orders or award suppliers.
 
-<!-- b3457 -->
+<!-- b3608 -->
 - Supply Chain Copilot.
-<!-- b3458 -->
+<!-- b3609 -->
 - Demand and Inventory Insight template.
-<!-- b3459 -->
+<!-- b3610 -->
 - Supplier Evaluation Assistant.
-<!-- b3460 -->
+<!-- b3611 -->
 - Procurement and contract checklist.
-<!-- b3461 -->
+<!-- b3612 -->
 - Supply Chain Risk Radar.
-<!-- b3462 -->
+<!-- b3613 -->
 - Executive Supply Chain Brief.
 
-<!-- b3463 -->
+<!-- b3614 -->
 Baselines may include consolidation time, exceptions detected, risk coverage, evaluation consistency, rework and escalation speed.
 
-<!-- b3464 -->
+<!-- b3615 -->
 It may assist analysis; the official forecast follows approved models and owners.
 
-<!-- b3465 -->
+<!-- b3616 -->
 No. It organizes evidence; the decision remains governed.
 
-<!-- b3466 -->
+<!-- b3617 -->
 It can extract and compare terms for professional review.
 
-<!-- b3467 -->
+<!-- b3618 -->
 No. Controlled exports are enough to begin.
 
-<!-- b3468 -->
+<!-- b3619 -->
 Legal, Compliance & Risk
 
-<!-- b3469 -->
+<!-- b3620 -->
 ## Tell us which supply-chain exception consumes the most coordination.
 
 ---
 
 ## `/en/services/become-now/technology-engineering`
 
-<!-- b3470 -->
+<!-- b3621 -->
 BECOME NOW™ · TECHNOLOGY & ENGINEERING
 
-<!-- b3471 -->
+<!-- b3622 -->
 # Build the judgment required to work with LLMs, agents and AI systems.
 
-<!-- b3472 -->
+<!-- b3623 -->
 A program for technical teams making stronger architecture, development, evaluation, integration and operating decisions for AI capabilities.
 
-<!-- b3473 -->
+<!-- b3624 -->
 ## A demo works long before a dependable system exists.
 
-<!-- b3474 -->
+<!-- b3625 -->
 The prompt responds and the agent acts. Then context, evals, permissions, latency, cost, observability and ownership appear. The challenge is not calling a model; it is designing a capability that fails visibly and safely.
 
-<!-- b3475 -->
+<!-- b3626 -->
 - Software Engineering
-<!-- b3476 -->
+<!-- b3627 -->
 - Architecture
-<!-- b3477 -->
+<!-- b3628 -->
 - QA
-<!-- b3478 -->
+<!-- b3629 -->
 - DevOps
-<!-- b3479 -->
+<!-- b3630 -->
 - IT Operations
-<!-- b3480 -->
+<!-- b3631 -->
 - Technology Leadership
 
-<!-- b3481 -->
+<!-- b3632 -->
 ## Session 0 defines one technical case and its operating constraints.
 
-<!-- b3482 -->
+<!-- b3633 -->
 We review architecture, repositories, APIs, knowledge, environments, security, SLAs, costs and standards. Evaluation data, expected behavior, threats, observability and human review are agreed.
 
-<!-- b3483 -->
+<!-- b3634 -->
 ## Build the judgment to work with LLMs, agents and AI systems.
 
-<!-- b3484 -->
+<!-- b3635 -->
 ### Session 1: Foundation models and prompting
 
-<!-- b3485 -->
+<!-- b3636 -->
 What stays installed: Engineering Copilot with review criteria.
 
-<!-- b3486 -->
+<!-- b3637 -->
 ### Session 2: Context engineering, RAG and embeddings
 
-<!-- b3487 -->
+<!-- b3638 -->
 What stays installed: Grounded technical assistant.
 
-<!-- b3488 -->
+<!-- b3639 -->
 ### Session 3: APIs, tool calling and MCP
 
-<!-- b3489 -->
+<!-- b3640 -->
 What stays installed: Workflow that consults systems instead of guessing.
 
-<!-- b3490 -->
+<!-- b3641 -->
 ### Session 4: Agentic workflows and routing
 
-<!-- b3491 -->
+<!-- b3642 -->
 What stays installed: Orchestration with limits and approval.
 
-<!-- b3492 -->
+<!-- b3643 -->
 ### Session 5: Evaluations, guardrails and testing
 
-<!-- b3493 -->
+<!-- b3644 -->
 What stays installed: Eval suite and release criteria.
 
-<!-- b3494 -->
+<!-- b3645 -->
 ### Session 6: Observability, incidents and cost
 
-<!-- b3495 -->
+<!-- b3646 -->
 What stays installed: Runbook with tracing and ownership.
 
-<!-- b3496 -->
+<!-- b3647 -->
 ## Every capability is tested for expected behavior, failure and misuse.
 
-<!-- b3497 -->
+<!-- b3648 -->
 The team documents architecture, dependencies, threats, evaluation data and thresholds. Correctness, consistency, security, latency, cost and recoverability all matter.
 
-<!-- b3498 -->
+<!-- b3649 -->
 The journey adapts to approved models, clouds, frameworks and standards. Labs use controlled environments; production deployment requires an implementation scope.
 
-<!-- b3499 -->
+<!-- b3650 -->
 - Engineering Copilot and usage policy.
-<!-- b3500 -->
+<!-- b3651 -->
 - Context engineering or RAG design.
-<!-- b3501 -->
+<!-- b3652 -->
 - Tool calling / MCP blueprint.
-<!-- b3502 -->
+<!-- b3653 -->
 - Agentic Workflow Blueprint™.
-<!-- b3503 -->
+<!-- b3654 -->
 - Evaluation dataset and initial suite.
-<!-- b3504 -->
+<!-- b3655 -->
 - Observability, incident and cost runbook.
 
-<!-- b3505 -->
+<!-- b3656 -->
 Measures may include eval pass rate, groundedness, defects caught, latency, cost per task, human intervention and incidents.
 
-<!-- b3506 -->
+<!-- b3657 -->
 No. It combines practice and engineering judgment for enterprise AI.
 
-<!-- b3507 -->
+<!-- b3658 -->
 No. It adapts to and can compare the approved stack.
 
-<!-- b3508 -->
+<!-- b3659 -->
 Yes, when the use case justifies tools, autonomy and controls.
 
-<!-- b3509 -->
+<!-- b3660 -->
 Not necessarily. Production belongs to an implementation engagement.
 
-<!-- b3510 -->
+<!-- b3661 -->
 Product & Innovation
 
-<!-- b3511 -->
+<!-- b3662 -->
 ## Tell us which AI capability needs stronger engineering judgment.
 
 ---
 
 ## `/en/services/become-now/ventas`
 
-<!-- b3512 -->
+<!-- b3663 -->
 BECOME NOW™ · SALES
 
-<!-- b3513 -->
+<!-- b3664 -->
 # Help sales teams research better, respond faster and sell with more context.
 
-<!-- b3514 -->
+<!-- b3665 -->
 A program for B2B teams turning account, meeting and pipeline information into consistent preparation and next actions.
 
-<!-- b3515 -->
+<!-- b3666 -->
 ## The seller knows the customer. The system rarely retains the full context.
 
-<!-- b3516 -->
+<!-- b3667 -->
 Notes, email, CRM, proposals and conversations hold signals about need, timing and objections. When fragmented, every meeting rebuilds the story and every proposal depends too heavily on who prepares it.
 
-<!-- b3517 -->
+<!-- b3668 -->
 The program turns commercial knowledge into reusable workflows without inventing data or automating relationships.
 
-<!-- b3518 -->
+<!-- b3669 -->
 - B2B and B2C Sales
-<!-- b3519 -->
+<!-- b3670 -->
 - Key Account Managers
-<!-- b3520 -->
+<!-- b3671 -->
 - Business Development
-<!-- b3521 -->
+<!-- b3672 -->
 - Inside Sales
-<!-- b3522 -->
+<!-- b3673 -->
 - Sales Operations
-<!-- b3523 -->
+<!-- b3674 -->
 - Customer Success
 
-<!-- b3524 -->
+<!-- b3675 -->
 ## Session 0 reconstructs the sales process and its progression criteria.
 
-<!-- b3525 -->
+<!-- b3676 -->
 We review ICP, offers, playbook, stages, CRM fields, wins and losses, proposals, objections and meetings. Sources, qualification signals, tone, permitted claims and pre-contact review are agreed.
 
-<!-- b3526 -->
+<!-- b3677 -->
 ## Help your sales team research better, respond faster and sell with more context.
 
-<!-- b3527 -->
+<!-- b3678 -->
 ### Session 1: AI for the sales process
 
-<!-- b3528 -->
+<!-- b3679 -->
 What stays installed: Sales Copilot adapted to offer and method.
 
-<!-- b3529 -->
+<!-- b3680 -->
 ### Session 2: Accounts and opportunities
 
-<!-- b3530 -->
+<!-- b3681 -->
 What stays installed: Research Assistant with source and date.
 
-<!-- b3531 -->
+<!-- b3682 -->
 ### Session 3: Qualification and priority
 
-<!-- b3532 -->
+<!-- b3683 -->
 What stays installed: Assistant applying criteria and exposing missing data.
 
-<!-- b3533 -->
+<!-- b3684 -->
 ### Session 4: Meeting preparation
 
-<!-- b3534 -->
+<!-- b3685 -->
 What stays installed: Copilot with context, questions and intended outcome.
 
-<!-- b3535 -->
+<!-- b3686 -->
 ### Session 5: Proposals and objections
 
-<!-- b3536 -->
+<!-- b3687 -->
 What stays installed: Assistant connecting need, evidence and differentiation.
 
-<!-- b3537 -->
+<!-- b3688 -->
 ### Session 6: Follow-up and pipeline
 
-<!-- b3538 -->
+<!-- b3689 -->
 What stays installed: Narrative and Next-Best-Action with rationale.
 
-<!-- b3539 -->
+<!-- b3690 -->
 ## The output should sound informed—not automated.
 
-<!-- b3540 -->
+<!-- b3691 -->
 It is checked against account data, playbook, approved claims, stage and objective. Facts, hypotheses and open questions remain distinct.
 
-<!-- b3541 -->
+<!-- b3692 -->
 Controlled exports and documents from CRM, enablement, email, meeting and proposal tools may be used. The program does not send messages or act on customer records without approval.
 
-<!-- b3542 -->
+<!-- b3693 -->
 - Sales Copilot.
-<!-- b3543 -->
+<!-- b3694 -->
 - Account Research Brief.
-<!-- b3544 -->
+<!-- b3695 -->
 - Qualification and prioritization matrix.
-<!-- b3545 -->
+<!-- b3696 -->
 - Meeting Preparation Copilot.
-<!-- b3546 -->
+<!-- b3697 -->
 - Proposal and Objection Assistant.
-<!-- b3547 -->
+<!-- b3698 -->
 - Pipeline Narrative and Next-Best-Action template.
 
-<!-- b3548 -->
+<!-- b3699 -->
 Measures may include preparation time, complete fields, qualification consistency, proposal rounds, timely follow-up and workflow adoption. Revenue attribution requires a separate measurement design.
 
-<!-- b3549 -->
+<!-- b3700 -->
 No. Messages are prepared and reviewed before sending.
 
-<!-- b3550 -->
+<!-- b3701 -->
 Yes through approved data or exports; direct integration is separate.
 
-<!-- b3551 -->
+<!-- b3702 -->
 Yes. It prioritizes research, questions, evidence and decision progression.
 
-<!-- b3552 -->
+<!-- b3703 -->
 It may apply agreed criteria and flag gaps; ownership remains in the sales process.
 
-<!-- b3553 -->
+<!-- b3704 -->
 Marketing & Communications
 
-<!-- b3554 -->
+<!-- b3705 -->
 Customer Service & CX
 
-<!-- b3555 -->
+<!-- b3706 -->
 ## Tell us where the sales process loses the most context today.
 
 ---

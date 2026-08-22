@@ -4,138 +4,138 @@
 
 **En Google** (no se ve en la página):
 
-<!-- b3740 -->
+<!-- b3901 -->
 - **Título:** Insights de IA para empresas | BECOME
-<!-- b3741 -->
+<!-- b3902 -->
 - **Descripción:** Análisis de BECOME sobre agentes de IA, procesos, modelos operativos, adopción, gobernanza y creación de valor empresarial.
 
-<!-- b3742 -->
+<!-- b3903 -->
 BECOME INSIGHTS
 
-<!-- b3743 -->
+<!-- b3904 -->
 # Ideas para la empresa que viene después.
 
-<!-- b3744 -->
-Perspectivas sobre AI-native operating models, agentic work, decision intelligence, adoption y responsible scale.
+<!-- b3905 -->
+Análisis sobre modelos operativos AI-native, agentes, rediseño de procesos, adopción y medición de valor.
 
-<!-- b3745 -->
+<!-- b3906 -->
 PUBLICADO
 
-<!-- b3746 -->
+<!-- b3907 -->
 ## Lo último que hemos escrito.
 
-<!-- b3747 -->
+<!-- b3908 -->
 ### Por qué tu equipo no usa la IA que le diste
 
-<!-- b3748 -->
+<!-- b3909 -->
 Compraste las licencias. Y tres meses después el panel de uso dice la verdad que nadie enseña en el comité.
 
-<!-- b3749 -->
+<!-- b3910 -->
 22 de agosto de 2026 · 5 min
 
-<!-- b3750 -->
+<!-- b3911 -->
 ### Cómo rediseñar un proceso para que lo ejecute una IA
 
-<!-- b3751 -->
+<!-- b3912 -->
 Metieron un agente en medio del proceso y siguieron haciendo exactamente lo mismo. Solo que ahora hay un paso más: alguien copia lo que dice el agente a la hoja de siempre, por si acaso.
 
-<!-- b3752 -->
+<!-- b3913 -->
 21 de agosto de 2026 · 6 min
 
-<!-- b3753 -->
+<!-- b3914 -->
 ### Por qué tus pilotos de IA no llegan a producción
 
-<!-- b3754 -->
+<!-- b3915 -->
 El piloto salió bien. Y ese es exactamente el momento en el que se quedó parado.
 
-<!-- b3755 -->
+<!-- b3916 -->
 20 de agosto de 2026 · 7 min
 
-<!-- b3756 -->
+<!-- b3917 -->
 ### Quién responde cuando responde un agente
 
-<!-- b3757 -->
+<!-- b3918 -->
 La pregunta que decide si un agente llega a producción no es técnica. Es de quién es el resultado cuando sale mal.
 
-<!-- b3758 -->
+<!-- b3919 -->
 20 de agosto de 2026 · 4 min
 
-<!-- b3759 -->
+<!-- b3920 -->
 PILARES EDITORIALES
 
-<!-- b3760 -->
+<!-- b3921 -->
 ## Sobre qué vamos a escribir, y sobre qué no.
 
-<!-- b3761 -->
+<!-- b3922 -->
 Cinco líneas. Nada de noticias de modelos, comparativas de herramientas ni resúmenes de lo que ya dijo otro.
 
-<!-- b3762 -->
-### The AI-native enterprise
+<!-- b3923 -->
+### La empresa AI-native
 
-<!-- b3763 -->
-Estrategia, ambition y enterprise design. Qué distingue a una empresa AI-native de una empresa con IA.
+<!-- b3924 -->
+Estrategia, ambición y diseño empresarial. Qué distingue a una empresa AI-native de una empresa con IA.
 
-<!-- b3764 -->
-### Agentic work
+<!-- b3925 -->
+### Trabajo con agentes
 
-<!-- b3765 -->
+<!-- b3926 -->
 Procesos, roles, agentes y responsabilidad humana. Cómo cambia el trabajo cuando parte lo hace un sistema.
 
-<!-- b3766 -->
-### Operating-model reinvention
+<!-- b3927 -->
+### Reinvención del modelo operativo
 
-<!-- b3767 -->
+<!-- b3928 -->
 Personas, Datos, Agentes, Productos y Operaciones. Las decisiones de diseño que determinan dónde se acumula el valor.
 
-<!-- b3768 -->
-### Value and adoption
+<!-- b3929 -->
+### Valor y adopción
 
-<!-- b3769 -->
+<!-- b3930 -->
 Medición, confianza, gestión del cambio y transferencia de capacidades. Por qué la adopción es un problema de diseño, no de comunicación.
 
-<!-- b3770 -->
-### Responsible scale
+<!-- b3931 -->
+### Escalado responsable
 
-<!-- b3771 -->
+<!-- b3932 -->
 Gobernanza, controles, riesgo y condiciones para escalar. Cuándo hacerlo y, sobre todo, cuándo no.
 
-<!-- b3772 -->
+<!-- b3933 -->
 FORMATOS
 
-<!-- b3773 -->
+<!-- b3934 -->
 ## Cada idea tiene su forma.
 
-<!-- b3774 -->
-### Perspective
+<!-- b3935 -->
+### Perspectiva
 
-<!-- b3775 -->
+<!-- b3936 -->
 Una tesis argumentada sobre hacia dónde va algo.
 
-<!-- b3776 -->
-### Field Note
+<!-- b3937 -->
+### Nota de campo
 
-<!-- b3777 -->
+<!-- b3938 -->
 Lo aprendido dentro de un problema concreto.
 
-<!-- b3778 -->
+<!-- b3939 -->
 ### Framework
 
-<!-- b3779 -->
+<!-- b3940 -->
 Una forma reutilizable de estructurar una decisión.
 
-<!-- b3780 -->
-### Executive Brief
+<!-- b3941 -->
+### Informe ejecutivo
 
-<!-- b3781 -->
+<!-- b3942 -->
 Lo que un comité necesita saber, en su formato.
 
-<!-- b3782 -->
-### Case Evidence
+<!-- b3943 -->
+### Evidencia de caso
 
-<!-- b3783 -->
+<!-- b3944 -->
 Trabajo real, solo cuando el cliente lo aprueba.
 
-<!-- b3784 -->
+<!-- b3945 -->
 ## ¿Qué idea necesita convertirse en capacidad?
 
 ---

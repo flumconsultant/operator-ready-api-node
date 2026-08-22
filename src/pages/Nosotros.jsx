@@ -26,6 +26,16 @@ const CULTURE = [
   ['capability', 'Leave capability behind', 'El trabajo debe aumentar la autonomía del cliente, no su dependencia de BECOME.'],
 ];
 
+const CAPACIDADES = [
+  'Estrategia y transformación',
+  'Producto y diseño',
+  'Procesos y operaciones',
+  'IA y datos',
+  'Arquitectura e integración',
+  'Gestión del cambio y adopción',
+  'Medición de valor',
+];
+
 const DELIVERY = [
   'Un responsable claro por proyecto.',
   'Equipo del cliente involucrado desde el inicio.',
@@ -100,6 +110,25 @@ export default function Nosotros() {
       </Section>
 
       {/* 06 — ADN */}
+      {/* Las capacidades de la firma, no las de cada persona. La distinción
+          importa: un equipo senior y pequeño que dice dominar siete
+          disciplinas no se cree, y con razón. Lo que se sostiene es que la
+          composición cambia según el reto. */}
+      <Section band="light">
+        <Kicker>Capacidades</Kicker>
+        <Headline>Negocio, transformación y tecnología en el mismo equipo.</Headline>
+        <Body style={{ marginTop: 'var(--space-6)' }}>
+          Según lo que el reto necesita, BECOME combina:
+        </Body>
+        <Cols min="220px" style={{ marginTop: 'var(--space-9)' }}>
+          {CAPACIDADES.map((c) => (
+            <Reveal as="div" key={c} style={{ borderTop: '1px solid var(--border-strong)', paddingTop: 'var(--space-5)' }}>
+              <p style={{ margin: 0, font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--text-heading)' }}>{c}</p>
+            </Reveal>
+          ))}
+        </Cols>
+      </Section>
+
       {/* Cómo trabajamos, en comportamientos observables. Antes era una capa
          aparte llamada «cultura»: para una firma joven, seis adjetivos
          institucionales pesan más de lo que prueban. */}
