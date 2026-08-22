@@ -23,14 +23,18 @@ on:
     # sería solo impaciencia.
     - cron: '30 13 * * *'
   workflow_dispatch:
-  # Y cuando se toca el propio centinela. Una comprobación que nunca se ejecuta
-  # al modificarla es una comprobación en la que nadie confía: así cada cambio
-  # se prueba contra el sitio de verdad en el mismo momento de subirlo.
-  push:
-    branches: [main]
-    paths:
-      - 'scripts/centinela.mjs'
-      - '.github/workflows/centinela.yml'
+  # Y después de cada despliegue que termina bien.
+  #
+  # Antes era un `push`, y era una carrera: el push lanzaba el centinela y el
+  # despliegue a la vez, así que el centinela pedía al sitio unas páginas que
+  # todavía se estaban compilando. La primera vez que ocurrió se saldó con un
+  # despliegue de rescate innecesario —el mecanismo se curó solo, pero por un
+  # problema que no existía—. Esperar al despliegue quita la carrera y, de
+  # paso, comprueba TODOS los despliegues en vez de solo los que tocan este
+  # archivo.
+  workflow_run:
+    workflows: ['Desplegar a Hostinger']
+    types: [completed]
 
 permissions:
   actions: write
@@ -42,6 +46,11 @@ concurrency:
 
 jobs:
   vigilar:
+    # Un despliegue que falló ya avisa por su cuenta; comprobar el sitio
+    # después no añade información y sí ruido.
+    if: >-
+      github.event_name != 'workflow_run'
+      || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -56,8 +65,15 @@ jobs:
         run: node scripts/centinela.mjs
 
       # Solo si la primera respuesta fue que no.
+      # Solo cuando la comprobación llega en frío: la diaria o una lanzada a
+      # mano. Después de un despliegue no se relanza nada, y por dos motivos:
+      # el despliegue acaba de correr, así que repetirlo tal cual repetiría el
+      # resultado; y relanzarlo desde aquí crearía un bucle —despliegue,
+      # centinela, despliegue— que solo pararía al agotar los minutos de la
+      # cuenta. En ese caso el trabajo falla en rojo, que es lo correcto:
+      # alguien tiene que mirarlo.
       - name: Relanzar el despliegue
-        if: steps.primera.outcome == 'failure'
+        if: steps.primera.outcome == 'failure' && github.event_name != 'workflow_run'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -66,18 +82,27 @@ jobs:
           gh workflow run deploy.yml --ref main
 
       - name: Esperar a que termine
-        if: steps.primera.outcome == 'failure'
+        if: steps.primera.outcome == 'failure' && github.event_name != 'workflow_run'
         run: |
           # Un despliegue completo tarda unos seis minutos entre compilar,
           # prerenderizar y subir. Diez da margen sin agotar el trabajo.
           sleep 600
 
       - name: Volver a comprobar
-        if: steps.primera.outcome == 'failure'
+        if: steps.primera.outcome == 'failure' && github.event_name != 'workflow_run'
         run: |
           set -euo pipefail
           node scripts/centinela.mjs
           echo "El despliegue de rescate funcionó: el sitio ya sirve todo lo publicado."
+
+      # Tras un despliegue no hay rescate, así que el fallo de la comprobación
+      # tiene que llegar hasta el resultado del trabajo: `continue-on-error` lo
+      # había dejado pasar.
+      - name: Fallar si el sitio no sirve lo publicado
+        if: steps.primera.outcome == 'failure' && github.event_name == 'workflow_run'
+        run: |
+          echo "::error::El despliegue terminó bien pero el sitio no sirve todo lo publicado. Revisa el paso «¿Está publicado lo que dice el repositorio?»."
+          exit 1
 
       - name: Resumen
         if: always()
