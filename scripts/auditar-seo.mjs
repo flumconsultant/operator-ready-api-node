@@ -44,7 +44,13 @@ for (const ruta of rutas) {
     // Google recorta alrededor de 60 caracteres; por encima el final no se ve.
     if (title.length > 62) av(`title de ${title.length} caracteres (se recorta): «${title}»`);
     if (title.length < 20) av(`title muy corto (${title.length}): «${title}»`);
-    if (!/BECOME/.test(title)) av(`el title no nombra la marca: «${title}»`);
+    /* La marca falta a propósito cuando el titular ya llena los 60: es
+       preferible a cortarlo a media palabra para hacerle sitio. Solo se avisa
+       cuando SÍ habría cabido, que entonces es un descuido de verdad. */
+    if (!/BECOME/.test(title)) {
+      if (title.length + ' | BECOME'.length <= 60) av(`el title no nombra la marca y cabía: «${title}»`);
+      else av(`titular tan largo que no cabe « | BECOME» detrás (${title.length}): «${title}»`);
+    }
     if (titulos.has(title)) di(`title duplicado con ${titulos.get(title)}`);
     else titulos.set(title, ruta);
   }
@@ -138,10 +144,15 @@ for (const ruta of rutas) {
 if (existsSync('dist/.htaccess')) {
   const reglas = [...readFileSync('dist/.htaccess', 'utf8').matchAll(/^\s*RedirectMatch\s+301\s+(\S+)\s+(\S+)\s*$/gm)]
     .map(([, patron, destino]) => [new RegExp(patron), destino]);
+  /* Además de las RedirectMatch, el .htaccess quita la barra final con una
+     RewriteRule. El simulador tiene que aplicarla también, o una cadena que
+     pase por ella se contaría como un solo salto. */
+  const quitaBarra = /RewriteRule \^\(\.\+\)\/\$/.test(readFileSync('dist/.htaccess', 'utf8'));
   const salto = (u) => {
     for (const [re, destino] of reglas) {
       if (re.test(u)) return u.replace(re, destino);
     }
+    if (quitaBarra && u.length > 1 && u.endsWith('/')) return u.slice(0, -1);
     return null;
   };
   /* Las direcciones de prueba.
@@ -175,6 +186,12 @@ if (existsSync('dist/.htaccess')) {
     if (corte > 0) { tramos.add(l.slice(0, corte)); slugs.add(l.slice(corte + 1)); }
   }
   for (const t of tramos) for (const sl of slugs) muestras.add(`${t}/${sl}`);
+  /* Y cada una otra vez con barra final. Es el caso que se escapó: las reglas
+     con captura arrastraban la barra al destino y obligaban a un segundo 301,
+     y como ninguna muestra la llevaba, la comprobación decía que todo estaba
+     bien. Una dirección con barra es una dirección distinta para un servidor;
+     probar solo la versión sin barra es probar la mitad. */
+  for (const u of [...muestras]) if (!u.endsWith('/')) muestras.add(`${u}/`);
   for (const u of muestras) {
     const cadena = [u];
     let actual = u;

@@ -75,6 +75,12 @@ export const SOLUCION_CONTENIDO = {
   },
 
   'deploy-governed-ai-agents': {
+    /* Título y descripción de buscador propios. Existen porque la pregunta y la
+       respuesta de esta página no caben: al recortarlas, lo que se publicaba
+       terminaba en puntos suspensivos, y una frase cortada a media palabra en
+       un resultado de Google se lee como una página descuidada. No dicen nada
+       nuevo: son la misma idea, escrita para el largo que hay. */
+    seoDesc: 'We design the workflow before selecting the model: what the agent does, which data it reaches, when it asks for approval and who owns the result.',
     q: 'Want to build an agent or copilot?',
     answer:
       'We design the workflow before selecting the model. We define what the agent should do, which data and tools it can access, which LLM it needs, when human approval is required and how it will be evaluated before and after go-live. A solution may combine ChatGPT/OpenAI, Claude/Anthropic, Gemini/Google or other models, together with APIs, RAG, tool calling, MCP and enterprise integrations.',
@@ -97,6 +103,7 @@ export const SOLUCION_CONTENIDO = {
   },
 
   'build-ai-enabled-products': {
+    seoDesc: 'To create a new experience for customers or teams, you need to design the value, the intelligent behaviour and the operation that sustains it.',
     q: 'Want to create an AI-native experience?',
     answer:
       'If you’re looking for a new experience for customers or collaborators, you need to design the value, the intelligent behavior and the operation that sustains it.',
@@ -119,6 +126,7 @@ export const SOLUCION_CONTENIDO = {
   },
 
   'measure-and-govern-ai-value': {
+    seoDesc: 'To demonstrate results and clarify who owns each decision, you need to measure against a baseline and govern what is already running.',
     q: 'Need to measure and govern AI value?',
     answer:
       'If you have to demonstrate results, reduce risk and clarify who owns each decision, you need to measure against a baseline and govern what is already running.',

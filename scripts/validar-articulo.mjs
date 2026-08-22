@@ -99,7 +99,11 @@ export function validar(art, { archivo = '', slugsAjenos = new Set() } = {}) {
     if (!t) { di(`falta la versión en ${lang}: los artículos van en los dos idiomas`); continue; }
 
     if (!t.titulo) d('falta el título');
-    else if (t.titulo.length > 60) d(`el título tiene ${t.titulo.length} caracteres; Google corta en 60`);
+    /* 51 y no 60: al título se le añade « | BECOME» —nueve caracteres— para el
+       resultado de búsqueda. Con 51 caben los dos; por encima, o se corta el
+       titular o se publica sin marca. Avisar a 60 dejaba pasar justo los
+       titulares que luego había que sacrificar. */
+    else if (t.titulo.length > 51) d(`el título tiene ${t.titulo.length} caracteres; con « | BECOME» detrás, Google corta a partir de 51`);
 
     if (!t.slug) d('falta la dirección (slug)');
     else if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(t.slug)) d(`la dirección "${t.slug}" solo puede llevar minúsculas, números y guiones`);

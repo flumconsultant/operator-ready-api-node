@@ -37,6 +37,13 @@ export const SOLUCION_CONTENIDO = {
   },
 
   'preparar-equipos-para-ia': {
+    /* Título y descripción de buscador propios. Existen porque la pregunta y la
+       respuesta de esta página no caben: al recortarlas, lo que se publicaba
+       terminaba en puntos suspensivos, y una frase cortada a media palabra en
+       un resultado de Google se lee como una página descuidada. No dicen nada
+       nuevo: son la misma idea, escrita para el largo que hay. */
+    seoTitulo: 'Preparar equipos para trabajar con IA',
+    seoDesc: 'Si tus equipos ya usan herramientas de IA sin un método común, hace falta convertir ese uso suelto en una forma de trabajar compartida.',
     q: '¿Necesitas preparar a tus equipos para trabajar con IA?',
     answer:
       'Si tus equipos ya usan herramientas de IA sin un método común, hace falta convertir ese uso suelto en una forma de trabajar compartida, con criterios y controles.',
@@ -83,6 +90,7 @@ export const SOLUCION_CONTENIDO = {
   },
 
   'agentes-de-ia-con-control': {
+    seoDesc: 'Diseñamos el workflow antes de elegir el modelo: qué hace el agente, a qué datos accede, cuándo pide aprobación y quién responde por el resultado.',
     q: '¿Quieres construir un agente o un copiloto?',
     answer:
       'Diseñamos el workflow antes de elegir el modelo. Definimos qué debe hacer el agent, a qué datos y herramientas puede acceder, qué LLM necesita, cuándo debe pedir aprobación humana y cómo se evaluará antes y después del go-live. Una solución puede combinar ChatGPT/OpenAI, Claude/Anthropic, Gemini/Google u otros modelos, junto con APIs, RAG, tool calling, MCP e integraciones empresariales.',
@@ -127,6 +135,7 @@ export const SOLUCION_CONTENIDO = {
   },
 
   'medir-y-gobernar-valor': {
+    seoDesc: 'Para demostrar resultados y aclarar quién responde por cada decisión, hace falta medir contra una línea base y gobernar lo que ya funciona.',
     q: '¿Necesitas medir y gobernar el valor de la IA?',
     answer:
       'Si tienes que demostrar resultados, reducir riesgos y aclarar quién responde por cada decisión, hace falta medir contra una línea base y gobernar lo que ya está funcionando.',

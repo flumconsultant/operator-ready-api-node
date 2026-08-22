@@ -99,8 +99,17 @@
   RedirectMatch 301 ^/en/solutions/por-donde-empezar-con-ia/?$     /en/use-cases
 
   # Y el tramo intermedio —«soluciones»— entero, con el slug intacto.
-  RedirectMatch 301 ^/es/soluciones(/.*)?$                           /es/casos-de-uso$1
-  RedirectMatch 301 ^/en/solutions(/.*)?$                            /en/use-cases$1
+  #
+  # Dos reglas por idioma y no una. Con una sola, `(/.*)?` capturaba también la
+  # barra sola: /es/soluciones/ se convertía en /es/casos-de-uso/ —con barra— y
+  # la regla de barra final de más abajo tenía que hacer un segundo 301.
+  # Medido: 48 direcciones daban dos saltos, todas las terminadas en barra.
+  # Cada salto diluye lo que se traslada y hay rastreadores que abandonan en el
+  # segundo, así que la barra se absorbe aquí en vez de dejarla para después.
+  RedirectMatch 301 ^/es/soluciones/?$                               /es/casos-de-uso
+  RedirectMatch 301 ^/es/soluciones/(.+?)/?$                         /es/casos-de-uso/$1
+  RedirectMatch 301 ^/en/solutions/?$                                /en/use-cases
+  RedirectMatch 301 ^/en/solutions/(.+?)/?$                          /en/use-cases/$1
 
   # El apartado que dejó de llamarse «Framework».
   RedirectMatch 301 ^/es/framework/?$                                /es/como-transformamos

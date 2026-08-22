@@ -112,8 +112,17 @@ const recorta = (s, max) => {
  * búsqueda, la única palabra que dice de quién es la página. Ahora se recorta
  * la parte variable y la marca se pega después.
  */
-const tituloConMarca = (texto, marca = ` | ${BRAND}`, max = 60) =>
-  recorta(texto, Math.max(12, max - marca.length)) + marca;
+const tituloConMarca = (texto, marca = ` | ${BRAND}`, max = 60) => {
+  const t = String(texto).replace(/\s+/g, ' ').trim();
+  /* Si el texto entero cabe pero no cabe CON la marca, se publica sin marca.
+     La alternativa era cortar el titular a media palabra para hacerle sitio al
+     « | BECOME», y en un resultado de búsqueda un titular partido con puntos
+     suspensivos se lee como una página descuidada, mientras que un titular
+     entero sin la marca se lee bien. Pasaba con los titulares de artículo, que
+     los escribe el redactor y no tienen un largo que se pueda imponer. */
+  if (t.length <= max && t.length + marca.length > max) return t;
+  return recorta(t, Math.max(12, max - marca.length)) + marca;
+};
 
 const dinamicas = {};
 
@@ -138,17 +147,21 @@ for (const [lang, tramo, otro, fuente] of [
     };
   }
 }
+/* La pregunta y la respuesta valen como título y descripción cuando caben. Las
+   que no caben llevan una versión propia: recortarlas dejaba puntos
+   suspensivos en el resultado de búsqueda, y una frase partida a media palabra
+   se lee como una página descuidada. */
 for (const [slug, c] of Object.entries(esCasos.SOLUCION_CONTENIDO)) {
   dinamicas[`/es/casos-de-uso/${slug}`] = {
-    title: tituloConMarca(c.q.replace(/^¿|\?$/g, '')),
-    description: recorta(c.answer, 155),
+    title: tituloConMarca(c.seoTitulo || c.q.replace(/^¿|\?$/g, '')),
+    description: recorta(c.seoDesc || c.answer, 155),
     alt: `/en/use-cases/${SLUG_ES_A_EN[slug]}`,
   };
 }
 for (const [slug, c] of Object.entries(enCasos.SOLUCION_CONTENIDO)) {
   dinamicas[`/en/use-cases/${slug}`] = {
-    title: tituloConMarca(c.q.replace(/\?$/, '')),
-    description: recorta(c.answer, 155),
+    title: tituloConMarca(c.seoTitulo || c.q.replace(/\?$/, '')),
+    description: recorta(c.seoDesc || c.answer, 155),
     alt: `/es/casos-de-uso/${SLUG_EN_A_ES[slug]}`,
   };
 }
@@ -332,6 +345,17 @@ function migasDeRuta(path, meta, titulos) {
   return { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: items };
 }
 
+/** Las migas de una ruta. Antes se construían dentro del bloque general, así
+    que las ramas que salían antes —la de equipo— se quedaban sin ellas. */
+function migasDe(path, meta) {
+  const titulos = Object.fromEntries(
+    Object.entries(PAGES).map(([r, v]) => [r, v[0]]).concat(
+      Object.entries(dinamicas).map(([r, v]) => [r, v.title]),
+    ),
+  );
+  return migasDeRuta(path, meta, titulos);
+}
+
 function datosEstructurados(path, meta) {
   const url = SITE + path;
 
@@ -395,7 +419,10 @@ function datosEstructurados(path, meta) {
         if (a.foto) persona.image = SITE + a.foto.split('?')[0];
         return persona;
       });
-    if (!gente.length) return [ORG];
+    /* Las migas también aquí. Eran las dos únicas páginas de segundo nivel sin
+       ellas, porque esta rama devuelve antes de llegar al bloque general. */
+    const migasEquipo = migasDe(path, meta);
+    if (!gente.length) return [ORG, ...(migasEquipo ? [migasEquipo] : [])];
     return [
       ORG,
       {
@@ -406,6 +433,7 @@ function datosEstructurados(path, meta) {
         about: { '@type': 'Organization', name: BRAND, url: SITE },
         mainEntity: gente,
       },
+      ...(migasEquipo ? [migasEquipo] : []),
     ];
   }
 
@@ -419,12 +447,7 @@ function datosEstructurados(path, meta) {
      publicaban sin un solo dato estructurado, y el único modo que tenía un
      asistente de saber que /es/servicios/become-now cuelga de /es/servicios
      era deducirlo de la forma de la URL. */
-  const titulos = Object.fromEntries(
-    Object.entries(PAGES).map(([r, v]) => [r, v[0]]).concat(
-      Object.entries(dinamicas).map(([r, v]) => [r, v.title]),
-    ),
-  );
-  const migasAqui = migasDeRuta(path, meta, titulos);
+  const migasAqui = migasDe(path, meta);
   const base = [
     {
       '@context': 'https://schema.org',
@@ -439,7 +462,12 @@ function datosEstructurados(path, meta) {
     ...(migasAqui ? [migasAqui] : []),
   ];
 
-  if (faqDeLaPagina) return [faqDeLaPagina, ...base];
+  if (faqDeLaPagina) {
+    /* Y también un Service. BECOME DISCOVER™ y BECOME EMBED™ lo declaran; que
+       el tercer servicio no lo hiciera era una incoherencia dentro del mismo
+       grupo, y la única señal de que NOW es un servicio y no un artículo. */
+    return [servicio(meta.title.split('|')[0].split('—')[0].trim(), meta.description, url), faqDeLaPagina, ...base];
+  }
 
   if (/^\/(es\/servicios|en\/services)\/(become-discover|become-embed)$/.test(path)) {
     return [servicio(meta.title.split('|')[0].trim(), meta.description, url), ...base];
@@ -951,9 +979,20 @@ Sitemap: ${SITE}/sitemap.xml
  * tipo de error que no se nota hasta que el tráfico cae.
  */
 {
+  /* Y de paso, sus metadatos sociales. Venían de la primera maqueta: otro
+     nombre de marca, una descripción que ya no está en ninguna página y una
+     imagen en WebP que WhatsApp no dibuja. Una página que no se indexa igual
+     se comparte —basta que alguien pegue una dirección con una errata— y lo
+     que se ve entonces es la tarjeta. Se alinean con los de la portada. */
+  const inicio = PAGES['/es'];
   const fallback = read('dist/index.html')
     .replace(/\s*<link rel="canonical"[^>]*>/g, '')
-    .replace(/<head>/, '<head>\n    <meta name="robots" content="noindex, follow" />');
+    .replace(/<head>/, '<head>\n    <meta name="robots" content="noindex, follow" />')
+    .replace(/(<meta property="og:title" content=")[^"]*/, `$1${escapa(inicio[0])}`)
+    .replace(/(<meta property="og:description" content=")[^"]*/, `$1${escapa(inicio[1])}`)
+    .replace(/(<meta property="og:image" content=")[^"]*/, `$1${OG_IMAGE}`)
+    .replace(/(<meta property="og:image:width" content=")[^"]*/, '$11200')
+    .replace(/(<meta property="og:image:height" content=")[^"]*/, '$1630');
   if (/name="robots"/.test(fallback) && !/rel="canonical"/.test(fallback)) {
     writeFileSync(join(ROOT, 'dist/index.html'), fallback);
   } else {
