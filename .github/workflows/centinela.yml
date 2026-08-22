@@ -23,6 +23,14 @@ on:
     # sería solo impaciencia.
     - cron: '30 13 * * *'
   workflow_dispatch:
+  # Y cuando se toca el propio centinela. Una comprobación que nunca se ejecuta
+  # al modificarla es una comprobación en la que nadie confía: así cada cambio
+  # se prueba contra el sitio de verdad en el mismo momento de subirlo.
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/centinela.mjs'
+      - '.github/workflows/centinela.yml'
 
 permissions:
   actions: write
