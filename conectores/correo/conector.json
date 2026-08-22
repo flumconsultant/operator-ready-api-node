@@ -1,0 +1,17 @@
+{
+  "nombre": "correo",
+  "sistema": "SMTP del dominio · meetbecome.com",
+  "queHace": "Envía los formularios de contacto y los correos de la lista de suscripción.",
+  "implementacion": "assets/api/contacto.php · assets/api/correo.php",
+  "disparadores": ["formulario-del-sitio", "difusion"],
+  "credenciales": [
+    { "clave": "MAIL_USER", "caduca": "nunca", "renueva": "Panel de correo de Hostinger" },
+    { "clave": "MAIL_PASSWORD", "caduca": "al-rotarla", "renueva": "Panel de correo de Hostinger" }
+  ],
+  "acciones": [
+    { "nombre": "enviar", "efecto": "irreversible", "ensayo": null }
+  ],
+  "registro": null,
+  "centinela": null,
+  "notas": "El despliegue falla si faltan los secretos: sin ellos el formulario que trae clientes queda mudo. Sin ensayo: enviar correo de prueba desde el hosting es la única forma de verificarlo."
+}

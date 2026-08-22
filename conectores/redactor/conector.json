@@ -1,0 +1,16 @@
+{
+  "nombre": "redactor",
+  "sistema": "Claude Code · rutina diaria",
+  "queHace": "Escribe y publica el artículo del día a partir del informe del observatorio, sin revisión humana previa.",
+  "implementacion": ".github/workflows/redactor.yml · scripts/validar-articulo.mjs",
+  "disparadores": ["cada-manana"],
+  "credenciales": [
+    { "clave": "CLAUDE_CODE_OAUTH_TOKEN", "caduca": "al-rotarla", "renueva": "claude setup-token" }
+  ],
+  "acciones": [
+    { "nombre": "escribir-articulo", "efecto": "reversible", "ensayo": null }
+  ],
+  "registro": "el historial de git",
+  "centinela": "scripts/validar-articulo.mjs",
+  "notas": "El centinela es la validacion: un articulo que no la pasa no se publica y el dia se queda sin articulo. Es el comportamiento correcto."
+}

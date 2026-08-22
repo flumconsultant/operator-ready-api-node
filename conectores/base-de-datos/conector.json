@@ -1,0 +1,23 @@
+{
+  "nombre": "base-de-datos",
+  "sistema": "MySQL de Hostinger",
+  "queHace": "Guarda la lista de suscripción con doble confirmación: altas pendientes, confirmadas y bajas.",
+  "implementacion": "assets/api/suscripcion.php",
+  "disparadores": ["formulario-del-sitio"],
+  "credenciales": [
+    { "clave": "BD_HOST", "caduca": "nunca", "renueva": "Panel de Hostinger" },
+    { "clave": "BD_USUARIO", "caduca": "nunca", "renueva": "Panel de Hostinger" },
+    { "clave": "BD_CLAVE", "caduca": "al-rotarla", "renueva": "Panel de Hostinger" },
+    { "clave": "BD_BASE", "caduca": "nunca", "renueva": "Panel de Hostinger" },
+    { "clave": "DIFUSION_TOKEN", "caduca": "al-rotarla", "renueva": "Se genera y se guarda como secreto del repositorio" }
+  ],
+  "acciones": [
+    { "nombre": "alta-pendiente", "efecto": "reversible", "ensayo": null },
+    { "nombre": "confirmar", "efecto": "reversible", "ensayo": null },
+    { "nombre": "baja", "efecto": "reversible", "ensayo": null }
+  ],
+  "registro": null,
+  "centinela": null,
+  "datosPersonales": true,
+  "notas": "AQUI VIVEN DATOS DE PERSONAS REALES. Correos de terceros con consentimiento demostrable. Es la pieza con obligaciones legales, y ya está en produccion."
+}

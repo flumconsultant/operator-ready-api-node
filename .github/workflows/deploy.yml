@@ -78,6 +78,11 @@ jobs:
       # puede saber qué lee una persona. Si encuentra una palabra importada o
       # un anglicismo accidental, el despliegue se detiene aquí y el sitio sigue
       # sirviendo la versión anterior, que es preferible a publicar media lengua.
+      # El catálogo antes que nada: no depende de compilar, y si una llave
+      # nueva no está declarada conviene saberlo antes de gastar diez minutos.
+      - name: El catálogo cuadra con lo que hay
+        run: node scripts/catalogo.mjs
+
       - name: QA de lenguaje del español publicado
         run: node scripts/qa-lenguaje.mjs
 

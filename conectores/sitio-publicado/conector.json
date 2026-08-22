@@ -1,0 +1,15 @@
+{
+  "nombre": "sitio-publicado",
+  "sistema": "meetbecome.com · el sitio en vivo",
+  "queHace": "Pregunta al dominio real si sirve todo lo que el repositorio da por publicado, y relanza el despliegue si no.",
+  "implementacion": "scripts/centinela.mjs",
+  "disparadores": ["dos-veces-al-dia", "tras-despliegue", "a-mano"],
+  "credenciales": [],
+  "acciones": [
+    { "nombre": "comprobar", "efecto": "reversible", "ensayo": null },
+    { "nombre": "relanzar-despliegue", "efecto": "reversible", "ensayo": null }
+  ],
+  "registro": null,
+  "centinela": "es el centinela",
+  "notas": "Sin credenciales a proposito: lee archivos del repositorio y hace peticiones publicas."
+}

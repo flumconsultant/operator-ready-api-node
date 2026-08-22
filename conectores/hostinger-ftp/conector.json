@@ -1,0 +1,18 @@
+{
+  "nombre": "hostinger-ftp",
+  "sistema": "Hostinger · alojamiento del sitio",
+  "queHace": "Sube el sitio compilado a public_html por FTPS.",
+  "implementacion": ".github/workflows/deploy.yml",
+  "disparadores": ["push-a-main", "a-mano"],
+  "credenciales": [
+    { "clave": "FTP_HOST", "caduca": "nunca", "renueva": "Panel de Hostinger" },
+    { "clave": "FTP_USER", "caduca": "nunca", "renueva": "Panel de Hostinger" },
+    { "clave": "FTP_PASSWORD", "caduca": "al-rotarla", "renueva": "Panel de Hostinger" }
+  ],
+  "acciones": [
+    { "nombre": "subir-sitio", "efecto": "reversible", "ensayo": null }
+  ],
+  "registro": null,
+  "centinela": "scripts/centinela.mjs",
+  "notas": "Reintentos con espera creciente en reintentar-despliegue.yml: 1 min, 10 min, 30 min."
+}

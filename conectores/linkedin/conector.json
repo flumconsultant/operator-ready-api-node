@@ -1,0 +1,43 @@
+{
+  "nombre": "linkedin",
+  "sistema": "LinkedIn · página de empresa",
+  "queHace": "Anuncia en la página de empresa el artículo recién publicado.",
+  "implementacion": "scripts/linkedin.mjs",
+  "disparadores": [
+    "tras-despliegue",
+    "a-mano"
+  ],
+  "credenciales": [
+    {
+      "clave": "LINKEDIN_TOKEN",
+      "caduca": "60d",
+      "avisar": "14d",
+      "renueva": "docs/linkedin.md"
+    },
+    {
+      "clave": "LINKEDIN_ORG_ID",
+      "caduca": "nunca",
+      "renueva": "docs/linkedin.md"
+    },
+    {
+      "clave": "LINKEDIN_CLIENT_ID",
+      "caduca": "nunca",
+      "renueva": "docs/linkedin.md"
+    },
+    {
+      "clave": "LINKEDIN_CLIENT_SECRET",
+      "caduca": "al-rotarla",
+      "renueva": "docs/linkedin.md"
+    }
+  ],
+  "acciones": [
+    {
+      "nombre": "publicar-articulo",
+      "efecto": "irreversible",
+      "ensayo": null
+    }
+  ],
+  "registro": ".github/linkedin-publicado.json",
+  "centinela": null,
+  "notas": "Sin centinela: nadie comprueba que el post exista de verdad en la página."
+}
