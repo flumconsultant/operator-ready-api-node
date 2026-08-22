@@ -4,331 +4,343 @@
 
 **En Google** (no se ve en la página):
 
-<!-- b0115 -->
+<!-- b0119 -->
 - **Título:** BECOME — AI-native transformation company
-<!-- b0116 -->
+<!-- b0120 -->
 - **Descripción:** BECOME turns AI, LLMs and AI agents into enterprise capabilities through strategy, adoption, workflows, technology and governance.
 
-<!-- b0117 -->
+<!-- b0121 -->
 AI-NATIVE TRANSFORMATION COMPANY
 
-<!-- b0118 -->
+<!-- b0122 -->
 # BECOME WHAT COMES NEXT.
 
-<!-- b0119 -->
+<!-- b0123 -->
 We turn AI into a capability your company owns. We align strategy, people, data, agents, products and operations to improve decisions, redesign how work gets done and create new sources of value.
 
-<!-- b0120 -->
+<!-- b0124 -->
 For companies ready to move from isolated tools and pilots to governed, adopted and measurable results.
 
-<!-- b0121 -->
+<!-- b0125 -->
 ## More AI doesn’t mean more transformation.
 
-<!-- b0122 -->
+<!-- b0126 -->
 Many organizations are already experimenting with ChatGPT, Claude, Gemini, copilots and other LLMs. The challenge isn’t gaining access to more models: it’s turning them into new ways to decide, work and operate.
 
-<!-- b0123 -->
+<!-- b0127 -->
 BECOME connects strategy, people, data, LLMs, agents, products and workflows to turn isolated experiments into enterprise capability.
 
-<!-- b0124 -->
+<!-- b0128 -->
 WHAT WE DO
 
-<!-- b0125 -->
+<!-- b0129 -->
 ## We train teams, define the change and build the capability.
 
-<!-- b0126 -->
+<!-- b0130 -->
 ### We train
 
-<!-- b0127 -->
+<!-- b0131 -->
 Every area learns to work with AI on its own processes and documents.
 
-<!-- b0128 -->
+<!-- b0132 -->
 ### We define
 
-<!-- b0129 -->
+<!-- b0133 -->
 Where the value is, what needs to change, and how the company should operate next.
 
-<!-- b0130 -->
+<!-- b0134 -->
 ### We build
 
-<!-- b0131 -->
+<!-- b0135 -->
 The workflow, the agent, or the product — inside the operation, with the people who will use it.
 
-<!-- b0132 -->
+<!-- b0136 -->
 OUR PURPOSE
 
-<!-- b0133 -->
+<!-- b0137 -->
 ## Making AI a capability of the enterprise, not a collection of initiatives.
 
-<!-- b0134 -->
+<!-- b0138 -->
 HOW WE BECOME
 
-<!-- b0135 -->
+<!-- b0139 -->
 ## We don’t bolt AI on from outside. We redesign the enterprise from within.
 
-<!-- b0136 -->
+<!-- b0140 -->
 At every stage we transform the five systems that decide whether AI stays an experiment or becomes a capability of the enterprise.
 
-<!-- b0137 -->
+<!-- b0141 -->
 ### People, inside.
 
-<!-- b0138 -->
+<!-- b0142 -->
 People able to work, decide and collaborate with AI.
 
-<!-- b0139 -->
+<!-- b0143 -->
 ### Data, inside.
 
-<!-- b0140 -->
+<!-- b0144 -->
 Structured and unstructured data prepared to support models, RAG, enterprise search and decisions.
 
-<!-- b0141 -->
+<!-- b0145 -->
 ### Agents, inside.
 
-<!-- b0142 -->
+<!-- b0146 -->
 LLMs, copilots and AI agents able to reason, use tools and execute parts of a workflow within defined boundaries.
 
-<!-- b0143 -->
+<!-- b0147 -->
 ### Products, inside.
 
-<!-- b0144 -->
+<!-- b0148 -->
 AI-native products and experiences that embed models, data and agents directly into the value proposition.
 
-<!-- b0145 -->
+<!-- b0149 -->
 ### Operations, inside.
 
-<!-- b0146 -->
+<!-- b0150 -->
 Redesigned workflows combining automation, AI agents, human decisions, exceptions and controls.
 
-<!-- b0147 -->
+<!-- b0151 -->
 HOW WE TRANSFORM
 
-<!-- b0148 -->
+<!-- b0152 -->
 ## Six stages. One path from ambition to value.
 
-<!-- b0149 -->
-- B Stage 1: Business Ambition
-<!-- b0150 -->
-- E Stage 2: Enterprise Discovery
-<!-- b0151 -->
-- C Stage 3: Capability Choices
-<!-- b0152 -->
-- O Stage 4: Operating Model Design
 <!-- b0153 -->
-- M Stage 5: Make & Embed
+- B Stage 1: Business Ambition
 <!-- b0154 -->
+- E Stage 2: Enterprise Discovery
+<!-- b0155 -->
+- C Stage 3: Capability Choices
+<!-- b0156 -->
+- O Stage 4: Operating Model Design
+<!-- b0157 -->
+- M Stage 5: Make & Embed
+<!-- b0158 -->
 - E Stage 6: Expand & Evolve
 
-<!-- b0155 -->
+<!-- b0159 -->
 Each stage is backed by a proprietary tool that unlocks a specific decision: readiness, value, design, adoption and scale.
 
-<!-- b0156 -->
+<!-- b0160 -->
 OUR OFFER
 
-<!-- b0157 -->
+<!-- b0161 -->
 ## Enable the present. Design what’s next. Build from within.
 
-<!-- b0158 -->
+<!-- b0162 -->
 ENABLE → DEFINE → DESIGN → BUILD → EMBED → SCALE
 
-<!-- b0159 -->
+<!-- b0163 -->
 Apply it starting tomorrow
 
-<!-- b0160 -->
+<!-- b0164 -->
 In-company training so every area can use ChatGPT, Claude and Gemini on its own processes, documents and challenges.
 
-<!-- b0161 -->
+<!-- b0165 -->
 8–12 weeks
 
-<!-- b0162 -->
+<!-- b0166 -->
 Defines the ambition, identifies where the value is, and designs the operating model and roadmap.
 
-<!-- b0163 -->
+<!-- b0167 -->
 8–12 weeks per capability
 
-<!-- b0164 -->
+<!-- b0168 -->
 Builds and embeds an AI-native capability with adoption, controls and measurement.
 
-<!-- b0165 -->
+<!-- b0169 -->
 INDUSTRIES
 
-<!-- b0166 -->
+<!-- b0170 -->
 ## The technology can be the same. The value is not.
 
-<!-- b0167 -->
+<!-- b0171 -->
 AI capabilities are horizontal; value is not. What decides the outcome is which decisions, which processes and which risks define your industry.
 
-<!-- b0168 -->
-### Real Estate & Construction
-
-<!-- b0169 -->
-Projects decided in contracts, technical files and permits.
-
-<!-- b0170 -->
-### Healthcare & Life Sciences
-
-<!-- b0171 -->
-The administrative and documentary work around care.
-
 <!-- b0172 -->
-## What do you need to transform right now?
+Banking, insurance, fintech and asset management.
 
 <!-- b0173 -->
-Start with the situation, not the name of the solution.
+Asset-intensive operations, safety and compliance.
 
 <!-- b0174 -->
-Do your pilots never scale?
+Assortment, pricing, content and service at weekly speed.
 
 <!-- b0175 -->
-Need to prepare your teams to work with AI?
+Service, disruption and experience under volume peaks.
 
 <!-- b0176 -->
-Need to redesign a critical workflow?
+### Real Estate & Construction
 
 <!-- b0177 -->
-Want to introduce agents without losing control?
+Projects decided in contracts, technical files and permits.
 
 <!-- b0178 -->
-### Build AI-enabled products and services
+### Healthcare & Life Sciences
 
 <!-- b0179 -->
-Want AI to become part of your value proposition?
+The administrative and documentary work around care.
 
 <!-- b0180 -->
-### Measure and govern AI value
+## What do you need to transform right now?
 
 <!-- b0181 -->
-Need to measure and govern AI value?
+Start with the situation, not the name of the solution.
 
 <!-- b0182 -->
-VALUE, MADE VISIBLE
+Do your pilots never scale?
 
 <!-- b0183 -->
-## Measure what changes, not how much AI you deploy.
+Need to prepare your teams to work with AI?
 
 <!-- b0184 -->
-### Speed
+Need to redesign a critical workflow?
 
 <!-- b0185 -->
-Shorter decision and execution cycles.
+Want to introduce agents without losing control?
 
 <!-- b0186 -->
-### Quality
+### Build AI-enabled products and services
 
 <!-- b0187 -->
-Consistent work, fewer errors and better outcomes.
+Want AI to become part of your value proposition?
 
 <!-- b0188 -->
-### Growth
+### Measure and govern AI value
 
 <!-- b0189 -->
-New products, experiences and sources of value.
+Need to measure and govern AI value?
 
 <!-- b0190 -->
-### Risk
+VALUE, MADE VISIBLE
 
 <!-- b0191 -->
-Clear controls, accountability and human oversight.
+## Measure what changes, not how much AI you deploy.
 
 <!-- b0192 -->
-### Capability
+### Speed
 
 <!-- b0193 -->
-Teams able to operate and improve the system.
+Shorter decision and execution cycles.
 
 <!-- b0194 -->
-We don’t publish client figures yet. When we do, they’ll come with baseline and attribution.
+### Quality
 
 <!-- b0195 -->
-WHY BECOME
+Consistent work, fewer errors and better outcomes.
 
 <!-- b0196 -->
-## Strategy that builds. Technology that embeds. Capability that stays.
+### Growth
 
 <!-- b0197 -->
-### Business first
+New products, experiences and sources of value.
 
 <!-- b0198 -->
-We start from the enterprise outcome, not the tool.
+### Risk
 
 <!-- b0199 -->
-We work with client teams to build ownership and operational confidence.
+Clear controls, accountability and human oversight.
 
 <!-- b0200 -->
-### Adoption by design
+### Capability
 
 <!-- b0201 -->
-Roles, controls, skills and measurement are part of the solution from day one.
+Teams able to operate and improve the system.
 
 <!-- b0202 -->
-The work is done when the capability belongs to the company.
+We don’t publish client figures yet. When we do, they’ll come with baseline and attribution.
 
 <!-- b0203 -->
-THE WORK WE ARE BUILT TO DO
+WHY BECOME
 
 <!-- b0204 -->
-## Three transformations we know how to lead.
+## Strategy that builds. Technology that embeds. Capability that stays.
 
 <!-- b0205 -->
-These are scenarios, not client cases.
+### Business first
 
 <!-- b0206 -->
-### Decision intelligence
+We start from the enterprise outcome, not the tool.
 
 <!-- b0207 -->
-Redesigning a high-value decision and its information flow.
+We work with client teams to build ownership and operational confidence.
 
 <!-- b0208 -->
-What changes inside: Shared context, exception paths and explicit decision rights.
+### Adoption by design
 
 <!-- b0209 -->
-### Agentic operations
+Roles, controls, skills and measurement are part of the solution from day one.
 
 <!-- b0210 -->
-Embedding agents into a controlled end-to-end workflow.
+The work is done when the capability belongs to the company.
 
 <!-- b0211 -->
-What changes inside: Orchestration, a human-in-the-loop model and operational controls.
+THE WORK WE ARE BUILT TO DO
 
 <!-- b0212 -->
-### AI-native product
+## Three transformations we know how to lead.
 
 <!-- b0213 -->
-Creating a new intelligent capability for customers or employees.
+These are scenarios, not client cases.
 
 <!-- b0214 -->
-What changes inside: Data layer, product ownership and value measurement.
+### Decision intelligence
 
 <!-- b0215 -->
-BECOME INSIGHTS
+Redesigning a high-value decision and its information flow.
 
 <!-- b0216 -->
-## Ideas for the company that comes next.
+What changes inside: Shared context, exception paths and explicit decision rights.
 
 <!-- b0217 -->
-### The AI-native enterprise
+### Agentic operations
 
 <!-- b0218 -->
-What sets an AI-native company apart from a company that just uses AI.
+Embedding agents into a controlled end-to-end workflow.
 
 <!-- b0219 -->
-### Agentic work
+What changes inside: Orchestration, a human-in-the-loop model and operational controls.
 
 <!-- b0220 -->
-Workflows, roles, agents and human accountability.
+### AI-native product
 
 <!-- b0221 -->
-### Operating-model reinvention
+Creating a new intelligent capability for customers or employees.
 
 <!-- b0222 -->
-The design decisions that determine where value accumulates.
+What changes inside: Data layer, product ownership and value measurement.
 
 <!-- b0223 -->
-## What should your company become next?
+BECOME INSIGHTS
 
 <!-- b0224 -->
-Start with a conversation about the outcome, capability or workflow you need to transform. Under two minutes to tell us about it.
+## Ideas for the company that comes next.
 
 <!-- b0225 -->
+### The AI-native enterprise
+
+<!-- b0226 -->
+What sets an AI-native company apart from a company that just uses AI.
+
+<!-- b0227 -->
+### Agentic work
+
+<!-- b0228 -->
+Workflows, roles, agents and human accountability.
+
+<!-- b0229 -->
+### Operating-model reinvention
+
+<!-- b0230 -->
+The design decisions that determine where value accumulates.
+
+<!-- b0231 -->
+## What should your company become next?
+
+<!-- b0232 -->
+Start with a conversation about the outcome, capability or workflow you need to transform. Under two minutes to tell us about it.
+
+<!-- b0233 -->
 Or email us at hello@meetbecome.com
 
 ---

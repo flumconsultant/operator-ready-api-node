@@ -167,177 +167,189 @@ INDUSTRIAS
 Las capacidades de IA son transversales; el valor no lo es. Lo que decide el resultado es qué decisiones, qué procesos y qué riesgos definen tu industria.
 
 <!-- b0057 -->
-### Real Estate y Construcción
+Banca, seguros, fintech y gestión de activos.
 
 <!-- b0058 -->
-Proyectos que se deciden en contratos, expedientes y permisos.
+Operaciones intensivas en activos, seguridad y cumplimiento.
 
 <!-- b0059 -->
-### Healthcare y Life Sciences
+Surtido, precio, contenido y servicio a velocidad semanal.
 
 <!-- b0060 -->
-Los procesos administrativos y documentales que rodean la atención.
+Servicio, incidencias y experiencia bajo picos de volumen.
 
 <!-- b0061 -->
-## ¿Qué necesitas transformar ahora?
+### Real Estate y Construcción
 
 <!-- b0062 -->
-Empieza por la situación, no por el nombre de la solución.
+Proyectos que se deciden en contratos, expedientes y permisos.
 
 <!-- b0063 -->
-¿Tienes pilotos que no escalan?
+### Healthcare y Life Sciences
 
 <!-- b0064 -->
-¿Necesitas preparar a tus equipos para trabajar con IA?
+Los procesos administrativos y documentales que rodean la atención.
 
 <!-- b0065 -->
-¿Necesitas rediseñar un proceso crítico?
+## ¿Qué necesitas transformar ahora?
 
 <!-- b0066 -->
-¿Quieres incorporar agentes de IA sin perder el control?
+Empieza por la situación, no por el nombre de la solución.
 
 <!-- b0067 -->
-### Crear productos y servicios con IA
+¿Tienes pilotos que no escalan?
 
 <!-- b0068 -->
-¿Quieres que la IA forme parte de tu propuesta de valor?
+¿Necesitas preparar a tus equipos para trabajar con IA?
 
 <!-- b0069 -->
-### Medir y gobernar el valor de la IA
+¿Necesitas rediseñar un proceso crítico?
 
 <!-- b0070 -->
-¿Necesitas medir y gobernar el valor de la IA?
+¿Quieres incorporar agentes de IA sin perder el control?
 
 <!-- b0071 -->
-VALUE, MADE VISIBLE
+### Crear productos y servicios con IA
 
 <!-- b0072 -->
-## Mide lo que cambia, no cuánta IA implementas.
+¿Quieres que la IA forme parte de tu propuesta de valor?
 
 <!-- b0073 -->
-### Speed
+### Medir y gobernar el valor de la IA
 
 <!-- b0074 -->
-Ciclos de decisión y ejecución más cortos.
+¿Necesitas medir y gobernar el valor de la IA?
 
 <!-- b0075 -->
-### Quality
+VALUE, MADE VISIBLE
 
 <!-- b0076 -->
-Trabajo consistente, menos errores y mejores resultados.
+## Mide lo que cambia, no cuánta IA implementas.
 
 <!-- b0077 -->
-### Growth
+### Speed
 
 <!-- b0078 -->
-Nuevos products, experiences y fuentes de valor.
+Ciclos de decisión y ejecución más cortos.
 
 <!-- b0079 -->
-### Risk
+### Quality
 
 <!-- b0080 -->
-Controles, accountability y human oversight claros.
+Trabajo consistente, menos errores y mejores resultados.
 
 <!-- b0081 -->
-### Capacidad
+### Growth
 
 <!-- b0082 -->
-Equipos capaces de operar y mejorar el sistema.
+Nuevos products, experiences y fuentes de valor.
 
 <!-- b0083 -->
-Todavía no publicamos cifras de cliente. Cuando las haya irán con baseline y atribución.
+### Risk
 
 <!-- b0084 -->
-POR QUÉ BECOME
+Controles, accountability y human oversight claros.
 
 <!-- b0085 -->
-## Strategy that builds. Technology that embeds. Capability that stays.
+### Capacidad
 
 <!-- b0086 -->
-### Business first
+Equipos capaces de operar y mejorar el sistema.
 
 <!-- b0087 -->
-Comenzamos por el resultado de negocio, no por la herramienta.
+Todavía no publicamos cifras de cliente. Cuando las haya irán con baseline y atribución.
 
 <!-- b0088 -->
-Trabajamos con los equipos del cliente para que la capacidad quede en sus manos, con confianza operativa.
+POR QUÉ BECOME
 
 <!-- b0089 -->
-### Adoption by design
+## Strategy that builds. Technology that embeds. Capability that stays.
 
 <!-- b0090 -->
-Roles, controles, skills y medición forman parte de la solución desde el inicio.
+### Business first
 
 <!-- b0091 -->
-El trabajo termina cuando la capacidad pertenece a la empresa.
+Comenzamos por el resultado de negocio, no por la herramienta.
 
 <!-- b0092 -->
-THE WORK WE ARE BUILT TO DO
+Trabajamos con los equipos del cliente para que la capacidad quede en sus manos, con confianza operativa.
 
 <!-- b0093 -->
-## Tres transformaciones que sabemos conducir.
+### Adoption by design
 
 <!-- b0094 -->
-Son escenarios, no casos de cliente.
+Roles, controles, skills y medición forman parte de la solución desde el inicio.
 
 <!-- b0095 -->
-### Decision intelligence
+El trabajo termina cuando la capacidad pertenece a la empresa.
 
 <!-- b0096 -->
-Rediseñar una decisión de alto valor y su flujo de información.
+THE WORK WE ARE BUILT TO DO
 
 <!-- b0097 -->
-Qué cambia dentro: Contexto compartido, rutas de excepción y decision rights explícitos.
+## Tres transformaciones que sabemos conducir.
 
 <!-- b0098 -->
-### Agentic operations
+Son escenarios, no casos de cliente.
 
 <!-- b0099 -->
-Incorporar agentes en un proceso controlado de principio a fin.
+### Decision intelligence
 
 <!-- b0100 -->
-Qué cambia dentro: Orquestación, human-in-the-loop model y controles operativos.
+Rediseñar una decisión de alto valor y su flujo de información.
 
 <!-- b0101 -->
-### AI-native product
+Qué cambia dentro: Contexto compartido, rutas de excepción y decision rights explícitos.
 
 <!-- b0102 -->
-Crear una nueva capacidad inteligente para clientes o colaboradores.
+### Agentic operations
 
 <!-- b0103 -->
-Qué cambia dentro: Capa de datos, responsable de producto y medición de valor.
+Incorporar agentes en un proceso controlado de principio a fin.
 
 <!-- b0104 -->
-BECOME INSIGHTS
+Qué cambia dentro: Orquestación, human-in-the-loop model y controles operativos.
 
 <!-- b0105 -->
-## Ideas para la empresa que viene después.
+### AI-native product
 
 <!-- b0106 -->
-### The AI-native enterprise
+Crear una nueva capacidad inteligente para clientes o colaboradores.
 
 <!-- b0107 -->
-Qué distingue a una empresa AI-native de una empresa con IA.
+Qué cambia dentro: Capa de datos, responsable de producto y medición de valor.
 
 <!-- b0108 -->
-### Agentic work
+BECOME INSIGHTS
 
 <!-- b0109 -->
-Procesos, roles, agentes y responsabilidad humana.
+## Ideas para la empresa que viene después.
 
 <!-- b0110 -->
-### Operating-model reinvention
+### The AI-native enterprise
 
 <!-- b0111 -->
-Las decisiones de diseño que determinan dónde se acumula el valor.
+Qué distingue a una empresa AI-native de una empresa con IA.
 
 <!-- b0112 -->
-## ¿En qué debe convertirse tu empresa después?
+### Agentic work
 
 <!-- b0113 -->
-Empieza con una conversación sobre el resultado, la capacidad o el proceso que necesitas transformar. Menos de dos minutos para contárnoslo.
+Procesos, roles, agentes y responsabilidad humana.
 
 <!-- b0114 -->
+### Operating-model reinvention
+
+<!-- b0115 -->
+Las decisiones de diseño que determinan dónde se acumula el valor.
+
+<!-- b0116 -->
+## ¿En qué debe convertirse tu empresa después?
+
+<!-- b0117 -->
+Empieza con una conversación sobre el resultado, la capacidad o el proceso que necesitas transformar. Menos de dos minutos para contárnoslo.
+
+<!-- b0118 -->
 O escríbenos a hello@meetbecome.com
 
 ---

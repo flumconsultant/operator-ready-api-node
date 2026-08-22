@@ -293,7 +293,6 @@ export default function FichaIndustria({ lang = 'es', slug }) {
             <p style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
               {t.metodoTitulo}
             </p>
-            <Body style={{ marginTop: 'var(--space-5)' }}>{t.metodoLinea}</Body>
             <TextCTA to={metodo}>{t.metodoCta}</TextCTA>
           </Card>
         </Cols>
@@ -307,11 +306,13 @@ export default function FichaIndustria({ lang = 'es', slug }) {
         <Cols min="240px" style={{ marginTop: 'var(--space-9)' }}>
           {otras.map((o) => (
             <Card key={o.slug[lang]}>
+              {/* La tarjeta no repite el descriptor de la industria vecina.
+                  Aparecía idéntico en las cinco páginas que enlazan a ella, y
+                  con el nombre basta para decidir si te interesa. */}
               <Link to={urlIndustria(o, lang)} style={{ textDecoration: 'none' }}>
                 <p style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', lineHeight: 1.26, color: 'var(--text-heading)' }}>
                   {o[lang].nombre}
                 </p>
-                <Body style={{ marginTop: 'var(--space-4)' }}>{o[lang].menu}</Body>
               </Link>
             </Card>
           ))}
