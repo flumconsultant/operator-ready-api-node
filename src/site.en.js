@@ -164,7 +164,11 @@ export const NAV = [
   },
 ];
 
-export const CONTACT = { to: '/en/contact', label: 'Let’s talk about your initiative' };
+export const CONTACT = {
+  to: '/en/contact',
+  label: 'Let’s talk about your initiative',
+  corta: 'Let’s talk',
+};
 
 export const FOOTER = [
   { title: 'Services', links: SERVICES.map((s) => ({ to: s.to, label: s.name })) },

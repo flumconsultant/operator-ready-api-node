@@ -187,10 +187,26 @@ export const NAV = [
   },
 ];
 
-/* La llamada a la acción de la cabecera. «Contáctanos» pide un trámite;
-   «Hablemos de tu iniciativa» nombra lo que la persona trae y por qué querría
-   escribir. Es el mismo enlace y la misma página: cambia qué promete. */
-export const CONTACT = { to: '/es/contacto', label: 'Hablemos de tu iniciativa' };
+/* La llamada a la acción, con dos longitudes.
+ *
+ * «Contáctanos» pide un trámite; «Hablemos de tu iniciativa» nombra lo que la
+ * persona trae y por qué querría escribir. Esa es la frase, y es la que va en
+ * los botones dentro de las páginas y en el menú a pantalla completa.
+ *
+ * En la barra de arriba no cabe, y no es una cuestión de gusto: medida, ocupa
+ * 237 px de una barra que ya lleva el logotipo, seis secciones y el selector de
+ * idioma. Con la frase entera, la separación entre las tres piezas se quedaba
+ * en 24 px —el mínimo— en TODAS las pantallas, incluso en una de 1920 donde
+ * sobra sitio. La barra no respiraba nunca.
+ *
+ * Así que arriba va la versión corta. No se pierde nada: quien pulsa llega a la
+ * misma página, y la promesa entera está en los botones del cuerpo, que es
+ * donde alguien la lee de verdad en vez de mirarla de reojo. */
+export const CONTACT = {
+  to: '/es/contacto',
+  label: 'Hablemos de tu iniciativa',
+  corta: 'Hablemos',
+};
 
 /* ---- pie: el mapa completo, para que la cabecera no tenga que serlo ---- */
 export const FOOTER = [

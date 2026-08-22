@@ -82,14 +82,19 @@ textarea:focus-visible {
 }
 
 /* Cabecera: nav completo en desktop, burger por debajo de 1180px */
-/* El corte sube de 1180 a 1300. El menú pasó de cuatro entradas a seis y la
-   llamada a la acción de «Contáctanos» a una frase entera: medido en el
-   navegador, la barra no cabe por debajo de 1300 px y lo que ocurre entonces no
-   es que se apriete, es que la última entrada y el botón se salen de la barra.
-   Por debajo de ese ancho el menú completo se abre desde el botón, que además
-   es donde caben las seis secciones con sus descripciones. */
-@media (max-width: 1299px) { [data-nav] { display: none !important; } }
-@media (min-width: 1300px) { [data-burger] { display: none !important; } }
+/* El corte sube de 1180 a 1260, y el número está medido, no elegido.
+   El menú pasó de cuatro entradas a seis, y con el botón de la cabecera en su
+   versión corta la barra deja de caber justo por debajo de 1240 px: a 1200 se
+   sale 9 px en español. 1260 deja veinte de margen por si otra plataforma
+   compone la tipografía un punto más ancha.
+   Lo que ocurre por debajo no es que el menú se apriete, es que la última
+   entrada y el botón se salen de la barra. Ahí se abre desde el botón, a
+   pantalla completa, que además es donde caben las seis secciones con su
+   descripción.
+   Un portátil de 1280 —el tamaño más común— se queda del lado bueno: 42 px de
+   aire a cada lado. */
+@media (max-width: 1259px) { [data-nav] { display: none !important; } }
+@media (min-width: 1260px) { [data-burger] { display: none !important; } }
 
 /* Por debajo de 720px, el CTA de píldora y el selector ES/EN no caben junto al
    wordmark: la barra desbordaba y empujaba el burger fuera de pantalla, dejando

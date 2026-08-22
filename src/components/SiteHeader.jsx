@@ -225,12 +225,12 @@ export default function SiteHeader() {
                grandes era lo único que volvía a desbordarla justo donde más
                sitio hay. */
             padding: '14px min(var(--gutter-page), 64px)', display: 'flex', alignItems: 'center',
-            gap: 'var(--space-6)', flexWrap: 'nowrap',
+            gap: 'var(--space-8)', flexWrap: 'nowrap',
           }}
         >
           <Logo />
 
-          <nav data-nav aria-label={A11Y.nav} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-5)', marginLeft: 'auto' }}>
+          <nav data-nav aria-label={A11Y.nav} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-6)', marginLeft: 'auto' }}>
             {t.NAV.map((item, i) =>
               item.items ? (
                 /* Dos controles, no uno. El label es un enlace a la landing de
@@ -400,20 +400,20 @@ export default function SiteHeader() {
             )}
           </nav>
 
-          <div data-bar-actions style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', marginLeft: 'auto' }}>
+          <div data-bar-actions style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-5)', marginLeft: 'auto' }}>
             <span data-lang><Lang /></span>
             <Link
               data-cta
               to={t.CONTACT.to}
               style={{
-                display: 'inline-flex', alignItems: 'center', minHeight: 44, padding: '0 var(--space-5)',
+                display: 'inline-flex', alignItems: 'center', minHeight: 44, padding: '0 var(--space-6)',
                 borderRadius: 'var(--radius-pill)', background: 'var(--electric-green)', color: 'var(--deep-navy)',
                 font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase',
                 textDecoration: 'none', whiteSpace: 'nowrap',
               }}
               className="cta-primary"
             >
-              {t.CONTACT.label}
+              {t.CONTACT.corta || t.CONTACT.label}
             </Link>
             <button
               data-burger
