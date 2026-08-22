@@ -9,10 +9,14 @@
 # corrección estuvo disponible a un clic durante una hora, y nadie la pulsó
 # porque nadie sabía que hacía falta. Esto pulsa el botón.
 #
-# Solo reintenta lo que puede arreglarse reintentando: un tropiezo de red. Si el
-# despliegue falla por una causa real —el build roto, un secreto caducado— el
-# segundo intento fallará igual y el tercero no se pide, así que el problema
-# acaba visible en vez de tapado por reintentos infinitos.
+# Solo reintenta lo que puede arreglarse reintentando: un tropiezo de red o un
+# servidor que hoy no está. Si el despliegue falla por una causa real —el build
+# roto, un secreto caducado, un gate en rojo— los reintentos fallarán igual y se
+# acaban, así que el problema queda visible en vez de tapado para siempre.
+#
+# La espera crece con el intento: un minuto, diez, media hora. Una espera fija
+# de segundos solo cura el tropiezo; contra un servidor caído es pedir el mismo
+# rechazo tres veces seguidas.
 
 name: Reintentar el despliegue
 
@@ -34,16 +38,22 @@ jobs:
     #     es el precio de cubrir el caso que importa, y volver a desplegar lo
     #     que ya está en main no rompe nada.
     #   · Que sea una rama que despliega. Un fallo en otra rama no publica nada.
-    #   · Que no lleve ya tres intentos. Sin esto, un fallo permanente se
+    #   · Que no lleve ya cuatro intentos. Sin esto, un fallo permanente se
     #     reintentaría para siempre: cada reintento vuelve a disparar este
-    #     workflow al terminar.
+    #     workflow al terminar. Cuatro intentos con esperas crecientes cubren
+    #     unos cuarenta minutos de servidor caído, que es el orden de magnitud
+    #     de un mal rato del FTP compartido. Más allá de eso ya no es un mal
+    #     rato, y entonces lo correcto es que se vea en rojo.
     if: >-
       github.event.workflow_run.conclusion != 'success'
       && (github.event.workflow_run.head_branch == 'main'
           || github.event.workflow_run.head_branch == 'claude/insights-diario')
-      && github.event.workflow_run.run_attempt < 3
+      && github.event.workflow_run.run_attempt < 4
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    # Cuarenta y cinco minutos porque la última espera es de treinta: el
+    # trabajo tiene que sobrevivir a su propia pausa, o moriría antes de
+    # relanzar nada.
+    timeout-minutes: 45
     steps:
       - name: Volver a lanzar el despliegue
         env:
@@ -55,10 +65,31 @@ jobs:
           set -euo pipefail
           echo "El despliegue $RUN_ID terminó como '$CONCLUSION' en el intento $INTENTO."
 
-          # Cuarenta y cinco segundos antes de reintentar. Cuando el FTP del
-          # hosting está estrangulando conexiones, volver de inmediato es pedir
-          # el mismo rechazo; unos segundos después suele aceptar.
-          sleep 45
+          # La espera crece con el intento, y no por gusto: son dos averías
+          # distintas con dos remedios distintos.
+          #
+          #   · Primer reintento, un minuto. El caso frecuente es un tropiezo:
+          #     el FTP estranguló la conexión de ese momento. Sesenta segundos
+          #     después suele aceptar, y no tiene sentido esperar diez minutos
+          #     para algo que se cura en uno.
+          #   · Segundo reintento, diez minutos. Si el primero también falló,
+          #     no fue un tropiezo: el servidor está caído o saturado. Volver a
+          #     los cuarenta y cinco segundos era pedir tres veces el mismo
+          #     rechazo y llamarlo reintento — ninguna espera corta sobrevive a
+          #     una caída, y la noche del 22 de agosto se vio: tres intentos y
+          #     el que funcionó fue el que llegó cincuenta minutos más tarde.
+          #   · Tercero, media hora. Es el último, y para entonces lo único que
+          #     puede ayudar es tiempo.
+          #
+          # El repositorio es público, así que los minutos de Actions no se
+          # pagan y esperar de más no cuesta nada. Esperar de menos, sí.
+          case "$INTENTO" in
+            1) ESPERA=60 ;;
+            2) ESPERA=600 ;;
+            *) ESPERA=1800 ;;
+          esac
+          echo "Esperando ${ESPERA}s antes de relanzar."
+          sleep "$ESPERA"
 
           # /rerun y no /rerun-failed-jobs: un trabajo cancelado por tiempo no
           # cuenta como «failed» para esa segunda ruta, que respondería que no
@@ -69,6 +100,6 @@ jobs:
             && echo "Relanzado. Será el intento $((INTENTO + 1))."
 
       - name: Avisar si ya no quedan reintentos
-        if: ${{ github.event.workflow_run.run_attempt >= 2 }}
+        if: ${{ github.event.workflow_run.run_attempt >= 3 }}
         run: |
           echo "::warning::Este era el último reintento automático del despliegue ${{ github.event.workflow_run.id }}. Si vuelve a fallar, el problema no es la red: míralo en la pestaña Actions."

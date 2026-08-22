@@ -22,6 +22,12 @@ on:
     # para los dos reintentos automáticos. Antes de esa hora, un fallo aquí
     # sería solo impaciencia.
     - cron: '30 13 * * *'
+    # Y otra vez a las 20:00 de Perú. La de la mañana cubre el artículo del día;
+    # esta cubre lo que se publica por la tarde. La noche del 22 de agosto el
+    # FTP del hosting se cayó a las seis de la tarde y, sin esta segunda pasada,
+    # un sitio desactualizado a esa hora se habría quedado así hasta la mañana
+    # siguiente sin que nadie lo supiera.
+    - cron: '0 1 * * *'
   workflow_dispatch:
   # Y después de cada despliegue que termina bien.
   #
