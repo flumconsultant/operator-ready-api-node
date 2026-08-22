@@ -35,7 +35,7 @@ export default function BecomeNow() {
           <GhostCTA to="#programs" dark>Explore programs by area</GhostCTA>
         </div>
         <p style={{ margin: 'var(--space-10) 0 0', paddingTop: 'var(--space-6)', borderTop: '1px solid var(--border-hairline-dark)', font: 'var(--type-body)', color: 'var(--slate-300)', maxWidth: '54ch' }}>
-          No generic examples: the training is built on your company’s reality.
+          Cases come from the real processes, documents and challenges of each area.
         </p>
         <p style={{ margin: 'var(--space-8) 0 0', font: 'var(--type-mono)', letterSpacing: 'var(--track-mono)', color: 'var(--electric-green)', textTransform: 'uppercase' }}>
           {TAGLINE}
@@ -105,7 +105,8 @@ export default function BecomeNow() {
         <Kicker>Business process understanding session</Kicker>
         <Headline>No program starts before we understand the work it needs to improve.</Headline>
         <Lead>
-          It’s not a sales meeting: it’s where we decide what gets taught.
+          It is the session where we define what work should improve, which cases
+          are worth taking into the programme and which limits we must respect.
         </Lead>
 
         <div style={{ marginTop: 'var(--space-10)' }}>
@@ -119,10 +120,10 @@ export default function BecomeNow() {
 
       <Section band="darker">
         <Kicker dark>How each session works</Kicker>
-        <Headline dark>Six steps. The last one is the one that almost never happens.</Headline>
+        <Headline dark>Every session ends with transfer.</Headline>
         <Lead dark>
-          Every session ends with transfer: the asset gets documented and gets
-          used the next day without us in the room.
+          The asset is documented so the team can reuse it the next day, without
+          us in the room.
         </Lead>
         <div style={{ marginTop: 'var(--space-10)' }}>
           {SESSION_FLOW.map(([t, d], i) => (

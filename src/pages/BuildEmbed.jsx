@@ -17,8 +17,8 @@ import { BajoElCapo } from '../components/tecnologia.jsx';
 
 const BUILDABLE = [
   ['flow', 'Proceso AI-native', 'Un proceso rediseñado de principio a fin, con personas y agentes trabajando juntos.'],
-  ['agents', 'Agent o copilot', 'Una capacidad con límites de autonomía, integración y accountability explícitos.'],
-  ['decision', 'Decision system', 'El flujo de información y la decisión de alto valor que lo consume.'],
+  ['agents', 'Agente o copiloto', 'Una capacidad con límites de autonomía, integración y responsabilidad explícitos.'],
+  ['decision', 'Sistema de decisión asistida', 'El flujo de información que prepara una decisión de alto valor y conserva su trazabilidad.'],
   ['product', 'AI-native product', 'Una experiencia nueva para clientes o colaboradores, con su operación detrás.'],
 ];
 
@@ -75,7 +75,7 @@ export default function BuildEmbed() {
 
       <Section band="light">
         <Kicker>El problema</Kicker>
-        <Headline>Prototypes que nunca se convierten en capacidad operativa.</Headline>
+        <Headline>Prototipos que nunca se convierten en capacidad operativa.</Headline>
         <Lead>
           El piloto funciona en la demo y desaparece en la operación. No falla el
           modelo: falla que se construyó al lado del trabajo real en vez de dentro.
@@ -140,7 +140,7 @@ export default function BuildEmbed() {
 
       <Section band="darker">
         <Kicker dark>Supervisión humana y controles</Kicker>
-        <Headline dark>Lo que decide el destino de un agent no es la calidad de sus respuestas.</Headline>
+        <Headline dark>Lo que determina si un agente puede operar no es solo la calidad de sus respuestas.</Headline>
         <Lead dark>
           Es quién responde cuando se equivoca y qué pasa con los casos que no
           encajan. Esas cuatro decisiones se toman antes de escribir la primera línea.

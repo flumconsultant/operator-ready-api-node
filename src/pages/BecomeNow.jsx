@@ -50,8 +50,7 @@ export default function BecomeNow() {
           <GhostCTA to="#programas" dark>Explora los programas por área</GhostCTA>
         </div>
         <p style={{ margin: 'var(--space-10) 0 0', paddingTop: 'var(--space-6)', borderTop: '1px solid var(--border-hairline-dark)', font: 'var(--type-body)', color: 'var(--slate-300)', maxWidth: '54ch' }}>
-          Nada de ejemplos genéricos: la capacitación se construye sobre la realidad
-          de tu empresa.
+          Los casos parten de los procesos, documentos y retos reales de cada área.
         </p>
         <p style={{ margin: 'var(--space-8) 0 0', font: 'var(--type-mono)', letterSpacing: 'var(--track-mono)', color: 'var(--electric-green)', textTransform: 'uppercase' }}>
           {TAGLINE}
@@ -125,7 +124,8 @@ export default function BecomeNow() {
         <Kicker>Business process understanding session</Kicker>
         <Headline>Ningún programa comienza antes de entender el trabajo que debe mejorar.</Headline>
         <Lead>
-          No es una reunión comercial: es donde se decide qué se va a enseñar.
+          Es la sesión donde definimos qué trabajo debe mejorar, qué casos vale la
+          pena llevar al programa y qué límites debemos respetar.
         </Lead>
 
         <div style={{ marginTop: 'var(--space-10)' }}>
@@ -143,10 +143,10 @@ export default function BecomeNow() {
       {/* Cómo funciona cada sesión */}
       <Section band="darker">
         <Kicker dark>Cómo funciona cada sesión</Kicker>
-        <Headline dark>Seis pasos. El último es el que casi nunca ocurre.</Headline>
+        <Headline dark>Cada sesión termina con transferencia.</Headline>
         <Lead dark>
-          Cada sesión termina en transferencia: el activo queda documentado y se usa
-          al día siguiente sin nosotros delante.
+          El activo queda documentado para que el equipo pueda reutilizarlo al día
+          siguiente, sin nosotros delante.
         </Lead>
         <div style={{ marginTop: 'var(--space-10)' }}>
           {SESSION_FLOW.map(([t, d], i) => (

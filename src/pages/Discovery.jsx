@@ -58,8 +58,13 @@ export default function Discovery() {
       <SiteHeader />
 
       <Section band="dark" pad="var(--space-12)">
-        <Kicker dark>BECOME Discover™</Kicker>
-        <Headline as="h1" dark>Define en qué debe convertirse tu empresa después.</Headline>
+        <Kicker dark>BECOME DISCOVER™ · Estrategia y modelo operativo</Kicker>
+        <Headline as="h1" dark>Decide dónde está el valor de la IA y qué debe cambiar para capturarlo.</Headline>
+        {/* La frase de marca baja a subtítulo: como H1 era memorable y
+            abstracta, y esta página tiene intención comercial. */}
+        <p style={{ margin: 'var(--space-6) 0 0', font: 'var(--type-lead)', color: 'var(--electric-green)' }}>
+          Define en qué debe convertirse tu empresa después.
+        </p>
         <Lead dark>
           De ocho a doce semanas para responder tres preguntas: dónde está el
           valor de la IA en tu negocio, qué se hace primero y cómo tiene que
@@ -149,17 +154,17 @@ export default function Discovery() {
             <Kicker>Working model</Kicker>
             <Headline>Se hace con tu equipo, no sobre tu equipo.</Headline>
             <Body>
-              Un accountable lead por engagement y un client team integrado desde la
-              primera semana. Las decisiones y los riesgos se hacen visibles a medida
+              Un responsable claro por engagement y el equipo del cliente integrado
+              desde la primera semana. Las decisiones y los riesgos se hacen visibles a medida
               que aparecen, no en la presentación final.
             </Body>
             <Body>
-              La participación ejecutiva no es opcional: sin las personas que deciden
-              en la sala, el output es un documento, no una dirección.
+              DISCOVER™ requiere participación ejecutiva en las decisiones clave:
+              prioridad, inversión, responsable y modelo operativo.
             </Body>
           </Reveal>
           <Reveal as="div">
-            <Kicker>Proprietary tools</Kicker>
+            <Kicker>Herramientas propias</Kicker>
             <div style={{ marginTop: 'var(--space-6)' }}>
               {TOOLS.map(([t, d], i) => <IndexRow key={t} index={i} term={t} def={d} />)}
             </div>

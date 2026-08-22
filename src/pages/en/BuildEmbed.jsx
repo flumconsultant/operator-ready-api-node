@@ -12,7 +12,7 @@ import { BajoElCapo } from '../../components/tecnologia.jsx';
 const BUILDABLE = [
   ['flow', 'AI-native workflow', 'An end-to-end process redesigned with people and agents working together.'],
   ['agents', 'Agent or copilot', 'A capability with explicit limits on autonomy, integration and accountability.'],
-  ['decision', 'Decision system', 'The information flow and the high-value decision that consumes it.'],
+  ['decision', 'Assisted decision system', 'An information flow that prepares a high-value decision and keeps it traceable.'],
   ['product', 'AI-native product', 'A new experience for customers or employees, with its operation behind it.'],
 ];
 
@@ -133,7 +133,7 @@ export default function BuildEmbed() {
 
       <Section band="darker">
         <Kicker dark>Human-in-the-loop and controls</Kicker>
-        <Headline dark>What decides an agent’s fate isn’t the quality of its answers.</Headline>
+        <Headline dark>What determines whether an agent can operate is not only the quality of its answers.</Headline>
         <Lead dark>
           It’s who answers for it when it gets something wrong, and what happens
           with the cases that don’t fit. Those four decisions get made before the

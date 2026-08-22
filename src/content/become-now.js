@@ -12,7 +12,7 @@
  * catálogo de cursos.
  */
 
-export const TAGLINE = 'Learn today. Apply tomorrow. Build capacidad that stays.';
+export const TAGLINE = 'Learn today. Apply tomorrow. Build capability that stays.';
 
 export const PROMISE =
   'Tu empresa no aprende IA con ejemplos genéricos. Aprende aplicándola a lo que necesita resolver hoy.';
