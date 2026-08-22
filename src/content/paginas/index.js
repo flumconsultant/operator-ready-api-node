@@ -17,7 +17,7 @@
  * edición desde el panel; las que aún no han pasado siguen funcionando igual.
  */
 
-import home from './home.json';
+import home from './home.json' with { type: 'json' };
 
 export const PAGINAS = { home };
 
