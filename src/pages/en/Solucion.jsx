@@ -101,11 +101,15 @@ export default function Solucion() {
         <Cols min="240px">
           {others.map((o) => (
             <Card key={o.slug}>
+              {/* La tarjeta no repite la descripción del caso vecino. Ese
+                  párrafo aparecía idéntico en las cinco páginas que enlazan a
+                  él, y era casi la mitad de lo compartido entre las seis.
+                  La etiqueta corta basta para decidir si te interesa; la
+                  página de destino se explica sola. */}
               <Link to={o.to} style={{ textDecoration: 'none' }}>
                 <p style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', lineHeight: 1.26, color: 'var(--text-heading)' }}>
-                  {o.q}
+                  {o.label}
                 </p>
-                <Body style={{ marginTop: 'var(--space-4)' }}>{o.line}</Body>
               </Link>
             </Card>
           ))}
