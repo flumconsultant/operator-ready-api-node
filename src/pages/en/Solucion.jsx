@@ -31,7 +31,7 @@ export default function Solucion() {
         <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1.2fr)', gap: 'var(--space-9)' }}>
           <Reveal as="div">
             <Kicker>This is probably happening to you</Kicker>
-            <Headline>Signals that read as familiar from the inside.</Headline>
+            <Headline>{c.senalesTitular}</Headline>
           </Reveal>
           <Reveal as="ul" style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 'var(--space-4)' }}>
             {c.signals.map((s) => (
@@ -46,6 +46,7 @@ export default function Solucion() {
 
       <Section band="dark">
         <Kicker dark>The problem behind the symptom</Kicker>
+        <Headline dark>{c.problemaTitular}</Headline>
         <Reveal as="p" style={{ margin: 'var(--space-6) 0 0', font: 'var(--type-lead)', color: 'var(--slate-100)', maxWidth: '62ch' }}>
           {c.problem}
         </Reveal>
@@ -53,6 +54,7 @@ export default function Solucion() {
 
       <Section band="light">
         <Kicker>How BECOME adds value</Kicker>
+        <Headline>{c.valorTitular}</Headline>
         <Lead>{c.value}</Lead>
 
         <Cols min="220px">
@@ -86,12 +88,8 @@ export default function Solucion() {
 
       <Section band="darker">
         <Kicker dark>What changes inside</Kicker>
-        <Headline dark>People, Data, Agents, Products and Operations.</Headline>
-        <Body dark style={{ marginTop: 'var(--space-6)' }}>
-          None of these situations gets solved in just one of the five layers.
-          That’s why the work crosses all five: if one is left out, the change
-          doesn’t survive the first quarter.
-        </Body>
+        <Headline dark>{c.dentroTitular}</Headline>
+        <Body dark style={{ marginTop: 'var(--space-6)' }}>{c.dentroTexto}</Body>
         <TextCTA to="/en/how-we-transform" dark>How we transform</TextCTA>
       </Section>
 
@@ -119,11 +117,8 @@ export default function Solucion() {
 
       <Section band="darker" pad="var(--space-13)">
         <Kicker dark>Your next operating model starts with a question</Kicker>
-        <Headline dark>{c.q}</Headline>
-        <Lead dark>
-          Tell us the context. We’ll respond with the right starting point, not a
-          sales sequence.
-        </Lead>
+        <Headline dark>{c.cierreTitular}</Headline>
+        <Lead dark>{c.cierreTexto}</Lead>
         <div style={{ marginTop: 'var(--space-8)' }}>
           <PrimaryCTA to="/en/contact">{c.cta}</PrimaryCTA>
         </div>

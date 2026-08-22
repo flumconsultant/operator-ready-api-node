@@ -4,343 +4,482 @@
 
 **En Google** (no se ve en la página):
 
-<!-- b1784 -->
+<!-- b1786 -->
 - **Título:** Casos de uso de IA en la empresa | BECOME
-<!-- b1785 -->
+<!-- b1787 -->
 - **Descripción:** Seis necesidades de negocio y qué exige cada una: escalar más allá de los pilotos, preparar equipos, rediseñar procesos, AI agents con control y medir el valor.
 
-<!-- b1786 -->
+<!-- b1788 -->
 # No busques una solución. Empieza por lo que debe cambiar.
 
-<!-- b1787 -->
+<!-- b1789 -->
 Selecciona la situación que más se parece a la tuya. Te mostraremos qué capacidad necesitas, qué debe cambiar dentro y cuál es el mejor punto de partida.
 
-<!-- b1788 -->
+<!-- b1790 -->
 ¿QUÉ NECESITAS TRANSFORMAR?
 
-<!-- b1789 -->
+<!-- b1791 -->
 ## Seis preguntas que reconocerás antes que cualquier nombre técnico.
 
-<!-- b1790 -->
-### Escalar la IA más allá de los pilotos
-
-<!-- b1791 -->
-Convierte una oportunidad priorizada en una capacidad segura, adoptada y medible.
-
 <!-- b1792 -->
-### Crear productos y servicios con IA
+Identifica qué falta en el proceso, los datos, los controles, el modelo operativo y quién responde.
 
 <!-- b1793 -->
-Diseña y construye un producto o una experiencia que cree valor nuevo para clientes o equipos.
+Convierte el uso suelto de herramientas en una forma de trabajar compartida, con criterios y controles.
 
 <!-- b1794 -->
-### Medir y gobernar el valor de la IA
+Replantea de principio a fin las personas, los agentes, las decisiones, los datos, las excepciones y las métricas.
 
 <!-- b1795 -->
-Define la línea base, los responsables y los controles que hacen que el resultado se sostenga.
+Convierte una oportunidad priorizada en una capacidad segura, adoptada y medible.
 
 <!-- b1796 -->
-Del síntoma a la decisión.
+### Crear productos y servicios con IA
 
 <!-- b1797 -->
-MAPA DE ORIENTACIÓN
+Diseña y construye un producto o una experiencia que cree valor nuevo para clientes o equipos.
 
 <!-- b1798 -->
-## Del síntoma a la decisión.
+### Medir y gobernar el valor de la IA
 
 <!-- b1799 -->
-BECOME DISCOVER™ cuando falta estrategia o estado objetivo. BECOME EMBED™ cuando ya hay una capacidad priorizada y condiciones para construir.
+Define la línea base, los responsables y los controles que hacen que el resultado se sostenga.
 
 <!-- b1800 -->
-PREGUNTA
+Del síntoma a la decisión.
 
 <!-- b1801 -->
-LO QUE SUELE OCURRIR
+MAPA DE ORIENTACIÓN
 
 <!-- b1802 -->
-LO QUE SE NECESITA
+## Del síntoma a la decisión.
 
 <!-- b1803 -->
-ENGAGEMENT
+BECOME DISCOVER™ cuando falta estrategia o estado objetivo. BECOME EMBED™ cuando ya hay una capacidad priorizada y condiciones para construir.
 
 <!-- b1804 -->
-Prototipos aislados, sin responsable, integración ni adopción.
+PREGUNTA
 
 <!-- b1805 -->
-Diagnóstico de sistema, estado objetivo y decisión sobre qué escalar.
+LO QUE SUELE OCURRIR
 
 <!-- b1806 -->
-BECOME DISCOVER™ → BECOME EMBED™
+LO QUE SE NECESITA
 
 <!-- b1807 -->
-Cada persona usa la IA a su manera y con resultados desiguales.
+ENGAGEMENT
 
 <!-- b1808 -->
-Un método común sobre los procesos reales del área, con criterios y controles.
+¿Tienes pilotos que no escalan?
 
 <!-- b1809 -->
-Un proceso lento, fragmentado o intensivo en decisiones.
+Prototipos aislados, sin responsable, integración ni adopción.
 
 <!-- b1810 -->
-Rediseño de principio a fin, con roles, agentes, datos y controles.
+Diagnóstico de sistema, estado objetivo y decisión sobre qué escalar.
 
 <!-- b1811 -->
-BECOME DISCOVER™ + BECOME EMBED™
+BECOME DISCOVER™ → BECOME EMBED™
 
 <!-- b1812 -->
-Hay una idea o una necesidad concreta, pero falta el diseño operativo.
+¿Necesitas preparar a tus equipos para trabajar con IA?
 
 <!-- b1813 -->
-Diseño, límites de autonomía, supervisión humana, construcción y adopción.
+Cada persona usa la IA a su manera y con resultados desiguales.
 
 <!-- b1814 -->
-¿Quieres que la IA forme parte de tu propuesta de valor?
+Un método común sobre los procesos reales del área, con criterios y controles.
 
 <!-- b1815 -->
-Se busca valor nuevo para clientes o colaboradores.
+¿Necesitas rediseñar un proceso crítico?
 
 <!-- b1816 -->
-Tesis de producto, diseño de la experiencia, arquitectura de datos y agentes, y validación.
+Un proceso lento, fragmentado o intensivo en decisiones.
 
 <!-- b1817 -->
-BECOME EMBED™ o la secuencia completa
+Rediseño de principio a fin, con roles, agentes, datos y controles.
 
 <!-- b1818 -->
-¿Necesitas medir y gobernar el valor de la IA?
+BECOME DISCOVER™ + BECOME EMBED™
 
 <!-- b1819 -->
-Se reportan actividades, pero no resultados, y nadie responde por las decisiones.
+¿Quieres incorporar agentes de IA sin perder el control?
 
 <!-- b1820 -->
-Línea base, responsables, frecuencia de revisión y controles.
+Hay una idea o una necesidad concreta, pero falta el diseño operativo.
 
 <!-- b1821 -->
-BECOME DISCOVER™ o BECOME EMBED™
+Diseño, límites de autonomía, supervisión humana, construcción y adopción.
 
 <!-- b1822 -->
-ENCUENTRA TU PUNTO DE PARTIDA
+¿Quieres que la IA forme parte de tu propuesta de valor?
 
 <!-- b1823 -->
+Se busca valor nuevo para clientes o colaboradores.
+
+<!-- b1824 -->
+Tesis de producto, diseño de la experiencia, arquitectura de datos y agentes, y validación.
+
+<!-- b1825 -->
+BECOME EMBED™ o la secuencia completa
+
+<!-- b1826 -->
+¿Necesitas medir y gobernar el valor de la IA?
+
+<!-- b1827 -->
+Se reportan actividades, pero no resultados, y nadie responde por las decisiones.
+
+<!-- b1828 -->
+Línea base, responsables, frecuencia de revisión y controles.
+
+<!-- b1829 -->
+BECOME DISCOVER™ o BECOME EMBED™
+
+<!-- b1830 -->
+ENCUENTRA TU PUNTO DE PARTIDA
+
+<!-- b1831 -->
 ## No empieces por el servicio. Empieza por la decisión que necesitas tomar.
 
 ---
 
 ## `/es/casos-de-uso/agentes-de-ia-con-control`
 
-<!-- b1824 -->
+<!-- b1832 -->
 # ¿Quieres construir un agente o un copiloto?
 
-<!-- b1825 -->
-Diseñamos el workflow antes de elegir el modelo. Definimos qué debe hacer el agent, a qué datos y herramientas puede acceder, qué LLM necesita, cuándo debe pedir aprobación humana y cómo se evaluará antes y después del go-live. Una solución puede combinar ChatGPT/OpenAI, Claude/Anthropic, Gemini/Google u otros modelos, junto con APIs, RAG, tool calling, MCP e integraciones empresariales.
-
-<!-- b1826 -->
-- — El equipo conoce la tarea, pero no el modelo operativo.
-<!-- b1827 -->
-- — No está claro qué decide el agente y qué conserva la persona.
-<!-- b1828 -->
-- — Faltan rutas para las excepciones, permisos o criterios de calidad.
-<!-- b1829 -->
-- — El prototipo no está integrado al proceso real.
-
-<!-- b1830 -->
-Un agente sin modelo operativo es una demostración con permisos. Lo que decide su destino no es la calidad de las respuestas, sino quién responde cuando se equivoca y qué pasa con los casos que no encajan.
-
-<!-- b1831 -->
-Validamos el diseño, definimos la supervisión humana y los controles, construimos e integramos el agente o copiloto, acompañamos la adopción y medimos confianza, desempeño, control y valor.
-
-<!-- b1832 -->
-Un agente o copiloto que participa en trabajo real, con un responsable explícito.
-
 <!-- b1833 -->
-Depende de la preparación: si la oportunidad todavía no tiene un diseño que se pueda validar, empezamos por una revisión corta.
+Diseñamos el trabajo antes de elegir la tecnología: qué puede hacer el agente, qué decisiones conserva la persona, a qué información accede y qué ocurre cuando no sabe cómo continuar.
 
 <!-- b1834 -->
-## ¿Quieres construir un agente o un copiloto?
+## El prototipo responde. La operación todavía no sabe cómo gobernarlo.
+
+<!-- b1835 -->
+- — El equipo conoce la tarea, pero no el modelo operativo.
+<!-- b1836 -->
+- — No está claro qué decide el agente y qué conserva la persona.
+<!-- b1837 -->
+- — Faltan rutas para las excepciones, permisos o criterios de calidad.
+<!-- b1838 -->
+- — El prototipo no está integrado al proceso real.
+<!-- b1839 -->
+- — No existen evaluaciones ni alertas para saber cuándo deja de comportarse como se espera.
+
+<!-- b1840 -->
+## El reto no es darle autonomía. Es diseñar sus límites.
+
+<!-- b1841 -->
+Un agente sin modelo operativo es una demostración con permisos. Lo que decide su destino no es la calidad de las respuestas, sino quién responde cuando se equivoca y qué pasa con los casos que no encajan.
+
+<!-- b1842 -->
+## Construimos el sistema de trabajo alrededor del agente.
+
+<!-- b1843 -->
+Validamos el diseño, definimos la supervisión humana y los controles, construimos e integramos el agente o copiloto, acompañamos la adopción y medimos confianza, desempeño, control y valor.
+
+<!-- b1844 -->
+Un agente o copiloto que participa en trabajo real, con un responsable explícito.
+
+<!-- b1845 -->
+Depende de la preparación: si la oportunidad todavía no tiene un diseño que se pueda validar, empezamos por una revisión corta.
+
+<!-- b1846 -->
+## Agents no opera solo: Operations define cuándo actúa y quién responde.
+
+<!-- b1847 -->
+Agents ejecuta dentro de límites explícitos. Operations define el workflow, las excepciones y el responsable. Data controla fuentes, accesos y trazabilidad. People supervisa y aprende a intervenir. Products convierte esa interacción en una experiencia comprensible para quien la utiliza.
+
+<!-- b1848 -->
+## Antes de construir, haz visible qué puede decidir.
+
+<!-- b1849 -->
+Cuéntanos qué tarea asumiría el agente, qué sistemas tendría que consultar y qué error no puedes permitirte. Con eso podremos definir autonomía, controles y el punto correcto de revisión humana.
 
 ---
 
 ## `/es/casos-de-uso/escalar-ia`
 
-<!-- b1835 -->
+<!-- b1850 -->
+# ¿Tienes pilotos que no escalan?
+
+<!-- b1851 -->
 Si tus prototipos funcionan en una demostración pero no en la operación, hay que identificar qué falta alrededor de la tecnología antes de escalar.
 
-<!-- b1836 -->
+<!-- b1852 -->
+## El piloto funciona. El sistema alrededor todavía no.
+
+<!-- b1853 -->
 - — Nadie se queda a cargo del piloto cuando termina.
-<!-- b1837 -->
+<!-- b1854 -->
 - — El proceso real no cambió.
-<!-- b1838 -->
+<!-- b1855 -->
 - — Los datos, las integraciones o los controles dependen de trabajo manual.
-<!-- b1839 -->
+<!-- b1856 -->
 - — Los usuarios prueban la solución, pero no la incorporan.
-<!-- b1840 -->
+<!-- b1857 -->
 - — No hay una línea base ni un criterio para decidir si está listo para escalar.
 
-<!-- b1841 -->
+<!-- b1858 -->
+## El piloto no está preparado para sobrevivir a la demo.
+
+<!-- b1859 -->
 El piloto no falla por el modelo. Falla porque se construyó al lado del trabajo real en vez de dentro: nadie es dueño del resultado, el proceso siguió igual y no hay medida contra la que decidir.
 
-<!-- b1842 -->
+<!-- b1860 -->
+## Escalar empieza por decidir qué debe cambiar alrededor del modelo.
+
+<!-- b1861 -->
 Evaluamos el piloto como parte de un sistema de Personas, Datos, Agentes, Productos y Operaciones; decidimos si debe detenerse, rediseñarse o convertirse en capacidad; luego construimos las condiciones de adopción y escala.
 
-<!-- b1843 -->
+<!-- b1862 -->
 Una decisión informada y, cuando corresponde, una capacidad preparada para operar.
 
-<!-- b1844 -->
+<!-- b1863 -->
 BECOME DISCOVER™ → BECOME EMBED™
 
-<!-- b1845 -->
+<!-- b1864 -->
 El diagnóstico es estratégico y la solución es operativa. Saltarse el primero suele producir un segundo piloto igual de aislado.
 
-<!-- b1846 -->
-Convierte una oportunidad priorizada en una capacidad segura, adoptada y medible.
+<!-- b1865 -->
+## De iniciativa aislada a capacidad con dueño.
+
+<!-- b1866 -->
+Operations incorpora la solución al flujo real y asigna un responsable. Data deja de depender de preparaciones manuales. Agents opera con límites y criterios de evaluación. People adopta una nueva forma de trabajar y Products convierte el piloto en una capacidad que puede evolucionar.
+
+<!-- b1867 -->
+## No todo piloto merece escalar. Todos merecen una decisión.
+
+<!-- b1868 -->
+Tráenos el piloto, su caso de negocio y lo que ocurrió después de la demostración. Identificaremos si falta adopción, datos, integración, control o una razón suficiente para seguir invirtiendo.
 
 ---
 
 ## `/es/casos-de-uso/medir-y-gobernar-valor`
 
-<!-- b1847 -->
+<!-- b1869 -->
 # ¿Necesitas medir y gobernar el valor de la IA?
 
-<!-- b1848 -->
+<!-- b1870 -->
 Si tienes que demostrar resultados, reducir riesgos y aclarar quién responde por cada decisión, hace falta medir contra una línea base y gobernar lo que ya está funcionando.
 
-<!-- b1849 -->
+<!-- b1871 -->
+## La actividad es visible. El valor todavía no.
+
+<!-- b1872 -->
 - — Se reportan actividades —usuarios, pilotos, licencias— pero no resultados.
-<!-- b1850 -->
+<!-- b1873 -->
 - — No hay línea base, así que cualquier mejora es discutible.
-<!-- b1851 -->
+<!-- b1874 -->
 - — Nadie sabe quién responde cuando un sistema se equivoca.
-<!-- b1852 -->
+<!-- b1875 -->
 - — La dirección necesita decidir la inversión con evidencia, no con demostraciones.
-<!-- b1853 -->
+<!-- b1876 -->
 - — Faltan criterios para decidir qué se escala y qué se detiene.
 
-<!-- b1854 -->
+<!-- b1877 -->
+## Sin baseline, cada resultado es una interpretación.
+
+<!-- b1878 -->
 Sin línea base no hay mejora que probar, solo opiniones sobre una demostración. Y sin responsables asignados, el control se convierte en un documento que nadie aplica. Medir y gobernar no son dos tareas administrativas al final: son lo que separa una capacidad de un experimento caro.
 
-<!-- b1855 -->
+<!-- b1879 -->
+## Convertimos valor y control en decisiones recurrentes.
+
+<!-- b1880 -->
 Definimos qué significa valor en tu caso, medimos el punto de partida, asignamos responsables y frecuencia de revisión, y establecemos los controles —supervisión humana, trazabilidad, calidad y escalamiento— que hacen que el resultado se sostenga.
 
-<!-- b1856 -->
+<!-- b1881 -->
 Una medición que resiste una pregunta difícil y un modelo de gobierno con nombres, no con buenas intenciones.
 
-<!-- b1857 -->
+<!-- b1882 -->
 BECOME DISCOVER™ o BECOME EMBED™
 
-<!-- b1858 -->
+<!-- b1883 -->
 Si lo que falta es el criterio, empieza en Discover. Si ya hay algo funcionando y lo que falta es medirlo y gobernarlo, va dentro de Embed.
 
-<!-- b1859 -->
-## ¿Necesitas medir y gobernar el valor de la IA?
+<!-- b1884 -->
+## La gobernanza no es una sexta capa. Es cómo responden las cinco.
+
+<!-- b1885 -->
+People asigna accountability. Data conserva evidencia y trazabilidad. Agents opera dentro de límites medibles. Products responde por el resultado que promete y Operations incorpora controles, revisión y escalamiento al trabajo habitual. Así, gobernar deja de ser revisar documentos y se convierte en tomar decisiones.
+
+<!-- b1886 -->
+## Lo que no puede explicarse tampoco puede escalarse.
+
+<!-- b1887 -->
+Muéstranos qué iniciativas existen, qué se reporta hoy y qué pregunta sigue sin respuesta en el comité. Definiremos una línea base, responsables y criterios para invertir, corregir, escalar o detener.
 
 ---
 
 ## `/es/casos-de-uso/preparar-equipos-para-ia`
 
-<!-- b1860 -->
+<!-- b1888 -->
+# ¿Necesitas preparar a tus equipos para trabajar con IA?
+
+<!-- b1889 -->
 Si tus equipos ya usan herramientas de IA sin un método común, hace falta convertir ese uso suelto en una forma de trabajar compartida, con criterios y controles.
 
-<!-- b1861 -->
+<!-- b1890 -->
+## El uso crece más rápido que el método.
+
+<!-- b1891 -->
 - — Cada persona usa la IA a su manera y con resultados desiguales.
-<!-- b1862 -->
+<!-- b1892 -->
 - — Se han hecho formaciones generales que no cambiaron el trabajo del día a día.
-<!-- b1863 -->
+<!-- b1893 -->
 - — Nadie sabe qué se puede pedir a una herramienta y qué no.
-<!-- b1864 -->
+<!-- b1894 -->
 - — Lo que funciona en un equipo no llega a los demás.
-<!-- b1865 -->
+<!-- b1895 -->
 - — Falta un criterio común sobre qué es un resultado aceptable.
 
-<!-- b1866 -->
+<!-- b1896 -->
+## La brecha no es de acceso. Es de aplicación.
+
+<!-- b1897 -->
 Un curso genérico enseña una herramienta; el trabajo no cambia porque nadie ha mirado el proceso real del área. La capacidad aparece cuando cada equipo trabaja sobre sus propios documentos, sus casos y sus restricciones, y se lleva algo reutilizable.
 
-<!-- b1867 -->
+<!-- b1898 -->
+## Convertimos aprendizaje individual en capacidad compartida.
+
+<!-- b1899 -->
 Partimos del trabajo que hace hoy cada área: mapeamos su proceso, elegimos los casos prioritarios, trabajamos sobre sus documentos reales y dejamos asistentes, plantillas y criterios de validación que quedan en la empresa.
 
-<!-- b1868 -->
+<!-- b1900 -->
 - Applied Workflow Canvas
-<!-- b1869 -->
+<!-- b1901 -->
 - Adoption Scorecard
 
-<!-- b1870 -->
+<!-- b1902 -->
 Equipos que trabajan con IA sobre sus propios procesos, con una biblioteca reutilizable y criterios comunes de calidad.
 
-<!-- b1871 -->
+<!-- b1903 -->
 Es el servicio diseñado para esto. Si además falta decidir dónde invertir como empresa, Discover ordena esa decisión antes o en paralelo.
 
-<!-- b1872 -->
-Convierte una oportunidad priorizada en una capacidad segura, adoptada y medible.
+<!-- b1904 -->
+## El cambio empieza en People y se sostiene en Operations.
+
+<!-- b1905 -->
+People desarrolla criterio y confianza para usar IA. Operations convierte los casos aprendidos en workflows repetibles. Data define qué información puede utilizarse y Agents deja de ser una herramienta aislada para participar dentro de tareas concretas, con revisión y estándares comunes.
+
+<!-- b1906 -->
+## La capacitación debe verse en el trabajo del día siguiente.
+
+<!-- b1907 -->
+Cuéntanos qué áreas participarán, qué tareas quieren mejorar y qué herramientas tienen autorizadas. Diseñaremos el programa sobre ese trabajo, no sobre ejemplos que desaparecen al terminar la sesión.
 
 ---
 
 ## `/es/casos-de-uso/productos-y-servicios-con-ia`
 
-<!-- b1873 -->
-# ¿Quieres crear una experiencia AI-native?
+<!-- b1908 -->
+# ¿Quieres crear un producto o servicio AI-native?
 
-<!-- b1874 -->
-Si buscas una nueva experiencia para clientes o colaboradores, necesitas diseñar el valor, el comportamiento inteligente y la operación que lo sostiene.
+<!-- b1909 -->
+Si buscas una nueva experiencia para clientes o colaboradores, necesitas diseñar al mismo tiempo su valor, su comportamiento inteligente y la operación que la sostiene.
 
-<!-- b1875 -->
+<!-- b1910 -->
+## La idea tiene IA. El producto todavía necesita una razón para existir.
+
+<!-- b1911 -->
 - — La idea depende de la IA, pero el valor para quien la usa todavía es genérico.
-<!-- b1876 -->
+<!-- b1912 -->
 - — La experiencia de producto no define confianza, explicación ni escalamiento.
-<!-- b1877 -->
+<!-- b1913 -->
 - — No está claro qué datos y qué conocimiento hacen posible la experiencia.
-<!-- b1878 -->
+<!-- b1914 -->
 - — El equipo necesita validar si se desea, si es posible y si es viable.
+<!-- b1915 -->
+- — No existe una métrica que demuestre que la inteligencia mejora la experiencia.
 
-<!-- b1879 -->
+<!-- b1916 -->
+## Un modelo dentro de la experiencia no la convierte en AI-native.
+
+<!-- b1917 -->
 Una experiencia AI-native no se diseña como una pantalla con un modelo detrás. El comportamiento inteligente es parte del producto: qué sabe, qué explica, cuándo cede el control y quién lo opera cuando está en producción.
 
-<!-- b1880 -->
+<!-- b1918 -->
+## Diseñamos valor, comportamiento y operación como un solo producto.
+
+<!-- b1919 -->
 Conectamos la tesis de producto, el recorrido de quien lo usa, la inteligencia, los datos, el comportamiento del agente, los controles y la responsabilidad operativa. Prototipamos, validamos y construimos el alcance que pueda demostrar valor real.
 
-<!-- b1881 -->
-Un producto o servicio AI-native validado y listo para incorporarse.
+<!-- b1920 -->
+Un producto o servicio AI-native validado, con una ruta explícita para llevarlo a operación.
 
-<!-- b1882 -->
-BECOME EMBED™ o secuencia completa
+<!-- b1921 -->
+BECOME EMBED™ o BECOME DISCOVER™ → BECOME EMBED™
 
-<!-- b1883 -->
+<!-- b1922 -->
 Si la tesis de producto todavía está abierta, BECOME DISCOVER™ la cierra antes de construir.
 
-<!-- b1884 -->
-## ¿Quieres crear una experiencia AI-native?
+<!-- b1923 -->
+## Products define la promesa. Las otras capas hacen que pueda cumplirse.
+
+<!-- b1924 -->
+Products define el valor y la experiencia. Agents aporta el comportamiento inteligente. Data determina qué puede conocer y explicar. Operations sostiene el servicio cuando aparecen errores y excepciones. People mantiene la confianza, la supervisión y la capacidad de evolucionarlo.
+
+<!-- b1925 -->
+## La pregunta no es dónde poner IA. Es qué experiencia ahora puede existir.
+
+<!-- b1926 -->
+Cuéntanos quién usaría el producto, qué resultado no puede obtener hoy y por qué la inteligencia sería esencial. Validaremos la propuesta antes de convertir una capacidad técnica en una promesa al mercado.
 
 ---
 
 ## `/es/casos-de-uso/redisenar-procesos-criticos`
 
-<!-- b1885 -->
+<!-- b1927 -->
+# ¿Necesitas rediseñar un proceso crítico?
+
+<!-- b1928 -->
 Si buscas mejorar una operación crítica, hay que rediseñar el proceso de principio a fin, no automatizar tareas aisladas.
 
-<!-- b1886 -->
+<!-- b1929 -->
+## El cuello de botella cambia de lugar, pero no desaparece.
+
+<!-- b1930 -->
 - — Hay muchas entregas entre equipos y trabajo que se rehace.
-<!-- b1887 -->
+<!-- b1931 -->
 - — Las decisiones dependen de información fragmentada.
-<!-- b1888 -->
+<!-- b1932 -->
 - — Los especialistas dedican tiempo a tareas repetitivas.
-<!-- b1889 -->
+<!-- b1933 -->
 - — Las excepciones no tienen responsable ni un criterio común.
-<!-- b1890 -->
+<!-- b1934 -->
 - — El proceso es lento, variable o difícil de auditar.
 
-<!-- b1891 -->
+<!-- b1935 -->
+## Una tarea más rápida no convierte al proceso en mejor.
+
+<!-- b1936 -->
 Automatizar una tarea dentro de un proceso que no cambia mueve el cuello de botella de sitio. El tiempo se recupera en un paso y se pierde en el siguiente, porque las decisiones, los datos y las excepciones siguen donde estaban.
 
-<!-- b1892 -->
+<!-- b1937 -->
+## Rediseñamos la decisión antes de automatizar la tarea.
+
+<!-- b1938 -->
 Rediseñamos como un solo proceso los eventos, las decisiones, los roles, las tareas del agente, los datos, las excepciones, la supervisión humana, los controles y las métricas. Después construimos y validamos la capacidad prioritaria.
 
-<!-- b1893 -->
+<!-- b1939 -->
 Un proceso más rápido, consistente, controlado y capaz de aprender.
 
-<!-- b1894 -->
+<!-- b1940 -->
 BECOME DISCOVER™ + BECOME EMBED™
 
-<!-- b1895 -->
+<!-- b1941 -->
 El rediseño necesita una mirada de sistema, y la mejora solo es real cuando el nuevo proceso funciona en producción.
 
-<!-- b1896 -->
-Convierte una oportunidad priorizada en una capacidad segura, adoptada y medible.
+<!-- b1942 -->
+## Operations lleva el peso. Data y Agents eliminan la fricción.
+
+<!-- b1943 -->
+Operations redefine el flujo completo, los handoffs y las excepciones. Data llega al punto donde se necesita para decidir. Agents asume tareas delimitadas y escala lo que no puede resolver. People conserva el criterio y el ownership; Products hace visible la experiencia de quienes usan o reciben el proceso.
+
+<!-- b1944 -->
+## Empieza por el proceso que más costo oculta.
+
+<!-- b1945 -->
+Muéstranos dónde se acumulan las esperas, el retrabajo y las excepciones. Reconstruiremos el proceso real y definiremos qué debe eliminarse, qué puede asistir la IA y qué decisión debe seguir en manos de una persona.
 
 ---

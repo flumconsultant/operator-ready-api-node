@@ -41,7 +41,7 @@ export default function Solucion() {
         <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1.2fr)', gap: 'var(--space-9)' }}>
           <Reveal as="div">
             <Kicker>Esto probablemente te está pasando</Kicker>
-            <Headline>Señales que se reconocen desde dentro.</Headline>
+            <Headline>{c.senalesTitular}</Headline>
           </Reveal>
           <Reveal as="ul" style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 'var(--space-4)' }}>
             {c.signals.map((s) => (
@@ -56,6 +56,7 @@ export default function Solucion() {
 
       <Section band="dark">
         <Kicker dark>El problema detrás del síntoma</Kicker>
+        <Headline dark>{c.problemaTitular}</Headline>
         <Reveal as="p" style={{ margin: 'var(--space-6) 0 0', font: 'var(--type-lead)', color: 'var(--slate-100)', maxWidth: '62ch' }}>
           {c.problem}
         </Reveal>
@@ -63,6 +64,7 @@ export default function Solucion() {
 
       <Section band="light">
         <Kicker>Cómo agrega valor BECOME</Kicker>
+        <Headline>{c.valorTitular}</Headline>
         <Lead>{c.value}</Lead>
 
         <Cols min="220px">
@@ -97,12 +99,8 @@ export default function Solucion() {
       {/* Qué cambia dentro: los cinco sistemas, que son la tesis de la casa */}
       <Section band="darker">
         <Kicker dark>Qué cambia dentro</Kicker>
-        <Headline dark>People, Data, Agents, Products y Operations.</Headline>
-        <Body dark style={{ marginTop: 'var(--space-6)' }}>
-          Ninguna de estas situaciones se resuelve en una sola de las cinco capas.
-          Por eso el trabajo cruza las cinco: si una queda fuera, el cambio no
-          sobrevive al primer trimestre.
-        </Body>
+        <Headline dark>{c.dentroTitular}</Headline>
+        <Body dark style={{ marginTop: 'var(--space-6)' }}>{c.dentroTexto}</Body>
         <TextCTA to="/es/como-transformamos" dark>Cómo transformamos</TextCTA>
       </Section>
 
@@ -130,11 +128,8 @@ export default function Solucion() {
 
       <Section band="darker" pad="var(--space-13)">
         <Kicker dark>Your next operating model starts with a question</Kicker>
-        <Headline dark>{c.q}</Headline>
-        <Lead dark>
-          Cuéntanos el contexto. Te responderemos con el punto de partida adecuado,
-          no con una secuencia comercial.
-        </Lead>
+        <Headline dark>{c.cierreTitular}</Headline>
+        <Lead dark>{c.cierreTexto}</Lead>
         <div style={{ marginTop: 'var(--space-8)' }}>
           <PrimaryCTA to="/es/contacto">{c.cta}</PrimaryCTA>
         </div>

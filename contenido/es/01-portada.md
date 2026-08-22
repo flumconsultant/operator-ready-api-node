@@ -185,150 +185,159 @@ Los procesos administrativos y documentales que rodean la atención.
 Empieza por la situación, no por el nombre de la solución.
 
 <!-- b0063 -->
-### Escalar la IA más allá de los pilotos
+¿Tienes pilotos que no escalan?
 
 <!-- b0064 -->
-### Crear productos y servicios con IA
+¿Necesitas preparar a tus equipos para trabajar con IA?
 
 <!-- b0065 -->
-¿Quieres que la IA forme parte de tu propuesta de valor?
+¿Necesitas rediseñar un proceso crítico?
 
 <!-- b0066 -->
-### Medir y gobernar el valor de la IA
+¿Quieres incorporar agentes de IA sin perder el control?
 
 <!-- b0067 -->
-¿Necesitas medir y gobernar el valor de la IA?
+### Crear productos y servicios con IA
 
 <!-- b0068 -->
-VALUE, MADE VISIBLE
+¿Quieres que la IA forme parte de tu propuesta de valor?
 
 <!-- b0069 -->
-## Mide lo que cambia, no cuánta IA implementas.
+### Medir y gobernar el valor de la IA
 
 <!-- b0070 -->
-### Speed
+¿Necesitas medir y gobernar el valor de la IA?
 
 <!-- b0071 -->
-Ciclos de decisión y ejecución más cortos.
+VALUE, MADE VISIBLE
 
 <!-- b0072 -->
-### Quality
+## Mide lo que cambia, no cuánta IA implementas.
 
 <!-- b0073 -->
-Trabajo consistente, menos errores y mejores resultados.
+### Speed
 
 <!-- b0074 -->
-### Growth
+Ciclos de decisión y ejecución más cortos.
 
 <!-- b0075 -->
-Nuevos products, experiences y fuentes de valor.
+### Quality
 
 <!-- b0076 -->
-### Risk
+Trabajo consistente, menos errores y mejores resultados.
 
 <!-- b0077 -->
-Controles, accountability y human oversight claros.
+### Growth
 
 <!-- b0078 -->
-### Capacidad
+Nuevos products, experiences y fuentes de valor.
 
 <!-- b0079 -->
-Equipos capaces de operar y mejorar el sistema.
+### Risk
 
 <!-- b0080 -->
-Todavía no publicamos cifras de cliente. Cuando las haya irán con baseline y atribución.
+Controles, accountability y human oversight claros.
 
 <!-- b0081 -->
-POR QUÉ BECOME
+### Capacidad
 
 <!-- b0082 -->
-## Strategy that builds. Technology that embeds. Capability that stays.
+Equipos capaces de operar y mejorar el sistema.
 
 <!-- b0083 -->
-### Business first
+Todavía no publicamos cifras de cliente. Cuando las haya irán con baseline y atribución.
 
 <!-- b0084 -->
-Comenzamos por el resultado de negocio, no por la herramienta.
+POR QUÉ BECOME
 
 <!-- b0085 -->
-Trabajamos con los equipos del cliente para que la capacidad quede en sus manos, con confianza operativa.
+## Strategy that builds. Technology that embeds. Capability that stays.
 
 <!-- b0086 -->
-### Adoption by design
+### Business first
 
 <!-- b0087 -->
-Roles, controles, skills y medición forman parte de la solución desde el inicio.
+Comenzamos por el resultado de negocio, no por la herramienta.
 
 <!-- b0088 -->
-El trabajo termina cuando la capacidad pertenece a la empresa.
+Trabajamos con los equipos del cliente para que la capacidad quede en sus manos, con confianza operativa.
 
 <!-- b0089 -->
-THE WORK WE ARE BUILT TO DO
+### Adoption by design
 
 <!-- b0090 -->
-## Tres transformaciones que sabemos conducir.
+Roles, controles, skills y medición forman parte de la solución desde el inicio.
 
 <!-- b0091 -->
-Son escenarios, no casos de cliente.
+El trabajo termina cuando la capacidad pertenece a la empresa.
 
 <!-- b0092 -->
-### Decision intelligence
+THE WORK WE ARE BUILT TO DO
 
 <!-- b0093 -->
-Rediseñar una decisión de alto valor y su flujo de información.
+## Tres transformaciones que sabemos conducir.
 
 <!-- b0094 -->
-Qué cambia dentro: Contexto compartido, rutas de excepción y decision rights explícitos.
+Son escenarios, no casos de cliente.
 
 <!-- b0095 -->
-### Agentic operations
+### Decision intelligence
 
 <!-- b0096 -->
-Incorporar agentes en un proceso controlado de principio a fin.
+Rediseñar una decisión de alto valor y su flujo de información.
 
 <!-- b0097 -->
-Qué cambia dentro: Orquestación, human-in-the-loop model y controles operativos.
+Qué cambia dentro: Contexto compartido, rutas de excepción y decision rights explícitos.
 
 <!-- b0098 -->
-### AI-native product
+### Agentic operations
 
 <!-- b0099 -->
-Crear una nueva capacidad inteligente para clientes o colaboradores.
+Incorporar agentes en un proceso controlado de principio a fin.
 
 <!-- b0100 -->
-Qué cambia dentro: Capa de datos, responsable de producto y medición de valor.
+Qué cambia dentro: Orquestación, human-in-the-loop model y controles operativos.
 
 <!-- b0101 -->
-BECOME INSIGHTS
+### AI-native product
 
 <!-- b0102 -->
-## Ideas para la empresa que viene después.
+Crear una nueva capacidad inteligente para clientes o colaboradores.
 
 <!-- b0103 -->
-### The AI-native enterprise
+Qué cambia dentro: Capa de datos, responsable de producto y medición de valor.
 
 <!-- b0104 -->
-Qué distingue a una empresa AI-native de una empresa con IA.
+BECOME INSIGHTS
 
 <!-- b0105 -->
-### Agentic work
+## Ideas para la empresa que viene después.
 
 <!-- b0106 -->
-Procesos, roles, agentes y responsabilidad humana.
+### The AI-native enterprise
 
 <!-- b0107 -->
-### Operating-model reinvention
+Qué distingue a una empresa AI-native de una empresa con IA.
 
 <!-- b0108 -->
-Las decisiones de diseño que determinan dónde se acumula el valor.
+### Agentic work
 
 <!-- b0109 -->
-## ¿En qué debe convertirse tu empresa después?
+Procesos, roles, agentes y responsabilidad humana.
 
 <!-- b0110 -->
-Empieza con una conversación sobre el resultado, la capacidad o el proceso que necesitas transformar. Menos de dos minutos para contárnoslo.
+### Operating-model reinvention
 
 <!-- b0111 -->
+Las decisiones de diseño que determinan dónde se acumula el valor.
+
+<!-- b0112 -->
+## ¿En qué debe convertirse tu empresa después?
+
+<!-- b0113 -->
+Empieza con una conversación sobre el resultado, la capacidad o el proceso que necesitas transformar. Menos de dos minutos para contárnoslo.
+
+<!-- b0114 -->
 O escríbenos a hello@meetbecome.com
 
 ---

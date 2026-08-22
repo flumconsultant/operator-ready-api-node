@@ -4,60 +4,60 @@
 
 **En Google** (no se ve en la página):
 
-<!-- b3215 -->
+<!-- b3311 -->
 - **Título:** Contacto — Empecemos por lo que quieres cambiar | BECOME
-<!-- b3216 -->
+<!-- b3312 -->
 - **Descripción:** Comparte el reto, el outcome que buscas y el contexto de tu organización. Lo revisamos y te proponemos el siguiente paso de tu transformación con IA.
 
-<!-- b3217 -->
+<!-- b3313 -->
 CONTACTO
 
-<!-- b3218 -->
+<!-- b3314 -->
 # Empecemos por lo que quieres cambiar.
 
-<!-- b3219 -->
+<!-- b3315 -->
 Comparte brevemente el reto, el outcome que buscas y el contexto de tu organización. Lo revisaremos para entender tu punto de partida y proponerte el siguiente paso más adecuado.
 
-<!-- b3220 -->
+<!-- b3316 -->
 ## Cuéntanos el contexto esencial.
 
-<!-- b3221 -->
+<!-- b3317 -->
 No necesitas tener la solución definida. Queremos entender el problema, la prioridad y las restricciones actuales.
 
-<!-- b3222 -->
+<!-- b3318 -->
 7 preguntas · menos de dos minutos · sin compromiso
 
-<!-- b3223 -->
+<!-- b3319 -->
 ¿Prefieres hablarlo directamente?
 
-<!-- b3224 -->
+<!-- b3320 -->
 Treinta minutos con Carlos Andrés Ramírez para revisar tu punto de partida y decirte, con criterio, qué haría falta. Sin presentación comercial.
 
-<!-- b3225 -->
+<!-- b3321 -->
 Se abre en Calendly, en una pestaña nueva.
 
-<!-- b3226 -->
+<!-- b3322 -->
 QUÉ OCURRE DESPUÉS
 
-<!-- b3227 -->
+<!-- b3323 -->
 ## Tres pasos, y el siguiente siempre es transparente.
 
-<!-- b3228 -->
+<!-- b3324 -->
 ### Leemos tu contexto
 
-<!-- b3229 -->
+<!-- b3325 -->
 Lo mapeamos a las etapas del framework BECOME para saber por dónde entra.
 
-<!-- b3230 -->
+<!-- b3326 -->
 ### Conversación de 30 minutos
 
-<!-- b3231 -->
+<!-- b3327 -->
 Centrada en el resultado de negocio y en las restricciones que tienes hoy.
 
-<!-- b3232 -->
+<!-- b3328 -->
 ### Definimos el primer paso
 
-<!-- b3233 -->
+<!-- b3329 -->
 BECOME NOW™, BECOME DISCOVER™ o BECOME EMBED™. El que corresponda, no el más grande.
 
 ---
