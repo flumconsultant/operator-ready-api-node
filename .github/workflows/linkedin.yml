@@ -1,0 +1,73 @@
+# Anuncia en LinkedIn el artículo que acaba de publicarse.
+#
+# Se dispara al terminar bien un despliegue, y no al escribirse el artículo. El
+# orden importa más de lo que parece: LinkedIn compone la tarjeta del enlace la
+# primera vez que mira la página y guarda ese resultado. Si publicáramos antes
+# de que el sitio estuviera arriba, la tarjeta quedaría vacía para siempre, y
+# borrar el post y repetirlo no la arregla.
+#
+# Mientras no existan los secretos, el trabajo corre y no hace nada: el script
+# lo dice y termina en verde. Así se puede tener montado antes de que LinkedIn
+# apruebe el acceso, sin que nada se ponga rojo entretanto.
+
+name: Anunciar en LinkedIn
+
+on:
+  workflow_run:
+    workflows: ['Desplegar a Hostinger']
+    types: [completed]
+  # Y a mano, para la primera prueba y para rescatar un día suelto.
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: linkedin
+  cancel-in-progress: false
+
+jobs:
+  anunciar:
+    # Solo tras un despliegue con éxito, y solo desde main. Anunciar un
+    # artículo que no llegó a la web sería mandar gente a una página vieja.
+    if: >-
+      github.event_name == 'workflow_dispatch'
+      || (github.event.workflow_run.conclusion == 'success'
+          && github.event.workflow_run.head_branch == 'main')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Publicar el artículo del día
+        env:
+          LINKEDIN_TOKEN: ${{ secrets.LINKEDIN_TOKEN }}
+          LINKEDIN_ORG_ID: ${{ secrets.LINKEDIN_ORG_ID }}
+          LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
+          LINKEDIN_CLIENT_SECRET: ${{ secrets.LINKEDIN_CLIENT_SECRET }}
+        run: node scripts/linkedin.mjs
+
+      # El registro de lo ya anunciado tiene que sobrevivir al trabajo, o cada
+      # despliegue volvería a publicar el mismo post.
+      #
+      # Con «[skip ci]» en el mensaje: sin eso, este commit lanzaría otro
+      # despliegue, que al terminar lanzaría este workflow, que no publicaría
+      # nada —el registro ya lo tiene— pero habría gastado una vuelta entera
+      # por haber apuntado algo en una libreta.
+      - name: Guardar lo anunciado
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- .github/linkedin-publicado.json; then
+            echo "El registro no cambió."
+            exit 0
+          fi
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .github/linkedin-publicado.json
+          git commit -m 'Anunciado en LinkedIn [skip ci]'
+          git push origin HEAD:main
