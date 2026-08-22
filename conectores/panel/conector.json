@@ -3,15 +3,29 @@
   "sistema": "GitHub · contenido del sitio",
   "queHace": "Deja escribir y publicar artículos desde /admin sin que nadie necesite cuenta de GitHub. El token vive en el servidor y no sale de él.",
   "implementacion": "assets/api/panel.php",
-  "disparadores": ["persona-en-admin"],
+  "disparadores": [
+    "persona-en-admin"
+  ],
   "credenciales": [
-    { "clave": "PANEL_TOKEN", "caduca": "al-rotarla", "renueva": "Token de GitHub con permiso de escritura solo sobre este repositorio" },
-    { "clave": "PANEL_USUARIOS", "caduca": "al-rotarla", "renueva": "Usuario y contraseña de quien edita" }
+    {
+      "clave": "PANEL_TOKEN",
+      "caduca": "al-rotarla",
+      "renueva": "Token de GitHub con permiso de escritura solo sobre este repositorio"
+    },
+    {
+      "clave": "PANEL_USUARIOS",
+      "caduca": "al-rotarla",
+      "renueva": "Usuario y contraseña de quien edita"
+    }
   ],
   "acciones": [
-    { "nombre": "publicar-articulo", "efecto": "reversible", "ensayo": null }
+    {
+      "nombre": "publicar-articulo",
+      "efecto": "reversible",
+      "ensayo": null
+    }
   ],
   "registro": "el historial de git",
-  "centinela": null,
+  "centinela": "scripts/centinela-api.mjs · el endpoint vive y niega la entrada sin sesión",
   "notas": "Es el CMS actual y el punto de partida del CMS completo. Reversible porque todo cambio queda en el historial y se puede deshacer."
 }

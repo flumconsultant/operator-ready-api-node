@@ -65,6 +65,14 @@ jobs:
         with:
           node-version: '22'
 
+      # La otra mitad del sitio: formularios, suscripción y panel. Una página
+      # rota se ve; un formulario que devuelve error solo lo descubre quien
+      # intentaba escribirte, y esa persona no vuelve a intentarlo.
+      - name: ¿Siguen vivos los endpoints?
+        continue-on-error: true
+        id: endpoints
+        run: node scripts/centinela-api.mjs
+
       - name: ¿Está publicado lo que dice el repositorio?
         id: primera
         continue-on-error: true
@@ -108,6 +116,12 @@ jobs:
         if: steps.primera.outcome == 'failure' && github.event_name == 'workflow_run'
         run: |
           echo "::error::El despliegue terminó bien pero el sitio no sirve todo lo publicado. Revisa el paso «¿Está publicado lo que dice el repositorio?»."
+          exit 1
+
+      - name: Fallar si algún endpoint no responde como debe
+        if: steps.endpoints.outcome == 'failure'
+        run: |
+          echo "::error::Uno de los endpoints del sitio no responde como debe. Revisa el paso «¿Siguen vivos los endpoints?»."
           exit 1
 
       - name: Resumen

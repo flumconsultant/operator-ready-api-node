@@ -97,6 +97,15 @@ jobs:
       # HTML servido, datos estructurados válidos, imágenes con alt y medidas, y
       # las seis industrias enlazando de verdad. Va aquí por el mismo motivo que
       # el QA: antes de subir, sobre el HTML que se iba a publicar.
+      # El destello de texto sin maquetar tenía guardián y no lo ejecutaba nadie:
+      # había que acordarse. Un guardián que depende de la memoria es media
+      # protección, y esta comprobación existe justamente porque cuatro
+      # controles automáticos dieron verde a algo que se veía a simple vista.
+      - name: Sin destello de texto sin maquetar
+        env:
+          CHROMIUM_PATH: /opt/pw-browsers/chromium-1194/chrome-linux/chrome
+        run: node scripts/verificar-destello.mjs
+
       - name: Gate de publicación
         run: node scripts/gate-seo.mjs
 

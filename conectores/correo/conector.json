@@ -3,15 +3,30 @@
   "sistema": "SMTP del dominio · meetbecome.com",
   "queHace": "Envía los formularios de contacto y los correos de la lista de suscripción.",
   "implementacion": "assets/api/contacto.php · assets/api/correo.php",
-  "disparadores": ["formulario-del-sitio", "difusion"],
+  "disparadores": [
+    "formulario-del-sitio",
+    "difusion"
+  ],
   "credenciales": [
-    { "clave": "MAIL_USER", "caduca": "nunca", "renueva": "Panel de correo de Hostinger" },
-    { "clave": "MAIL_PASSWORD", "caduca": "al-rotarla", "renueva": "Panel de correo de Hostinger" }
+    {
+      "clave": "MAIL_USER",
+      "caduca": "nunca",
+      "renueva": "Panel de correo de Hostinger"
+    },
+    {
+      "clave": "MAIL_PASSWORD",
+      "caduca": "al-rotarla",
+      "renueva": "Panel de correo de Hostinger"
+    }
   ],
   "acciones": [
-    { "nombre": "enviar", "efecto": "irreversible", "ensayo": null }
+    {
+      "nombre": "enviar",
+      "efecto": "irreversible",
+      "ensayo": null
+    }
   ],
   "registro": null,
-  "centinela": null,
-  "notas": "El despliegue falla si faltan los secretos: sin ellos el formulario que trae clientes queda mudo. Sin ensayo: enviar correo de prueba desde el hosting es la única forma de verificarlo."
+  "centinela": "scripts/centinela-api.mjs · el endpoint vive y rechaza un envío vacío",
+  "notas": "El despliegue falla si faltan los secretos: sin ellos el formulario que trae clientes queda mudo. Sin modo ensayo, y es deuda con motivo: enviar es irreversible y llega a una bandeja real, y el endpoint vive dentro del sitio en PHP, no en un script que se pueda lanzar a medias. Lo que sí se comprueba es que el endpoint esté vivo y rechace un envío vacío, que es todo lo que puede hacerse sin efectos."
 }

@@ -40,7 +40,7 @@ Tres reglas, sin excepciones: ninguna llave viaja por un chat ni por correo —u
 - Se dispara: formulario-del-sitio
 - Acciones: alta-pendiente, confirmar, baja
 - Registro de lo hecho: no lleva
-- Centinela: **ninguno**
+- Centinela: scripts/centinela-api.mjs · el endpoint vive y rechaza un alta sin correo
 - **Guarda datos personales de terceros.**
 
 AQUI VIVEN DATOS DE PERSONAS REALES. Correos de terceros con consentimiento demostrable. Es la pieza con obligaciones legales, y ya está en produccion.
@@ -53,9 +53,9 @@ AQUI VIVEN DATOS DE PERSONAS REALES. Correos de terceros con consentimiento demo
 - Se dispara: formulario-del-sitio, difusion
 - Acciones: enviar (irreversible)
 - Registro de lo hecho: no lleva
-- Centinela: **ninguno**
+- Centinela: scripts/centinela-api.mjs · el endpoint vive y rechaza un envío vacío
 
-El despliegue falla si faltan los secretos: sin ellos el formulario que trae clientes queda mudo. Sin ensayo: enviar correo de prueba desde el hosting es la única forma de verificarlo.
+El despliegue falla si faltan los secretos: sin ellos el formulario que trae clientes queda mudo. Sin modo ensayo, y es deuda con motivo: enviar es irreversible y llega a una bandeja real, y el endpoint vive dentro del sitio en PHP, no en un script que se pueda lanzar a medias. Lo que sí se comprueba es que el endpoint esté vivo y rechace un envío vacío, que es todo lo que puede hacerse sin efectos.
 
 ### hostinger-ftp
 
@@ -77,7 +77,7 @@ Reintentos con espera creciente en reintentar-despliegue.yml: 1 min, 10 min, 30 
 - Se dispara: tras-subir-el-sitio
 - Acciones: avisar-cambios
 - Registro de lo hecho: no lleva
-- Centinela: **ninguno**
+- Centinela: scripts/centinela-api.mjs · la clave publicada sigue ahí
 
 Sin registro porque avisar dos veces de la misma dirección no causa daño.
 
@@ -89,9 +89,9 @@ Sin registro porque avisar dos veces de la misma dirección no causa daño.
 - Se dispara: tras-despliegue, a-mano
 - Acciones: publicar-articulo (irreversible)
 - Registro de lo hecho: .github/linkedin-publicado.json
-- Centinela: **ninguno**
+- Centinela: comprueba en LinkedIn que el post existe y está publicado
 
-Sin centinela: nadie comprueba que el post exista de verdad en la página.
+El centinela pregunta a LinkedIn por el post recién creado. Si no está, el artículo vuelve a la cola: el registro no puede decir que se anunció algo que no existe.
 
 ### panel
 
@@ -101,7 +101,7 @@ Sin centinela: nadie comprueba que el post exista de verdad en la página.
 - Se dispara: persona-en-admin
 - Acciones: publicar-articulo
 - Registro de lo hecho: el historial de git
-- Centinela: **ninguno**
+- Centinela: scripts/centinela-api.mjs · el endpoint vive y niega la entrada sin sesión
 
 Es el CMS actual y el punto de partida del CMS completo. Reversible porque todo cambio queda en el historial y se puede deshacer.
 

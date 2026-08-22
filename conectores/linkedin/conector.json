@@ -34,10 +34,10 @@
     {
       "nombre": "publicar-articulo",
       "efecto": "irreversible",
-      "ensayo": null
+      "ensayo": "node scripts/linkedin.mjs --ensayo"
     }
   ],
   "registro": ".github/linkedin-publicado.json",
-  "centinela": null,
-  "notas": "Sin centinela: nadie comprueba que el post exista de verdad en la página."
+  "centinela": "comprueba en LinkedIn que el post existe y está publicado",
+  "notas": "El centinela pregunta a LinkedIn por el post recién creado. Si no está, el artículo vuelve a la cola: el registro no puede decir que se anunció algo que no existe."
 }

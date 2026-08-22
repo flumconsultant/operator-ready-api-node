@@ -3,15 +3,25 @@
   "sistema": "IndexNow · Bing, Yandex, Seznam, Naver",
   "queHace": "Avisa a los buscadores de las direcciones que cambiaron. Google no usa este protocolo.",
   "implementacion": "scripts/indexnow.mjs",
-  "disparadores": ["tras-subir-el-sitio"],
+  "disparadores": [
+    "tras-subir-el-sitio"
+  ],
   "credenciales": [
-    { "clave": "clave-publica-indexnow", "caduca": "nunca", "publica": true,
-      "renueva": "El protocolo exige publicarla en assets/<clave>.txt. Guardarla como secreto daría una falsa sensación de protección sobre un valor que es público por diseño." }
+    {
+      "clave": "clave-publica-indexnow",
+      "caduca": "nunca",
+      "publica": true,
+      "renueva": "El protocolo exige publicarla en assets/<clave>.txt. Guardarla como secreto daría una falsa sensación de protección sobre un valor que es público por diseño."
+    }
   ],
   "acciones": [
-    { "nombre": "avisar-cambios", "efecto": "reversible", "ensayo": null }
+    {
+      "nombre": "avisar-cambios",
+      "efecto": "reversible",
+      "ensayo": null
+    }
   ],
   "registro": null,
-  "centinela": null,
+  "centinela": "scripts/centinela-api.mjs · la clave publicada sigue ahí",
   "notas": "Sin registro porque avisar dos veces de la misma dirección no causa daño."
 }

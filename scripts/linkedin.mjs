@@ -200,3 +200,46 @@ console.log(`  ${urn}`);
 publicados.anunciados.push(nuevo.es.slug);
 writeFileSync(REGISTRO, `${JSON.stringify(publicados, null, 2)}\n`);
 console.log(`Registrado en ${REGISTRO} para que no se repita.`);
+
+/* ---- El centinela: ¿existe el post de verdad? ----------------------------
+ *
+ * LinkedIn ha respondido que sí, y eso no es lo mismo que que el post esté en
+ * la página. Es la distinción que costó un artículo esta semana: «terminó en
+ * verde» y «funcionó» son cosas distintas, y solo se sabe preguntando por el
+ * resultado.
+ *
+ * Se le pide a LinkedIn el post recién creado por su identificador. Si no está,
+ * no se deshace nada —no hay nada que deshacer— pero el aviso sale y el
+ * registro NO se deja mentir: se quita el artículo para que el siguiente
+ * intento vuelva a publicarlo.
+ *
+ * Necesita permiso de lectura sobre la organización. Si no lo hay, lo dice y no
+ * falla: media comprobación es mejor que ninguna, y peor sería poner el
+ * despliegue en rojo por un permiso que quizá LinkedIn no concedió. */
+if (urn && urn.startsWith('urn:li:')) {
+  try {
+    const c = await fetch(`https://api.linkedin.com/rest/posts/${encodeURIComponent(urn)}`, {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+        'X-Restli-Protocol-Version': '2.0.0',
+        'LinkedIn-Version': VERSION,
+      },
+    });
+    if (c.ok) {
+      const d = await c.json();
+      const vivo = d?.lifecycleState === 'PUBLISHED';
+      console.log(vivo
+        ? 'Centinela: el post existe en la página y está publicado.'
+        : `::warning::El post existe pero figura como «${d?.lifecycleState}». Míralo en la página.`);
+    } else if (c.status === 403) {
+      console.log('Centinela: sin permiso de lectura sobre la organización, no se pudo comprobar que el post exista. Añade r_organization_social al token.');
+    } else {
+      console.log(`::warning::LinkedIn dijo que publicó, pero al pedir el post responde HTTP ${c.status}. Comprueba la página a mano.`);
+      publicados.anunciados = publicados.anunciados.filter((x) => x !== nuevo.es.slug);
+      writeFileSync(REGISTRO, `${JSON.stringify(publicados, null, 2)}\n`);
+      console.log('El artículo vuelve a la cola: el registro no puede decir que se anunció algo que no está.');
+    }
+  } catch (e) {
+    console.log(`Centinela: no se pudo comprobar el post (${e.message}).`);
+  }
+}
