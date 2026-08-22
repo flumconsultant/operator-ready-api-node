@@ -1,3 +1,4 @@
+import { campo } from '../content/paginas/index.js';
 import React from 'react';
 import SiteHeader from '../components/SiteHeader.jsx';
 import SiteFooter from '../components/SiteFooter.jsx';
@@ -51,13 +52,9 @@ export default function Nosotros() {
       <SiteHeader />
 
       <Section band="dark" pad="var(--space-12)">
-        <Kicker dark>About BECOME</Kicker>
-        <Headline as="h1" dark>La próxima empresa ya existe dentro de la tuya.</Headline>
-        <Lead dark>
-          BECOME es una AI-native transformation company que conecta estrategia,
-          modelo operativo, tecnología y adopción para convertir una ambición en
-          capacidad real.
-        </Lead>
+        <Kicker dark>{campo('nosotros', 's1kicker')}</Kicker>
+        <Headline as="h1" dark>{campo('nosotros', 's1headline')}</Headline>
+        <Lead dark>{campo('nosotros', 's1lead')}</Lead>
         <div style={{ marginTop: 'var(--space-8)' }}>
           <PrimaryCTA to="/es/como-transformamos">Conoce cómo trabajamos</PrimaryCTA>
         </div>
@@ -65,13 +62,9 @@ export default function Nosotros() {
 
       {/* 01 — Qué es BECOME */}
       <Section band="light" id="sobre-become">
-        <Kicker>Qué es BECOME</Kicker>
-        <Headline>No llegamos para agregar otra herramienta.</Headline>
-        <Lead>
-          Ayudamos a las empresas a rediseñar cómo operan, deciden y crean valor
-          alrededor de la IA. Trabajamos dentro del negocio para convertir una
-          ambición en una capacidad propia, gobernable y capaz de evolucionar.
-        </Lead>
+        <Kicker>{campo('nosotros', 's2kicker')}</Kicker>
+        <Headline>{campo('nosotros', 's2headline')}</Headline>
+        <Lead>{campo('nosotros', 's2lead')}</Lead>
         <Cols min="240px">
           {[
             ['work', 'Categoría', 'AI-native transformation company.'],
@@ -94,18 +87,10 @@ export default function Nosotros() {
           ratio="1 / 1"
           media="0.78fr"
         >
-          <Kicker>Nuestra creencia</Kicker>
-          <Headline>La transformación no se instala. Se construye dentro.</Headline>
-          <Lead>
-            Los pilotos aislados no cambian una empresa. El cambio ocurre cuando se
-            rediseñan a la vez los procesos, los roles, quién decide, los datos, los
-            controles, las capacidades y las métricas: un solo sistema, no siete
-            proyectos.
-          </Lead>
-          <Body>
-            Por eso construimos con los equipos del cliente y les transferimos la responsabilidad
-            desde el inicio.
-          </Body>
+          <Kicker>{campo('nosotros', 's3kicker')}</Kicker>
+          <Headline>{campo('nosotros', 's3headline')}</Headline>
+          <Lead>{campo('nosotros', 's3lead')}</Lead>
+          <Body>{campo('nosotros', 's3body')}</Body>
         </Split>
       </Section>
 
@@ -115,11 +100,9 @@ export default function Nosotros() {
           disciplinas no se cree, y con razón. Lo que se sostiene es que la
           composición cambia según el reto. */}
       <Section band="light">
-        <Kicker>Capacidades</Kicker>
-        <Headline>Negocio, transformación y tecnología en el mismo equipo.</Headline>
-        <Body style={{ marginTop: 'var(--space-6)' }}>
-          Según lo que el reto necesita, BECOME combina:
-        </Body>
+        <Kicker>{campo('nosotros', 's4kicker')}</Kicker>
+        <Headline>{campo('nosotros', 's4headline')}</Headline>
+        <Body style={{ marginTop: 'var(--space-6)' }}>{campo('nosotros', 's4body')}</Body>
         <Cols min="220px" style={{ marginTop: 'var(--space-9)' }}>
           {CAPACIDADES.map((c) => (
             <Reveal as="div" key={c} style={{ borderTop: '1px solid var(--border-strong)', paddingTop: 'var(--space-5)' }}>
@@ -133,8 +116,8 @@ export default function Nosotros() {
          aparte llamada «cultura»: para una firma joven, seis adjetivos
          institucionales pesan más de lo que prueban. */}
       <Section band="darker">
-        <Kicker dark>Cómo trabajamos</Kicker>
-        <Headline dark>Comportamientos observables, no adjetivos aspiracionales.</Headline>
+        <Kicker dark>{campo('nosotros', 's5kicker')}</Kicker>
+        <Headline dark>{campo('nosotros', 's5headline')}</Headline>
         {/* 300px fuerza tres columnas: con 260 caben cuatro y los seis
             comportamientos quedaban en 4 + 2, con la segunda fila medio vacía. */}
         <Cols min="300px">
@@ -152,13 +135,9 @@ export default function Nosotros() {
       <Section id="como-trabajamos" band="light">
         <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 'var(--space-9)' }}>
           <Reveal as="div">
-            <Kicker>El equipo de trabajo</Kicker>
-            <Headline>Un equipo senior y multidisciplinario alrededor del resultado.</Headline>
-            <Body>
-              La composición combina negocio, transformación, producto, adopción,
-              datos e IA según lo que el reto necesita. Cada proyecto mantiene un
-              responsable claro.
-            </Body>
+            <Kicker>{campo('nosotros', 's6kicker')}</Kicker>
+            <Headline>{campo('nosotros', 's6headline')}</Headline>
+            <Body>{campo('nosotros', 's6body')}</Body>
           </Reveal>
           <Reveal as="ul" style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 'var(--space-4)' }}>
             {DELIVERY.map((d) => (
@@ -175,8 +154,8 @@ export default function Nosotros() {
       <Equipo lang="es" id="equipo" />
 
       <Section band="darker" pad="var(--space-13)">
-        <Kicker dark>La próxima capacidad se construye desde dentro</Kicker>
-        <Headline dark>Cuéntanos qué necesita cambiar en tu empresa.</Headline>
+        <Kicker dark>{campo('nosotros', 's7kicker')}</Kicker>
+        <Headline dark>{campo('nosotros', 's7headline')}</Headline>
         <div style={{ marginTop: 'var(--space-8)' }}>
           <PrimaryCTA to="/es/contacto">Contáctanos</PrimaryCTA>
         </div>

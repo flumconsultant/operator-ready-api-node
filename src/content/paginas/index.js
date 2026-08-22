@@ -21,8 +21,16 @@ import home from './home.json' with { type: 'json' };
 import servicios from './servicios.json' with { type: 'json' };
 import discover from './discover.json' with { type: 'json' };
 import embed from './embed.json' with { type: 'json' };
+import nosotros from './nosotros.json' with { type: 'json' };
+import iaResponsable from './ia-responsable.json' with { type: 'json' };
+import contacto from './contacto.json' with { type: 'json' };
+import insights from './insights.json' with { type: 'json' };
+import becomeNow from './become-now.json' with { type: 'json' };
 
-export const PAGINAS = { home, servicios, discover, embed };
+export const PAGINAS = {
+  home, servicios, discover, embed,
+  nosotros, 'ia-responsable': iaResponsable, contacto, insights, 'become-now': becomeNow,
+};
 
 /** El valor de un campo, o el de reserva si esa página aún no se migró. */
 export const campo = (pagina, id, reserva = '') =>

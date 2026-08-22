@@ -1,0 +1,148 @@
+{
+  "_": "Los rótulos y textos de Nosotros. Lo que lleva enlaces o listas se queda en el componente.",
+  "id": "nosotros",
+  "titulo": "Nosotros",
+  "ruta": "/es/nosotros",
+  "campos": [
+    {
+      "id": "s1kicker",
+      "rotulo": "Sección 1 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "About BECOME"
+    },
+    {
+      "id": "s1headline",
+      "rotulo": "Sección 1 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "La próxima empresa ya existe dentro de la tuya."
+    },
+    {
+      "id": "s1lead",
+      "rotulo": "Sección 1 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "BECOME es una AI-native transformation company que conecta estrategia, modelo operativo, tecnología y adopción para convertir una ambición en capacidad real."
+    },
+    {
+      "id": "s2kicker",
+      "rotulo": "Sección 2 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Qué es BECOME"
+    },
+    {
+      "id": "s2headline",
+      "rotulo": "Sección 2 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "No llegamos para agregar otra herramienta."
+    },
+    {
+      "id": "s2lead",
+      "rotulo": "Sección 2 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "Ayudamos a las empresas a rediseñar cómo operan, deciden y crean valor alrededor de la IA. Trabajamos dentro del negocio para convertir una ambición en una capacidad propia, gobernable y capaz de evolucionar."
+    },
+    {
+      "id": "s3kicker",
+      "rotulo": "Sección 3 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Nuestra creencia"
+    },
+    {
+      "id": "s3headline",
+      "rotulo": "Sección 3 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "La transformación no se instala. Se construye dentro."
+    },
+    {
+      "id": "s3lead",
+      "rotulo": "Sección 3 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "Los pilotos aislados no cambian una empresa. El cambio ocurre cuando se rediseñan a la vez los procesos, los roles, quién decide, los datos, los controles, las capacidades y las métricas: un solo sistema, no siete proyectos."
+    },
+    {
+      "id": "s3body",
+      "rotulo": "Sección 3 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "Por eso construimos con los equipos del cliente y les transferimos la responsabilidad desde el inicio."
+    },
+    {
+      "id": "s4kicker",
+      "rotulo": "Sección 4 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Capacidades"
+    },
+    {
+      "id": "s4headline",
+      "rotulo": "Sección 4 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Negocio, transformación y tecnología en el mismo equipo."
+    },
+    {
+      "id": "s4body",
+      "rotulo": "Sección 4 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "Según lo que el reto necesita, BECOME combina:"
+    },
+    {
+      "id": "s5kicker",
+      "rotulo": "Sección 5 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Cómo trabajamos"
+    },
+    {
+      "id": "s5headline",
+      "rotulo": "Sección 5 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Comportamientos observables, no adjetivos aspiracionales."
+    },
+    {
+      "id": "s6kicker",
+      "rotulo": "Sección 6 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "El equipo de trabajo"
+    },
+    {
+      "id": "s6headline",
+      "rotulo": "Sección 6 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Un equipo senior y multidisciplinario alrededor del resultado."
+    },
+    {
+      "id": "s6body",
+      "rotulo": "Sección 6 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "La composición combina negocio, transformación, producto, adopción, datos e IA según lo que el reto necesita. Cada proyecto mantiene un responsable claro."
+    },
+    {
+      "id": "s7kicker",
+      "rotulo": "Sección 7 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 86,
+      "valor": "La próxima capacidad se construye desde dentro"
+    },
+    {
+      "id": "s7headline",
+      "rotulo": "Sección 7 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Cuéntanos qué necesita cambiar en tu empresa."
+    }
+  ]
+}

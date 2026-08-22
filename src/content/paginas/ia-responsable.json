@@ -1,0 +1,92 @@
+{
+  "_": "Los rótulos y textos de IA responsable. Lo que lleva enlaces o listas se queda en el componente.",
+  "id": "ia-responsable",
+  "titulo": "IA responsable",
+  "ruta": "/es/nosotros/ia-responsable",
+  "campos": [
+    {
+      "id": "s1kicker",
+      "rotulo": "Sección 1 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "IA responsable"
+    },
+    {
+      "id": "s1headline",
+      "rotulo": "Sección 1 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Los controles se diseñan con la solución, no se añaden al final."
+    },
+    {
+      "id": "s1lead",
+      "rotulo": "Sección 1 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "La IA responsable se incorpora desde el diseño. Definimos el uso adecuado de datos, los accesos, la supervisión humana, la evaluación, el escalamiento, la trazabilidad y la responsabilidad según el caso de uso y su perfil de riesgo."
+    },
+    {
+      "id": "s2kicker",
+      "rotulo": "Sección 2 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Por qué al principio"
+    },
+    {
+      "id": "s2headline",
+      "rotulo": "Sección 2 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Un control añadido después no cambia cómo se decide."
+    },
+    {
+      "id": "s2lead",
+      "rotulo": "Sección 2 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "Cuando los límites se escriben una vez que la solución ya funciona, se convierten en una capa de revisión que frena el trabajo y que la gente aprende a rodear. Definidos antes, son parte de cómo está construida: el sistema no puede hacer aquello para lo que no tiene permiso."
+    },
+    {
+      "id": "s2body",
+      "rotulo": "Sección 2 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "No todos los casos necesitan lo mismo. Un asistente que redacta un borrador interno y un agente que actúa sobre un sistema de producción tienen perfiles de riesgo distintos, y por tanto controles distintos. Lo que no cambia es que estén decididos y escritos antes de construir."
+    },
+    {
+      "id": "s3kicker",
+      "rotulo": "Sección 3 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Qué se define en cada caso"
+    },
+    {
+      "id": "s3headline",
+      "rotulo": "Sección 3 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Ocho decisiones, siempre las mismas."
+    },
+    {
+      "id": "s4kicker",
+      "rotulo": "Sección 4 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 85,
+      "valor": "La responsabilidad no se delega en el sistema"
+    },
+    {
+      "id": "s4headline",
+      "rotulo": "Sección 4 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "La IA amplía la capacidad; las personas mantienen la dirección."
+    },
+    {
+      "id": "s4lead",
+      "rotulo": "Sección 4 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "Cuéntanos el caso y su perfil de riesgo. Te decimos qué controles necesita antes de escribir una línea de código."
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "_": "Los rótulos y textos de Contacto. Lo que lleva enlaces o listas se queda en el componente.",
+  "id": "contacto",
+  "titulo": "Contacto",
+  "ruta": "/es/contacto",
+  "campos": [
+    {
+      "id": "s1kicker",
+      "rotulo": "Sección 1 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Contacto"
+    },
+    {
+      "id": "s1headline",
+      "rotulo": "Sección 1 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Empecemos por lo que quieres cambiar."
+    },
+    {
+      "id": "s1lead",
+      "rotulo": "Sección 1 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "Comparte el reto, el resultado que buscas y el contexto de tu organización. Lo revisaremos para entender tu punto de partida y orientar la primera conversación."
+    },
+    {
+      "id": "s2kicker",
+      "rotulo": "Sección 2 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Qué ocurre después"
+    },
+    {
+      "id": "s2headline",
+      "rotulo": "Sección 2 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Qué ocurre después de que escribes."
+    }
+  ]
+}

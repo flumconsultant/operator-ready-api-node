@@ -1,3 +1,4 @@
+import { campo } from '../content/paginas/index.js';
 import React from 'react';
 import SiteHeader from '../components/SiteHeader.jsx';
 import SiteFooter from '../components/SiteFooter.jsx';
@@ -40,36 +41,21 @@ export default function IaResponsable() {
       <SiteHeader />
       <main id="contenido" data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
         <Section band="dark" pad="var(--space-12)" data-node-state="0">
-          <Kicker dark>IA responsable</Kicker>
-          <Headline as="h1" dark>Los controles se diseñan con la solución, no se añaden al final.</Headline>
-          <Lead dark>
-            La IA responsable se incorpora desde el diseño. Definimos el uso adecuado
-            de datos, los accesos, la supervisión humana, la evaluación, el
-            escalamiento, la trazabilidad y la responsabilidad según el caso de uso y
-            su perfil de riesgo.
-          </Lead>
+          <Kicker dark>{campo('ia-responsable', 's1kicker')}</Kicker>
+          <Headline as="h1" dark>{campo('ia-responsable', 's1headline')}</Headline>
+          <Lead dark>{campo('ia-responsable', 's1lead')}</Lead>
         </Section>
 
         <Section band="light">
-          <Kicker>Por qué al principio</Kicker>
-          <Headline>Un control añadido después no cambia cómo se decide.</Headline>
-          <Lead>
-            Cuando los límites se escriben una vez que la solución ya funciona, se
-            convierten en una capa de revisión que frena el trabajo y que la gente
-            aprende a rodear. Definidos antes, son parte de cómo está construida: el
-            sistema no puede hacer aquello para lo que no tiene permiso.
-          </Lead>
-          <Body style={{ marginTop: 'var(--space-7)' }}>
-            No todos los casos necesitan lo mismo. Un asistente que redacta un borrador
-            interno y un agente que actúa sobre un sistema de producción tienen perfiles
-            de riesgo distintos, y por tanto controles distintos. Lo que no cambia es que
-            estén decididos y escritos antes de construir.
-          </Body>
+          <Kicker>{campo('ia-responsable', 's2kicker')}</Kicker>
+          <Headline>{campo('ia-responsable', 's2headline')}</Headline>
+          <Lead>{campo('ia-responsable', 's2lead')}</Lead>
+          <Body style={{ marginTop: 'var(--space-7)' }}>{campo('ia-responsable', 's2body')}</Body>
         </Section>
 
         <Section band="sunken">
-          <Kicker>Qué se define en cada caso</Kicker>
-          <Headline>Ocho decisiones, siempre las mismas.</Headline>
+          <Kicker>{campo('ia-responsable', 's3kicker')}</Kicker>
+          <Headline>{campo('ia-responsable', 's3headline')}</Headline>
           {/* Rejilla a mano no: ocho controles en tres columnas dejaban la
               última fila con dos y un hueco. <Cols> reparte 3, 3 y 2 estirando
               las tres filas hasta el borde. */}
@@ -89,12 +75,9 @@ export default function IaResponsable() {
         </Section>
 
         <Section band="darker" pad="var(--space-13)">
-          <Kicker dark>La responsabilidad no se delega en el sistema</Kicker>
-          <Headline dark>La IA amplía la capacidad; las personas mantienen la dirección.</Headline>
-          <Lead dark>
-            Cuéntanos el caso y su perfil de riesgo. Te decimos qué controles necesita
-            antes de escribir una línea de código.
-          </Lead>
+          <Kicker dark>{campo('ia-responsable', 's4kicker')}</Kicker>
+          <Headline dark>{campo('ia-responsable', 's4headline')}</Headline>
+          <Lead dark>{campo('ia-responsable', 's4lead')}</Lead>
           <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
             <PrimaryCTA to="/es/contacto">Hablemos de tu caso</PrimaryCTA>
             <GhostCTA to="/es/nosotros" dark>Conoce BECOME</GhostCTA>

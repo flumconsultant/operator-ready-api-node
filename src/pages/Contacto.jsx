@@ -1,3 +1,4 @@
+import { campo } from '../content/paginas/index.js';
 import React from 'react';
 import { BloqueAgenda } from '../components/Agendar.jsx';
 import SiteHeader from '../components/SiteHeader.jsx';
@@ -61,13 +62,9 @@ export default function Contacto() {
       <SiteHeader />
 
       <Section band="dark" pad="var(--space-12)">
-        <Kicker dark>Contacto</Kicker>
-        <Headline as="h1" dark>Empecemos por lo que quieres cambiar.</Headline>
-        <Lead dark>
-          Comparte el reto, el resultado que buscas y el contexto de tu
-          organización. Lo revisaremos para entender tu punto de partida y
-          orientar la primera conversación.
-        </Lead>
+        <Kicker dark>{campo('contacto', 's1kicker')}</Kicker>
+        <Headline as="h1" dark>{campo('contacto', 's1headline')}</Headline>
+        <Lead dark>{campo('contacto', 's1lead')}</Lead>
       </Section>
 
       <Section band="light">
@@ -93,8 +90,8 @@ export default function Contacto() {
       </Section>
 
       <Section band="sunken">
-        <Kicker>Qué ocurre después</Kicker>
-        <Headline>Qué ocurre después de que escribes.</Headline>
+        <Kicker>{campo('contacto', 's2kicker')}</Kicker>
+        <Headline>{campo('contacto', 's2headline')}</Headline>
         <div data-cols style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'var(--space-8)', marginTop: 'var(--space-10)' }}>
           {NEXT.map(([icon, title, line], i) => (
             <Reveal as="div" key={title} style={{ borderTop: '1px solid var(--border-strong)', paddingTop: 'var(--space-5)' }}>

@@ -1,0 +1,78 @@
+{
+  "_": "Los rótulos y textos de Insights. Lo que lleva enlaces o listas se queda en el componente.",
+  "id": "insights",
+  "titulo": "Insights",
+  "ruta": "/es/insights",
+  "campos": [
+    {
+      "id": "s1kicker",
+      "rotulo": "Sección 1 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "BECOME Insights"
+    },
+    {
+      "id": "s1headline",
+      "rotulo": "Sección 1 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Ideas para la empresa que viene después."
+    },
+    {
+      "id": "s1lead",
+      "rotulo": "Sección 1 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "Análisis sobre modelos operativos AI-native, agentes, rediseño de procesos, adopción y medición de valor."
+    },
+    {
+      "id": "s2kicker",
+      "rotulo": "Sección 2 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Pilares editoriales"
+    },
+    {
+      "id": "s2headline",
+      "rotulo": "Sección 2 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Sobre qué vamos a escribir, y sobre qué no."
+    },
+    {
+      "id": "s2lead",
+      "rotulo": "Sección 2 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "Cinco líneas. Nada de noticias de modelos, comparativas de herramientas ni resúmenes de lo que ya dijo otro."
+    },
+    {
+      "id": "s3kicker",
+      "rotulo": "Sección 3 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Formatos"
+    },
+    {
+      "id": "s3headline",
+      "rotulo": "Sección 3 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Cada idea tiene su forma."
+    },
+    {
+      "id": "s4kicker",
+      "rotulo": "Sección 4 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Become insights"
+    },
+    {
+      "id": "s4headline",
+      "rotulo": "Sección 4 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "¿Qué idea necesita convertirse en capacidad?"
+    }
+  ]
+}

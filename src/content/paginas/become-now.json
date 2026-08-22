@@ -1,0 +1,239 @@
+{
+  "_": "Los rótulos y textos de BECOME NOW™. Lo que lleva enlaces o listas se queda en el componente.",
+  "id": "become-now",
+  "titulo": "BECOME NOW™",
+  "ruta": "/es/servicios/become-now",
+  "campos": [
+    {
+      "id": "s1kicker",
+      "rotulo": "Sección 1 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 81,
+      "valor": "BECOME NOW™ — Capacitación en IA aplicada"
+    },
+    {
+      "id": "s1headline",
+      "rotulo": "Sección 1 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Lleva a tus equipos de usar IA a trabajar mejor con ella."
+    },
+    {
+      "id": "s1lead",
+      "rotulo": "Sección 1 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "BECOME NOW™ convierte herramientas de inteligencia artificial generativa en nuevas formas de trabajo aplicadas a cada función."
+    },
+    {
+      "id": "s1body",
+      "rotulo": "Sección 1 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "Trabajamos sobre procesos, documentos y retos reales utilizando el ecosistema autorizado por la empresa —por ejemplo, ChatGPT, Claude, Gemini, Microsoft Copilot y otros LLMs— en lugar de enseñar herramientas de forma aislada."
+    },
+    {
+      "id": "s2kicker",
+      "rotulo": "Sección 2 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "La brecha de adopción"
+    },
+    {
+      "id": "s2headline",
+      "rotulo": "Sección 2 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Tener acceso a la IA no significa saber trabajar con ella."
+    },
+    {
+      "id": "s2lead",
+      "rotulo": "Sección 2 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "El problema no son las herramientas. Es que nadie las ha convertido en una forma común de trabajar."
+    },
+    {
+      "id": "s3kicker",
+      "rotulo": "Sección 3 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Built around your work"
+    },
+    {
+      "id": "s3headline",
+      "rotulo": "Sección 3 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Primero entendemos cómo trabajan. Después diseñamos la capacitación."
+    },
+    {
+      "id": "s3lead",
+      "rotulo": "Sección 3 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "Antes de definir la malla conocemos el área, sus procesos, sus cuellos de botella y las herramientas que usa hoy. De ahí salen los casos, los asistentes y los procesos que se trabajan en las sesiones."
+    },
+    {
+      "id": "s3body",
+      "rotulo": "Sección 3 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "La información puede usarse en formato real, anonimizado o simulado, según los criterios de seguridad de la empresa."
+    },
+    {
+      "id": "s4kicker",
+      "rotulo": "Sección 4 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 78,
+      "valor": "Business process understanding session"
+    },
+    {
+      "id": "s4headline",
+      "rotulo": "Sección 4 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Ningún programa comienza antes de entender el trabajo que debe mejorar."
+    },
+    {
+      "id": "s4lead",
+      "rotulo": "Sección 4 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "Es la sesión donde definimos qué trabajo debe mejorar, qué casos vale la pena llevar al programa y qué límites debemos respetar."
+    },
+    {
+      "id": "s5kicker",
+      "rotulo": "Sección 5 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Cómo funciona cada sesión"
+    },
+    {
+      "id": "s5headline",
+      "rotulo": "Sección 5 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Cada sesión termina con transferencia."
+    },
+    {
+      "id": "s5lead",
+      "rotulo": "Sección 5 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "El activo queda documentado para que el equipo pueda reutilizarlo al día siguiente, sin nosotros delante."
+    },
+    {
+      "id": "s6kicker",
+      "rotulo": "Sección 6 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Formatos adaptables"
+    },
+    {
+      "id": "s6headline",
+      "rotulo": "Sección 6 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Tres puntos de partida, ninguno cerrado."
+    },
+    {
+      "id": "s6body",
+      "rotulo": "Sección 6 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "Todo se ajusta a la empresa. Lo único que no cambia es la sesión previa de entendimiento."
+    },
+    {
+      "id": "s7kicker",
+      "rotulo": "Sección 7 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Programas por área"
+    },
+    {
+      "id": "s7headline",
+      "rotulo": "Sección 7 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Catorce rutas de referencia. Ninguna es el programa final."
+    },
+    {
+      "id": "s7lead",
+      "rotulo": "Sección 7 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "Recorridos de referencia. El programa real se construye después de la Sesión 0, y puede ser para un área que no esté aquí."
+    },
+    {
+      "id": "s8kicker",
+      "rotulo": "Sección 8 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Qué es y qué no es"
+    },
+    {
+      "id": "s8headline",
+      "rotulo": "Sección 8 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "La diferencia importa más que el temario."
+    },
+    {
+      "id": "s9kicker",
+      "rotulo": "Sección 9 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Indicadores"
+    },
+    {
+      "id": "s9headline",
+      "rotulo": "Sección 9 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Cómo se mide que sirvió."
+    },
+    {
+      "id": "s9body",
+      "rotulo": "Sección 9 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "No publicamos porcentajes de productividad sin haber establecido un baseline. Medir antes es parte del programa, no un extra."
+    },
+    {
+      "id": "s10kicker",
+      "rotulo": "Sección 10 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Entregables generales"
+    },
+    {
+      "id": "s11kicker",
+      "rotulo": "Sección 11 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Preguntas frecuentes"
+    },
+    {
+      "id": "s11headline",
+      "rotulo": "Sección 11 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Lo que suelen preguntarnos antes de empezar."
+    },
+    {
+      "id": "s12kicker",
+      "rotulo": "Sección 12 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Built around your work"
+    },
+    {
+      "id": "s12body",
+      "rotulo": "Sección 12 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "NOW™ capacita para el trabajo de hoy. BECOME DISCOVER™ define en qué debe convertirse la empresa. BECOME EMBED™ construye lo que hará posible ese futuro. Puede contratarse solo o integrarse en los otros dos."
+    }
+  ]
+}

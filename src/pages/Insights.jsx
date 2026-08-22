@@ -1,3 +1,4 @@
+import { campo } from '../content/paginas/index.js';
 import React from 'react';
 import Resultado from '../components/suscripcion/Resultado.jsx';
 import SiteHeader from '../components/SiteHeader.jsx';
@@ -38,12 +39,9 @@ export default function Insights() {
       <SiteHeader />
 
       <Section band="dark" pad="var(--space-12)">
-        <Kicker dark>BECOME Insights</Kicker>
-        <Headline as="h1" dark>Ideas para la empresa que viene después.</Headline>
-        <Lead dark>
-          Análisis sobre modelos operativos AI-native, agentes, rediseño de
-          procesos, adopción y medición de valor.
-        </Lead>
+        <Kicker dark>{campo('insights', 's1kicker')}</Kicker>
+        <Headline as="h1" dark>{campo('insights', 's1headline')}</Headline>
+        <Lead dark>{campo('insights', 's1lead')}</Lead>
       </Section>
 
       <Section band="light">
@@ -54,12 +52,9 @@ export default function Insights() {
       </Section>
 
       <Section band="darker">
-        <Kicker dark>Pilares editoriales</Kicker>
-        <Headline dark>Sobre qué vamos a escribir, y sobre qué no.</Headline>
-        <Lead dark>
-          Cinco líneas. Nada de noticias de modelos, comparativas de herramientas ni
-          resúmenes de lo que ya dijo otro.
-        </Lead>
+        <Kicker dark>{campo('insights', 's2kicker')}</Kicker>
+        <Headline dark>{campo('insights', 's2headline')}</Headline>
+        <Lead dark>{campo('insights', 's2lead')}</Lead>
         <div style={{ marginTop: 'var(--space-10)' }}>
           {PILLARS.map(([name, line], i) => (
             <IndexRow key={name} index={i} dark num={String(i + 1).padStart(2, '0')} term={name} def={line} />
@@ -68,16 +63,16 @@ export default function Insights() {
       </Section>
 
       <Section band="light">
-        <Kicker>Formatos</Kicker>
-        <Headline>Cada idea tiene su forma.</Headline>
+        <Kicker>{campo('insights', 's3kicker')}</Kicker>
+        <Headline>{campo('insights', 's3headline')}</Headline>
         <div style={{ marginTop: 'var(--space-10)' }}>
           {FORMATS.map(([name, line], i) => <IndexRow key={name} index={i} term={name} def={line} />)}
         </div>
       </Section>
 
       <Section band="dark" pad="var(--space-13)">
-        <Kicker dark>Become insights</Kicker>
-        <Headline dark>¿Qué idea necesita convertirse en capacidad?</Headline>
+        <Kicker dark>{campo('insights', 's4kicker')}</Kicker>
+        <Headline dark>{campo('insights', 's4headline')}</Headline>
         <div style={{ marginTop: 'var(--space-8)' }}>
           <PrimaryCTA to="/es/contacto">Contáctanos</PrimaryCTA>
         </div>

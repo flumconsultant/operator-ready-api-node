@@ -1,3 +1,4 @@
+import { campo } from '../content/paginas/index.js';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import SiteHeader from '../components/SiteHeader.jsx';
@@ -30,21 +31,13 @@ export default function BecomeNow() {
       <SiteHeader />
 
       <Section band="dark" pad="var(--space-12)">
-        <Kicker dark>BECOME NOW™ — Capacitación en IA aplicada</Kicker>
-        <Headline as="h1" dark>Lleva a tus equipos de usar IA a trabajar mejor con ella.</Headline>
-        <Lead dark>
-          BECOME NOW™ convierte herramientas de inteligencia artificial generativa
-          en nuevas formas de trabajo aplicadas a cada función.
-        </Lead>
+        <Kicker dark>{campo('become-now', 's1kicker')}</Kicker>
+        <Headline as="h1" dark>{campo('become-now', 's1headline')}</Headline>
+        <Lead dark>{campo('become-now', 's1lead')}</Lead>
         {/* Las marcas van aquí y no en el H1: en el titular convierten a BECOME
             en implementador de una herramienta; en el segundo párrafo demuestran
             que se conoce el ecosistema sin cambiar de categoría. */}
-        <Body dark style={{ marginTop: 'var(--space-6)' }}>
-          Trabajamos sobre procesos, documentos y retos reales utilizando el
-          ecosistema autorizado por la empresa —por ejemplo, ChatGPT, Claude,
-          Gemini, Microsoft Copilot y otros LLMs— en lugar de enseñar herramientas
-          de forma aislada.
-        </Body>
+        <Body dark style={{ marginTop: 'var(--space-6)' }}>{campo('become-now', 's1body')}</Body>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
           <PrimaryCTA href="#disena-tu-programa">Diseña tu programa</PrimaryCTA>
           <GhostCTA to="#programas" dark>Explora los programas por área</GhostCTA>
@@ -59,12 +52,9 @@ export default function BecomeNow() {
 
       {/* La tensión */}
       <Section band="light">
-        <Kicker>La brecha de adopción</Kicker>
-        <Headline>Tener acceso a la IA no significa saber trabajar con ella.</Headline>
-        <Lead>
-          El problema no son las herramientas. Es que nadie las ha convertido en
-          una forma común de trabajar.
-        </Lead>
+        <Kicker>{campo('become-now', 's2kicker')}</Kicker>
+        <Headline>{campo('become-now', 's2headline')}</Headline>
+        <Lead>{campo('become-now', 's2lead')}</Lead>
 
         <Cols min="260px">
           {SITUATIONS.map((s) => (
@@ -81,13 +71,9 @@ export default function BecomeNow() {
 
       {/* La diferencia */}
       <Section band="dark">
-        <Kicker dark>Built around your work</Kicker>
-        <Headline dark>Primero entendemos cómo trabajan. Después diseñamos la capacitación.</Headline>
-        <Lead dark>
-          Antes de definir la malla conocemos el área, sus procesos, sus cuellos de
-          botella y las herramientas que usa hoy. De ahí salen los casos, los
-          asistentes y los procesos que se trabajan en las sesiones.
-        </Lead>
+        <Kicker dark>{campo('become-now', 's3kicker')}</Kicker>
+        <Headline dark>{campo('become-now', 's3headline')}</Headline>
+        <Lead dark>{campo('become-now', 's3lead')}</Lead>
 
         <div style={{ marginTop: 'var(--space-11)' }}>
           <p style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--electric-green)' }}>
@@ -105,10 +91,7 @@ export default function BecomeNow() {
               </span>
             ))}
           </div>
-          <Body dark style={{ marginTop: 'var(--space-6)' }}>
-            La información puede usarse en formato real, anonimizado o simulado, según
-            los criterios de seguridad de la empresa.
-          </Body>
+          <Body dark style={{ marginTop: 'var(--space-6)' }}>{campo('become-now', 's3body')}</Body>
         </div>
       </Section>
 
@@ -121,12 +104,9 @@ export default function BecomeNow() {
 
       {/* Sesión 0 — antes que cualquier malla */}
       <Section band="sunken" id="sesion-0">
-        <Kicker>Business process understanding session</Kicker>
-        <Headline>Ningún programa comienza antes de entender el trabajo que debe mejorar.</Headline>
-        <Lead>
-          Es la sesión donde definimos qué trabajo debe mejorar, qué casos vale la
-          pena llevar al programa y qué límites debemos respetar.
-        </Lead>
+        <Kicker>{campo('become-now', 's4kicker')}</Kicker>
+        <Headline>{campo('become-now', 's4headline')}</Headline>
+        <Lead>{campo('become-now', 's4lead')}</Lead>
 
         <div style={{ marginTop: 'var(--space-10)' }}>
           {SESSION_ZERO.map(([t, d], i) => (
@@ -142,12 +122,9 @@ export default function BecomeNow() {
 
       {/* Cómo funciona cada sesión */}
       <Section band="darker">
-        <Kicker dark>Cómo funciona cada sesión</Kicker>
-        <Headline dark>Cada sesión termina con transferencia.</Headline>
-        <Lead dark>
-          El activo queda documentado para que el equipo pueda reutilizarlo al día
-          siguiente, sin nosotros delante.
-        </Lead>
+        <Kicker dark>{campo('become-now', 's5kicker')}</Kicker>
+        <Headline dark>{campo('become-now', 's5headline')}</Headline>
+        <Lead dark>{campo('become-now', 's5lead')}</Lead>
         <div style={{ marginTop: 'var(--space-10)' }}>
           {SESSION_FLOW.map(([t, d], i) => (
             <Reveal as="div" key={t} data-cols className="row-hit"
@@ -169,12 +146,9 @@ export default function BecomeNow() {
 
       {/* Formatos */}
       <Section band="light">
-        <Kicker>Formatos adaptables</Kicker>
-        <Headline>Tres puntos de partida, ninguno cerrado.</Headline>
-        <Body>
-          Todo se ajusta a la empresa. Lo único que no cambia es la sesión previa de
-          entendimiento.
-        </Body>
+        <Kicker>{campo('become-now', 's6kicker')}</Kicker>
+        <Headline>{campo('become-now', 's6headline')}</Headline>
+        <Body>{campo('become-now', 's6body')}</Body>
         <Cols min="280px">
           {FORMATS.map((f) => (
             <Card key={f.name}>
@@ -199,12 +173,9 @@ export default function BecomeNow() {
 
       {/* Catálogo — al final, y como rutas de referencia */}
       <Section band="dark" id="programas">
-        <Kicker dark>Programas por área</Kicker>
-        <Headline dark>Catorce rutas de referencia. Ninguna es el programa final.</Headline>
-        <Lead dark>
-          Recorridos de referencia. El programa real se construye después de la
-          Sesión 0, y puede ser para un área que no esté aquí.
-        </Lead>
+        <Kicker dark>{campo('become-now', 's7kicker')}</Kicker>
+        <Headline dark>{campo('become-now', 's7headline')}</Headline>
+        <Lead dark>{campo('become-now', 's7lead')}</Lead>
 
         {/* Rejilla de nombres, no fichas: la descripción de cada programa está
             en su propia página. Aquí ocupaba cuatro pantallas para decir catorce
@@ -243,8 +214,8 @@ export default function BecomeNow() {
 
       {/* Qué es y qué no es */}
       <Section band="light">
-        <Kicker>Qué es y qué no es</Kicker>
-        <Headline>La diferencia importa más que el temario.</Headline>
+        <Kicker>{campo('become-now', 's8kicker')}</Kicker>
+        <Headline>{campo('become-now', 's8headline')}</Headline>
         <div style={{ marginTop: 'var(--space-10)', overflowX: 'auto' }}>
           <table style={{ width: '100%', minWidth: 640, borderCollapse: 'collapse', textAlign: 'left' }}>
             <thead>
@@ -285,18 +256,15 @@ export default function BecomeNow() {
       <Section band="sunken">
         <div data-cols style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1.1fr) minmax(0,1fr)', gap: 'var(--space-9)' }}>
           <Reveal as="div">
-            <Kicker>Indicadores</Kicker>
-            <Headline>Cómo se mide que sirvió.</Headline>
+            <Kicker>{campo('become-now', 's9kicker')}</Kicker>
+            <Headline>{campo('become-now', 's9headline')}</Headline>
             <div style={{ marginTop: 'var(--space-8)' }}>
               {INDICATORS.map(([t, d], i) => <IndexRow key={t} index={i} term={t} def={d} />)}
             </div>
-            <Body style={{ marginTop: 'var(--space-6)' }}>
-              No publicamos porcentajes de productividad sin haber establecido un
-              baseline. Medir antes es parte del programa, no un extra.
-            </Body>
+            <Body style={{ marginTop: 'var(--space-6)' }}>{campo('become-now', 's9body')}</Body>
           </Reveal>
           <Reveal as="div">
-            <Kicker>Entregables generales</Kicker>
+            <Kicker>{campo('become-now', 's10kicker')}</Kicker>
             <div style={{ marginTop: 'var(--space-6)', display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)' }}>
               {GENERAL_DELIVERABLES.map((d) => (
                 <span key={d} style={{
@@ -312,8 +280,8 @@ export default function BecomeNow() {
 
       {/* FAQ */}
       <Section band="light">
-        <Kicker>Preguntas frecuentes</Kicker>
-        <Headline>Lo que suelen preguntarnos antes de empezar.</Headline>
+        <Kicker>{campo('become-now', 's11kicker')}</Kicker>
+        <Headline>{campo('become-now', 's11headline')}</Headline>
         <div style={{ marginTop: 'var(--space-10)' }}>
           {FAQ.map(([q, a]) => (
             <details key={q} className="faq-item">
@@ -328,7 +296,7 @@ export default function BecomeNow() {
       <Section band="dark" id="disena-tu-programa" pad="var(--space-13)">
         {/* El titular lo pone la propia invitación del formulario: repetirlo
             aquí era decir dos veces lo mismo con dos tamaños distintos. */}
-        <Kicker dark>Built around your work</Kicker>
+        <Kicker dark>{campo('become-now', 's12kicker')}</Kicker>
         <div style={{ marginTop: 'var(--space-7)' }}>
           <BecomeNowForm />
         </div>
@@ -336,11 +304,7 @@ export default function BecomeNow() {
         {/* Cómo encaja con los otros dos: era una sección propia justo antes de
             esta, y las dos terminaban en lo mismo. */}
         <div style={{ marginTop: 'var(--space-11)', paddingTop: 'var(--space-6)', borderTop: '1px solid var(--border-hairline-dark)' }}>
-          <Body dark style={{ marginTop: 0 }}>
-            NOW™ capacita para el trabajo de hoy. BECOME DISCOVER™ define en qué debe
-            convertirse la empresa. BECOME EMBED™ construye lo que hará posible ese
-            futuro. Puede contratarse solo o integrarse en los otros dos.
-          </Body>
+          <Body dark style={{ marginTop: 0 }}>{campo('become-now', 's12body')}</Body>
           <div style={{ marginTop: 'var(--space-6)', display: 'flex', gap: 'var(--space-7)', flexWrap: 'wrap' }}>
             <TextCTA to="/es/servicios/become-discover" dark>Explora BECOME DISCOVER™</TextCTA>
             <TextCTA to="/es/servicios/become-embed" dark>Explora BECOME EMBED™</TextCTA>
