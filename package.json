@@ -11,7 +11,8 @@
     "tarjetas": "node scripts/tarjeta-social.mjs",
     "seo:auditar": "node scripts/auditar-seo.mjs",
     "plazos": "node scripts/comprobar-plazos.mjs",
-    "centinela": "node scripts/centinela.mjs"
+    "centinela": "node scripts/centinela.mjs",
+    "indexnow": "node scripts/indexnow.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

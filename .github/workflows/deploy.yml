@@ -548,6 +548,16 @@ jobs:
             fi
           fi
 
+      # Después de comprobar que el sitio sirve lo nuevo, y no antes: el aviso
+      # incluye la dirección del archivo de clave, y si el buscador va a
+      # buscarlo y todavía no está subido, rechaza el aviso entero.
+      #
+      # Nunca hace fallar el despliegue: avisar a un buscador es una cortesía,
+      # no una condición para publicar.
+      - name: Avisar a IndexNow de lo que cambió
+        continue-on-error: true
+        run: node scripts/indexnow.mjs
+
       - name: Comprobar que el correo del formulario funciona
         # Conecta y se autentica contra el servidor de correo, sin enviar
         # ningún mensaje. Es lo único que distingue "el formulario está
