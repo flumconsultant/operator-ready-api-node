@@ -258,9 +258,12 @@ function esquema_leer(array $config, string $rama, string $id) {
     $r = github($config, 'contents/' . rawurlencode(RUTA_ESQUEMAS . '/' . $id . '.json') . '?ref=' . rawurlencode($rama));
     if ($r['codigo'] !== 200) return null;
     $e = json_decode((string) base64_decode(str_replace("\n", '', (string) ($r['datos']['content'] ?? ''))), true);
-    if (!is_array($e) || empty($e['archivoDatos']) || empty($e['campos'])) return null;
-    $destino = (string) $e['archivoDatos'];
-    if (!preg_match('#^src/content/[a-z0-9./-]+\.json$#', $destino) || str_contains($destino, '..')) return null;
+    if (!is_array($e) || empty($e['campos'])) return null;
+    $rutas = is_array($e['archivosPorIdioma'] ?? null) ? array_values($e['archivosPorIdioma']) : [(string) ($e['archivoDatos'] ?? '')];
+    if (!$rutas) return null;
+    foreach ($rutas as $destino) {
+        if (!preg_match('#^src/content/[a-z0-9./-]+\.json$#', (string) $destino) || str_contains((string) $destino, '..')) return null;
+    }
     return $e;
 }
 
@@ -280,14 +283,53 @@ if ($accion === 'listar-esquemas') {
     responder(200, ['ok' => true, 'esquemas' => $lista]);
 }
 
+/* Dónde vive el contenido de un esquema, para un idioma dado.
+ *
+ * Hay tres formas en el sitio y ninguna se puede forzar a las otras:
+ *
+ *   · industrias  — un array, cada elemento con su bloque es/en dentro
+ *   · servicios   — un archivo por idioma, y dentro un mapa por slug
+ *   · el método   — un archivo, y dentro un bloque es/en
+ *
+ * Generalizarlo cuesta veinte líneas. Hacer un caso especial por forma cuesta
+ * un módulo nuevo cada vez que aparezca contenido con otra pinta. */
+function contenido_archivo(array $esq, string $lang): string {
+    $porIdioma = $esq['archivosPorIdioma'] ?? null;
+    $ruta = is_array($porIdioma) ? (string) ($porIdioma[$lang] ?? '') : (string) ($esq['archivoDatos'] ?? '');
+    return preg_match('#^src/content/[a-z0-9./-]+\.json$#', $ruta) && !str_contains($ruta, '..') ? $ruta : '';
+}
+
+/** Los elementos que se pueden elegir, con su nombre para el desplegable. */
+function contenido_claves(array $esq, $datos, string $lang): array {
+    $raiz = (string) ($esq['raiz'] ?? '');
+    $base = $raiz !== '' ? ($datos[$raiz] ?? null) : $datos;
+    $etiqueta = (string) ($esq['etiqueta'] ?? '');
+    $salida = [];
+    if (($esq['forma'] ?? '') === 'mapa' && is_array($base)) {
+        foreach ($base as $k => $v) $salida[] = ['clave' => (string) $k, 'nombre' => (string) ($v[$etiqueta] ?? $k)];
+    } elseif (!empty($esq['coleccion']) && is_array($base)) {
+        foreach ($base as $i => $v) $salida[] = ['clave' => (string) $i, 'nombre' => (string) ($v[$lang][$etiqueta] ?? $v['es'][$etiqueta] ?? ('Elemento ' . ($i + 1)))];
+    } else {
+        $salida[] = ['clave' => '', 'nombre' => (string) ($esq['titulo'] ?? 'Contenido')];
+    }
+    return $salida;
+}
+
 if ($accion === 'abrir-esquema') {
-    $id  = (string) ($cuerpo['esquema'] ?? $_GET['esquema'] ?? '');
-    $esq = esquema_leer($config, $rama, $id);
+    $id   = (string) ($cuerpo['esquema'] ?? $_GET['esquema'] ?? '');
+    $lang = (string) ($cuerpo['idioma'] ?? $_GET['idioma'] ?? '');
+    $esq  = esquema_leer($config, $rama, $id);
     if (!$esq) responder(404, ['ok' => false, 'error' => 'sin_esquema', 'mensaje' => 'Ese esquema no existe.']);
-    $d = github($config, 'contents/' . rawurlencode((string) $esq['archivoDatos']) . '?ref=' . rawurlencode($rama));
+    $idiomas = (array) ($esq['idiomas'] ?? ['es']);
+    if (!in_array($lang, $idiomas, true)) $lang = (string) $idiomas[0];
+
+    $ruta = contenido_archivo($esq, $lang);
+    if ($ruta === '') responder(500, ['ok' => false, 'error' => 'esquema_roto', 'mensaje' => 'El esquema no apunta a un archivo válido.']);
+    $d = github($config, 'contents/' . rawurlencode($ruta) . '?ref=' . rawurlencode($rama));
     if ($d['codigo'] !== 200) responder(404, ['ok' => false, 'error' => 'sin_datos', 'mensaje' => 'El esquema apunta a un archivo que no existe.']);
     $datos = json_decode((string) base64_decode(str_replace("\n", '', (string) ($d['datos']['content'] ?? ''))), true);
-    responder(200, ['ok' => true, 'esquema' => $esq, 'datos' => $datos, 'sha' => $d['datos']['sha'] ?? '']);
+    responder(200, ['ok' => true, 'esquema' => $esq, 'datos' => $datos, 'idioma' => $lang,
+                    'claves' => contenido_claves($esq, $datos, $lang)]);
 }
 
 if ($accion === 'guardar-contenido') {
@@ -303,22 +345,38 @@ if ($accion === 'guardar-contenido') {
         responder(400, ['ok' => false, 'error' => 'idioma', 'mensaje' => 'Ese idioma no está declarado en el esquema.']);
     }
 
-    $d = github($config, 'contents/' . rawurlencode((string) $esq['archivoDatos']) . '?ref=' . rawurlencode($rama));
+    $ruta = contenido_archivo($esq, $lang);
+    if ($ruta === '') responder(500, ['ok' => false, 'error' => 'esquema_roto', 'mensaje' => 'El esquema no apunta a un archivo válido.']);
+    $d = github($config, 'contents/' . rawurlencode($ruta) . '?ref=' . rawurlencode($rama));
     if ($d['codigo'] !== 200) responder(404, ['ok' => false, 'error' => 'sin_datos', 'mensaje' => 'No se encontró el archivo de datos.']);
     $datos = json_decode((string) base64_decode(str_replace("\n", '', (string) ($d['datos']['content'] ?? ''))), true);
     if (!is_array($datos)) responder(500, ['ok' => false, 'error' => 'datos_rotos', 'mensaje' => 'El archivo de datos no se pudo leer.']);
 
-    if (!empty($esq['coleccion'])) {
-        $i = (int) $indice;
-        if (!isset($datos[$i][$lang]) || !is_array($datos[$i][$lang])) {
+    $raiz = (string) ($esq['raiz'] ?? '');
+    $base =& $datos;
+    if ($raiz !== '') {
+        if (!isset($datos[$raiz]) || !is_array($datos[$raiz])) {
+            responder(500, ['ok' => false, 'error' => 'datos_rotos', 'mensaje' => 'El archivo no tiene la raíz que el esquema declara.']);
+        }
+        $base =& $datos[$raiz];
+    }
+    $clave = (string) ($cuerpo['clave'] ?? $indice ?? '');
+    if (($esq['forma'] ?? '') === 'mapa') {
+        if (!isset($base[$clave]) || !is_array($base[$clave])) {
+            responder(400, ['ok' => false, 'error' => 'clave', 'mensaje' => 'Ese elemento no existe.']);
+        }
+        $destino =& $base[$clave];
+    } elseif (!empty($esq['coleccion'])) {
+        $i = (int) $clave;
+        if (!isset($base[$i][$lang]) || !is_array($base[$i][$lang])) {
             responder(400, ['ok' => false, 'error' => 'indice', 'mensaje' => 'Ese elemento no existe.']);
         }
-        $destino =& $datos[$i][$lang];
+        $destino =& $base[$i][$lang];
     } else {
-        if (!isset($datos[$lang]) || !is_array($datos[$lang])) {
+        if (!isset($base[$lang]) || !is_array($base[$lang])) {
             responder(400, ['ok' => false, 'error' => 'idioma', 'mensaje' => 'Ese idioma no está en los datos.']);
         }
-        $destino =& $datos[$lang];
+        $destino =& $base[$lang];
     }
 
     $cambiados = 0;
@@ -348,9 +406,13 @@ if ($accion === 'guardar-contenido') {
             if (!is_array($v)) continue;
             $nuevo = [];
             foreach ($v as $x) { $t = $limitar($x, (int) $tope); if ($t !== '') $nuevo[] = $t; }
-        } elseif ($tipo === 'pares' || $tipo === 'trios') {
+        } elseif ($tipo === 'pares' || $tipo === 'trios' || $tipo === 'tupla') {
             if (!is_array($v)) continue;
-            $anchura = $tipo === 'pares' ? 2 : 3;
+            /* La anchura la dan las columnas declaradas, no el nombre del tipo.
+               Con «pares» y «trios» codificados a dos y tres, un campo de cinco
+               columnas obligaba a inventar un tipo nuevo por cada anchura. */
+            $columnas = (array) ($campo['columnas'] ?? []);
+            $anchura = count($columnas) ?: ($tipo === 'pares' ? 2 : 3);
             $topes = is_array($tope) ? $tope : array_fill(0, $anchura, (int) $tope);
             $nuevo = [];
             foreach ($v as $fila) {
@@ -380,7 +442,7 @@ if ($accion === 'guardar-contenido') {
     if ($cambiados === 0) responder(200, ['ok' => true, 'sin_cambios' => true]);
 
     $json = json_encode($datos, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n";
-    $r = github($config, 'contents/' . rawurlencode((string) $esq['archivoDatos']), 'PUT', [
+    $r = github($config, 'contents/' . rawurlencode($ruta), 'PUT', [
         'message' => ($esq['titulo'] ?? $id) . ' editado desde el panel (' . $lang . ')',
         'content' => base64_encode($json),
         'sha'     => $d['datos']['sha'] ?? '',

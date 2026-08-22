@@ -1,0 +1,45 @@
+{
+  "_": "El método. Un solo archivo con un bloque por idioma dentro de CT: ni colección ni mapa. Falta ETAPAS a propósito: sus filas llevan una lista anidada y ningún tipo del editor la representa todavía. Sin declarar significa no editable, y es preferible a un editor que la aplaste.",
+  "id": "metodo",
+  "titulo": "Cómo transformamos",
+  "raiz": "CT",
+  "archivoDatos": "src/content/como-transformamos.json",
+  "idiomas": ["es", "en"],
+  "campos": [
+    { "id": "kicker", "rotulo": "Antetítulo", "tipo": "linea", "maximo": 50 },
+    { "id": "h1", "rotulo": "Titular", "tipo": "linea", "maximo": 80, "ayuda": "Es el h1 de la página del método." },
+    { "id": "lead", "rotulo": "Entrada", "tipo": "parrafo", "maximo": 300 },
+    { "id": "estados", "rotulo": "Los estados", "tipo": "parrafo", "maximo": 400 },
+    { "id": "salida", "rotulo": "Etiqueta de resultado", "tipo": "linea", "maximo": 20 },
+
+    { "id": "tesisKicker", "rotulo": "Antetítulo de la tesis", "tipo": "linea", "maximo": 30 },
+    { "id": "tesis", "rotulo": "La tesis", "tipo": "linea", "maximo": 80 },
+    { "id": "tesisTexto", "rotulo": "Texto de la tesis", "tipo": "lista", "maximo": 500 },
+
+    { "id": "sistemasKicker", "rotulo": "Antetítulo de sistemas", "tipo": "linea", "maximo": 30 },
+    { "id": "sistemas", "rotulo": "Titular de sistemas", "tipo": "linea", "maximo": 80 },
+    { "id": "sistemasLead", "rotulo": "Entrada de sistemas", "tipo": "parrafo", "maximo": 300 },
+    { "id": "SISTEMAS", "rotulo": "Los cinco sistemas", "tipo": "tupla", "maximo": [20, 500, 60],
+      "columnas": ["Nombre", "Qué es", "Resultado"],
+      "ayuda": "People, Data, Agents, Products y Operations. Los nombres van en inglés a propósito: son el naming del método." },
+
+    { "id": "etapasKicker", "rotulo": "Antetítulo de etapas", "tipo": "linea", "maximo": 30 },
+    { "id": "etapas", "rotulo": "Titular de etapas", "tipo": "linea", "maximo": 80 },
+
+    { "id": "principiosKicker", "rotulo": "Antetítulo de principios", "tipo": "linea", "maximo": 30 },
+    { "id": "principios", "rotulo": "Titular de principios", "tipo": "linea", "maximo": 80 },
+    { "id": "PRINCIPIOS", "rotulo": "Los cinco principios", "tipo": "tupla", "maximo": [60, 400],
+      "columnas": ["Principio", "Qué significa"] },
+
+    { "id": "entradasKicker", "rotulo": "Antetítulo de entradas", "tipo": "linea", "maximo": 30 },
+    { "id": "entradas", "rotulo": "Titular de entradas", "tipo": "linea", "maximo": 80 },
+    { "id": "entradasLead", "rotulo": "Entrada de entradas", "tipo": "parrafo", "maximo": 250 },
+    { "id": "ENTRADAS", "rotulo": "Por dónde se entra", "tipo": "tupla", "maximo": [25, 40, 350, 20, 60],
+      "columnas": ["Servicio", "Qué es", "Cuándo entra", "Etapas", "Enlace"],
+      "ayuda": "El enlace tiene que empezar por /es o /en y existir: un enlace roto aquí es una página menos en el sitio." },
+
+    { "id": "ctaKicker", "rotulo": "Antetítulo del cierre", "tipo": "linea", "maximo": 40 },
+    { "id": "cta", "rotulo": "Cierre", "tipo": "linea", "maximo": 80 },
+    { "id": "ctaBoton", "rotulo": "Botón final", "tipo": "linea", "maximo": 40 }
+  ]
+}

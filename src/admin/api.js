@@ -63,7 +63,7 @@ export const guardarAutor = (datos) => llamar('guardar-autor', datos);
 export const subirFoto = (datos) => llamar('subir-foto', datos);
 export const listarPaginas = () => llamar('listar-paginas');
 export const listarEsquemas = () => llamar('listar-esquemas');
-export const abrirEsquema = (esquema) => llamar('abrir-esquema', { esquema });
+export const abrirEsquema = (esquema, idioma) => llamar('abrir-esquema', { esquema, idioma });
 export const guardarContenido = (datos) => llamar('guardar-contenido', datos);
 export const guardarPagina = (datos) => llamar('guardar-pagina', datos);
 export const suscriptores = () => llamar('suscriptores');

@@ -6,9 +6,17 @@ import { createServer } from 'node:http';
 import { readFileSync, existsSync, statSync } from 'node:fs';
 import { chromium } from 'playwright';
 
-const esquema = JSON.parse(readFileSync('src/content/esquemas/industrias.json', 'utf8'));
-const datos = JSON.parse(readFileSync('src/content/industrias.json', 'utf8'));
+const leer = (f) => JSON.parse(readFileSync(f, 'utf8'));
+const ESQUEMAS = ['industrias', 'servicios', 'metodo'].map((id) => leer(`src/content/esquemas/${id}.json`));
 let guardado = null;
+
+const archivoDe = (e, lang) => (e.archivosPorIdioma ? e.archivosPorIdioma[lang] : e.archivoDatos);
+const clavesDe = (e, datos, lang) => {
+  const base = e.raiz ? datos[e.raiz] : datos;
+  if (e.forma === 'mapa') return Object.entries(base).map(([k, v]) => ({ clave: k, nombre: v[e.etiqueta] || k }));
+  if (e.coleccion) return base.map((v, i) => ({ clave: String(i), nombre: v[lang]?.[e.etiqueta] || `Elemento ${i + 1}` }));
+  return [{ clave: '', nombre: e.titulo }];
+};
 
 const tipo = (p) => p.endsWith('.js') ? 'text/javascript' : p.endsWith('.css') ? 'text/css'
   : p.endsWith('.svg') ? 'image/svg+xml' : p.endsWith('.webp') ? 'image/webp' : p.endsWith('.woff2') ? 'font/woff2' : 'text/html';
@@ -22,8 +30,13 @@ const srv = createServer(async (req, res) => {
     const responder = (o) => { res.writeHead(200, { 'content-type': 'application/json' }); res.end(JSON.stringify(o)); };
     if (p.accion === 'yo') return responder({ ok: true, nombre: 'Carlos' });
     if (p.accion === 'listar') return responder({ ok: true, articulos: [] });
-    if (p.accion === 'listar-esquemas') return responder({ ok: true, esquemas: [{ id: 'industrias', titulo: esquema.titulo, campos: esquema.campos.length }] });
-    if (p.accion === 'abrir-esquema') return responder({ ok: true, esquema, datos, sha: 'x' });
+    if (p.accion === 'listar-esquemas') return responder({ ok: true, esquemas: ESQUEMAS.map((e) => ({ id: e.id, titulo: e.titulo, campos: e.campos.length })) });
+    if (p.accion === 'abrir-esquema') {
+      const e = ESQUEMAS.find((x) => x.id === p.esquema);
+      const lang = (e.idiomas || ['es']).includes(p.idioma) ? p.idioma : e.idiomas[0];
+      const datos = leer(archivoDe(e, lang));
+      return responder({ ok: true, esquema: e, datos, idioma: lang, claves: clavesDe(e, datos, lang), sha: 'x' });
+    }
     if (p.accion === 'guardar-contenido') { guardado = p; return responder({ ok: true, cambiados: 1 }); }
     return responder({ ok: true });
   }
@@ -76,13 +89,27 @@ await pg.waitForTimeout(200);
 await pg.getByRole('button', { name: 'Guardar', exact: true }).click();
 await pg.waitForTimeout(600);
 
-const antes = datos[1].es;
+const antes = leer('src/content/industrias.json')[1].es;
 const enviado = guardado?.valores;
-console.log(`5. guarda esquema=${guardado?.esquema} indice=${guardado?.indice} idioma=${guardado?.idioma}`);
-const ok5 = guardado?.esquema === 'industrias' && guardado?.indice === 1 && guardado?.idioma === 'es';
+console.log(`5. guarda esquema=${guardado?.esquema} clave=${guardado?.clave} idioma=${guardado?.idioma}`);
+const ok5 = guardado?.esquema === 'industrias' && guardado?.clave === '1' && guardado?.idioma === 'es';
 const reordenado = JSON.stringify(enviado?.contexto?.[0]) === JSON.stringify(antes.contexto[1]);
 console.log(`6. el reordenar llegó al servidor: ${reordenado ? 'ok' : '✗'}`);
 console.log(`7. manda los ${Object.keys(enviado || {}).length} campos del esquema`);
+/* Y las otras dos formas: un mapa por slug y un bloque único por idioma. */
+for (const [id, rotulo] of [['servicios', 'Casos de uso'], ['metodo', 'Cómo transformamos']]) {
+  await pg.getByRole('button', { name: 'Volver' }).click();
+  await pg.waitForTimeout(300);
+  await pg.getByText(rotulo, { exact: true }).first().click();
+  await pg.waitForTimeout(600);
+  const sel = await pg.locator('select').count();
+  const campos = await pg.locator('input[type="text"], textarea').count();
+  const err = errores.length;
+  await pg.getByRole('button', { name: 'EN', exact: true }).click();
+  await pg.waitForTimeout(500);
+  const tras = await pg.locator('input[type="text"], textarea').count();
+  console.log(`8. ${rotulo}: ${sel ? 'con selector' : 'sin selector'} · ${campos} campos · cambia a EN y sigue con ${tras} · ${errores.length === err ? 'sin errores' : '✗ errores'}`);
+}
 console.log(errores.length ? `\n✗ errores en la página: ${errores.join(' | ')}` : '\nSin errores de JavaScript.');
 
 await b.close(); srv.close();
