@@ -32,7 +32,12 @@ const ESPERA_MS = 20000;
 const articulos = readdirSync(CARPETA)
   .filter((f) => f.endsWith('.json'))
   .map((f) => JSON.parse(readFileSync(join(CARPETA, f), 'utf8')))
-  .filter((a) => a.estado === 'publicado');
+  .filter((a) => a.estado === 'publicado')
+  /* Por fecha y no por nombre de archivo. Leer la carpeta da orden alfabético,
+     y con él «el más reciente» era en realidad «el primero por la A»: la
+     comprobación del feed buscaba un artículo viejo, que sigue estando, y daba
+     por bueno un feed que se había quedado atrás. Se vio probándolo. */
+  .sort((a, b) => String(b.fecha).localeCompare(String(a.fecha)));
 
 if (!articulos.length) {
   console.log('No hay artículos publicados en el repositorio. Nada que comprobar.');
@@ -90,13 +95,33 @@ for (const a of articulos) {
   }
 }
 
+/* Y el feed, que es por donde los buscadores se enteran de lo nuevo sin
+   releer el sitio entero. Un feed que se queda atrás no rompe ninguna página
+   —nadie lo ve— pero apaga en silencio el mecanismo de descubrimiento rápido,
+   que es justo el fallo que nadie encuentra mirando la web. */
+const reciente = articulos[0];
+for (const lang of ['es', 'en']) {
+  const t = reciente?.[lang];
+  if (!t?.slug) continue;
+  const url = `${SITIO}/${lang}/feed.xml`;
+  const { estado, html, error } = await pedir(url);
+  comprobadas++;
+  if (estado !== 200) {
+    fallos.push(`${url} → ${error ? `sin respuesta (${error})` : `HTTP ${estado}`}`);
+  } else if (!html.includes(`/${lang}/insights/${t.slug}`)) {
+    fallos.push(`${url} → no contiene el último artículo («${t.titulo}»): el feed publicado se quedó en una versión anterior.`);
+  }
+}
+
 console.log(`Artículos publicados en el repositorio: ${articulos.length}`);
 console.log(`Direcciones comprobadas contra ${SITIO}: ${comprobadas}`);
 
 if (fallos.length) {
   console.log('');
   for (const f of fallos) console.error(`::error::${f}`);
-  console.error(`::error::${fallos.length === 1 ? 'Hay una dirección que el repositorio da' : `Hay ${fallos.length} direcciones que el repositorio da`} por publicada y el sitio no sirve. El último despliegue no llegó a la web.`);
+  console.error(`::error::${fallos.length === 1
+    ? 'Hay una dirección que el repositorio da por publicada'
+    : `Hay ${fallos.length} direcciones que el repositorio da por publicadas`} y el sitio no sirve. El último despliegue no llegó a la web.`);
   process.exit(1);
 }
 

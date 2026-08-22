@@ -723,6 +723,11 @@ function documentoPara(path, meta) {
     <link rel="alternate" hreflang="${esEs ? 'en' : 'es'}" href="${SITE}${altPath}" />
     <link rel="alternate" hreflang="x-default" href="${SITE}${esEs ? path : altPath}" />
 
+    <!-- El feed de novedades, en el idioma de esta página. Va en todas y no
+         solo en Insights: un rastreador que aterriza en cualquier página
+         encuentra así por dónde se entera de lo nuevo. -->
+    <link rel="alternate" type="application/rss+xml" title="${BRAND} — Insights" href="${SITE}/${esEs ? 'es' : 'en'}/feed.xml" />
+
     <meta property="og:type" content="${meta.tipoOg || 'website'}" />
 ${meta.tipoOg === 'article' && meta.publicado ? `    <meta property="article:published_time" content="${escapa(meta.publicado)}" />\n` : ''}${meta.tipoOg === 'article' && meta.autor ? `    <meta property="article:author" content="${escapa(meta.autor)}" />\n` : ''}
     <meta property="og:site_name" content="${BRAND}" />
@@ -878,6 +883,71 @@ ${urls}
 </urlset>
 `);
 
+/* ---------------------------------------------------------- feed RSS ----
+ *
+ * Un sitemap dice «estas páginas existen». Un feed dice «esto es lo último», y
+ * los buscadores lo tratan distinto: Google documenta expresamente que un feed
+ * RSS/Atom es un mecanismo de descubrimiento rápido para contenido nuevo, y
+ * recomienda tener los dos. El sitemap se rastrea de vez en cuando; el feed se
+ * consulta buscando novedades.
+ *
+ * Además resuelve una pregunta razonable: si publicamos un artículo al día sin
+ * que nadie mire, ¿hay que ir a Search Console cada mañana a pedir indexación?
+ * No. Ese botón existe para casos puntuales, tiene cuota diaria y no tiene una
+ * API pública. Lo que sí se automatiza es esto: sitemap con su fecha real, feed
+ * con lo último, y ambos declarados donde el buscador los busca.
+ *
+ * Uno por idioma, porque mezclar dos idiomas en un feed obliga a quien lo lee
+ * a adivinar cuál le toca. Veinte entradas: es un feed de novedades, no un
+ * archivo histórico —para eso está el sitemap—.
+ */
+const escapaXml = (t) => String(t)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+
+/* RFC 822, que es el formato que pide RSS. Las fechas del artículo son solo el
+   día, sin hora: se fija el mediodía UTC para que ninguna zona horaria mueva
+   una publicación al día anterior. */
+const fechaRss = (dia) => new Date(`${dia}T12:00:00Z`).toUTCString();
+
+for (const lang of ['es', 'en']) {
+  const entradas = articulos
+    .filter((a) => a[lang]?.slug)
+    .slice(0, 20)
+    .map((a) => {
+      const t = a[lang];
+      const url = `${SITE}/${lang}/insights/${t.slug}`;
+      return `    <item>
+      <title>${escapaXml(t.titulo)}</title>
+      <link>${url}</link>
+      <guid isPermaLink="true">${url}</guid>
+      <pubDate>${fechaRss(a.fecha)}</pubDate>
+      <description>${escapaXml(t.descripcion || t.entradilla || '')}</description>
+      ${a.autor ? `<dc:creator>${escapaXml(a.autor)}</dc:creator>` : ''}
+    </item>`;
+    }).join('\n');
+
+  const titulo = lang === 'es' ? 'BECOME — Insights' : 'BECOME — Insights';
+  const descripcion = lang === 'es'
+    ? 'Análisis de BECOME sobre agentes de IA, procesos, modelos operativos, adopción y creación de valor empresarial.'
+    : 'BECOME analysis on AI agents, processes, operating models, adoption and enterprise value.';
+
+  mkdirSync(join(ROOT, `dist/${lang}`), { recursive: true });
+  writeFileSync(join(ROOT, `dist/${lang}/feed.xml`),
+`<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>${titulo}</title>
+    <link>${SITE}/${lang}/insights</link>
+    <description>${escapaXml(descripcion)}</description>
+    <language>${lang}</language>
+    <atom:link href="${SITE}/${lang}/feed.xml" rel="self" type="application/rss+xml"/>
+${entradas}
+  </channel>
+</rss>
+`);
+}
+
 /* ------------------------------------------------------------- llms.txt */
 /*
  * El equivalente de robots.txt para los asistentes de IA: un índice en texto
@@ -972,6 +1042,11 @@ Disallow: /_pages/
 Disallow: /admin
 
 Sitemap: ${SITE}/sitemap.xml
+
+# Los feeds. Un buscador acepta un RSS como sitemap, y es donde mira cuando
+# quiere saber qué hay de nuevo sin releer las noventa páginas.
+Sitemap: ${SITE}/es/feed.xml
+Sitemap: ${SITE}/en/feed.xml
 `);
 
 /**
