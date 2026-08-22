@@ -52,7 +52,7 @@ export default function Servicios() {
           o construir la solución. Se contratan por separado o en secuencia.
         </Lead>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
-          <PrimaryCTA to="/es/soluciones">Encuentra tu punto de partida</PrimaryCTA>
+          <PrimaryCTA to="/es/casos-de-uso">Encuentra tu punto de partida</PrimaryCTA>
           <GhostCTA to="/es/contacto" dark>Conversemos</GhostCTA>
         </div>
       </Section>
@@ -238,7 +238,7 @@ export default function Servicios() {
         <Headline dark>No empieces por el servicio. Empieza por la decisión que necesitas tomar.</Headline>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
           <PrimaryCTA to="/es/contacto">Cuéntanos qué debe cambiar</PrimaryCTA>
-          <GhostCTA to="/es/soluciones" dark>Empieza por tu pregunta</GhostCTA>
+          <GhostCTA to="/es/casos-de-uso" dark>Empieza por tu pregunta</GhostCTA>
         </div>
       </Section>
 

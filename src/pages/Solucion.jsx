@@ -20,7 +20,7 @@ import { SOLUCIONES_MENU } from '../site.js';
 export default function Solucion() {
   const { slug } = useParams();
   const c = SOLUCION_CONTENIDO[slug];
-  if (!c) return <Navigate to="/es/soluciones" replace />;
+  if (!c) return <Navigate to="/es/casos-de-uso" replace />;
 
   const others = SOLUCIONES_MENU.filter((u) => u.slug !== slug).slice(0, 3);
 
@@ -121,7 +121,7 @@ export default function Solucion() {
             </Card>
           ))}
         </Cols>
-        <TextCTA to="/es/soluciones">Ver todos los casos de uso</TextCTA>
+        <TextCTA to="/es/casos-de-uso">Ver todos los casos de uso</TextCTA>
       </Section>
 
       <Section band="darker" pad="var(--space-13)">

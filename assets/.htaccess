@@ -47,25 +47,44 @@
   RedirectMatch 301 ^/en/services/transformation-discovery/?$  /en/services/become-discover
   RedirectMatch 301 ^/en/services/build-and-embed/?$           /en/services/become-embed
 
-  # El apartado pasó de llamarse «casos de uso» a «soluciones», y cuatro de las
-  # seis cambiaron de dirección. Dos ya no tienen equivalente: «por dónde
-  # empezar» desapareció como solución propia —es lo que hace BECOME DISCOVER™
-  # entero— y «demostrar valor en 90 días» se convirtió en «medir y gobernar el
-  # valor», que es la necesidad de fondo. Ambas van al índice: es preferible a
-  # un 404, y a inventar una correspondencia que no existe.
-  RedirectMatch 301 ^/es/casos-de-uso/pilotos-que-no-escalan/?$      /es/soluciones/escalar-ia
-  RedirectMatch 301 ^/es/casos-de-uso/redisenar-workflow-critico/?$  /es/soluciones/redisenar-procesos-criticos
-  RedirectMatch 301 ^/es/casos-de-uso/construir-agent-o-copilot/?$   /es/soluciones/agentes-de-ia-con-control
-  RedirectMatch 301 ^/es/casos-de-uso/experiencia-ai-native/?$       /es/soluciones/productos-y-servicios-con-ia
-  RedirectMatch 301 ^/es/casos-de-uso/demostrar-valor-en-90-dias/?$  /es/soluciones/medir-y-gobernar-valor
-  RedirectMatch 301 ^/es/casos-de-uso(/.*)?$                         /es/soluciones
+  # El apartado ha cambiado de nombre dos veces: «casos de uso» → «soluciones»
+  # → «casos de uso» otra vez. Las tres direcciones tienen que seguir llevando
+  # al mismo sitio, y con un 301 del servidor, que es lo único que traslada el
+  # posicionamiento; una redirección de JavaScript deja dos páginas distintas a
+  # ojos de un buscador y la vieja acaba en 404 el día que se retire.
+  #
+  # Los slugs de las seis nunca cambiaron en ninguno de los dos renombrados:
+  # solo el tramo del que cuelgan. Por eso el grueso es UNA regla con captura
+  # —$1 arrastra el slug— en vez de doce escritas a mano.
+  #
+  # El orden importa: las reglas de slug antiguo van ANTES de la genérica,
+  # porque esos cinco sí cambiaron de nombre y necesitan su destino propio.
 
-  RedirectMatch 301 ^/en/use-cases/pilotos-que-no-escalan/?$         /en/solutions/scale-ai-beyond-pilots
-  RedirectMatch 301 ^/en/use-cases/redisenar-workflow-critico/?$     /en/solutions/redesign-critical-workflows
-  RedirectMatch 301 ^/en/use-cases/construir-agent-o-copilot/?$      /en/solutions/deploy-governed-ai-agents
-  RedirectMatch 301 ^/en/use-cases/experiencia-ai-native/?$          /en/solutions/build-ai-enabled-products
-  RedirectMatch 301 ^/en/use-cases/demostrar-valor-en-90-dias/?$     /en/solutions/measure-and-govern-ai-value
-  RedirectMatch 301 ^/en/use-cases(/.*)?$                            /en/solutions
+  # Los cinco slugs de la primerísima versión, ya bajo el tramo definitivo.
+  RedirectMatch 301 ^/es/casos-de-uso/pilotos-que-no-escalan/?$      /es/casos-de-uso/escalar-ia
+  RedirectMatch 301 ^/es/casos-de-uso/redisenar-workflow-critico/?$  /es/casos-de-uso/redisenar-procesos-criticos
+  RedirectMatch 301 ^/es/casos-de-uso/construir-agent-o-copilot/?$   /es/casos-de-uso/agentes-de-ia-con-control
+  RedirectMatch 301 ^/es/casos-de-uso/experiencia-ai-native/?$       /es/casos-de-uso/productos-y-servicios-con-ia
+  RedirectMatch 301 ^/es/casos-de-uso/demostrar-valor-en-90-dias/?$  /es/casos-de-uso/medir-y-gobernar-valor
+  # «Por dónde empezar» dejó de ser una página propia: es lo que hace BECOME
+  # DISCOVER™ entero. Va al índice, que es preferible a un 404 y a inventar una
+  # correspondencia que no existe.
+  RedirectMatch 301 ^/es/casos-de-uso/por-donde-empezar-con-ia/?$    /es/casos-de-uso
+
+  RedirectMatch 301 ^/en/use-cases/pilotos-que-no-escalan/?$         /en/use-cases/scale-ai-beyond-pilots
+  RedirectMatch 301 ^/en/use-cases/redisenar-workflow-critico/?$     /en/use-cases/redesign-critical-workflows
+  RedirectMatch 301 ^/en/use-cases/construir-agent-o-copilot/?$      /en/use-cases/deploy-governed-ai-agents
+  RedirectMatch 301 ^/en/use-cases/experiencia-ai-native/?$          /en/use-cases/build-ai-enabled-products
+  RedirectMatch 301 ^/en/use-cases/demostrar-valor-en-90-dias/?$     /en/use-cases/measure-and-govern-ai-value
+  RedirectMatch 301 ^/en/use-cases/por-donde-empezar-con-ia/?$       /en/use-cases
+
+  # Y el tramo intermedio —«soluciones»— entero, con el slug intacto.
+  RedirectMatch 301 ^/es/soluciones(/.*)?$                           /es/casos-de-uso$1
+  RedirectMatch 301 ^/en/solutions(/.*)?$                            /en/use-cases$1
+
+  # El apartado que dejó de llamarse «Framework».
+  RedirectMatch 301 ^/es/framework/?$                                /es/como-transformamos
+  RedirectMatch 301 ^/en/framework/?$                                /en/how-we-transform
 
   # La raíz no tiene página propia: el sitio empieza en /es. La redirección la
   # hace el servidor y no React para que los buscadores vean un 301 de verdad

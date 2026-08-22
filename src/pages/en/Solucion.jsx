@@ -10,7 +10,7 @@ import { SOLUCIONES_MENU } from '../../site.en.js';
 export default function Solucion() {
   const { slug } = useParams();
   const c = SOLUCION_CONTENIDO[slug];
-  if (!c) return <Navigate to="/en/solutions" replace />;
+  if (!c) return <Navigate to="/en/use-cases" replace />;
 
   const others = SOLUCIONES_MENU.filter((u) => u.slug !== slug).slice(0, 3);
 
@@ -110,7 +110,7 @@ export default function Solucion() {
             </Card>
           ))}
         </Cols>
-        <TextCTA to="/en/solutions">View all use cases</TextCTA>
+        <TextCTA to="/en/use-cases">View all use cases</TextCTA>
       </Section>
 
       <Section band="darker" pad="var(--space-13)">

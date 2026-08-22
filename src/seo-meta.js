@@ -69,10 +69,10 @@ export const PAGES = {
     'BECOME conecta estrategia, diseño del modelo operativo, construcción y adopción en un solo sistema. Qué creemos y cómo trabajamos.',
     '/en/about',
   ],
-  '/es/soluciones': [
-    'Soluciones de IA para empresas | BECOME',
+  '/es/casos-de-uso': [
+    'Casos de uso de IA en la empresa | BECOME',
     'Seis necesidades de negocio y qué exige cada una: escalar más allá de los pilotos, preparar equipos, rediseñar procesos, AI agents con control y medir el valor.',
-    '/en/solutions',
+    '/en/use-cases',
   ],
   '/es/nosotros/ia-responsable': [
     'IA responsable: cómo la controlamos | BECOME',
@@ -177,10 +177,10 @@ export const PAGES = {
     'BECOME connects strategy, operating-model design, building and adoption in one system. What we believe and how we work.',
     '/es/nosotros',
   ],
-  '/en/solutions': [
-    'AI solutions for companies | BECOME',
+  '/en/use-cases': [
+    'AI use cases for companies | BECOME',
     'Six business needs and what each takes: scaling beyond pilots, preparing teams, redesigning workflows, governed AI agents and measuring value.',
-    '/es/soluciones',
+    '/es/casos-de-uso',
   ],
   '/en/about/responsible-ai': [
     'Responsible AI: how we control it | BECOME',
@@ -292,13 +292,13 @@ export function equivalenteEnElOtroIdioma(path) {
 
   /* Las soluciones son el caso que NO comparte slug: cada idioma tiene el suyo
      —escalar-ia / scale-ai-beyond-pilots— y hace falta el mapa para emparejarlas. */
-  if (path.startsWith('/es/soluciones/')) {
-    const en = SLUG_ES_A_EN[path.slice('/es/soluciones/'.length)];
-    if (en) return `/en/solutions/${en}`;
+  if (path.startsWith('/es/casos-de-uso/')) {
+    const en = SLUG_ES_A_EN[path.slice('/es/casos-de-uso/'.length)];
+    if (en) return `/en/use-cases/${en}`;
   }
-  if (path.startsWith('/en/solutions/')) {
-    const es = SLUG_EN_A_ES[path.slice('/en/solutions/'.length)];
-    if (es) return `/es/soluciones/${es}`;
+  if (path.startsWith('/en/use-cases/')) {
+    const es = SLUG_EN_A_ES[path.slice('/en/use-cases/'.length)];
+    if (es) return `/es/casos-de-uso/${es}`;
   }
 
   return langOf(path) === 'en' ? '/es' : '/en';

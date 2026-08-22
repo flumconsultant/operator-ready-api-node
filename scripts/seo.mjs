@@ -39,7 +39,7 @@ const enNow = await import('../src/content/become-now.en.js');
 const esCasos = await import('../src/content/soluciones.js');
 const enCasos = await import('../src/content/soluciones.en.js');
 /* Cada solución tiene una dirección distinta en cada idioma; sin este mapa, el
-   hreflang apuntaría a /en/solutions/escalar-ia, que no existe. */
+   hreflang apuntaría a /en/use-cases/escalar-ia, que no existe. */
 const { SLUG_ES_A_EN, SLUG_EN_A_ES } = await import('../src/content/soluciones-slugs.js');
 const { POR_SLUG: INDUSTRIA_POR_SLUG } = await import('../src/content/industrias.js');
 
@@ -131,17 +131,17 @@ for (const [slug, p] of Object.entries(enNow.PROGRAMS)) {
   };
 }
 for (const [slug, c] of Object.entries(esCasos.SOLUCION_CONTENIDO)) {
-  dinamicas[`/es/soluciones/${slug}`] = {
+  dinamicas[`/es/casos-de-uso/${slug}`] = {
     title: tituloConMarca(c.q.replace(/^¿|\?$/g, '')),
     description: recorta(c.answer, 155),
-    alt: `/en/solutions/${SLUG_ES_A_EN[slug]}`,
+    alt: `/en/use-cases/${SLUG_ES_A_EN[slug]}`,
   };
 }
 for (const [slug, c] of Object.entries(enCasos.SOLUCION_CONTENIDO)) {
-  dinamicas[`/en/solutions/${slug}`] = {
+  dinamicas[`/en/use-cases/${slug}`] = {
     title: tituloConMarca(c.q.replace(/\?$/, '')),
     description: recorta(c.answer, 155),
-    alt: `/es/soluciones/${SLUG_EN_A_ES[slug]}`,
+    alt: `/es/casos-de-uso/${SLUG_EN_A_ES[slug]}`,
   };
 }
 
@@ -498,7 +498,7 @@ const fuentePorPatron = Object.fromEntries(
 );
 
 /** El patrón que atiende una URL concreta: primero el literal, luego el que
-    tiene parámetro. `/es/soluciones/x` lo sirve `/es/soluciones/:slug`. */
+    tiene parámetro. `/es/casos-de-uso/x` lo sirve `/es/casos-de-uso/:slug`. */
 function patronDe(path) {
   if (fuentePorPatron[path]) return path;
   const partes = path.split('/');

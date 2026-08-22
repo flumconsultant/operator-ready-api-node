@@ -106,7 +106,7 @@ export const SOLUCIONES_MENU = [
     q: 'Need to measure and govern AI value?',
     line: 'Define the baseline, the owners and the controls that make the result hold.',
   },
-].map((c) => ({ ...c, to: `/en/solutions/${c.slug}` }));
+].map((c) => ({ ...c, to: `/en/use-cases/${c.slug}` }));
 
 /* Las industrias salen del contenido compartido: la lista es la misma en los
    dos idiomas y solo cambia el texto, así que una industria nueva no se añade
@@ -138,10 +138,10 @@ export const NAV = [
   },
   {
     label: 'Use cases',
-    to: '/en/solutions',
+    to: '/en/use-cases',
     heading: 'What needs to change in your company?',
     items: SOLUCIONES_MENU.map((c) => ({ to: c.to, label: c.label, line: c.line })),
-    more: { to: '/en/solutions', label: 'View all use cases' },
+    more: { to: '/en/use-cases', label: 'View all use cases' },
     wide: true,
   },
   { label: 'How we transform', to: '/en/how-we-transform' },

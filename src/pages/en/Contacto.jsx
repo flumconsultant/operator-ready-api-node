@@ -93,7 +93,7 @@ export default function Contacto() {
         </div>
 
         <div style={{ marginTop: 'var(--space-10)', paddingTop: 'var(--space-6)', borderTop: '1px solid var(--border-hairline)', display: 'flex', gap: 'var(--space-6)', alignItems: 'center', flexWrap: 'wrap' }}>
-          <GhostCTA to="/en/solutions">See where to start first</GhostCTA>
+          <GhostCTA to="/en/use-cases">See where to start first</GhostCTA>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, font: 'var(--type-body)', color: 'var(--text-muted)' }}>
             <Ico name="chat" size={20} style={{ color: 'var(--text-accent)' }} />
             Or write to us at{' '}

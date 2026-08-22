@@ -86,8 +86,8 @@ export const routes = [
   { path: '/en/about', element: <NosotrosEN /> },
   { path: '/en/about/responsible-ai', element: <ResponsibleAI /> },
 
-  { path: '/en/solutions', element: <SolucionesEN /> },
-  { path: '/en/solutions/:slug', element: <SolucionEN /> },
+  { path: '/en/use-cases', element: <SolucionesEN /> },
+  { path: '/en/use-cases/:slug', element: <SolucionEN /> },
 
   { path: '/en/insights', element: <InsightsEN /> },
   { path: '/en/insights/:slug', element: <ArticuloEN /> },
@@ -115,8 +115,8 @@ export const routes = [
   { path: '/es/nosotros', element: <Nosotros /> },
   { path: '/es/nosotros/ia-responsable', element: <IaResponsable /> },
 
-  { path: '/es/soluciones', element: <Soluciones /> },
-  { path: '/es/soluciones/:slug', element: <Solucion /> },
+  { path: '/es/casos-de-uso', element: <Soluciones /> },
+  { path: '/es/casos-de-uso/:slug', element: <Solucion /> },
 
   { path: '/es/insights', element: <Insights /> },
   { path: '/es/insights/:slug', element: <Articulo /> },

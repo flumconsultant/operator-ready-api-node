@@ -310,7 +310,7 @@ export default function Home() {
             <IndexRow key={c.slug} index={i} icon={c.icon} to={c.to} num={String(i + 1).padStart(2, '0')} term={c.label} def={c.q} />
           ))}
         </div>
-        <TextCTA to="/en/solutions">See all use cases</TextCTA>
+        <TextCTA to="/en/use-cases">See all use cases</TextCTA>
       </Section>
 
       <Section band="dark" nodeState={3}>
@@ -376,7 +376,7 @@ export default function Home() {
             </Reveal>
           ))}
         </Cols>
-        <TextCTA to="/en/solutions" dark>Find the scenario closest to yours</TextCTA>
+        <TextCTA to="/en/use-cases" dark>Find the scenario closest to yours</TextCTA>
       </Section>
 
       <Section band="light">

@@ -106,7 +106,7 @@ export const SOLUCIONES_MENU = [
     q: '¿Necesitas medir y gobernar el valor de la IA?',
     line: 'Define la línea base, los responsables y los controles que hacen que el resultado se sostenga.',
   },
-].map((c) => ({ ...c, to: `/es/soluciones/${c.slug}` }));
+].map((c) => ({ ...c, to: `/es/casos-de-uso/${c.slug}` }));
 
 /* ---- industrias ----
    El menú las lista con un descriptor de una línea, igual que las soluciones.
@@ -152,10 +152,10 @@ export const NAV = [
   },
   {
     label: 'Casos de uso',
-    to: '/es/soluciones',
+    to: '/es/casos-de-uso',
     heading: '¿Qué necesita cambiar en tu empresa?',
     items: SOLUCIONES_MENU.map((c) => ({ to: c.to, label: c.label, line: c.line })),
-    more: { to: '/es/soluciones', label: 'Ver todos los casos de uso' },
+    more: { to: '/es/casos-de-uso', label: 'Ver todos los casos de uso' },
     wide: true,
   },
   /* «Cómo transformamos» y no «Framework»: en un menú, quien entra por primera
@@ -242,7 +242,7 @@ export const LEGACY_REDIRECTS = {
   '/como-trabajamos': '/es/como-transformamos',
   '/discovery': '/es/servicios/become-discover',
   '/build-embed': '/es/servicios/become-embed',
-  '/casos': '/es/soluciones',
+  '/casos': '/es/casos-de-uso',
   '/insights': '/es/insights',
   '/nosotros': '/es/nosotros',
   '/contacto': '/es/contacto',

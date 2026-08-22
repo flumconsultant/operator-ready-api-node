@@ -111,7 +111,7 @@ export default function Contacto() {
         </div>
 
         <div style={{ marginTop: 'var(--space-10)', paddingTop: 'var(--space-6)', borderTop: '1px solid var(--border-hairline)', display: 'flex', gap: 'var(--space-6)', alignItems: 'center', flexWrap: 'wrap' }}>
-          <GhostCTA to="/es/soluciones">Mira antes por dónde empezar</GhostCTA>
+          <GhostCTA to="/es/casos-de-uso">Mira antes por dónde empezar</GhostCTA>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, font: 'var(--type-body)', color: 'var(--text-muted)' }}>
             <Ico name="chat" size={20} style={{ color: 'var(--text-accent)' }} />
             O escríbenos a{' '}
