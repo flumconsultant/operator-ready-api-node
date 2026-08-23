@@ -26,7 +26,7 @@
       "ayuda": "Es el h1 de la página: la frase por la que Google entiende de qué va tu portada. Entre 150 y 260 caracteres.",
       "tipo": "parrafo",
       "maximo": 280,
-      "valor": "Convertimos la IA en una capacidad propia de tu empresa. Conectamos la estrategia con personas, datos, agentes, productos y operaciones para mejorar decisiones, rediseñar la forma de trabajar y crear nuevas fuentes de valor."
+      "valor": "BECOME es una firma de consultoría y transformación con IA para empresas. Convertimos herramientas y pilotos en capacidades que el negocio puede operar, gobernar y mejorar."
     },
     {
       "id": "ctaPrincipal",
@@ -42,7 +42,7 @@
       "ayuda": "Lleva más abajo en la misma página.",
       "tipo": "linea",
       "maximo": 30,
-      "valor": "Ver qué hacemos"
+      "valor": "Explora los servicios"
     },
     {
       "id": "paraQuien",
@@ -50,7 +50,7 @@
       "ayuda": "La línea bajo el separador. Filtra: quien no se reconozca aquí, no es tu cliente.",
       "tipo": "parrafo",
       "maximo": 200,
-      "valor": "Para empresas que necesitan pasar de herramientas aisladas y pilotos a resultados gobernados, adoptados y medibles."
+      "valor": "Un piloto demuestra que algo puede funcionar. El valor aparece cuando tiene responsable, controles, integración, adopción y una métrica."
     },
     {
       "id": "s1kicker",
@@ -239,14 +239,14 @@
       "rotulo": "Sección 9 · Titular",
       "tipo": "linea",
       "maximo": 130,
-      "valor": "Strategy that builds. Technology that embeds. Capability that stays."
+      "valor": "Built to operate. Built to stay."
     },
     {
       "id": "s10kicker",
       "rotulo": "Sección 10 · Antetítulo",
       "tipo": "linea",
       "maximo": 70,
-      "valor": "The work we are built to do"
+      "valor": "Qué construimos"
     },
     {
       "id": "s10headline",
@@ -289,6 +289,30 @@
       "tipo": "parrafo",
       "maximo": 420,
       "valor": "Empieza con una conversación sobre el resultado, la capacidad o el proceso que necesitas transformar. Menos de dos minutos para contárnoslo."
+    },
+    {
+      "id": "s13kicker",
+      "rotulo": "Sección 13 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 79,
+      "ayuda": "",
+      "valor": "Lo que queda dentro"
+    },
+    {
+      "id": "s13headline",
+      "rotulo": "Sección 13 · Titular",
+      "tipo": "linea",
+      "maximo": 115,
+      "ayuda": "",
+      "valor": "Lo que queda después de BECOME es más que una solución."
+    },
+    {
+      "id": "s13lead",
+      "rotulo": "Sección 13 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 130,
+      "ayuda": "",
+      "valor": "Una capacidad empresarial necesita algo más que un modelo funcionando."
     }
   ],
   "listas": {
@@ -486,6 +510,32 @@
         "operations",
         "Operating-model reinvention",
         "Las decisiones de diseño que determinan dónde se acumula el valor."
+      ]
+    ],
+    "QUEDA_DENTRO": [
+      [
+        "Proceso",
+        "Un proceso rediseñado con decisiones, excepciones y responsables claros."
+      ],
+      [
+        "Inteligencia",
+        "El agente, copiloto, producto o sistema de decisión que incorpora IA."
+      ],
+      [
+        "Control",
+        "Permisos, trazabilidad, validaciones, límites de autonomía y escalamiento."
+      ],
+      [
+        "Personas",
+        "Un equipo que sabe utilizar, supervisar y mejorar la capacidad."
+      ],
+      [
+        "Responsabilidad",
+        "Documentación, manual de operación y responsabilidad dentro de la empresa."
+      ],
+      [
+        "Medición",
+        "Una línea base y un cuadro de mando para saber si realmente cambió algo."
       ]
     ]
   }

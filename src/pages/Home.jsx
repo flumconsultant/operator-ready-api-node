@@ -60,6 +60,13 @@ const CAPACIDADES = LISTAS.CAPACIDADES;
 
 const INSIGHTS = LISTAS.INSIGHTS;
 
+/* Lo que la empresa se queda cuando BECOME se va. Va justo detrás de lo que
+   BECOME puede construir, y el orden no es casual: primero qué se construye,
+   después qué queda cuando ya no estamos. Es la diferencia entre vender un
+   proyecto y vender una capacidad, y es lo único de esta página que responde a
+   la pregunta que un comprador se hace al final. */
+const QUEDA_DENTRO = LISTAS.QUEDA_DENTRO;
+
 export default function Home() {
   return (
     <main id="contenido" data-page-root style={{ paddingTop: 72, font: 'var(--type-body)', color: 'var(--text-body)', background: 'var(--off-white)' }}>
@@ -218,6 +225,23 @@ export default function Home() {
           ))}
         </Cols>
         <TextCTA to="/es/como-transformamos">Conoce cómo transformamos</TextCTA>
+      </Section>
+
+      {/* 03b — Lo que queda dentro. */}
+      <Section band="light">
+        <Kicker>{campo('home', 's13kicker')}</Kicker>
+        <Headline>{campo('home', 's13headline')}</Headline>
+        <Lead>{campo('home', 's13lead')}</Lead>
+        <Cols min="240px" style={{ marginTop: 'var(--space-10)' }}>
+          {QUEDA_DENTRO.map(([nombre, linea]) => (
+            <Reveal as="div" key={nombre} style={{ borderTop: '1px solid var(--border-strong)', paddingTop: 'var(--space-5)' }}>
+              <h3 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)' }}>
+                {nombre}
+              </h3>
+              <Body style={{ marginTop: 'var(--space-4)' }}>{linea}</Body>
+            </Reveal>
+          ))}
+        </Cols>
       </Section>
 
       {/* 04 — Qué cambia dentro: los cinco sistemas. */}
