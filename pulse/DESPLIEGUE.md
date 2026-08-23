@@ -21,10 +21,10 @@ Calcula **una hora larga** la primera vez. Los pasos 1 a 3 son de esperar
 
 | # | Paso | Dónde |
 |---|---|---|
-| 1 | Contratar el VPS | Web de Hostinger |
+| 1 | Contratar el VPS *(el de BECOME ya está)* | Web de Hostinger |
 | 2 | Apuntar `pulse` a su IP | Panel DNS de `meetbecome.com` |
 | 3 | Entrar por SSH y asegurar el servidor | Terminal |
-| 4 | Instalar Docker | Terminal (en el VPS) |
+| 4 | Instalar Docker *(ya está en el de BECOME)* | Terminal (en el VPS) |
 | 5 | Traer el código | Terminal (en el VPS) |
 | 6 | Escribir el `.env` | Terminal (en el VPS) |
 | 7 | Levantarlo | Terminal (en el VPS) |
@@ -32,19 +32,20 @@ Calcula **una hora larga** la primera vez. Los pasos 1 a 3 son de esperar
 | 9 | El resumen semanal y las copias | Terminal (en el VPS) |
 | 10 | Despliegue automático desde GitHub | Web de GitHub |
 
-> ### ¿Y si el VPS ya tiene algo funcionando?
+> ### El VPS de BECOME ya existe, y ya tiene cosas
 >
-> Si vas a reutilizar un servidor donde ya corre n8n u otra cosa publicada en
-> internet, **sirve perfectamente** —Pulse cabe de sobra en un KVM 2— pero hay
-> un cambio importante: los puertos 80 y 443 ya los tiene el proxy de lo que
-> está montado, y dos programas no pueden escuchar en el mismo puerto. Pulse
-> se cuelga de ese proxy en vez de traer el suyo.
+> Si vas a montarlo en `srv836595.hstgr.cloud` (31.97.41.59), donde ya corren
+> n8n, searxng y la API de WhatsApp, **sáltate el paso 1** —el servidor está
+> contratado y es el tamaño correcto— **y el 4**, que Docker ya está puesto.
+> Los pasos 3.4 y 7 cambian, porque el proxy que da la cara a internet ya es
+> el Traefik que hay, no el Caddy de Pulse.
 >
-> Cambian solo el paso 3.4 (el cortafuegos ya estará hecho) y el paso 7. Lo
-> tienes en **[«Si el VPS ya tiene otra cosa»](#si-el-vps-ya-tiene-otra-cosa)**,
-> justo después del paso 7, con el fragmento de configuración para Caddy,
-> Nginx y Traefik en [`infra/proxy-compartido.md`](infra/proxy-compartido.md).
-> El resto de la guía es igual.
+> Está todo en **[«Si el VPS ya tiene otra cosa — el caso de
+> BECOME»](#si-el-vps-ya-tiene-otra-cosa--el-caso-de-become)**, justo después
+> del paso 7, con lo que hay montado hoy y lo que cambia en cada paso.
+>
+> Para otro servidor con otro proxy (Caddy, Nginx), los fragmentos están en
+> [`infra/proxy-compartido.md`](infra/proxy-compartido.md).
 
 ---
 
@@ -379,60 +380,112 @@ docker compose -f pulse/docker-compose.yml --env-file pulse/.env logs caddy --ta
 
 ---
 
-## Si el VPS ya tiene otra cosa
+## Si el VPS ya tiene otra cosa — el caso de BECOME
 
-Todo lo anterior asume un servidor vacío, donde el Caddy de Pulse puede quedarse
-con los puertos 80 y 443. Si ahí ya vive n8n, esos puertos están ocupados: si
-levantas el compose normal, el contenedor `caddy` de Pulse no arranca —y si
-arrancara, sería peor, porque se pelearía con el proxy que sostiene n8n.
+Todo lo anterior asume un servidor vacío. **El VPS que vas a usar no lo está**,
+y eso cambia dos pasos. Esto es lo que hay hoy en `srv836595.hstgr.cloud`
+(31.97.41.59, KVM 2, Ubuntu):
 
-**Antes de nada, mira qué hay montado.** Estos cuatro comandos lo dicen todo:
+| Contenedor | Qué es | Puertos |
+|---|---|---|
+| `root-traefik-1` | Traefik v2.10 — **el proxy**: el que tiene el 80 y el 443 y saca los certificados | 80, 443 |
+| `root-n8n-1` | n8n | solo `127.0.0.1:5678`, detrás de Traefik |
+| `searxng` | buscador | 8081 |
+| `evolution_api` | API de WhatsApp | 8080 |
+| `evolution_redis` | Redis de esa API | 6379 |
+| `evolution_postgres` | Postgres de esa API | 5432 |
+
+Y de sitio va sobrado: **5,4 GB de RAM libres de 7,8**, y 86 GB de disco de 96.
+Pulse en marcha se lleva menos de 1 GB. Cabe sin discusión.
+
+Lo que **no** cabe es un segundo proxy: el 80 y el 443 los tiene Traefik. Si
+levantas el compose normal, el contenedor `caddy` de Pulse no arranca — y si
+arrancara sería peor, porque se pelearía con el que sostiene n8n.
+
+La buena noticia es que Traefik es el proxy más fácil de los tres para esto:
+**no se configura con archivos, sino con etiquetas en los propios
+contenedores**. Se entera solo de que existe un sitio nuevo. No hay que tocar
+nada de n8n, ni reiniciar el proxy, ni editar ningún archivo suyo.
+
+### Lo que cambia
+
+**Paso 3.2 y 3.3 (usuario y clave).** Estás entrando como `root`. Si te vale
+así para el piloto, sáltatelos; si quieres hacerlo bien, créate el usuario
+`become` y usa ese. No cambia nada del resto de la guía salvo que `sudo` pasa a
+hacer falta.
+
+**Paso 3.4, el cortafuegos.** Comprueba con `sudo ufw status`. Si dice
+`inactive`, **no lo actives ahora**: encender el cortafuegos de golpe en un
+servidor en marcha es la forma más rápida de cortar n8n. Déjalo como está y lo
+vemos aparte.
+
+**Paso 4, Docker.** Ya está instalado. Sáltatelo.
+
+**Paso 5, traer el código.** Igual que está escrito. Clona en `/opt/pulse`,
+que está libre.
+
+**Paso 6, el `.env`.** Igual, más tres líneas al final, que le dicen a Pulse
+cómo colgarse del Traefik que ya existe. Los dos primeros valores salen de
+preguntárselo al propio Traefik:
 
 ```bash
-# ¿Quién tiene el 80 y el 443?
-sudo ss -ltnp | grep -E ':(80|443)\s'
-# ¿Qué contenedores corren?
-docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Ports}}'
-# ¿Hay sitio?
-free -h && df -h /
+# La red de Docker donde vive.
+docker inspect root-traefik-1 \
+  -f '{{range $k,$v := .NetworkSettings.Networks}}{{$k}}{{end}}'
+
+# El resolver de Let's Encrypt y el entrypoint de HTTPS.
+docker inspect root-traefik-1 --format '{{json .Config.Cmd}}' | tr ',' '\n' \
+  | grep -E 'certificatesresolvers|entrypoints'
 ```
 
-Lo que salga en la primera línea es tu proxy: `caddy`, `nginx`, `traefik` o
-`docker-proxy` (que significa que el proxy va en un contenedor; la segunda
-línea dice cuál).
+De la segunda salen líneas tipo `--certificatesresolvers.mytlschallenge.acme…`
+y `--entrypoints.websecure.address=:443`. Lo que va entre los dos puntos es el
+nombre que hace falta:
 
-Con eso, dos cambios respecto a la guía:
+```bash
+TRAEFIK_RED=la-red-que-salió
+TRAEFIK_CERTRESOLVER=el-resolver-que-salió
+TRAEFIK_ENTRYPOINT=websecure
+```
 
-**Paso 3.4, el cortafuegos.** Ya estará configurado, porque n8n se sirve desde
-fuera. Comprueba con `sudo ufw status` que 80 y 443 están abiertos y **no
-ejecutes `ufw --force enable`** si dice `inactive`: activarlo de golpe en un
-servidor en marcha puede cortar n8n. Si está inactivo, déjalo como está.
-
-**Paso 7, levantarlo.** Con los dos archivos de compose, para que Pulse no
-traiga su proxy y escuche solo en local:
+**Paso 7, levantarlo.** Con dos `-f`, y el segundo es el de Traefik:
 
 ```bash
 cd /opt/pulse/pulse
-docker compose -f docker-compose.yml -f docker-compose.compartido.yml \
+docker compose -f docker-compose.yml -f docker-compose.traefik.yml \
   --env-file .env up -d --build
 ```
 
-Salen tres contenedores en vez de cuatro (`db`, `web`, `bot`), y `web`
-responde en `127.0.0.1:3000`: alcanzable desde la propia máquina, desde
-internet no.
+Salen tres contenedores en vez de cuatro (`db`, `web`, `bot`) y **Pulse no
+publica ningún puerto en la máquina**: Traefik le llega por la red de Docker.
+Es más cerrado que el montaje normal, no menos.
 
-Falta decirle al proxy que `pulse.meetbecome.com` va a ese puerto. El
-fragmento exacto según cuál sea está en
-**[`infra/proxy-compartido.md`](infra/proxy-compartido.md)**, con la
-comprobación final de que Pulse responde y n8n sigue igual.
+En un minuto, `https://pulse.meetbecome.com` responde con su certificado. Si no:
 
-Dos avisos sobre compartir servidor:
+```bash
+docker logs root-traefik-1 --tail 50 | grep -i pulse
+docker compose -f docker-compose.yml -f docker-compose.traefik.yml \
+  --env-file .env logs web --tail 50
+```
 
-- **El build aprieta.** Compilar la web se lleva una CPU entera un par de
-  minutos, y en un KVM 2 eso son las dos que hay. Si n8n tiene automatizaciones
-  sensibles a la hora, despliega cuando no estén corriendo.
-- **Una copia de seguridad del VPS ya no es solo de Pulse.** Cuando restaures
-  algo, mira qué te llevas por delante.
+El resto de la guía —crear la empresa, el cron del resumen, las copias— es
+exactamente igual.
+
+### Dos cosas que conviene saber
+
+**El build aprieta.** Compilar la web se lleva una CPU entera un par de
+minutos, y en un KVM 2 son las dos que hay. Si n8n tiene automatizaciones
+sensibles a la hora, despliega cuando no estén corriendo.
+
+**Y una que no es de Pulse, pero se ve desde aquí.** En ese servidor,
+`evolution_postgres` y `evolution_redis` publican sus puertos en `0.0.0.0`, o
+sea, **abiertos a internet**: cualquiera puede intentar conectarse al 5432 y al
+6379 desde fuera. Redis, además, viene sin contraseña por defecto. Pulse no
+hace eso —su base no publica ningún puerto— pero comparte máquina con ellos.
+Se arregla cambiando `5432:5432` por `127.0.0.1:5432:5432` en el compose de esa
+API, y lo mismo con Redis; siguen funcionando igual, porque quien los usa está
+en la misma máquina. Ojo: `ufw` **no** protege de esto —Docker abre sus puertos
+por debajo del cortafuegos—, así que la única solución es esa.
 
 ---
 

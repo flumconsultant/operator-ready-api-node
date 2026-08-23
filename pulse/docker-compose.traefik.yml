@@ -1,0 +1,80 @@
+# Pulse detrás del Traefik que ya está en el VPS.
+#
+#   docker compose -f docker-compose.yml -f docker-compose.traefik.yml \
+#     --env-file .env up -d --build
+#
+# Traefik no se configura con archivos sino con etiquetas en los propios
+# contenedores: lee lo que hay puesto aquí y se entera solo de que existe un
+# sitio nuevo. No hay que tocar nada de n8n ni reiniciar el proxy.
+#
+# En el .env hacen falta dos valores más, que salen del Traefik que ya corre:
+#
+#   TRAEFIK_RED=...          la red de Docker donde vive Traefik
+#   TRAEFIK_CERTRESOLVER=... el nombre del resolver de Let's Encrypt
+#   TRAEFIK_ENTRYPOINT=...   el entrypoint de HTTPS. Casi siempre `websecure`,
+#                            a veces `https`. Si no lo pones, `websecure`.
+#
+# Los dos se sacan con:
+#
+#   docker inspect root-traefik-1 \
+#     -f '{{range $k,$v := .NetworkSettings.Networks}}red: {{$k}}{{end}}'
+#   docker inspect root-traefik-1 --format '{{json .Config.Cmd}}' | tr ',' '\n' \
+#     | grep certificatesresolvers
+#
+# La segunda imprime algo como `--certificatesresolvers.mytlschallenge.acme…`:
+# lo que va entre los dos puntos es el nombre del resolver.
+
+services:
+  # Sin Caddy: los puertos 80 y 443 son de Traefik.
+  caddy:
+    profiles: ["sin-usar"]
+
+  web:
+    # Sin `ports`. Traefik llega por la red de Docker, y así Pulse no publica
+    # ningún puerto en la máquina: menos superficie que la que tiene hoy.
+    networks:
+      - default
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=${TRAEFIK_RED}"
+
+      # El sitio.
+      - "traefik.http.routers.pulse.rule=Host(`${DOMINIO}`)"
+      - "traefik.http.routers.pulse.entrypoints=${TRAEFIK_ENTRYPOINT:-websecure}"
+      - "traefik.http.routers.pulse.tls=true"
+      - "traefik.http.routers.pulse.tls.certresolver=${TRAEFIK_CERTRESOLVER}"
+      - "traefik.http.services.pulse.loadbalancer.server.port=3000"
+
+      # La API interna solo la usa el bot, y la usa por dentro de la red de
+      # Docker sin pasar por aquí. Desde internet se corta: `priority` más alta
+      # que la del sitio para que esta regla gane, y solo pasan las IPs
+      # privadas, que son las de los contenedores. Sin esto, el token
+      # compartido sería la única puerta.
+      #
+      # `ipwhitelist` es el nombre en Traefik v2, que es el que hay en el VPS.
+      # En v3 pasó a llamarse `ipallowlist`; si algún día se actualiza el
+      # proxy, esta línea es la que hay que cambiar.
+      - "traefik.http.routers.pulse-interno.rule=Host(`${DOMINIO}`) && PathPrefix(`/api/interno`)"
+      - "traefik.http.routers.pulse-interno.priority=100"
+      - "traefik.http.routers.pulse-interno.entrypoints=${TRAEFIK_ENTRYPOINT:-websecure}"
+      - "traefik.http.routers.pulse-interno.tls=true"
+      - "traefik.http.routers.pulse-interno.tls.certresolver=${TRAEFIK_CERTRESOLVER}"
+      - "traefik.http.routers.pulse-interno.service=pulse"
+      - "traefik.http.routers.pulse-interno.middlewares=pulse-solo-interno"
+      - "traefik.http.middlewares.pulse-solo-interno.ipwhitelist.sourcerange=127.0.0.1/32,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+
+  bot:
+    # El bot habla con Discord hacia fuera y con `web` hacia dentro. No tiene
+    # nada que hacer en la red de Traefik.
+    networks:
+      - default
+
+  db:
+    networks:
+      - default
+
+networks:
+  traefik:
+    external: true
+    name: ${TRAEFIK_RED}
