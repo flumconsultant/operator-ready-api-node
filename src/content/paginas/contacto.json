@@ -39,5 +39,84 @@
       "maximo": 130,
       "valor": "Qué ocurre después de que escribes."
     }
-  ]
+  ],
+  "listas": {
+    "FIELDS": [
+      {
+        "name": "nombre",
+        "short": "Nombre",
+        "label": "¿Cómo te llamas?",
+        "required": true,
+        "autoComplete": "name"
+      },
+      {
+        "name": "email",
+        "short": "Email",
+        "label": "Tu email corporativo",
+        "type": "email",
+        "required": true,
+        "autoComplete": "email"
+      },
+      {
+        "name": "empresa",
+        "short": "Empresa",
+        "label": "¿En qué empresa trabajas?",
+        "required": true,
+        "autoComplete": "organization"
+      },
+      {
+        "name": "rol",
+        "short": "Rol",
+        "label": "¿Cuál es tu rol?",
+        "required": true,
+        "autoComplete": "organization-title"
+      },
+      {
+        "name": "cambio",
+        "short": "Qué debe cambiar",
+        "label": "¿Qué necesita cambiar?",
+        "type": "textarea",
+        "required": true,
+        "wide": true,
+        "help": "El resultado de negocio, la capacidad o el proceso que necesitas transformar. Sin formalidades."
+      },
+      {
+        "name": "etapa",
+        "short": "Etapa actual",
+        "label": "¿En qué etapa estáis hoy?",
+        "type": "select",
+        "options": [
+          "Definiendo la estrategia",
+          "Priorizando oportunidades",
+          "Diseñando el operating model",
+          "Construyendo una capacidad",
+          "Escalando una solución existente"
+        ],
+        "default": "Definiendo la estrategia"
+      },
+      {
+        "name": "timeline",
+        "short": "Plazo",
+        "label": "¿Para cuándo?",
+        "placeholder": "Por ejemplo: este trimestre"
+      }
+    ],
+    "NEXT": [
+      [
+        "signpost",
+        "Revisamos tu contexto",
+        "Entendemos el problema, el resultado que buscas y las restricciones que existen hoy."
+      ],
+      [
+        "calendar",
+        "Conversamos sobre el reto",
+        "Una conversación de 30 minutos centrada en lo que necesitas cambiar."
+      ],
+      [
+        "target",
+        "Definimos el punto de partida",
+        "Puede ser BECOME NOW™, DISCOVER™, EMBED™ o una recomendación sobre qué resolver primero."
+      ]
+    ]
+  }
 }

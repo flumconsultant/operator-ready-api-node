@@ -1,0 +1,78 @@
+{
+  "_": "Los rótulos y textos de Casos de uso.",
+  "id": "soluciones",
+  "titulo": "Casos de uso",
+  "ruta": "/es/casos-de-uso",
+  "campos": [
+    {
+      "id": "s1kicker",
+      "rotulo": "Sección 1 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Start with your question"
+    },
+    {
+      "id": "s1headline",
+      "rotulo": "Sección 1 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "No busques una solución. Empieza por lo que debe cambiar."
+    },
+    {
+      "id": "s1lead",
+      "rotulo": "Sección 1 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "Selecciona la situación que más se parece a la tuya. Te mostraremos qué capacidad necesitas, qué debe cambiar dentro y cuál es el mejor punto de partida."
+    },
+    {
+      "id": "s2kicker",
+      "rotulo": "Sección 2 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "¿Qué necesitas transformar?"
+    },
+    {
+      "id": "s2headline",
+      "rotulo": "Sección 2 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Seis preguntas que reconocerás antes que cualquier nombre técnico."
+    },
+    {
+      "id": "s3kicker",
+      "rotulo": "Sección 3 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Mapa de orientación"
+    },
+    {
+      "id": "s3headline",
+      "rotulo": "Sección 3 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Del síntoma a la decisión."
+    },
+    {
+      "id": "s3body",
+      "rotulo": "Sección 3 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "BECOME DISCOVER™ cuando falta estrategia o estado objetivo. BECOME EMBED™ cuando ya hay una capacidad priorizada y condiciones para construir."
+    },
+    {
+      "id": "s4kicker",
+      "rotulo": "Sección 4 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Encuentra tu punto de partida"
+    },
+    {
+      "id": "s4headline",
+      "rotulo": "Sección 4 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "No empieces por el servicio. Empieza por la decisión que necesitas tomar."
+    }
+  ]
+}

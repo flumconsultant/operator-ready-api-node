@@ -1,3 +1,4 @@
+import { campo } from '../content/paginas/index.js';
 import React from 'react';
 import SiteHeader from '../components/SiteHeader.jsx';
 import SiteFooter from '../components/SiteFooter.jsx';
@@ -25,18 +26,14 @@ export default function Soluciones() {
           que elegir entre seis opciones: el fondo confirma que esto responde a
           ti. Debajo de un párrafo largo sería ruido moviéndose. */}
       <Section band="dark" pad="var(--space-13)" backdrop={<KineticGrid />} scrim="soft">
-        <Kicker dark>Start with your question</Kicker>
-        <Headline as="h1" dark>No busques una solución. Empieza por lo que debe cambiar.</Headline>
-        <Lead dark>
-          Selecciona la situación que más se parece a la tuya. Te mostraremos qué
-          capacidad necesitas, qué debe cambiar dentro y cuál es el mejor punto de
-          partida.
-        </Lead>
+        <Kicker dark>{campo('soluciones', 's1kicker')}</Kicker>
+        <Headline as="h1" dark>{campo('soluciones', 's1headline')}</Headline>
+        <Lead dark>{campo('soluciones', 's1lead')}</Lead>
       </Section>
 
       <Section band="light">
-        <Kicker>¿Qué necesitas transformar?</Kicker>
-        <Headline>Seis preguntas que reconocerás antes que cualquier nombre técnico.</Headline>
+        <Kicker>{campo('soluciones', 's2kicker')}</Kicker>
+        <Headline>{campo('soluciones', 's2headline')}</Headline>
         <div style={{ marginTop: 'var(--space-10)' }}>
           {SOLUCIONES_MENU.map((c, i) => (
             <IndexRow
@@ -61,12 +58,9 @@ export default function Soluciones() {
       {/* El mapa de orientación: síntoma → necesidad real → engagement. Es lo
           que evita que la elección dependa de intuición comercial. */}
       <Section band="darker">
-        <Kicker dark>Mapa de orientación</Kicker>
-        <Headline dark>Del síntoma a la decisión.</Headline>
-        <Body dark style={{ marginTop: 'var(--space-6)' }}>
-          BECOME DISCOVER™ cuando falta estrategia o estado objetivo. BECOME EMBED™ cuando
-          ya hay una capacidad priorizada y condiciones para construir.
-        </Body>
+        <Kicker dark>{campo('soluciones', 's3kicker')}</Kicker>
+        <Headline dark>{campo('soluciones', 's3headline')}</Headline>
+        <Body dark style={{ marginTop: 'var(--space-6)' }}>{campo('soluciones', 's3body')}</Body>
 
         <div style={{ marginTop: 'var(--space-10)', overflowX: 'auto' }}>
           <table style={{ width: '100%', minWidth: 720, borderCollapse: 'collapse', textAlign: 'left' }}>
@@ -104,8 +98,8 @@ export default function Soluciones() {
 
       <Section band="light" pad="var(--space-12)">
         <Reveal as="div">
-          <Kicker>Encuentra tu punto de partida</Kicker>
-          <Headline>No empieces por el servicio. Empieza por la decisión que necesitas tomar.</Headline>
+          <Kicker>{campo('soluciones', 's4kicker')}</Kicker>
+          <Headline>{campo('soluciones', 's4headline')}</Headline>
           <div style={{ marginTop: 'var(--space-8)' }}>
             <PrimaryCTA to="/es/contacto">Cuéntanos qué debe cambiar</PrimaryCTA>
           </div>

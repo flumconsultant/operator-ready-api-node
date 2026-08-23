@@ -1,5 +1,4 @@
-import { listasDe } from '../content/paginas/index.js';
-import { campo } from '../content/paginas/index.js';
+import { campo, listasDe } from '../content/paginas/index.js';
 import React from 'react';
 import SiteHeader from '../components/SiteHeader.jsx';
 import SiteFooter from '../components/SiteFooter.jsx';

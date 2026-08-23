@@ -1,4 +1,4 @@
-import { campo } from '../content/paginas/index.js';
+import { campo, listasDe } from '../content/paginas/index.js';
 import React from 'react';
 import SiteHeader from '../components/SiteHeader.jsx';
 import SiteFooter from '../components/SiteFooter.jsx';
@@ -18,33 +18,13 @@ import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, Cols } from '../comp
  */
 
 
-const CULTURE = [
-  ['outcome', 'Think in outcomes', 'Preguntamos qué decisión, qué comportamiento o qué resultado de negocio debe cambiar antes de hablar de tecnología.'],
-  ['inspect', 'Go inside the system', 'Buscamos la causa en el modelo operativo, no una solución superficial al síntoma.'],
-  ['together', 'Build with, not for', 'Diseñamos y construimos junto a quienes operarán la capacidad.'],
-  ['idea', 'Stay curious, stay precise', 'Exploramos posibilidades sin confundir exploración con evidencia.'],
-  ['trust', 'Earn trust', 'Hacemos visibles los límites, los riesgos, los supuestos, los controles y las decisiones.'],
-  ['capability', 'Leave capability behind', 'El trabajo debe aumentar la autonomía del cliente, no su dependencia de BECOME.'],
-];
+const LISTAS = listasDe('nosotros');
 
-const CAPACIDADES = [
-  'Estrategia y transformación',
-  'Producto y diseño',
-  'Procesos y operaciones',
-  'IA y datos',
-  'Arquitectura e integración',
-  'Gestión del cambio y adopción',
-  'Medición de valor',
-];
+const CULTURE = LISTAS.CULTURE;
 
-const DELIVERY = [
-  'Un responsable claro por proyecto.',
-  'Equipo del cliente involucrado desde el inicio.',
-  'Decisiones, supuestos y riesgos visibles.',
-  'Software funcional o artefactos utilizables, no solo presentaciones.',
-  'Transferencia de conocimiento y capacidades incluida en el alcance.',
-  'Gobierno y uso responsable incorporados al diseño, no añadidos al final.',
-];
+const CAPACIDADES = LISTAS.CAPACIDADES;
+
+const DELIVERY = LISTAS.DELIVERY;
 
 export default function Nosotros() {
   return (

@@ -21,6 +21,7 @@ import home from './home.json' with { type: 'json' };
 import servicios from './servicios.json' with { type: 'json' };
 import discover from './discover.json' with { type: 'json' };
 import embed from './embed.json' with { type: 'json' };
+import soluciones from './soluciones.json' with { type: 'json' };
 import nosotros from './nosotros.json' with { type: 'json' };
 import iaResponsable from './ia-responsable.json' with { type: 'json' };
 import contacto from './contacto.json' with { type: 'json' };
@@ -28,7 +29,7 @@ import insights from './insights.json' with { type: 'json' };
 import becomeNow from './become-now.json' with { type: 'json' };
 
 export const PAGINAS = {
-  home, servicios, discover, embed,
+  home, servicios, discover, embed, soluciones,
   nosotros, 'ia-responsable': iaResponsable, contacto, insights, 'become-now': becomeNow,
 };
 

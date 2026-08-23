@@ -1,10 +1,9 @@
-import { listasDe } from '../content/paginas/index.js';
+import { campo, listasDe } from '../content/paginas/index.js';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import SiteHeader from '../components/SiteHeader.jsx';
 import SiteFooter from '../components/SiteFooter.jsx';
 import Reveal from '../components/Reveal.jsx';
-import { campo } from '../content/paginas/index.js';
 import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, TextCTA, Card, Cols } from '../components/ui.jsx';
 import { Ico, IcoBadge } from '../components/icons.jsx';
 import { INDUSTRIAS_MENU } from '../site.js';

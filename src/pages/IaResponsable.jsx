@@ -1,4 +1,4 @@
-import { campo } from '../content/paginas/index.js';
+import { campo, listasDe } from '../content/paginas/index.js';
 import React from 'react';
 import SiteHeader from '../components/SiteHeader.jsx';
 import SiteFooter from '../components/SiteFooter.jsx';
@@ -16,24 +16,9 @@ import { Section, Kicker, Headline, Lead, Body, PrimaryCTA, GhostCTA, Cols } fro
  * declarado de normas concretas. Eso se acredita, no se escribe.
  */
 
-const CONTROLES = [
-  ['Uso y acceso a los datos',
-   'Qué información entra, de dónde sale, quién puede consultarla y para qué. Se define antes de construir, no cuando ya está en marcha.'],
-  ['Privacidad y seguridad',
-   'Tratamiento de datos personales y sensibles, cifrado, retención y aislamiento según el entorno de cada empresa.'],
-  ['Evaluación de resultados',
-   'Qué se considera una respuesta aceptable y cómo se comprueba. Sin un umbral definido, «funciona bien» es una opinión.'],
-  ['Validación humana',
-   'Dónde una persona revisa, aprueba o corrige antes de que algo tenga efecto. Cuanto mayor el riesgo, más cerca del final está ese punto.'],
-  ['Escalamiento y excepciones',
-   'Qué pasa con los casos que no encajan: a quién llegan, en cuánto tiempo y con qué información.'],
-  ['Trazabilidad',
-   'Qué se registra de cada decisión asistida, para poder reconstruir después por qué ocurrió lo que ocurrió.'],
-  ['Responsables con nombre',
-   'Quién responde por la operación y quién por el resultado de negocio. Un control sin responsable es un documento.'],
-  ['Seguimiento continuo',
-   'Con qué frecuencia se revisa el comportamiento, quién lo revisa y qué dispara un cambio.'],
-];
+const LISTAS = listasDe('ia-responsable');
+
+const CONTROLES = LISTAS.CONTROLES;
 
 export default function IaResponsable() {
   return (

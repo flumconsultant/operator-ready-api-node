@@ -51,6 +51,244 @@
       "tipo": "parrafo",
       "maximo": 200,
       "valor": "Para empresas que necesitan pasar de herramientas aisladas y pilotos a resultados gobernados, adoptados y medibles."
+    },
+    {
+      "id": "s1kicker",
+      "rotulo": "Sección 1 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Qué hacemos"
+    },
+    {
+      "id": "s1headline",
+      "rotulo": "Sección 1 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Capacitamos equipos, definimos el cambio y construimos la capacidad."
+    },
+    {
+      "id": "s2kicker",
+      "rotulo": "Sección 2 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Nuestros servicios"
+    },
+    {
+      "id": "s2headline",
+      "rotulo": "Sección 2 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Capacita el presente. Diseña lo que sigue. Construye desde dentro."
+    },
+    {
+      "id": "s2body",
+      "rotulo": "Sección 2 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "Capacitación aplicada para que cada área use ChatGPT, Claude y Gemini sobre sus propios procesos, documentos y desafíos."
+    },
+    {
+      "id": "s2body2",
+      "rotulo": "Sección 2 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "Dónde está el valor de la IA en tu empresa, qué se hace primero y cómo hay que operar para conseguirlo."
+    },
+    {
+      "id": "s2body3",
+      "rotulo": "Sección 2 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "Construye e incorpora una capacidad AI-native con adopción, controles y medición."
+    },
+    {
+      "id": "s3kicker",
+      "rotulo": "Sección 3 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Qué puede construir BECOME"
+    },
+    {
+      "id": "s3headline",
+      "rotulo": "Sección 3 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Estrategia cuando falta dirección. Capacidad cuando falta ejecución."
+    },
+    {
+      "id": "s3lead",
+      "rotulo": "Sección 3 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "Trabajamos desde la decisión de dónde invertir hasta la capacidad que queda funcionando dentro de la empresa."
+    },
+    {
+      "id": "s4kicker",
+      "rotulo": "Sección 4 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "How we become"
+    },
+    {
+      "id": "s4headline",
+      "rotulo": "Sección 4 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "No añadimos IA desde fuera. Rediseñamos la empresa desde dentro."
+    },
+    {
+      "id": "s4lead",
+      "rotulo": "Sección 4 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "En cada etapa transformamos los cinco sistemas que deciden si la IA es un experimento o una capacidad de la empresa."
+    },
+    {
+      "id": "s5kicker",
+      "rotulo": "Sección 5 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Industrias"
+    },
+    {
+      "id": "s5headline",
+      "rotulo": "Sección 5 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "La tecnología puede ser la misma. El valor no."
+    },
+    {
+      "id": "s5lead",
+      "rotulo": "Sección 5 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "Las capacidades de IA son transversales; el valor no lo es. Lo que decide el resultado es qué decisiones, qué procesos y qué riesgos definen tu industria."
+    },
+    {
+      "id": "s6kicker",
+      "rotulo": "Sección 6 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Empieza por el problema"
+    },
+    {
+      "id": "s6headline",
+      "rotulo": "Sección 6 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "¿Qué necesitas transformar ahora?"
+    },
+    {
+      "id": "s6lead",
+      "rotulo": "Sección 6 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "Empieza por la situación, no por el nombre de la solución."
+    },
+    {
+      "id": "s7kicker",
+      "rotulo": "Sección 7 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Cómo transformamos"
+    },
+    {
+      "id": "s7headline",
+      "rotulo": "Sección 7 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Seis etapas. Un camino de la ambición al valor."
+    },
+    {
+      "id": "s7body",
+      "rotulo": "Sección 7 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "Cada etapa se apoya en una herramienta propia que desbloquea una decisión concreta: preparación, valor, diseño, adopción y escala."
+    },
+    {
+      "id": "s8kicker",
+      "rotulo": "Sección 8 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Value, made visible"
+    },
+    {
+      "id": "s8headline",
+      "rotulo": "Sección 8 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Mide lo que cambia, no cuánta IA implementas."
+    },
+    {
+      "id": "s8body",
+      "rotulo": "Sección 8 · Texto",
+      "tipo": "parrafo",
+      "maximo": 600,
+      "valor": "Cada proyecto parte de una línea base y de métricas acordadas antes de intervenir. Medimos el cambio contra ese punto de partida."
+    },
+    {
+      "id": "s9kicker",
+      "rotulo": "Sección 9 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Por qué BECOME"
+    },
+    {
+      "id": "s9headline",
+      "rotulo": "Sección 9 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Strategy that builds. Technology that embeds. Capability that stays."
+    },
+    {
+      "id": "s10kicker",
+      "rotulo": "Sección 10 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "The work we are built to do"
+    },
+    {
+      "id": "s10headline",
+      "rotulo": "Sección 10 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Tres transformaciones que sabemos conducir."
+    },
+    {
+      "id": "s11kicker",
+      "rotulo": "Sección 11 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 70,
+      "valor": "Become insights"
+    },
+    {
+      "id": "s11headline",
+      "rotulo": "Sección 11 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "Ideas para la empresa que viene después."
+    },
+    {
+      "id": "s12kicker",
+      "rotulo": "Sección 12 · Antetítulo",
+      "tipo": "linea",
+      "maximo": 88,
+      "valor": "Your next operating model starts with a question"
+    },
+    {
+      "id": "s12headline",
+      "rotulo": "Sección 12 · Titular",
+      "tipo": "linea",
+      "maximo": 130,
+      "valor": "¿En qué debe convertirse tu empresa después?"
+    },
+    {
+      "id": "s12lead",
+      "rotulo": "Sección 12 · Entrada",
+      "tipo": "parrafo",
+      "maximo": 420,
+      "valor": "Empieza con una conversación sobre el resultado, la capacidad o el proceso que necesitas transformar. Menos de dos minutos para contárnoslo."
     }
   ],
   "listas": {

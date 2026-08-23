@@ -1,4 +1,4 @@
-import { campo } from '../content/paginas/index.js';
+import { campo, listasDe } from '../content/paginas/index.js';
 import React from 'react';
 import Resultado from '../components/suscripcion/Resultado.jsx';
 import SiteHeader from '../components/SiteHeader.jsx';
@@ -17,21 +17,11 @@ import Listado from '../components/insights/Listado.jsx';
  * también las claves con las que cada artículo declara a cuál pertenece.
  */
 
-const PILLARS = [
-  ['La empresa AI-native', 'Estrategia, ambición y diseño empresarial. Qué distingue a una empresa AI-native de una empresa con IA.'],
-  ['Trabajo con agentes', 'Procesos, roles, agentes y responsabilidad humana. Cómo cambia el trabajo cuando parte lo hace un sistema.'],
-  ['Reinvención del modelo operativo', 'Personas, Datos, Agentes, Productos y Operaciones. Las decisiones de diseño que determinan dónde se acumula el valor.'],
-  ['Valor y adopción', 'Medición, confianza, gestión del cambio y transferencia de capacidades. Por qué la adopción es un problema de diseño, no de comunicación.'],
-  ['Escalado responsable', 'Gobernanza, controles, riesgo y condiciones para escalar. Cuándo hacerlo y, sobre todo, cuándo no.'],
-];
+const LISTAS = listasDe('insights');
 
-const FORMATS = [
-  ['Perspectiva', 'Una tesis argumentada sobre hacia dónde va algo.'],
-  ['Nota de campo', 'Lo aprendido dentro de un problema concreto.'],
-  ['Framework', 'Una forma reutilizable de estructurar una decisión.'],
-  ['Informe ejecutivo', 'Lo que un comité necesita saber, en su formato.'],
-  ['Evidencia de caso', 'Trabajo real, solo cuando el cliente lo aprueba.'],
-];
+const PILLARS = LISTAS.PILLARS;
+
+const FORMATS = LISTAS.FORMATS;
 
 export default function Insights() {
   return (

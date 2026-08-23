@@ -1,9 +1,8 @@
-import { listasDe } from '../content/paginas/index.js';
+import { campo, listasDe } from '../content/paginas/index.js';
 import React from 'react';
 import SiteHeader from '../components/SiteHeader.jsx';
 import SiteFooter from '../components/SiteFooter.jsx';
 import Reveal from '../components/Reveal.jsx';
-import { campo } from '../content/paginas';
 import {
   Section, Kicker, Headline, Lead, Body,
   PrimaryCTA, GhostCTA, TextCTA, Cols, Card, IndexRow,
@@ -113,8 +112,8 @@ export default function Home() {
 
       {/* 02 — Qué hacemos, antes que cualquier método. Tres verbos, tres salidas. */}
       <Section band="light" id="que-hacemos">
-        <Kicker>Qué hacemos</Kicker>
-        <Headline>Capacitamos equipos, definimos el cambio y construimos la capacidad.</Headline>
+        <Kicker>{campo('home', 's1kicker')}</Kicker>
+        <Headline>{campo('home', 's1headline')}</Headline>
         <Cols min="260px">
           {WHAT.map((w) => (
             <Reveal as="div" key={w.label} className="row-hit" style={{ borderTop: '1px solid var(--border-strong)', paddingTop: 'var(--space-5)' }}>
@@ -146,8 +145,8 @@ export default function Home() {
           el problema quiere saber qué puede contratar, no cómo trabajamos. El
           método viene después. */}
       <Section band="light">
-        <Kicker>Nuestros servicios</Kicker>
-        <Headline>Capacita el presente. Diseña lo que sigue. Construye desde dentro.</Headline>
+        <Kicker>{campo('home', 's2kicker')}</Kicker>
+        <Headline>{campo('home', 's2headline')}</Headline>
 
         <Reveal as="p" style={{ margin: 'var(--space-9) 0 0', font: 'var(--type-mono)', letterSpacing: 'var(--track-mono)', color: 'var(--text-accent)' }}>
           ENABLE → DEFINE → DESIGN → BUILD → EMBED → SCALE
@@ -163,10 +162,7 @@ export default function Home() {
               BECOME NOW™
             </h3>
             <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--text-accent)' }}>Capacitación en IA aplicada</p>
-            <Body>
-              Capacitación aplicada para que cada área use ChatGPT, Claude y Gemini sobre
-              sus propios procesos, documentos y desafíos.
-            </Body>
+            <Body>{campo('home', 's2body')}</Body>
             <TextCTA to="/es/servicios/become-now">Explora BECOME NOW™</TextCTA>
           </Card>
           <Card>
@@ -178,10 +174,7 @@ export default function Home() {
               BECOME DISCOVER™
             </h3>
             <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--text-accent)' }}>Estrategia y modelo operativo</p>
-            <Body>
-              Dónde está el valor de la IA en tu empresa, qué se hace primero y cómo
-              hay que operar para conseguirlo.
-            </Body>
+            <Body>{campo('home', 's2body2')}</Body>
             <TextCTA to="/es/servicios/become-discover">Explora BECOME DISCOVER™</TextCTA>
           </Card>
           <Card>
@@ -193,10 +186,7 @@ export default function Home() {
               BECOME EMBED™
             </h3>
             <p style={{ margin: 'var(--space-3) 0 0', font: 'var(--type-body)', fontSize: 'var(--text-body-md)', color: 'var(--text-accent)' }}>Construcción e implementación</p>
-            <Body>
-              Construye e incorpora una capacidad AI-native con adopción, controles y
-              medición.
-            </Body>
+            <Body>{campo('home', 's2body3')}</Body>
             <TextCTA to="/es/servicios/become-embed">Explora BECOME EMBED™</TextCTA>
           </Card>
         </Cols>
@@ -213,12 +203,9 @@ export default function Home() {
           línea de servicio —la arquitectura comercial sigue siendo NOW,
           DISCOVER y EMBED—: es la amplitud de lo que esos tres cubren. */}
       <Section band="sunken">
-        <Kicker>Qué puede construir BECOME</Kicker>
-        <Headline>Estrategia cuando falta dirección. Capacidad cuando falta ejecución.</Headline>
-        <Lead>
-          Trabajamos desde la decisión de dónde invertir hasta la capacidad que
-          queda funcionando dentro de la empresa.
-        </Lead>
+        <Kicker>{campo('home', 's3kicker')}</Kicker>
+        <Headline>{campo('home', 's3headline')}</Headline>
+        <Lead>{campo('home', 's3lead')}</Lead>
         <Cols min="200px" style={{ marginTop: 'var(--space-10)' }}>
           {CAPACIDADES.map(([icon, nombre, linea]) => (
             <Reveal as="div" key={nombre} className="icon-hit row-hit" style={{ borderTop: '1px solid var(--border-strong)', paddingTop: 'var(--space-5)' }}>
@@ -235,12 +222,9 @@ export default function Home() {
 
       {/* 04 — Qué cambia dentro: los cinco sistemas. */}
       <Section band="dark" nodeState={1}>
-        <Kicker dark>How we become</Kicker>
-        <Headline dark>No añadimos IA desde fuera. Rediseñamos la empresa desde dentro.</Headline>
-        <Lead dark>
-          En cada etapa transformamos los cinco sistemas que deciden si la IA es un
-          experimento o una capacidad de la empresa.
-        </Lead>
+        <Kicker dark>{campo('home', 's4kicker')}</Kicker>
+        <Headline dark>{campo('home', 's4headline')}</Headline>
+        <Lead dark>{campo('home', 's4lead')}</Lead>
 
         <Cols min="230px" style={{ marginTop: 'var(--space-11)' }}>
           {DOMAINS.map(([name, line, icon]) => (
@@ -262,13 +246,9 @@ export default function Home() {
           pregunta si eso aplica a SU contexto, y esa es la pregunta que
           responde este bloque. Después ya puede elegir por problema. */}
       <Section band="light">
-        <Kicker>Industrias</Kicker>
-        <Headline>La tecnología puede ser la misma. El valor no.</Headline>
-        <Lead>
-          Las capacidades de IA son transversales; el valor no lo es. Lo que
-          decide el resultado es qué decisiones, qué procesos y qué riesgos
-          definen tu industria.
-        </Lead>
+        <Kicker>{campo('home', 's5kicker')}</Kicker>
+        <Headline>{campo('home', 's5headline')}</Headline>
+        <Lead>{campo('home', 's5lead')}</Lead>
         <div style={{ marginTop: 'var(--space-10)' }}>
           {INDUSTRIAS_MENU.map((i, n) => (
             <IndexRow key={i.slug} index={n} icon={i.icon} to={i.to} num={String(n + 1).padStart(2, '0')} term={i.label} def={i.line} />
@@ -279,9 +259,9 @@ export default function Home() {
 
       {/* 06 — Casos de uso como preguntas. */}
       <Section band="sunken">
-        <Kicker>Empieza por el problema</Kicker>
-        <Headline>¿Qué necesitas transformar ahora?</Headline>
-        <Lead>Empieza por la situación, no por el nombre de la solución.</Lead>
+        <Kicker>{campo('home', 's6kicker')}</Kicker>
+        <Headline>{campo('home', 's6headline')}</Headline>
+        <Lead>{campo('home', 's6lead')}</Lead>
         <div style={{ marginTop: 'var(--space-10)' }}>
           {SOLUCIONES_MENU.map((c, i) => (
             <IndexRow key={c.slug} index={i} icon={c.icon} to={c.to} num={String(i + 1).padStart(2, '0')} term={c.label} def={c.q} />
@@ -294,8 +274,8 @@ export default function Home() {
           ya sabe qué puede contratar y en qué industria o problema se
           reconoce. Primero la oferta, luego el método. */}
       <Section band="darker" nodeState={2}>
-        <Kicker dark>Cómo transformamos</Kicker>
-        <Headline dark>Seis etapas. Un camino de la ambición al valor.</Headline>
+        <Kicker dark>{campo('home', 's7kicker')}</Kicker>
+        <Headline dark>{campo('home', 's7headline')}</Headline>
         {/* Tira compacta: la descripción de cada etapa vive en /framework. En la
             home estaba entera, y era el bloque que más pantallas costaba a
             cambio de decir lo mismo dos veces. */}
@@ -313,10 +293,7 @@ export default function Home() {
         </ol>
         {/* Las siete herramientas propias eran una sección entera que solo
             anunciaba la de /framework. Aquí caben en una línea. */}
-        <Body dark style={{ marginTop: 'var(--space-9)' }}>
-          Cada etapa se apoya en una herramienta propia que desbloquea una decisión
-          concreta: preparación, valor, diseño, adopción y escala.
-        </Body>
+        <Body dark style={{ marginTop: 'var(--space-9)' }}>{campo('home', 's7body')}</Body>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
           <GhostCTA to="/es/como-transformamos" dark>Cómo transformamos</GhostCTA>
           <PrimaryCTA to="/es/contacto">Empieza por tu etapa</PrimaryCTA>
@@ -330,8 +307,8 @@ export default function Home() {
 
       {/* 08 — Outcomes. Sistema de medición, no métricas inventadas. */}
       <Section band="dark" nodeState={3}>
-        <Kicker dark>Value, made visible</Kicker>
-        <Headline dark>Mide lo que cambia, no cuánta IA implementas.</Headline>
+        <Kicker dark>{campo('home', 's8kicker')}</Kicker>
+        <Headline dark>{campo('home', 's8headline')}</Headline>
         <Cols min="190px">
           {OUTCOMES.map(([icon, dim, line]) => (
             <Reveal as="div" key={dim} style={{ borderTop: '1px solid var(--green-line)', paddingTop: 'var(--space-5)' }}>
@@ -341,17 +318,14 @@ export default function Home() {
             </Reveal>
           ))}
         </Cols>
-        <Body dark style={{ marginTop: 'var(--space-9)' }}>
-          Cada proyecto parte de una línea base y de métricas acordadas antes de
-          intervenir. Medimos el cambio contra ese punto de partida.
-        </Body>
+        <Body dark style={{ marginTop: 'var(--space-9)' }}>{campo('home', 's8body')}</Body>
       </Section>
 
       {/* 09 — Por qué BECOME, con imagen: el bloque de principios era el más
           textual de la página. */}
       <Section band="light">
-        <Kicker>Por qué BECOME</Kicker>
-        <Headline>Strategy that builds. Technology that embeds. Capability that stays.</Headline>
+        <Kicker>{campo('home', 's9kicker')}</Kicker>
+        <Headline>{campo('home', 's9headline')}</Headline>
         <div style={{ marginTop: 'var(--space-10)' }}>
           <Split src="/images/45-executive.webp" alt="Conversación ejecutiva sobre el modelo operativo" ratio="1 / 1">
             <div style={{ display: 'grid', gap: 'var(--space-7)' }}>
@@ -375,8 +349,8 @@ export default function Home() {
 
       {/* 10 — Trabajo y evidencia. Escenarios, marcados como escenarios. */}
       <Section band="darker" nodeState={4}>
-        <Kicker dark>The work we are built to do</Kicker>
-        <Headline dark>Tres transformaciones que sabemos conducir.</Headline>
+        <Kicker dark>{campo('home', 's10kicker')}</Kicker>
+        <Headline dark>{campo('home', 's10headline')}</Headline>
         <p style={{ margin: 'var(--space-6) 0 0', font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--slate-300)' }}>
           Escenarios ilustrativos
         </p>
@@ -401,8 +375,8 @@ export default function Home() {
       {/* 11 — Insights. Tres piezas, en índice: como tarjetas ocupaban una
           pantalla para decir tres frases. */}
       <Section band="light">
-        <Kicker>Become insights</Kicker>
-        <Headline>Ideas para la empresa que viene después.</Headline>
+        <Kicker>{campo('home', 's11kicker')}</Kicker>
+        <Headline>{campo('home', 's11headline')}</Headline>
         <div style={{ marginTop: 'var(--space-9)' }}>
           {INSIGHTS.map(([icon, title, line], i) => (
             <IndexRow key={title} index={i} icon={icon} term={title} def={line} />
@@ -417,12 +391,9 @@ export default function Home() {
           el cierre, en cambio, una mezcla que no para de transformarse es
           literalmente lo que dice el titular. */}
       <Section band="darker" pad="var(--space-14)" backdrop={<GradientField speed={1.6} />}>
-        <Kicker dark>Your next operating model starts with a question</Kicker>
-        <Headline dark>¿En qué debe convertirse tu empresa después?</Headline>
-        <Lead dark>
-          Empieza con una conversación sobre el resultado, la capacidad o el proceso
-          que necesitas transformar. Menos de dos minutos para contárnoslo.
-        </Lead>
+        <Kicker dark>{campo('home', 's12kicker')}</Kicker>
+        <Headline dark>{campo('home', 's12headline')}</Headline>
+        <Lead dark>{campo('home', 's12lead')}</Lead>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', alignItems: 'center', flexWrap: 'wrap' }}>
           <PrimaryCTA to="/es/contacto">Encuentra tu punto de partida</PrimaryCTA>
           <GhostCTA to="/es/servicios/become-now" dark>O capacita a tu equipo ya</GhostCTA>
