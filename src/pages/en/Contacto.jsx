@@ -43,7 +43,7 @@ export default function Contacto() {
 
       <Section band="dark" pad="var(--space-12)">
         <Kicker dark>Contact</Kicker>
-        <Headline as="h1" dark>Start with what you want to change.</Headline>
+        <Headline as="h1" dark>Start with what you need to change.</Headline>
         <Lead dark>
           Share the challenge, the outcome you are aiming for and the context of
           your organization. We will review it to understand your starting point

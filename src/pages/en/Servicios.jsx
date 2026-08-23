@@ -36,7 +36,7 @@ export default function Servicios() {
 
       <Section band="dark" pad="var(--space-12)">
         <Kicker dark>Our services</Kicker>
-        <Headline as="h1" dark>From today’s capability to the company that comes next.</Headline>
+        <Headline as="h1" dark>Three ways to turn AI into real capability.</Headline>
         <Lead dark>
           Three engagements connect applied AI enablement, AI-native strategy,
           operating-model design, building, adoption and scale.

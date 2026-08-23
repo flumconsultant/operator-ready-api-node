@@ -160,118 +160,131 @@
       ]
     },
     "en": {
-      "nombre": "Banking, Insurance & Fintech",
-      "menu": "Credit, fraud, operations, claims, compliance, collections and digital channels.",
-      "h1": "The advantage is not having more data. It is deciding better with it.",
-      "lead": "Banking, insurance, fintech and asset management run on data, rules and decisions. AI does not change the product — it changes the speed, the consistency and the traceability of every decision.",
+      "nombre": "Banking, insurance & fintech",
+      "menu": "Credit, fraud, claims, KYC/AML, collections, reconciliation and customer operations.",
+      "h1": "The advantage is not having more data. It is making better decisions with it.",
+      "lead": "Financial institutions already operate with extensive data, policies and controls. The opportunity is to reduce the distance between information and action without weakening traceability, risk controls or human accountability.",
       "contexto": [
-        "Few industries hold this much information and have this little time to use it. A credit file, a claim, a compliance case or a portfolio review pulls together documents, systems and judgment that today are connected by people, not by process. AI fits here because the work already is reading, comparing and deciding.",
-        "And it fits badly when it is installed without control. In a supervised sector, a capability that cannot be explained or audited is not an advantage — it is exposure. So the work starts with where decisions are made and who answers for them, not with which tool to buy."
+        "Most of the friction does not sit inside the core system. It sits around it: incomplete files, alerts without context, exceptions moving between teams, reconciliations that require comparing sources.",
+        "BECOME works on those points to connect data, documentation, policy, people, LLMs and agents inside a process that stays traceable."
       ],
-      "oportunidadesTitular": "The opportunity sits between the document that arrives and the decision that must be explained.",
+      "oportunidadesTitular": "Where AI can create value.",
       "oportunidades": [
         [
-          "Loan origination and credit assessment",
-          "Prepare files, check completeness, cross-read documents, flag inconsistencies and hand the analyst a better structured case."
+          "Credit file preparation and decision support",
+          ""
         ],
         [
-          "Operations around the core banking system",
-          "Assist with exceptions, incidents, reconciliation, adjustments and queries that today mean navigating several systems and procedures."
+          "Fraud investigation and unrecognized-transaction analysis",
+          ""
         ],
         [
-          "Fraud",
-          "Consolidate history, prioritise alerts and prepare the context that speeds up an investigation."
+          "KYC/AML knowledge and case support",
+          ""
         ],
         [
-          "KYC, AML and compliance",
-          "Review documentation, retrieve internal policy and regulation, prepare evidence and leave a record of what was consulted."
+          "Collections prioritization",
+          ""
         ],
         [
-          "Collections",
-          "Prioritise cases, summarise history and prepare the next action within defined policy."
+          "Claims and service-case triage",
+          ""
         ],
         [
-          "Insurance",
-          "Order files, cross-check coverage and identify what is missing in underwriting, renewal or claims."
+          "Reconciliation and exception handling",
+          ""
         ],
         [
-          "Claims and unrecognised charges",
-          "Retrieve transactions, channel, history and documentation to prepare the response."
+          "Policy and procedure knowledge",
+          ""
         ],
         [
-          "Reconciliation",
-          "Compare sources, identify differences and prepare the corrections."
+          "Insurance reimbursement and guarantee-letter workflows",
+          ""
+        ],
+        [
+          "Customer operations and back-office support",
+          ""
         ]
       ],
-      "workflowsTitular": "Credit, claims and compliance change when the file arrives read—not decided.",
+      "workflowsTitular": "Where the work starts.",
       "workflows": [
-        "Credit origination and assessment",
-        "Underwriting and policy renewal",
-        "Claims management",
-        "KYC, AML and ongoing monitoring",
-        "Regulatory reporting and internal audit",
-        "Customer service, collections and retention"
+        "Credit",
+        "Fraud",
+        "Operations",
+        "Claims",
+        "Compliance",
+        "Collections",
+        "Digital channels"
       ],
       "capacidades": [
         [
-          "Prioritise where the value is",
-          "Map credit, fraud, operations, insurance or service processes and rank them by impact, feasibility, risk and speed of capture.",
-          "BECOME DISCOVER™"
-        ],
-        [
-          "Redesign one decision",
-          "Define what information must arrive, which rules apply, where the exception sits, who approves and what evidence must be recorded.",
-          "Decision intelligence"
-        ],
-        [
-          "Build governed copilots and agents",
-          "Retrieval over policy and procedure, document extraction, agents scoped to a single task, and API access to authorised systems.",
+          "Credit decision copilot",
+          "Prepares a traceable view of customer information, policy criteria and missing evidence before human decision-making.",
           "BECOME EMBED™"
         ],
         [
-          "Develop the teams",
-          "Applied programmes for Finance, Legal, Risk, Operations and Service, built on their own files and documents.",
-          "BECOME NOW™"
+          "Fraud investigation assistant",
+          "Brings together transaction context, alerts, policies and prior cases to support faster review.",
+          "BECOME EMBED™"
         ],
         [
-          "Measure and hand over",
-          "Baseline, metrics, autonomy limits, traceability, a named owner and an operating manual so the capability stays inside.",
-          "Across all three"
+          "Reconciliation agent",
+          "Matches records across sources, identifies exceptions and routes unresolved cases.",
+          "BECOME EMBED™"
+        ],
+        [
+          "Compliance knowledge assistant",
+          "Retrieves internal policy and regulatory guidance with source references and access control.",
+          "Knowledge intelligence"
+        ],
+        [
+          "Claims operations assistant",
+          "Structures documents, identifies missing information and supports routing without replacing accountable decisions.",
+          "BECOME EMBED™"
         ]
       ],
-      "tecnologiaTitular": "If the system cannot cite what it read, it should not influence the decision.",
-      "tecnologia": "Extraction over unstructured documents, retrieval over regulation and internal policy with the source cited, agents scoped to one step of the process, and a record of what the system consulted before it proposed anything. Human oversight is not a layer added afterwards: it is part of the workflow design.",
-      "metricasTitular": "A faster file means little if nobody can explain why it was approved.",
+      "tecnologiaTitular": "AI can prepare a decision. It should not hide how it got there.",
+      "tecnologia": "Enterprise knowledge retrieval, RAG and grounded responses, API integrations, permissions and auditability, human review for consequential decisions, evaluation against known cases, and traceability by source and action.",
+      "metricasTitular": "What we measure.",
       "metricas": [
         [
           "Cycle time",
-          "How long a file takes from intake to decision."
+          ""
         ],
         [
-          "First-pass completeness",
-          "What share of cases reaches review with nothing missing."
+          "Manual handling",
+          ""
+        ],
+        [
+          "Exception rate",
+          ""
         ],
         [
           "Rework",
-          "How often a case goes back a step."
+          ""
         ],
         [
-          "Exceptions",
-          "How many there are, who resolves them and how fast."
+          "Decision consistency",
+          ""
         ],
         [
-          "Traceability",
-          "What share of decisions has a record of what they were based on."
+          "Escalation rate",
+          ""
+        ],
+        [
+          "Adoption by role",
+          ""
         ]
       ],
-      "empezarTitular": "Start where volume is high and every exception still has an owner.",
+      "empezarTitular": "Where to start.",
       "empezar": [
-        "A BECOME NOW™ program with the risk, finance or legal team, on their own files.",
-        "A BECOME DISCOVER™ scoped to one process — origination or claims — to decide where the value is and which controls are required.",
-        "A BECOME EMBED™ on the prioritised workflow, with oversight and traceability designed in from the start."
+        "BECOME NOW™ when the challenge is how the team works.",
+        "BECOME DISCOVER™ when the investment decision is still open.",
+        "BECOME EMBED™ when a priority process has to reach operation."
       ],
-      "cierre": "Start with the decision that takes too long today.",
-      "cierreTexto": "Bring us one file, the decision it enables and the controls still checked by hand. We will identify what AI may prepare, what must remain under professional judgment and how evidence stays traceable from intake to decision."
+      "cierre": "Explore AI opportunities in financial services.",
+      "cierreTexto": "Tell us which decision, process or experience needs to change. We will help you identify the right starting point."
     }
   },
   {
@@ -454,66 +467,66 @@
       "cierreTexto": "Muéstranos dónde hoy se pierde tiempo buscando antecedentes, preparando una guardia, revisando una parada o entendiendo una desviación."
     },
     "en": {
-      "nombre": "Mining & Energy",
-      "menu": "Mine planning, operations, concentrator, maintenance, safety, logistics and asset-intensive work.",
-      "h1": "The operation already produces the signal. The challenge is acting on it in time.",
-      "lead": "An asset-intensive operation generates more information than it can use. The opportunity lives in the gap between what the operation already knows and the moment someone acts on it.",
+      "nombre": "Mining & energy",
+      "menu": "Mine planning, maintenance, concentrator operations, shutdowns, logistics and operational knowledge.",
+      "h1": "The operation already generates the signal. The challenge is turning it into action in time.",
+      "lead": "A mine, plant or maintenance organization generates operational information continuously. Value is lost when that signal stays fragmented across reports, systems, spreadsheets, shift notes and specialist knowledge.",
       "contexto": [
-        "A site or a plant produces continuous signals: sensors, maintenance, shifts, permits, incidents, suppliers. Almost all of it is recorded and very little reaches the decision-maker in time. The bottleneck is rarely the model — it is that the knowledge lives in reports, emails and people with twenty years on the job.",
-        "It is also an environment where safety and licence to operate are not a section of the project: they are the condition. Any capability installed here has to make clear what a person decides, what a system does not decide, and how it is all recorded."
+        "The work does not start from an AI use case. It starts where a supervisor, planner, engineer or maintainer has to gather too much information before acting.",
+        "BECOME works on that gap, with the source, the context and the decision boundary explicit."
       ],
-      "oportunidadesTitular": "The operation already produces the signal. Value appears when it arrives before the deviation.",
+      "oportunidadesTitular": "Where AI can create value.",
       "oportunidades": [
         [
-          "Geology and mine planning",
-          "Consolidate history, constraints, plans, deviations and assumptions ahead of a planning decision."
+          "Geology and mine-planning knowledge",
+          ""
         ],
         [
-          "Drill and blast",
-          "Order designs, compliance, results and lessons learned from previous blasts."
+          "Drilling and blasting information",
+          ""
         ],
         [
-          "Loading and haulage",
-          "Prepare the analysis of delays, availability, cycle times and fleet events."
+          "Loading and hauling exceptions",
+          ""
         ],
         [
-          "Crushing",
-          "Retrieve history, procedures and events to prepare constraint and downtime analysis."
+          "Crusher and concentrator operations",
+          ""
         ],
         [
-          "Grinding and flotation",
-          "Consolidate operational information and history to support variability analysis."
-        ],
-        [
-          "Concentrator plant",
-          "Give fast access to procedures, logs, reports, manuals and precedent."
+          "Grinding and flotation knowledge",
+          ""
         ],
         [
           "Maintenance and reliability",
-          "Gather work orders, history, manuals, past failures, spares and backlog before an intervention."
+          ""
         ],
         [
-          "Plant shutdowns",
-          "Prepare scope, critical path, permits, contractors, risks, materials and open items."
+          "Plant shutdown preparation",
+          ""
         ],
         [
-          "Shift reports",
-          "Turn scattered records into consistent reports that can be compared across shifts."
+          "Shift handover and reporting",
+          ""
         ],
         [
-          "Tailings, water and compliance",
-          "Retrieve documentation, inspections and commitments with traceability."
+          "Tailings and water information",
+          ""
         ],
         [
-          "Concentrate logistics and haulage",
-          "Consolidate incidents, scheduling and constraints."
+          "Concentrate logistics",
+          ""
         ],
         [
-          "Contracts and services",
-          "Compare bids, milestones, progress valuations and compliance."
+          "Contractor and service management",
+          ""
+        ],
+        [
+          "HSE and permit knowledge",
+          ""
         ]
       ],
-      "workflowsTitular": "The shift, the shutdown and the permit are where knowledge becomes action.",
+      "workflowsTitular": "Where the work starts.",
       "casos": [
         "Shift copilot.",
         "Maintenance assistant.",
@@ -522,73 +535,87 @@
         "Assisted analyst for loading and haulage delays."
       ],
       "workflows": [
-        "Maintenance planning and execution",
-        "Shift management and operational reporting",
-        "Permits, HSE and incident management",
-        "Procurement, contracts and supplier management",
-        "Engineering studies and precedent management",
-        "Community relations and sustainability reporting"
+        "Planning",
+        "Mine",
+        "Concentrator",
+        "Maintenance",
+        "Safety",
+        "Logistics",
+        "Asset-intensive operations"
       ],
       "capacidades": [
         [
-          "Find where knowledge arrives too late",
-          "Map decisions, sources, exceptions, dependencies and the time lost between signal and action.",
-          "BECOME DISCOVER™"
-        ],
-        [
-          "Make operational knowledge searchable",
-          "Enterprise search over manuals, procedures, logs, reports and precedent, with the source always visible.",
-          "Knowledge intelligence"
-        ],
-        [
-          "Build shift, maintenance and shutdown copilots",
-          "Assistants that prepare context, open items and evidence without taking safety or process-critical decisions.",
+          "Shift copilot",
+          "Structures shift information, open issues, risks and follow-ups for the incoming team.",
           "BECOME EMBED™"
         ],
         [
-          "Develop capability in the teams",
-          "Applied programmes for Operations, Maintenance, Engineering, Supply Chain and corporate functions.",
-          "BECOME NOW™"
+          "Maintenance assistant",
+          "Combines work orders, manuals, history and operational context to support preparation and diagnosis.",
+          "BECOME EMBED™"
         ],
         [
-          "Design the operating controls",
-          "Define what a system may prepare, what requires human approval, what gets logged and how an action is reconstructed afterwards.",
-          "Across all three"
+          "Shutdown preparation agent",
+          "Tracks dependencies, permits, contractors, critical-path items and missing information.",
+          "BECOME EMBED™"
+        ],
+        [
+          "Concentrator knowledge assistant",
+          "Retrieves operating procedures, equipment information and historical knowledge with sources.",
+          "Knowledge intelligence"
+        ],
+        [
+          "Haulage-delay analyst",
+          "Structures recurring delay reasons and helps identify patterns for operational review.",
+          "Decision intelligence"
+        ],
+        [
+          "Service-contract assistant",
+          "Supports review of obligations, milestones, evidence and exceptions.",
+          "BECOME EMBED™"
         ]
       ],
-      "tecnologiaTitular": "Where safety is involved, AI prepares the evidence. A person makes the decision.",
-      "tecnologia": "Retrieval over large technical corpora with the source cited, extraction over reports and work orders, and assistants scoped to a single procedure. Where a recommendation could affect safety, the system prepares the evidence and the decision stays entirely with the accountable person.",
-      "metricasTitular": "Improvement is measured between the recorded signal and action in the field.",
+      "tecnologiaTitular": "In safety-critical operations, AI prepares context. The person keeps the decision.",
+      "tecnologia": "RAG over technical and operational knowledge, integration with maintenance and operational systems where appropriate, role-based access, human approval for operational actions, traceability and source citation, and evaluation against known operating scenarios.",
+      "metricasTitular": "What we measure.",
       "metricas": [
         [
-          "Signal to decision",
-          "How long between something being recorded and someone acting."
+          "Preparation time",
+          ""
         ],
         [
-          "Reporting consistency",
-          "What share of reports is produced to the same standard."
+          "Information-retrieval time",
+          ""
         ],
         [
-          "Hours recovered",
-          "How much engineering time was going into looking for information."
+          "Rework",
+          ""
         ],
         [
-          "Shutdown readiness",
-          "How long it takes to prepare a planned intervention."
+          "Handover quality",
+          ""
         ],
         [
-          "Documentation findings",
-          "How many documentation issues appear in permits and audits."
+          "Exception resolution time",
+          ""
+        ],
+        [
+          "Compliance with planned work",
+          ""
+        ],
+        [
+          "Adoption by planners, operators and maintainers",
+          ""
         ]
       ],
-      "empezarTitular": "Start where knowledge arrives after the decision that needed it.",
+      "empezarTitular": "Where to start.",
       "empezar": [
-        "A BECOME NOW™ program with operations, maintenance or procurement, on their own procedures.",
-        "A BECOME DISCOVER™ on a process where decision delay is measurable.",
-        "A BECOME EMBED™ to leave the prioritised capability running, with explicit oversight wherever safety is involved."
+        "BECOME NOW™ when the challenge is how the team works.",
+        "BECOME DISCOVER™ when the investment decision is still open.",
+        "BECOME EMBED™ when a priority process has to reach operation."
       ],
-      "cierre": "Start with the information you already have that arrives too late.",
-      "cierreTexto": "Show us a process where manuals, work orders, reports or permits already exist but do not reach the shift in time. We will design access, traceability and human boundaries before discussing automation."
+      "cierre": "Explore AI for mining operations.",
+      "cierreTexto": "Show us where time is lost gathering background, preparing a shift, reviewing a shutdown or explaining a deviation."
     }
   },
   {
@@ -761,110 +788,140 @@
       ]
     },
     "en": {
-      "nombre": "Retail & Consumer Goods",
-      "menu": "Assortment, inventory, pricing, promotions, e-commerce, stores, distribution and after-sales.",
-      "h1": "When the market moves every week, deciding late costs sales.",
-      "lead": "Assortment, pricing, content and service are decided week by week. AI contributes when it shortens that cycle without losing commercial judgment.",
+      "nombre": "Retail & consumer goods",
+      "menu": "Inventory, category management, e-commerce, marketplace, fulfillment, returns and commercial operations.",
+      "h1": "When the market changes every week, late decisions cost sales.",
+      "lead": "Retail value is lost in the gaps between demand, stock, price, content, orders, stores, e-commerce and fulfillment. The opportunity is not another dashboard. It is faster, more consistent decisions across the commercial operation.",
       "contexto": [
-        "In retail and consumer the problem is almost never a lack of data: it is that deciding assortment, price or content means pulling together five different sources and finding someone with the judgment to read them. That someone is the bottleneck, and hiring more people does not fix it.",
-        "The other half is content volume. Product pages, campaigns, replies, adaptations per channel and per market: repetitive work against a brand standard that today only exists in a small team’s heads. Writing that standard down, and making it applicable, is half the transformation."
+        "The bottleneck appears when the judgment needed to decide, publish or resolve an exception does not scale at the same rate as volume.",
+        "AI helps when it prepares decisions, keeps information consistent across channels and resolves cases with better context."
       ],
-      "oportunidadesTitular": "Advantage comes from deciding and publishing at the speed of the market.",
+      "oportunidadesTitular": "Where AI can create value.",
       "oportunidades": [
         [
-          "Product content at scale",
-          "Product pages, descriptions and channel adaptations with the same voice and the same brand rules."
+          "Category management",
+          ""
         ],
         [
-          "Commercial decision prep",
-          "Bring sales, stock, price and market context into one brief for the weekly meeting."
+          "Inventory and availability",
+          ""
+        ],
+        [
+          "Pricing and promotion support",
+          ""
+        ],
+        [
+          "Product catalog enrichment",
+          ""
+        ],
+        [
+          "E-commerce content operations",
+          ""
+        ],
+        [
+          "Marketplace management",
+          ""
+        ],
+        [
+          "Order and fulfillment exceptions",
+          ""
+        ],
+        [
+          "Delivery and store pickup",
+          ""
+        ],
+        [
+          "Returns and exchanges",
+          ""
         ],
         [
           "Customer service",
-          "Resolve from real product, order and policy documentation, with a clear handover to a person."
+          ""
         ],
         [
-          "Campaigns and communication",
-          "Produce segment and channel variants from one approved message."
+          "Trade marketing",
+          ""
         ],
         [
-          "Assortment and suppliers",
-          "Compare proposals, terms and track record without rebuilding the analysis each time."
-        ],
-        [
-          "Store knowledge",
-          "Procedures, promotions and exceptions searchable by the team at the point of sale."
+          "Sell-in / sell-out analysis",
+          ""
         ]
       ],
-      "workflowsTitular": "Assortment, content and service share the same challenge: scale with judgment.",
+      "workflowsTitular": "Where the work starts.",
       "workflows": [
-        "Product setup and publication",
-        "Weekly commercial planning",
-        "Campaign production and adaptation",
-        "Customer service and after-sales",
-        "Supplier negotiation and evaluation",
-        "Store operations and internal communication"
+        "Assortment",
+        "Inventory",
+        "Pricing",
+        "Promotions",
+        "E-commerce",
+        "Stores",
+        "Distribution",
+        "After-sales"
       ],
       "capacidades": [
         [
-          "Prioritise the cycle that carries the value",
-          "Compare opportunities across commercial, catalogue, order, service, content and store.",
-          "BECOME DISCOVER™"
-        ],
-        [
-          "Design commercial decision copilots",
-          "Bring sales, stock, price and context signals into one preparation for a person to review.",
-          "Decision intelligence"
-        ],
-        [
-          "Build content operations",
-          "Systems that generate and adapt product pages and assets within brand, product and approval rules.",
+          "Category copilot",
+          "Combines sales, stock, promotion and assortment context to prepare commercial decisions.",
           "BECOME EMBED™"
         ],
         [
-          "Build service and exception agents",
-          "Agents scoped to orders, delivery, click and collect, returns and queries, with a clear exit to a person.",
+          "Catalog operations assistant",
+          "Structures and enriches product information while enforcing content standards.",
           "BECOME EMBED™"
         ],
         [
-          "Develop Marketing, Commercial and Service",
-          "Applied programmes built on each team’s real materials, decisions and processes.",
-          "BECOME NOW™"
+          "Order-exception agent",
+          "Identifies fulfillment issues, gathers context and routes exceptions to the right team.",
+          "BECOME EMBED™"
+        ],
+        [
+          "Marketplace operations assistant",
+          "Supports product, inventory and seller-operation workflows across marketplace environments.",
+          "BECOME EMBED™"
+        ],
+        [
+          "Returns intelligence assistant",
+          "Structures reasons, patterns and operational impact across return and exchange flows.",
+          "Knowledge intelligence"
         ]
       ],
-      "tecnologiaTitular": "AI can multiply assets. Brand rules decide whether they can be published.",
-      "tecnologia": "Generation against explicit brand rules with human review before publishing, retrieval over catalogue and policy, and service agents with a defined scope and a clear exit to a person. The brand standard stops being tacit judgment and becomes a verifiable instruction.",
-      "metricasTitular": "Speed without consistency only creates rework at scale.",
+      "tecnologiaTitular": "AI can multiply output. Rules and approvals decide what can be published.",
+      "tecnologia": "LLMs, a structured catalog, RAG over commercial policy, API integrations, brand rules, human review and logging.",
+      "metricasTitular": "What we measure.",
       "metricas": [
         [
-          "Time to publish",
-          "How long a product page or campaign takes from brief to live."
+          "Time to decision",
+          ""
         ],
         [
-          "First-pass approval",
-          "What share of content clears review without corrections."
+          "Manual catalog effort",
+          ""
         ],
         [
-          "Meeting preparation",
-          "How long it takes to arrive with the analysis ready."
+          "Order exception time",
+          ""
         ],
         [
-          "Resolved without escalation",
-          "What share of queries closes without reaching a person."
+          "Return-resolution time",
+          ""
         ],
         [
-          "Brand consistency",
-          "How many deviations review catches."
+          "Stock-related lost sales",
+          ""
+        ],
+        [
+          "Commercial-team adoption",
+          ""
         ]
       ],
-      "empezarTitular": "Start with the weekly cycle that is always running late.",
+      "empezarTitular": "Where to start.",
       "empezar": [
-        "A BECOME NOW™ program with marketing, commercial or service, on their own materials.",
-        "A BECOME DISCOVER™ if what is missing is deciding where to invest first across content, commercial decisions and service.",
-        "A BECOME EMBED™ to leave the content flow or the service agent running inside the operation."
+        "BECOME NOW™ when the challenge is how the team works.",
+        "BECOME DISCOVER™ when the investment decision is still open.",
+        "BECOME EMBED™ when a priority process has to reach operation."
       ],
-      "cierre": "Start with the cycle you cannot close today.",
-      "cierreTexto": "Tell us what repeats every week: product pages that miss the window, commercial reviews that start too late or questions escalated for lack of information. We will choose a cycle where speed, consistency and outcome can be measured together."
+      "cierre": "Explore AI for retail operations.",
+      "cierreTexto": "Pick the commercial or operational cycle that repeats every week, where speed and quality can be measured together."
     }
   },
   {
@@ -1045,110 +1102,143 @@
       ]
     },
     "en": {
-      "nombre": "Travel & Hospitality",
-      "menu": "Bookings, revenue, guest service, hotel operations, events, reputation and loyalty.",
-      "h1": "Experience is won or lost across hundreds of small moments.",
-      "lead": "Bookings, changes, disruptions and after-sales arrive in peaks. AI helps when it holds the standard of service exactly where volume erodes it today.",
+      "nombre": "Travel & hospitality",
+      "menu": "Reservations, revenue operations, guest service, housekeeping, groups, events and loyalty.",
+      "h1": "The guest experience is won or lost across hundreds of small moments.",
+      "lead": "Hospitality depends on coordination across reservations, pricing, front desk, service, housekeeping, maintenance, events and guest communication. AI creates value when it strengthens that operating system without making the experience feel automated.",
       "contexto": [
-        "A hotel, an airline or a tour operator lives on moments: the question before booking, the last-minute change, the disruption during the trip, the complaint afterwards. Each one is short, specific and depends on information spread across reservations, policies, fares and suppliers.",
-        "Service degrades because of volume, not because judgment is missing. And the judgment exists: it sits with the most experienced people. Turning it into something searchable and applicable in the moment is the transformation; changing the service channel is not."
+        "The experience depends on the team having the right context at the right moment: availability, rate, policy, reservation, preferences, requests, benefits and open items.",
+        "AI works when it brings that context closer to the service and reduces searching between teams, without turning an exception into an automatic decision."
       ],
-      "oportunidadesTitular": "Every minute matters once the guest or passenger experience is underway.",
+      "oportunidadesTitular": "Where AI can create value.",
       "oportunidades": [
         [
-          "Pre-booking service",
-          "Answer on availability, terms and policy from current information."
+          "Reservations",
+          ""
         ],
         [
-          "Changes and disruption",
-          "Assemble the whole case — booking, policy, history — before a person decides."
+          "Revenue-management support",
+          ""
         ],
         [
-          "After-sales and complaints",
-          "Classify, check against policy and draft the response with the exception flagged."
+          "Pre-arrival communication",
+          ""
         ],
         [
-          "Content and distribution",
-          "Descriptions, terms and channel or market adaptations, against your own rules."
+          "Check-in and check-out support",
+          ""
         ],
         [
-          "Operational knowledge",
-          "Procedures, standards and escalations searchable by the team on shift."
+          "Guest service",
+          ""
         ],
         [
-          "Voice of the guest",
-          "Turn reviews and surveys into actionable themes by property, route or season."
+          "Housekeeping coordination",
+          ""
+        ],
+        [
+          "Maintenance requests",
+          ""
+        ],
+        [
+          "No-show and cancellation workflows",
+          ""
+        ],
+        [
+          "Service recovery",
+          ""
+        ],
+        [
+          "Groups and events",
+          ""
+        ],
+        [
+          "Corporate accounts",
+          ""
+        ],
+        [
+          "Loyalty and post-stay engagement",
+          ""
         ]
       ],
-      "workflowsTitular": "The booking, the disruption and the shift handover cannot lose context.",
+      "workflowsTitular": "Where the work starts.",
       "workflows": [
-        "Pre-booking enquiry and conversion",
-        "Change and cancellation handling",
-        "In-trip and in-stay disruption",
-        "Complaints and compensation",
-        "Content and fare distribution by channel",
-        "Shift operations and team handover"
+        "Reservations",
+        "Revenue",
+        "Guest service",
+        "Hotel operations",
+        "Events",
+        "Reputation",
+        "Loyalty"
       ],
       "capacidades": [
         [
-          "Prioritise the moment under most pressure",
-          "Compare booking, arrival, stay, disruption and post-stay by volume, impact on experience and feasibility.",
-          "BECOME DISCOVER™"
-        ],
-        [
-          "Build booking and service copilots",
-          "Availability, services, conditions and policy, with explicit escalation for any exception.",
+          "Reservation copilot",
+          "Supports agents with policy, availability context, guest history and next-best actions.",
           "BECOME EMBED™"
         ],
         [
-          "Make the operation searchable",
-          "Procedures and standards by role, available during the shift instead of buried in folders.",
+          "Pre-arrival assistant",
+          "Coordinates relevant guest communication based on reservation context and operating rules.",
+          "BECOME EMBED™"
+        ],
+        [
+          "Guest-service agent",
+          "Handles defined requests and routes exceptions while keeping the operating team in control.",
+          "BECOME EMBED™"
+        ],
+        [
+          "Housekeeping coordination assistant",
+          "Structures room status, priorities, exceptions and handoffs.",
+          "BECOME EMBED™"
+        ],
+        [
+          "Service-recovery assistant",
+          "Brings together case history, policy and available actions to support faster resolution.",
           "Knowledge intelligence"
-        ],
-        [
-          "Coordinate incidents across teams",
-          "One shared context for front desk, housekeeping and maintenance, with the open item and its owner visible.",
-          "BECOME EMBED™"
-        ],
-        [
-          "Develop Service, Operations and Commercial",
-          "Applied programmes built on the property’s real queries, incidents and quotes.",
-          "BECOME NOW™"
         ]
       ],
-      "tecnologiaTitular": "A policy can be retrieved. An exception must always be escalated.",
-      "tecnologia": "Agents with a bounded scope and an explicit exit to a person, retrieval over current policy and terms, and case classification with the exception flagged. Nothing that commits a compensation or a policy exception is resolved without a human decision.",
-      "metricasTitular": "Experience improves when the first response already has the complete case.",
+      "tecnologiaTitular": "AI brings the context closer to the service. The exception stays a human decision.",
+      "tecnologia": "RAG over policy and procedure, scoped reservation and service agents, API integrations with authorized reservation and operations systems, permissions, traceability, human review and escalation rules.",
+      "metricasTitular": "What we measure.",
       "metricas": [
         [
-          "First response",
-          "How long the first useful contact takes."
-        ],
-        [
-          "Resolved without escalation",
-          "What share of cases closes at first level."
+          "Response time",
+          ""
         ],
         [
           "Resolution time",
-          "How long a case runs end to end."
+          ""
         ],
         [
-          "Consistency across shifts",
-          "How much the standard varies with who is on duty."
+          "Manual handling",
+          ""
         ],
         [
-          "Recurring themes",
-          "How many repeat causes are closed each period."
+          "Service-recovery time",
+          ""
+        ],
+        [
+          "No-show reduction",
+          ""
+        ],
+        [
+          "Team adoption",
+          ""
+        ],
+        [
+          "Guest-experience indicators where available",
+          ""
         ]
       ],
-      "empezarTitular": "Start with the moment where volume begins to erode service.",
+      "empezarTitular": "Where to start.",
       "empezar": [
-        "A BECOME NOW™ program with service, operations or revenue, on their own cases.",
-        "A BECOME DISCOVER™ if the decision is which moment of the experience to transform first.",
-        "A BECOME EMBED™ to leave the agent or the disruption flow running within defined limits."
+        "BECOME NOW™ when the challenge is how the team works.",
+        "BECOME DISCOVER™ when the investment decision is still open.",
+        "BECOME EMBED™ when a priority process has to reach operation."
       ],
-      "cierre": "Start with the moment where service breaks today.",
-      "cierreTexto": "Bring us the moment under the most pressure—before booking, during disruption or after the experience—and the systems that fragment the case. We will design a faster response without automating exceptions or commitments that require a person."
+      "cierre": "Explore AI for hospitality operations.",
+      "cierreTexto": "Start with the moment where the guest is waiting and the team needs context."
     }
   },
   {
@@ -1350,82 +1440,86 @@
       "cierreTexto": "Cuéntanos qué decisión, proceso o experiencia necesita cambiar. Te ayudaremos a identificar el punto de partida más adecuado."
     },
     "en": {
-      "nombre": "Real Estate & Construction",
-      "menu": "Land, projects, sales, contracts, site work, progress valuations, handover and after-sales.",
-      "h1": "A project changes every day. So does the information about it.",
-      "lead": "Contracts, technical files, permits and progress claims carry the project’s risk. AI contributes exactly where reading is done by sampling today.",
+      "nombre": "Real estate & construction",
+      "menu": "Sales, post-sale, project controls, BIM, RFIs, quantities, valuations and contract administration.",
+      "h1": "A project changes every day. So does the information around it.",
+      "lead": "Commercial, legal, engineering, site, suppliers, supervision and the client all work on documents, versions, commitments and dates that keep moving. AI helps where a decision depends on finding the right version, spotting an open item or gathering background before it becomes a delay.",
       "contexto": [
-        "A real estate or construction project advances on documents: contracts, amendments, technical files, permits, progress claims, change orders. Risk shows up when something was written down and nobody got to it in time.",
-        "It is also an industry of coordination: owner, contractor, supervision, suppliers and authority all work on different versions of the same truth. AI does not replace that coordination; it means whoever coordinates arrives with the case already read."
+        "Real estate: land and feasibility, product, commercial inventory, leads, reservation, financing, contract, handover and post-sale.",
+        "Construction: planning, production control, BIM, technical queries, quantities, valuations, contract administration, changes, procurement and closeout."
       ],
-      "oportunidadesTitular": "Value appears when a written obligation is found before it becomes a delay.",
+      "oportunidadesTitular": "Where AI can create value.",
       "oportunidades": [
         [
-          "Land and feasibility",
-          "Order history, planning parameters, documents, constraints and assumptions before a land decision."
+          "Land and feasibility information",
+          ""
         ],
         [
-          "Development and permit files",
-          "Track completeness, comments, versions and open items in the file."
+          "Lead qualification",
+          ""
         ],
         [
-          "Sales inventory",
-          "Look up units, prices, availability, features, parking and current promotions."
+          "Inventory and unit availability",
+          ""
         ],
         [
-          "Leads",
-          "Summarise a prospect’s interactions and prepare the next commercial action."
+          "Reservation and down-payment workflows",
+          ""
         ],
         [
-          "Reservation and closing",
-          "Give visibility to the path from reservation to down payment, mortgage approval, sale documentation and bank."
+          "Approval-letter tracking",
+          ""
+        ],
+        [
+          "Contract and closing documentation",
+          ""
         ],
         [
           "Handover",
-          "Order appointments, documentation and outstanding items."
+          ""
         ],
         [
-          "After-sales service",
-          "Classify defects, retrieve history and follow up with the responsible party."
+          "Post-sale and warranty cases",
+          ""
         ],
         [
-          "Site planning and production",
-          "Prepare progress, constraints, work fronts, commitments and deviations."
+          "Planning and production control",
+          ""
         ],
         [
-          "BIM",
-          "Make models, drawings, documents and changes searchable and traceable against each other."
+          "BIM knowledge",
+          ""
         ],
         [
           "RFIs and technical queries",
-          "Retrieve specifications, drawings and precedent before drafting the answer."
+          ""
         ],
         [
-          "Quantity take-off",
-          "Organise the supporting evidence, the versions and their traceability."
+          "Quantities and progress",
+          ""
         ],
         [
-          "Progress valuations",
-          "Prepare progress, quantities, supporting evidence and comments."
+          "Valuations",
+          ""
         ],
         [
           "Contract administration",
-          "Find obligations, correspondence, milestones and deadlines inside the contract."
+          ""
         ],
         [
-          "Changes and variations",
-          "Compare versions and prepare the supporting file."
+          "Changes and additional works",
+          ""
         ],
         [
-          "Subcontracts and procurement",
-          "Compare bids, deliverables, obligations, compliance and technical and commercial comparisons."
+          "Procurement and subcontractor information",
+          ""
         ],
         [
-          "Project close-out",
-          "Order punch lists, dossiers, as-built, manuals, warranties and open items."
+          "Project closeout and as-built documentation",
+          ""
         ]
       ],
-      "workflowsTitular": "Contracts, permits and changes need one shared reading of the project.",
+      "workflowsTitular": "Where the work starts.",
       "casos": [
         "Real estate sales copilot.",
         "Sale file agent.",
@@ -1435,73 +1529,84 @@
         "Project knowledge assistant."
       ],
       "workflows": [
-        "Contract assessment and close",
-        "Permit preparation and follow-up",
-        "Change order management",
-        "Progress claims and control",
-        "Tendering and supplier qualification",
-        "Property sales and after-sales"
+        "Land",
+        "Projects",
+        "Sales",
+        "Contracts",
+        "Site",
+        "Valuations",
+        "Handover",
+        "Post-sale"
       ],
       "capacidades": [
         [
-          "Prioritise where delay costs most",
-          "Compare the sales cycle, the permit file, site work and after-sales by impact on schedule, cost and contractual risk.",
-          "BECOME DISCOVER™"
-        ],
-        [
-          "Build the sales copilot and the sale file",
-          "Inventory, pricing and approved documentation in one query, and the path from reservation to contract with its open items visible.",
+          "Sales copilot",
+          "Answers on units, pricing, availability and conditions from approved inventory and documentation.",
           "BECOME EMBED™"
         ],
         [
-          "Build RFI, quantity and valuation assistants",
-          "Retrieve specifications, drawings and precedent, and prepare the supporting evidence before the responsible party reviews it.",
+          "Document-completeness agent",
+          "Tracks the path from lead to reservation to contract, with open items in view.",
           "BECOME EMBED™"
         ],
         [
-          "Read contracts and changes with traceability",
-          "Find obligations, milestones and correspondence, and compare versions to prepare the supporting file.",
-          "Contract intelligence"
+          "RFI assistant",
+          "Retrieves specifications, drawings, background and prior answers before a query is prepared.",
+          "Knowledge intelligence"
         ],
         [
-          "Develop Real Estate Finance, PMO and Site teams",
-          "Applied programmes built on the project’s real contracts, valuations and files.",
-          "BECOME NOW™"
+          "Valuation-preparation agent",
+          "Structures progress, quantities, supporting evidence, observations and open items for review.",
+          "BECOME EMBED™"
+        ],
+        [
+          "Contract-knowledge assistant",
+          "Finds obligations, communications, milestones, deadlines and precedent across the contract record.",
+          "Knowledge intelligence"
+        ],
+        [
+          "Closeout knowledge assistant",
+          "Organizes punch lists, dossiers, as-built drawings, manuals, warranties and evidence.",
+          "BECOME EMBED™"
         ]
       ],
-      "tecnologiaTitular": "Comparing versions helps. Legal and technical conclusions still require a signature.",
-      "tecnologia": "Extraction and version comparison across long documents, retrieval over applicable regulation and prior files with the source cited, and assisted review that surfaces findings for a person to validate. The legal or technical conclusion still belongs to a professional.",
-      "metricasTitular": "Faster review matters when it prevents a comment, change or dispute.",
+      "tecnologiaTitular": "AI can compare and prepare. The technical, legal or commercial conclusion keeps an owner.",
+      "tecnologia": "Document-grounded RAG, BIM and document integration where feasible, role-based access, approval flows, source traceability and exception handling.",
+      "metricasTitular": "What we measure.",
       "metricas": [
         [
-          "Review time",
-          "How long a full contract or file review takes."
+          "Search and review time",
+          ""
         ],
         [
-          "Findings before signature",
-          "How many are caught in time rather than afterwards."
+          "RFI response preparation",
+          ""
         ],
         [
-          "Permit observations",
-          "How many are avoided through complete documentation."
+          "Document completeness",
+          ""
         ],
         [
-          "Change order closure",
-          "How long one takes from raised to approved."
+          "Valuation preparation time",
+          ""
         ],
         [
-          "Commercial response",
-          "How long a client question takes to get a substantiated answer."
+          "Rework",
+          ""
+        ],
+        [
+          "Post-sale resolution time",
+          ""
         ]
       ],
-      "empezarTitular": "Start where the wrong version carries the highest cost.",
+      "empezarTitular": "Where to start.",
       "empezar": [
-        "A BECOME NOW™ program with legal, project control or sales, on their own documents.",
-        "A BECOME DISCOVER™ on the point of the project where documentary risk is highest.",
-        "A BECOME EMBED™ to leave assisted review running inside the real approval flow."
+        "BECOME NOW™ when the challenge is how the team works.",
+        "BECOME DISCOVER™ when the investment decision is still open.",
+        "BECOME EMBED™ when a priority process has to reach operation."
       ],
-      "cierre": "Start with the document nobody gets to read in full today.",
-      "cierreTexto": "Show us the document carrying the most risk and the workflow that reviews, comments on and approves it. We will identify where AI can compare versions, recover precedent or flag missing information without replacing the responsible professional's conclusion."
+      "cierre": "Explore AI for real estate and construction.",
+      "cierreTexto": "Start at the point in the project where a version, an open item or an approval can turn into a delay."
     }
   },
   {
@@ -1673,114 +1778,135 @@
       ]
     },
     "en": {
-      "nombre": "Healthcare & Pharma",
-      "menu": "Scheduling, admissions, authorisations, billing, supply, documentation and non-clinical operations.",
-      "h1": "Around care there is a large operation that can improve too.",
-      "lead": "We work on the administrative, documentary and operational processes that surround care. Not on diagnosis and not on treatment.",
+      "nombre": "Healthcare & pharma",
+      "menu": "Appointments, admission, authorizations, billing, reimbursements, supply and administrative operations.",
+      "h1": "Better operations create more room for care.",
+      "lead": "Clinics, health networks, insurers and pharmaceutical companies run appointments, admission, authorizations, billing, reimbursements, supply, documentation and internal knowledge. BECOME applies AI to those processes to recover time and improve consistency.",
       "limite": {
-        "titulo": "Where the line is, stated first",
-        "texto": "BECOME does not develop or validate diagnostic, treatment, clinical triage or study-interpretation capabilities, and does not advise on the regulatory conformity of medical devices. Where a process borders a clinical decision, that boundary is set in the design and the decision remains entirely with the health professional."
+        "titulo": "Where we do not operate.",
+        "texto": "BECOME focuses on administrative and operational capabilities. We do not position these solutions as substitutes for diagnosis, treatment decisions or clinical judgment."
       },
       "contexto": [
-        "A health institution or a life sciences company spends an enormous share of its effort on work that is not clinical: admissions, authorisations, billing, internal documentation, procurement, staff training, administrative support. That is where applied AI has a direct and verifiable effect.",
-        "It is also where risk can be bounded honestly. An administrative process can be measured, audited and corrected without touching a clinical decision. Starting there is not starting with the easy part: it is starting where what you promise can be sustained."
+        "The work starts in the administrative process, not in the consultation: what happens before and around care is where time is lost.",
+        "Where a process approaches a clinical decision, the boundary is defined before anything is built and the decision stays with the responsible professional."
       ],
-      "oportunidadesTitular": "The first opportunity sits around care—not inside the clinical decision.",
+      "oportunidadesTitular": "Where AI can create value.",
       "oportunidades": [
         [
-          "Admissions and authorisations",
-          "Assemble and check a case’s administrative documentation before review."
+          "Appointment and rescheduling workflows",
+          ""
+        ],
+        [
+          "Admission",
+          ""
+        ],
+        [
+          "Insurance and authorization support",
+          ""
+        ],
+        [
+          "Guarantee-letter preparation",
+          ""
         ],
         [
           "Billing and reconciliation",
-          "Compare services, coverage and terms, and flag the differences."
+          ""
         ],
         [
-          "Internal documentation and procedures",
-          "Procedures, policies and regulation searchable with the source cited."
+          "Reimbursements",
+          ""
         ],
         [
-          "Procurement and supply chain",
-          "Compare proposals, terms and supplier track record."
+          "Administrative patient service",
+          ""
         ],
         [
-          "Administrative support",
-          "Resolve questions on schedules, requirements and coverage, with explicit limits and handover to a person."
+          "Procurement and supply",
+          ""
         ],
         [
-          "Staff enablement",
-          "Programs built on each area’s real processes and documents, with validation criteria."
+          "Internal procedures and knowledge",
+          ""
+        ],
+        [
+          "Staff training and policy access",
+          ""
         ]
       ],
-      "workflowsTitular": "Admissions, authorisations and billing can improve without entering clinical practice.",
+      "workflowsTitular": "Where the work starts.",
       "workflows": [
-        "Admissions and authorisation management",
-        "Billing, coverage and reconciliation",
-        "Document and procedure management",
-        "Procurement and supply chain",
-        "Administrative user support",
-        "Staff training and enablement"
+        "Appointments",
+        "Admission",
+        "Authorizations",
+        "Billing",
+        "Supply",
+        "Documentation",
+        "Non-clinical operations"
       ],
       "capacidades": [
         [
-          "Find a measurable administrative process",
-          "Rank procedures by volume, time, rework, risk and feasibility, and choose one that never touches the clinical decision.",
-          "BECOME DISCOVER™"
-        ],
-        [
-          "Design assistants that know when to escalate",
-          "Retrieval over policy and procedure, document extraction, and an explicit limit whenever a query stops being administrative.",
-          "Decision intelligence"
-        ],
-        [
-          "Implement the assisted administrative process",
-          "Integrate the prioritised capability with authorised sources and systems, with permissions and a record of what was consulted.",
+          "Appointment operations assistant",
+          "Supports scheduling, rescheduling, reminders and exception handling.",
           "BECOME EMBED™"
         ],
         [
-          "Develop corporate capability",
-          "Applied programmes for Operations, HR, Procurement, Finance, Legal and Marketing, built on their real work.",
-          "BECOME NOW™"
+          "Authorization knowledge assistant",
+          "Retrieves internal policies, payer requirements and case context.",
+          "Knowledge intelligence"
         ],
         [
-          "Design privacy and traceability",
-          "Define sources, permissions, personal-data handling, logging, escalation and human review before anything operates.",
-          "Across all three"
+          "Billing-reconciliation agent",
+          "Structures discrepancies and supports exception workflows.",
+          "BECOME EMBED™"
+        ],
+        [
+          "Reimbursement assistant",
+          "Helps organize documentation, missing information and status follow-up.",
+          "BECOME EMBED™"
+        ],
+        [
+          "Internal knowledge assistant",
+          "Provides grounded access to procedures, policies and operational guidance.",
+          "Knowledge intelligence"
         ]
       ],
-      "tecnologiaTitular": "The system must know when a question is no longer administrative.",
-      "tecnologia": "Extraction over administrative documentation, retrieval over internal procedures with the source cited, and assistants with a declared scope and mandatory handover the moment a question stops being administrative. How personal health data is handled is defined before anything is built, not after.",
-      "metricasTitular": "Recovering time for care starts by measuring the paperwork that consumes it.",
+      "tecnologiaTitular": "The boundary is set before anything is built, and clinical judgment is never inside it.",
+      "tecnologia": "Strict access controls, source-grounded responses, human review for consequential decisions, a clear boundary between administrative and clinical use, and traceability and logging.",
+      "metricasTitular": "What we measure.",
       "metricas": [
         [
-          "Processing time",
-          "How long an administrative procedure takes end to end."
+          "Administrative cycle time",
+          ""
         ],
         [
-          "Complete files",
-          "What share reaches review with nothing missing."
+          "Rework",
+          ""
         ],
         [
-          "Billing rework",
-          "How many corrections happen after issuing."
+          "Missing-document rate",
+          ""
         ],
         [
-          "Administrative response",
-          "How long a user question takes to resolve."
+          "Resolution time",
+          ""
         ],
         [
-          "Hours recovered",
-          "How much staff time was going into documentary tasks."
+          "Staff adoption",
+          ""
+        ],
+        [
+          "Process consistency",
+          ""
         ]
       ],
-      "empezarTitular": "Start where administration delays care without being part of it.",
+      "empezarTitular": "Where to start.",
       "empezar": [
-        "A BECOME NOW™ program with administration, procurement or HR, on their own processes.",
-        "A BECOME DISCOVER™ to prioritise across processing, billing and administrative support.",
-        "A BECOME EMBED™ on the prioritised administrative process, with data handling designed in from the start."
+        "BECOME NOW™ when the challenge is how the team works.",
+        "BECOME DISCOVER™ when the investment decision is still open.",
+        "BECOME EMBED™ when a priority process has to reach operation."
       ],
-      "cierre": "Start with the procedure that consumes the time of the people who care for patients.",
-      "cierreTexto": "Tell us which administrative process consumes staff time, delays the user or creates repeated correction. We will work on that process and its data, excluding diagnosis, treatment and clinical triage from the outset."
+      "cierre": "Explore AI for healthcare operations.",
+      "cierreTexto": "Start with the administrative process that consumes time without forming part of the clinical decision."
     }
   }
 ]

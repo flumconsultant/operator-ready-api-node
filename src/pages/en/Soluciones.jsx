@@ -15,7 +15,7 @@ export default function Soluciones() {
 
       <Section band="dark" pad="var(--space-13)" backdrop={<KineticGrid />} scrim="soft">
         <Kicker dark>Start with your question</Kicker>
-        <Headline as="h1" dark>Don’t look for a solution. Start with what needs to change.</Headline>
+        <Headline as="h1" dark>Start from the work that needs to change.</Headline>
         <Lead dark>
           Pick the situation closest to yours. We’ll show you what capability you
           need, what has to change inside, and the best place to start.

@@ -85,6 +85,20 @@ const PRINCIPLES = [
   ['fit', 'Adoption by design', 'Roles, controls, skills and measurement are part of the solution from day one.'],
 ];
 
+/* What the company keeps once BECOME leaves. It sits right after what BECOME
+   can build, and the order is deliberate: first what gets built, then what
+   remains when we are gone. That is the difference between selling a project
+   and selling a capability, and it was the one question this page never
+   answered. Mirrors the Spanish home, so both sides have the same shape. */
+const STAYS_INSIDE = [
+  ['Process', 'A redesigned process with clear decisions, exceptions and owners.'],
+  ['Intelligence', 'The agent, copilot, product or decision system that embeds AI into the work.'],
+  ['Control', 'Permissions, traceability, validation, autonomy boundaries and escalation paths.'],
+  ['People', 'A team capable of using, supervising and improving the capability.'],
+  ['Ownership', 'Documentation, runbooks and accountability inside the organization.'],
+  ['Measurement', 'A baseline and scorecard to know whether anything actually changed.'],
+];
+
 const CAPABILITIES = [
   ['decision', 'Prioritise', 'Where the value sits, which use cases, on what business case and in which order.'],
   ['flow', 'Redesign', 'Decisions, processes, roles, exceptions and controls.'],
@@ -121,13 +135,13 @@ export default function Home() {
           BECOME WHAT COMES NEXT.
         </h1>
         <Lead dark>
-          We turn AI into a capability your company owns. We align strategy,
-          people, data, agents, products and operations to improve decisions,
-          redesign how work gets done and create new sources of value.
+          BECOME is an enterprise AI consulting and transformation company. We
+          turn AI opportunities, tools and pilots into capabilities the business
+          can operate, govern and improve.
         </Lead>
         <div style={{ marginTop: 'var(--space-8)', display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
           <PrimaryCTA to="/en/contact">Find your starting point</PrimaryCTA>
-          <a href="#what-we-do" style={ghostAnchor}>See what we do</a>
+          <a href="#what-we-do" style={ghostAnchor}>Explore our services</a>
         </div>
         <p
           style={{
@@ -136,8 +150,8 @@ export default function Home() {
             font: 'var(--type-body)', color: 'var(--slate-300)', maxWidth: '52ch',
           }}
         >
-          For companies ready to move from isolated tools and pilots to governed,
-          adopted and measurable results.
+          A pilot shows that something can work. Value appears when the capability
+          is integrated into the business, governed, adopted and measured.
         </p>
       </Section>
 
@@ -231,7 +245,7 @@ export default function Home() {
 
       <Section band="sunken">
         <Kicker>What BECOME can build</Kicker>
-        <Headline>Strategy when direction is missing. Capability when execution is.</Headline>
+        <Headline>Strategy when direction is missing. Capability when execution is missing.</Headline>
         <Lead>
           We work from the decision about where to invest through to the
           capability that keeps running inside the company.
@@ -248,6 +262,22 @@ export default function Home() {
           ))}
         </Cols>
         <TextCTA to="/en/how-we-transform">See how we transform</TextCTA>
+      </Section>
+
+      <Section band="light">
+        <Kicker>What stays inside</Kicker>
+        <Headline>What remains after BECOME is more than a solution.</Headline>
+        <Lead>An enterprise capability needs more than a working model.</Lead>
+        <Cols min="240px" style={{ marginTop: 'var(--space-10)' }}>
+          {STAYS_INSIDE.map(([name, line]) => (
+            <Reveal as="div" key={name} style={{ borderTop: '1px solid var(--border-strong)', paddingTop: 'var(--space-5)' }}>
+              <h3 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)' }}>
+                {name}
+              </h3>
+              <Body style={{ marginTop: 'var(--space-4)' }}>{line}</Body>
+            </Reveal>
+          ))}
+        </Cols>
       </Section>
 
       <Section band="dark" nodeState={1}>

@@ -105,6 +105,15 @@ jobs:
       # sabe dónde está. Fijar una ruta a mano fue un error mío —era la del
       # entorno donde lo escribí, que en este runner no existe— y habría hecho
       # fallar el despliegue en el primer intento.
+      - name: QA de lenguaje del inglés publicado
+        # El guardián español busca palabras sin traducir. Este busca otra cosa,
+        # porque el lado inglés ya está limpio de español: busca copy que suene
+        # como el de cualquier otro proveedor de IA. «Unlock the power of AI»,
+        # «cutting-edge», «seamless». Ninguna está mal; todas son
+        # intercambiables, y una consultora que suena como las demás tiene que
+        # explicar en la reunión por qué es distinta.
+        run: node scripts/qa-english.mjs
+
       - name: Sin destello de texto sin maquetar
         run: node scripts/verificar-destello.mjs
 

@@ -50,7 +50,7 @@ export default function BuildEmbed() {
 
       <Section band="dark" pad="var(--space-12)">
         <Kicker dark>BECOME Embed™</Kicker>
-        <Headline as="h1" dark>Turn an AI priority into an operational capability.</Headline>
+        <Headline as="h1" dark>Turn an AI priority into a capability ready to operate.</Headline>
         <Lead dark>
           We design and build copilots, AI agents and LLM-powered workflows
           connected to your organization’s data, tools and systems.

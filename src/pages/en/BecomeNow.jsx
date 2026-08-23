@@ -20,7 +20,7 @@ export default function BecomeNow() {
 
       <Section band="dark" pad="var(--space-12)">
         <Kicker dark>BECOME NOW™ — Applied AI Enablement</Kicker>
-        <Headline as="h1" dark>Move your teams from using AI to working differently with it.</Headline>
+        <Headline as="h1" dark>Build AI capability around the work your team actually does.</Headline>
         <Lead dark>
           BECOME NOW™ turns generative AI tools into new, applied ways of working
           across each business function.

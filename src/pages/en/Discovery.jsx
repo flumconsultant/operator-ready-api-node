@@ -53,7 +53,7 @@ export default function Discovery() {
 
       <Section band="dark" pad="var(--space-12)">
         <Kicker dark>BECOME Discover™</Kicker>
-        <Headline as="h1" dark>Decide where AI value sits, and what must change to capture it.</Headline>
+        <Headline as="h1" dark>Decide where AI can create value — and what must change to capture it.</Headline>
         <p style={{ margin: 'var(--space-6) 0 0', font: 'var(--type-lead)', color: 'var(--electric-green)' }}>
           Define what your company should become next.
         </p>

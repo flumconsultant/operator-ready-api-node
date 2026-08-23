@@ -154,43 +154,43 @@ export const PAGES = {
 
   /* ---------------------------------------------------------------- inglés */
   '/en': [
-    'BECOME — AI-native transformation company',
-    'BECOME turns AI, LLMs and AI agents into enterprise capabilities through strategy, adoption, workflows, technology and governance.',
+    'Enterprise AI Consulting & Transformation | BECOME',
+    'BECOME helps enterprises turn AI strategy, tools and pilots into capabilities that teams can operate, govern and improve.',
     '/es',
   ],
   '/en/services': [
-    'AI services for companies: NOW, DISCOVER and EMBED | BECOME',
-    'Three ways to move forward with AI: train teams, define strategy and operating model, or build a capability inside the operation.',
+    'Enterprise AI Services: NOW, DISCOVER & EMBED | BECOME',
+    'Build AI capability, define AI strategy and move priority use cases into operation with BECOME NOW™, DISCOVER™ and EMBED™.',
     '/es/servicios',
   ],
   '/en/services/become-now': [
-    'Applied AI training for teams | BECOME NOW™',
-    'Applied enterprise AI programs built around real workflows using ChatGPT, Claude, Gemini, Microsoft Copilot and other approved LLMs.',
+    'Enterprise AI Training & Capability Building | BECOME NOW™',
+    'Applied enterprise AI training built around real work, processes and decisions using tools such as ChatGPT, Claude, Gemini and Copilot.',
     '/es/servicios/become-now',
   ],
   '/en/services/become-discover': [
-    'AI strategy and operating model | BECOME DISCOVER™',
-    'Eight to twelve weeks to know where AI value sits in your business, what to do first, and how the company must operate to sustain it.',
+    'Enterprise AI Strategy & Roadmap | BECOME DISCOVER™',
+    'Identify AI value pools, prioritize use cases, define the target operating model and build a roadmap for enterprise AI transformation.',
     '/es/servicios/become-discover',
   ],
   '/en/services/become-embed': [
-    'Implementing AI agents and solutions | BECOME EMBED™',
-    'We design and implement agents, copilots and LLM-based processes with data, APIs, integrations, controls, observability and handover.',
+    'Enterprise AI Agents & Automation | BECOME EMBED™',
+    'Design and implement enterprise AI agents, copilots, RAG, integrations and AI-enabled workflows with controls and human oversight.',
     '/es/servicios/become-embed',
   ],
   '/en/how-we-transform': [
-    'How we transform with AI — The method | BECOME',
-    'Six stages from ambition to value, crossing the five systems that decide whether AI stays installed: people, data, agents, products and operations.',
+    'AI Transformation Methodology | BECOME',
+    'A six-stage method for turning AI opportunities into governed, measurable capabilities embedded in real enterprise work.',
     '/es/como-transformamos',
   ],
   '/en/about': [
-    'About — AI-native transformation company | BECOME',
-    'BECOME connects strategy, operating-model design, building and adoption in one system. What we believe and how we work.',
+    'BECOME | AI-Native Enterprise Transformation',
+    'BECOME is an AI-native transformation company connecting business, people, data and technology to build enterprise capability from the inside.',
     '/es/nosotros',
   ],
   '/en/use-cases': [
-    'AI use cases for companies | BECOME',
-    'Six business needs and what each takes: scaling beyond pilots, preparing teams, redesigning workflows, governed AI agents and measuring value.',
+    'Enterprise AI Use Cases | BECOME',
+    'Explore enterprise AI use cases across agents, critical workflows, products, team capability, governance and measurable value.',
     '/es/casos-de-uso',
   ],
   '/en/about/responsible-ai': [
@@ -204,8 +204,8 @@ export const PAGES = {
     '/es/insights',
   ],
   '/en/contact': [
-    'Contact: AI consulting for enterprises | BECOME',
-    'Share the challenge, the outcome you are aiming for and your organisation’s context. We review it and shape the first conversation.',
+    'Contact BECOME | Enterprise AI Consulting',
+    'Talk with BECOME about AI strategy, capability building, enterprise agents, process redesign or AI transformation.',
     '/es/contacto',
   ],
   '/en/privacy': [
@@ -224,38 +224,38 @@ export const PAGES = {
     '/es/terminos',
   ],
   '/en/industries': [
-    'AI by industry: banking, mining, retail and more | BECOME',
-    'AI applied to banking, mining, retail, hospitality, real estate, construction and healthcare, with the processes and metrics of each industry.',
+    'Enterprise AI by Industry: Banking, Mining, Retail & More | BECOME',
+    'Explore how BECOME applies AI transformation to banking, mining, retail, hospitality, real estate, construction, healthcare and pharma.',
     '/es/industrias',
   ],
   '/en/industries/banking-insurance-fintech': [
-    'AI for banking, insurance and fintech | BECOME',
-    'AI applied to credit, fraud, operations, KYC, AML, claims, collections, reconciliation and digital channels, with traceability and human oversight.',
+    'AI for Banking, Insurance & Fintech | BECOME',
+    'Apply enterprise AI to credit, fraud, claims, KYC/AML, collections, reconciliation and customer operations with controls and traceability.',
     '/es/industrias/banca-seguros-fintech',
   ],
   '/en/industries/mining-energy': [
-    'AI for mining and energy operations | BECOME',
-    'AI applied to mine planning, drill and blast, loading and haulage, crushing, grinding, flotation, maintenance and plant shutdowns.',
+    'AI for Mining & Mining Operations | BECOME',
+    'Apply AI to mine planning, maintenance, concentrator operations, shutdowns, logistics and operational knowledge with human oversight.',
     '/es/industrias/mineria-energia',
   ],
   '/en/industries/retail-consumer-goods': [
-    'AI for retail and consumer goods | BECOME',
-    'AI applied to assortment, inventory, pricing, promotions, catalogue, e-commerce, delivery, click and collect, returns and customer service.',
+    'AI for Retail & Consumer Goods | BECOME',
+    'Apply AI to inventory, category management, e-commerce, marketplace, fulfillment, returns, trade marketing and commercial operations.',
     '/es/industrias/retail-consumo-masivo',
   ],
   '/en/industries/travel-hospitality': [
-    'AI for travel and hospitality | BECOME',
-    'AI for bookings, revenue management, guest service, check-in, hotel operations, events, reputation and loyalty.',
+    'AI for Hotels, Travel & Hospitality | BECOME',
+    'Apply AI to reservations, revenue operations, pre-arrival, guest service, housekeeping, no-shows, groups, events and loyalty.',
     '/es/industrias/turismo-hoteleria',
   ],
   '/en/industries/real-estate-construction': [
-    'AI for real estate and construction | BECOME',
-    'AI applied to land, feasibility, sales, reservations, contracts, BIM, RFIs, quantities, progress valuations, changes, handover and after-sales.',
+    'AI for Real Estate & Construction | BECOME',
+    'Apply AI across real estate sales, post-sale, project controls, BIM, RFIs, quantities, valuations, contracts and construction operations.',
     '/es/industrias/inmobiliario-construccion',
   ],
   '/en/industries/healthcare-pharma': [
-    'AI for healthcare and pharma | BECOME',
-    'AI applied to scheduling, admissions, authorisations, billing, reimbursements, supply, documentation and non-clinical operations.',
+    'AI for Healthcare Operations & Pharma | BECOME',
+    'Apply AI to appointments, admission, authorizations, billing, reimbursements, supply, knowledge and administrative healthcare operations.',
     '/es/industrias/salud-farmaceutica',
   ],
 };
