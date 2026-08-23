@@ -7,6 +7,8 @@ import Suscriptores from './Suscriptores.jsx';
 import Paginas from './Paginas.jsx';
 import Contenido from './Contenido.jsx';
 import { Etiqueta, Texto, Boton, Fila, Aviso } from './piezas.jsx';
+import Marco from './Marco.jsx';
+import { IconoSalir, IconoFuera } from './iconos.jsx';
 import './panel.css';
 
 /**
@@ -128,36 +130,9 @@ function Lista({ items, alAbrir, alNuevo, alRecargar, cargando, vacioEn }) {
  * describía a dónde te llevaba y no dónde estabas. Con dos secciones se
  * aguanta; con cinco es un laberinto.
  *
- * Ahora cada módulo tiene un sitio fijo y el activo se ve. La barra se
- * desplaza en horizontal a propósito: quien administra esto lo hace desde el
- * móvil, y apilar los módulos en vertical empujaría el contenido fuera de la
- * pantalla antes de empezar a trabajar. */
-const MODULOS = [
-  ['articulos', 'Artículos'],
-  ['paginas', 'Páginas'],
-  ['contenido', 'Contenido'],
-  ['conocimiento', 'Conocimiento'],
-  ['autores', 'Autores'],
-  ['suscriptores', 'Suscriptores'],
-];
-
-function Modulos({ vista, alCambiar }) {
-  return (
-    <nav className="pnl-modulos" aria-label="Secciones del panel">
-      {MODULOS.map(([id, rotulo]) => (
-        <button
-          key={id}
-          type="button"
-          className="pnl-modulo"
-          onClick={() => alCambiar(id)}
-          aria-current={vista === id ? 'page' : undefined}
-        >
-          {rotulo}
-        </button>
-      ))}
-    </nav>
-  );
-}
+ * La lista de módulos y su pintura viven ahora en Marco.jsx, que la coloca en
+ * una columna fija en el ordenador y en un cajón en el móvil. Aquí solo queda
+ * qué se enseña en cada una. */
 
 export default function Panel() {
   /* null = no se sabe todavía; false = no hay sesión; objeto = quién eres.
@@ -283,77 +258,62 @@ export default function Panel() {
   const fallos = abierto ? problemas(abierto.articulo) : [];
 
   return (
-    <main className="pnl">
-      <header className="pnl-cabecera">
-        <div className="pnl-cabecera-fila">
-          <div className="pnl-marca">
-            <strong>BECOME</strong>
-            <span className="pnl-quien">{sesion.nombre}</span>
-          </div>
+    <Marco
+      vista={vista}
+      alCambiar={setVista}
+      quien={sesion.nombre}
+      acciones={
+        <>
+          <Link to="/es" className="pnl-nav-item pnl-nav-item--pie"><IconoFuera /><span>Ver el sitio</span></Link>
+          <button type="button" className="pnl-nav-item pnl-nav-item--pie" onClick={cerrarSesion}><IconoSalir /><span>Salir</span></button>
+        </>
+      }
+    >
+      {/* Las acciones del artículo abierto viven con el artículo, no en la
+          navegación: son de esta pantalla y desaparecen con ella. */}
+      {abierto && (
+        <div className="pnl-barra">
+          <h2 className="pnl-titulo">{abierto.sha ? 'Editar artículo' : 'Artículo nuevo'}</h2>
           <div className="pnl-acciones">
-            {abierto ? (
-              <>
-                <Boton onClick={cerrar} disabled={guardando}>Volver</Boton>
-                {abierto.sha && <Boton variante="peligro" onClick={retirar} disabled={guardando}>Retirar</Boton>}
-                <Boton variante="fuerte" onClick={publicar} disabled={guardando || fallos.length > 0}>
-                  {guardando ? 'Guardando…' : abierto.articulo.estado === 'publicado' ? 'Publicar' : 'Guardar borrador'}
-                </Boton>
-              </>
-            ) : (
-              <>
-                <Link to="/es" className="pnl-enlace">Ver el sitio</Link>
-                <Boton variante="quieto" onClick={cerrarSesion}>Salir</Boton>
-              </>
-            )}
+            <Boton onClick={cerrar} disabled={guardando}>Volver</Boton>
+            {abierto.sha && <Boton variante="peligro" onClick={retirar} disabled={guardando}>Retirar</Boton>}
+            <Boton variante="fuerte" onClick={publicar} disabled={guardando || fallos.length > 0}>
+              {guardando ? 'Guardando…' : abierto.articulo.estado === 'publicado' ? 'Publicar' : 'Guardar borrador'}
+            </Boton>
           </div>
         </div>
-        {!abierto && <Modulos vista={vista} alCambiar={setVista} />}
-      </header>
+      )}
 
-      <div className="pnl-lienzo">
-        <Aviso tono="mal">{error}</Aviso>
-        <Aviso tono="bien">{nota}</Aviso>
+      <Aviso tono="mal">{error}</Aviso>
+      <Aviso tono="bien">{nota}</Aviso>
 
-        {vista === 'conocimiento' && !abierto ? (
-          <div>
-            <Paginas carpeta="conocimiento" titulo="Conocimiento de BECOME"
-                     vacio="Aquí vive lo que un agente necesita saber para hablar por BECOME: quién eres, qué no haces, qué respondes. Cada documento lleva escrita la pregunta que contesta." />
-          </div>
-        ) : vista === 'contenido' && !abierto ? (
-          <div>
-            <Contenido />
-          </div>
-        ) : vista === 'paginas' && !abierto ? (
-          <div>
-            <Paginas />
-          </div>
-        ) : vista === 'suscriptores' && !abierto ? (
-          <Suscriptores alCerrar={() => setVista('articulos')} />
-        ) : vista === 'autores' && !abierto ? (
-          <div>
-            <Autores alCerrar={() => setVista('articulos')} />
-          </div>
-        ) : abierto ? (
-          <div>
-            <Editor
-              articulo={abierto.articulo}
-              publicadoAntes={Boolean(abierto.sha) && abierto.articulo.estado === 'publicado'}
-              alCambiar={(a) => setAbierto({ ...abierto, articulo: a })}
-            />
-          </div>
-        ) : (
-          <div>
-            <Lista
-              items={items}
-              cargando={cargando}
-              vacioEn={vacioEn}
-              alRecargar={cargar}
-              alNuevo={() => setAbierto({ archivo: null, sha: null, articulo: ARTICULO_NUEVO() })}
-              alAbrir={(it) => setAbierto({ archivo: it.archivo, sha: it.sha, articulo: it.articulo })}
-            />
-          </div>
-        )}
-      </div>
-    </main>
+      {vista === 'conocimiento' && !abierto ? (
+        <Paginas carpeta="conocimiento" titulo="Conocimiento de BECOME"
+                 vacio="Aquí vive lo que un agente necesita saber para hablar por BECOME: quién eres, qué no haces, qué respondes. Cada documento lleva escrita la pregunta que contesta." />
+      ) : vista === 'contenido' && !abierto ? (
+        <Contenido />
+      ) : vista === 'paginas' && !abierto ? (
+        <Paginas />
+      ) : vista === 'suscriptores' && !abierto ? (
+        <Suscriptores alCerrar={() => setVista('articulos')} />
+      ) : vista === 'autores' && !abierto ? (
+        <Autores alCerrar={() => setVista('articulos')} />
+      ) : abierto ? (
+        <Editor
+          articulo={abierto.articulo}
+          publicadoAntes={Boolean(abierto.sha) && abierto.articulo.estado === 'publicado'}
+          alCambiar={(a) => setAbierto({ ...abierto, articulo: a })}
+        />
+      ) : (
+        <Lista
+          items={items}
+          cargando={cargando}
+          vacioEn={vacioEn}
+          alRecargar={cargar}
+          alNuevo={() => setAbierto({ archivo: null, sha: null, articulo: ARTICULO_NUEVO() })}
+          alAbrir={(it) => setAbierto({ archivo: it.archivo, sha: it.sha, articulo: it.articulo })}
+        />
+      )}
+    </Marco>
   );
 }

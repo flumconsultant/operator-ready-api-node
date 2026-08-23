@@ -88,55 +88,113 @@
   border-radius: 2px;
 }
 
-/* --- cabecera ------------------------------------------------------------ */
-.pnl-cabecera {
-  position: sticky; top: 0; z-index: 20;
-  background: rgba(10, 14, 39, .92);
-  backdrop-filter: blur(10px);
+/* --- el marco: lateral en el ordenador, cajón en el móvil ----------------
+   Una sola lista de módulos que cambia de sitio, no dos navegaciones. A partir
+   de 1024 píxeles es una columna fija; por debajo, el cajón. */
+
+.pnl-marco { display: flex; min-height: 100dvh; }
+.pnl-columna-principal { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.pnl-principal { flex: 1; min-width: 0; padding: var(--pnl-4); }
+.pnl-principal:focus { outline: none; }
+
+/* Saltar la navegación. Quien va con teclado no debería recorrer seis módulos
+   en cada pantalla para llegar al formulario. Se ve solo al enfocarlo. */
+.pnl-saltar {
+  position: absolute; left: -9999px; top: 0; z-index: 60;
+  padding: var(--pnl-3) var(--pnl-4);
+  background: var(--pnl-verde); color: #04210F; font-weight: 700; border-radius: 0 0 var(--pnl-r) 0;
+}
+.pnl-saltar:focus { left: 0; }
+
+/* --- la columna fija ------------------------------------------------------ */
+.pnl-lateral { display: none; }
+
+@media (min-width: 64rem) {
+  .pnl-lateral {
+    display: flex; flex-direction: column;
+    position: sticky; top: 0; align-self: flex-start;
+    width: 240px; height: 100dvh; flex: 0 0 240px;
+    padding: var(--pnl-4) var(--pnl-3);
+    background: var(--pnl-sup);
+    border-right: 1px solid var(--pnl-linea);
+  }
+  .pnl-lateral-pie { margin-top: auto; padding-top: var(--pnl-4); border-top: 1px solid var(--pnl-linea); }
+  .pnl-principal { padding: var(--pnl-5) var(--pnl-6); }
+}
+
+.pnl-lateral-marca {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 0 var(--pnl-3) var(--pnl-4);
+}
+.pnl-lateral-marca strong {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 18px; letter-spacing: .02em; color: var(--pnl-tinta);
+}
+.pnl-quien { font: var(--type-mono); font-size: 11px; color: var(--pnl-tenue); }
+
+/* --- la lista de módulos --------------------------------------------------- */
+.pnl-nav { display: flex; flex-direction: column; gap: 2px; }
+.pnl-nav-item {
+  display: flex; align-items: center; gap: var(--pnl-3);
+  width: 100%; min-height: var(--pnl-toque);
+  padding: 0 var(--pnl-3);
+  background: transparent; border: 0; border-left: 2px solid transparent;
+  border-radius: var(--pnl-r);
+  color: var(--pnl-tinta-2); font: inherit; font-size: 15px; text-align: left;
+  text-decoration: none; cursor: pointer;
+}
+.pnl-nav-item:hover { background: var(--pnl-sup-2); color: var(--pnl-tinta); }
+/* Dónde estás, dicho de tres formas y no solo con el color: la barra a la
+   izquierda, la superficie y el peso. El color nunca informa solo. */
+.pnl-nav-item[aria-current="page"] {
+  background: var(--pnl-sup-2);
+  border-left-color: var(--pnl-verde);
+  color: var(--pnl-tinta);
+  font-weight: 600;
+}
+.pnl-nav-item svg { flex: 0 0 auto; }
+.pnl-nav-item--pie { color: var(--pnl-tenue); font-size: 14px; }
+.pnl-nav-item--pie:hover { color: var(--pnl-tinta); }
+
+/* --- la barra de arriba, en el móvil ---------------------------------------
+   Con la columna lateral a la vista, un botón de menú que abre lo que ya está
+   abierto es un control que no hace nada: por eso desaparece.
+
+   La regla de ocultarlo va DESPUÉS de la que la dibuja, unas líneas más
+   abajo. Estuvo antes y no funcionaba: con la misma especificidad gana la
+   última declaración del archivo, no la más específica en intención. Se vio
+   probándolo en 1440 píxeles, donde el botón de menú seguía ahí. */
+.pnl-superior {
+  position: sticky; top: 0; z-index: 15;
+  display: flex; align-items: center; gap: var(--pnl-3);
+  padding: var(--pnl-2) var(--pnl-3);
+  background: var(--pnl-fondo);
   border-bottom: 1px solid var(--pnl-linea);
 }
-.pnl-cabecera-fila {
-  max-width: 1360px; margin: 0 auto;
-  padding: var(--pnl-3) var(--pnl-4);
-  display: flex; align-items: center; gap: var(--pnl-3);
-  justify-content: space-between; flex-wrap: wrap;
-}
-.pnl-marca {
-  display: flex; align-items: baseline; gap: var(--pnl-3); min-width: 0;
-}
+.pnl-btn--icono { min-width: var(--pnl-toque); padding: 0; }
 .pnl-marca strong {
   font-family: var(--font-display); font-weight: 700;
-  letter-spacing: .04em; color: var(--pnl-tinta); font-size: 15px;
+  font-size: 16px; letter-spacing: .02em; color: var(--pnl-tinta);
 }
-.pnl-quien {
-  font: var(--type-mono); font-size: 11px; color: var(--pnl-tenue);
-  letter-spacing: .04em; white-space: nowrap;
-  overflow: hidden; text-overflow: ellipsis;
-}
-.pnl-acciones { display: flex; align-items: center; gap: var(--pnl-2); flex-wrap: wrap; }
 
-/* --- navegación de módulos ------------------------------------------------
-   Se desplaza en horizontal a propósito: apilar seis módulos en vertical
-   empujaría el contenido fuera de la pantalla antes de empezar a trabajar. */
-.pnl-modulos {
-  display: flex; gap: 0; overflow-x: auto;
-  max-width: 1360px; margin: 0 auto; padding: 0 var(--pnl-2);
-  scrollbar-width: none; -webkit-overflow-scrolling: touch;
-}
-.pnl-modulos::-webkit-scrollbar { display: none; }
-.pnl-modulo {
-  appearance: none; border: 0; background: transparent; cursor: pointer;
-  font: var(--type-body); font-size: 14px; color: var(--pnl-tenue);
-  padding: var(--pnl-3) var(--pnl-4);
-  min-height: var(--pnl-toque);
-  white-space: nowrap;
-  border-bottom: 2px solid transparent;
+/* Y aquí, después de dibujarla, se apaga en el ordenador. */
+@media (min-width: 64rem) { .pnl-superior { display: none; } }
+
+/* --- el cajón -------------------------------------------------------------- */
+.pnl-cajon { position: fixed; inset: 0; z-index: 50; display: flex; }
+.pnl-cajon-fondo { position: absolute; inset: 0; background: rgba(5, 7, 15, .72); }
+.pnl-cajon-caja {
   position: relative;
+  display: flex; flex-direction: column;
+  width: min(280px, 82vw); height: 100dvh;
+  padding: var(--pnl-4) var(--pnl-3);
+  background: var(--pnl-sup);
+  border-right: 1px solid var(--pnl-linea-fuerte);
 }
-.pnl-modulo:hover { color: var(--pnl-tinta-2); }
-.pnl-modulo[aria-current="page"] {
-  color: var(--pnl-tinta); font-weight: 600;
-  border-bottom-color: var(--pnl-verde);
+.pnl-cajon-caja .pnl-lateral-pie { margin-top: auto; padding-top: var(--pnl-4); border-top: 1px solid var(--pnl-linea); }
+@media (prefers-reduced-motion: no-preference) {
+  .pnl-cajon-caja { animation: pnl-entra-cajon .22s cubic-bezier(.22, 1, .36, 1); }
+  @keyframes pnl-entra-cajon { from { transform: translateX(-100%); } to { transform: none; } }
 }
 
 /* --- lienzo -------------------------------------------------------------- */
@@ -194,6 +252,7 @@
   background: var(--pnl-sup-2); color: var(--pnl-tinta-2);
   touch-action: manipulation; white-space: nowrap;
 }
+.pnl-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--pnl-2); }
 .pnl-btn:hover:not(:disabled) { border-color: var(--pnl-tenue); color: var(--pnl-tinta); }
 .pnl-btn:disabled { opacity: .42; cursor: not-allowed; }
 .pnl-btn--fuerte {
@@ -407,7 +466,7 @@ select.pnl-entrada { width: auto; max-width: 100%; }
 /* La cuenta de filas es el trabajo que hay dentro. Cuatro campos con doce
    filas dentro no son cuatro campos, y eso decide si se abre ahora o luego. */
 .pnl-seccion-cuenta { font: var(--type-mono); font-size: 11px; color: var(--pnl-tenue); white-space: nowrap; }
-.pnl-seccion-flecha { color: var(--pnl-tenue); font-size: 12px; }
+.pnl-seccion-flecha { display: inline-flex; color: var(--pnl-tenue); }
 .pnl-seccion .pnl-panel { padding-bottom: var(--pnl-5); }
 
 /* Separa quitar de reordenar. Los tres controles que más daño hacen no

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Boton } from './piezas.jsx';
+import { IconoSubir, IconoBajar, IconoQuitar, IconoArriba, IconoAbajo, IconoNuevo } from './iconos.jsx';
 import './panel.css';
 
 /**
@@ -95,12 +96,14 @@ function Filas({ filas, columnas, topes, alCambiar }) {
           <div className="pnl-fila-cab">
             <span className="pnl-fila-num">{String(i + 1).padStart(2, '0')}</span>
             <div className="pnl-fila-mandos">
-              <Boton menudo onClick={() => mover(i, -1)} disabled={i === 0} aria-label={`Subir el elemento ${i + 1}`}>↑</Boton>
-              <Boton menudo onClick={() => mover(i, 1)} disabled={i === filas.length - 1} aria-label={`Bajar el elemento ${i + 1}`}>↓</Boton>
+              {/* El rótulo va en el botón: el icono va solo, y un control sin
+                  nombre no se puede usar con un lector de pantalla. */}
+              <Boton menudo onClick={() => mover(i, -1)} disabled={i === 0} aria-label={`Subir el elemento ${i + 1}`}><IconoSubir /></Boton>
+              <Boton menudo onClick={() => mover(i, 1)} disabled={i === filas.length - 1} aria-label={`Bajar el elemento ${i + 1}`}><IconoBajar /></Boton>
               {/* Separado del par de reordenar: los tres controles que más daño
                   hacen no deberían compartir el mismo centímetro de pantalla. */}
               <span className="pnl-fila-corte" aria-hidden="true" />
-              <Boton menudo variante="peligro" onClick={() => setConfirmar(i)} aria-label={`Quitar el elemento ${i + 1}`}>Quitar</Boton>
+              <Boton menudo variante="peligro" onClick={() => setConfirmar(i)} aria-label={`Quitar el elemento ${i + 1}`}><IconoQuitar /></Boton>
             </div>
           </div>
           {columnas.map((col, k) => (
@@ -111,7 +114,7 @@ function Filas({ filas, columnas, topes, alCambiar }) {
           ))}
         </div>
       ))}
-      <div><Boton onClick={() => alCambiar([...filas, vacia()])}>Añadir fila</Boton></div>
+      <div><Boton onClick={() => alCambiar([...filas, vacia()])}><IconoNuevo />Añadir fila</Boton></div>
 
       {confirmar != null && (
         <div className="pnl-hoja" role="dialog" aria-modal="true" aria-label="Quitar esta fila">
@@ -281,7 +284,7 @@ export function Formulario({ campos, valores, alCambiar }) {
                   {s.campos.length} {s.campos.length === 1 ? 'campo' : 'campos'}
                   {filas > 0 && ` · ${filas} ${filas === 1 ? 'fila' : 'filas'}`}
                 </span>
-                <span className="pnl-seccion-flecha" aria-hidden="true">{abierta ? '▴' : '▾'}</span>
+                <span className="pnl-seccion-flecha">{abierta ? <IconoArriba /> : <IconoAbajo />}</span>
               </button>
             )}
             {abierta && (

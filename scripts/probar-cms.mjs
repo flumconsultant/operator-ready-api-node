@@ -56,8 +56,19 @@ pg.on('pageerror', (e) => errores.push(e.message));
 
 await pg.goto('http://localhost:4500/admin', { waitUntil: 'networkidle' });
 await pg.waitForTimeout(500);
-await pg.getByRole('button', { name: 'Contenido' }).click();
-await pg.waitForTimeout(400);
+/* Los módulos viven en la columna lateral, y en móvil dentro de un cajón.
+   Abrirlo es parte del recorrido de quien usa el panel desde el teléfono. */
+const irA = async (modulo) => {
+  if (await pg.locator('.pnl-lateral').isVisible()) {
+    await pg.locator('.pnl-lateral .pnl-nav-item', { hasText: modulo }).first().click();
+  } else {
+    await pg.getByRole('button', { name: 'Abrir el menú' }).click();
+    await pg.waitForTimeout(250);
+    await pg.locator('.pnl-cajon .pnl-nav-item', { hasText: modulo }).first().click();
+  }
+  await pg.waitForTimeout(400);
+};
+await irA('Contenido');
 await pg.getByText('Industrias', { exact: true }).first().click();
 await pg.waitForTimeout(600);
 

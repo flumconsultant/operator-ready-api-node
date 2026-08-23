@@ -11,6 +11,7 @@ import { createServer } from 'node:http';
 import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { chromium } from 'playwright';
 const leer=(f)=>JSON.parse(readFileSync(f,'utf8'));
+let SIN_SESION=false;
 const ESQ=['industrias'].map(i=>leer(`src/content/esquemas/${i}.json`));
 /* Una página real del sitio, para abrir también el módulo de Páginas: ahí el
    formulario es el mismo componente y un fallo suyo no se ve compilando. */
@@ -22,7 +23,8 @@ const tipo=(p)=>p.endsWith('.js')?'text/javascript':p.endsWith('.css')?'text/css
 createServer(async(q,r)=>{const u=decodeURIComponent(q.url.split('?')[0]);
  if(u==='/api/panel.php'){let b='';for await(const c of q)b+=c;const p=b?JSON.parse(b):{accion:new URL(q.url,'http://x').searchParams.get('accion')};
   const res=(o)=>{r.writeHead(200,{'content-type':'application/json'});r.end(JSON.stringify(o));};
-  if(p.accion==='yo')return res({ok:true,nombre:'carlos@meetbecome.com'});
+  if(p.accion==='yo'){ if(SIN_SESION) return res({ok:false,error:'sin_sesion',mensaje:'No hay sesión.'});
+   return res({ok:true,nombre:'carlos@meetbecome.com'}); }
   if(p.accion==='listar')return res({ok:true,articulos:[]});
   if(p.accion==='listar-paginas'){const c=(p.carpeta||'paginas');
    return res({ok:true,paginas:c==='conocimiento'?CON:PAG});}
@@ -36,12 +38,49 @@ const b=await chromium.launch({executablePath:process.env.CHROMIUM_PATH});
 const pg=await (await b.newContext({viewport:{width:390,height:844}})).newPage();
 await pg.goto('http://localhost:5100/admin',{waitUntil:'networkidle'});
 await pg.waitForTimeout(600);
-await pg.getByRole('button',{name:'Contenido'}).click(); await pg.waitForTimeout(300);
+
+/* En el móvil los módulos viven en un cajón. Abrirlo es parte del recorrido:
+   una prueba que fuera directa al módulo no comprobaría la navegación, que es
+   justo lo que cambió. */
+const irA = async (modulo) => {
+  if (await pg.locator('.pnl-lateral').isVisible()) {
+    await pg.locator('.pnl-lateral .pnl-nav-item', { hasText: modulo }).first().click();
+  } else {
+    await pg.getByRole('button', { name: 'Abrir el menú' }).click();
+    await pg.waitForTimeout(250);
+    await pg.locator('.pnl-cajon .pnl-nav-item', { hasText: modulo }).first().click();
+  }
+  await pg.waitForTimeout(400);
+};
+await irA('Contenido');
 await pg.getByText('Industrias',{exact:true}).first().click(); await pg.waitForTimeout(700);
 
 /* ---- Comportamiento, antes de abrirlo todo -------------------------------- */
 const fallos = [];
 const di = (ok, texto) => { console.log(`${ok?'ok ':'✗  '} ${texto}`); if(!ok) fallos.push(texto); };
+
+/* El marco: en 390 px la columna fija no está y el cajón sí. */
+di(!(await pg.locator('.pnl-lateral').isVisible()), 'en móvil no hay columna lateral robando ancho');
+di(await pg.getByRole('button', { name: /el menú/ }).isVisible(), 'y sí hay un botón de menú');
+/* Icono Y palabra en los seis. Un panel que solo enseña dibujos obliga a
+   aprenderse los dibujos, y el rótulo es lo que lee un lector de pantalla. */
+await pg.getByRole('button', { name: 'Abrir el menú' }).click();
+await pg.waitForTimeout(300);
+const nav = await pg.locator('.pnl-cajon .pnl-nav-item').evaluateAll((ns) => ns.map((n) => ({
+  texto: (n.textContent || '').trim(),
+  icono: n.querySelectorAll('svg').length,
+  oculto: n.querySelector('svg')?.getAttribute('aria-hidden') === 'true',
+})));
+const seis = nav.slice(0, 6);
+di(seis.length === 6 && seis.every((m) => m.texto && m.icono === 1),
+   `los seis módulos llevan icono y palabra: ${seis.map((m) => m.texto).join(', ')}`);
+di(seis.every((m) => m.oculto), 'y el icono va oculto al lector, que ya oye la palabra');
+di((await pg.locator('.pnl-cajon-caja').evaluateAll((n) => n.length)) === 1, 'el cajón se abre');
+await pg.keyboard.press('Escape');
+await pg.waitForTimeout(300);
+di((await pg.locator('.pnl-cajon-caja').count()) === 0, 'y Escape lo cierra');
+di(await pg.evaluate(() => document.activeElement?.getAttribute('aria-label')?.includes('menú')),
+   'devolviendo el foco al botón que lo abrió');
 
 const chips = await pg.locator('.pnl-chip').count();
 di(chips === 10, `el índice dibuja ${chips} secciones (se esperan 10)`);
@@ -83,7 +122,7 @@ di(despues === antes, `cancelar no quita nada (${antes} filas antes, ${despues} 
 
 /* El módulo de Páginas usa el mismo formulario. Se abre porque un componente
    compartido que se rompe en el segundo sitio compila igual de bien. */
-await pg.getByRole('button',{name:'Páginas'}).click(); await pg.waitForTimeout(400);
+await irA('Páginas');
 await pg.locator('.pnl-tarjeta').first().click(); await pg.waitForTimeout(500);
 const camposPagina = await pg.locator('.pnl-campo').count();
 di(camposPagina > 0, `el módulo de Páginas dibuja ${camposPagina} campos (no una pantalla en blanco)`);
@@ -92,13 +131,13 @@ di(await pg.locator('.pnl-indice').count() === 0, 'sin índice, porque una pági
 await pg.getByRole('button',{name:'Volver'}).click(); await pg.waitForTimeout(300);
 
 /* La deuda de conocimiento, que era el fallo de «está escondida». */
-await pg.getByRole('button',{name:'Conocimiento'}).click(); await pg.waitForTimeout(500);
+await irA('Conocimiento');
 const deuda = (await pg.locator('.pnl-deuda').textContent() || '').trim();
 di(/^\d+/.test(deuda) && !deuda.startsWith('0'), `los campos sin escribir se cuentan en la primera línea: «${deuda}»`);
 const marcados = await pg.locator('.pnl-pendiente').count();
 di(marcados > 0, `y ${marcados} documentos llevan su propia marca en la tarjeta`);
 
-await pg.getByRole('button',{name:'Contenido'}).click(); await pg.waitForTimeout(300);
+await irA('Contenido');
 await pg.getByText('Industrias',{exact:true}).first().click(); await pg.waitForTimeout(700);
 
 /* ---- Y ahora sí: abrir todo para medir sobre el formulario entero --------- */
@@ -140,4 +179,33 @@ console.log(r.pequenos.length ? `✗ tocables pequeños (${r.pequenos.length}): 
 await pg.keyboard.press('Tab'); await pg.keyboard.press('Tab');
 const foco = await pg.evaluate(() => { const e=document.activeElement; const cs=getComputedStyle(e); return { que:(e.textContent||e.tagName).trim().slice(0,24), outline: cs.outlineWidth+' '+cs.outlineColor }; });
 console.log(`foco visible en «${foco.que}» → ${foco.outline}`);
+/* ---- Y el mismo panel en un ordenador ------------------------------------ */
+console.log('');
+const ancho = await (await b.newContext({ viewport: { width: 1440, height: 900 } })).newPage();
+await ancho.goto('http://localhost:5100/admin', { waitUntil: 'networkidle' });
+await ancho.waitForTimeout(800);
+di(await ancho.locator('.pnl-lateral').isVisible(), 'en 1440 px la columna de módulos está fija a la izquierda');
+di(!(await ancho.locator('.pnl-superior').isVisible()), 'y desaparece el botón de menú, que ya no abre nada nuevo');
+const lateral = await ancho.locator('.pnl-lateral').boundingBox();
+di(lateral.x === 0 && Math.round(lateral.width) === 240, `mide ${Math.round(lateral.width)} px y empieza en el borde`);
+di((await ancho.locator('.pnl-lateral .pnl-nav-item').count()) >= 6, 'con los seis módulos y las acciones del pie');
+/* El salto al contenido, para quien va con teclado. */
+await ancho.keyboard.press('Tab');
+const salto = await ancho.evaluate(() => {
+  const e = document.activeElement;
+  return { texto: (e.textContent || '').trim(), visible: e.getBoundingClientRect().left >= 0 };
+});
+di(salto.texto === 'Saltar al contenido' && salto.visible, `el primer tabulador ofrece «${salto.texto}» y se ve`);
+
+/* La pantalla de entrada, que vive fuera del marco y por eso no la toca nada
+   de lo anterior. Se llega negando la sesión en el servidor de mentira. */
+SIN_SESION = true;
+const puerta = await (await b.newContext({ viewport: { width: 390, height: 844 } })).newPage();
+await puerta.goto('http://localhost:5100/admin', { waitUntil: 'networkidle' });
+await puerta.waitForTimeout(700);
+di(await puerta.locator('.pnl-puerta').isVisible(), 'sin sesión aparece la pantalla de entrada, no una en blanco');
+di(await puerta.locator('form input[type="password"]').isVisible(), 'con su campo de contraseña dentro de un formulario');
+const cuerpoCampo = await puerta.locator('.pnl-puerta input').first().evaluate((n) => parseFloat(getComputedStyle(n).fontSize));
+di(cuerpoCampo >= 16, `y los campos escriben a ${cuerpoCampo} px, que es lo que evita que iOS amplíe al enfocar`);
+
 await b.close(); process.exit(r.malos.length||r.pequenos.length||fallos.length?1:0);
