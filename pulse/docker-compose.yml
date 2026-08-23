@@ -54,6 +54,13 @@ services:
         condition: service_completed_successfully
     environment:
       NODE_ENV: production
+      # Docker mete HOSTNAME con el ID del contenedor y el servidor de Next la
+      # respeta al elegir a qué dirección atarse. Con dos redes —la suya y la
+      # del proxy— eso lo deja escuchando solo en una, y el proxy, que entra
+      # por la otra, se encuentra la puerta cerrada: un 502 sin ningún error en
+      # los logs. Atándolo a 0.0.0.0 escucha en todas.
+      HOSTNAME: 0.0.0.0
+      PORT: 3000
       DATABASE_URL: ${DATABASE_URL}
       AUTH_SECRET: ${AUTH_SECRET}
       AUTH_URL: ${AUTH_URL}
