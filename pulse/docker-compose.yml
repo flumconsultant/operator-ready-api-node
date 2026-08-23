@@ -1,0 +1,87 @@
+# Los cuatro contenedores de BECOME Pulse.
+#
+#   docker compose up -d --build
+#
+# `db` es el único con volumen: es lo único que no se puede volver a construir.
+# Su puerto no se publica — a Postgres se llega desde dentro de la red de
+# Docker o con `docker compose exec`, nunca desde internet.
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - datos-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build:
+      context: .
+      dockerfile: web/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: ${DATABASE_URL}
+      AUTH_SECRET: ${AUTH_SECRET}
+      AUTH_URL: ${AUTH_URL}
+      APP_URL: ${APP_URL}
+      INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN}
+      CRON_TOKEN: ${CRON_TOKEN}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      ANTHROPIC_MODELO: ${ANTHROPIC_MODELO:-claude-opus-5}
+      SMTP_URL: ${SMTP_URL}
+      SMTP_DESDE: ${SMTP_DESDE}
+      BOT_INTERNAL_URL: http://bot:3001
+    expose:
+      - "3000"
+
+  bot:
+    build:
+      context: .
+      dockerfile: bot/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - web
+    environment:
+      NODE_ENV: production
+      DISCORD_TOKEN: ${DISCORD_TOKEN}
+      DISCORD_CLIENT_ID: ${DISCORD_CLIENT_ID}
+      INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN}
+      WEB_INTERNAL_URL: http://web:3000
+      APP_URL: ${APP_URL}
+      PUERTO: 3001
+    # Sin `ports`: el bot habla con Discord hacia fuera y con `web` hacia
+    # dentro. Nadie más tiene que poder llegar a él.
+    expose:
+      - "3001"
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      - web
+    environment:
+      DOMINIO: ${DOMINIO:-localhost}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./infra/Caddyfile:/etc/caddy/Caddyfile:ro
+      - datos-caddy:/data
+      - config-caddy:/config
+
+volumes:
+  datos-postgres:
+  datos-caddy:
+  config-caddy:

@@ -9,3 +9,9 @@ _*.mjs
 # se versionan, para poder ver qué cambió entre una revisión de texto y otra.
 contenido/*.zip
 contenido/revision/*.zip
+
+# BECOME Pulse: el .env con las claves nunca se sube, y el build de Next
+# tampoco. `dist/` y `node_modules/` ya están cubiertos arriba.
+pulse/.env
+pulse/**/.env
+pulse/web/.next/

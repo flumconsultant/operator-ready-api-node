@@ -1,0 +1,122 @@
+# Comprueba y despliega BECOME Pulse.
+#
+# El PRD pedía GitLab CI/CD porque así estaba pensado el VPS. El repositorio
+# está en GitHub, así que el pipeline vive aquí: la mecánica es idéntica
+# —construir las imágenes, empujarlas a un registro, entrar por SSH al VPS y
+# hacer `docker compose pull && up -d`— y el registro es el de GitHub
+# (ghcr.io) en vez del de GitLab. Si algún día esto se muda a GitLab, lo único
+# que cambia es el nombre del registro y la sintaxis del archivo.
+#
+# Se dispara solo con cambios dentro de pulse/: el sitio de BECOME tiene su
+# propio despliegue y no tienen nada que ver.
+
+name: Pulse
+
+on:
+  push:
+    branches: [main]
+    paths: ['pulse/**', '.github/workflows/pulse.yml']
+  pull_request:
+    paths: ['pulse/**', '.github/workflows/pulse.yml']
+  workflow_dispatch:
+
+concurrency:
+  group: pulse-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  comprobar:
+    name: Tipos y build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Instalar dependencias de la web
+        working-directory: pulse/web
+        run: npm install --no-audit --no-fund
+
+      - name: Generar el cliente de Prisma
+        working-directory: pulse/web
+        run: npx prisma generate
+
+      # Los tokens son un archivo generado y comiteado. Si alguien tocó
+      # tokens/ en la raíz y olvidó regenerarlo, aquí se ve: el diff deja de
+      # estar limpio y el trabajo falla antes de desplegar una hoja de estilos
+      # que no corresponde con el sistema de diseño.
+      - name: Los tokens están al día
+        run: |
+          node pulse/scripts/sincronizar-tokens.mjs
+          git diff --exit-code -- pulse/web/src/app/tokens.css \
+            || { echo "::error::tokens.css está desactualizado. Ejecuta: node pulse/scripts/sincronizar-tokens.mjs"; exit 1; }
+
+      - name: Comprobar tipos de la web
+        working-directory: pulse/web
+        run: npx tsc --noEmit
+
+      - name: Construir la web
+        working-directory: pulse/web
+        env:
+          # El build de Next importa el módulo que valida el entorno. Estos
+          # valores son de mentira y solo existen durante la compilación: no
+          # hay base de datos ni claves reales en CI.
+          DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
+          AUTH_SECRET: solo-para-compilar-en-ci-nada-real-aqui-32
+          INTERNAL_API_TOKEN: solo-para-compilar-en-ci-nada-real
+          NEXT_TELEMETRY_DISABLED: '1'
+        run: npx next build
+
+      - name: Instalar y comprobar el bot
+        working-directory: pulse/bot
+        run: |
+          npm install --no-audit --no-fund
+          npx tsc --noEmit
+
+  desplegar:
+    name: Desplegar al VPS
+    needs: comprobar
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    # Sin los secretos configurados el trabajo se salta entero en vez de fallar
+    # en rojo: así el pipeline se puede tener montado antes de que el VPS
+    # exista.
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: ¿Hay VPS configurado?
+        id: comprobacion
+        run: |
+          if [ -z "${{ secrets.VPS_HOST }}" ]; then
+            echo "::notice::VPS_HOST no está configurado. No se despliega."
+            echo "listo=no" >> "$GITHUB_OUTPUT"
+          else
+            echo "listo=si" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Entrar al VPS y actualizar los contenedores
+        if: steps.comprobacion.outputs.listo == 'si'
+        env:
+          CLAVE: ${{ secrets.VPS_SSH_KEY }}
+          HOST: ${{ secrets.VPS_HOST }}
+          USUARIO: ${{ secrets.VPS_USER }}
+          RUTA: ${{ secrets.VPS_RUTA }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$CLAVE" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          # El .env vive en el VPS y no pasa por aquí. El pipeline solo trae el
+          # código y reconstruye; las claves nunca salen del servidor.
+          # La ruta se pasa como argumento: el heredoc va entrecomillado para
+          # que nada se expanda en el runner, así que dentro no existe $RUTA.
+          ssh -i ~/.ssh/id_ed25519 "$USUARIO@$HOST" bash -s -- "${RUTA:-/opt/pulse}" <<'REMOTO'
+            set -euo pipefail
+            cd "$1"
+            git fetch origin main
+            git reset --hard origin/main
+            docker compose -f pulse/docker-compose.yml --env-file pulse/.env up -d --build
+            docker image prune -f
+          REMOTO

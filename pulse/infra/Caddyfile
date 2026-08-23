@@ -1,0 +1,24 @@
+# Caddy saca y renueva el certificado TLS solo, sin certbot ni cron. Lo único
+# que hay que tener es el dominio apuntando al VPS antes de levantarlo.
+
+{$DOMINIO} {
+	encode zstd gzip
+
+	# La API interna solo existe dentro de la red de Docker. Si alguien la pide
+	# desde fuera, aquí se acaba el viaje: sin esto, el token compartido sería
+	# la única puerta.
+	handle /api/interno/* {
+		respond "No existe." 404
+	}
+
+	handle {
+		reverse_proxy web:3000
+	}
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		-Server
+	}
+}

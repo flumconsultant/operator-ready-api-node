@@ -1,0 +1,201 @@
+// Modelo de datos de BECOME Pulse.
+// Las cinco entidades del PRD (Company, User, Value, Recognition, WeeklyInsight)
+// más lo que Auth.js necesita para guardar sesiones y tokens de magic link.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Rol {
+  ADMIN
+  MANAGER
+  COLABORADOR
+}
+
+enum Canal {
+  WEB
+  DISCORD
+}
+
+/// Un workspace: una empresa cliente. Todo lo demás cuelga de aquí.
+model Company {
+  id        String   @id @default(cuid())
+  nombre    String
+  slug      String   @unique
+  plan      String   @default("piloto")
+  /// Servidor de Discord conectado, si lo hay.
+  discordGuildId String? @unique
+  /// Canal donde el bot publica el espejo del feed.
+  discordCanalFeedId String?
+  /// Tope de reconocimientos que se procesan con IA al mes. El PRD pide
+  /// vigilar el coste de la API desde el primer día; esto es ese freno.
+  limiteIaMensual Int @default(2000)
+  creadaEn  DateTime @default(now())
+
+  usuarios  User[]
+  valores   Value[]
+  reconocimientos Recognition[]
+  insights  WeeklyInsight[]
+
+  @@map("companies")
+}
+
+/// Un valor de la empresa. Son las opciones que salen al reconocer, y los
+/// configura el admin: por eso pertenecen a la Company y no son un enum.
+model Value {
+  id          String  @id @default(cuid())
+  companyId   String
+  nombre      String
+  descripcion String?
+  /// Emoji con el que sale en Discord y en el feed.
+  emoji       String  @default("✨")
+  orden       Int     @default(0)
+  activo      Boolean @default(true)
+
+  company         Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  reconocimientos Recognition[]
+
+  @@unique([companyId, nombre])
+  @@index([companyId, activo])
+  @@map("values")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  companyId     String
+  nombre        String
+  email         String    @unique
+  /// Hash bcrypt. Nulo si la persona solo entra por magic link.
+  passwordHash  String?
+  emailVerified DateTime?
+  imagen        String?
+  rol           Rol       @default(COLABORADOR)
+  equipo        String?
+  discordId     String?   @unique
+  activo        Boolean   @default(true)
+  invitadoEn    DateTime  @default(now())
+
+  company    Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  dados      Recognition[] @relation("reconocimientosDados")
+  recibidos  Recognition[] @relation("reconocimientosRecibidos")
+  reacciones Reaction[]
+  accounts   Account[]
+  sessions   Session[]
+
+  @@index([companyId])
+  @@map("users")
+}
+
+/// El reconocimiento en sí. `sentimiento*` lo rellena la capa de IA de forma
+/// asíncrona: un reconocimiento se guarda y se ve en el feed aunque la API de
+/// Claude esté caída o el cupo del mes esté agotado.
+model Recognition {
+  id        String   @id @default(cuid())
+  companyId String
+  deUserId  String
+  paraUserId String
+  valueId   String
+  mensaje   String
+  canal     Canal    @default(WEB)
+  creadoEn  DateTime @default(now())
+
+  /// -1 (frío) a 1 (cálido). Nulo mientras no se ha analizado.
+  sentimientoScore Float?
+  /// Cuánto se apoya en hechos concretos frente a una fórmula genérica, 0-1.
+  especificidad    Float?
+  sentimientoTono  String?
+  analizadoEn      DateTime?
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  de      User    @relation("reconocimientosDados", fields: [deUserId], references: [id], onDelete: Cascade)
+  para    User    @relation("reconocimientosRecibidos", fields: [paraUserId], references: [id], onDelete: Cascade)
+  valor   Value   @relation(fields: [valueId], references: [id])
+  reacciones Reaction[]
+
+  @@index([companyId, creadoEn])
+  @@index([paraUserId, creadoEn])
+  @@index([deUserId, creadoEn])
+  @@index([companyId, analizadoEn])
+  @@map("recognitions")
+}
+
+/// El "me gusta" del feed. Una por persona y reconocimiento.
+model Reaction {
+  id            String   @id @default(cuid())
+  recognitionId String
+  userId        String
+  emoji         String   @default("👏")
+  creadaEn      DateTime @default(now())
+
+  reconocimiento Recognition @relation(fields: [recognitionId], references: [id], onDelete: Cascade)
+  user           User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([recognitionId, userId])
+  @@map("reactions")
+}
+
+/// El resumen semanal que genera la IA para RRHH.
+model WeeklyInsight {
+  id         String   @id @default(cuid())
+  companyId  String
+  semanaIso  String
+  /// Los 3-5 insights en texto, ya redactados.
+  contenido  String
+  /// Las cifras con las que se redactó, para poder auditar el resumen.
+  datos      Json
+  generadoEn DateTime @default(now())
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([companyId, semanaIso])
+  @@map("weekly_insights")
+}
+
+// ---- Tablas de Auth.js ----------------------------------------------------
+// La sesión va en JWT, pero el magic link necesita guardar el token en la base
+// y el adaptador exige estas tablas.
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
