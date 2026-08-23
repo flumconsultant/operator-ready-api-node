@@ -53,20 +53,17 @@ COPY --from=build /app/public ./public
 COPY --from=build --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=build --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# El CLI de Prisma y las migraciones viajan con la imagen: el arranque aplica
-# lo que falte antes de servir la primera petición. Es lo que hace que un
-# `docker compose pull && up -d` baste para desplegar un cambio de esquema.
-#
-# Se llama a `prisma/build/index.js` y no al atajo `.bin/prisma` a propósito:
-# ese atajo es un enlace simbólico, y COPY lo convierte en un archivo real
-# dentro de `.bin/`. Ahí deja de tener al lado los `.wasm` que carga desde su
-# propia carpeta, y el contenedor se reinicia en bucle con un ENOENT.
+# El cliente de Prisma y su motor: esto sí lo necesita la aplicación para
+# hablar con la base. Lo que NO viaja aquí es el CLI de `prisma`, que es quien
+# aplica las migraciones: arrastra media docena de dependencias de desarrollo y
+# elegirlas a mano es una cadena de fallos sin fin. Las migraciones las aplica
+# el servicio `migraciones` del docker-compose, que usa la etapa de build —
+# donde está todo— y termina antes de que la web arranque.
 COPY --from=build /app/prisma ./prisma
-COPY --from=build /app/node_modules/prisma ./node_modules/prisma
 COPY --from=build /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=build /app/scripts-js ./scripts
 
 USER nextjs
 EXPOSE 3000
-CMD ["sh", "-c", "node ./node_modules/prisma/build/index.js migrate deploy && node server.js"]
+CMD ["node", "server.js"]

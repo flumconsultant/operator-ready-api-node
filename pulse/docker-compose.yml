@@ -22,6 +22,26 @@ services:
       timeout: 5s
       retries: 10
 
+  # Aplica las migraciones y se muere. La web no arranca hasta que este
+  # termina bien, así que nunca sirve una petición contra un esquema viejo.
+  #
+  # Va en su propio contenedor y no en el arranque de `web` porque usa la etapa
+  # de build de la imagen, que es la única que tiene el CLI de Prisma con todas
+  # sus dependencias. La imagen final de la web no lo lleva: no le hace falta
+  # para funcionar y son decenas de megas de paquetes de desarrollo.
+  migraciones:
+    build:
+      context: .
+      dockerfile: web/Dockerfile
+      target: build
+    restart: "no"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    command: ["npx", "prisma", "migrate", "deploy"]
+
   web:
     build:
       context: .
@@ -30,6 +50,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      migraciones:
+        condition: service_completed_successfully
     environment:
       NODE_ENV: production
       DATABASE_URL: ${DATABASE_URL}
