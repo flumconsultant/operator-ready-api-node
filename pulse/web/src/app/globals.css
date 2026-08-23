@@ -138,6 +138,18 @@ a {
 
 /* ---- Piezas -------------------------------------------------------------- */
 
+/* El párrafo que explica una sección se pegaba a la tabla de debajo: el margen
+ * de bloque por defecto es demasiado corto cuando lo que sigue es una cabecera
+ * de tabla en mayúsculas. */
+.tarjeta > p {
+  margin: 0 0 var(--space-6);
+}
+
+.tarjeta > ul {
+  margin: 0;
+  padding-left: var(--space-5);
+}
+
 .tarjeta {
   background: var(--surface-card);
   border: var(--border-hair) solid var(--border-hairline);

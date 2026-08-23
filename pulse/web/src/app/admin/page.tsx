@@ -108,7 +108,7 @@ export default async function Admin() {
         <h2 style={{ font: "var(--type-h3)", margin: "0 0 var(--space-2)" }}>
           Resumen semanal
         </h2>
-        <p className="meta" style={{ marginTop: 0 }}>
+        <p className="meta">
           {ultimoInsight
             ? `Semana ${ultimoInsight.semanaIso}`
             : "Todavía no se ha generado ninguno"}
@@ -169,7 +169,7 @@ export default async function Admin() {
         <h2 style={{ font: "var(--type-h3)", margin: "0 0 var(--space-2)" }}>
           Mapa de influencia
         </h2>
-        <p style={{ color: "var(--text-muted)", marginTop: 0 }}>
+        <p style={{ color: "var(--text-muted)" }}>
           Ordenado por cuánta <em>gente distinta</em> reconoce a cada persona, no
           por cuántos reconocimientos acumula. Es un proxy de influencia
           positiva, no una evaluación de desempeño.
@@ -211,11 +211,11 @@ export default async function Admin() {
           <h2 style={{ font: "var(--type-h3)", margin: "0 0 var(--space-2)" }}>
             Señal de desconexión
           </h2>
-          <p style={{ color: "var(--text-muted)", marginTop: 0 }}>
+          <p style={{ color: "var(--text-muted)" }}>
             60 días sin dar ni recibir un reconocimiento. No significa que se
             vayan a ir; significa que merece una conversación.
           </p>
-          <ul style={{ margin: 0, paddingLeft: "var(--space-5)" }}>
+          <ul>
             {desconectadas.map((p) => (
               <li key={p.id} style={{ marginBottom: "var(--space-2)" }}>
                 {p.nombre}
