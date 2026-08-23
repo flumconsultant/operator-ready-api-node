@@ -8,8 +8,8 @@ import { analizarPendientes } from "@/lib/ia/sentimiento";
 
 // El job semanal. Lo dispara cron desde el VPS:
 //
-//   0 13 * * 1 curl -fsS -H "authorization: Bearer $CRON_TOKEN" \
-//     https://pulse.tu-dominio.com/api/cron/resumen-semanal
+//   0 13 * * 1 curl -fsS -X POST -H "authorization: Bearer $CRON_TOKEN" \
+//     https://pulse.meetbecome.com/api/cron/resumen-semanal
 //
 // Está fuera de la aplicación a propósito: un contenedor con su propio
 // planificador dentro se duplica en cuanto escalas a dos réplicas y RRHH recibe

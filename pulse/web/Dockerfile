@@ -21,6 +21,14 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY web/ ./
 RUN npx prisma generate && npx next build
 
+# El alta de empresas es un script suelto, no una pantalla de la web. Para que
+# se pueda ejecutar dentro del contenedor —que no lleva ni TypeScript ni el
+# código fuente— se transpila aquí a JavaScript plano. Solo importa
+# node:crypto y @prisma/client, que sí viajan en la imagen final.
+RUN npx tsc scripts/crear-empresa.ts \
+      --module commonjs --target es2022 --moduleResolution node \
+      --skipLibCheck --outDir scripts-js
+
 FROM node:22-alpine AS runtime
 WORKDIR /app
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1
@@ -38,6 +46,7 @@ COPY --from=build /app/node_modules/prisma ./node_modules/prisma
 COPY --from=build /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=build /app/node_modules/.bin/prisma ./node_modules/.bin/prisma
+COPY --from=build /app/scripts-js ./scripts
 
 USER nextjs
 EXPOSE 3000

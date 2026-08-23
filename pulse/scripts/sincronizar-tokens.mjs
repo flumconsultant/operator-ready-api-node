@@ -12,12 +12,23 @@
 // Si cambia un token en `tokens/`, se vuelve a ejecutar y se comitea el
 // resultado. No hay más magia.
 
-import { readFileSync, writeFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync, readdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const aqui = dirname(fileURLToPath(import.meta.url));
-const origen = resolve(aqui, "../../tokens");
+// Dos sitios posibles: `../../tokens` mientras Pulse vive dentro del
+// repositorio del sitio, y `../tokens` cuando Pulse esté en el suyo y los
+// tokens se hayan copiado a su raíz. El script funciona igual en los dos.
+const origen = [resolve(aqui, "../../tokens"), resolve(aqui, "../tokens")].find(
+  existsSync,
+);
+if (!origen) {
+  console.error(
+    "No encuentro la carpeta tokens/. Debe estar en la raíz del repositorio.",
+  );
+  process.exit(1);
+}
 const destino = resolve(aqui, "../web/src/app/tokens.css");
 
 // El orden importa: `colors.css` define las variables semánticas que el resto

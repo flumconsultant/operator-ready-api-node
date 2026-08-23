@@ -9,7 +9,7 @@ proyecto así antes. Si algo no funciona, lo más probable es que sea el `.env`.
 
 ---
 
-## 1. Por qué está en una rama y no en un repositorio nuevo
+## 1. La rama, y el repositorio propio
 
 Preguntaste si convenía hacerlo en otra rama. Sí, y está hecho así: todo el
 trabajo vive en la rama `claude/mvp-become-guidelines-ijxsdz`. Mientras no la
@@ -19,15 +19,16 @@ igual que antes. Puedes borrar la rama y no queda rastro.
 Una rama es eso: una copia del proyecto donde trabajas sin tocar lo que está en
 producción. No hace falta saber más para usarla.
 
-**Un repositorio propio también es una opción razonable**, y probablemente sea
-lo correcto el día que Pulse tenga clientes: es otro producto, con otro ciclo
-de vida y otro equipo. No se ha hecho ahora por dos motivos: el sitio y Pulse
-comparten el sistema de diseño, y separarlo el primer día obliga a montar el
-mecanismo para compartirlo entre repositorios antes de saber si el producto
-funciona. Cuando quieras separarlos, la carpeta `pulse/` se mueve entera a un
-repositorio nuevo y lo único que hay que llevarse aparte es `tokens/`. El
-archivo generado `web/src/app/tokens.css` ya viaja dentro, así que el proyecto
-sigue construyendo desde el primer minuto.
+**Y sí, Pulse debe acabar en su propio repositorio**: es otro producto, se
+despliega a otro sitio y va a tener otro acceso. Se hizo aquí primero porque
+comparte el sistema de diseño con el sitio y separar el primer día obliga a
+resolver eso antes de saber si el producto funciona. Ya está resuelto —los
+tokens se vuelcan a un CSS generado que viaja dentro de `pulse/`—, así que la
+separación es un comando. Está contada en **[`SEPARAR.md`](SEPARAR.md)**, con
+el script que la hace conservando la historia.
+
+No hay prisa el mismo día: puedes desplegar primero desde esta rama y separar
+después.
 
 Cómo mirar esta rama en tu ordenador, si nunca lo has hecho:
 
@@ -37,6 +38,13 @@ cd operator-ready-api-node
 git checkout claude/mvp-become-guidelines-ijxsdz
 cd pulse
 ```
+
+Y las dos guías que probablemente busques:
+
+| | |
+|---|---|
+| **[`DESPLIEGUE.md`](DESPLIEGUE.md)** | Montar `pulse.meetbecome.com` desde cero: VPS, DNS, Docker, certificado, copias de seguridad. Paso a paso. |
+| **[`SEPARAR.md`](SEPARAR.md)** | Sacar Pulse a su propio repositorio sin perder la historia. |
 
 ---
 
@@ -405,19 +413,27 @@ Caddy: desde internet devuelve 404.
 
 ## 9. Despliegue
 
-`.github/workflows/pulse.yml` comprueba tipos y build en cada push, y despliega
-al VPS cuando el cambio llega a `main`. Se dispara solo con cambios dentro de
-`pulse/`.
+**La guía completa, desde un VPS que todavía no existe hasta
+`pulse.meetbecome.com/flum` funcionando, está en
+[`DESPLIEGUE.md`](DESPLIEGUE.md).** Aquí solo va la forma del montaje.
+
+Pulse vive en un subdominio, `pulse.meetbecome.com`, y cada empresa cuelga de
+su slug: `pulse.meetbecome.com/flum`. El sitio de BECOME no se toca — un
+subdominio es un registro más en el DNS.
+
+En el servidor corren cuatro contenedores: `db` (Postgres), `web`, `bot` y
+`caddy`, que es el que da la cara a internet y saca el certificado solo. Solo
+`caddy` publica puertos; a Postgres no se llega desde fuera.
+
+`.github/workflows/pulse.yml` comprueba tipos, pruebas y build en cada push, y
+despliega al VPS cuando el cambio llega a `main`. Se dispara solo con cambios
+dentro de `pulse/`. Los secretos que hay que crear en GitHub para que despliegue
+son `VPS_HOST`, `VPS_USER`, `VPS_SSH_KEY` y `VPS_RUTA`; sin ellos el trabajo de
+despliegue se salta entero en vez de fallar en rojo.
 
 El PRD pedía GitLab CI/CD porque así estaba pensado el VPS. El repositorio está
-en GitHub, así que el pipeline vive ahí: la mecánica es la misma —construir,
-entrar por SSH y `docker compose up -d --build`— y si algún día se muda a
-GitLab lo único que cambia es la sintaxis del archivo.
-
-Secretos que hay que crear en GitHub (*Settings → Secrets and variables →
-Actions*) para que despliegue: `VPS_HOST`, `VPS_USER`, `VPS_SSH_KEY`,
-`VPS_RUTA`. Sin ellos el trabajo de despliegue se salta entero en vez de fallar
-en rojo, así que puedes tener el pipeline montado antes de que el VPS exista.
+en GitHub, así que el pipeline vive ahí: la mecánica es la misma y si algún día
+se muda a GitLab lo único que cambia es la sintaxis del archivo.
 
 **El `.env` de producción vive en el VPS y no pasa por el pipeline.** Las claves
 no salen del servidor.
@@ -430,8 +446,8 @@ no salen del servidor.
 |---|---|
 | Registro público de empresas | Se dan de alta con `npm run empresa:crear`, que crea la empresa, su primer administrador y el enlace de invitación. Es un script y no un formulario a propósito: Pulse se vende con acompañamiento, y un endpoint público que crea empresas sin autenticación es una invitación a llenar la base de compañías vacías. Cuando exista un flujo comercial de autoservicio, esa misma función es la que llamará. |
 | Correo real | Sin `SMTP_URL`, el enlace de acceso por magic link se escribe en el log del contenedor en vez de enviarse. Las invitaciones no dependen de esto: su enlace se copia a mano. |
-| Menciones con @ dentro del mensaje | El texto se guarda plano. Es lo siguiente que pide un feed en cuanto se usa de verdad. |
-| Reconocer a varias personas a la vez | StarMeUp lo tiene y tiene sentido para un logro de equipo. Cambia el modelo de datos, así que no entró en esta pasada. |
+| Notificaciones por correo | Las novedades se ven dentro de la aplicación. Que un kudo llegue también al buzón es lo que hace que la gente que no entra a diario se entere. |
+| Panel de la empresa en móvil | Las tablas de *Personas* y *Auditoría* se leen en móvil pero se administran mal. Se administra desde un ordenador. |
 | Cobertura de pruebas más allá de la lógica pura | `npm test` cubre lo que se rompe en silencio —fechas, menciones, celebraciones, listas pegadas— con 40 casos. Lo que no hay son pruebas de integración contra una base de datos real; eso lo cubre hoy `npm run revisar:interfaz` y las pruebas a mano. |
 | Inglés | El MVP es solo español, como dice el PRD. |
 
