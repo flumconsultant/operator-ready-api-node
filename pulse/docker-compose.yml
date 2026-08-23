@@ -43,6 +43,11 @@ services:
       SMTP_URL: ${SMTP_URL}
       SMTP_DESDE: ${SMTP_DESDE}
       BOT_INTERNAL_URL: http://bot:3001
+      ALMACEN_IMAGENES: /app/subidas
+    volumes:
+      # Las fotos de perfil y las de las publicaciones. Es el segundo volumen
+      # que hay que respaldar, después de la base: no se pueden reconstruir.
+      - datos-imagenes:/app/subidas
     expose:
       - "3000"
 
@@ -83,5 +88,6 @@ services:
 
 volumes:
   datos-postgres:
+  datos-imagenes:
   datos-caddy:
   config-caddy:

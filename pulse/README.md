@@ -49,6 +49,7 @@ propio proyecto.
 # 1. Las variables de entorno
 cp .env.example .env
 # Abre .env y rellena al menos AUTH_SECRET e INTERNAL_API_TOKEN.
+# En local, pon ALMACEN_IMAGENES a una carpeta tuya (p. ej. ./subidas).
 # Los secretos se generan así:
 #   openssl rand -base64 48   → AUTH_SECRET
 #   openssl rand -hex 32      → INTERNAL_API_TOKEN y CRON_TOKEN
@@ -104,13 +105,65 @@ red de Docker y desde ningún otro sitio.
 | Carpeta | Qué hay |
 |---|---|
 | `web/prisma/schema.prisma` | El modelo de datos. Las cinco entidades del PRD más lo que Auth.js necesita. |
-| `web/src/lib/` | La lógica de negocio: métricas, reconocimientos, sesión, entorno. |
+| `web/src/lib/` | La lógica de negocio: métricas, reconocimientos, celebraciones, notificaciones, imágenes, sesión, entorno. |
 | `web/src/lib/ia/` | La capa de IA: sentimiento, mapa de influencia y resumen semanal. |
+| `web/src/componentes/` | Las piezas del feed: avatar, publicación, reacciones, comentarios, celebración, columna lateral. |
 | `web/src/app/` | Las páginas y las rutas de API. |
 | `web/src/app/tokens.css` | El sistema de diseño de BECOME, **generado**. No se edita a mano. |
 | `bot/src/` | El bot de Discord: `/reconocer`, y el espejo del feed en el canal. |
 | `infra/Caddyfile` | El reverse proxy. |
 | `scripts/sincronizar-tokens.mjs` | Regenera `tokens.css` desde `tokens/` de la raíz. |
+| `web/scripts/revisar-interfaz.mjs` | Comprueba contraste, foco, áreas pulsables y encabezados. |
+
+## 5. El feed
+
+Pulse es una red interna, no un formulario de RRHH. Lo que hay:
+
+- **Composer** con tu cara y una pregunta, no cuatro campos siempre abiertos.
+  Un formulario desplegado arriba del feed dice «esto es una herramienta de
+  RRHH»; un campo que pregunta dice «esto es para ti».
+- **Foto en la publicación.** Va a un volumen en disco, no a la base ni a un
+  bucket. Todo lo que sube el navegador se reencodifica a WebP con sharp, que
+  de paso **borra los metadatos EXIF** — una foto de móvil lleva las
+  coordenadas GPS de donde se tomó, y nadie espera publicar su casa al subir
+  una foto de equipo.
+- **Cinco reacciones** en vez de un aplauso, y **una por persona**: quien ya
+  aplaudió y pulsa el corazón cambia de reacción en vez de acumular dos. Es el
+  comportamiento de LinkedIn y no el de Slack, porque cinco filas de emoji
+  debajo de cada publicación convierten el reconocimiento en un concurso de
+  reacciones.
+- **Comentarios**, colapsados a partir del tercero para que el feed se pueda
+  seguir recorriendo.
+- **Cumpleaños y aniversarios**, calculados al leer el feed a partir de dos
+  fechas del perfil. No se guardan como publicaciones: un job que las creara
+  tendría que ser idempotente, saber qué hacer si alguien corrige su fecha y
+  limpiar lo que generó mal. Así siempre están al día.
+- **Perfil de cada persona** con su muro, por qué valores la reconocen y desde
+  cuándo está.
+- **Novedades**: reconocimientos recibidos, comentarios en las conversaciones
+  donde participas y reacciones. Nadie se notifica a sí mismo, y cambiar de
+  reacción no genera una notificación nueva.
+- **Columna de contexto** en escritorio: quién cumple esta semana, qué valores
+  se reconocen más, y a quién no has reconocido tú en 30 días. Esa última es
+  privada y dice a quién no has reconocido **tú**, no a quién no ha reconocido
+  nadie: «a Rosa no la reconoce nadie» en la pantalla de toda la empresa es una
+  humillación con forma de recordatorio.
+
+### Lo que se miró de StarMeUp y Workvivo
+
+De [StarMeUp](https://www.capterra.com/p/160234/StarmeUp/): reconocimiento
+ligado a valores, feed social, celebraciones de hitos y analítica de cultura.
+De [Workvivo](https://www.workvivo.com/product/): el feed con fotos, «me
+gusta» y comentarios, los perfiles de empleado y las celebraciones.
+
+Lo que se dejó fuera a propósito, y por qué:
+
+| Función | Por qué no está |
+|---|---|
+| Puntos canjeables y catálogo de premios | Está fuera del alcance del PRD, y convierte el reconocimiento en una moneda: la gente empieza a reconocer para que le devuelvan el favor. Si se añade, que sea con datos del piloto delante. |
+| Ranking público de quién recibe más | Premia a quien tiene el equipo más grande. El mapa de influencia mide otra cosa —cuánta gente distinta te reconoce— y vive en el panel de RRHH, no en el feed. |
+| Espacios o grupos | Con 50-500 personas, un solo feed todavía se lee entero. Los grupos se justifican cuando deja de leerse. |
+| Encuestas y sondeos | Fuera del alcance del MVP. La tesis del producto es medir el clima **sin** encuestas. |
 
 ### El sistema de diseño
 
@@ -132,7 +185,7 @@ queda reservado para lo accionable.
 
 ---
 
-## 5. La capa de IA
+## 6. La capa de IA
 
 Son tres cosas, y ninguna es imprescindible para que el producto funcione. Si
 `ANTHROPIC_API_KEY` está vacía, Pulse arranca igual: el feed, el bot y los
@@ -175,7 +228,7 @@ réplicas y RRHH recibe el resumen dos veces.
 
 ---
 
-## 6. Discord
+## 7. Discord
 
 1. Crea una aplicación en <https://discord.com/developers/applications>, añádele
    un bot y copia el token y el Client ID a `.env`.
@@ -202,7 +255,7 @@ Caddy: desde internet devuelve 404.
 
 ---
 
-## 7. Despliegue
+## 8. Despliegue
 
 `.github/workflows/pulse.yml` comprueba tipos y build en cada push, y despliega
 al VPS cuando el cambio llega a `main`. Se dispara solo con cambios dentro de
@@ -223,15 +276,17 @@ no salen del servidor.
 
 ---
 
-## 8. Lo que no está hecho, y por qué
+## 9. Lo que no está hecho, y por qué
 
 | Pendiente | Motivo |
 |---|---|
 | Invitar colaboradores desde el panel | Hoy las cuentas se crean con la semilla o a mano en la base. Es lo primero que hay que construir para el piloto. |
 | `/vincular` en el bot | Enlazar Discord con Pulse se hace hoy escribiendo el `discordId` en la tabla. Funciona, pero no escala más allá de una empresa piloto. |
 | Correo real | Sin `SMTP_URL`, el enlace de acceso se escribe en el log del contenedor en vez de enviarse. Para un piloto sirve; para producción hay que ponerlo. |
-| Paginación del feed | Se cargan los 40 últimos. La consulta ya acepta un cursor; falta el botón. |
-| Pruebas automáticas | No hay ninguna. El pipeline comprueba tipos y build, que atrapa bastante, pero no es lo mismo. |
+| Menciones con @ dentro del mensaje | El texto se guarda plano. Es lo siguiente que pide un feed en cuanto se usa de verdad. |
+| Reconocer a varias personas a la vez | StarMeUp lo tiene y tiene sentido para un logro de equipo. Cambia el modelo de datos, así que no entró en esta pasada. |
+| Moderar o borrar una publicación | No hay forma de retirar un reconocimiento desafortunado. Para un piloto con acompañamiento se puede vivir con ello; para el segundo cliente, no. |
+| Pruebas automáticas | No hay ninguna. El pipeline comprueba tipos y build, y `npm run revisar:interfaz` cubre contraste, foco y áreas pulsables, pero no es lo mismo que una suite. |
 | Inglés | El MVP es solo español, como dice el PRD. |
 
 Ninguna de estas es un bloqueo para arrancar un piloto. La primera sí lo es

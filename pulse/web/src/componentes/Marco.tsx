@@ -1,16 +1,35 @@
 import Link from "next/link";
+import {
+  House,
+  UsersThree,
+  ChartLineUp,
+  BellSimple,
+  SignOut,
+} from "@phosphor-icons/react/dist/ssr";
 
 import { signOut } from "@/lib/auth";
 import { sesionRequerida } from "@/lib/sesion";
+import { sinLeer } from "@/lib/notificaciones";
+import { prisma } from "@/lib/prisma";
+import Avatar from "./Avatar";
 
-// El marco de la aplicación: barra lateral, navegación según el rol y el
-// guardián de sesión. Todas las páginas privadas pasan por aquí, así que la
-// comprobación de sesión se hace una vez y no una por página.
+// El marco de la aplicación.
+//
+// En pantalla ancha es una barra lateral; por debajo de 860px se convierte en
+// una barra inferior de cuatro entradas, que es donde llega el pulgar. Las
+// entradas son las mismas y en el mismo orden en los dos sitios: una navegación
+// que cambia de contenido según el tamaño obliga a reaprenderla en el móvil.
+//
+// Los iconos son de Phosphor, la misma familia que usa el sitio de BECOME.
+// Ninguno va solo: todos llevan su texto al lado. Un icono sin etiqueta se
+// entiende el segundo día y no el primero, y el primero es el que decide si
+// alguien vuelve.
 
 const ENLACES = [
-  { href: "/feed", texto: "Feed", roles: ["ADMIN", "MANAGER", "COLABORADOR"] },
-  { href: "/panel", texto: "Mi equipo", roles: ["ADMIN", "MANAGER"] },
-  { href: "/admin", texto: "Cultura y valores", roles: ["ADMIN"] },
+  { href: "/feed", texto: "Feed", Icono: House, roles: ["ADMIN", "MANAGER", "COLABORADOR"] },
+  { href: "/notificaciones", texto: "Novedades", Icono: BellSimple, roles: ["ADMIN", "MANAGER", "COLABORADOR"] },
+  { href: "/panel", texto: "Mi equipo", Icono: UsersThree, roles: ["ADMIN", "MANAGER"] },
+  { href: "/admin", texto: "Cultura", Icono: ChartLineUp, roles: ["ADMIN"] },
 ] as const;
 
 export default async function Marco({
@@ -21,49 +40,78 @@ export default async function Marco({
   actual: string;
 }) {
   const usuario = await sesionRequerida();
-  const rol = usuario.rol;
+
+  const [pendientes, yo] = await Promise.all([
+    sinLeer(usuario.id),
+    prisma.user.findUniqueOrThrow({
+      where: { id: usuario.id },
+      select: { id: true, nombre: true, imagen: true, cargo: true },
+    }),
+  ]);
+
   const visibles = ENLACES.filter((e) =>
-    (e.roles as readonly string[]).includes(rol),
+    (e.roles as readonly string[]).includes(usuario.rol),
   );
+
+  const enlaces = visibles.map(({ href, texto, Icono }) => {
+    const activo = actual === href;
+    const pendiente = href === "/notificaciones" ? pendientes : 0;
+
+    return (
+      <Link
+        key={href}
+        href={href}
+        className="nav__enlace"
+        aria-current={activo ? "page" : undefined}
+      >
+        <span className="nav__icono">
+          <Icono size={22} weight={activo ? "fill" : "regular"} aria-hidden="true" />
+          {pendiente > 0 && (
+            <span className="nav__punto" aria-hidden="true">
+              {pendiente > 9 ? "9+" : pendiente}
+            </span>
+          )}
+        </span>
+        <span className="nav__texto">{texto}</span>
+        {pendiente > 0 && (
+          // El número también en texto, porque la pastilla es decorativa para
+          // un lector de pantalla y «Novedades» a secas no dice que hay tres.
+          <span className="visually-hidden">
+            , {pendiente} sin leer
+          </span>
+        )}
+      </Link>
+    );
+  });
 
   return (
     <div className="app">
       <aside className="lateral">
-        <div className="lateral__marca">
+        <Link href="/feed" className="lateral__marca">
           BECOME <span>Pulse</span>
-        </div>
+        </Link>
 
-        <nav className="lateral__nav" aria-label="Secciones">
-          {visibles.map((enlace) => (
-            <Link
-              key={enlace.href}
-              href={enlace.href}
-              className="lateral__enlace"
-              aria-current={actual === enlace.href ? "page" : undefined}
-            >
-              {enlace.texto}
-            </Link>
-          ))}
+        <nav className="nav nav--lateral" aria-label="Secciones">
+          {enlaces}
         </nav>
 
         <div className="lateral__pie">
-          <p style={{ margin: "0 0 var(--space-4)", color: "var(--slate-200)" }}>
-            {usuario.name}
-          </p>
+          <Link href="/perfil" className="lateral__yo">
+            <Avatar persona={yo} tamano="md" enlazado={false} />
+            <span>
+              <strong>{yo.nombre}</strong>
+              {yo.cargo && <span className="lateral__cargo">{yo.cargo}</span>}
+            </span>
+          </Link>
+
           <form
             action={async () => {
               "use server";
               await signOut({ redirectTo: "/acceder" });
             }}
           >
-            <button
-              type="submit"
-              className="boton boton--discreto"
-              style={{
-                color: "var(--slate-200)",
-                borderColor: "var(--border-strong-dark)",
-              }}
-            >
+            <button type="submit" className="lateral__salir">
+              <SignOut size={18} aria-hidden="true" />
               Salir
             </button>
           </form>
@@ -71,6 +119,21 @@ export default async function Marco({
       </aside>
 
       <main className="principal">{children}</main>
+
+      {/* La misma navegación, abajo, en móvil. */}
+      <nav className="nav nav--inferior" aria-label="Secciones">
+        {enlaces}
+        <Link
+          href="/perfil"
+          className="nav__enlace"
+          aria-current={actual === "/perfil" ? "page" : undefined}
+        >
+          <span className="nav__icono">
+            <Avatar persona={yo} tamano="sm" enlazado={false} />
+          </span>
+          <span className="nav__texto">Tú</span>
+        </Link>
+      </nav>
     </div>
   );
 }

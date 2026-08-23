@@ -22,25 +22,32 @@ enum Canal {
   DISCORD
 }
 
+enum TipoNotificacion {
+  RECONOCIMIENTO_RECIBIDO
+  COMENTARIO
+  REACCION
+  CELEBRACION
+}
+
 /// Un workspace: una empresa cliente. Todo lo demás cuelga de aquí.
 model Company {
-  id        String   @id @default(cuid())
-  nombre    String
-  slug      String   @unique
-  plan      String   @default("piloto")
+  id                 String   @id @default(cuid())
+  nombre             String
+  slug               String   @unique
+  plan               String   @default("piloto")
   /// Servidor de Discord conectado, si lo hay.
-  discordGuildId String? @unique
+  discordGuildId     String?  @unique
   /// Canal donde el bot publica el espejo del feed.
   discordCanalFeedId String?
   /// Tope de reconocimientos que se procesan con IA al mes. El PRD pide
   /// vigilar el coste de la API desde el primer día; esto es ese freno.
-  limiteIaMensual Int @default(2000)
-  creadaEn  DateTime @default(now())
+  limiteIaMensual    Int      @default(2000)
+  creadaEn           DateTime @default(now())
 
-  usuarios  User[]
-  valores   Value[]
+  usuarios        User[]
+  valores         Value[]
   reconocimientos Recognition[]
-  insights  WeeklyInsight[]
+  insights        WeeklyInsight[]
 
   @@map("companies")
 }
@@ -73,19 +80,31 @@ model User {
   /// Hash bcrypt. Nulo si la persona solo entra por magic link.
   passwordHash  String?
   emailVerified DateTime?
+  /// Nombre del archivo en el almacén de imágenes, no una URL completa: el
+  /// dominio cambia entre local, piloto y producción, y una URL guardada se
+  /// queda apuntando al anterior.
   imagen        String?
   rol           Rol       @default(COLABORADOR)
   equipo        String?
+  cargo         String?
+  bio           String?
+  /// Día y mes son lo único que se usa; el año se guarda porque una fecha
+  /// parcial complica más de lo que protege, y no se muestra nunca.
+  cumpleanos    DateTime?
+  fechaIngreso  DateTime?
   discordId     String?   @unique
   activo        Boolean   @default(true)
   invitadoEn    DateTime  @default(now())
 
-  company    Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  dados      Recognition[] @relation("reconocimientosDados")
-  recibidos  Recognition[] @relation("reconocimientosRecibidos")
-  reacciones Reaction[]
-  accounts   Account[]
-  sessions   Session[]
+  company        Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  dados          Recognition[]  @relation("reconocimientosDados")
+  recibidos      Recognition[]  @relation("reconocimientosRecibidos")
+  reacciones     Reaction[]
+  comentarios    Comment[]
+  notificaciones Notification[] @relation("destinatario")
+  provocadas     Notification[] @relation("actor")
+  accounts       Account[]
+  sessions       Session[]
 
   @@index([companyId])
   @@map("users")
@@ -95,14 +114,17 @@ model User {
 /// asíncrona: un reconocimiento se guarda y se ve en el feed aunque la API de
 /// Claude esté caída o el cupo del mes esté agotado.
 model Recognition {
-  id        String   @id @default(cuid())
-  companyId String
-  deUserId  String
+  id         String   @id @default(cuid())
+  companyId  String
+  deUserId   String
   paraUserId String
-  valueId   String
-  mensaje   String
-  canal     Canal    @default(WEB)
-  creadoEn  DateTime @default(now())
+  valueId    String
+  mensaje    String
+  /// Una foto por reconocimiento, como en cualquier feed. Es el nombre del
+  /// archivo, no una URL, por el mismo motivo que en User.imagen.
+  imagen     String?
+  canal      Canal    @default(WEB)
+  creadoEn   DateTime @default(now())
 
   /// -1 (frío) a 1 (cálido). Nulo mientras no se ha analizado.
   sentimientoScore Float?
@@ -111,11 +133,13 @@ model Recognition {
   sentimientoTono  String?
   analizadoEn      DateTime?
 
-  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  de      User    @relation("reconocimientosDados", fields: [deUserId], references: [id], onDelete: Cascade)
-  para    User    @relation("reconocimientosRecibidos", fields: [paraUserId], references: [id], onDelete: Cascade)
-  valor   Value   @relation(fields: [valueId], references: [id])
-  reacciones Reaction[]
+  company        Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  de             User           @relation("reconocimientosDados", fields: [deUserId], references: [id], onDelete: Cascade)
+  para           User           @relation("reconocimientosRecibidos", fields: [paraUserId], references: [id], onDelete: Cascade)
+  valor          Value          @relation(fields: [valueId], references: [id])
+  reacciones     Reaction[]
+  comentarios    Comment[]
+  notificaciones Notification[]
 
   @@index([companyId, creadoEn])
   @@index([paraUserId, creadoEn])
@@ -124,7 +148,11 @@ model Recognition {
   @@map("recognitions")
 }
 
-/// El "me gusta" del feed. Una por persona y reconocimiento.
+/// La reacción del feed. Una por persona y reconocimiento, cambiable: quien
+/// ya aplaudió y pulsa el corazón cambia de reacción en vez de acumular dos.
+/// Es el comportamiento de LinkedIn, no el de Slack, y para un feed corto de
+/// empresa se lee mejor: cinco filas de emoji debajo de cada post convierten
+/// el reconocimiento en un concurso de reacciones.
 model Reaction {
   id            String   @id @default(cuid())
   recognitionId String
@@ -137,6 +165,45 @@ model Reaction {
 
   @@unique([recognitionId, userId])
   @@map("reactions")
+}
+
+/// Un comentario en un reconocimiento. Sin hilos anidados a propósito: en un
+/// feed de empresa de cincuenta personas, las respuestas a respuestas no
+/// aportan y sí complican la lectura y el moderado.
+model Comment {
+  id            String    @id @default(cuid())
+  recognitionId String
+  userId        String
+  texto         String
+  creadoEn      DateTime  @default(now())
+  editadoEn     DateTime?
+
+  reconocimiento Recognition @relation(fields: [recognitionId], references: [id], onDelete: Cascade)
+  user           User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([recognitionId, creadoEn])
+  @@map("comments")
+}
+
+/// Notificaciones en la aplicación. Las de Discord las manda el bot y no pasan
+/// por aquí: esta tabla es lo que se ve al pulsar la campana.
+model Notification {
+  id            String           @id @default(cuid())
+  userId        String
+  actorId       String?
+  recognitionId String?
+  tipo          TipoNotificacion
+  texto         String
+  enlace        String
+  leidaEn       DateTime?
+  creadaEn      DateTime         @default(now())
+
+  user           User         @relation("destinatario", fields: [userId], references: [id], onDelete: Cascade)
+  actor          User?        @relation("actor", fields: [actorId], references: [id], onDelete: SetNull)
+  reconocimiento Recognition? @relation(fields: [recognitionId], references: [id], onDelete: Cascade)
+
+  @@index([userId, leidaEn, creadaEn])
+  @@map("notifications")
 }
 
 /// El resumen semanal que genera la IA para RRHH.
