@@ -29,7 +29,17 @@ const esquema = z.object({
   APP_URL: z.string().url().default("http://localhost:3000"),
 });
 
-const resultado = esquema.safeParse(process.env);
+// Una variable escrita pero vacía —`SMTP_URL=` en el .env— llega como cadena
+// vacía, no como ausente. Sin esto, los `??` y los valores por defecto no se
+// aplican y lo opcional deja de serlo: el proveedor de correo se registraba
+// con un servidor vacío y tumbaba la pantalla de acceso entera. Se descartan
+// antes de validar, que es lo que el .env.example ya da a entender al dejar
+// esas líneas en blanco.
+const crudo = Object.fromEntries(
+  Object.entries(process.env).filter(([, valor]) => valor !== ""),
+);
+
+const resultado = esquema.safeParse(crudo);
 
 if (!resultado.success) {
   const detalle = resultado.error.issues
