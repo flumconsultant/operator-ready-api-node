@@ -132,6 +132,16 @@ jobs:
       - name: Sin destello de texto sin maquetar
         run: node scripts/verificar-destello.mjs
 
+      # Lo que decide si Google indexa: canonical autorreferente, hreflang
+      # recíproco, un H1, la marca una sola vez en el título, ningún enlace
+      # interno hacia una dirección vieja y ninguna página anunciada en el
+      # sitemap que no esté enlazada desde su índice.
+      #
+      # Corre antes de subir a propósito. Las mismas comprobaciones contra el
+      # sitio ya publicado llegarían tarde: el error estaría en producción.
+      - name: QA de indexación
+        run: node scripts/qa-indexacion.mjs
+
       - name: Gate de publicación
         run: node scripts/gate-seo.mjs
 

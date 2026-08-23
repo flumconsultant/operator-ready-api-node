@@ -1,7 +1,7 @@
 {
   "nombre": "linkedin",
-  "sistema": "LinkedIn · página de empresa",
-  "queHace": "Anuncia en la página de empresa el artículo recién publicado.",
+  "sistema": "LinkedIn · página de empresa o perfil",
+  "queHace": "Anuncia el artículo recién publicado: en la página de empresa si está LINKEDIN_ORG_ID, y si no en el perfil de quien autorizó el permiso.",
   "implementacion": "scripts/linkedin.mjs",
   "disparadores": [
     "tras-despliegue",
@@ -16,6 +16,11 @@
     },
     {
       "clave": "LINKEDIN_ORG_ID",
+      "caduca": "nunca",
+      "renueva": "docs/linkedin.md"
+    },
+    {
+      "clave": "LINKEDIN_MEMBER_ID",
       "caduca": "nunca",
       "renueva": "docs/linkedin.md"
     },

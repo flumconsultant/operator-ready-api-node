@@ -122,6 +122,20 @@ const tituloConMarca = (texto, marca = ` | ${BRAND}`, max = 60) => {
      entero sin la marca se lee bien. Pasaba con los titulares de artículo, que
      los escribe el redactor y no tienen un largo que se pueda imponer. */
   if (t.length <= max && t.length + marca.length > max) return t;
+  /* Y si el texto YA trae la marca, no se le pone otra.
+   *
+   * Pasaba en las doce páginas de casos de uso: su `seoTitulo` está escrito a
+   * mano en soluciones.json y termina en « | BECOME», y esta función le pegaba
+   * el suyo detrás. El resultado, «Agentes de IA con control | BECOME |
+   * BECOME», es de las cosas que un buscador enseña tal cual y que hacen que
+   * una página parezca generada sin que nadie la mirara.
+   *
+   * La comprobación va aquí y no en el contenido a propósito. El `seoTitulo`
+   * se edita desde el panel, así que quien lo escriba puede poner la marca o
+   * no ponerla, y ninguna de las dos decisiones debería producir un título
+   * roto. Arreglar los doce textos habría arreglado hoy; arreglar el generador
+   * arregla también el que se escriba mañana. */
+  if (new RegExp(`\\b${BRAND}\\b`, 'i').test(t)) return recorta(t, max);
   return recorta(t, Math.max(12, max - marca.length)) + marca;
 };
 

@@ -3,7 +3,7 @@
 > Generado por `scripts/catalogo.mjs` a partir de `conectores/*/conector.json`.
 > No se edita a mano: se edita el manifiesto y se vuelve a generar.
 
-8 conectores · 18 llaves · 1 con fecha de caducidad
+8 conectores · 19 llaves · 1 con fecha de caducidad
 
 ## Registro de llaves
 
@@ -20,6 +20,7 @@
 | `FTP_USER` | hostinger-ftp | nunca | Panel de Hostinger |
 | `LINKEDIN_CLIENT_ID` | linkedin | nunca | docs/linkedin.md |
 | `LINKEDIN_CLIENT_SECRET` | linkedin | al-rotarla | docs/linkedin.md |
+| `LINKEDIN_MEMBER_ID` | linkedin | nunca | docs/linkedin.md |
 | `LINKEDIN_ORG_ID` | linkedin | nunca | docs/linkedin.md |
 | `LINKEDIN_TOKEN` | linkedin | 60d | docs/linkedin.md |
 | `MAIL_PASSWORD` | correo | al-rotarla | Panel de correo de Hostinger |
@@ -83,7 +84,7 @@ Sin registro porque avisar dos veces de la misma dirección no causa daño.
 
 ### linkedin
 
-**LinkedIn · página de empresa** — Anuncia en la página de empresa el artículo recién publicado.
+**LinkedIn · página de empresa o perfil** — Anuncia el artículo recién publicado: en la página de empresa si está LINKEDIN_ORG_ID, y si no en el perfil de quien autorizó el permiso.
 
 - Implementación: `scripts/linkedin.mjs`
 - Se dispara: tras-despliegue, a-mano
