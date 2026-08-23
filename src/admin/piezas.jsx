@@ -69,10 +69,10 @@ export const Contador = ({ valor = '', limite }) => {
   );
 };
 
-export const Boton = ({ children, variante = 'normal', menudo = false, ...rest }) => (
+export const Boton = ({ children, variante = 'normal', menudo = false, ancho = false, ...rest }) => (
   <button
     type="button"
-    className={`pnl-btn${variante !== 'normal' ? ` pnl-btn--${variante}` : ''}${menudo ? ' pnl-btn--menudo' : ''}`}
+    className={`pnl-btn${variante !== 'normal' ? ` pnl-btn--${variante}` : ''}${menudo ? ' pnl-btn--menudo' : ''}${ancho ? ' pnl-btn--ancho' : ''}`}
     {...rest}
   >
     {children}

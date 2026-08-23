@@ -1,7 +1,7 @@
 import React from 'react';
 import * as api from './api.js';
 import { Boton, Aviso } from './piezas.jsx';
-import { Campo } from './Contenido.jsx';
+import { Formulario, BarraPublicar } from './Formulario.jsx';
 
 /**
  * Editar los textos del sitio, no solo los artículos.
@@ -25,16 +25,25 @@ import { Campo } from './Contenido.jsx';
  * eso el contador avisa antes de llegar al tope, no cuando ya se pasó.
  */
 
-/* El editor de campos es el del módulo de Contenido: sabe dibujar líneas,
-   párrafos, listas y tablas, que es lo que llevan los documentos de
-   conocimiento. Tener dos editores era tener dos sitios donde el contador
-   puede decir un número distinto del límite que aplica el servidor. */
+/* El formulario es el mismo que el del módulo de Contenido: sabe dibujar
+   líneas, párrafos, listas y tablas, plegar por secciones y contar caracteres.
+   Tener dos editores era tener dos sitios donde el contador puede decir un
+   número distinto del límite que aplica el servidor. */
+
+/* Un campo está sin escribir si no tiene nada dentro, sea texto o lista. */
+const sinEscribir = (p) => (p.campos || []).filter((c) => {
+  const v = c.valor;
+  if (Array.isArray(v)) return v.length === 0;
+  if (v && typeof v === 'object') return Object.values(v).every((x) => !x || (Array.isArray(x) && !x.length));
+  return !String(v ?? '').trim();
+}).length;
 
 export default function Paginas({ alCerrar, carpeta = 'paginas', titulo = 'Páginas del sitio', vacio }) {
   const [paginas, setPaginas] = React.useState([]);
   const [cargando, setCargando] = React.useState(true);
   const [abierta, setAbierta] = React.useState(null);
   const [valores, setValores] = React.useState({});
+  const [inicial, setInicial] = React.useState({});
   const [error, setError] = React.useState('');
   const [nota, setNota] = React.useState('');
   const [guardando, setGuardando] = React.useState(false);
@@ -50,10 +59,12 @@ export default function Paginas({ alCerrar, carpeta = 'paginas', titulo = 'Pági
 
   const abrir = (p) => {
     setAbierta(p);
-    setValores(Object.fromEntries((p.campos || []).map((c) => [
+    const v = Object.fromEntries((p.campos || []).map((c) => [
       c.id,
       structuredClone(c.valor ?? (['lista','pares','trios','tupla'].includes(c.tipo) ? [] : '')),
-    ])));
+    ]));
+    setValores(v);
+    setInicial(structuredClone(v));
     setNota(''); setError('');
   };
 
@@ -76,7 +87,7 @@ export default function Paginas({ alCerrar, carpeta = 'paginas', titulo = 'Pági
       const d = await api.guardarPagina({ carpeta, archivo: abierta._archivo, valores });
       if (d.sin_cambios) setNota('No había nada que cambiar.');
       else {
-        setNota(`Guardado. ${d.cambiados === 1 ? 'Un campo' : `${d.cambiados} campos`}. Estará en la web en unos minutos, cuando termine el despliegue.`);
+        setNota(`Publicado. ${d.cambiados === 1 ? 'Un campo' : `${d.cambiados} campos`}. Estará en la web en unos minutos, cuando termine el despliegue.`);
         await cargar();
       }
     } catch (e) { setError(e.message); }
@@ -84,8 +95,9 @@ export default function Paginas({ alCerrar, carpeta = 'paginas', titulo = 'Pági
   };
 
   if (abierta) {
+    const sucio = JSON.stringify(valores) !== JSON.stringify(inicial);
     return (
-      <div className="pnl-lienzo" style={{ padding: 0 }}>
+      <div className="pnl-lienzo pnl-lienzo--publica" style={{ padding: 0 }}>
         <div className="pnl-barra">
           <div>
             <h2 className="pnl-titulo">{abierta.titulo}</h2>
@@ -93,9 +105,6 @@ export default function Paginas({ alCerrar, carpeta = 'paginas', titulo = 'Pági
           </div>
           <div className="pnl-acciones">
             <Boton onClick={() => setAbierta(null)} disabled={guardando}>Volver</Boton>
-            <Boton variante="fuerte" onClick={guardar} disabled={guardando || problemas.length > 0}>
-              {guardando ? 'Guardando…' : 'Guardar y publicar'}
-            </Boton>
           </div>
         </div>
 
@@ -103,18 +112,24 @@ export default function Paginas({ alCerrar, carpeta = 'paginas', titulo = 'Pági
         <Aviso tono="bien">{nota}</Aviso>
         {problemas.length > 0 && (
           <Aviso tono="mal">
-            {problemas.map((c) => c.rotulo).join(' · ')} — revisa {problemas.length === 1 ? 'ese campo' : 'esos campos'} antes de guardar.
+            {problemas.map((c) => c.rotulo).join(' · ')} — revisa {problemas.length === 1 ? 'ese campo' : 'esos campos'} antes de publicar.
           </Aviso>
         )}
 
-        <div className="pnl-panel">
-          {(abierta.campos || []).map((c) => (
-            <Campo key={c.id} campo={c} valor={valores[c.id]} alCambiar={(v) => setValores({ ...valores, [c.id]: v })} />
-          ))}
-        </div>
+        <Formulario
+          key={abierta._archivo}
+          campos={abierta.campos || []}
+          valores={valores}
+          alCambiar={(id, v) => setValores((x) => ({ ...x, [id]: v }))}
+        />
+
+        <BarraPublicar sucio={sucio} guardando={guardando} problemas={problemas.length} onPublicar={guardar} />
       </div>
     );
   }
+
+  const vacios = paginas.reduce((n, p) => n + sinEscribir(p), 0);
+  const total = paginas.reduce((n, p) => n + (p.campos || []).length, 0);
 
   return (
     <div className="pnl-lienzo" style={{ padding: 0 }}>
@@ -127,6 +142,16 @@ export default function Paginas({ alCerrar, carpeta = 'paginas', titulo = 'Pági
       </div>
 
       <Aviso tono="mal">{error}</Aviso>
+
+      {/* La deuda, a la vista. Trece campos de conocimiento sin escribir no se
+          ven entrando documento por documento: se ven cuando alguien los
+          cuenta y los pone en la primera pantalla. Solo aparece si hay algo
+          que deber; un contador que siempre dice cero es ruido. */}
+      {vacios > 0 && (
+        <p className="pnl-deuda">
+          <strong>{vacios}</strong> {vacios === 1 ? 'campo sin escribir' : 'campos sin escribir'} de {total}
+        </p>
+      )}
 
       {!cargando && paginas.length === 0 && (
         <div className="pnl-vacio">
@@ -149,6 +174,9 @@ export default function Paginas({ alCerrar, carpeta = 'paginas', titulo = 'Pági
             <span className="pnl-nota">
               {p.pregunta || `${(p.campos || []).length} ${(p.campos || []).length === 1 ? 'campo' : 'campos'} editables`}
             </span>
+            {sinEscribir(p) > 0 && (
+              <span className="pnl-pendiente">{sinEscribir(p)} sin escribir</span>
+            )}
           </button>
         ))}
       </div>

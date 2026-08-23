@@ -1,6 +1,7 @@
 import React from 'react';
 import * as api from './api.js';
 import { Boton, Aviso } from './piezas.jsx';
+import { Formulario, BarraPublicar } from './Formulario.jsx';
 import './panel.css';
 
 /**
@@ -26,134 +27,16 @@ import './panel.css';
  * inventarlas antes es construir un editor para contenido que no existe.
  */
 
-/* El contador avisa ANTES del tope, no cuando ya se pasó: un título que se
-   corta en Google solo se descubre publicado. */
-const contar = (largo, tope) => {
-  if (!tope) return null;
-  const queda = tope - largo;
-  if (queda < 0) return { clase: ' pnl-cuenta--pasa', texto: `${largo}/${tope} · sobran ${-queda}` };
-  if (queda <= tope * 0.1) return { clase: ' pnl-cuenta--cerca', texto: `${largo}/${tope}` };
-  return { clase: '', texto: `${largo}/${tope}` };
-};
-
-
-
-function Entrada({ valor, tope, filas, alCambiar, marcador }) {
-  const c = contar(String(valor ?? '').length, tope);
-  return (
-    <div className="pnl-columna">
-      {filas ? (
-        <textarea className="pnl-entrada" rows={filas} value={valor ?? ''} placeholder={marcador} onChange={(e) => alCambiar(e.target.value)} />
-      ) : (
-        <input className="pnl-entrada" type="text" value={valor ?? ''} placeholder={marcador} onChange={(e) => alCambiar(e.target.value)} />
-      )}
-      {c && <span className={`pnl-cuenta${c.clase}`}>{c.texto}</span>}
-    </div>
-  );
-}
-
-/* Una lista con sus botones. Reordenar existe porque el orden ES contenido:
-   la primera oportunidad de una industria es la que más gente lee. */
-function Filas({ filas, columnas, topes, alCambiar }) {
-  const anchura = columnas.length;
-  const vacia = () => Array.from({ length: anchura }, () => '');
-  const cambiar = (i, k, v) => {
-    const n = filas.map((f, j) => (j === i ? f.map((x, l) => (l === k ? v : x)) : f));
-    alCambiar(n);
-  };
-  const mover = (i, d) => {
-    if (i + d < 0 || i + d >= filas.length) return;
-    const n = [...filas];
-    [n[i], n[i + d]] = [n[i + d], n[i]];
-    alCambiar(n);
-  };
-  return (
-    <div className="pnl-filas">
-      {filas.map((f, i) => (
-        <div key={i} className="pnl-fila">
-          <div className="pnl-fila-cab">
-            <span className="pnl-fila-num">{String(i + 1).padStart(2, '0')}</span>
-            <div className="pnl-fila-mandos">
-              <Boton menudo onClick={() => mover(i, -1)} disabled={i === 0} aria-label={`Subir el elemento ${i + 1}`}>↑</Boton>
-              <Boton menudo onClick={() => mover(i, 1)} disabled={i === filas.length - 1} aria-label={`Bajar el elemento ${i + 1}`}>↓</Boton>
-              <Boton menudo variante="peligro" onClick={() => alCambiar(filas.filter((_, j) => j !== i))}>Quitar</Boton>
-            </div>
-          </div>
-          {columnas.map((col, k) => (
-            <div key={k} className="pnl-columna">
-              <span className="pnl-columna-rotulo">{col}</span>
-              <Entrada valor={f[k]} tope={topes[k]} filas={topes[k] > 120 ? 3 : 0} alCambiar={(v) => cambiar(i, k, v)} />
-            </div>
-          ))}
-        </div>
-      ))}
-      <div><Boton onClick={() => alCambiar([...filas, vacia()])}>Añadir</Boton></div>
-    </div>
-  );
-}
-
-export function Campo({ campo, valor, alCambiar }) {
-  const { tipo, rotulo, ayuda, maximo } = campo;
-  const cuerpo = () => {
-    if (tipo === 'linea') return <Entrada valor={valor} tope={maximo} alCambiar={alCambiar} />;
-    if (tipo === 'parrafo') return <Entrada valor={valor} tope={maximo} filas={4} alCambiar={alCambiar} />;
-    if (tipo === 'lista') {
-      const filas = (valor || []).map((x) => [x]);
-      return <Filas filas={filas} columnas={['Texto']} topes={[maximo]} alCambiar={(n) => alCambiar(n.map((f) => f[0]))} />;
-    }
-    if (tipo === 'pares' || tipo === 'trios' || tipo === 'tupla') {
-      /* La anchura la dan las columnas declaradas y no el nombre del tipo: con
-         «pares» y «trios» fijos, un campo de cinco columnas obligaba a inventar
-         un tipo por cada anchura. */
-      const cols = campo.columnas || (tipo === 'pares' ? ['Uno', 'Dos'] : ['Uno', 'Dos', 'Tres']);
-      const topes = Array.isArray(maximo) ? maximo : cols.map(() => maximo);
-      return <Filas filas={valor || []} columnas={cols} topes={topes} alCambiar={alCambiar} />;
-    }
-    if (tipo === 'bloque') {
-      const v = valor || {};
-      return (
-        <div className="pnl-fila">
-          {(campo.partes || []).map((p) => (
-            <div key={p.id} className="pnl-columna">
-              <span className="pnl-columna-rotulo">{p.rotulo}</span>
-              {/* Un bloque puede llevar una lista dentro: «el problema» es un
-                  titular más varios párrafos. Se reutiliza el mismo editor de
-                  filas en vez de inventar un tipo por combinación. */}
-              {p.tipo === 'lista' ? (
-                <Filas filas={(v[p.id] || []).map((x) => [x])} columnas={[p.rotulo]} topes={[p.maximo]}
-                       alCambiar={(n) => alCambiar({ ...v, [p.id]: n.map((f) => f[0]) })} />
-              ) : p.tipo === 'pares' || p.tipo === 'tupla' ? (
-                <Filas filas={v[p.id] || []} columnas={p.columnas || ['Uno', 'Dos']}
-                       topes={Array.isArray(p.maximo) ? p.maximo : (p.columnas || ['', '']).map(() => p.maximo)}
-                       alCambiar={(n) => alCambiar({ ...v, [p.id]: n })} />
-              ) : (
-                <Entrada valor={v[p.id]} tope={p.maximo} filas={p.tipo === 'parrafo' ? 4 : 0} alCambiar={(x) => alCambiar({ ...v, [p.id]: x })} />
-              )}
-            </div>
-          ))}
-        </div>
-      );
-    }
-    return null;
-  };
-  return (
-    <div className="pnl-campo">
-      <div className="pnl-campo-cab">
-        <strong className="pnl-rotulo">{rotulo}</strong>
-        {campo.opcional && <span className="pnl-opcional">opcional</span>}
-      </div>
-      {ayuda && <p className="pnl-ayuda">{ayuda}</p>}
-      {cuerpo()}
-    </div>
-  );
-}
-
 export default function Contenido() {
   const [esquemas, setEsquemas] = React.useState([]);
   const [abierto, setAbierto] = React.useState(null);   // { esquema, datos, claves }
   const [clave, setClave] = React.useState('');
   const [idioma, setIdioma] = React.useState('es');
   const [valores, setValores] = React.useState({});
+  /* La copia de lo que había al abrir. Sin ella no se puede saber si hay algo
+     que publicar, y un botón que siempre se puede pulsar acaba pulsándose por
+     si acaso: dos versiones en el historial por un texto que nadie cambió. */
+  const [inicial, setInicial] = React.useState({});
   const [cargando, setCargando] = React.useState(true);
   const [error, setError] = React.useState('');
   const [nota, setNota] = React.useState('');
@@ -179,7 +62,9 @@ export default function Contenido() {
 
   const cargarValores = (datos, esquema, cl, lang) => {
     const fuente = dentro(datos, esquema, cl, lang);
-    setValores(Object.fromEntries(esquema.campos.map((c) => [c.id, structuredClone(fuente?.[c.id] ?? (['lista','pares','trios','tupla'].includes(c.tipo) ? [] : c.tipo === 'bloque' ? {} : ''))])));
+    const v = Object.fromEntries(esquema.campos.map((c) => [c.id, structuredClone(fuente?.[c.id] ?? (['lista','pares','trios','tupla'].includes(c.tipo) ? [] : c.tipo === 'bloque' ? {} : ''))]));
+    setValores(v);
+    setInicial(structuredClone(v));
   };
 
   /* El idioma se recarga contra el servidor, no se cambia en el navegador:
@@ -218,7 +103,7 @@ export default function Contenido() {
       const d = await api.guardarContenido({ esquema: abierto.esquema.id, clave, idioma, valores });
       if (d.sin_cambios) setNota('No había nada que cambiar.');
       else {
-        setNota(`Guardado. ${d.cambiados === 1 ? 'Un campo' : `${d.cambiados} campos`}. Estará en la web cuando termine el despliegue.`);
+        setNota(`Publicado. ${d.cambiados === 1 ? 'Un campo' : `${d.cambiados} campos`}. Estará en la web en unos minutos, cuando termine el despliegue.`);
         const r = await api.abrirEsquema(abierto.esquema.id, idioma);
         setAbierto({ esquema: r.esquema, datos: r.datos, claves: r.claves || [] });
         cargarValores(r.datos, r.esquema, clave, idioma);
@@ -246,19 +131,32 @@ export default function Contenido() {
   }
 
   const { esquema, claves } = abierto;
+  const sucio = JSON.stringify(valores) !== JSON.stringify(inicial);
+
+  /* Lo que impide publicar, dicho antes de intentarlo. El servidor lo vuelve a
+     comprobar —nunca se confía en el navegador— pero enterarse por un error
+     del servidor es enterarse después de haber pulsado. */
+  const problemas = esquema.campos.filter((c) => {
+    const v = valores[c.id];
+    return typeof v === 'string' && typeof c.maximo === 'number' && v.length > c.maximo;
+  });
 
   return (
-    <div className="pnl-lienzo" style={{ padding: 0 }}>
+    <div className="pnl-lienzo pnl-lienzo--publica" style={{ padding: 0 }}>
       <div className="pnl-barra">
         <h2 className="pnl-titulo">{esquema.titulo}</h2>
         <div className="pnl-acciones">
           <Boton onClick={() => setAbierto(null)} disabled={guardando}>Volver</Boton>
-          <Boton variante="fuerte" onClick={guardar} disabled={guardando}>{guardando ? 'Guardando…' : 'Guardar'}</Boton>
         </div>
       </div>
 
       <Aviso tono="mal">{error}</Aviso>
       <Aviso tono="bien">{nota}</Aviso>
+      {problemas.length > 0 && (
+        <Aviso tono="mal">
+          {problemas.map((c) => c.rotulo).join(' · ')} — {problemas.length === 1 ? 'ese campo pasa' : 'esos campos pasan'} de su límite.
+        </Aviso>
+      )}
 
       {/* Elegir qué se edita. Se guarda un elemento y un idioma cada vez: un
           botón que guardara los doce a la vez convertiría un error pequeño en
@@ -280,11 +178,16 @@ export default function Contenido() {
         </div>
       </div>
 
-      <div className="pnl-panel">
-        {esquema.campos.map((c) => (
-          <Campo key={c.id} campo={c} valor={valores[c.id]} alCambiar={(v) => setValores({ ...valores, [c.id]: v })} />
-        ))}
-      </div>
+      {/* La clave y el idioma en la firma: al cambiar de elemento el formulario
+          se monta de nuevo y las secciones vuelven a su estado inicial. */}
+      <Formulario
+        key={`${esquema.id}·${clave}·${idioma}`}
+        campos={esquema.campos}
+        valores={valores}
+        alCambiar={(id, v) => setValores((x) => ({ ...x, [id]: v }))}
+      />
+
+      <BarraPublicar sucio={sucio} guardando={guardando} problemas={problemas.length} onPublicar={guardar} />
     </div>
   );
 }

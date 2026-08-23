@@ -12,48 +12,48 @@
   "campos": [
     {
       "id": "nombre",
-      "rotulo": "Nombre",
+      "seccion": "Identidad", "rotulo": "Nombre",
       "tipo": "linea",
       "maximo": 40,
       "ayuda": "Cómo se llama la industria en el menú y en los títulos."
     },
     {
       "id": "menu",
-      "rotulo": "Descripción en el menú",
+      "seccion": "Identidad", "rotulo": "Descripción en el menú",
       "tipo": "linea",
       "maximo": 110,
       "ayuda": "La línea que acompaña al nombre en el menú de industrias."
     },
     {
       "id": "h1",
-      "rotulo": "Titular de la página",
+      "seccion": "Portada", "rotulo": "Titular de la página",
       "tipo": "linea",
       "maximo": 110,
       "ayuda": "Es el h1: la frase por la que Google entiende de qué va esta página."
     },
     {
       "id": "lead",
-      "rotulo": "Entrada",
+      "seccion": "Portada", "rotulo": "Entrada",
       "tipo": "parrafo",
       "maximo": 420,
       "ayuda": "El párrafo que sigue al titular. Plantea el problema, no la solución."
     },
     {
       "id": "contexto",
-      "rotulo": "Contexto",
+      "seccion": "Contexto", "rotulo": "Contexto",
       "tipo": "lista",
       "maximo": 400,
       "ayuda": "Uno o dos párrafos sobre cómo trabaja hoy esta industria."
     },
     {
       "id": "oportunidadesTitular",
-      "rotulo": "Titular de oportunidades",
+      "seccion": "Oportunidades", "rotulo": "Titular de oportunidades",
       "tipo": "linea",
       "maximo": 120
     },
     {
       "id": "oportunidades",
-      "rotulo": "Oportunidades",
+      "seccion": "Oportunidades", "rotulo": "Oportunidades",
       "tipo": "pares",
       "maximo": [
         70,
@@ -67,19 +67,19 @@
     },
     {
       "id": "workflowsTitular",
-      "rotulo": "Titular de procesos",
+      "seccion": "Procesos", "rotulo": "Titular de procesos",
       "tipo": "linea",
       "maximo": 120
     },
     {
       "id": "workflows",
-      "rotulo": "Procesos",
+      "seccion": "Procesos", "rotulo": "Procesos",
       "tipo": "lista",
       "maximo": 90
     },
     {
       "id": "casos",
-      "rotulo": "Casos",
+      "seccion": "Procesos", "rotulo": "Casos",
       "tipo": "lista",
       "maximo": 90,
       "opcional": true,
@@ -87,7 +87,7 @@
     },
     {
       "id": "capacidades",
-      "rotulo": "Qué puede hacer BECOME aquí",
+      "seccion": "Capacidades", "rotulo": "Qué puede hacer BECOME aquí",
       "tipo": "trios",
       "maximo": [
         80,
@@ -103,25 +103,25 @@
     },
     {
       "id": "tecnologiaTitular",
-      "rotulo": "Titular de tecnología",
+      "seccion": "Tecnología", "rotulo": "Titular de tecnología",
       "tipo": "linea",
       "maximo": 120
     },
     {
       "id": "tecnologia",
-      "rotulo": "Tecnología",
+      "seccion": "Tecnología", "rotulo": "Tecnología",
       "tipo": "parrafo",
       "maximo": 420
     },
     {
       "id": "metricasTitular",
-      "rotulo": "Titular de métricas",
+      "seccion": "Métricas", "rotulo": "Titular de métricas",
       "tipo": "linea",
       "maximo": 120
     },
     {
       "id": "metricas",
-      "rotulo": "Métricas",
+      "seccion": "Métricas", "rotulo": "Métricas",
       "tipo": "pares",
       "maximo": [
         50,
@@ -134,31 +134,31 @@
     },
     {
       "id": "empezarTitular",
-      "rotulo": "Titular de por dónde empezar",
+      "seccion": "Por dónde empezar", "rotulo": "Titular de por dónde empezar",
       "tipo": "linea",
       "maximo": 120
     },
     {
       "id": "empezar",
-      "rotulo": "Por dónde empezar",
+      "seccion": "Por dónde empezar", "rotulo": "Por dónde empezar",
       "tipo": "lista",
       "maximo": 240
     },
     {
       "id": "cierre",
-      "rotulo": "Cierre",
+      "seccion": "Cierre", "rotulo": "Cierre",
       "tipo": "linea",
       "maximo": 120
     },
     {
       "id": "cierreTexto",
-      "rotulo": "Texto de cierre",
+      "seccion": "Cierre", "rotulo": "Texto de cierre",
       "tipo": "parrafo",
       "maximo": 400
     },
     {
       "id": "limite",
-      "rotulo": "Dónde está el límite",
+      "seccion": "Cierre", "rotulo": "Dónde está el límite",
       "tipo": "bloque",
       "opcional": true,
       "ayuda": "Solo lo llevan las industrias donde hace falta decir qué NO hace BECOME. En salud es obligatorio.",

@@ -32,16 +32,19 @@
 
 .pnl {
   /* --- superficies ------------------------------------------------------ */
+  /* La rampa es la del design system de BECOME, no una aproximación: el gris
+     tenue mide 7,98:1 sobre el navy donde el anterior medía 6,05, y ese gris
+     es el de la ayuda bajo cada campo, que es texto de 13 píxeles. */
   --pnl-fondo: #0A0E27;
-  --pnl-sup: #121734;
-  --pnl-sup-2: #1A2044;
-  --pnl-linea: #262C51;
-  --pnl-linea-fuerte: #39406B;
+  --pnl-sup: #0E1330;
+  --pnl-sup-2: #141A3A;
+  --pnl-linea: rgba(226, 232, 240, .14);
+  --pnl-linea-fuerte: rgba(226, 232, 240, .28);
 
   /* --- texto ------------------------------------------------------------ */
   --pnl-tinta: #F7FAFC;
-  --pnl-tinta-2: #C3CBDD;
-  --pnl-tenue: #8791AD;
+  --pnl-tinta-2: #C3CEDD;
+  --pnl-tenue: #9BA9BF;
 
   /* --- señal ------------------------------------------------------------ */
   --pnl-verde: #00FF88;
@@ -359,4 +362,122 @@ select.pnl-entrada { width: auto; max-width: 100%; }
   .pnl-cabecera-fila { flex-wrap: nowrap; gap: var(--pnl-2); }
   .pnl-quien { display: none; }
   .pnl-cabecera-fila .pnl-btn { padding: 0 var(--pnl-3); }
+}
+
+
+/* --- el formulario largo --------------------------------------------------
+   Veinte campos y treinta filas no son una lista: son un territorio. Estas
+   tres piezas —índice, secciones plegadas y barra fija— existen para saber
+   dónde se está y para tener la acción principal siempre a mano. */
+
+.pnl-formulario { display: flex; flex-direction: column; gap: var(--pnl-4); }
+
+/* El índice. Se desplaza en horizontal en vez de apilarse: nueve secciones
+   apiladas ocupan media pantalla del teléfono antes de llegar al primer campo. */
+.pnl-indice {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; gap: var(--pnl-2);
+  overflow-x: auto; scrollbar-width: none;
+  margin: 0 calc(var(--pnl-4) * -1); padding: var(--pnl-2) var(--pnl-4);
+  background: var(--pnl-fondo);
+  border-bottom: 1px solid var(--pnl-linea);
+}
+.pnl-indice::-webkit-scrollbar { display: none; }
+.pnl-chip {
+  flex: 0 0 auto; min-height: var(--pnl-toque);
+  padding: 0 var(--pnl-3);
+  background: transparent; border: 1px solid var(--pnl-linea); border-radius: var(--pnl-r);
+  color: var(--pnl-tenue); font: inherit; font-size: 13px; white-space: nowrap; cursor: pointer;
+}
+.pnl-chip:hover { color: var(--pnl-tinta); border-color: var(--pnl-linea-fuerte); }
+/* La sección en la que se está: superficie y texto, no verde. El verde de esta
+   pantalla es el de publicar, y si está en dos sitios deja de señalar. */
+.pnl-chip[aria-current="true"] {
+  background: var(--pnl-sup-2); border-color: var(--pnl-linea-fuerte); color: var(--pnl-tinta);
+}
+
+.pnl-seccion { border-top: 1px solid var(--pnl-linea); }
+.pnl-seccion-cab {
+  display: flex; align-items: center; gap: var(--pnl-3);
+  width: 100%; min-height: 56px; padding: var(--pnl-3) 0;
+  background: transparent; border: 0; color: var(--pnl-tinta);
+  font: inherit; text-align: left; cursor: pointer;
+}
+.pnl-seccion-titulo { font: var(--type-h4); font-size: 17px; letter-spacing: -.01em; flex: 1; min-width: 0; }
+/* La cuenta de filas es el trabajo que hay dentro. Cuatro campos con doce
+   filas dentro no son cuatro campos, y eso decide si se abre ahora o luego. */
+.pnl-seccion-cuenta { font: var(--type-mono); font-size: 11px; color: var(--pnl-tenue); white-space: nowrap; }
+.pnl-seccion-flecha { color: var(--pnl-tenue); font-size: 12px; }
+.pnl-seccion .pnl-panel { padding-bottom: var(--pnl-5); }
+
+/* Separa quitar de reordenar. Los tres controles que más daño hacen no
+   deberían compartir el mismo centímetro de pantalla. */
+.pnl-fila-corte { width: var(--pnl-2); }
+
+.pnl-entrada--mono { font: var(--type-mono); font-size: 16px; }
+.pnl-entrada--pasa { border-color: var(--pnl-rojo); }
+/* La consecuencia, en palabras. Un número en rojo dice que algo va mal; no
+   dice qué pasa si se deja así. */
+.pnl-consecuencia { margin: 0; font-size: 13px; line-height: 1.45; color: var(--pnl-rojo); }
+
+/* --- la barra de publicar -------------------------------------------------
+   Fija abajo, donde está el pulgar. Con el botón arriba, después de treinta
+   filas hay que volver a subir para guardar, y ese viaje es donde se abandona. */
+
+.pnl-lienzo--publica { padding-bottom: 132px !important; }
+.pnl-publicar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+  padding: var(--pnl-3) var(--pnl-4) calc(var(--pnl-3) + env(safe-area-inset-bottom));
+  background: var(--pnl-fondo); border-top: 1px solid var(--pnl-linea);
+}
+.pnl-publicar-nota { margin: var(--pnl-2) 0 0; font-size: 12px; line-height: 1.4; color: var(--pnl-tenue); }
+.pnl-btn--ancho { width: 100%; min-height: 52px; }
+
+/* --- la hoja de confirmación ----------------------------------------------
+   Quitar una fila es lo único que no se puede deshacer desde el teléfono. Por
+   eso pregunta, y al preguntar enseña el texto que se va a perder: una
+   confirmación que no dice qué se borra es una que se acepta sin leer. */
+
+.pnl-hoja { position: fixed; inset: 0; z-index: 40; display: flex; align-items: flex-end; }
+.pnl-hoja-fondo { position: absolute; inset: 0; background: rgba(5, 7, 15, .72); }
+.pnl-hoja-caja {
+  position: relative; width: 100%;
+  display: flex; flex-direction: column; gap: var(--pnl-3);
+  padding: var(--pnl-5) var(--pnl-4) calc(var(--pnl-5) + env(safe-area-inset-bottom));
+  background: var(--pnl-sup); border-top: 1px solid var(--pnl-linea-fuerte);
+  border-radius: 16px 16px 0 0;
+}
+.pnl-hoja-titulo { margin: 0; font: var(--type-h4); font-size: 19px; color: var(--pnl-tinta); }
+.pnl-hoja-cita {
+  margin: 0; padding: var(--pnl-3);
+  background: var(--pnl-fondo); border-left: 2px solid var(--pnl-linea-fuerte);
+  color: var(--pnl-tinta-2); font-size: 15px; line-height: 1.5;
+}
+.pnl-hoja-mandos { display: flex; gap: var(--pnl-3); }
+.pnl-hoja-mandos .pnl-btn { flex: 1; min-height: 48px; }
+
+@media (min-width: 48rem) {
+  .pnl-hoja { align-items: center; justify-content: center; }
+  .pnl-hoja-caja { max-width: 480px; border-radius: 16px; border: 1px solid var(--pnl-linea-fuerte); }
+  /* En escritorio la barra no ocupa el ancho de la ventana: el formulario vive
+     en una columna, y la acción vive con él. */
+  .pnl-publicar { left: auto; right: var(--pnl-5); bottom: var(--pnl-5); width: 320px; border: 1px solid var(--pnl-linea); border-radius: var(--pnl-r); }
+  .pnl-lienzo--publica { padding-bottom: var(--pnl-6) !important; }
+}
+
+/* --- la deuda ---------------------------------------------------------------
+   Trece campos de conocimiento vacíos no se ven entrando documento por
+   documento. Se ven cuando alguien los cuenta y los pone en la primera línea.
+   Es el único verde de esa pantalla, y por eso ahí no hay otro. */
+
+.pnl-deuda {
+  margin: 0 0 var(--pnl-4);
+  font: var(--type-mono); font-size: 13px; color: var(--pnl-tinta-2);
+}
+.pnl-deuda strong { font-size: 28px; color: var(--pnl-verde); margin-right: var(--pnl-2); }
+.pnl-pendiente {
+  align-self: flex-start; margin-top: var(--pnl-2);
+  padding: 2px var(--pnl-2);
+  border: 1px solid var(--pnl-linea-fuerte); border-radius: var(--pnl-r);
+  font: var(--type-mono); font-size: 11px; color: var(--pnl-tinta-2);
 }

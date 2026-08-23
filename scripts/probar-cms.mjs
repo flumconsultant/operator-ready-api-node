@@ -61,11 +61,26 @@ await pg.waitForTimeout(400);
 await pg.getByText('Industrias', { exact: true }).first().click();
 await pg.waitForTimeout(600);
 
+
+/* El formulario llega plegado por secciones: solo la primera está abierta.
+   Medir sin desplegar es medir un tercio del formulario y creer que el resto
+   no existe —la primera vez que se pasó esta prueba después del plegado, dijo
+   «0 listas · 0 filas» y tenía razón: estaban dentro de secciones cerradas. */
+const desplegar = async () => {
+  for (let n = 0; n < 40; n++) {
+    const cerrada = pg.locator('.pnl-seccion-cab[aria-expanded="false"]').first();
+    if (!(await cerrada.count())) break;
+    await cerrada.click();
+  }
+  await pg.waitForTimeout(200);
+};
+await desplegar();
+
 const industria = await pg.locator('select').first().inputValue();
 console.log(`1. abre industrias · elemento ${Number(industria) + 1} de 6`);
 
 /* Que las listas estén dibujadas de verdad, no solo el contenedor. */
-const anadir = await pg.getByRole('button', { name: 'Añadir' }).count();
+const anadir = await pg.getByRole('button', { name: 'Añadir fila' }).count();
 const quitar = await pg.getByRole('button', { name: 'Quitar' }).count();
 const areas = await pg.locator('textarea').count();
 const entradas = await pg.locator('input[type="text"]').count();
@@ -75,21 +90,27 @@ console.log(`2. dibuja ${anadir} listas · ${quitar} filas · ${entradas} campos
 const primerTitular = await pg.locator('input[type="text"]').nth(1).inputValue();
 await pg.locator('select').first().selectOption('1');
 await pg.waitForTimeout(400);
+await desplegar();
 const segundoTitular = await pg.locator('input[type="text"]').nth(1).inputValue();
 console.log(`3. cambiar de industria recarga: ${primerTitular !== segundoTitular ? 'ok' : '✗ arrastra los valores'}`);
 
 /* Y cambiar de idioma también. */
 await pg.getByRole('button', { name: 'EN', exact: true }).click();
 await pg.waitForTimeout(400);
+await desplegar();
 const enIngles = await pg.locator('input[type="text"]').nth(1).inputValue();
 console.log(`4. cambiar de idioma recarga: ${enIngles !== segundoTitular ? 'ok' : '✗'}`);
 
 /* Reordenar: la primera oportunidad es la que más gente lee. */
 await pg.getByRole('button', { name: 'ES', exact: true }).click();
 await pg.waitForTimeout(400);
-await pg.getByRole('button', { name: '↓' }).first().click();
+await desplegar();
+/* Por el rótulo accesible, no por la flecha: el botón lleva aria-label, y el
+   nombre accesible de un botón con aria-label es su aria-label, no su texto.
+   Buscando «↓» esta prueba llevaba tiempo agotando el tiempo de espera. */
+await pg.getByRole('button', { name: /^Bajar el elemento/ }).first().click();
 await pg.waitForTimeout(200);
-await pg.getByRole('button', { name: 'Guardar', exact: true }).click();
+await pg.locator('.pnl-publicar .pnl-btn').click();
 await pg.waitForTimeout(600);
 
 const antes = leer('src/content/industrias.json')[1].es;
@@ -105,11 +126,13 @@ for (const [id, rotulo] of [['servicios', 'Casos de uso'], ['metodo', 'Cómo tra
   await pg.waitForTimeout(300);
   await pg.getByText(rotulo, { exact: true }).first().click();
   await pg.waitForTimeout(600);
+  await desplegar();
   const sel = await pg.locator('select').count();
   const campos = await pg.locator('input[type="text"], textarea').count();
   const err = errores.length;
   await pg.getByRole('button', { name: 'EN', exact: true }).click();
   await pg.waitForTimeout(500);
+  await desplegar();
   const tras = await pg.locator('input[type="text"], textarea').count();
   console.log(`8. ${rotulo}: ${sel ? 'con selector' : 'sin selector'} · ${campos} campos · cambia a EN y sigue con ${tras} · ${errores.length === err ? 'sin errores' : '✗ errores'}`);
 }

@@ -9,41 +9,41 @@
   "etiqueta": "h1",
   "idiomas": ["es", "en"],
   "campos": [
-    { "id": "eyebrow", "rotulo": "Antetítulo", "tipo": "linea", "maximo": 60 },
-    { "id": "h1", "rotulo": "Titular", "tipo": "linea", "maximo": 110, "ayuda": "Es el h1 del programa." },
-    { "id": "lead", "rotulo": "Entrada", "tipo": "parrafo", "maximo": 400 },
-    { "id": "seoTitulo", "rotulo": "Título en Google", "tipo": "linea", "maximo": 60 },
-    { "id": "seoDesc", "rotulo": "Descripción en Google", "tipo": "parrafo", "maximo": 160 },
-    { "id": "problema", "rotulo": "El problema", "tipo": "bloque",
+    { "id": "eyebrow", "seccion": "Portada", "rotulo": "Antetítulo", "tipo": "linea", "maximo": 60 },
+    { "id": "h1", "seccion": "Portada", "rotulo": "Titular", "tipo": "linea", "maximo": 110, "ayuda": "Es el h1 del programa." },
+    { "id": "lead", "seccion": "Portada", "rotulo": "Entrada", "tipo": "parrafo", "maximo": 400 },
+    { "id": "seoTitulo", "seccion": "SEO", "rotulo": "Título en Google", "tipo": "linea", "maximo": 60 },
+    { "id": "seoDesc", "seccion": "SEO", "rotulo": "Descripción en Google", "tipo": "parrafo", "maximo": 160 },
+    { "id": "problema", "seccion": "El problema", "rotulo": "El problema", "tipo": "bloque",
       "partes": [
         { "id": "titular", "rotulo": "Titular", "tipo": "linea", "maximo": 130 },
         { "id": "parrafos", "rotulo": "Párrafos", "tipo": "lista", "maximo": 500 }
       ] },
-    { "id": "sesion0", "rotulo": "La Sesión 0", "tipo": "bloque",
+    { "id": "sesion0", "seccion": "La Sesión 0", "rotulo": "La Sesión 0", "tipo": "bloque",
       "partes": [
         { "id": "titular", "rotulo": "Titular", "tipo": "linea", "maximo": 130 },
         { "id": "parrafos", "rotulo": "Párrafos", "tipo": "lista", "maximo": 500 }
       ] },
-    { "id": "ruta", "rotulo": "La ruta del programa", "tipo": "bloque",
+    { "id": "ruta", "seccion": "La ruta", "rotulo": "La ruta del programa", "tipo": "bloque",
       "partes": [
         { "id": "bajada", "rotulo": "Bajada", "tipo": "parrafo", "maximo": 260 },
         { "id": "pasos", "rotulo": "Sesiones", "tipo": "pares", "maximo": [70, 260],
           "columnas": ["Sesión", "Qué queda instalado"] }
       ] },
-    { "id": "sesion", "rotulo": "Cómo es una sesión", "tipo": "bloque",
+    { "id": "sesion", "seccion": "Una sesión", "rotulo": "Cómo es una sesión", "tipo": "bloque",
       "partes": [
         { "id": "titular", "rotulo": "Titular", "tipo": "linea", "maximo": 130 },
         { "id": "parrafos", "rotulo": "Párrafos", "tipo": "lista", "maximo": 500 }
       ] },
-    { "id": "tecnologia", "rotulo": "Tecnología", "tipo": "lista", "maximo": 400 },
-    { "id": "entregables", "rotulo": "Entregables", "tipo": "lista", "maximo": 160 },
-    { "id": "medicion", "rotulo": "Cómo se mide", "tipo": "bloque",
+    { "id": "tecnologia", "seccion": "Tecnología y entregables", "rotulo": "Tecnología", "tipo": "lista", "maximo": 400 },
+    { "id": "entregables", "seccion": "Tecnología y entregables", "rotulo": "Entregables", "tipo": "lista", "maximo": 160 },
+    { "id": "medicion", "seccion": "Cómo se mide", "rotulo": "Cómo se mide", "tipo": "bloque",
       "partes": [
         { "id": "titular", "rotulo": "Titular", "tipo": "linea", "maximo": 130 },
         { "id": "parrafos", "rotulo": "Párrafos", "tipo": "lista", "maximo": 500 }
       ] },
-    { "id": "faq", "rotulo": "Preguntas frecuentes", "tipo": "pares", "maximo": [130, 500],
+    { "id": "faq", "seccion": "Preguntas", "rotulo": "Preguntas frecuentes", "tipo": "pares", "maximo": [130, 500],
       "columnas": ["Pregunta", "Respuesta"] },
-    { "id": "cta", "rotulo": "Cierre", "tipo": "parrafo", "maximo": 300 }
+    { "id": "cta", "seccion": "Cierre", "rotulo": "Cierre", "tipo": "parrafo", "maximo": 300 }
   ]
 }
