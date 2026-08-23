@@ -50,7 +50,27 @@ const { readFileSync, writeFileSync, readdirSync, existsSync } = await import('n
 const { join } = await import('node:path');
 
 const TOKEN = process.env.LINKEDIN_TOKEN;
+
+/* ---- Quién firma el post -------------------------------------------------
+ *
+ * Hay dos formas de publicar y LinkedIn las separa con dos permisos distintos:
+ *
+ *   · La página de empresa. Necesita `w_organization_social`, que solo se
+ *     obtiene con la Community Management API, y esa la revisa LinkedIn a
+ *     mano: puede tardar semanas y puede denegarla.
+ *   · El perfil de una persona. Necesita `w_member_social`, que da el producto
+ *     «Share on LinkedIn» y se concede al momento, sin revisión.
+ *
+ * Esto admite las dos, y no por indecisión: la segunda está disponible hoy y
+ * la primera no. Además, en LinkedIn un post de una persona suele llegar a más
+ * gente que el mismo post en una página de empresa; el algoritmo reparte
+ * distinto. Publicar desde el perfil de quien firma los artículos no es el
+ * plan B, es una opción defendible por sí sola.
+ *
+ * Si están los dos, manda la página: es una decisión de marca, y quien puso
+ * el identificador de la organización lo puso a propósito. */
 const ORG = process.env.LINKEDIN_ORG_ID;
+const MIEMBRO = process.env.LINKEDIN_MEMBER_ID;
 
 /* Un ensayo: hace todo el recorrido —elegir el artículo, componer el texto,
    decidir si toca o no— y se detiene justo antes de publicar. Existe porque la
@@ -61,9 +81,35 @@ const ENSAYO = process.argv.includes('--ensayo');
 
 if (ENSAYO) console.log('— ENSAYO: no se va a publicar nada —\n');
 
-if ((!TOKEN || !ORG) && !ENSAYO) {
-  console.log('Sin credenciales de LinkedIn (LINKEDIN_TOKEN / LINKEDIN_ORG_ID). No hay nada que publicar.');
+if (!TOKEN && !ENSAYO) {
+  console.log('Sin credenciales de LinkedIn (LINKEDIN_TOKEN). No hay nada que publicar.');
   process.exit(0);
+}
+
+/**
+ * El identificador de quien firma, resuelto en este orden: la organización si
+ * está declarada; si no, la persona.
+ *
+ * Y si no está declarada ninguna, se le pregunta a LinkedIn quién es el dueño
+ * del permiso. El identificador de una persona no es su nombre de usuario ni
+ * nada que se pueda leer en el perfil: es un código que solo devuelve la API,
+ * así que pedirle a alguien que lo copie a mano en un secreto es pedirle que
+ * busque un dato escondido. Preguntarlo cuesta una llamada y no falla nunca
+ * mientras el permiso valga.
+ */
+async function quienPublica() {
+  if (ORG) return { urn: `urn:li:organization:${ORG}`, donde: 'la página de empresa' };
+  if (MIEMBRO) return { urn: `urn:li:person:${MIEMBRO}`, donde: 'el perfil personal' };
+  if (!TOKEN) return { urn: '', donde: 'nadie: falta LINKEDIN_ORG_ID o LINKEDIN_MEMBER_ID' };
+  try {
+    const r = await fetch('https://api.linkedin.com/v2/userinfo', { headers: { Authorization: `Bearer ${TOKEN}` } });
+    if (!r.ok) return { urn: '', donde: `no se pudo averiguar (HTTP ${r.status} al preguntar quién es el dueño del permiso)` };
+    const d = await r.json();
+    if (!d.sub) return { urn: '', donde: 'no se pudo averiguar: la respuesta no traía identificador' };
+    return { urn: `urn:li:person:${d.sub}`, donde: `el perfil personal de ${d.name || 'quien autorizó'}` };
+  } catch (e) {
+    return { urn: '', donde: `no se pudo averiguar: ${e.message}` };
+  }
 }
 
 /* ---- Cuánto le queda al permiso -----------------------------------------
@@ -182,8 +228,14 @@ if (texto.length > 3000) {
   process.exit(1);
 }
 
+const firma = await quienPublica();
+if (!firma.urn && !ENSAYO) {
+  console.error(`::error::No se sabe en nombre de quién publicar. Hace falta LINKEDIN_ORG_ID (página de empresa, con Community Management API) o LINKEDIN_MEMBER_ID (perfil personal, con Share on LinkedIn). ${firma.donde}`);
+  process.exit(1);
+}
+
 const cuerpo = {
-  author: `urn:li:organization:${ORG}`,
+  author: firma.urn,
   commentary: texto,
   visibility: 'PUBLIC',
   distribution: { feedDistribution: 'MAIN_FEED', targetEntities: [], thirdPartyDistributionChannels: [] },
@@ -203,7 +255,7 @@ if (ENSAYO) {
   console.log(`  ${cuerpo.content.article.title}`);
   console.log(`  ${cuerpo.content.article.description}`);
   console.log(`  ${cuerpo.content.article.source}`);
-  console.log(`\nautor: ${ORG ? cuerpo.author : 'urn:li:organization:(falta LINKEDIN_ORG_ID)'} · versión de la API: ${VERSION}`);
+  console.log(`\nSaldría en ${firma.donde}${firma.urn ? ` (${firma.urn})` : ''} · versión de la API: ${VERSION}`);
   process.exit(0);
 }
 
@@ -223,6 +275,9 @@ if (!r.ok) {
   console.error(`::error::LinkedIn rechazó el post (HTTP ${r.status}). ${detalle}`);
   /* 401 es siempre lo mismo y conviene decirlo con nombre: el permiso caducó.
      Buscar «401» en la documentación de LinkedIn no lleva a esa respuesta. */
+  if (r.status === 403) {
+    console.error('::error::Un 403 casi siempre es un permiso que no cubre a quien firma: publicar en la PÁGINA de empresa necesita w_organization_social (Community Management API) y publicar en un PERFIL necesita w_member_social (Share on LinkedIn). Comprueba que el permiso y el autor son del mismo tipo.');
+  }
   if (r.status === 401) {
     console.error('::error::Eso casi siempre significa que el permiso de 60 días caducó. Hay que volver a autorizar la aplicación siguiendo docs/linkedin.md.');
   }
@@ -231,7 +286,7 @@ if (!r.ok) {
 
 /* El identificador del post viaja en una cabecera, no en el cuerpo. */
 const urn = r.headers.get('x-restli-id') || '(sin identificador)';
-console.log(`Publicado en LinkedIn: «${nuevo.es.titulo}»`);
+console.log(`Publicado en LinkedIn, en ${firma.donde}: «${nuevo.es.titulo}»`);
 console.log(`  ${url}`);
 console.log(`  ${urn}`);
 

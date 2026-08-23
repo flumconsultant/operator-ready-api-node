@@ -22,7 +22,48 @@ que pasa por una conversación es una clave que hay que rotar.
    la aplicación pertenece de verdad a esa página. Sin esa verificación no se
    puede pedir el permiso del paso siguiente.
 
-## 2. Pedir el acceso — el paso lento
+## 2. Elegir quién firma el post
+
+Hay dos caminos y no son el mismo trabajo. LinkedIn los separa con dos permisos
+distintos, y el que da acceso a la página de empresa es el que hay que pedir a
+mano.
+
+| | **Perfil personal** | **Página de empresa** |
+|---|---|---|
+| Producto | **Share on LinkedIn** | **Community Management API** |
+| Permiso | `w_member_social` | `w_organization_social` |
+| Cómo se consigue | Se pulsa *Request access* y queda concedido | Lo revisa una persona de LinkedIn |
+| Cuánto tarda | Al momento | Días o semanas, y puede denegarse |
+| Quién aparece firmando | Carlos Andrés Ramírez | BECOME |
+
+**El perfil personal no es el plan B.** En LinkedIn un post de una persona
+suele llegar a bastante más gente que el mismo post publicado por una página de
+empresa: el algoritmo reparte distinto y las páginas parten con desventaja. Los
+artículos ya van firmados por una persona, así que el post firmado por esa
+misma persona es coherente con lo que se publica.
+
+Lo razonable es **empezar por el perfil, que está disponible hoy**, y pedir en
+paralelo el acceso a la página. El día que lo aprueben, se añade el secreto
+`LINKEDIN_ORG_ID` y el mecanismo cambia de firmante solo, sin tocar código: si
+está el identificador de la organización, manda la organización.
+
+### Si vas por el perfil
+
+1. En **Products**, pulsa *Request access* en **Share on LinkedIn**. Queda
+   concedido en el momento.
+2. Pide también **Sign In with LinkedIn using OpenID Connect**, del mismo modo.
+   No es para entrar en ningún sitio: es lo que deja preguntar por el
+   identificador de la persona, que no se puede leer en el perfil ni copiar de
+   ninguna pantalla.
+3. Genera el token con los alcances **`w_member_social`**, `openid` y `profile`.
+4. Guarda ese token como `LINKEDIN_TOKEN`. **No hace falta ningún secreto más:**
+   el publicador le pregunta a LinkedIn de quién es el permiso.
+
+Si prefieres no dar el alcance `openid`, hay que averiguar el identificador de
+otra forma y escribirlo a mano en el secreto `LINKEDIN_MEMBER_ID`. Es más
+trabajo y no aporta nada.
+
+## 3. Pedir el acceso a la página — el paso lento
 
 En la pestaña **Products**, solicita **Community Management API**.
 
@@ -38,7 +79,7 @@ empresa escribe en su sitio web, uno al día, sin acceder a datos de terceros.*
 sin credenciales, cada despliegue lo ejecuta, dice «no hay nada que publicar» y
 termina en verde. No se rompe nada esperando.
 
-## 3. Conseguir los cuatro valores
+## 4. Conseguir los valores
 
 ### `LINKEDIN_CLIENT_ID` y `LINKEDIN_CLIENT_SECRET`
 
@@ -54,10 +95,22 @@ aviso. Ponlos.
 
 El permiso propiamente dicho. La forma cómoda de obtenerlo es el **OAuth Token
 Generator** de LinkedIn: en la aplicación, pestaña **Auth**, enlace *OAuth 2.0
-tools*. Marca los alcances **`w_organization_social`** y **`r_organization_admin`**,
-autoriza y copia el token que sale.
+tools*. Marca los alcances, autoriza y copia el token que sale.
 
-### `LINKEDIN_ORG_ID`
+Los alcances dependen de quién firme:
+
+- **Perfil personal:** `w_member_social`, `openid`, `profile`.
+- **Página de empresa:** `w_organization_social` y `r_organization_admin`.
+
+Si en el generador no aparece alguno, es que falta pedir su producto en la
+pestaña **Products**. El token solo lleva los alcances que había concedidos el
+día que se generó: si añades un producto después, hay que volver a generarlo.
+
+### `LINKEDIN_ORG_ID` — solo si publicas en la página
+
+Con este secreto puesto, el post sale a nombre de BECOME. Sin él, sale a nombre
+de la persona dueña del permiso. Es el único interruptor entre los dos caminos;
+no hay nada más que cambiar.
 
 El número de la página de empresa. Dos formas:
 
@@ -74,7 +127,7 @@ El número de la página de empresa. Dos formas:
 
   Responde con `urn:li:organization:12345678`. El número final es el valor.
 
-## 4. Probar sin publicar
+## 5. Probar sin publicar
 
 Antes de dejarlo suelto sobre la página real:
 
@@ -83,7 +136,8 @@ node scripts/linkedin.mjs --ensayo
 ```
 
 Hace todo el recorrido —elige el artículo, compone el texto, decide si toca— y
-se detiene justo antes de publicar, enseñando exactamente lo que saldría. Un
+se detiene justo antes de publicar, enseñando exactamente lo que saldría, con
+la última línea diciendo **en nombre de quién** saldría. Un
 post de prueba en una página real no se puede deshacer sin que alguien lo haya
 visto; por eso existe este modo.
 
@@ -101,7 +155,7 @@ resto hay que volver a autorizar la aplicación a mano.
 
 Es la parte frágil de todo esto y no tiene arreglo por código. Lo que sí hay es
 aviso: catorce días antes, cada ejecución escribe una advertencia en el resumen
-del workflow. Cuando la veas, repite el paso `LINKEDIN_TOKEN` del apartado 3 y
+del workflow. Cuando la veas, repite el paso `LINKEDIN_TOKEN` del apartado 4 y
 actualiza ese secreto. Nada más.
 
 Si se pasa la fecha, el post falla con un `401` y el workflow se pone en rojo,
