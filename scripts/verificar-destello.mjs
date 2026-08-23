@@ -17,7 +17,7 @@ const srv = createServer((req, res) => {
 }).listen(4322);
 
 const RUTAS = ['/es', '/en', '/es/servicios/become-discover', '/es/insights/por-que-tu-equipo-no-usa-la-ia-que-le-diste'];
-const b = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH });
+const b = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 let fallos = 0;
 
 console.log('CON JavaScript — el resumen debe estar oculto en todo momento');

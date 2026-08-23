@@ -101,9 +101,11 @@ jobs:
       # había que acordarse. Un guardián que depende de la memoria es media
       # protección, y esta comprobación existe justamente porque cuatro
       # controles automáticos dieron verde a algo que se veía a simple vista.
+      # Sin CHROMIUM_PATH: aquí lo instaló Playwright unos pasos más arriba y
+      # sabe dónde está. Fijar una ruta a mano fue un error mío —era la del
+      # entorno donde lo escribí, que en este runner no existe— y habría hecho
+      # fallar el despliegue en el primer intento.
       - name: Sin destello de texto sin maquetar
-        env:
-          CHROMIUM_PATH: /opt/pw-browsers/chromium-1194/chrome-linux/chrome
         run: node scripts/verificar-destello.mjs
 
       - name: Gate de publicación

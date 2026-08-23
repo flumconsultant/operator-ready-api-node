@@ -13,7 +13,7 @@ const srv = createServer((req, res) => {
   res.writeHead(404); res.end();
 }).listen(4400);
 
-const b = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH });
+const b = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 const ctx = await b.newContext({ viewport: { width: 390, height: 844 } });   // el móvil de Carlos
 const pg = await ctx.newPage();
 

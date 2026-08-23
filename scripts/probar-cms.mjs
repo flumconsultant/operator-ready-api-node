@@ -49,7 +49,7 @@ const srv = createServer(async (req, res) => {
   res.writeHead(404); res.end();
 }).listen(4500);
 
-const b = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH });
+const b = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 const pg = await (await b.newContext({ viewport: { width: 390, height: 844 } })).newPage();
 const errores = [];
 pg.on('pageerror', (e) => errores.push(e.message));
