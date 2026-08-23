@@ -14,7 +14,11 @@ name: Pulse
 
 on:
   push:
-    branches: [main]
+    # Pulse vive en su rama de trabajo mientras el sitio de BECOME sigue en
+    # main. Se despliega desde la rama que esté publicada en el VPS, sea cual
+    # sea de las dos: el script remoto usa el nombre de la rama que disparó el
+    # trabajo, así que esto no hay que tocarlo al fusionar.
+    branches: [main, claude/mvp-become-guidelines-ijxsdz]
     paths: ['pulse/**', '.github/workflows/pulse.yml']
   pull_request:
     paths: ['pulse/**', '.github/workflows/pulse.yml']
@@ -84,7 +88,7 @@ jobs:
   desplegar:
     name: Desplegar al VPS
     needs: comprobar
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     # Sin los secretos configurados el trabajo se salta entero en vez de fallar
     # en rojo: así el pipeline se puede tener montado antes de que el VPS
@@ -109,6 +113,7 @@ jobs:
           HOST: ${{ secrets.VPS_HOST }}
           USUARIO: ${{ secrets.VPS_USER }}
           RUTA: ${{ secrets.VPS_RUTA }}
+          RAMA: ${{ github.ref_name }}
         run: |
           mkdir -p ~/.ssh
           printf '%s\n' "$CLAVE" > ~/.ssh/id_ed25519
@@ -118,11 +123,22 @@ jobs:
           # código y reconstruye; las claves nunca salen del servidor.
           # La ruta se pasa como argumento: el heredoc va entrecomillado para
           # que nada se expanda en el runner, así que dentro no existe $RUTA.
-          ssh -i ~/.ssh/id_ed25519 "$USUARIO@$HOST" bash -s -- "${RUTA:-/opt/pulse}" <<'REMOTO'
+          ssh -i ~/.ssh/id_ed25519 "$USUARIO@$HOST" bash -s -- "${RUTA:-/opt/pulse}" "$RAMA" <<'REMOTO'
             set -euo pipefail
             cd "$1"
-            git fetch origin main
-            git reset --hard origin/main
-            docker compose -f pulse/docker-compose.yml --env-file pulse/.env up -d --build
+            git fetch origin "$2"
+            git reset --hard "origin/$2"
+
+            # Los dos archivos de compose: el normal y el que cuelga Pulse del
+            # Traefik que ya existe en el VPS. Con uno solo, Docker intentaría
+            # levantar el Caddy de Pulse y pelearse por los puertos 80 y 443.
+            cd pulse
+            docker compose \
+              -f docker-compose.yml \
+              -f docker-compose.traefik.yml \
+              --env-file .env up -d --build
+
+            # El build deja capas huérfanas en cada despliegue. Sin esto, el
+            # disco del VPS se llena en unas semanas.
             docker image prune -f
           REMOTO

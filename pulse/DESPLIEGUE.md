@@ -729,36 +729,89 @@ gunzip -c /opt/copias/base-2026-08-23.sql.gz | \
 
 ## 10. Desplegar sin entrar al servidor
 
-Ya está el pipeline hecho en `.github/workflows/pulse.yml`. Comprueba tipos,
-pruebas y build en cada push, y despliega cuando el cambio llega a `main`.
+El objetivo: cambias algo, se sube al repositorio, y el VPS se actualiza solo.
+Sin abrir una terminal. El pipeline ya está escrito en
+`.github/workflows/pulse.yml`; lo que falta es darle una llave del servidor.
 
-Para que despliegue, en GitHub → *Settings* → *Secrets and variables* →
-*Actions* → *New repository secret*, crea cuatro:
+Son tres pasos y se hacen una sola vez.
 
-| Secreto | Valor |
+### 10.1 Una llave para que GitHub entre al VPS
+
+Hay dos llaves distintas en juego y conviene no confundirlas:
+
+| Llave | Va de | Ya la tienes |
+|---|---|---|
+| *Deploy key* | el VPS → GitHub, para poder bajar el código | sí, del paso 5 |
+| Esta | GitHub → el VPS, para poder entrar y actualizar | no |
+
+**En el VPS**, crea la segunda y autorízala:
+
+```bash
+ssh-keygen -t ed25519 -C "github-actions" -f ~/.ssh/despliegue -N ""
+cat ~/.ssh/despliegue.pub >> ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
+cat ~/.ssh/despliegue
+```
+
+Ese último comando imprime la **clave privada**, entre las líneas
+`-----BEGIN OPENSSH PRIVATE KEY-----` y `-----END OPENSSH PRIVATE KEY-----`.
+Cópiala entera, esas dos líneas incluidas.
+
+> Esta sí es secreta, al revés que la `.pub`. Va directa al gestor de secretos
+> de GitHub, que la cifra: no la pegues en un chat, ni en un correo, ni en un
+> archivo del repositorio.
+
+### 10.2 Los cuatro secretos en GitHub
+
+En el repositorio → *Settings* → *Secrets and variables* → *Actions* →
+*New repository secret*, uno por uno:
+
+| Nombre | Valor |
 |---|---|
-| `VPS_HOST` | la IP del VPS |
-| `VPS_USER` | `become` |
-| `VPS_SSH_KEY` | el contenido de `~/.ssh/id_ed25519` **de tu ordenador** (la privada, la que no acaba en `.pub`) |
+| `VPS_HOST` | `31.97.41.59` |
+| `VPS_USER` | `root` |
+| `VPS_SSH_KEY` | la clave privada que acabas de copiar, entera |
 | `VPS_RUTA` | `/opt/pulse` |
 
-Sin estos secretos el trabajo de despliegue se salta y el pipeline sigue en
-verde: puedes tenerlo montado antes de que exista el VPS.
+Sin ellos el pipeline sigue funcionando —comprueba tipos, pruebas y build— pero
+el trabajo de despliegue se salta en vez de fallar en rojo.
 
-**El `.env` no pasa por el pipeline.** GitHub trae el código, entra por SSH y
-reconstruye; las claves nunca salen del servidor.
+### 10.3 Probarlo
 
-> Si el VPS tiene 4 GB de RAM, construir ahí dentro puede quedarse sin memoria.
-> La salida a eso es construir las imágenes en el pipeline, empujarlas a
-> `ghcr.io` y que el VPS solo haga `docker compose pull`. Con 8 GB no hace
-> falta.
+Haz cualquier cambio dentro de `pulse/` y súbelo. En la pestaña **Actions** del
+repositorio verás dos trabajos:
+
+1. **Tipos y build** — comprueba tipos, pasa las 40 pruebas y compila. Si algo
+   está roto, se para **aquí** y no toca el servidor. Esa es la parte que más
+   vale de tener esto montado: un cambio malo no llega a producción.
+2. **Desplegar al VPS** — entra por SSH, baja el código, reconstruye los
+   contenedores y limpia las imágenes viejas.
+
+En dos o tres minutos el cambio está en `pulse.meetbecome.com`.
+
+### Lo que conviene saber
+
+**El `.env` no pasa por el pipeline.** GitHub trae el código y reconstruye; las
+claves nunca salen del servidor. Si añades una variable nueva al `.env`, esa sí
+hay que ponerla a mano en el VPS.
+
+**Las migraciones se aplican solas.** El contenedor `migraciones` corre antes
+que la web en cada despliegue.
+
+**Hay un corte de unos segundos** mientras el contenedor se reinicia. Para un
+piloto interno no es un problema; el día que lo sea, la salida es construir las
+imágenes en el pipeline y que el VPS solo las descargue.
+
+**Si el despliegue falla**, el log del trabajo en *Actions* dice en qué paso.
+Los dos habituales: la clave mal pegada (falta una línea) y `VPS_RUTA` que no
+coincide con dónde está clonado el repositorio.
 
 ### Mientras tanto, a mano
 
 ```bash
-cd /opt/pulse
-git pull
-docker compose -f pulse/docker-compose.yml --env-file pulse/.env up -d --build
+cd /opt/pulse && git pull
+cd pulse && docker compose -f docker-compose.yml -f docker-compose.traefik.yml \
+  --env-file .env up -d --build
 ```
 
 ---
