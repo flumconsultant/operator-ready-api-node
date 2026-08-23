@@ -82,6 +82,12 @@ Copia la estructura de un artículo existente. Los campos:
 - `es` y `en`, cada uno con `slug`, `titulo`, `entradilla`, `descripcion` y
   `bloques`.
 
+Y dentro de `es`, además, `linkedin`: el post con el que se anuncia el
+artículo. Se escribe siguiendo `automatizacion/copy-linkedin.md`, que es el
+encargo entero. Ábrelo, porque el copy tiene reglas propias y no son las del
+artículo: no resume, plantea. Va en español y solo en español; la página de
+empresa publica en español.
+
 El `slug` de cada idioma es distinto y va en su propio idioma. `descripcion` es
 la que sale en Google: máximo 155 caracteres, y que responda la pregunta, no que
 la anuncie. `titulo`: máximo 60 caracteres.
@@ -209,6 +215,10 @@ haya rayas largas ni muletillas, y que ninguna cifra viaje sin fuente.
 **Si no pasa, arréglalo y vuelve a ejecutarlo.** No entregues un artículo que no
 pase: el mismo guardián corre en el despliegue y lo va a rechazar igual, solo
 que entonces no habrá nadie para arreglarlo y el día se queda sin artículo.
+
+El guardián revisa también el post de LinkedIn si lo has escrito: que tenga
+entre 60 y 100 palabras, que no repita el título ni la entradilla, que no lleve
+el enlace dentro y que los hashtags sean tres como mucho.
 
 Y cuando pase, genera la tarjeta para compartir:
 

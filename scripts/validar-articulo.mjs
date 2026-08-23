@@ -78,6 +78,80 @@ function textoDe(t) {
 
 const palabras = (s) => s.split(/\s+/).filter(Boolean).length;
 
+/* Frases que el encargo del copy prohíbe por su nombre. Son literales, así que
+   se pueden buscar: no es criterio, es una lista. */
+const COPY_PROHIBIDO = [
+  'la ia está revolucionando', 'en un mundo cada vez más digital', 'descubre cómo',
+  '¿estás listo para el futuro?', 'no te lo puedes perder', 'nuevo artículo',
+];
+
+/**
+ * El post de LinkedIn, revisado con las mismas reglas que el artículo.
+ *
+ * Se revisa aquí y no al publicar por una razón de horario: al publicar no hay
+ * nadie mirando, el artículo ya está en la web y rechazar el post solo consigue
+ * que el artículo salga sin anuncio. Aquí todavía hay quien lo escribió.
+ *
+ * Es opcional: un artículo sin copy se publica igual, con un texto de respaldo
+ * peor. Lo que no se admite es un copy escrito mal.
+ */
+function revisarCopyLinkedIn(art, di) {
+  const copy = art.es?.linkedin;
+  if (!copy) return;
+  const d = (m) => di(`[linkedin] ${m}`);
+
+  if (typeof copy !== 'object' || Array.isArray(copy)) { d('«linkedin» tiene que ser un objeto con «texto» y «hashtags»'); return; }
+  const texto = String(copy.texto || '').trim();
+  if (!texto) { d('está el campo pero el texto está vacío'); return; }
+
+  /* 60–100 palabras es el encargo. El margen es de una palabra por lado y no
+     más: el rango existe porque un post largo se corta con «…ver más» y uno
+     corto no da razón para pulsar. */
+  const n = texto.split(/\s+/).filter(Boolean).length;
+  if (n < 60) d(`el copy tiene ${n} palabras; por debajo de 60 no plantea nada, solo anuncia`);
+  if (n > 100) d(`el copy tiene ${n} palabras; por encima de 100 el lector ya no necesita abrir el artículo`);
+
+  /* El enlace lo pone el publicador. Uno escrito a mano dentro del texto sale
+     duplicado en el post, y si además está mal, mal. */
+  if (/https?:\/\/|meetbecome\.com/i.test(texto)) d('el texto lleva un enlace escrito a mano; el enlace lo añade el publicador desde el slug');
+  if (texto.includes('#')) d('los hashtags van en «hashtags», no dentro del texto');
+
+  /* Una sola pregunta. Dos seguidas diluyen la primera, y tres son un anuncio. */
+  const preguntas = (texto.match(/\?/g) || []).length;
+  if (preguntas > 1) d(`lleva ${preguntas} signos de interrogación de cierre; el encargo permite uno`);
+
+  if (texto.includes('—')) d('lleva rayas largas (—); aquí tampoco');
+
+  const bajo = texto.toLowerCase();
+  for (const m of COPY_PROHIBIDO) if (bajo.includes(m)) d(`frase prohibida en el copy: "${m}"`);
+  for (const m of MULETILLAS) if (bajo.includes(m)) d(`muletilla de texto generado en el copy: "${m}"`);
+
+  /* Repetir el título es el atajo por defecto y es justo lo que convierte el
+     post en un titular con enlace. */
+  const titulo = String(art.es.titulo || '').trim().toLowerCase();
+  if (titulo && bajo.includes(titulo)) d('el copy repite el título literalmente; el post tiene que aportar el ángulo, no el titular');
+
+  /* Que no sea el artículo otra vez. Si el gancho es la entradilla copiada,
+     nadie ha escrito un post: se ha movido un campo de sitio. */
+  const entradilla = String(art.es.entradilla || '').trim().toLowerCase();
+  if (entradilla.length > 40 && bajo.includes(entradilla.slice(0, 60))) {
+    d('el copy empieza copiando la entradilla del artículo; el post necesita su propio gancho');
+  }
+
+  const etiquetas = copy.hashtags;
+  if (etiquetas !== undefined) {
+    if (!Array.isArray(etiquetas)) d('«hashtags» tiene que ser una lista');
+    else {
+      if (etiquetas.length > 3) d(`lleva ${etiquetas.length} hashtags; el máximo es 3`);
+      for (const h of etiquetas) {
+        if (typeof h !== 'string' || !h.trim()) d('hay un hashtag vacío');
+        else if (h.startsWith('#')) d(`el hashtag "${h}" lleva almohadilla; la pone el publicador`);
+        else if (/\s/.test(h)) d(`el hashtag "${h}" lleva espacios y LinkedIn los parte en dos`);
+      }
+    }
+  }
+}
+
 export function validar(art, { archivo = '', slugsAjenos = new Set() } = {}) {
   const mal = [];
   const di = (m) => mal.push(m);
@@ -175,6 +249,8 @@ export function validar(art, { archivo = '', slugsAjenos = new Set() } = {}) {
       }
     }
   }
+
+  revisarCopyLinkedIn(art, di);
 
   if (art.es?.slug && art.es.slug === art.en?.slug) {
     di('la dirección en español y en inglés son la misma; cada idioma lleva la suya');

@@ -94,6 +94,12 @@ export default function Editor({ articulo, alCambiar, publicadoAntes }) {
 
   const bloques = t.bloques || [];
   const ponBloques = (b) => pon('bloques', b);
+
+  /* El copy de LinkedIn vive dentro del artículo, en español. Se cuenta aquí
+     para poder enseñar el número mientras se escribe: el rango del encargo es
+     60–100 palabras y sin contador nadie acierta a ojo. */
+  const copyLinkedIn = (articulo.es && articulo.es.linkedin) || {};
+  const palabrasCopy = String(copyLinkedIn.texto || '').split(/\s+/).filter(Boolean).length;
   const mover = (i, d) => {
     const b = [...bloques];
     const j = i + d;
@@ -205,6 +211,41 @@ export default function Editor({ articulo, alCambiar, publicadoAntes }) {
               <Area valor={t.descripcion} alCambiar={(v) => pon('descripcion', v)} />
             </div>
           </div>
+
+          {/* El post de LinkedIn. Solo en español: la página de empresa publica
+              en español y el enlace del post apunta al artículo en español.
+           *
+           * Está aquí, junto al artículo y antes de publicarlo, porque es el
+           * único momento en que alguien puede leerlo. Después lo publica un
+           * mecanismo automático sin nadie delante. */}
+          {lang === 'es' && (
+            <div style={{ background: marco.papel, border: marco.linea, borderRadius: 2, padding: 16, display: 'grid', gap: 12 }}>
+              <Fila style={{ justifyContent: 'space-between' }}>
+                <Etiqueta pista="lo que se lee en LinkedIn cuando salga el artículo">Post de LinkedIn</Etiqueta>
+                <span style={{ font: 'var(--type-mono)', fontSize: 12, color: palabrasCopy > 100 || (palabrasCopy && palabrasCopy < 60) ? 'var(--estado-error, #b42318)' : 'var(--text-faint)' }}>
+                  {palabrasCopy} palabras · 60–100
+                </span>
+              </Fila>
+              <Area
+                valor={copyLinkedIn.texto || ''}
+                alCambiar={(v) => pon('linkedin', { ...copyLinkedIn, texto: v })}
+                filas={7}
+              />
+              <div>
+                <Etiqueta pista="hasta tres, separados por coma y sin almohadilla">Hashtags</Etiqueta>
+                <Texto
+                  valor={(copyLinkedIn.hashtags || []).join(', ')}
+                  alCambiar={(v) => pon('linkedin', {
+                    ...copyLinkedIn,
+                    hashtags: v.split(',').map((x) => x.trim().replace(/^#/, '')).filter(Boolean).slice(0, 3),
+                  })}
+                />
+              </div>
+              <span style={{ font: 'var(--type-mono)', fontSize: 12, color: 'var(--text-faint)' }}>
+                El enlace lo añade el publicador. No lo escribas en el texto.
+              </span>
+            </div>
+          )}
 
           {bloques.map((b, i) => (
             <Bloque

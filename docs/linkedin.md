@@ -109,6 +109,31 @@ así que el correo de GitHub llega igual. El artículo no se pierde: sigue
 publicado en la web, en el sitemap y en los feeds. Lo único que falta ese día es
 el aviso en LinkedIn.
 
+## De dónde sale el texto del post
+
+No lo compone este mecanismo. Cada artículo trae el suyo escrito dentro, en
+`es.linkedin`, y se puede leer y corregir en el panel antes de que salga, en la
+pantalla del artículo, debajo de la descripción.
+
+El encargo completo está en `automatizacion/copy-linkedin.md` y lo importante
+cabe en una línea: **el post no resume el artículo, plantea la idea que lo hace
+interesante.** Un resumen bien hecho es la forma más eficaz de que nadie abra el
+enlace.
+
+El enlace y los hashtags los pone el publicador. En el texto no van: una
+dirección escrita a mano es una dirección que puede estar mal, y cuando se note,
+el post ya está publicado y la tarjeta que LinkedIn compuso la primera vez ya no
+se puede cambiar.
+
+Para ver cómo queda un post sin publicarlo:
+
+```
+node scripts/linkedin.mjs --ensayo
+```
+
+Si un artículo llegara sin copy escrito, se publica igual con un texto de
+respaldo peor y queda una advertencia en el resumen del despliegue.
+
 ## Cuándo subir la versión de la API
 
 `scripts/linkedin.mjs` fija `LINKEDIN_VERSION` en un mes concreto. LinkedIn saca

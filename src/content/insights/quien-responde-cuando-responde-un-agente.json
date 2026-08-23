@@ -9,6 +9,14 @@
     "titulo": "Quién responde cuando responde un agente",
     "entradilla": "La pregunta que decide si un agente llega a producción no es técnica. Es de quién es el resultado cuando sale mal.",
     "descripcion": "Por qué los agentes de IA se atascan antes de producción: no falta capacidad técnica, falta un dueño del resultado y un umbral de decisión escrito.",
+    "linkedin": {
+      "texto": "Antes de preguntar qué tan bueno es un agente, conviene saber de quién es el error que cometa.\n\nEs la conversación que detiene proyectos que ya funcionan. Mientras nadie tenga el resultado, la respuesta por defecto es que una persona confirme cada decisión: la forma más cara de no automatizar nada, porque el trabajo se hace dos veces y con una espera en medio.\n\nExploramos qué cambia cuando un agente deja de tratarse como una herramienta y pasa a ocupar un puesto. Análisis completo de BECOME.",
+      "hashtags": [
+        "IA",
+        "Gobernanza",
+        "Agentes"
+      ]
+    },
     "bloques": [
       {
         "tipo": "entradilla",

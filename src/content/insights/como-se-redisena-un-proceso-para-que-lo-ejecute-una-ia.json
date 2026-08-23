@@ -9,6 +9,14 @@
     "titulo": "Cómo rediseñar un proceso para que lo ejecute una IA",
     "entradilla": "Metieron un agente en medio del proceso y siguieron haciendo exactamente lo mismo. Solo que ahora hay un paso más: alguien copia lo que dice el agente a la hoja de siempre, por si acaso.",
     "descripcion": "Rediseñar un proceso no es insertar una IA en él. Es decidir antes qué puede hacer sola, qué necesita firma humana y quién responde si sale mal.",
+    "linkedin": {
+      "texto": "«Rediseña antes de automatizar» se repite tanto que ya suena a método. Es una consigna: dice qué hacer y no dice cómo.\n\nLo que ocurre después es previsible. El equipo coge el diagrama de siempre, busca dónde encaja la IA y la mete en una caja nueva. El proceso conserva sus pasos, sus revisiones y sus esperas, más una: alguien copia lo que dijo el agente a la hoja de siempre, por si acaso.\n\nEn el artículo completo analizamos qué se rediseña de verdad en un proceso con volumen real.",
+      "hashtags": [
+        "IA",
+        "Procesos",
+        "Automatizacion"
+      ]
+    },
     "bloques": [
       {
         "tipo": "parrafo",

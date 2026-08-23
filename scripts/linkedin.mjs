@@ -138,11 +138,49 @@ if (!ENSAYO) await avisarSiCaduca();
 
 /* ---- El texto del post ---------------------------------------------------
  *
- * La entradilla y no la descripción. La descripción se escribió para el
- * resultado de búsqueda: resume. La entradilla se escribió para que alguien
- * siga leyendo, que es exactamente el trabajo que tiene que hacer aquí. */
+ * El copy viene escrito dentro del artículo, en `es.linkedin`, y lo escribe
+ * quien escribe el artículo siguiendo `automatizacion/copy-linkedin.md`.
+ *
+ * Antes se componía aquí, juntando la entradilla con el título y el enlace.
+ * Funcionaba y estaba mal: eso es un resumen, y un resumen resuelto es la
+ * forma más eficaz de que nadie abra el artículo. El lector lo lee, entiende
+ * de qué va, y sigue bajando. Un post tiene un trabajo distinto al de una
+ * entradilla —abrir una pregunta, no cerrarla— y ese trabajo no se puede hacer
+ * concatenando campos que se escribieron para otra cosa.
+ *
+ * El enlace lo pone este script, no el copy: una dirección escrita a mano en
+ * el texto es una dirección que puede estar mal, y cuando se note, el post ya
+ * está publicado y la tarjeta que LinkedIn compuso la primera vez ya no se
+ * puede cambiar. Los hashtags igual: llegan como lista, sin almohadilla, y se
+ * añaden al final. */
 const url = `${SITIO}/es/insights/${nuevo.es.slug}`;
-const texto = `${nuevo.es.entradilla}\n\n${nuevo.es.titulo}\n\n${url}`;
+
+const copy = nuevo.es.linkedin || {};
+const etiquetas = (copy.hashtags || [])
+  .slice(0, 3)
+  .map((h) => `#${String(h).replace(/[^\p{L}\p{N}]/gu, '')}`)
+  .filter((h) => h.length > 1);
+
+/* Sin copy escrito hay que decidir entre no publicar nada o publicar algo
+   pobre. Gana publicar: el artículo ya está en la web y el post es lo que lo
+   lleva gente. Pero queda dicho en el registro del despliegue, porque un
+   respaldo silencioso se convierte en el comportamiento normal. */
+if (!copy.texto) {
+  console.log(`::warning::«${nuevo.es.titulo}» no trae copy de LinkedIn escrito (es.linkedin.texto). Se publica con un texto de respaldo, que es peor. Lo correcto está en automatizacion/copy-linkedin.md.`);
+}
+
+const cuerpoTexto = (copy.texto || `${nuevo.es.entradilla}\n\nLo desarrollamos en este nuevo análisis de BECOME.`).trim();
+
+const texto = [cuerpoTexto, url, etiquetas.join(' ')].filter(Boolean).join('\n\n');
+
+/* LinkedIn corta el post a los 3.000 caracteres. Ninguno de los nuestros se
+   acerca, y por eso mismo si uno llegara sería por un error —un campo pegado
+   dos veces, un artículo entero donde iba el copy— y cortarlo en silencio
+   publicaría ese error a medias. */
+if (texto.length > 3000) {
+  console.error(`::error::El post mide ${texto.length} caracteres y LinkedIn admite 3.000. No se publica: revisa es.linkedin.texto de «${nuevo.es.slug}».`);
+  process.exit(1);
+}
 
 const cuerpo = {
   author: `urn:li:organization:${ORG}`,

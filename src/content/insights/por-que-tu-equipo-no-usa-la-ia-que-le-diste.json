@@ -9,6 +9,14 @@
     "titulo": "Por qué tu equipo no usa la IA que le diste",
     "entradilla": "Compraste las licencias. Y tres meses después el panel de uso dice la verdad que nadie enseña en el comité.",
     "descripcion": "Tu equipo no adopta la IA por falta de formación: la usa a medias porque usarla bien no le conviene a nadie salvo a la empresa.",
+    "linkedin": {
+      "texto": "Compraste las licencias, hiciste la capacitación y el panel de uso sigue diciendo lo que nadie enseña en el comité.\n\nLa lectura habitual es que falta formación. Rara vez es eso. Usar bien una herramienta de IA le conviene a la empresa, y hoy, en la mayoría de equipos, a quien la usa no le cambia nada: ni su carga de trabajo, ni su evaluación, ni lo que se espera de ella.\n\nExploramos qué hay que mover para que la adopción deje de depender de la buena voluntad. Análisis completo de BECOME.",
+      "hashtags": [
+        "IA",
+        "Adopcion",
+        "Liderazgo"
+      ]
+    },
     "bloques": [
       {
         "tipo": "entradilla",

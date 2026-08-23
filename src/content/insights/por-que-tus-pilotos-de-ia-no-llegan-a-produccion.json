@@ -9,6 +9,14 @@
     "titulo": "Por qué tus pilotos de IA no llegan a producción",
     "entradilla": "El piloto salió bien. Y ese es exactamente el momento en el que se quedó parado.",
     "descripcion": "Un piloto que funciona se atasca al pasar a producción cuando nadie presupuestó el gasto recurrente ni escribió la fecha en la que se mata.",
+    "linkedin": {
+      "texto": "Un piloto demuestra que la IA puede funcionar. No demuestra que la empresa pueda operarla.\n\nLo que frena el paso a producción casi nunca es técnico. Un piloto se aprueba como experimento y la operación se aprueba como gasto: dos comités distintos, dos apetitos de riesgo distintos y una pregunta que rara vez llega al acta, la de quién paga que esto siga funcionando cuando deje de ser noticia.\n\nEn el análisis completo de BECOME desarrollamos qué decisión hay que firmar para que un piloto deje de estar parado.",
+      "hashtags": [
+        "IA",
+        "Estrategia",
+        "Operaciones"
+      ]
+    },
     "bloques": [
       {
         "tipo": "entradilla",

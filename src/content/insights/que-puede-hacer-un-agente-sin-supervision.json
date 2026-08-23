@@ -9,6 +9,14 @@
     "titulo": "Qué puede hacer un agente sin supervisión",
     "entradilla": "El marco de «clasificar por riesgo» suena a método. En la práctica nadie en la sala puede aplicarlo a un caso real hasta que ya salió mal.",
     "descripcion": "El criterio para que un agente actúe sin supervisión no es el riesgo: son tres variables escritas antes, que cualquiera puede auditar.",
+    "linkedin": {
+      "texto": "Clasificar por riesgo suena a método hasta que hay que aplicarlo a un caso concreto, y entonces nadie en la sala sabe dónde está el corte.\n\nMientras ese criterio no baje a algo que se pueda mirar sin discutir media hora, no vive en un documento: vive en la cabeza de quien estuvo en la reunión. Y acaban conviviendo dos empresas dentro de la misma, una que deja decidir de más y otra que retira autonomía de golpe tras el primer incidente.\n\nEn el análisis completo de BECOME desarrollamos las tres variables que sí definen ese corte.",
+      "hashtags": [
+        "IA",
+        "Agentes",
+        "Operaciones"
+      ]
+    },
     "bloques": [
       {
         "tipo": "entradilla",
