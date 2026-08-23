@@ -1,0 +1,31 @@
+# Pulse en un VPS que YA tiene otra cosa publicando en internet (n8n, por
+# ejemplo). Se usa junto al compose normal, no en su lugar:
+#
+#   docker compose -f docker-compose.yml -f docker-compose.compartido.yml \
+#     --env-file .env up -d --build
+#
+# Dos cambios respecto al montaje normal:
+#
+#   1. El Caddy de Pulse no arranca. Los puertos 80 y 443 ya los tiene el
+#      proxy que hay en la máquina, y dos programas no pueden escuchar en el
+#      mismo puerto. Ese proxy es el que hay que apuntar a Pulse.
+#
+#   2. `web` publica su puerto solo en 127.0.0.1. Así el proxy de la máquina
+#      llega —está en la misma máquina— y desde internet no se llega, que es
+#      exactamente lo que queremos: el único que da la cara sigue siendo el
+#      proxy, con su certificado.
+#
+# Al proxy hay que decirle que pulse.meetbecome.com va a http://127.0.0.1:3000,
+# y que /api/interno/* se responde con un 404 sin llegar a Pulse: esa API solo
+# tiene sentido entre el bot y la web, y de puertas afuera no existe. En
+# infra/ hay un ejemplo para Caddy y otro para Nginx.
+
+services:
+  caddy:
+    # Un perfil que nadie activa nunca es la forma de decir «este servicio no
+    # arranca» sin tener que borrarlo del compose principal.
+    profiles: ["sin-usar"]
+
+  web:
+    ports:
+      - "127.0.0.1:3000:3000"

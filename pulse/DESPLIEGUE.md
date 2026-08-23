@@ -32,6 +32,20 @@ Calcula **una hora larga** la primera vez. Los pasos 1 a 3 son de esperar
 | 9 | El resumen semanal y las copias | Terminal (en el VPS) |
 | 10 | Despliegue automático desde GitHub | Web de GitHub |
 
+> ### ¿Y si el VPS ya tiene algo funcionando?
+>
+> Si vas a reutilizar un servidor donde ya corre n8n u otra cosa publicada en
+> internet, **sirve perfectamente** —Pulse cabe de sobra en un KVM 2— pero hay
+> un cambio importante: los puertos 80 y 443 ya los tiene el proxy de lo que
+> está montado, y dos programas no pueden escuchar en el mismo puerto. Pulse
+> se cuelga de ese proxy en vez de traer el suyo.
+>
+> Cambian solo el paso 3.4 (el cortafuegos ya estará hecho) y el paso 7. Lo
+> tienes en **[«Si el VPS ya tiene otra cosa»](#si-el-vps-ya-tiene-otra-cosa)**,
+> justo después del paso 7, con el fragmento de configuración para Caddy,
+> Nginx y Traefik en [`infra/proxy-compartido.md`](infra/proxy-compartido.md).
+> El resto de la guía es igual.
+
 ---
 
 ## 1. Contratar el VPS
@@ -362,6 +376,63 @@ docker compose -f pulse/docker-compose.yml --env-file pulse/.env logs caddy --ta
 | Caddy: `too many failed authorizations` | Let's Encrypt te frenó por reintentos. Espera una hora con el DNS ya correcto. |
 | El navegador no carga nada, ni error | El cortafuegos. `sudo ufw status` tiene que listar 80 y 443. |
 | Sale sin estilos, todo texto plano | Es la única forma de un build a medias. `docker compose ... up -d --build --force-recreate web`. |
+
+---
+
+## Si el VPS ya tiene otra cosa
+
+Todo lo anterior asume un servidor vacío, donde el Caddy de Pulse puede quedarse
+con los puertos 80 y 443. Si ahí ya vive n8n, esos puertos están ocupados: si
+levantas el compose normal, el contenedor `caddy` de Pulse no arranca —y si
+arrancara, sería peor, porque se pelearía con el proxy que sostiene n8n.
+
+**Antes de nada, mira qué hay montado.** Estos cuatro comandos lo dicen todo:
+
+```bash
+# ¿Quién tiene el 80 y el 443?
+sudo ss -ltnp | grep -E ':(80|443)\s'
+# ¿Qué contenedores corren?
+docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Ports}}'
+# ¿Hay sitio?
+free -h && df -h /
+```
+
+Lo que salga en la primera línea es tu proxy: `caddy`, `nginx`, `traefik` o
+`docker-proxy` (que significa que el proxy va en un contenedor; la segunda
+línea dice cuál).
+
+Con eso, dos cambios respecto a la guía:
+
+**Paso 3.4, el cortafuegos.** Ya estará configurado, porque n8n se sirve desde
+fuera. Comprueba con `sudo ufw status` que 80 y 443 están abiertos y **no
+ejecutes `ufw --force enable`** si dice `inactive`: activarlo de golpe en un
+servidor en marcha puede cortar n8n. Si está inactivo, déjalo como está.
+
+**Paso 7, levantarlo.** Con los dos archivos de compose, para que Pulse no
+traiga su proxy y escuche solo en local:
+
+```bash
+cd /opt/pulse/pulse
+docker compose -f docker-compose.yml -f docker-compose.compartido.yml \
+  --env-file .env up -d --build
+```
+
+Salen tres contenedores en vez de cuatro (`db`, `web`, `bot`), y `web`
+responde en `127.0.0.1:3000`: alcanzable desde la propia máquina, desde
+internet no.
+
+Falta decirle al proxy que `pulse.meetbecome.com` va a ese puerto. El
+fragmento exacto según cuál sea está en
+**[`infra/proxy-compartido.md`](infra/proxy-compartido.md)**, con la
+comprobación final de que Pulse responde y n8n sigue igual.
+
+Dos avisos sobre compartir servidor:
+
+- **El build aprieta.** Compilar la web se lleva una CPU entera un par de
+  minutos, y en un KVM 2 eso son las dos que hay. Si n8n tiene automatizaciones
+  sensibles a la hora, despliega cuando no estén corriendo.
+- **Una copia de seguridad del VPS ya no es solo de Pulse.** Cuando restaures
+  algo, mira qué te llevas por delante.
 
 ---
 
