@@ -19,7 +19,15 @@ import { chromium } from "playwright";
 
 const BASE = process.argv[2] ?? "http://localhost:3000";
 const CUENTA = { email: "carlos@demo.pe", password: "pulse-demo-2026" };
-const RUTAS = ["/feed", "/notificaciones", "/perfil", "/admin", "/panel"];
+const RUTAS = [
+  "/feed",
+  "/notificaciones",
+  "/perfil",
+  "/admin",
+  "/admin/personas",
+  "/admin/empresa",
+  "/panel",
+];
 
 function luminancia([r, g, b]) {
   const f = (c) => {

@@ -81,7 +81,11 @@ a {
   padding: 0 var(--space-3);
 }
 
-.lateral__marca span {
+/* El descriptor «PULSE» que va bajo el wordmark. La clase es específica a
+ * propósito: con `.lateral__marca span` a secas, el nombre de la empresa
+ * —que también es un span ahí dentro— heredaba las mayúsculas y el tracking
+ * ancho del wordmark y salía como «F L U M   C O N S U L T O R E S». */
+.lateral__marca > span:not([class]) {
   font: var(--type-label);
   letter-spacing: var(--track-descriptor);
   text-transform: uppercase;
@@ -1532,5 +1536,349 @@ td:has(.barra) {
     animation-duration: 1ms !important;
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* ---- Administración ------------------------------------------------------ */
+
+.pestanas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-7);
+  border-bottom: var(--border-hair) solid var(--border-hairline);
+}
+
+.pestanas__enlace {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border-bottom: var(--border-thick) solid transparent;
+  color: var(--text-muted);
+  font: var(--type-body);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-standard);
+}
+
+.pestanas__enlace:hover {
+  color: var(--text-heading);
+}
+
+/* La pestaña activa se marca con la línea Y con el peso, no solo con el color:
+ * el verde sobre blanco es la única señal que un daltónico no distingue. */
+.pestanas__enlace[aria-current="page"] {
+  color: var(--text-heading);
+  font-weight: var(--weight-body-medium);
+  border-bottom-color: var(--electric-green);
+}
+
+.bloque-config {
+  margin-bottom: var(--space-6);
+}
+
+.bloque-config > p {
+  max-width: var(--maxw-prose);
+}
+
+.bloque-config code {
+  font: var(--type-mono);
+  background: var(--bg-sunken);
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
+}
+
+/* ---- Logotipo ------------------------------------------------------------ */
+
+.logo-editor {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  margin-bottom: var(--space-7);
+  flex-wrap: wrap;
+}
+
+.logo-editor__marco {
+  width: 96px;
+  height: 96px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-xl);
+  background: var(--bg-sunken);
+  border: var(--border-hair) solid var(--border-hairline);
+  overflow: hidden;
+}
+
+.logo-editor__marco img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.logo-editor__vacio {
+  font: var(--type-h3);
+  color: var(--text-faint);
+  letter-spacing: var(--track-label);
+}
+
+.lateral__logo {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+  flex: none;
+}
+
+.lateral__nombre-empresa {
+  font: var(--type-body);
+  font-weight: var(--weight-body-medium);
+  color: var(--white);
+  letter-spacing: var(--track-body);
+  text-transform: none;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.acceso__logo {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-lg);
+  object-fit: cover;
+  margin-bottom: var(--space-5);
+  display: block;
+}
+
+/* ---- Datos que no se editan ---------------------------------------------- */
+
+.datos-fijos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-5);
+  margin: var(--space-6) 0 0;
+  padding-top: var(--space-5);
+  border-top: var(--border-hair) solid var(--border-hairline);
+}
+
+.datos-fijos dt {
+  font: var(--type-label);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: var(--space-2);
+}
+
+.datos-fijos dd {
+  margin: 0;
+  font: var(--type-body);
+  color: var(--text-body);
+}
+
+.consumo {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-5) 0 0;
+  color: var(--text-faint);
+  font: var(--type-mono);
+}
+
+.consumo__barra {
+  display: block;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-sunken);
+  overflow: hidden;
+}
+
+.consumo__barra > span {
+  display: block;
+  height: 100%;
+  background: var(--electric-green);
+}
+
+/* ---- Personas ------------------------------------------------------------ */
+
+.barra-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+
+.barra-acciones__buscador {
+  flex: 1;
+  min-width: 220px;
+}
+
+.celda-persona {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.celda-persona strong {
+  display: block;
+  font-weight: var(--weight-body-medium);
+  color: var(--text-heading);
+}
+
+.celda-persona__correo {
+  display: block;
+  color: var(--text-faint);
+  font-size: var(--text-body-sm);
+}
+
+/* Una fila desactivada baja de contraste, pero no por debajo de AA: sigue
+ * teniendo que leerse para poder reactivarla. */
+tr[data-inactiva] .celda-persona strong,
+tr[data-inactiva] td {
+  color: var(--text-muted);
+}
+
+.acciones-fila {
+  display: flex;
+  gap: var(--space-1);
+  align-items: center;
+}
+
+.opcion-radio {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.opcion-radio:hover {
+  background: var(--bg-sunken);
+}
+
+.opcion-radio input {
+  width: auto;
+  min-height: 0;
+  margin-top: 3px;
+  flex: none;
+  accent-color: var(--text-accent);
+}
+
+.opcion-radio strong {
+  display: block;
+  color: var(--text-heading);
+  font-weight: var(--weight-body-medium);
+}
+
+.opcion-radio__ayuda {
+  display: block;
+  color: var(--text-muted);
+  font-size: var(--text-body-sm);
+}
+
+fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0 0 var(--space-5);
+}
+
+legend {
+  font: var(--type-label);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 0;
+  margin-bottom: var(--space-2);
+}
+
+.edicion-fila {
+  padding: var(--space-5) 0;
+}
+
+.edicion-fila__quien {
+  margin: 0 0 var(--space-5);
+}
+
+.edicion-fila__quien strong {
+  color: var(--text-heading);
+}
+
+.edicion-fila__botones {
+  display: flex;
+  gap: var(--space-3);
+}
+
+/* ---- Enlace de invitación ------------------------------------------------ */
+
+.panel-enlace {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+  border-color: var(--green-line);
+  background: var(--green-tint);
+}
+
+.panel-enlace__texto {
+  flex: 1;
+  min-width: 260px;
+}
+
+.panel-enlace__texto p {
+  margin: 0 0 var(--space-4);
+  max-width: var(--maxw-prose);
+}
+
+.panel-enlace__url {
+  display: block;
+  font: var(--type-mono);
+  color: var(--text-body);
+  background: var(--white);
+  border: var(--border-hair) solid var(--border-hairline);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  overflow-wrap: anywhere;
+}
+
+.panel-enlace__lista {
+  font: var(--type-mono);
+  background: var(--white);
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.panel-enlace__botones {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.lista-fallos {
+  margin: 0 0 var(--space-5);
+  padding-left: var(--space-5);
+  color: var(--text-body);
+  font: var(--type-body);
+}
+
+.lista-fallos li {
+  margin-bottom: var(--space-2);
+}
+
+.aviso--ok {
+  border-color: var(--green-line);
+  background: var(--green-tint);
+  color: var(--text-body);
+}
+
+@media (max-width: 860px) {
+  .panel-enlace__botones {
+    width: 100%;
+  }
+
+  .panel-enlace__botones .boton {
+    flex: 1;
   }
 }

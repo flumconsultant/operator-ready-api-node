@@ -185,7 +185,76 @@ queda reservado para lo accionable.
 
 ---
 
-## 6. La capa de IA
+## 6. Montar una empresa
+
+Todo se hace desde `/admin`, que tiene tres pestañas.
+
+**Empresa.** Nombre, logotipo, dominio de correo, conexión con Discord y el
+tope mensual de la capa de IA. El logotipo sustituye al nombre de Pulse en la
+barra lateral y en la pantalla de invitación: quien entra cada mañana tiene que
+ver su casa, no la nuestra.
+
+**Personas.** Aquí se da de alta a la gente. Dos formas:
+
+- *Invitar a alguien*: nombre, correo, equipo, cargo y permisos.
+- *Pegar una lista*: una persona por línea, separando con comas o tabuladores.
+  Se puede copiar y pegar directamente desde Excel o Google Sheets — acepta los
+  tres separadores porque eso es lo que sale al copiar de cada uno, y se salta
+  la fila de cabecera si la pegas también. Las líneas con error se informan una
+  a una y no impiden que el resto entre.
+
+**Cultura.** Los valores configurables, el ranking, el mapa de influencia y el
+resumen semanal.
+
+### Cómo entra la gente invitada
+
+Al dar de alta a alguien, Pulse genera un **enlace de invitación** que el
+administrador copia y manda por donde quiera. Con él, la persona elige su
+contraseña y entra directa: no hay una segunda pantalla pidiéndole que vuelva a
+escribirla.
+
+Es un mecanismo propio y no el magic link de Auth.js, por un motivo práctico:
+en un piloto sin servidor de correo montado, el administrador tiene que poder
+pegar el enlace en un WhatsApp. Con el magic link eso no se puede — el token se
+genera al pedirlo y sale por correo o no existe.
+
+El enlace caduca a los catorce días y **se quema al usarse**. Si se pierde, se
+genera otro desde la lista de personas, y el anterior deja de valer en ese
+momento: si alguien reenvía una invitación suele ser porque la primera acabó
+donde no debía.
+
+### Los tres permisos
+
+| Permiso | Qué puede |
+|---|---|
+| Colaborador | Ver el feed, reconocer, comentar y reaccionar. |
+| Manager | Además, el panel de su equipo. |
+| Administrador | Además, configurar la empresa y dar de alta a la gente. |
+
+### Lo que la interfaz no te deja hacer
+
+Tres cosas, y las tres a propósito, porque dejan una empresa rota sin forma de
+arreglarla desde dentro:
+
+- Quitarte a ti mismo el rol de administrador.
+- Desactivarte a ti mismo.
+- Desactivar al último administrador activo.
+
+Y una cuarta: **no se borra a nadie, se desactiva.** Un borrado se llevaría por
+delante todos los reconocimientos que esa persona dio y recibió, y con ellos el
+histórico de la empresa. Quien se va del equipo deja de entrar; lo que escribió
+se queda.
+
+### Conectar Discord
+
+En la pestaña Empresa hacen falta dos identificadores: el del servidor y el del
+canal donde se espeja el feed. Los dos se copian con clic derecho en Discord,
+con el modo desarrollador activado. Después, cada persona necesita su **ID de
+Discord** en su ficha (pestaña Personas → editar) para poder usar
+`/reconocer`. Eso sigue siendo manual y es lo siguiente que hay que
+automatizar.
+
+## 7. La capa de IA
 
 Son tres cosas, y ninguna es imprescindible para que el producto funcione. Si
 `ANTHROPIC_API_KEY` está vacía, Pulse arranca igual: el feed, el bot y los
@@ -228,25 +297,18 @@ réplicas y RRHH recibe el resumen dos veces.
 
 ---
 
-## 7. Discord
+## 8. Discord
 
 1. Crea una aplicación en <https://discord.com/developers/applications>, añádele
    un bot y copia el token y el Client ID a `.env`.
 2. Invita al bot a tu servidor con el permiso de enviar mensajes.
 3. `cd bot && npm run registrar` — registra `/reconocer`. Se hace una vez, no en
    cada despliegue: Discord limita cuántas veces al día se puede.
-4. En la base de datos, vincula la empresa con el servidor:
-
-   ```sql
-   update companies
-      set "discordGuildId" = 'ID_DEL_SERVIDOR',
-          "discordCanalFeedId" = 'ID_DEL_CANAL'
-    where slug = 'demo';
-   ```
-
-5. Cada persona necesita su `discordId` en la tabla `users` para poder
-   reconocer desde Discord. Es lo que queda pendiente de automatizar: hoy se
-   pone a mano, y en v2 debería ser un `/vincular` en el propio bot.
+4. Vincula el servidor desde **Cultura → Empresa**, pegando los dos
+   identificadores de Discord.
+5. Pon el ID de Discord de cada persona en su ficha, en **Cultura → Personas**.
+   Es lo que queda por automatizar: en v2 debería ser un `/vincular` en el
+   propio bot.
 
 El bot no toca Postgres. Todo se lo pide a la web por una API interna
 autenticada con `INTERNAL_API_TOKEN`, así hay una sola definición de las reglas
@@ -255,7 +317,7 @@ Caddy: desde internet devuelve 404.
 
 ---
 
-## 8. Despliegue
+## 9. Despliegue
 
 `.github/workflows/pulse.yml` comprueba tipos y build en cada push, y despliega
 al VPS cuando el cambio llega a `main`. Se dispara solo con cambios dentro de
@@ -276,13 +338,13 @@ no salen del servidor.
 
 ---
 
-## 9. Lo que no está hecho, y por qué
+## 10. Lo que no está hecho, y por qué
 
 | Pendiente | Motivo |
 |---|---|
-| Invitar colaboradores desde el panel | Hoy las cuentas se crean con la semilla o a mano en la base. Es lo primero que hay que construir para el piloto. |
-| `/vincular` en el bot | Enlazar Discord con Pulse se hace hoy escribiendo el `discordId` en la tabla. Funciona, pero no escala más allá de una empresa piloto. |
-| Correo real | Sin `SMTP_URL`, el enlace de acceso se escribe en el log del contenedor en vez de enviarse. Para un piloto sirve; para producción hay que ponerlo. |
+| `/vincular` en el bot | Enlazar Discord con Pulse se hace hoy escribiendo el ID en la ficha de cada persona. Funciona para una empresa piloto y no para la segunda. |
+| Registro de una empresa nueva | La primera empresa la crea la semilla. Para dar de alta un cliente nuevo hoy hay que insertar una fila en `companies`. Es un formulario más, y solo hace falta cuando haya un segundo cliente. |
+| Correo real | Sin `SMTP_URL`, el enlace de acceso por magic link se escribe en el log del contenedor en vez de enviarse. Las invitaciones no dependen de esto: su enlace se copia a mano. |
 | Menciones con @ dentro del mensaje | El texto se guarda plano. Es lo siguiente que pide un feed en cuanto se usa de verdad. |
 | Reconocer a varias personas a la vez | StarMeUp lo tiene y tiene sentido para un logro de equipo. Cambia el modelo de datos, así que no entró en esta pasada. |
 | Moderar o borrar una publicación | No hay forma de retirar un reconocimiento desafortunado. Para un piloto con acompañamiento se puede vivir con ello; para el segundo cliente, no. |

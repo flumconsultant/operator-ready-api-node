@@ -41,11 +41,15 @@ export default async function Marco({
 }) {
   const usuario = await sesionRequerida();
 
-  const [pendientes, yo] = await Promise.all([
+  const [pendientes, yo, empresa] = await Promise.all([
     sinLeer(usuario.id),
     prisma.user.findUniqueOrThrow({
       where: { id: usuario.id },
       select: { id: true, nombre: true, imagen: true, cargo: true },
+    }),
+    prisma.company.findUniqueOrThrow({
+      where: { id: usuario.companyId },
+      select: { nombre: true, logo: true },
     }),
   ]);
 
@@ -87,8 +91,25 @@ export default async function Marco({
   return (
     <div className="app">
       <aside className="lateral">
+        {/* Con logo, la barra enseña la marca de la empresa; sin él, la de
+            Pulse. Quien entra cada mañana tiene que ver su casa, no la nuestra
+            — y a la vez el pie recuerda de qué producto se trata. */}
         <Link href="/feed" className="lateral__marca">
-          BECOME <span>Pulse</span>
+          {empresa.logo ? (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`/api/imagenes/${empresa.logo}`}
+                alt={empresa.nombre}
+                className="lateral__logo"
+              />
+              <span className="lateral__nombre-empresa">{empresa.nombre}</span>
+            </>
+          ) : (
+            <>
+              BECOME <span>Pulse</span>
+            </>
+          )}
         </Link>
 
         <nav className="nav nav--lateral" aria-label="Secciones">

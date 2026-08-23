@@ -35,6 +35,14 @@ model Company {
   nombre             String
   slug               String   @unique
   plan               String   @default("piloto")
+  /// Nombre del archivo en el almacén de imágenes. Sustituye al wordmark de
+  /// Pulse en la barra lateral y en la pantalla de acceso: quien entra tiene
+  /// que ver su empresa, no la nuestra.
+  logo               String?
+  /// Dominio de correo de la empresa. Si está puesto, al invitar se avisa
+  /// cuando una dirección no lo cumple — no se bloquea, porque los becarios y
+  /// los externos existen.
+  dominioCorreo      String?
   /// Servidor de Discord conectado, si lo hay.
   discordGuildId     String?  @unique
   /// Canal donde el bot publica el espejo del feed.
@@ -95,6 +103,13 @@ model User {
   discordId     String?   @unique
   activo        Boolean   @default(true)
   invitadoEn    DateTime  @default(now())
+  /// Invitación pendiente. Es un mecanismo propio y no el magic link de
+  /// Auth.js: el enlace se puede copiar y mandar por WhatsApp, que es lo que
+  /// va a pasar en un piloto sin servidor de correo montado.
+  tokenInvitacion   String?   @unique
+  invitacionExpira  DateTime?
+  /// Cuándo entró por primera vez. Sirve para saber a quién hay que perseguir.
+  primerAcceso      DateTime?
 
   company        Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
   dados          Recognition[]  @relation("reconocimientosDados")
