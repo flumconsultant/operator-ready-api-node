@@ -16,7 +16,15 @@ RUN npm ci --no-audit --no-fund || npm install --no-audit --no-fund
 
 FROM node:22-alpine AS build
 WORKDIR /app
-ENV NEXT_TELEMETRY_DISABLED=1
+# Al compilar, Next recorre las rutas y eso importa el módulo que valida el
+# entorno. Estos valores son de mentira y solo existen en esta etapa: no hay
+# base de datos ni claves reales durante el build, y la etapa final arranca
+# limpia y recibe las de verdad desde el .env del servidor. Sin esto, `next
+# build` se para con «Configuración inválida» aunque el .env esté perfecto.
+ENV NEXT_TELEMETRY_DISABLED=1 \
+    DATABASE_URL=postgresql://compilar:compilar@localhost:5432/compilar \
+    AUTH_SECRET=solo-para-compilar-la-imagen-nada-real-de-aqui \
+    INTERNAL_API_TOKEN=solo-para-compilar-la-imagen-nada-real
 COPY --from=deps /app/node_modules ./node_modules
 COPY web/ ./
 RUN npx prisma generate && npx next build
