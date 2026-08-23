@@ -3,6 +3,12 @@ import { z } from "zod";
 import type { Rol } from "@prisma/client";
 
 import { prisma } from "./prisma";
+import { anotar, diferencias } from "./auditoria";
+
+// Quién hace el cambio. Se pasa a cada función en vez de leerse de la sesión
+// aquí dentro para que este módulo se pueda usar también desde un script o
+// desde una importación masiva, donde no hay sesión que leer.
+export type Actor = { id: string | null; nombre: string | null };
 
 // Todo lo que hace un administrador: configurar su empresa y dar de alta a su
 // gente. Vive aparte de las páginas porque las mismas reglas las van a
@@ -41,10 +47,23 @@ export const DatosEmpresa = z.object({
 
 export async function guardarEmpresa(
   companyId: string,
+  actor: Actor,
   datos: z.infer<typeof DatosEmpresa>,
   logo?: string,
 ) {
   const vacioANulo = (v?: string) => (v && v.length ? v : null);
+
+  const antes = await prisma.company.findUniqueOrThrow({
+    where: { id: companyId },
+    select: {
+      nombre: true,
+      dominioCorreo: true,
+      discordGuildId: true,
+      discordCanalFeedId: true,
+      limiteIaMensual: true,
+      logo: true,
+    },
+  });
 
   // El guild de Discord es único en toda la instalación: dos empresas
   // apuntando al mismo servidor harían que los reconocimientos de una cayeran
@@ -59,17 +78,38 @@ export async function guardarEmpresa(
     }
   }
 
-  await prisma.company.update({
-    where: { id: companyId },
-    data: {
-      nombre: datos.nombre,
-      dominioCorreo: vacioANulo(datos.dominioCorreo),
-      discordGuildId: vacioANulo(datos.discordGuildId),
-      discordCanalFeedId: vacioANulo(datos.discordCanalFeedId),
-      limiteIaMensual: datos.limiteIaMensual,
-      ...(logo ? { logo } : {}),
-    },
+  const despues = {
+    nombre: datos.nombre,
+    dominioCorreo: vacioANulo(datos.dominioCorreo),
+    discordGuildId: vacioANulo(datos.discordGuildId),
+    discordCanalFeedId: vacioANulo(datos.discordCanalFeedId),
+    limiteIaMensual: datos.limiteIaMensual,
+    ...(logo ? { logo } : {}),
+  };
+
+  await prisma.company.update({ where: { id: companyId }, data: despues });
+
+  const cambios = diferencias(antes, despues, {
+    nombre: "nombre",
+    dominioCorreo: "dominio de correo",
+    discordGuildId: "servidor de Discord",
+    discordCanalFeedId: "canal del feed",
+    limiteIaMensual: "tope mensual de IA",
+    logo: "logotipo",
   });
+
+  // Un guardado que no cambió nada no se anota: llenaría el registro de ruido
+  // cada vez que alguien abre el formulario y pulsa guardar por costumbre.
+  if (cambios.length > 0) {
+    await anotar({
+      companyId,
+      actorId: actor.id,
+      actorNombre: actor.nombre,
+      accion: "EMPRESA_ACTUALIZADA",
+      objetivoNombre: despues.nombre,
+      cambios,
+    });
+  }
 
   return { ok: true as const };
 }
@@ -96,6 +136,7 @@ export type ResultadoAlta =
 /// puede — el token se genera al pedirlo y se manda por correo o no existe.
 export async function invitarPersona(
   companyId: string,
+  actor: Actor,
   datos: z.infer<typeof NuevaPersona>,
   appUrl: string,
 ): Promise<ResultadoAlta> {
@@ -132,6 +173,20 @@ export async function invitarPersona(
     select: { id: true },
   });
 
+  await anotar({
+    companyId,
+    actorId: actor.id,
+    actorNombre: actor.nombre,
+    accion: "PERSONA_INVITADA",
+    objetivoId: creada.id,
+    objetivoNombre: datos.nombre,
+    cambios: [
+      { campo: "correo", antes: null, despues: datos.email },
+      { campo: "permisos", antes: null, despues: datos.rol },
+      { campo: "equipo", antes: null, despues: datos.equipo || null },
+    ],
+  });
+
   return { ok: true, id: creada.id, enlace: `${appUrl}/invitacion/${token}` };
 }
 
@@ -139,12 +194,13 @@ export async function invitarPersona(
 /// reenvía una invitación suele ser porque la primera acabó donde no debía.
 export async function renovarInvitacion(
   companyId: string,
+  actor: Actor,
   userId: string,
   appUrl: string,
 ): Promise<ResultadoAlta> {
   const persona = await prisma.user.findFirst({
     where: { id: userId, companyId },
-    select: { id: true, passwordHash: true, primerAcceso: true },
+    select: { id: true, nombre: true, passwordHash: true, primerAcceso: true },
   });
   if (!persona) return { ok: false, error: "No encontrada." };
   if (persona.primerAcceso) {
@@ -158,6 +214,15 @@ export async function renovarInvitacion(
       tokenInvitacion: token,
       invitacionExpira: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
     },
+  });
+
+  await anotar({
+    companyId,
+    actorId: actor.id,
+    actorNombre: actor.nombre,
+    accion: "INVITACION_RENOVADA",
+    objetivoId: persona.id,
+    objetivoNombre: persona.nombre,
   });
 
   return { ok: true, id: persona.id, enlace: `${appUrl}/invitacion/${token}` };
@@ -179,18 +244,18 @@ export const CambiosPersona = z.object({
 
 export async function guardarPersona(
   companyId: string,
-  actorId: string,
+  actor: Actor,
   datos: z.infer<typeof CambiosPersona>,
 ) {
   const persona = await prisma.user.findFirst({
     where: { id: datos.userId, companyId },
-    select: { id: true, rol: true },
+    select: { id: true, nombre: true, rol: true, equipo: true, cargo: true, discordId: true },
   });
   if (!persona) return { ok: false as const, error: "No encontrada." };
 
   // Nadie puede quitarse a sí mismo el rol de administrador: es la forma más
   // rápida de dejar una empresa sin nadie que pueda administrarla.
-  if (persona.id === actorId && datos.rol !== "ADMIN") {
+  if (persona.id === actor.id && datos.rol !== "ADMIN") {
     return { ok: false as const, error: "No puedes quitarte a ti mismo el rol de administrador." };
   }
 
@@ -204,15 +269,33 @@ export async function guardarPersona(
     }
   }
 
-  await prisma.user.update({
-    where: { id: persona.id },
-    data: {
-      rol: datos.rol as Rol,
-      equipo: datos.equipo || null,
-      cargo: datos.cargo || null,
-      discordId: datos.discordId || null,
-    },
+  const despues = {
+    rol: datos.rol as Rol,
+    equipo: datos.equipo || null,
+    cargo: datos.cargo || null,
+    discordId: datos.discordId || null,
+  };
+
+  await prisma.user.update({ where: { id: persona.id }, data: despues });
+
+  const cambios = diferencias(persona, despues, {
+    rol: "permisos",
+    equipo: "equipo",
+    cargo: "cargo",
+    discordId: "ID de Discord",
   });
+
+  if (cambios.length > 0) {
+    await anotar({
+      companyId,
+      actorId: actor.id,
+      actorNombre: actor.nombre,
+      accion: "PERSONA_EDITADA",
+      objetivoId: persona.id,
+      objetivoNombre: persona.nombre,
+      cambios,
+    });
+  }
 
   return { ok: true as const };
 }
@@ -222,17 +305,17 @@ export async function guardarPersona(
 /// la empresa. Quien se va del equipo deja de entrar; lo que escribió se queda.
 export async function cambiarEstado(
   companyId: string,
-  actorId: string,
+  actor: Actor,
   userId: string,
   activo: boolean,
 ) {
-  if (userId === actorId) {
+  if (userId === actor.id) {
     return { ok: false as const, error: "No puedes desactivarte a ti mismo." };
   }
 
   const persona = await prisma.user.findFirst({
     where: { id: userId, companyId },
-    select: { id: true },
+    select: { id: true, nombre: true },
   });
   if (!persona) return { ok: false as const, error: "No encontrada." };
 
@@ -248,6 +331,16 @@ export async function cambiarEstado(
   }
 
   await prisma.user.update({ where: { id: persona.id }, data: { activo } });
+
+  await anotar({
+    companyId,
+    actorId: actor.id,
+    actorNombre: actor.nombre,
+    accion: activo ? "PERSONA_REACTIVADA" : "PERSONA_DESACTIVADA",
+    objetivoId: persona.id,
+    objetivoNombre: persona.nombre,
+  });
+
   return { ok: true as const };
 }
 

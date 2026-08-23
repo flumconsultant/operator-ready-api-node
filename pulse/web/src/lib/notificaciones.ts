@@ -70,6 +70,28 @@ export function listar(userId: string, limite = 40) {
   });
 }
 
+/// Marca una y devuelve a dónde iba.
+///
+/// Devolver el enlace desde aquí, en vez de leerlo en el cliente, es lo que
+/// impide que alguien marque como leída una notificación que no es suya: el
+/// `where` lleva el userId, así que un id ajeno no encuentra nada.
+export async function marcarLeida(userId: string, id: string) {
+  const notificacion = await prisma.notification.findFirst({
+    where: { id, userId },
+    select: { id: true, enlace: true, leidaEn: true },
+  });
+  if (!notificacion) return null;
+
+  if (!notificacion.leidaEn) {
+    await prisma.notification.update({
+      where: { id: notificacion.id },
+      data: { leidaEn: new Date() },
+    });
+  }
+
+  return notificacion.enlace;
+}
+
 export function marcarTodasLeidas(userId: string) {
   return prisma.notification.updateMany({
     where: { userId, leidaEn: null },

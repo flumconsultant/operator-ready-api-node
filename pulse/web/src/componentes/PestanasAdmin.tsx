@@ -2,7 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChartLineUp, Buildings, UsersThree } from "@phosphor-icons/react/dist/ssr";
+import {
+  ChartLineUp,
+  Buildings,
+  UsersThree,
+  ShieldCheck,
+} from "@phosphor-icons/react/dist/ssr";
 
 // Las tres pantallas de administración.
 //
@@ -15,6 +20,7 @@ const PESTANAS = [
   { href: "/admin", texto: "Cultura", Icono: ChartLineUp },
   { href: "/admin/personas", texto: "Personas", Icono: UsersThree },
   { href: "/admin/empresa", texto: "Empresa", Icono: Buildings },
+  { href: "/admin/auditoria", texto: "Auditoría", Icono: ShieldCheck },
 ];
 
 export default function PestanasAdmin() {

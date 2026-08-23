@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { z } from "zod";
 
 import { prisma } from "@/lib/prisma";
+import { anotar } from "@/lib/auditoria";
 
 const Cuerpo = z.object({
   token: z.string().min(20),
@@ -26,7 +27,13 @@ export async function POST(peticion: Request) {
 
   const persona = await prisma.user.findUnique({
     where: { tokenInvitacion: validado.data.token },
-    select: { id: true, activo: true, invitacionExpira: true },
+    select: {
+      id: true,
+      nombre: true,
+      companyId: true,
+      activo: true,
+      invitacionExpira: true,
+    },
   });
 
   if (
@@ -52,6 +59,17 @@ export async function POST(peticion: Request) {
       tokenInvitacion: null,
       invitacionExpira: null,
     },
+  });
+
+  // El actor es la propia persona, pero todavía no tiene sesión: se anota con
+  // su id, que es lo que hay, y sin actorId de administrador porque no lo hubo.
+  await anotar({
+    companyId: persona.companyId,
+    actorId: persona.id,
+    actorNombre: persona.nombre,
+    accion: "INVITACION_ACEPTADA",
+    objetivoId: persona.id,
+    objetivoNombre: persona.nombre,
   });
 
   return NextResponse.json({ ok: true });

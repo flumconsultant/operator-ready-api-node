@@ -55,8 +55,10 @@ export default async function Notificaciones() {
           <ul className="notificaciones">
             {notificaciones.map((n) => (
               <li key={n.id}>
+                {/* Pasa por la API para quedar marcada como leída antes de
+                    llegar al destino. */}
                 <Link
-                  href={n.enlace}
+                  href={`/api/notificaciones/${n.id}`}
                   className="notificacion"
                   data-sin-leer={!n.leidaEn || undefined}
                 >

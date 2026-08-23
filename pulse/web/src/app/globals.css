@@ -1882,3 +1882,81 @@ legend {
     flex: 1;
   }
 }
+
+/* ---- Auditoría ----------------------------------------------------------- */
+
+.auditoria {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-5);
+}
+
+.auditoria > li {
+  padding-left: var(--space-5);
+  border-left: 3px solid var(--border-hairline);
+}
+
+/* Las acciones que quitan acceso o cambian permisos se marcan con la línea
+ * verde. Es un realce, no la única señal: la etiqueta de la acción ya lo dice
+ * con palabras. */
+.auditoria > li[data-sensible] {
+  border-left-color: var(--electric-green);
+}
+
+.auditoria__linea {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.auditoria__accion {
+  font: var(--type-label);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-accent);
+}
+
+.auditoria__quien {
+  margin: var(--space-2) 0 0;
+  font: var(--type-body);
+  color: var(--text-body);
+}
+
+.auditoria__quien strong {
+  color: var(--text-heading);
+  font-weight: var(--weight-body-medium);
+}
+
+.auditoria__cambios {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.auditoria__cambios li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  font: var(--type-mono);
+  color: var(--text-faint);
+}
+
+.auditoria__campo {
+  color: var(--text-muted);
+  min-width: 140px;
+}
+
+.auditoria__antes {
+  text-decoration: line-through;
+}
+
+.auditoria__despues {
+  color: var(--text-body);
+}

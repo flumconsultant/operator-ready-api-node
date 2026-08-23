@@ -61,7 +61,12 @@ export default async function PaginaPersonas() {
       return { error: validado.error.issues[0]?.message ?? "Datos inválidos." };
     }
 
-    const r = await invitarPersona(s.companyId, validado.data, entorno.APP_URL);
+    const r = await invitarPersona(
+      s.companyId,
+      { id: s.id, nombre: s.name ?? null },
+      validado.data,
+      entorno.APP_URL,
+    );
     if (!r.ok) return { error: r.error };
 
     revalidatePath("/admin/personas");
@@ -81,6 +86,7 @@ export default async function PaginaPersonas() {
       }
       const r = await invitarPersona(
         s.companyId,
+        { id: s.id, nombre: s.name ?? null },
         {
           nombre: fila.nombre,
           email: fila.email,
@@ -115,7 +121,11 @@ export default async function PaginaPersonas() {
       return { error: validado.error.issues[0]?.message ?? "Datos inválidos." };
     }
 
-    const r = await guardarPersona(s.companyId, s.id, validado.data);
+    const r = await guardarPersona(
+      s.companyId,
+      { id: s.id, nombre: s.name ?? null },
+      validado.data,
+    );
     if (!r.ok) return { error: r.error };
 
     revalidatePath("/admin/personas");
@@ -127,7 +137,7 @@ export default async function PaginaPersonas() {
     const s = await sesionDeAdmin();
     const r = await cambiarEstado(
       s.companyId,
-      s.id,
+      { id: s.id, nombre: s.name ?? null },
       String(datos.get("userId")),
       datos.get("activo") === "si",
     );
@@ -140,6 +150,7 @@ export default async function PaginaPersonas() {
     const s = await sesionDeAdmin();
     const r = await renovarInvitacion(
       s.companyId,
+      { id: s.id, nombre: s.name ?? null },
       String(datos.get("userId")),
       entorno.APP_URL,
     );

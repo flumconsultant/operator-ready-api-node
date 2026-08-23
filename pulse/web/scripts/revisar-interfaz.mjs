@@ -26,6 +26,7 @@ const RUTAS = [
   "/admin",
   "/admin/personas",
   "/admin/empresa",
+  "/admin/auditoria",
   "/panel",
 ];
 

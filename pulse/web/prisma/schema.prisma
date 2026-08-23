@@ -26,7 +26,23 @@ enum TipoNotificacion {
   RECONOCIMIENTO_RECIBIDO
   COMENTARIO
   REACCION
-  CELEBRACION
+}
+
+/// Lo que queda registrado en la auditoría. Son acciones de administración y
+/// de acceso, no actividad del feed: quién reconoció a quién ya está en
+/// `recognitions` con su fecha, y duplicarlo aquí solo daría dos versiones de
+/// la misma verdad que algún día no coincidirían.
+enum AccionAuditada {
+  EMPRESA_ACTUALIZADA
+  PERSONA_INVITADA
+  PERSONA_EDITADA
+  PERSONA_DESACTIVADA
+  PERSONA_REACTIVADA
+  INVITACION_RENOVADA
+  INVITACION_ACEPTADA
+  VALOR_CREADO
+  VALOR_RETIRADO
+  VALOR_REACTIVADO
 }
 
 /// Un workspace: una empresa cliente. Todo lo demás cuelga de aquí.
@@ -54,6 +70,7 @@ model Company {
 
   usuarios        User[]
   valores         Value[]
+  auditoria       AuditLog[]
   reconocimientos Recognition[]
   insights        WeeklyInsight[]
 
@@ -81,35 +98,35 @@ model Value {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  companyId     String
-  nombre        String
-  email         String    @unique
+  id               String    @id @default(cuid())
+  companyId        String
+  nombre           String
+  email            String    @unique
   /// Hash bcrypt. Nulo si la persona solo entra por magic link.
-  passwordHash  String?
-  emailVerified DateTime?
+  passwordHash     String?
+  emailVerified    DateTime?
   /// Nombre del archivo en el almacén de imágenes, no una URL completa: el
   /// dominio cambia entre local, piloto y producción, y una URL guardada se
   /// queda apuntando al anterior.
-  imagen        String?
-  rol           Rol       @default(COLABORADOR)
-  equipo        String?
-  cargo         String?
-  bio           String?
+  imagen           String?
+  rol              Rol       @default(COLABORADOR)
+  equipo           String?
+  cargo            String?
+  bio              String?
   /// Día y mes son lo único que se usa; el año se guarda porque una fecha
   /// parcial complica más de lo que protege, y no se muestra nunca.
-  cumpleanos    DateTime?
-  fechaIngreso  DateTime?
-  discordId     String?   @unique
-  activo        Boolean   @default(true)
-  invitadoEn    DateTime  @default(now())
+  cumpleanos       DateTime?
+  fechaIngreso     DateTime?
+  discordId        String?   @unique
+  activo           Boolean   @default(true)
+  invitadoEn       DateTime  @default(now())
   /// Invitación pendiente. Es un mecanismo propio y no el magic link de
   /// Auth.js: el enlace se puede copiar y mandar por WhatsApp, que es lo que
   /// va a pasar en un piloto sin servidor de correo montado.
-  tokenInvitacion   String?   @unique
-  invitacionExpira  DateTime?
+  tokenInvitacion  String?   @unique
+  invitacionExpira DateTime?
   /// Cuándo entró por primera vez. Sirve para saber a quién hay que perseguir.
-  primerAcceso      DateTime?
+  primerAcceso     DateTime?
 
   company        Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
   dados          Recognition[]  @relation("reconocimientosDados")
@@ -118,6 +135,7 @@ model User {
   comentarios    Comment[]
   notificaciones Notification[] @relation("destinatario")
   provocadas     Notification[] @relation("actor")
+  auditoria      AuditLog[]     @relation("auditor")
   accounts       Account[]
   sessions       Session[]
 
@@ -236,6 +254,41 @@ model WeeklyInsight {
 
   @@unique([companyId, semanaIso])
   @@map("weekly_insights")
+}
+
+/// El registro de auditoría.
+///
+/// Existe porque las acciones que hay aquí cambian quién puede entrar y con qué
+/// permisos, y esas son las únicas que alguien va a querer reconstruir seis
+/// meses después: quién ascendió a quién a administrador, quién desactivó a
+/// alguien y cuándo, quién cambió el tope de gasto de la IA.
+///
+/// No se borra ni se edita desde ninguna parte de la aplicación. Un registro
+/// que la propia interfaz puede modificar no sirve para auditar nada.
+model AuditLog {
+  id             String         @id @default(cuid())
+  companyId      String
+  /// Nulo cuando la acción no la hace una persona identificada: aceptar una
+  /// invitación ocurre antes de tener sesión.
+  actorId        String?
+  /// El nombre se copia en el momento, además de la referencia. Si esa persona
+  /// se va y se desactiva, el registro tiene que seguir diciendo quién fue.
+  actorNombre    String?
+  accion         AccionAuditada
+  /// A quién o a qué afectó, también con su nombre congelado.
+  objetivoId     String?
+  objetivoNombre String?
+  /// Lo que cambió, en pares campo/antes/después. Es lo que convierte «persona
+  /// editada» en algo que se puede leer.
+  cambios        Json?
+  creadoEn       DateTime       @default(now())
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  actor   User?   @relation("auditor", fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([companyId, creadoEn])
+  @@index([companyId, accion, creadoEn])
+  @@map("audit_logs")
 }
 
 // ---- Tablas de Auth.js ----------------------------------------------------

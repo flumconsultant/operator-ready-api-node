@@ -2,6 +2,7 @@ import { revalidatePath } from "next/cache";
 
 import { auth } from "@/lib/auth";
 import { sesionDeAdmin } from "@/lib/sesion";
+import { anotar } from "@/lib/auditoria";
 import { prisma } from "@/lib/prisma";
 import { metricasDeEmpresa } from "@/lib/metricas";
 import { mapaDeInfluencia, personasDesconectadas } from "@/lib/ia/influencia";
@@ -36,14 +37,25 @@ export default async function Admin() {
     if (s?.user.rol !== "ADMIN") return;
     const nombre = String(datos.get("nombre") ?? "").trim();
     if (!nombre) return;
-    await prisma.value.create({
+    const creado = await prisma.value.create({
       data: {
         companyId: s.user.companyId,
         nombre,
         emoji: String(datos.get("emoji") ?? "✨").trim() || "✨",
         descripcion: String(datos.get("descripcion") ?? "").trim() || null,
       },
+      select: { id: true },
     });
+
+    await anotar({
+      companyId: s.user.companyId,
+      actorId: s.user.id,
+      actorNombre: s.user.name ?? null,
+      accion: "VALOR_CREADO",
+      objetivoId: creado.id,
+      objetivoNombre: nombre,
+    });
+
     revalidatePath("/admin");
     revalidatePath("/feed");
   }
@@ -57,13 +69,24 @@ export default async function Admin() {
     // desactivaría desde aquí.
     const valor = await prisma.value.findFirst({
       where: { id, companyId: s.user.companyId },
-      select: { id: true, activo: true },
+      select: { id: true, activo: true, nombre: true },
     });
     if (!valor) return;
+
     await prisma.value.update({
       where: { id: valor.id },
       data: { activo: !valor.activo },
     });
+
+    await anotar({
+      companyId: s.user.companyId,
+      actorId: s.user.id,
+      actorNombre: s.user.name ?? null,
+      accion: valor.activo ? "VALOR_RETIRADO" : "VALOR_REACTIVADO",
+      objetivoId: valor.id,
+      objetivoNombre: valor.nombre,
+    });
+
     revalidatePath("/admin");
     revalidatePath("/feed");
   }

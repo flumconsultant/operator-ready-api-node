@@ -141,8 +141,11 @@ Pulse es una red interna, no un formulario de RRHH. Lo que hay:
 - **Perfil de cada persona** con su muro, por qué valores la reconocen y desde
   cuándo está.
 - **Novedades**: reconocimientos recibidos, comentarios en las conversaciones
-  donde participas y reacciones. Nadie se notifica a sí mismo, y cambiar de
-  reacción no genera una notificación nueva.
+  donde participas, y reacciones —que avisan a los dos lados: a quien lo
+  recibió y a quien se tomó la molestia de escribirlo. Nadie se notifica a sí
+  mismo, cambiar de reacción no genera una notificación nueva, y abrir una la
+  marca leída por el camino, así que la campana no se queda encendida para
+  siempre.
 - **Columna de contexto** en escritorio: quién cumple esta semana, qué valores
   se reconocen más, y a quién no has reconocido tú en 30 días. Esa última es
   privada y dice a quién no has reconocido **tú**, no a quién no ha reconocido
@@ -205,6 +208,18 @@ ver su casa, no la nuestra.
 
 **Cultura.** Los valores configurables, el ranking, el mapa de influencia y el
 resumen semanal.
+
+**Auditoría.** Quién cambió qué y cuándo, con el antes y el después de cada
+campo. Registra las altas, los cambios de permisos y de equipo, las
+desactivaciones, las invitaciones renovadas y aceptadas, los cambios de
+configuración y los valores creados o retirados.
+
+Lo que **no** registra, a propósito: la actividad del feed. Quién reconoció a
+quién ya está en la tabla de reconocimientos con su fecha, y duplicarlo aquí
+daría dos versiones de la misma verdad que algún día no coincidirían.
+
+El registro no se puede editar ni borrar desde ninguna parte de la aplicación.
+Uno que la propia interfaz puede modificar no sirve para auditar nada.
 
 ### Cómo entra la gente invitada
 

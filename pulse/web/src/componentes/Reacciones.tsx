@@ -1,6 +1,6 @@
 "use client";
 
-import { useOptimistic, useState, useTransition } from "react";
+import { useEffect, useOptimistic, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { SmileyWink } from "@phosphor-icons/react/dist/ssr";
 
@@ -38,6 +38,34 @@ export default function Reacciones({
   const router = useRouter();
   const [, empezar] = useTransition();
   const [abierto, setAbierto] = useState(false);
+  const caja = useRef<HTMLDivElement>(null);
+  const disparador = useRef<HTMLButtonElement>(null);
+
+  // Escape y clic fuera cierran el selector. Sin esto, abrir uno y desplazarse
+  // dejaba el menú flotando sobre otra publicación, y quien navega con teclado
+  // se quedaba dentro sin una salida evidente.
+  useEffect(() => {
+    if (!abierto) return;
+
+    const alPulsarTecla = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      setAbierto(false);
+      // El foco vuelve al botón que abrió el menú, no al principio del
+      // documento: cerrar algo no debería perder el sitio.
+      disparador.current?.focus();
+    };
+
+    const alPulsarFuera = (e: PointerEvent) => {
+      if (!caja.current?.contains(e.target as Node)) setAbierto(false);
+    };
+
+    document.addEventListener("keydown", alPulsarTecla);
+    document.addEventListener("pointerdown", alPulsarFuera);
+    return () => {
+      document.removeEventListener("keydown", alPulsarTecla);
+      document.removeEventListener("pointerdown", alPulsarFuera);
+    };
+  }, [abierto]);
 
   const mia = reacciones.find((r) => r.user.id === usuarioActual)?.emoji ?? null;
 
@@ -80,9 +108,10 @@ export default function Reacciones({
 
   return (
     <div className="reacciones">
-      <div className="reacciones__disparador">
+      <div className="reacciones__disparador" ref={caja}>
         <button
           type="button"
+          ref={disparador}
           className="boton-icono"
           onClick={() => setAbierto((v) => !v)}
           aria-expanded={abierto}

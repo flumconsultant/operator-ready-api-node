@@ -67,14 +67,33 @@ export async function POST(peticion: Request) {
       where: { id: sesion.user.id },
       select: { nombre: true },
     });
-    await notificar({
-      userId: reconocimiento.paraUserId,
-      actorId: sesion.user.id,
-      recognitionId: reconocimiento.id,
-      tipo: "REACCION",
-      texto: `${quien?.nombre ?? "Alguien"} reaccionó a tu reconocimiento`,
-      enlace: `/feed/${reconocimiento.id}`,
-    });
+    const nombre = quien?.nombre ?? "Alguien";
+
+    // Se avisa a los dos lados. Antes solo llegaba a la persona reconocida, y
+    // eso dejaba fuera a quien se había tomado la molestia de escribirlo: si
+    // nadie le dice que su reconocimiento gustó, deja de escribirlos.
+    // `notificar` ya descarta al propio actor, así que quien reacciona a algo
+    // suyo no se autoavisa, y el Set evita duplicar cuando ambos coinciden.
+    const destinatarios = new Set([
+      reconocimiento.paraUserId,
+      reconocimiento.deUserId,
+    ]);
+
+    await Promise.all(
+      [...destinatarios].map((userId) =>
+        notificar({
+          userId,
+          actorId: sesion.user.id,
+          recognitionId: reconocimiento.id,
+          tipo: "REACCION",
+          texto:
+            userId === reconocimiento.paraUserId
+              ? `${nombre} reaccionó al reconocimiento que recibiste`
+              : `${nombre} reaccionó al reconocimiento que escribiste`,
+          enlace: `/feed/${reconocimiento.id}`,
+        }),
+      ),
+    );
   }
 
   return NextResponse.json({ emoji });

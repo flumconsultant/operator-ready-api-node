@@ -60,7 +60,12 @@ export default async function Empresa() {
       logo = resultado.nombre;
     }
 
-    const resultado = await guardarEmpresa(s.companyId, validado.data, logo);
+    const resultado = await guardarEmpresa(
+      s.companyId,
+      { id: s.id, nombre: s.name ?? null },
+      validado.data,
+      logo,
+    );
     if (!resultado.ok) return { error: resultado.error };
 
     // El logo sale en la barra lateral de todas las páginas, así que se
