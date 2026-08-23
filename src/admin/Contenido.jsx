@@ -1,6 +1,7 @@
 import React from 'react';
 import * as api from './api.js';
-import { Boton, Aviso, marco } from './piezas.jsx';
+import { Boton, Aviso } from './piezas.jsx';
+import './panel.css';
 
 /**
  * Editar contenido con listas dentro: industrias, servicios, el método.
@@ -25,31 +26,28 @@ import { Boton, Aviso, marco } from './piezas.jsx';
  * inventarlas antes es construir un editor para contenido que no existe.
  */
 
+/* El contador avisa ANTES del tope, no cuando ya se pasó: un título que se
+   corta en Google solo se descubre publicado. */
 const contar = (largo, tope) => {
   if (!tope) return null;
   const queda = tope - largo;
-  if (queda < 0) return { color: '#A32B20', texto: `${largo}/${tope} · sobran ${-queda}` };
-  if (queda <= tope * 0.1) return { color: '#8A5A00', texto: `${largo}/${tope}` };
-  return { color: 'var(--text-faint)', texto: `${largo}/${tope}` };
+  if (queda < 0) return { clase: ' pnl-cuenta--pasa', texto: `${largo}/${tope} · sobran ${-queda}` };
+  if (queda <= tope * 0.1) return { clase: ' pnl-cuenta--cerca', texto: `${largo}/${tope}` };
+  return { clase: '', texto: `${largo}/${tope}` };
 };
 
-const campoBase = {
-  width: '100%', boxSizing: 'border-box', padding: '9px 11px',
-  font: 'var(--type-body)', fontSize: 15, lineHeight: 1.5,
-  color: 'var(--text-heading)', background: 'var(--white)',
-  border: '1px solid var(--border-hairline)', borderRadius: 2, resize: 'vertical',
-};
+
 
 function Entrada({ valor, tope, filas, alCambiar, marcador }) {
   const c = contar(String(valor ?? '').length, tope);
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 3, minWidth: 0 }}>
+    <div className="pnl-columna">
       {filas ? (
-        <textarea rows={filas} value={valor ?? ''} placeholder={marcador} onChange={(e) => alCambiar(e.target.value)} style={campoBase} />
+        <textarea className="pnl-entrada" rows={filas} value={valor ?? ''} placeholder={marcador} onChange={(e) => alCambiar(e.target.value)} />
       ) : (
-        <input type="text" value={valor ?? ''} placeholder={marcador} onChange={(e) => alCambiar(e.target.value)} style={campoBase} />
+        <input className="pnl-entrada" type="text" value={valor ?? ''} placeholder={marcador} onChange={(e) => alCambiar(e.target.value)} />
       )}
-      {c && <span style={{ font: 'var(--type-mono)', fontSize: 11, color: c.color, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>{c.texto}</span>}
+      {c && <span className={`pnl-cuenta${c.clase}`}>{c.texto}</span>}
     </div>
   );
 }
@@ -70,20 +68,20 @@ function Filas({ filas, columnas, topes, alCambiar }) {
     alCambiar(n);
   };
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+    <div className="pnl-filas">
       {filas.map((f, i) => (
-        <div key={i} style={{ border: marco.linea, borderRadius: 2, padding: 10, background: 'var(--off-white)', display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <div style={{ display: 'flex', gap: 8, alignItems: 'center', justifyContent: 'space-between' }}>
-            <span style={{ font: 'var(--type-mono)', fontSize: 11, color: 'var(--text-faint)' }}>{i + 1}</span>
-            <div style={{ display: 'flex', gap: 4 }}>
-              <Boton onClick={() => mover(i, -1)} disabled={i === 0}>↑</Boton>
-              <Boton onClick={() => mover(i, 1)} disabled={i === filas.length - 1}>↓</Boton>
-              <Boton variante="peligro" onClick={() => alCambiar(filas.filter((_, j) => j !== i))}>Quitar</Boton>
+        <div key={i} className="pnl-fila">
+          <div className="pnl-fila-cab">
+            <span className="pnl-fila-num">{String(i + 1).padStart(2, '0')}</span>
+            <div className="pnl-fila-mandos">
+              <Boton menudo onClick={() => mover(i, -1)} disabled={i === 0} aria-label={`Subir el elemento ${i + 1}`}>↑</Boton>
+              <Boton menudo onClick={() => mover(i, 1)} disabled={i === filas.length - 1} aria-label={`Bajar el elemento ${i + 1}`}>↓</Boton>
+              <Boton menudo variante="peligro" onClick={() => alCambiar(filas.filter((_, j) => j !== i))}>Quitar</Boton>
             </div>
           </div>
           {columnas.map((col, k) => (
-            <div key={k} style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-              <span style={{ font: 'var(--type-mono)', fontSize: 11, color: 'var(--text-faint)' }}>{col}</span>
+            <div key={k} className="pnl-columna">
+              <span className="pnl-columna-rotulo">{col}</span>
               <Entrada valor={f[k]} tope={topes[k]} filas={topes[k] > 120 ? 3 : 0} alCambiar={(v) => cambiar(i, k, v)} />
             </div>
           ))}
@@ -114,10 +112,10 @@ export function Campo({ campo, valor, alCambiar }) {
     if (tipo === 'bloque') {
       const v = valor || {};
       return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, border: marco.linea, borderRadius: 2, padding: 10, background: 'var(--off-white)' }}>
+        <div className="pnl-fila">
           {(campo.partes || []).map((p) => (
-            <div key={p.id} style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-              <span style={{ font: 'var(--type-mono)', fontSize: 11, color: 'var(--text-faint)' }}>{p.rotulo}</span>
+            <div key={p.id} className="pnl-columna">
+              <span className="pnl-columna-rotulo">{p.rotulo}</span>
               {/* Un bloque puede llevar una lista dentro: «el problema» es un
                   titular más varios párrafos. Se reutiliza el mismo editor de
                   filas en vez de inventar un tipo por combinación. */}
@@ -139,12 +137,12 @@ export function Campo({ campo, valor, alCambiar }) {
     return null;
   };
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'baseline' }}>
-        <strong style={{ font: 'var(--type-body)', fontSize: 14, color: 'var(--text-heading)' }}>{rotulo}</strong>
-        {campo.opcional && <span style={{ font: 'var(--type-mono)', fontSize: 11, color: 'var(--text-faint)' }}>opcional</span>}
+    <div className="pnl-campo">
+      <div className="pnl-campo-cab">
+        <strong className="pnl-rotulo">{rotulo}</strong>
+        {campo.opcional && <span className="pnl-opcional">opcional</span>}
       </div>
-      {ayuda && <p style={{ margin: 0, font: 'var(--type-body)', fontSize: 13, color: 'var(--text-faint)', lineHeight: 1.45 }}>{ayuda}</p>}
+      {ayuda && <p className="pnl-ayuda">{ayuda}</p>}
       {cuerpo()}
     </div>
   );
@@ -231,16 +229,15 @@ export default function Contenido() {
 
   if (!abierto) {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-        <h2 style={{ margin: 0, fontFamily: 'var(--font-display)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)' }}>Contenido del sitio</h2>
+      <div className="pnl-lienzo" style={{ padding: 0 }}>
+        <h2 className="pnl-titulo">Contenido del sitio</h2>
         <Aviso tono="mal">{error}</Aviso>
-        {cargando && <p style={{ color: 'var(--text-faint)' }}>Cargando…</p>}
-        <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))' }}>
+        {cargando && <p className="pnl-ayuda">Cargando…</p>}
+        <div className="pnl-rejilla">
           {esquemas.map((e) => (
-            <button key={e.id} type="button" onClick={() => abrir(e.id)}
-              style={{ textAlign: 'left', cursor: 'pointer', background: marco.papel, border: marco.linea, borderRadius: 2, padding: 16, display: 'flex', flexDirection: 'column', gap: 4, font: 'inherit', color: 'inherit' }}>
-              <strong style={{ fontFamily: 'var(--font-display)', fontSize: 16, color: 'var(--text-heading)' }}>{e.titulo}</strong>
-              <span style={{ font: 'var(--type-body)', fontSize: 13, color: 'var(--text-faint)' }}>{e.campos} campos editables</span>
+            <button key={e.id} type="button" className="pnl-tarjeta" onClick={() => abrir(e.id)}>
+              <strong>{e.titulo}</strong>
+              <span className="pnl-nota">{e.campos} campos editables</span>
             </button>
           ))}
         </div>
@@ -251,10 +248,10 @@ export default function Contenido() {
   const { esquema, claves } = abierto;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, alignItems: 'center', justifyContent: 'space-between' }}>
-        <h2 style={{ margin: 0, fontFamily: 'var(--font-display)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)' }}>{esquema.titulo}</h2>
-        <div style={{ display: 'flex', gap: 8 }}>
+    <div className="pnl-lienzo" style={{ padding: 0 }}>
+      <div className="pnl-barra">
+        <h2 className="pnl-titulo">{esquema.titulo}</h2>
+        <div className="pnl-acciones">
           <Boton onClick={() => setAbierto(null)} disabled={guardando}>Volver</Boton>
           <Boton variante="fuerte" onClick={guardar} disabled={guardando}>{guardando ? 'Guardando…' : 'Guardar'}</Boton>
         </div>
@@ -266,18 +263,24 @@ export default function Contenido() {
       {/* Elegir qué se edita. Se guarda un elemento y un idioma cada vez: un
           botón que guardara los doce a la vez convertiría un error pequeño en
           doce errores. */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
+      <div className="pnl-acciones">
         {claves.length > 1 && (
-          <select value={clave} onChange={(e) => cambiarElemento(e.target.value)} style={{ ...campoBase, width: 'auto', maxWidth: '100%' }}>
+          <select className="pnl-entrada" aria-label="Elemento a editar" value={clave} onChange={(e) => cambiarElemento(e.target.value)}>
             {claves.map((k) => <option key={k.clave} value={k.clave}>{k.nombre}</option>)}
           </select>
         )}
-        {(esquema.idiomas || ['es']).map((l) => (
-          <Boton key={l} variante={l === idioma ? 'fuerte' : 'quieto'} onClick={() => cambiarIdioma(l)}>{l.toUpperCase()}</Boton>
-        ))}
+        {/* Segmentado y no dos botones: el activo se distingue por superficie,
+            no por el verde, que está reservado para la acción principal. */}
+        <div className="pnl-segmento" role="group" aria-label="Idioma que se edita">
+          {(esquema.idiomas || ['es']).map((l) => (
+            <button key={l} type="button" aria-pressed={l === idioma} onClick={() => cambiarIdioma(l)}>
+              {l.toUpperCase()}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div style={{ background: marco.papel, border: marco.linea, borderRadius: 2, padding: 20, display: 'flex', flexDirection: 'column', gap: 26 }}>
+      <div className="pnl-panel">
         {esquema.campos.map((c) => (
           <Campo key={c.id} campo={c} valor={valores[c.id]} alCambiar={(v) => setValores({ ...valores, [c.id]: v })} />
         ))}

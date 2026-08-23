@@ -6,7 +6,8 @@ import Autores from './Autores.jsx';
 import Suscriptores from './Suscriptores.jsx';
 import Paginas from './Paginas.jsx';
 import Contenido from './Contenido.jsx';
-import { Etiqueta, Texto, Boton, Fila, Aviso, marco } from './piezas.jsx';
+import { Etiqueta, Texto, Boton, Fila, Aviso } from './piezas.jsx';
+import './panel.css';
 
 /**
  * Panel de artículos.
@@ -45,37 +46,37 @@ function Puerta({ alEntrar }) {
   };
 
   return (
-    <div style={{ maxWidth: 420, margin: '0 auto', padding: '80px 24px' }}>
-      <h1 style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display)', fontSize: 'var(--text-h2)', color: 'var(--text-heading)' }}>
-        Artículos de BECOME
-      </h1>
-      <p style={{ font: 'var(--type-body)', color: 'var(--text-muted)' }}>
-        Entra para escribir y publicar en Insights.
-      </p>
+    <div className="pnl-puerta">
+      <div className="pnl-puerta-caja">
+        <div>
+          <h1>El panel de BECOME</h1>
+          <p className="pnl-ayuda" style={{ marginTop: 6 }}>
+            Contenido, páginas y conocimiento del sitio.
+          </p>
+        </div>
 
-      {/* Un formulario de verdad, no dos campos sueltos: así el gestor de
-          contraseñas del navegador ofrece guardarlas y rellenarlas, y la tecla
-          Intro envía. */}
-      <form onSubmit={enviar} style={{ display: 'grid', gap: 12, marginTop: 24, background: marco.papel, border: marco.linea, borderRadius: 2, padding: 20 }}>
-        <div>
-          <Etiqueta>Usuario</Etiqueta>
-          <Texto valor={usuario} alCambiar={setUsuario} type="email" name="username" autoComplete="username" autoFocus />
-        </div>
-        <div>
-          <Etiqueta>Contraseña</Etiqueta>
-          <Texto valor={clave} alCambiar={setClave} type="password" name="password" autoComplete="current-password" />
-        </div>
-        <div>
+        {/* Un formulario de verdad, no dos campos sueltos: así el gestor de
+            contraseñas del navegador ofrece guardarlas y rellenarlas, y la
+            tecla Intro envía. */}
+        <form onSubmit={enviar} style={{ display: 'grid', gap: 'var(--pnl-4)' }}>
+          <div className="pnl-campo">
+            <Etiqueta>Usuario</Etiqueta>
+            <Texto valor={usuario} alCambiar={setUsuario} type="email" name="username" autoComplete="username" autoFocus />
+          </div>
+          <div className="pnl-campo">
+            <Etiqueta>Contraseña</Etiqueta>
+            <Texto valor={clave} alCambiar={setClave} type="password" name="password" autoComplete="current-password" />
+          </div>
           <Boton variante="fuerte" type="submit" disabled={!usuario || !clave || entrando}>
             {entrando ? 'Entrando…' : 'Entrar'}
           </Boton>
-        </div>
-        <Aviso tono="mal">{error}</Aviso>
-      </form>
+          <Aviso tono="mal">{error}</Aviso>
+        </form>
 
-      <p style={{ font: 'var(--type-body)', fontSize: 13, color: 'var(--text-faint)' }}>
-        ¿No tienes acceso? Las cuentas las da quien administra el sitio.
-      </p>
+        <p className="pnl-ayuda" style={{ borderTop: '1px solid var(--pnl-linea)', paddingTop: 'var(--pnl-4)' }}>
+          ¿No tienes acceso? Las cuentas las da quien administra el sitio.
+        </p>
+      </div>
     </div>
   );
 }
@@ -100,32 +101,16 @@ function Lista({ items, alAbrir, alNuevo, alRecargar, cargando, vacioEn }) {
         </Aviso>
       )}
 
-      <div style={{ display: 'grid', gap: 1, background: 'var(--border-hairline)', border: marco.linea }}>
+      <div className="pnl-rejilla">
         {items.map((it) => (
-          <button
-            key={it.archivo}
-            type="button"
-            onClick={() => alAbrir(it)}
-            style={{
-              display: 'grid', gridTemplateColumns: 'minmax(0,1fr) auto', gap: 16, alignItems: 'center',
-              textAlign: 'left', padding: '14px 16px', background: marco.papel, border: 0, cursor: 'pointer',
-            }}
-          >
-            <span>
-              <span style={{ display: 'block', font: 'var(--type-h3)', color: 'var(--text-heading)' }}>
-                {it.articulo.es?.titulo || it.articulo.en?.titulo || it.archivo}
-              </span>
-              <span style={{ display: 'block', marginTop: 4, font: 'var(--type-mono)', fontSize: 12, color: 'var(--text-faint)' }}>
-                {it.articulo.fecha} · {it.articulo.es?.slug ? 'ES' : '—'} {it.articulo.en?.slug ? 'EN' : ''}
-              </span>
+          <button key={it.archivo} type="button" className="pnl-tarjeta" onClick={() => alAbrir(it)}>
+            <strong>{it.articulo.es?.titulo || it.articulo.en?.titulo || it.archivo}</strong>
+            <span className="pnl-meta">
+              {it.articulo.fecha} · {it.articulo.es?.slug ? 'ES' : '—'} {it.articulo.en?.slug ? 'EN' : ''}
             </span>
-            <span style={{
-              font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase',
-              padding: '4px 10px', borderRadius: 999,
-              background: it.articulo.estado === 'publicado' ? 'var(--electric-green)' : 'var(--off-white)',
-              color: it.articulo.estado === 'publicado' ? 'var(--navy-900)' : 'var(--text-muted)',
-              border: it.articulo.estado === 'publicado' ? 0 : marco.linea,
-            }}>
+            {/* El estado no se dice solo con color: lleva su palabra al lado,
+                que es lo que se entiende sin distinguir tonos. */}
+            <span className="pnl-estado" data-publicado={it.articulo.estado === 'publicado' || undefined}>
               {it.articulo.estado === 'publicado' ? 'Publicado' : 'Borrador'}
             </span>
           </button>
@@ -158,34 +143,18 @@ const MODULOS = [
 
 function Modulos({ vista, alCambiar }) {
   return (
-    <nav
-      aria-label="Secciones del panel"
-      style={{
-        display: 'flex', gap: 2, overflowX: 'auto', borderTop: marco.linea,
-        background: marco.papel, padding: '0 12px', WebkitOverflowScrolling: 'touch',
-      }}
-    >
-      {MODULOS.map(([id, rotulo]) => {
-        const activo = vista === id;
-        return (
-          <button
-            key={id}
-            type="button"
-            onClick={() => alCambiar(id)}
-            aria-current={activo ? 'page' : undefined}
-            style={{
-              appearance: 'none', border: 0, background: 'transparent', cursor: 'pointer',
-              font: 'var(--type-body)', fontSize: 14,
-              fontWeight: activo ? 600 : 400,
-              color: activo ? 'var(--text-heading)' : 'var(--text-faint)',
-              padding: '13px 14px', whiteSpace: 'nowrap',
-              borderBottom: `2px solid ${activo ? 'var(--text-accent)' : 'transparent'}`,
-            }}
-          >
-            {rotulo}
-          </button>
-        );
-      })}
+    <nav className="pnl-modulos" aria-label="Secciones del panel">
+      {MODULOS.map(([id, rotulo]) => (
+        <button
+          key={id}
+          type="button"
+          className="pnl-modulo"
+          onClick={() => alCambiar(id)}
+          aria-current={vista === id ? 'page' : undefined}
+        >
+          {rotulo}
+        </button>
+      ))}
     </nav>
   );
 }
@@ -268,7 +237,7 @@ export default function Panel() {
   if (sesion === null) {
     return <div style={{ padding: 80, textAlign: 'center', font: 'var(--type-mono)', color: 'var(--text-faint)' }}>Comprobando la sesión…</div>;
   }
-  if (!sesion) return <Puerta alEntrar={setSesion} />;
+  if (!sesion) return <main className="pnl"><Puerta alEntrar={setSesion} /></main>;
 
   /* Si la sesión caducó a media edición, no se enseña un error: se vuelve a la
      pantalla de entrada. Lo escrito sigue en sessionStorage, así que al
@@ -314,14 +283,14 @@ export default function Panel() {
   const fallos = abierto ? problemas(abierto.articulo) : [];
 
   return (
-    <main style={{ minHeight: '100vh', background: marco.fondo, font: 'var(--type-body)', color: 'var(--text-body)' }}>
-      <header style={{ borderBottom: marco.linea, background: marco.papel, position: 'sticky', top: 0, zIndex: 10 }}>
-        <div style={{ maxWidth: 1400, margin: '0 auto', padding: '14px 24px', display: 'flex', gap: 16, alignItems: 'center', justifyContent: 'space-between' }}>
-          <Fila gap={12}>
-            <strong style={{ fontFamily: 'var(--font-display)', letterSpacing: 'var(--track-label)' }}>BECOME</strong>
-            <span style={{ font: 'var(--type-mono)', fontSize: 12, color: 'var(--text-faint)' }}>{sesion.nombre}</span>
-          </Fila>
-          <Fila gap={8}>
+    <main className="pnl">
+      <header className="pnl-cabecera">
+        <div className="pnl-cabecera-fila">
+          <div className="pnl-marca">
+            <strong>BECOME</strong>
+            <span className="pnl-quien">{sesion.nombre}</span>
+          </div>
+          <div className="pnl-acciones">
             {abierto ? (
               <>
                 <Boton onClick={cerrar} disabled={guardando}>Volver</Boton>
@@ -332,40 +301,40 @@ export default function Panel() {
               </>
             ) : (
               <>
-                <Link to="/es" style={{ font: 'var(--type-body)', fontSize: 14, color: 'var(--text-accent)' }}>Ver el sitio</Link>
+                <Link to="/es" className="pnl-enlace">Ver el sitio</Link>
                 <Boton variante="quieto" onClick={cerrarSesion}>Salir</Boton>
               </>
             )}
-          </Fila>
+          </div>
         </div>
         {!abierto && <Modulos vista={vista} alCambiar={setVista} />}
       </header>
 
-      <div style={{ maxWidth: 1400, margin: '0 auto', padding: '24px' }}>
+      <div className="pnl-lienzo">
         <Aviso tono="mal">{error}</Aviso>
         <Aviso tono="bien">{nota}</Aviso>
 
         {vista === 'conocimiento' && !abierto ? (
-          <div style={{ marginTop: 16 }}>
+          <div>
             <Paginas carpeta="conocimiento" titulo="Conocimiento de BECOME"
                      vacio="Aquí vive lo que un agente necesita saber para hablar por BECOME: quién eres, qué no haces, qué respondes. Cada documento lleva escrita la pregunta que contesta." />
           </div>
         ) : vista === 'contenido' && !abierto ? (
-          <div style={{ marginTop: 16 }}>
+          <div>
             <Contenido />
           </div>
         ) : vista === 'paginas' && !abierto ? (
-          <div style={{ marginTop: 16 }}>
+          <div>
             <Paginas />
           </div>
         ) : vista === 'suscriptores' && !abierto ? (
           <Suscriptores alCerrar={() => setVista('articulos')} />
         ) : vista === 'autores' && !abierto ? (
-          <div style={{ marginTop: 16 }}>
+          <div>
             <Autores alCerrar={() => setVista('articulos')} />
           </div>
         ) : abierto ? (
-          <div style={{ marginTop: 16 }}>
+          <div>
             <Editor
               articulo={abierto.articulo}
               publicadoAntes={Boolean(abierto.sha) && abierto.articulo.estado === 'publicado'}
@@ -373,7 +342,7 @@ export default function Panel() {
             />
           </div>
         ) : (
-          <div style={{ marginTop: 16 }}>
+          <div>
             <Lista
               items={items}
               cargando={cargando}

@@ -9,34 +9,23 @@ import React from 'react';
  * haya bordes, fondos y tamaños que no existen en ninguna página pública.
  */
 
-export const marco = {
-  fondo: 'var(--off-white)',
-  papel: 'var(--white)',
-  linea: '1px solid var(--border-hairline)',
-};
+/* Se conserva por compatibilidad con los módulos que aún lo usan; los colores
+   de verdad están en panel.css. */
+export const marco = { fondo: 'transparent', papel: 'transparent', linea: 'none' };
 
-const baseCampo = {
-  width: '100%',
-  boxSizing: 'border-box',
-  padding: '10px 12px',
-  font: 'var(--type-body)',
-  fontSize: 15,
-  lineHeight: 1.5,
-  color: 'var(--text-heading)',
-  background: 'var(--white)',
-  border: '1px solid var(--border-hairline)',
-  borderRadius: 2,
-};
+/* Los controles ya no llevan sus estilos encima: viven en panel.css. Con
+   estilos en línea cada botón decidía su propio relleno y su propio borde, y
+   con seis módulos el resultado era que nada se parecía a nada. */
 
 export const Etiqueta = ({ children, pista }) => (
-  <span style={{ display: 'block', marginBottom: 6, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
+  <span className="pnl-columna-rotulo" style={{ display: 'block', marginBottom: 6 }}>
     {children}
-    {pista && <span style={{ textTransform: 'none', letterSpacing: 0, marginLeft: 8, color: 'var(--text-muted)' }}>{pista}</span>}
+    {pista && <span style={{ textTransform: 'none', letterSpacing: 0, marginLeft: 8 }}>{pista}</span>}
   </span>
 );
 
 export const Texto = ({ valor, alCambiar, ...rest }) => (
-  <input value={valor ?? ''} onChange={(e) => alCambiar(e.target.value)} style={baseCampo} {...rest} />
+  <input value={valor ?? ''} onChange={(e) => alCambiar(e.target.value)} className="pnl-entrada" {...rest} />
 );
 
 /* La altura crece con el contenido: un área fija obliga a desplazarse dentro
@@ -55,14 +44,14 @@ export const Area = ({ valor, alCambiar, filas = 3, ...rest }) => {
       rows={filas}
       value={valor ?? ''}
       onChange={(e) => alCambiar(e.target.value)}
-      style={{ ...baseCampo, resize: 'vertical', minHeight: filas * 24 + 20 }}
+      className="pnl-entrada"
       {...rest}
     />
   );
 };
 
 export const Selector = ({ valor, alCambiar, opciones }) => (
-  <select value={valor ?? ''} onChange={(e) => alCambiar(e.target.value)} style={{ ...baseCampo, cursor: 'pointer' }}>
+  <select value={valor ?? ''} onChange={(e) => alCambiar(e.target.value)} className="pnl-entrada">
     {opciones.map(([v, t]) => <option key={v} value={v}>{t}</option>)}
   </select>
 );
@@ -74,42 +63,26 @@ export const Contador = ({ valor = '', limite }) => {
   const n = String(valor).length;
   const pasado = n > limite;
   return (
-    <span style={{ font: 'var(--type-mono)', fontSize: 12, color: pasado ? '#b4531f' : 'var(--text-faint)' }}>
+    <span className={`pnl-cuenta${pasado ? ' pnl-cuenta--pasa' : ''}`}>
       {n}/{limite}{pasado ? ' — se cortará en los resultados' : ''}
     </span>
   );
 };
 
-export const Boton = ({ children, variante = 'normal', ...rest }) => {
-  const estilos = {
-    normal: { background: 'var(--white)', color: 'var(--text-heading)', border: '1px solid var(--border-hairline)' },
-    fuerte: { background: 'var(--electric-green)', color: 'var(--navy-900)', border: '1px solid var(--electric-green)' },
-    quieto: { background: 'transparent', color: 'var(--text-muted)', border: '1px solid transparent' },
-    peligro: { background: 'transparent', color: '#b4531f', border: '1px solid var(--border-hairline)' },
-  }[variante];
-  return (
-    <button
-      type="button"
-      style={{
-        padding: '9px 16px', borderRadius: 2, cursor: 'pointer',
-        font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase',
-        ...estilos,
-        ...(rest.disabled ? { opacity: 0.45, cursor: 'not-allowed' } : {}),
-      }}
-      {...rest}
-    >
-      {children}
-    </button>
-  );
-};
+export const Boton = ({ children, variante = 'normal', menudo = false, ...rest }) => (
+  <button
+    type="button"
+    className={`pnl-btn${variante !== 'normal' ? ` pnl-btn--${variante}` : ''}${menudo ? ' pnl-btn--menudo' : ''}`}
+    {...rest}
+  >
+    {children}
+  </button>
+);
 
+/* Un aviso dice qué pasó y qué hacer. El color acompaña, no informa solo: el
+   borde a la izquierda y el texto son lo que se entiende sin distinguir tonos. */
 export const Aviso = ({ tono = 'info', children }) => children ? (
-  <div style={{
-    padding: '12px 14px', marginTop: 12, border: marco.linea, borderRadius: 2,
-    font: 'var(--type-body)', fontSize: 14,
-    background: tono === 'mal' ? '#fdf1ea' : tono === 'bien' ? '#eefaf3' : 'var(--white)',
-    color: tono === 'mal' ? '#8c3f16' : 'var(--text-body)',
-  }}>
+  <div className={`pnl-aviso pnl-aviso--${tono === 'mal' ? 'mal' : tono === 'bien' ? 'bien' : 'ojo'}`} role={tono === 'mal' ? 'alert' : 'status'}>
     {children}
   </div>
 ) : null;

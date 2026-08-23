@@ -1,6 +1,6 @@
 import React from 'react';
 import * as api from './api.js';
-import { Boton, Aviso, marco } from './piezas.jsx';
+import { Boton, Aviso } from './piezas.jsx';
 import { Campo } from './Contenido.jsx';
 
 /**
@@ -85,15 +85,13 @@ export default function Paginas({ alCerrar, carpeta = 'paginas', titulo = 'Pági
 
   if (abierta) {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center', justifyContent: 'space-between' }}>
+      <div className="pnl-lienzo" style={{ padding: 0 }}>
+        <div className="pnl-barra">
           <div>
-            <h2 style={{ margin: 0, fontFamily: 'var(--font-display)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)' }}>
-              {abierta.titulo}
-            </h2>
-            <p style={{ margin: '2px 0 0', font: 'var(--type-mono)', fontSize: 12, color: 'var(--text-faint)' }}>{abierta.ruta || abierta.pregunta}</p>
+            <h2 className="pnl-titulo">{abierta.titulo}</h2>
+            <p className="pnl-sub">{abierta.ruta || abierta.pregunta}</p>
           </div>
-          <div style={{ display: 'flex', gap: 8 }}>
+          <div className="pnl-acciones">
             <Boton onClick={() => setAbierta(null)} disabled={guardando}>Volver</Boton>
             <Boton variante="fuerte" onClick={guardar} disabled={guardando || problemas.length > 0}>
               {guardando ? 'Guardando…' : 'Guardar y publicar'}
@@ -109,7 +107,7 @@ export default function Paginas({ alCerrar, carpeta = 'paginas', titulo = 'Pági
           </Aviso>
         )}
 
-        <div style={{ background: marco.papel, border: marco.linea, borderRadius: 2, padding: 20, display: 'flex', flexDirection: 'column', gap: 22 }}>
+        <div className="pnl-panel">
           {(abierta.campos || []).map((c) => (
             <Campo key={c.id} campo={c} valor={valores[c.id]} alCambiar={(v) => setValores({ ...valores, [c.id]: v })} />
           ))}
@@ -119,12 +117,10 @@ export default function Paginas({ alCerrar, carpeta = 'paginas', titulo = 'Pági
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center', justifyContent: 'space-between' }}>
-        <h2 style={{ margin: 0, fontFamily: 'var(--font-display)', fontSize: 'var(--text-h3)', color: 'var(--text-heading)' }}>
-          {titulo}
-        </h2>
-        <div style={{ display: 'flex', gap: 8 }}>
+    <div className="pnl-lienzo" style={{ padding: 0 }}>
+      <div className="pnl-barra">
+        <h2 className="pnl-titulo">{titulo}</h2>
+        <div className="pnl-acciones">
           <Boton onClick={cargar} disabled={cargando}>{cargando ? 'Cargando…' : 'Recargar'}</Boton>
           {alCerrar && <Boton onClick={alCerrar}>Cerrar</Boton>}
         </div>
@@ -133,28 +129,24 @@ export default function Paginas({ alCerrar, carpeta = 'paginas', titulo = 'Pági
       <Aviso tono="mal">{error}</Aviso>
 
       {!cargando && paginas.length === 0 && (
-        <div style={{ background: marco.papel, border: marco.linea, borderRadius: 2, padding: 24 }}>
-          <p style={{ margin: 0, color: 'var(--text-faint)' }}>
+        <div className="pnl-vacio">
+          <p style={{ margin: 0 }}>
             {vacio || 'Todavía no hay ninguna página migrada. Las páginas se van pasando de una en una: cada una que llega aquí se puede editar sin tocar código.'}
           </p>
         </div>
       )}
 
-      <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}>
+      <div className="pnl-rejilla">
         {paginas.map((p) => (
           <button
             key={p._archivo}
             type="button"
             onClick={() => abrir(p)}
-            style={{
-              textAlign: 'left', cursor: 'pointer', background: marco.papel,
-              border: marco.linea, borderRadius: 2, padding: 16,
-              display: 'flex', flexDirection: 'column', gap: 4, font: 'inherit', color: 'inherit',
-            }}
+            className="pnl-tarjeta"
           >
-            <strong style={{ fontFamily: 'var(--font-display)', fontSize: 16, color: 'var(--text-heading)' }}>{p.titulo}</strong>
-            {p.ruta && <span style={{ font: 'var(--type-mono)', fontSize: 12, color: 'var(--text-faint)' }}>{p.ruta}</span>}
-            <span style={{ font: 'var(--type-body)', fontSize: 13, color: 'var(--text-faint)', marginTop: 4 }}>
+            <strong>{p.titulo}</strong>
+            {p.ruta && <span className="pnl-meta">{p.ruta}</span>}
+            <span className="pnl-nota">
               {p.pregunta || `${(p.campos || []).length} ${(p.campos || []).length === 1 ? 'campo' : 'campos'} editables`}
             </span>
           </button>

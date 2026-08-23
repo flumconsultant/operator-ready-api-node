@@ -1,0 +1,362 @@
+/* =============================================================================
+   El panel de BECOME.
+   =============================================================================
+
+   Por qué existe este archivo
+   ---------------------------
+   El panel estaba escrito con estilos en línea: cada botón decidía su propio
+   relleno, cada tarjeta su propio borde. Con dos pantallas se aguanta; con seis
+   módulos el resultado es que nada se parece a nada, y eso es exactamente lo
+   que hace que una herramienta parezca improvisada aunque funcione bien.
+
+   Aquí las decisiones se toman UNA vez.
+
+   La dirección
+   ------------
+   No es un dashboard genérico: es el instrumento de BECOME, y usa su marca.
+   Navy profundo de fondo, verde eléctrico como única señal, y tipografía de
+   display para los títulos con monoespaciada para todo lo que se cuenta o se
+   etiqueta. La web es clara y se lee despacio; esto es oscuro y se opera
+   deprisa. Son el mismo lenguaje hablado a otra velocidad.
+
+   El verde se gasta en un sitio a la vez: el módulo activo, la acción
+   principal, el foco. Si el verde está en todas partes, no señala nada.
+
+   Escrito para el móvil
+   ---------------------
+   Quien administra esto lo hace desde el teléfono. Por eso todo lo tocable
+   mide 44 píxeles como mínimo, la barra de módulos se desplaza en horizontal
+   en vez de apilarse, y las acciones de guardar quedan siempre al alcance del
+   pulgar sin tapar lo que se está escribiendo.
+   ============================================================================= */
+
+.pnl {
+  /* --- superficies ------------------------------------------------------ */
+  --pnl-fondo: #0A0E27;
+  --pnl-sup: #121734;
+  --pnl-sup-2: #1A2044;
+  --pnl-linea: #262C51;
+  --pnl-linea-fuerte: #39406B;
+
+  /* --- texto ------------------------------------------------------------ */
+  --pnl-tinta: #F7FAFC;
+  --pnl-tinta-2: #C3CBDD;
+  --pnl-tenue: #8791AD;
+
+  /* --- señal ------------------------------------------------------------ */
+  --pnl-verde: #00FF88;
+  --pnl-verde-tenue: #0B3D2A;
+  --pnl-ambar: #F5B33C;
+  --pnl-ambar-tenue: #3A2C10;
+  --pnl-rojo: #FF6B5E;
+  --pnl-rojo-tenue: #3B1714;
+
+  /* --- ritmo: denso, porque esto se opera, no se lee ---------------------- */
+  --pnl-1: 4px;  --pnl-2: 8px;  --pnl-3: 12px;
+  --pnl-4: 16px; --pnl-5: 24px; --pnl-6: 36px;
+  --pnl-r: 3px;
+  --pnl-toque: 44px;
+
+  min-height: 100dvh;
+  background: var(--pnl-fondo);
+  color: var(--pnl-tinta-2);
+  font: var(--type-body);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.pnl *, .pnl *::before, .pnl *::after { box-sizing: border-box; }
+
+/* Lo que se anima y lo que no. Una sola duración compartida: el panel no es un
+   sitio donde el movimiento cuente nada, solo confirma que algo respondió. */
+.pnl a, .pnl button, .pnl input, .pnl textarea, .pnl select, .pnl .pnl-tarjeta {
+  transition: background-color .16s ease, border-color .16s ease, color .16s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pnl *, .pnl *::before, .pnl *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+
+/* El foco se ve siempre. Quitarlo es la forma más rápida de dejar fuera a
+   quien navega con teclado, y no ahorra nada. */
+.pnl :focus-visible {
+  outline: 2px solid var(--pnl-verde);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* --- cabecera ------------------------------------------------------------ */
+.pnl-cabecera {
+  position: sticky; top: 0; z-index: 20;
+  background: rgba(10, 14, 39, .92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--pnl-linea);
+}
+.pnl-cabecera-fila {
+  max-width: 1360px; margin: 0 auto;
+  padding: var(--pnl-3) var(--pnl-4);
+  display: flex; align-items: center; gap: var(--pnl-3);
+  justify-content: space-between; flex-wrap: wrap;
+}
+.pnl-marca {
+  display: flex; align-items: baseline; gap: var(--pnl-3); min-width: 0;
+}
+.pnl-marca strong {
+  font-family: var(--font-display); font-weight: 700;
+  letter-spacing: .04em; color: var(--pnl-tinta); font-size: 15px;
+}
+.pnl-quien {
+  font: var(--type-mono); font-size: 11px; color: var(--pnl-tenue);
+  letter-spacing: .04em; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.pnl-acciones { display: flex; align-items: center; gap: var(--pnl-2); flex-wrap: wrap; }
+
+/* --- navegación de módulos ------------------------------------------------
+   Se desplaza en horizontal a propósito: apilar seis módulos en vertical
+   empujaría el contenido fuera de la pantalla antes de empezar a trabajar. */
+.pnl-modulos {
+  display: flex; gap: 0; overflow-x: auto;
+  max-width: 1360px; margin: 0 auto; padding: 0 var(--pnl-2);
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.pnl-modulos::-webkit-scrollbar { display: none; }
+.pnl-modulo {
+  appearance: none; border: 0; background: transparent; cursor: pointer;
+  font: var(--type-body); font-size: 14px; color: var(--pnl-tenue);
+  padding: var(--pnl-3) var(--pnl-4);
+  min-height: var(--pnl-toque);
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  position: relative;
+}
+.pnl-modulo:hover { color: var(--pnl-tinta-2); }
+.pnl-modulo[aria-current="page"] {
+  color: var(--pnl-tinta); font-weight: 600;
+  border-bottom-color: var(--pnl-verde);
+}
+
+/* --- lienzo -------------------------------------------------------------- */
+.pnl-lienzo {
+  max-width: 1360px; margin: 0 auto;
+  padding: var(--pnl-5) var(--pnl-4) var(--pnl-6);
+  display: flex; flex-direction: column; gap: var(--pnl-4);
+}
+
+.pnl-titulo {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: clamp(1.15rem, 4vw, 1.4rem); letter-spacing: -.015em;
+  color: var(--pnl-tinta); margin: 0;
+}
+.pnl-sub { font: var(--type-mono); font-size: 12px; color: var(--pnl-tenue); margin: 2px 0 0; }
+.pnl-barra {
+  display: flex; flex-wrap: wrap; gap: var(--pnl-3);
+  align-items: center; justify-content: space-between;
+}
+
+/* --- tarjetas ------------------------------------------------------------ */
+.pnl-rejilla {
+  display: grid; gap: var(--pnl-3);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+}
+.pnl-tarjeta {
+  text-align: left; cursor: pointer; font: inherit; color: inherit;
+  background: var(--pnl-sup); border: 1px solid var(--pnl-linea);
+  border-radius: var(--pnl-r); padding: var(--pnl-4);
+  display: flex; flex-direction: column; gap: var(--pnl-1);
+  min-height: var(--pnl-toque);
+}
+.pnl-tarjeta:hover { background: var(--pnl-sup-2); border-color: var(--pnl-linea-fuerte); }
+.pnl-tarjeta strong {
+  font-family: var(--font-display); font-weight: 600; font-size: 15px;
+  color: var(--pnl-tinta); line-height: 1.3;
+}
+.pnl-tarjeta .pnl-meta { font: var(--type-mono); font-size: 11px; color: var(--pnl-tenue); }
+.pnl-tarjeta .pnl-nota { font-size: 13px; color: var(--pnl-tenue); margin-top: var(--pnl-1); }
+
+.pnl-panel {
+  background: var(--pnl-sup); border: 1px solid var(--pnl-linea);
+  border-radius: var(--pnl-r); padding: var(--pnl-5) var(--pnl-4);
+  display: flex; flex-direction: column; gap: var(--pnl-6);
+}
+
+/* --- botones -------------------------------------------------------------
+   Una sola escala y un solo tamaño mínimo. La acción principal lleva el verde
+   y solo hay una por pantalla. */
+.pnl-btn {
+  appearance: none; cursor: pointer; font: var(--type-body); font-size: 14px;
+  min-height: var(--pnl-toque); padding: 0 var(--pnl-4);
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--pnl-2);
+  border-radius: var(--pnl-r); border: 1px solid var(--pnl-linea-fuerte);
+  background: var(--pnl-sup-2); color: var(--pnl-tinta-2);
+  touch-action: manipulation; white-space: nowrap;
+}
+.pnl-btn:hover:not(:disabled) { border-color: var(--pnl-tenue); color: var(--pnl-tinta); }
+.pnl-btn:disabled { opacity: .42; cursor: not-allowed; }
+.pnl-btn--fuerte {
+  background: var(--pnl-verde); border-color: var(--pnl-verde);
+  color: #04210F; font-weight: 600;
+}
+.pnl-btn--fuerte:hover:not(:disabled) { background: #4DFFAB; border-color: #4DFFAB; color: #04210F; }
+.pnl-btn--quieto { background: transparent; border-color: transparent; color: var(--pnl-tenue); }
+.pnl-btn--quieto:hover:not(:disabled) { background: var(--pnl-sup-2); color: var(--pnl-tinta); }
+.pnl-btn--peligro { background: transparent; border-color: var(--pnl-rojo-tenue); color: var(--pnl-rojo); }
+.pnl-btn--peligro:hover:not(:disabled) { background: var(--pnl-rojo-tenue); border-color: var(--pnl-rojo); }
+.pnl-btn--menudo { min-height: var(--pnl-toque); min-width: var(--pnl-toque); padding: 0 var(--pnl-3); font-size: 13px; }
+
+/* «Menudo» solo lo es de ancho y de letra: la altura sigue siendo la de
+   cualquier otro control. La había bajado a 34 para ganar densidad, y era en
+   los botones que reordenan y BORRAN una fila, en un panel que se opera con el
+   pulgar. Un toque errado ahí no es una molestia: es un párrafo escrito a mano
+   que desaparece. La densidad se gana en otro sitio. */
+
+.pnl-enlace {
+  color: var(--pnl-verde); font-size: 14px; text-underline-offset: 3px;
+  display: inline-flex; align-items: center; min-height: var(--pnl-toque);
+  padding: 0 var(--pnl-2);
+}
+
+/* --- campos --------------------------------------------------------------
+   16px en el móvil no es capricho: por debajo de eso iOS amplía la página al
+   enfocar un campo, y quien escribe pierde el sitio donde estaba. */
+.pnl-campo { display: flex; flex-direction: column; gap: var(--pnl-2); min-width: 0; }
+.pnl-campo-cab {
+  display: flex; flex-wrap: wrap; gap: var(--pnl-2);
+  align-items: baseline; justify-content: space-between;
+}
+.pnl-rotulo {
+  font-family: var(--font-display); font-weight: 600; font-size: 14px;
+  color: var(--pnl-tinta); letter-spacing: -.005em;
+}
+.pnl-ayuda { font-size: 13px; color: var(--pnl-tenue); line-height: 1.45; margin: 0; }
+.pnl-opcional {
+  font: var(--type-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--pnl-tenue); border: 1px solid var(--pnl-linea); border-radius: 2px; padding: 1px 5px;
+}
+
+.pnl-entrada {
+  width: 100%; font: var(--type-body); font-size: 16px; line-height: 1.5;
+  color: var(--pnl-tinta); background: var(--pnl-fondo);
+  border: 1px solid var(--pnl-linea-fuerte); border-radius: var(--pnl-r);
+  padding: 11px var(--pnl-3); min-height: var(--pnl-toque);
+  resize: vertical;
+}
+.pnl-entrada::placeholder { color: var(--pnl-tenue); }
+.pnl-entrada:hover { border-color: var(--pnl-tenue); }
+.pnl-entrada:focus { border-color: var(--pnl-verde); }
+textarea.pnl-entrada { min-height: 96px; }
+select.pnl-entrada { width: auto; max-width: 100%; }
+
+/* El contador. Tabular para que no baile al escribir. */
+.pnl-cuenta {
+  font: var(--type-mono); font-size: 11px; font-variant-numeric: tabular-nums;
+  color: var(--pnl-tenue); text-align: right;
+}
+.pnl-cuenta--cerca { color: var(--pnl-ambar); }
+.pnl-cuenta--pasa { color: var(--pnl-rojo); }
+
+/* --- filas de una lista ---------------------------------------------------
+   Cada fila es una tarjeta con su número: en una lista de doce oportunidades,
+   saber en cuál estás es la mitad del trabajo. */
+.pnl-filas { display: flex; flex-direction: column; gap: var(--pnl-3); }
+.pnl-fila {
+  background: var(--pnl-fondo); border: 1px solid var(--pnl-linea);
+  border-radius: var(--pnl-r); padding: var(--pnl-3);
+  display: flex; flex-direction: column; gap: var(--pnl-3);
+}
+.pnl-fila-cab {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--pnl-2);
+}
+.pnl-fila-num {
+  font: var(--type-mono); font-size: 11px; color: var(--pnl-tenue);
+  font-variant-numeric: tabular-nums;
+}
+.pnl-fila-mandos { display: flex; gap: var(--pnl-2); }
+.pnl-columna { display: flex; flex-direction: column; gap: var(--pnl-1); min-width: 0; }
+.pnl-columna-rotulo {
+  font: var(--type-mono); font-size: 10px; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--pnl-tenue);
+}
+
+/* --- avisos ---------------------------------------------------------------
+   El color no dice solo el color: cada tono lleva su borde a la izquierda y su
+   texto explica qué pasó y qué hacer. */
+.pnl-aviso {
+  border-radius: var(--pnl-r); padding: var(--pnl-3) var(--pnl-4);
+  font-size: 14px; line-height: 1.5; border: 1px solid;
+  border-left-width: 3px;
+}
+.pnl-aviso--bien { background: var(--pnl-verde-tenue); border-color: var(--pnl-verde); color: #B6FFD9; }
+.pnl-aviso--mal { background: var(--pnl-rojo-tenue); border-color: var(--pnl-rojo); color: #FFC7C1; }
+.pnl-aviso--ojo { background: var(--pnl-ambar-tenue); border-color: var(--pnl-ambar); color: #FFE0AC; }
+
+.pnl-vacio {
+  background: var(--pnl-sup); border: 1px dashed var(--pnl-linea-fuerte);
+  border-radius: var(--pnl-r); padding: var(--pnl-5) var(--pnl-4);
+  color: var(--pnl-tenue); font-size: 14px;
+}
+
+/* --- la puerta ------------------------------------------------------------ */
+.pnl-puerta {
+  min-height: 100dvh; display: grid; place-items: center;
+  padding: var(--pnl-5) var(--pnl-4);
+}
+.pnl-puerta-caja {
+  width: 100%; max-width: 380px;
+  background: var(--pnl-sup); border: 1px solid var(--pnl-linea);
+  border-radius: var(--pnl-r); padding: var(--pnl-6) var(--pnl-5);
+  display: flex; flex-direction: column; gap: var(--pnl-4);
+}
+.pnl-puerta-caja h1 {
+  font-family: var(--font-display); font-weight: 700; font-size: 1.35rem;
+  color: var(--pnl-tinta); margin: 0; letter-spacing: -.02em;
+}
+
+/* --- escritorio ----------------------------------------------------------- */
+@media (min-width: 48rem) {
+  .pnl-lienzo { padding-left: var(--pnl-5); padding-right: var(--pnl-5); }
+  .pnl-cabecera-fila { padding-left: var(--pnl-5); padding-right: var(--pnl-5); }
+  .pnl-panel { padding: var(--pnl-6) var(--pnl-5); }
+}
+
+/* --- estado de un artículo ------------------------------------------------
+   El color acompaña; la palabra es la que informa. Quien no distinga el verde
+   lee «Publicado» igual. */
+.pnl-estado {
+  align-self: flex-start; margin-top: var(--pnl-2);
+  font: var(--type-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 999px;
+  border: 1px solid var(--pnl-linea-fuerte); color: var(--pnl-tenue);
+}
+.pnl-estado[data-publicado] {
+  background: var(--pnl-verde-tenue); border-color: var(--pnl-verde); color: var(--pnl-verde);
+}
+
+/* --- control segmentado (el idioma) ---------------------------------------
+   Antes eran dos botones y el activo iba en verde, así que en la misma
+   pantalla competían dos verdes: el del idioma y el de Guardar. El verde
+   señala UNA cosa; si señala dos, no señala ninguna. Aquí el activo se
+   distingue por superficie y peso, no por color de marca. */
+.pnl-segmento {
+  display: inline-flex; border: 1px solid var(--pnl-linea-fuerte);
+  border-radius: var(--pnl-r); overflow: hidden; background: var(--pnl-fondo);
+}
+.pnl-segmento button {
+  appearance: none; border: 0; background: transparent; cursor: pointer;
+  font: var(--type-mono); font-size: 12px; letter-spacing: .08em;
+  color: var(--pnl-tenue); padding: 0 var(--pnl-4);
+  min-height: var(--pnl-toque); min-width: 52px;
+}
+.pnl-segmento button + button { border-left: 1px solid var(--pnl-linea-fuerte); }
+.pnl-segmento button:hover { color: var(--pnl-tinta); }
+.pnl-segmento button[aria-pressed="true"] {
+  background: var(--pnl-sup-2); color: var(--pnl-tinta); font-weight: 600;
+}
+
+/* La cabecera no gasta dos filas en un móvil: la marca, quién eres y las dos
+   salidas caben en una. */
+@media (max-width: 30rem) {
+  .pnl-cabecera-fila { flex-wrap: nowrap; gap: var(--pnl-2); }
+  .pnl-quien { display: none; }
+  .pnl-cabecera-fila .pnl-btn { padding: 0 var(--pnl-3); }
+}
