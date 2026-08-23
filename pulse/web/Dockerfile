@@ -42,6 +42,13 @@ WORKDIR /app
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1
 RUN addgroup -g 1001 -S nodejs && adduser -S nextjs -u 1001
 
+# La carpeta de las fotos se crea aquí, con dueño, y no la deja crear a Docker
+# al montar el volumen: un volumen nuevo hereda el dueño de la carpeta que
+# encuentra en la imagen, y si no encuentra ninguna la crea como root. El
+# contenedor corre sin privilegios, así que en ese caso no podría escribir y
+# cada subida de foto fallaría.
+RUN mkdir -p /app/subidas && chown nextjs:nodejs /app/subidas
+
 COPY --from=build /app/public ./public
 COPY --from=build --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=build --chown=nextjs:nodejs /app/.next/static ./.next/static
@@ -49,13 +56,17 @@ COPY --from=build --chown=nextjs:nodejs /app/.next/static ./.next/static
 # El CLI de Prisma y las migraciones viajan con la imagen: el arranque aplica
 # lo que falte antes de servir la primera petición. Es lo que hace que un
 # `docker compose pull && up -d` baste para desplegar un cambio de esquema.
+#
+# Se llama a `prisma/build/index.js` y no al atajo `.bin/prisma` a propósito:
+# ese atajo es un enlace simbólico, y COPY lo convierte en un archivo real
+# dentro de `.bin/`. Ahí deja de tener al lado los `.wasm` que carga desde su
+# propia carpeta, y el contenedor se reinicia en bucle con un ENOENT.
 COPY --from=build /app/prisma ./prisma
 COPY --from=build /app/node_modules/prisma ./node_modules/prisma
 COPY --from=build /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=build /app/node_modules/.bin/prisma ./node_modules/.bin/prisma
 COPY --from=build /app/scripts-js ./scripts
 
 USER nextjs
 EXPOSE 3000
-CMD ["sh", "-c", "./node_modules/.bin/prisma migrate deploy && node server.js"]
+CMD ["sh", "-c", "node ./node_modules/prisma/build/index.js migrate deploy && node server.js"]
