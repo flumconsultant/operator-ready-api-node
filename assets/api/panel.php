@@ -284,6 +284,49 @@ if ($accion === 'listar-esquemas') {
     responder(200, ['ok' => true, 'esquemas' => $lista]);
 }
 
+/* Qué le pasó al guardado, dicho de forma que se pueda actuar.
+ *
+ * Antes esto decía «GitHub rechazó el guardado» y nada más. Es la clase de
+ * mensaje que deja a quien edita sin saber si el problema es suyo, es de la
+ * conexión o hay que llamar a alguien — y las tres causas probables tienen
+ * arreglos distintos:
+ *
+ *   · 409 — el archivo cambió en el repositorio mientras estaba abierto en el
+ *     panel. Ocurre de verdad: basta con que un despliegue toque ese archivo
+ *     entre que se abre y se guarda. Se arregla recargando y volviendo a
+ *     escribir, y NO se debe reintentar solo: reintentar aquí es pisar el
+ *     cambio de otro sin haberlo visto.
+ *   · 401 o 403 — el token de GitHub caducó o perdió permiso. No se arregla
+ *     desde el panel.
+ *   · 404 — la rama o la ruta no existen. Es configuración.
+ *
+ * El mensaje de GitHub se añade al final cuando lo hay, porque a veces dice
+ * exactamente qué falta y traducirlo sería perder información.
+ */
+function fallo_al_guardar(array $r, string $que) {
+    $codigo = (int) ($r['codigo'] ?? 0);
+    $detalle = trim((string) ($r['datos']['message'] ?? ''));
+
+    if ($codigo === 409) {
+        $mensaje = 'No se guardó: ' . $que . ' cambió en el repositorio mientras lo tenías abierto. '
+            . 'Vuelve atrás, entra otra vez y repite el cambio — así ves lo que hay ahora antes de escribir encima.';
+    } elseif ($codigo === 401 || $codigo === 403) {
+        $mensaje = 'No se guardó: GitHub no aceptó el permiso del panel. El token caducó o perdió acceso al repositorio. '
+            . 'Esto no se arregla desde aquí: hay que renovar el secreto PANEL_TOKEN.';
+    } elseif ($codigo === 404) {
+        $mensaje = 'No se guardó: GitHub no encuentra ' . $que . ' en la rama configurada. Es un problema de configuración del panel.';
+    } elseif ($codigo === 422) {
+        $mensaje = 'No se guardó: GitHub rechazó el contenido por no ser válido para esa ruta.';
+    } elseif ($codigo === 0) {
+        $mensaje = 'No se guardó: el servidor no pudo hablar con GitHub. Vuelve a intentarlo en un minuto; si sigue, es la red del hosting.';
+    } else {
+        $mensaje = 'No se guardó: GitHub respondió ' . $codigo . '.';
+    }
+    if ($detalle !== '') $mensaje .= ' GitHub dice: «' . $detalle . '».';
+
+    responder(502, ['ok' => false, 'error' => 'github', 'codigo_github' => $codigo, 'mensaje' => $mensaje]);
+}
+
 /* Dónde vive el contenido de un esquema, para un idioma dado.
  *
  * Hay tres formas en el sitio y ninguna se puede forzar a las otras:
@@ -486,7 +529,7 @@ if ($accion === 'guardar-contenido') {
         'branch'  => $rama,
     ]);
     if ($r['codigo'] < 200 || $r['codigo'] >= 300) {
-        responder(502, ['ok' => false, 'error' => 'github', 'mensaje' => 'GitHub rechazó el guardado.']);
+        fallo_al_guardar($r, 'este contenido');
     }
     responder(200, ['ok' => true, 'cambiados' => $cambiados]);
 }
@@ -615,7 +658,7 @@ if ($accion === 'guardar-pagina') {
         'branch'  => $rama,
     ]);
     if ($r['codigo'] < 200 || $r['codigo'] >= 300) {
-        responder(502, ['ok' => false, 'error' => 'github', 'mensaje' => 'GitHub rechazó el guardado de la página.']);
+        fallo_al_guardar($r, 'esta página');
     }
     responder(200, ['ok' => true, 'cambiados' => $cambiados]);
 }
