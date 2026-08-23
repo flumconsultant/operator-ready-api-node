@@ -121,15 +121,35 @@
   #
   # Minería no aparece aquí: su dirección no cambió, y una redirección de una
   # dirección hacia sí misma es un bucle.
-  RedirectMatch 301 ^/es/industrias/servicios-financieros/?$      /es/industrias/banca-seguros-fintech
-  RedirectMatch 301 ^/es/industrias/retail-consumo/?$             /es/industrias/retail-consumo-masivo
-  RedirectMatch 301 ^/es/industrias/travel-hospitality/?$         /es/industrias/turismo-hoteleria
-  RedirectMatch 301 ^/es/industrias/real-estate-construction/?$   /es/industrias/inmobiliario-construccion
-  RedirectMatch 301 ^/es/industrias/healthcare-life-sciences/?$   /es/industrias/salud-farmaceutica
+  #
+  # ---- Por qué son RewriteRule y no RedirectMatch ----
+  #
+  # Eran RedirectMatch, que es mod_alias. La regla que sirve las cabeceras por
+  # ruta —la de _pages, más abajo— es mod_rewrite. Cuál de los dos módulos actúa
+  # primero no lo decide el orden del archivo: lo decide el servidor, y no
+  # siempre igual. Con una auditoría externa estas direcciones respondieron 200
+  # y con la del despliegue respondieron 301, las dos medidas correctas y en
+  # desacuerdo, porque cada petición llegó por un camino distinto.
+  #
+  # Lo que hacía posible ese 200: en el servidor todavía viven los
+  # _pages/es/industrias/<slug-viejo>.html de antes del renombrado —la subida
+  # es un espejo SIN --delete—, así que la regla de _pages encuentra archivo y
+  # lo sirve. La dirección vieja no redirige: devuelve la página. Para un
+  # buscador eso no es una mudanza, son dos direcciones con el mismo contenido,
+  # y por eso Google todavía tiene indexadas tres de las viejas.
+  #
+  # Escritas como RewriteRule y colocadas ANTES de la regla de _pages, el orden
+  # del archivo sí manda: mismo módulo, primera regla que casa, `[L]` corta. Ya
+  # no depende de qué módulo gane ni de qué archivos quedaron en el servidor.
+  RewriteRule ^es/industrias/servicios-financieros/?$      /es/industrias/banca-seguros-fintech [R=301,L]
+  RewriteRule ^es/industrias/retail-consumo/?$             /es/industrias/retail-consumo-masivo [R=301,L]
+  RewriteRule ^es/industrias/travel-hospitality/?$         /es/industrias/turismo-hoteleria [R=301,L]
+  RewriteRule ^es/industrias/real-estate-construction/?$   /es/industrias/inmobiliario-construccion [R=301,L]
+  RewriteRule ^es/industrias/healthcare-life-sciences/?$   /es/industrias/salud-farmaceutica [R=301,L]
 
-  RedirectMatch 301 ^/en/industries/financial-services/?$         /en/industries/banking-insurance-fintech
-  RedirectMatch 301 ^/en/industries/retail-consumer/?$            /en/industries/retail-consumer-goods
-  RedirectMatch 301 ^/en/industries/healthcare-life-sciences/?$   /en/industries/healthcare-pharma
+  RewriteRule ^en/industries/financial-services/?$         /en/industries/banking-insurance-fintech [R=301,L]
+  RewriteRule ^en/industries/retail-consumer/?$            /en/industries/retail-consumer-goods [R=301,L]
+  RewriteRule ^en/industries/healthcare-life-sciences/?$   /en/industries/healthcare-pharma [R=301,L]
 
   # El apartado que dejó de llamarse «Framework».
   RedirectMatch 301 ^/es/framework/?$                                /es/como-transformamos

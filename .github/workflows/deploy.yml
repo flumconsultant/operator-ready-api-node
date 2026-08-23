@@ -413,6 +413,28 @@ jobs:
             # de ahora en adelante.
             rm -f $DESTINO/assets/.htaccess;
 
+            # Las cabeceras por ruta de las industrias con su nombre viejo.
+            #
+            # El espejo de abajo va SIN --delete a propósito, así que un archivo
+            # que deja de existir en el repositorio se queda en el servidor para
+            # siempre. Con estos eso no es inocuo: la regla de _pages del
+            # .htaccess encuentra el archivo, lo sirve, y la dirección vieja
+            # responde 200 con la página nueva dentro en vez de redirigir. Para
+            # un buscador son dos direcciones con el mismo contenido, que es
+            # justo lo que la mudanza venía a evitar — y es por lo que Google
+            # todavía tiene indexadas tres de las viejas.
+            #
+            # -f para que no proteste cuando ya no existan, que es lo que
+            # pasará a partir del segundo despliegue.
+            rm -f $DESTINO/_pages/es/industrias/servicios-financieros.html;
+            rm -f $DESTINO/_pages/es/industrias/retail-consumo.html;
+            rm -f $DESTINO/_pages/es/industrias/travel-hospitality.html;
+            rm -f $DESTINO/_pages/es/industrias/real-estate-construction.html;
+            rm -f $DESTINO/_pages/es/industrias/healthcare-life-sciences.html;
+            rm -f $DESTINO/_pages/en/industries/financial-services.html;
+            rm -f $DESTINO/_pages/en/industries/retail-consumer.html;
+            rm -f $DESTINO/_pages/en/industries/healthcare-life-sciences.html;
+
             # Y los permisos de la carpeta. Un directorio que el servidor web
             # no puede leer devuelve 403 en todo lo que hay dentro, que es
             # exactamente el síntoma, y no se arregla borrando archivos. Si ya
