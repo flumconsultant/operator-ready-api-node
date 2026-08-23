@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { reconocimiento } from "@/lib/reconocimientos";
 import { serializarReconocimiento } from "@/lib/serializar";
 import { sesionConfigurada } from "@/lib/sesion";
+import { rutas } from "@/lib/rutas";
 import Marco from "@/componentes/Marco";
 import Reconocimiento from "@/componentes/Reconocimiento";
 
@@ -41,9 +42,9 @@ export default async function Publicacion({
   if (!r) notFound();
 
   return (
-    <Marco actual="/feed">
+    <Marco actual="feed">
       <div className="columna-feed">
-        <Link href="/feed" className="enlace-volver">
+        <Link href={rutas(usuario.empresaSlug).feed} className="enlace-volver">
           <ArrowLeftIcon size={18} aria-hidden="true" />
           Volver al feed
         </Link>

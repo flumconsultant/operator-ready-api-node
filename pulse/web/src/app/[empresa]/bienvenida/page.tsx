@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache";
 
 import { prisma } from "@/lib/prisma";
 import { sesionRequerida } from "@/lib/sesion";
+import { rutas } from "@/lib/rutas";
 import { guardarImagen } from "@/lib/imagenes";
 import AsistentePersona from "./AsistentePersona";
 
@@ -40,10 +41,11 @@ export default async function OnboardingPersona() {
     }),
   ]);
 
-  if (yo.onboardingEn) redirect("/feed");
+  const r = rutas(usuario.empresaSlug);
+  if (yo.onboardingEn) redirect(r.feed);
   // La empresa va primero: no tiene sentido pedir un primer reconocimiento en
   // una empresa que todavía no tiene valores.
-  if (!empresa.onboardingEn && usuario.rol === "ADMIN") redirect("/bienvenida/empresa");
+  if (!empresa.onboardingEn && usuario.rol === "ADMIN") redirect(r.bienvenidaEmpresa);
 
   async function guardarPerfil(datos: FormData) {
     "use server";
@@ -108,8 +110,8 @@ export default async function OnboardingPersona() {
       data: { onboardingEn: new Date() },
     });
 
-    revalidatePath("/feed");
-    redirect("/feed");
+    revalidatePath("/[empresa]/feed", "page");
+    redirect(rutas(u.empresaSlug).feed);
   }
 
   return (

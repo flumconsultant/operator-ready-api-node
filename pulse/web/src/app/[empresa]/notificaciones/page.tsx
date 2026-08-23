@@ -19,14 +19,14 @@ export default async function Notificaciones() {
     "use server";
     const u = await sesionConfigurada();
     await marcarTodasLeidas(u.id);
-    revalidatePath("/notificaciones");
-    revalidatePath("/feed");
+    revalidatePath("/[empresa]/notificaciones", "page");
+    revalidatePath("/[empresa]/feed", "page");
   }
 
   const sinLeer = notificaciones.filter((n) => !n.leidaEn).length;
 
   return (
-    <Marco actual="/notificaciones">
+    <Marco actual="novedades">
       <div className="columna-feed">
         <div className="cabecera-pagina cabecera-pagina--con-accion">
           <div>

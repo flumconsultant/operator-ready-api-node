@@ -122,7 +122,7 @@ export async function crearReconocimiento(datos: {
           personas.length === 1
             ? `${quien} te reconoció por ${valor.nombre}`
             : `${quien} os reconoció a ${personas.length} por ${valor.nombre}`,
-        enlace: `/feed/${creado.id}`,
+        enlace: `feed/${creado.id}`,
       }),
     ),
     avisarMencionados({
@@ -169,7 +169,7 @@ async function avisarMencionados(datos: {
         recognitionId: datos.recognitionId,
         tipo: "MENCION",
         texto: `${datos.actorNombre} te mencionó`,
-        enlace: `/feed/${datos.recognitionId}`,
+        enlace: `feed/${datos.recognitionId}`,
       }),
     ),
   );
@@ -230,7 +230,7 @@ export async function comentar(datos: {
           recognitionId: reconocimiento.id,
           tipo: "COMENTARIO",
           texto: `${quien} comentó un reconocimiento`,
-          enlace: `/feed/${reconocimiento.id}`,
+          enlace: `feed/${reconocimiento.id}`,
         }),
       ),
     avisarMencionados({

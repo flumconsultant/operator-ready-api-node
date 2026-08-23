@@ -1,13 +1,17 @@
+"use client";
+
 import Link from "next/link";
 import { CalendarHeartIcon, TrendUpIcon, HandHeartIcon } from "@phosphor-icons/react/dist/ssr";
 
 import { diaYMes } from "@/lib/fechas";
 import Avatar from "./Avatar";
 import IconoValor from "./IconoValor";
+import { useRutas } from "./useRutas";
 
 type Datos = Awaited<ReturnType<typeof import("@/lib/panel-lateral").datosDelPanel>>;
 
 export default function PanelLateral({ datos }: { datos: Datos }) {
+  const r = useRutas();
   const { proximas, ranking, sugerencias } = datos;
 
   return (
@@ -23,7 +27,7 @@ export default function PanelLateral({ datos }: { datos: Datos }) {
               <li key={`${c.tipo}-${c.persona.id}`}>
                 <Avatar persona={c.persona} tamano="sm" />
                 <span>
-                  <Link href={`/persona/${c.persona.id}`} className="enlace-persona">
+                  <Link href={r.persona(c.persona.id)} className="enlace-persona">
                     {c.persona.nombre}
                   </Link>
                   <span className="rail__detalle">
@@ -75,7 +79,7 @@ export default function PanelLateral({ datos }: { datos: Datos }) {
               <li key={p.id}>
                 <Avatar persona={p} tamano="sm" />
                 <span>
-                  <Link href={`/persona/${p.id}`} className="enlace-persona">
+                  <Link href={r.persona(p.id)} className="enlace-persona">
                     {p.nombre}
                   </Link>
                   {p.cargo && <span className="rail__detalle">{p.cargo}</span>}

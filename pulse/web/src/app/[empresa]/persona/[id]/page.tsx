@@ -79,7 +79,7 @@ export default async function Persona({
   });
 
   return (
-    <Marco actual="/feed">
+    <Marco actual="feed">
       <div className="columna-feed">
         <header className="perfil">
           <Avatar persona={persona} tamano="xl" enlazado={false} />

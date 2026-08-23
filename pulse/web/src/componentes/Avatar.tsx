@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useRutas } from "./useRutas";
 
 // El avatar.
 //
@@ -46,6 +49,7 @@ export default function Avatar({
   tamano?: TamanoAvatar;
   enlazado?: boolean;
 }) {
+  const r = useRutas();
   const px = TAMANOS[tamano];
   const paleta = color(persona.id);
 
@@ -86,7 +90,7 @@ export default function Avatar({
 
   return (
     <Link
-      href={`/persona/${persona.id}`}
+      href={r.persona(persona.id)}
       className="avatar__enlace"
       aria-label={`Ver el perfil de ${persona.nombre}`}
     >

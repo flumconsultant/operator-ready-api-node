@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import { auth } from "@/lib/auth";
 import { marcarLeida } from "@/lib/notificaciones";
+import { rutas, ACCEDER } from "@/lib/rutas";
 
 // Abrir una notificación: la marca leída y redirige a donde apuntaba.
 //
@@ -16,15 +17,19 @@ export async function GET(
 ) {
   const sesion = await auth();
   if (!sesion?.user) {
-    return NextResponse.redirect(new URL("/acceder", process.env.APP_URL));
+    return NextResponse.redirect(new URL(ACCEDER, process.env.APP_URL));
   }
 
   const { id } = await contexto.params;
   const destino = await marcarLeida(sesion.user.id, id);
+  const r = rutas(sesion.user.empresaSlug);
 
   // Si la notificación no existe o no es suya, se va al listado en vez de dar
   // un error: no hay nada que un 404 le aclare a quien acaba de pulsar.
   return NextResponse.redirect(
-    new URL(destino ?? "/notificaciones", process.env.APP_URL),
+    new URL(
+      destino ? `/${sesion.user.empresaSlug}/${destino}` : r.novedades,
+      process.env.APP_URL,
+    ),
   );
 }

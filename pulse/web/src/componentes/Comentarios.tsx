@@ -9,6 +9,7 @@ import Avatar from "./Avatar";
 import Fecha from "./Fecha";
 import TextoConMenciones from "./TextoConMenciones";
 import CampoConMenciones, { type Mencionable } from "./CampoConMenciones";
+import { useRutas } from "./useRutas";
 
 // La fecha llega como cadena ISO, igual que el resto del feed: ver
 // lib/serializar.ts sobre por qué.
@@ -38,6 +39,7 @@ export default function Comentarios({
   companeros?: Mencionable[];
   siempreAbierto?: boolean;
 }) {
+  const r = useRutas();
   const router = useRouter();
   const [, empezar] = useTransition();
   const [texto, setTexto] = useState("");
@@ -92,7 +94,7 @@ export default function Comentarios({
           <Avatar persona={c.user} tamano="sm" />
           <div className="comentario__cuerpo">
             <p className="comentario__texto">
-              <Link href={`/persona/${c.user.id}`} className="comentario__autor">
+              <Link href={r.persona(c.user.id)} className="comentario__autor">
                 {c.user.nombre}
               </Link>{" "}
               <TextoConMenciones texto={c.texto} />

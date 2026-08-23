@@ -62,7 +62,9 @@ export default function Bienvenida({
       return;
     }
 
-    window.location.href = "/perfil";
+    // A la raíz: la portada la lleva a su empresa y de ahí al asistente de
+    // bienvenida, que es donde tiene que empezar.
+    window.location.href = "/";
   }
 
   return (

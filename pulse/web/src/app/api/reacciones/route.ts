@@ -99,7 +99,7 @@ export async function POST(peticion: Request) {
             userId === reconocimiento.deUserId
               ? `${nombre} reaccionó al reconocimiento que escribiste`
               : `${nombre} reaccionó al reconocimiento que recibiste`,
-          enlace: `/feed/${reconocimiento.id}`,
+          enlace: `feed/${reconocimiento.id}`,
         }),
       ),
     );

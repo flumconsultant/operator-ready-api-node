@@ -47,7 +47,7 @@ export default async function Auditoria({
   const registros = await listarAuditoria(companyId, { accion: filtro, limite: 200 });
 
   return (
-    <Marco actual="/admin">
+    <Marco actual="cultura">
       <div className="cabecera-pagina">
         <h1>Auditoría</h1>
         <p>

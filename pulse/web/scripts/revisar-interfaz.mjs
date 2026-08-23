@@ -19,6 +19,8 @@ import { chromium } from "playwright";
 
 const BASE = process.argv[2] ?? "http://localhost:3000";
 const CUENTA = { email: "carlos@demo.pe", password: "pulse-demo-2026" };
+// La empresa de la cuenta de demostración. Las rutas cuelgan de su slug.
+const EMPRESA = process.argv[3] ?? "demo";
 const RUTAS = [
   "/feed",
   "/notificaciones",
@@ -28,7 +30,7 @@ const RUTAS = [
   "/admin/empresa",
   "/admin/auditoria",
   "/panel",
-];
+].map((r) => `/${EMPRESA}${r}`);
 
 function luminancia([r, g, b]) {
   const f = (c) => {
@@ -167,8 +169,11 @@ for (const ruta of RUTAS) {
 }
 
 // El foco tiene que verse en todo lo que lo recibe.
-await pagina.goto(`${BASE}/feed`, { waitUntil: "networkidle" });
-await pagina.waitForTimeout(300);
+await pagina.goto(`${BASE}/${EMPRESA}/feed`, { waitUntil: "networkidle" });
+await pagina.waitForTimeout(600);
+// Sin un punto de partida dentro del documento, el primer Tab se lo queda el
+// navegador (la barra de direcciones) y el recorrido sale vacío.
+await pagina.evaluate(() => document.body.focus());
 
 let sinAnillo = 0;
 let recorridos = 0;

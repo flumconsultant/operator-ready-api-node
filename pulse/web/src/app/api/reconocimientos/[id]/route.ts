@@ -56,7 +56,7 @@ export async function DELETE(
       texto: `Un administrador retiró un reconocimiento que escribiste${
         cuerpo.motivo?.trim() ? `: ${cuerpo.motivo.trim()}` : "."
       }`,
-      enlace: "/feed",
+      enlace: "feed",
     });
   }
 

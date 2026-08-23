@@ -45,7 +45,7 @@ export default async function Panel({
   const sinDar = datos.filas.filter((f) => f.dados === 0).length;
 
   return (
-    <Marco actual="/panel">
+    <Marco actual="equipo">
       <div className="cabecera-pagina">
         <h1>{equipo ?? "Sin equipo asignado"}</h1>
         <p>Últimos 30 días. La media de la empresa está al lado de cada cifra.</p>

@@ -1,4 +1,5 @@
 import { prisma } from "./prisma";
+import { rutas } from "./rutas";
 
 // Cuándo hay que llevar a alguien a un asistente y no al feed.
 //
@@ -38,8 +39,9 @@ export async function dondeEmpezar(
   return { ir: null };
 }
 
-export function rutaDe(destino: Destino) {
-  if (destino.ir === "empresa") return "/bienvenida/empresa";
-  if (destino.ir === "persona") return "/bienvenida";
+export function rutaDe(destino: Destino, empresaSlug: string) {
+  const r = rutas(empresaSlug);
+  if (destino.ir === "empresa") return r.bienvenidaEmpresa;
+  if (destino.ir === "persona") return r.bienvenida;
   return null;
 }

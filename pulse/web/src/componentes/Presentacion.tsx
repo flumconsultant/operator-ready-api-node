@@ -6,6 +6,7 @@ import { HandWavingIcon } from "@phosphor-icons/react/dist/ssr";
 import type { PresentacionSerializada } from "@/lib/serializar";
 import Avatar from "./Avatar";
 import Fecha from "./Fecha";
+import { useRutas } from "./useRutas";
 
 // La presentación de quien se incorpora.
 //
@@ -18,6 +19,7 @@ export default function Presentacion({
 }: {
   presentacion: PresentacionSerializada;
 }) {
+  const r = useRutas();
   return (
     <article className="presentacion">
       <div className="presentacion__cabecera">
@@ -28,7 +30,7 @@ export default function Presentacion({
             Se ha incorporado
           </p>
           <p className="presentacion__nombre">
-            <Link href={`/persona/${p.user.id}`} className="enlace-persona">
+            <Link href={r.persona(p.user.id)} className="enlace-persona">
               {p.user.nombre}
             </Link>
           </p>

@@ -35,7 +35,7 @@ export default async function Feed() {
   ]);
 
   return (
-    <Marco actual="/feed">
+    <Marco actual="feed">
       <div className="con-rail">
         <div className="columna-feed">
           <Reconocer yo={yo} valores={valores} companeros={companeros} />

@@ -12,7 +12,7 @@ export default async function Acceder({
   searchParams: Promise<{ error?: string }>;
 }) {
   const sesion = await auth();
-  if (sesion) redirect("/feed");
+  if (sesion) redirect("/");
 
   const { error } = await searchParams;
 
@@ -24,7 +24,10 @@ export default async function Acceder({
       await signIn("credentials", {
         email: String(datos.get("email") ?? ""),
         password: String(datos.get("password") ?? ""),
-        redirectTo: "/feed",
+        // A la raíz y no a una ruta concreta: en este punto todavía no se sabe
+        // de qué empresa es quien entra, y la portada sí — con la sesión ya
+        // creada, manda a /su-empresa/feed.
+        redirectTo: "/",
       });
     } catch (e) {
       // signIn lanza para redirigir; hay que dejar pasar esa excepción.
@@ -38,7 +41,7 @@ export default async function Acceder({
     "use server";
     await signIn("nodemailer", {
       email: String(datos.get("email") ?? ""),
-      redirectTo: "/feed",
+      redirectTo: "/",
     });
   }
 

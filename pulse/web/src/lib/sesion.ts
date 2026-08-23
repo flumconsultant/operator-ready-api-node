@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 
 import { auth } from "./auth";
 import { dondeEmpezar, rutaDe } from "./onboarding";
+import { ACCEDER, rutas } from "./rutas";
 
 // El guardián de las páginas privadas.
 //
@@ -13,7 +14,7 @@ import { dondeEmpezar, rutaDe } from "./onboarding";
 
 export async function sesionRequerida() {
   const sesion = await auth();
-  if (!sesion?.user) redirect("/acceder");
+  if (!sesion?.user) redirect(ACCEDER);
   return sesion.user;
 }
 
@@ -22,19 +23,19 @@ export async function sesionRequerida() {
 /// usan `sesionRequerida` a secas o se redirigirían a sí mismos para siempre.
 export async function sesionConfigurada() {
   const usuario = await sesionRequerida();
-  const ruta = rutaDe(await dondeEmpezar(usuario));
+  const ruta = rutaDe(await dondeEmpezar(usuario), usuario.empresaSlug);
   if (ruta) redirect(ruta);
   return usuario;
 }
 
 export async function sesionDeAdmin() {
   const usuario = await sesionConfigurada();
-  if (usuario.rol !== "ADMIN") redirect("/feed");
+  if (usuario.rol !== "ADMIN") redirect(rutas(usuario.empresaSlug).feed);
   return usuario;
 }
 
 export async function sesionDeManager() {
   const usuario = await sesionConfigurada();
-  if (usuario.rol === "COLABORADOR") redirect("/feed");
+  if (usuario.rol === "COLABORADOR") redirect(rutas(usuario.empresaSlug).feed);
   return usuario;
 }

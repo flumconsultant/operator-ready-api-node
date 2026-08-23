@@ -69,7 +69,7 @@ export default async function PaginaPersonas() {
     );
     if (!r.ok) return { error: r.error };
 
-    revalidatePath("/admin/personas");
+    revalidatePath("/[empresa]/admin/personas", "page");
     return { enlace: r.enlace, nombre: validado.data.nombre };
   }
 
@@ -103,7 +103,7 @@ export default async function PaginaPersonas() {
       );
     }
 
-    revalidatePath("/admin/personas");
+    revalidatePath("/[empresa]/admin/personas", "page");
     return { resultados };
   }
 
@@ -128,7 +128,7 @@ export default async function PaginaPersonas() {
     );
     if (!r.ok) return { error: r.error };
 
-    revalidatePath("/admin/personas");
+    revalidatePath("/[empresa]/admin/personas", "page");
     return { ok: true as const };
   }
 
@@ -141,7 +141,7 @@ export default async function PaginaPersonas() {
       String(datos.get("userId")),
       datos.get("activo") === "si",
     );
-    revalidatePath("/admin/personas");
+    revalidatePath("/[empresa]/admin/personas", "page");
     return r.ok ? { ok: true as const } : { error: r.error };
   }
 
@@ -154,12 +154,12 @@ export default async function PaginaPersonas() {
       String(datos.get("userId")),
       entorno.APP_URL,
     );
-    revalidatePath("/admin/personas");
+    revalidatePath("/[empresa]/admin/personas", "page");
     return r.ok ? { enlace: r.enlace } : { error: r.error };
   }
 
   return (
-    <Marco actual="/admin">
+    <Marco actual="cultura">
       <div className="cabecera-pagina">
         <h1>Personas</h1>
         <p>

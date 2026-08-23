@@ -73,21 +73,20 @@ export default async function Perfil() {
       },
     });
 
-    revalidatePath("/perfil");
-    revalidatePath("/feed");
-    revalidatePath(`/persona/${u.id}`);
+    revalidatePath("/", "layout");
+    
   }
 
   async function codigoDiscord() {
     "use server";
     const u = await sesionConfigurada();
     const codigo = await generarCodigoDiscord(u.id);
-    revalidatePath("/perfil");
+    revalidatePath("/", "layout");
     return { codigo };
   }
 
   return (
-    <Marco actual="/perfil">
+    <Marco actual="perfil">
       <div className="columna-feed">
         <div className="cabecera-pagina">
           <h1>Mi perfil</h1>

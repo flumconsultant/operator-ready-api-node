@@ -15,6 +15,10 @@ export async function notificar(datos: {
   recognitionId?: string;
   tipo: TipoNotificacion;
   texto: string;
+  /// Sin el slug de la empresa y sin barra inicial: «feed/abc123». El slug se
+  /// pone al leer, porque quien lee es de esa empresa. Guardarlo aquí dentro
+  /// dejaría todas las notificaciones apuntando a una dirección muerta el día
+  /// que una empresa se renombre.
   enlace: string;
 }) {
   if (datos.actorId && datos.actorId === datos.userId) return null;

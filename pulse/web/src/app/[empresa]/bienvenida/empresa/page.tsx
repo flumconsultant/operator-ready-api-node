@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache";
 
 import { prisma } from "@/lib/prisma";
 import { sesionRequerida } from "@/lib/sesion";
+import { rutas } from "@/lib/rutas";
 import { guardarImagen } from "@/lib/imagenes";
 import { entorno } from "@/lib/entorno";
 import { anotar } from "@/lib/auditoria";
@@ -25,7 +26,8 @@ export default async function OnboardingEmpresa() {
   // Solo el administrador configura la empresa. Es el único rol que puede, y
   // el que llegue aquí sin serlo se va al feed en vez de a una pantalla que no
   // podría completar.
-  if (usuario.rol !== "ADMIN") redirect("/feed");
+  const r = rutas(usuario.empresaSlug);
+  if (usuario.rol !== "ADMIN") redirect(r.feed);
 
   const empresa = await prisma.company.findUniqueOrThrow({
     where: { id: usuario.companyId },
@@ -39,7 +41,7 @@ export default async function OnboardingEmpresa() {
 
   // Ya configurada: se puede volver a Empresa desde el panel, pero el asistente
   // no se repite.
-  if (empresa.onboardingEn) redirect("/admin/empresa");
+  if (empresa.onboardingEn) redirect(r.empresa);
 
   async function guardarIdentidad(datos: FormData) {
     "use server";
@@ -205,7 +207,7 @@ export default async function OnboardingEmpresa() {
     // Sin valores no se puede reconocer, así que el asistente devuelve al paso
     // de valores en vez de dar por terminada una empresa que no funciona.
     const valores = await prisma.value.count({ where: { companyId: u.companyId } });
-    if (valores === 0) redirect("/bienvenida/empresa?paso=valores");
+    if (valores === 0) redirect(rutas(u.empresaSlug).bienvenidaEmpresa);
 
     await prisma.company.update({
       where: { id: u.companyId },
@@ -221,7 +223,7 @@ export default async function OnboardingEmpresa() {
     });
 
     revalidatePath("/", "layout");
-    redirect("/bienvenida");
+    redirect(rutas(u.empresaSlug).bienvenida);
   }
 
   return (

@@ -13,6 +13,7 @@ import Reacciones from "./Reacciones";
 import Comentarios from "./Comentarios";
 import TextoConMenciones from "./TextoConMenciones";
 import type { Mencionable } from "./CampoConMenciones";
+import { useRutas } from "./useRutas";
 
 // La publicación del feed.
 //
@@ -38,6 +39,7 @@ export default function Reconocimiento({
   permalink?: boolean;
   puedeModerar?: boolean;
 }) {
+  const rt = useRutas();
   const router = useRouter();
   const [retirando, setRetirando] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -88,7 +90,7 @@ export default function Reconocimiento({
 
         <div className="publicacion__quien">
           <p className="publicacion__linea">
-            <Link href={`/persona/${r.de.id}`} className="enlace-persona">
+            <Link href={rt.persona(r.de.id)} className="enlace-persona">
               {r.de.nombre}
             </Link>{" "}
             <span className="publicacion__verbo">reconoció a</span>{" "}
@@ -98,7 +100,7 @@ export default function Reconocimiento({
             {permalink ? (
               <Fecha valor={r.creadoEn} />
             ) : (
-              <Link href={`/feed/${r.id}`} className="enlace-discreto">
+              <Link href={rt.publicacion(r.id)} className="enlace-discreto">
                 <Fecha valor={r.creadoEn} />
               </Link>
             )}
@@ -184,8 +186,9 @@ export default function Reconocimiento({
 /// «Ana», «Ana y Diego», «Ana, Diego y 3 más». Escribir la lista entera de diez
 /// nombres deja la cabecera en cuatro líneas y esconde el mensaje.
 function ListaPersonas({ personas }: { personas: { id: string; nombre: string }[] }) {
+  const rt = useRutas();
   const enlace = (p: { id: string; nombre: string }) => (
-    <Link key={p.id} href={`/persona/${p.id}`} className="enlace-persona">
+    <Link key={p.id} href={rt.persona(p.id)} className="enlace-persona">
       {p.nombre}
     </Link>
   );

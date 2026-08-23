@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
+import { useRutas } from "./useRutas";
 import {
   ChartLineUpIcon,
   BuildingsIcon,
@@ -17,18 +19,20 @@ import {
 // solo lo ve un administrador, que es una persona por empresa.
 
 const PESTANAS = [
-  { href: "/admin", texto: "Cultura", Icono: ChartLineUpIcon },
-  { href: "/admin/personas", texto: "Personas", Icono: UsersThreeIcon },
-  { href: "/admin/empresa", texto: "Empresa", Icono: BuildingsIcon },
-  { href: "/admin/auditoria", texto: "Auditoría", Icono: ShieldCheckIcon },
-];
+  { clave: "cultura", texto: "Cultura", Icono: ChartLineUpIcon },
+  { clave: "personas", texto: "Personas", Icono: UsersThreeIcon },
+  { clave: "empresa", texto: "Empresa", Icono: BuildingsIcon },
+  { clave: "auditoria", texto: "Auditoría", Icono: ShieldCheckIcon },
+] as const;
 
 export default function PestanasAdmin() {
   const ruta = usePathname();
+  const r = useRutas();
 
   return (
     <nav className="pestanas" aria-label="Administración">
-      {PESTANAS.map(({ href, texto, Icono }) => {
+      {PESTANAS.map(({ clave, texto, Icono }) => {
+        const href = r[clave];
         const activa = ruta === href;
         return (
           <Link

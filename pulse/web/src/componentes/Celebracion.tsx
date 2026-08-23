@@ -6,6 +6,7 @@ import { CakeIcon, ConfettiIcon } from "@phosphor-icons/react/dist/ssr";
 import type { CelebracionSerializada as Datos } from "@/lib/serializar";
 import Avatar from "./Avatar";
 import Fecha from "./Fecha";
+import { useRutas } from "./useRutas";
 
 // Cumpleaños y aniversarios en el feed.
 //
@@ -15,6 +16,7 @@ import Fecha from "./Fecha";
 // misma tarjeta haría que el feed pareciera más activo de lo que está.
 
 export default function Celebracion({ celebracion: c }: { celebracion: Datos }) {
+  const r = useRutas();
   const cumpleanos = c.tipo === "CUMPLEANOS";
 
   return (
@@ -30,13 +32,13 @@ export default function Celebracion({ celebracion: c }: { celebracion: Datos }) 
           {cumpleanos ? (
             <>
               Hoy cumple años{" "}
-              <Link href={`/persona/${c.persona.id}`} className="enlace-persona">
+              <Link href={r.persona(c.persona.id)} className="enlace-persona">
                 {c.persona.nombre}
               </Link>
             </>
           ) : (
             <>
-              <Link href={`/persona/${c.persona.id}`} className="enlace-persona">
+              <Link href={r.persona(c.persona.id)} className="enlace-persona">
                 {c.persona.nombre}
               </Link>{" "}
               cumple {c.anos} {c.anos === 1 ? "año" : "años"} en la empresa

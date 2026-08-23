@@ -9,6 +9,7 @@ import {
 
 import { signOut } from "@/lib/auth";
 import { sesionRequerida } from "@/lib/sesion";
+import { ACCEDER, rutas } from "@/lib/rutas";
 import { sinLeer } from "@/lib/notificaciones";
 import { prisma } from "@/lib/prisma";
 import Avatar from "./Avatar";
@@ -26,10 +27,10 @@ import Avatar from "./Avatar";
 // alguien vuelve.
 
 const ENLACES = [
-  { href: "/feed", texto: "Feed", Icono: HouseIcon, roles: ["ADMIN", "MANAGER", "COLABORADOR"] },
-  { href: "/notificaciones", texto: "Novedades", Icono: BellSimpleIcon, roles: ["ADMIN", "MANAGER", "COLABORADOR"] },
-  { href: "/panel", texto: "Mi equipo", Icono: UsersThreeIcon, roles: ["ADMIN", "MANAGER"] },
-  { href: "/admin", texto: "Cultura", Icono: ChartLineUpIcon, roles: ["ADMIN"] },
+  { clave: "feed", texto: "Feed", Icono: HouseIcon, roles: ["ADMIN", "MANAGER", "COLABORADOR"] },
+  { clave: "novedades", texto: "Novedades", Icono: BellSimpleIcon, roles: ["ADMIN", "MANAGER", "COLABORADOR"] },
+  { clave: "equipo", texto: "Mi equipo", Icono: UsersThreeIcon, roles: ["ADMIN", "MANAGER"] },
+  { clave: "cultura", texto: "Cultura", Icono: ChartLineUpIcon, roles: ["ADMIN"] },
 ] as const;
 
 export default async function Marco({
@@ -40,6 +41,7 @@ export default async function Marco({
   actual: string;
 }) {
   const usuario = await sesionRequerida();
+  const r = rutas(usuario.empresaSlug);
 
   const [pendientes, yo, empresa] = await Promise.all([
     sinLeer(usuario.id),
@@ -57,9 +59,10 @@ export default async function Marco({
     (e.roles as readonly string[]).includes(usuario.rol),
   );
 
-  const enlaces = visibles.map(({ href, texto, Icono }) => {
-    const activo = actual === href;
-    const pendiente = href === "/notificaciones" ? pendientes : 0;
+  const enlaces = visibles.map(({ clave, texto, Icono }) => {
+    const href = r[clave];
+    const activo = actual === clave;
+    const pendiente = clave === "novedades" ? pendientes : 0;
 
     return (
       <Link
@@ -94,7 +97,7 @@ export default async function Marco({
         {/* Con logo, la barra enseña la marca de la empresa; sin él, la de
             Pulse. Quien entra cada mañana tiene que ver su casa, no la nuestra
             — y a la vez el pie recuerda de qué producto se trata. */}
-        <Link href="/feed" className="lateral__marca">
+        <Link href={r.feed} className="lateral__marca">
           {empresa.logo ? (
             <>
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -117,7 +120,7 @@ export default async function Marco({
         </nav>
 
         <div className="lateral__pie">
-          <Link href="/perfil" className="lateral__yo">
+          <Link href={r.perfil} className="lateral__yo">
             <Avatar persona={yo} tamano="md" enlazado={false} />
             <span>
               <strong>{yo.nombre}</strong>
@@ -128,7 +131,7 @@ export default async function Marco({
           <form
             action={async () => {
               "use server";
-              await signOut({ redirectTo: "/acceder" });
+              await signOut({ redirectTo: ACCEDER });
             }}
           >
             <button type="submit" className="lateral__salir">
@@ -145,9 +148,9 @@ export default async function Marco({
       <nav className="nav nav--inferior" aria-label="Secciones">
         {enlaces}
         <Link
-          href="/perfil"
+          href={r.perfil}
           className="nav__enlace"
-          aria-current={actual === "/perfil" ? "page" : undefined}
+          aria-current={actual === "perfil" ? "page" : undefined}
         >
           <span className="nav__icono">
             <Avatar persona={yo} tamano="sm" enlazado={false} />

@@ -17,6 +17,10 @@ declare module "next-auth" {
     user: {
       id: string;
       companyId: string;
+      /// El slug de la empresa. Va en la sesión porque cada enlace de la
+      /// aplicación lo lleva delante: sin él aquí, habría una consulta a la
+      /// base por página para un dato que no cambia.
+      empresaSlug: string;
       rol: "ADMIN" | "MANAGER" | "COLABORADOR";
     } & DefaultSession["user"];
   }
@@ -115,11 +119,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (email) {
           const fila = await prisma.user.findUnique({
             where: { email: email.toLowerCase() },
-            select: { id: true, companyId: true, rol: true, nombre: true },
+            select: {
+              id: true,
+              companyId: true,
+              rol: true,
+              nombre: true,
+              company: { select: { slug: true } },
+            },
           });
           if (fila) {
             token.sub = fila.id;
             token.companyId = fila.companyId;
+            token.empresaSlug = fila.company.slug;
             token.rol = fila.rol;
             token.name = fila.nombre;
           }
@@ -130,6 +141,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async session({ session, token }) {
       session.user.id = token.sub as string;
       session.user.companyId = token.companyId as string;
+      session.user.empresaSlug = token.empresaSlug as string;
       session.user.rol = token.rol as "ADMIN" | "MANAGER" | "COLABORADOR";
       return session;
     },

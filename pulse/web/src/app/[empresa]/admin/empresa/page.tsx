@@ -75,7 +75,7 @@ export default async function Empresa() {
   }
 
   return (
-    <Marco actual="/admin">
+    <Marco actual="cultura">
       <div className="cabecera-pagina">
         <h1>Configuración</h1>
         <p>Los datos de tu empresa, su marca y las conexiones con el exterior.</p>

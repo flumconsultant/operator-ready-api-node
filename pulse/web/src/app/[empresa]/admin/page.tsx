@@ -8,6 +8,7 @@ import { metricasDeEmpresa } from "@/lib/metricas";
 import { mapaDeInfluencia, personasDesconectadas } from "@/lib/ia/influencia";
 import { iaActiva } from "@/lib/entorno";
 import Marco from "@/componentes/Marco";
+import PestanasAdmin from "@/componentes/PestanasAdmin";
 import IconoValor from "@/componentes/IconoValor";
 import Valores from "./Valores";
 
@@ -57,8 +58,8 @@ export default async function Admin() {
       objetivoNombre: nombre,
     });
 
-    revalidatePath("/admin");
-    revalidatePath("/feed");
+    revalidatePath("/[empresa]/admin", "page");
+    revalidatePath("/[empresa]/feed", "page");
   }
 
   async function alternarValor(datos: FormData) {
@@ -88,14 +89,14 @@ export default async function Admin() {
       objetivoNombre: valor.nombre,
     });
 
-    revalidatePath("/admin");
-    revalidatePath("/feed");
+    revalidatePath("/[empresa]/admin", "page");
+    revalidatePath("/[empresa]/feed", "page");
   }
 
   const maxRanking = metricas.ranking[0]?.total ?? 1;
 
   return (
-    <Marco actual="/admin">
+    <Marco actual="cultura">
       <div className="cabecera-pagina">
         <h1>Cultura y valores</h1>
         <p>
@@ -103,6 +104,8 @@ export default async function Admin() {
           lanzado ninguna encuesta.
         </p>
       </div>
+
+      <PestanasAdmin />
 
       <div className="rejilla-metricas">
         <div className="tarjeta">

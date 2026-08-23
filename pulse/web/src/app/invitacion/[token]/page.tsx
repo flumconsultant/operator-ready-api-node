@@ -23,7 +23,7 @@ export default async function Invitacion({
   // Si alguien ya tiene sesión y abre una invitación, lo más probable es que se
   // haya equivocado de enlace. No se cierra su sesión por sorpresa.
   const sesion = await auth();
-  if (sesion?.user) redirect("/feed");
+  if (sesion?.user) redirect("/");
 
   const { token } = await params;
 

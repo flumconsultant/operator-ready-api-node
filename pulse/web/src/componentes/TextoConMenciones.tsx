@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 
 import { trocear } from "@/lib/menciones";
+import { useRutas } from "./useRutas";
 
 // Pinta un texto resolviendo las menciones a enlaces.
 //
@@ -10,13 +13,14 @@ import { trocear } from "@/lib/menciones";
 // Es el mismo compromiso que hacen Slack y LinkedIn.
 
 export default function TextoConMenciones({ texto }: { texto: string }) {
+  const r = useRutas();
   return (
     <>
       {trocear(texto).map((trozo, i) =>
         trozo.tipo === "texto" ? (
           <span key={i}>{trozo.texto}</span>
         ) : (
-          <Link key={i} href={`/persona/${trozo.userId}`} className="mencion">
+          <Link key={i} href={r.persona(trozo.userId)} className="mencion">
             @{trozo.nombre}
           </Link>
         ),
