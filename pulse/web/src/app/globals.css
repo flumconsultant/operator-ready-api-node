@@ -152,6 +152,10 @@ a {
   padding: var(--space-9) var(--gutter-page) var(--space-12);
   width: 100%;
   max-width: var(--maxw-content);
+  /* Sin esto, el contenido se pega a la izquierda y todo el espacio sobrante
+     se amontona a la derecha: en una pantalla ancha la aplicación parece
+     descuadrada aunque cada pieza esté bien. */
+  margin-inline: auto;
 }
 
 /* ---- Navegación ---------------------------------------------------------- */
@@ -722,6 +726,60 @@ a {
   background: var(--green-tint);
   color: var(--text-accent);
   font-weight: var(--weight-body-medium);
+}
+
+/* Reaccionar es el gesto más repetido del feed y hasta ahora no se notaba en
+   absoluto: la pastilla aparecía de golpe y parecía que no había pasado nada.
+   El emoji entra con un rebote corto —la escala pasa de largo y vuelve— y la
+   pastilla se hunde al pulsarla. Solo se animan `transform` y `opacity`, que
+   son las dos propiedades que el navegador puede mover sin recalcular la
+   página. */
+@keyframes brinco-reaccion {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.25);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.pastilla-reaccion > span[aria-hidden] {
+  display: inline-block;
+  animation: brinco-reaccion 340ms var(--ease-standard);
+}
+
+.pastilla-reaccion:active {
+  transform: scale(0.94);
+}
+
+.selector-reacciones__opcion:active {
+  transform: scale(0.96);
+}
+
+.selector-reacciones__opcion,
+.pastilla-reaccion {
+  transition:
+    border-color var(--dur-fast) var(--ease-standard),
+    background var(--dur-fast) var(--ease-standard),
+    transform var(--dur-fast) var(--ease-standard);
+}
+
+/* Quien pide menos movimiento en su sistema operativo lo está pidiendo por un
+   motivo: el rebote se va y queda un cambio de color, que informa igual. */
+@media (prefers-reduced-motion: reduce) {
+  .pastilla-reaccion > span[aria-hidden] {
+    animation: none;
+  }
+
+  .pastilla-reaccion:active,
+  .selector-reacciones__opcion:active {
+    transform: none;
+  }
 }
 
 .pastilla-reaccion__cuenta {
@@ -2625,4 +2683,23 @@ legend {
   border: var(--border-hair) solid var(--green-line);
   border-radius: var(--radius-md);
   padding: var(--space-3) var(--space-5);
+}
+
+/* Los pasos de los primeros días, en la columna de contexto. Es texto, no una
+   lista de tareas con casillas: no hay nada que marcar, y una casilla que no se
+   puede marcar es una promesa rota. */
+.rail__pasos {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0 0 0 var(--space-5);
+  list-style: decimal;
+  font: var(--type-body);
+  font-size: var(--text-body-sm);
+  color: var(--text-muted);
+}
+
+.rail__pasos li::marker {
+  color: var(--text-accent);
+  font-weight: var(--weight-body-medium);
 }

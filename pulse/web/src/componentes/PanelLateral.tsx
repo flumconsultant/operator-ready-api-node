@@ -1,7 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { CalendarHeartIcon, TrendUpIcon, HandHeartIcon } from "@phosphor-icons/react/dist/ssr";
+import {
+  CalendarHeartIcon,
+  TrendUpIcon,
+  HandHeartIcon,
+  CompassIcon,
+} from "@phosphor-icons/react/dist/ssr";
 
 import { diaYMes } from "@/lib/fechas";
 import Avatar from "./Avatar";
@@ -14,8 +19,39 @@ export default function PanelLateral({ datos }: { datos: Datos }) {
   const r = useRutas();
   const { proximas, ranking, sugerencias } = datos;
 
+  // Los tres bloques dependen de que ya haya pasado algo: cumpleaños en la
+  // agenda, kudos que contar, gente a quien no has reconocido. En una empresa
+  // recién creada no hay ninguna de las tres cosas y la columna se queda en
+  // blanco, que es la peor primera impresión posible. Los primeros días se
+  // llena con lo que sí se puede decir siempre: qué hacer a continuación.
+  const vacio =
+    proximas.length === 0 && ranking.length === 0 && sugerencias.length === 0;
+
   return (
     <aside className="rail" aria-label="Resumen de la empresa">
+      {vacio && (
+        <section className="rail__bloque">
+          <h2 className="rail__titulo">
+            <CompassIcon size={18} weight="fill" aria-hidden="true" />
+            Los primeros días
+          </h2>
+          <ul className="rail__pasos">
+            <li>
+              Escribe el primer reconocimiento. Concreto: qué hizo y qué
+              cambió. Es lo que marca el tono de todos los demás.
+            </li>
+            <li>
+              Invita al equipo desde <Link href={r.equipo}>Mi equipo</Link>. Un
+              feed de dos personas no es un feed.
+            </li>
+            <li>
+              Cuando haya movimiento, aquí verás los cumpleaños de la semana, los
+              valores que más se reconocen y a quién llevas tiempo sin
+              mencionar.
+            </li>
+          </ul>
+        </section>
+      )}
       {proximas.length > 0 && (
         <section className="rail__bloque">
           <h2 className="rail__titulo">

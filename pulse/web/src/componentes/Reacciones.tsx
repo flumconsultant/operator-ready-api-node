@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useOptimistic, useRef, useState, useTransition } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { SmileyWinkIcon } from "@phosphor-icons/react/dist/ssr";
 
@@ -18,10 +18,10 @@ import { SmileyWinkIcon } from "@phosphor-icons/react/dist/ssr";
 
 export const REACCIONES = [
   { emoji: "👏", nombre: "Aplauso" },
-  { emoji: "❤️", nombre: "Me llega" },
+  { emoji: "❤️", nombre: "Me encanta" },
   { emoji: "🔥", nombre: "Crack" },
   { emoji: "🎉", nombre: "A celebrarlo" },
-  { emoji: "💡", nombre: "He aprendido algo" },
+  { emoji: "💡", nombre: "Aprendí algo" },
 ] as const;
 
 type Reaccion = { emoji: string; user: { id: string; nombre: string } };
@@ -36,7 +36,6 @@ export default function Reacciones({
   usuarioActual: string;
 }) {
   const router = useRouter();
-  const [, empezar] = useTransition();
   const [abierto, setAbierto] = useState(false);
   const caja = useRef<HTMLDivElement>(null);
   const disparador = useRef<HTMLButtonElement>(null);
@@ -67,43 +66,61 @@ export default function Reacciones({
     };
   }, [abierto]);
 
-  const mia = reacciones.find((r) => r.user.id === usuarioActual)?.emoji ?? null;
+  // La lista vive aquí, en el componente, y no se recalcula desde las props en
+  // cada render. Es deliberado: el feed guarda sus entradas en memoria del
+  // navegador y no se entera de los cambios del servidor, así que apoyarse en
+  // las props hacía que la reacción se dibujara y desapareciera medio segundo
+  // después. Ahora manda lo que el servidor confirmó, y solo se vuelve a
+  // sincronizar cuando el servidor trae una lista realmente distinta.
+  const [lista, setLista] = useState<Reaccion[]>(reacciones);
 
-  // Optimista: la reacción se dibuja antes de que conteste el servidor. Sin
-  // esto se nota el viaje de ida y vuelta, y en cuanto un gesto se duda, se
-  // deja de usar.
-  const [estado, aplicar] = useOptimistic(
-    { lista: reacciones, mia },
-    (previo, emoji: string) => {
-      const sinLaMia = previo.lista.filter((r) => r.user.id !== usuarioActual);
-      const quita = previo.mia === emoji;
-      return {
-        mia: quita ? null : emoji,
-        lista: quita
-          ? sinLaMia
-          : [...sinLaMia, { emoji, user: { id: usuarioActual, nombre: "Tú" } }],
-      };
-    },
-  );
+  const huella = reacciones
+    .map((r) => `${r.user.id}${r.emoji}`)
+    .sort()
+    .join("|");
+  useEffect(() => {
+    setLista(reacciones);
+    // `huella` compara el contenido, no la identidad del array: si dependiera
+    // del array, cualquier render del padre borraría la reacción recién puesta.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [huella]);
 
-  function reaccionar(emoji: string) {
+  const mia = lista.find((r) => r.user.id === usuarioActual)?.emoji ?? null;
+
+  async function reaccionar(emoji: string) {
     setAbierto(false);
-    empezar(async () => {
-      aplicar(emoji);
-      await fetch("/api/reacciones", {
+
+    const previo = lista;
+    const sinLaMia = lista.filter((r) => r.user.id !== usuarioActual);
+    const quita = mia === emoji;
+
+    // Se dibuja antes de preguntar al servidor: en cuanto un gesto se duda, se
+    // deja de usar. Si el servidor dice que no, se devuelve a como estaba.
+    setLista(
+      quita
+        ? sinLaMia
+        : [...sinLaMia, { emoji, user: { id: usuarioActual, nombre: "Tú" } }],
+    );
+
+    try {
+      const respuesta = await fetch("/api/reacciones", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ recognitionId, emoji }),
       });
+      if (!respuesta.ok) throw new Error(String(respuesta.status));
+      // Refresca lo que sí depende del servidor: el contador de novedades.
       router.refresh();
-    });
+    } catch {
+      setLista(previo);
+    }
   }
 
   // Se agrupa por emoji conservando el orden de REACCIONES, para que la barra
   // no baile de posición cada vez que alguien reacciona.
   const grupos = REACCIONES.map((r) => ({
     ...r,
-    quienes: estado.lista.filter((x) => x.emoji === r.emoji).map((x) => x.user.nombre),
+    quienes: lista.filter((x) => x.emoji === r.emoji).map((x) => x.user.nombre),
   })).filter((g) => g.quienes.length > 0);
 
   return (
@@ -118,7 +135,7 @@ export default function Reacciones({
           aria-haspopup="true"
         >
           <SmileyWinkIcon size={20} aria-hidden="true" />
-          <span>{estado.mia ? "Cambiar reacción" : "Reaccionar"}</span>
+          <span>{mia ? "Cambiar reacción" : "Reaccionar"}</span>
         </button>
 
         {abierto && (
@@ -128,7 +145,7 @@ export default function Reacciones({
                 key={r.emoji}
                 type="button"
                 role="menuitemradio"
-                aria-checked={estado.mia === r.emoji}
+                aria-checked={mia === r.emoji}
                 className="selector-reacciones__opcion"
                 onClick={() => reaccionar(r.emoji)}
                 title={r.nombre}
@@ -146,13 +163,13 @@ export default function Reacciones({
           key={g.emoji}
           type="button"
           className="pastilla-reaccion"
-          data-mia={estado.mia === g.emoji || undefined}
+          data-mia={mia === g.emoji || undefined}
           onClick={() => reaccionar(g.emoji)}
           // El title da la lista completa al ratón; el aria-label la da al
           // lector de pantalla, que no puede leer un title.
           title={g.quienes.join(", ")}
           aria-label={`${g.nombre}: ${g.quienes.join(", ")}. ${
-            estado.mia === g.emoji ? "Quitar mi reacción" : "Reaccionar así"
+            mia === g.emoji ? "Quitar mi reacción" : "Reaccionar así"
           }`}
         >
           <span aria-hidden="true">{g.emoji}</span>

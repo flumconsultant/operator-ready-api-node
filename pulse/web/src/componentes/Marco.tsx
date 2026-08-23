@@ -99,15 +99,15 @@ export default async function Marco({
             — y a la vez el pie recuerda de qué producto se trata. */}
         <Link href={r.feed} className="lateral__marca">
           {empresa.logo ? (
-            <>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={`/api/imagenes/${empresa.logo}`}
-                alt={empresa.nombre}
-                className="lateral__logo"
-              />
-              <span className="lateral__nombre-empresa">{empresa.nombre}</span>
-            </>
+            /* Solo el logo. Un logo casi siempre lleva el nombre dentro, y
+               ponerlo otra vez al lado lo repite: «FLUM Flum». El nombre sigue
+               ahí para quien no ve la imagen, en el texto alternativo. */
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={`/api/imagenes/${empresa.logo}`}
+              alt={empresa.nombre}
+              className="lateral__logo"
+            />
           ) : (
             <>
               BECOME <span>Pulse</span>
