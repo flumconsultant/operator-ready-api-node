@@ -45,6 +45,50 @@ const P0 = [
   [/Treinta minutos con Carlos/gi, '30 minutos con el equipo BECOME'],
 ];
 
+/* Sección 5 del documento 09: frases que bajan el nivel.
+ *
+ * No son palabras mal traducidas: son frases correctas en castellano que
+ * hacen parecer a la firma más pequeña o más defensiva de lo que es. Una
+ * consultora que dedica una línea de cada página a explicar lo que NO tiene
+ * está gastando su mejor espacio en desmentir una acusación que nadie hizo.
+ *
+ * Cada una lleva escrito con qué se sustituye, tal como lo fija el documento:
+ * un aviso que solo dice «quita esto» deja a quien lo lee inventando el
+ * reemplazo, y ahí se pierde la voz. */
+const FRASES = [
+  [/No publicamos resultados de terceros/gi,
+   'Cada iniciativa define su línea base y sus métricas antes de construir. Los resultados de clientes solo se publican con contexto y autorización.'],
+  [/Nada de ejemplos gen[eé]ricos/gi,
+   'Los casos parten de los procesos, documentos y retos reales de cada área.'],
+  [/No es una reuni[oó]n comercial/gi,
+   'Es la sesión donde definimos qué trabajo debe mejorar, qué casos vale la pena llevar al programa y qué límites debemos respetar.'],
+  [/El [uú]ltimo es el que casi nunca ocurre/gi,
+   'Cada sesión termina con transferencia: el activo queda documentado para que el equipo pueda reutilizarlo.'],
+  [/La participaci[oó]n ejecutiva no es opcional/gi,
+   'DISCOVER requiere participación ejecutiva en las decisiones clave: prioridad, inversión, responsabilidad y modelo operativo.'],
+  [/si no lo es,? te lo diremos/gi,
+   'Te recomendaremos el punto de entrada que corresponda al estado actual de la iniciativa.'],
+  [/BUILD CAPACIDAD THAT STAYS/g, 'BUILD CAPABILITY THAT STAYS'],
+  [/no se resuelve contratando m[aá]s gente/gi,
+   'El cuello de botella aparece cuando el criterio necesario para decidir o publicar no escala al mismo ritmo que el volumen.'],
+  [/vive en la cabeza de un equipo peque[nñ]o/gi,
+   'el estándar todavía depende de conocimiento tácito difícil de reutilizar a escala.'],
+  [/se lee por muestreo/gi,
+   'La IA aporta donde una decisión depende de encontrar la versión correcta, identificar un pendiente o reunir antecedentes antes de que se conviertan en demora.'],
+];
+
+/* Nombres de industria antiguos o a medias. El documento 10 los marca como P0
+   detectado en vivo: media lengua en el nombre de un sector es lo que más
+   barato delata que el texto se tradujo en vez de escribirse. */
+const NOMBRES = [
+  [/Servicios financieros/g, 'Banca, seguros y fintech'],
+  [/Retail y Consumo(?! masivo)/g, 'Retail y consumo masivo'],
+  [/Miner[ií]a y Energ[ií]a/g, 'Minería y energía'],
+  [/Real Estate/g, 'Inmobiliario y construcción'],
+  [/Healthcare/g, 'Salud y farmacéutica'],
+  [/Life Sciences/g, 'Salud y farmacéutica'],
+];
+
 /* Anglicismos que en el cuerpo español deben ir traducidos. Se buscan como
    palabra suelta para no marcar «AI agents» dentro de un nombre propio ni
    «workflow» dentro de una URL. */
@@ -182,6 +226,8 @@ for (const p of paginas) {
   const texto = visible(p);
   if (texto.length < 200) { vacias++; continue; }
   revisar(texto, p, P0, 'P0');
+  revisar(texto, p, NOMBRES, 'nombre de industria');
+  revisar(texto, p, FRASES, 'frase que baja nivel');
   revisar(texto, p, ANGLICISMOS, 'anglicismo');
 }
 
@@ -204,9 +250,13 @@ if (vacias > paginas.length / 3) {
 const url = (ruta) => ruta.replace('dist/_pages', '').replace(/\.html$/, '');
 const p0 = hallazgos.filter((h) => h.nivel === 'P0');
 const ang = hallazgos.filter((h) => h.nivel === 'anglicismo');
+const nom = hallazgos.filter((h) => h.nivel === 'nombre de industria');
+const fra = hallazgos.filter((h) => h.nivel === 'frase que baja nivel');
 
 console.log(`Páginas en español revisadas: ${paginas.length}`);
-console.log(`Palabras P0: ${p0.length} · anglicismos en el cuerpo: ${ang.length}`);
+/* Las cuatro categorías, siempre. Un resumen que solo cuenta dos deja las
+   otras dos encontradas y sin nombrar: el guardián fallaba y no decía dónde. */
+console.log(`P0: ${p0.length} · nombres de industria: ${nom.length} · frases que bajan nivel: ${fra.length} · anglicismos: ${ang.length}`);
 
 const contar = (lista) => {
   const por = new Map();
@@ -218,7 +268,12 @@ const contar = (lista) => {
   return por;
 };
 
-for (const [titulo, lista] of [['P0 — cero tolerancia', p0], ['Anglicismos en el cuerpo', ang]]) {
+for (const [titulo, lista] of [
+  ['P0 — cero tolerancia', p0],
+  ['Nombres de industria antiguos o a medias', nom],
+  ['Frases que bajan el nivel (documento 09, sección 5)', fra],
+  ['Anglicismos en el cuerpo', ang],
+]) {
   if (!lista.length) continue;
   console.log(`\n── ${titulo}`);
   for (const [palabra, h] of contar(lista)) {

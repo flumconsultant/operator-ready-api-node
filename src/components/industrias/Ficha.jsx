@@ -50,7 +50,7 @@ const T = {
     workflowsKicker: 'Procesos que se rediseñan',
     tecnologiaKicker: 'Qué tecnología, y con qué control',
     metricasKicker: 'Qué se mide',
-    metricasNota: 'Son las magnitudes que proponemos medir en esta industria, y la línea base se establece antes de construir. No publicamos resultados de terceros.',
+    metricasNota: 'Cada iniciativa define su línea base y sus métricas antes de construir. Los resultados de clientes solo se publican con contexto y autorización.',
     empezarKicker: 'Cómo puede empezar BECOME',
     enlacesKicker: 'Sigue por aquí',
     servicio: 'Servicio recomendado',
@@ -75,7 +75,7 @@ const T = {
     workflowsKicker: 'Workflows we redesign',
     tecnologiaKicker: 'Which technology, and under what control',
     metricasKicker: 'What gets measured',
-    metricasNota: 'These are the measures we propose for this industry, and the baseline is set before anything is built. We do not publish third-party results.',
+    metricasNota: 'Every initiative defines its baseline and its metrics before anything is built. Client results are published only with context and authorisation.',
     empezarKicker: 'How BECOME can start',
     enlacesKicker: 'Continue here',
     servicio: 'Recommended service',
@@ -270,7 +270,7 @@ export default function FichaIndustria({ lang = 'es', slug }) {
               <h3 style={{ margin: 0, font: 'var(--type-label)', letterSpacing: 'var(--track-label)', textTransform: 'uppercase', color: 'var(--text-accent)' }}>
                 {titulo}
               </h3>
-              <Body style={{ marginTop: 'var(--space-4)' }}>{linea}</Body>
+              {linea && <Body style={{ marginTop: 'var(--space-4)' }}>{linea}</Body>}
             </Reveal>
           ))}
         </Cols>

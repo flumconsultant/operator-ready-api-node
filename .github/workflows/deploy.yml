@@ -586,6 +586,26 @@ jobs:
             fi
           fi
 
+      - name: Las direcciones viejas de industrias siguen redirigiendo
+        # Que el 301 esté escrito en el .htaccess no prueba que actúe: puede
+        # que el módulo no esté activo, que el archivo no subiera, o que la
+        # reescritura de la SPA se adelante y la dirección vieja acabe
+        # respondiendo 200 con la página nueva dentro. Eso último es el caso
+        # peor: para un buscador no es una mudanza, son dos direcciones con el
+        # mismo contenido, que es justo lo que la mudanza venía a evitar.
+        #
+        # Se comprueba DESPUÉS de subir, contra el dominio real, porque antes
+        # de subir no hay nada que preguntar.
+        continue-on-error: true
+        id: redirects
+        run: node scripts/verificar-redirects.mjs
+
+      - name: Y si alguna dejó de redirigir, el despliegue lo dice
+        if: steps.redirects.outcome == 'failure'
+        run: |
+          echo "::error::Alguna dirección vieja de industrias dejó de responder 301. El paso anterior dice cuál."
+          exit 1
+
       # Después de comprobar que el sitio sirve lo nuevo, y no antes: el aviso
       # incluye la dirección del archivo de clave, y si el buscador va a
       # buscarlo y todavía no está subido, rechaza el aviso entero.

@@ -18,116 +18,146 @@
     "es": {
       "nombre": "Banca, seguros y fintech",
       "menu": "Crédito, fraude, operaciones, siniestros, cumplimiento, cobranza y canales digitales.",
-      "h1": "La ventaja no está en tener más datos. Está en decidir mejor con ellos.",
-      "lead": "Banca, seguros, fintech y gestión de activos operan sobre datos, reglas y decisiones. La IA no cambia el producto: cambia el tiempo, el criterio y la trazabilidad con que se decide.",
+      "h1": "Millones de operaciones. Menos tiempo para entender qué requiere atención.",
+      "lead": "Crédito, fraude, siniestros, reclamos y cumplimiento dependen de información distribuida entre documentos, reglas y sistemas. La IA aporta cuando prepara mejor el caso, reduce búsqueda y hace visible la evidencia, sin sacar la decisión de quien debe responder por ella.",
       "contexto": [
-        "Pocas industrias reúnen tanta información y tienen tan poco tiempo para usarla. Un expediente de crédito, una reclamación, un caso de cumplimiento o una revisión de cartera juntan documentos, sistemas y criterios que hoy conectan personas, no procesos. La IA encaja bien aquí porque el trabajo ya es leer, comparar y decidir.",
-        "Y encaja mal cuando se instala sin control. En un sector supervisado, una capacidad que no puede explicarse ni auditarse no es una ventaja: es una exposición. Por eso el trabajo empieza por dónde se decide y quién responde, no por qué herramienta se compra."
+        "Muchos de los cuellos de botella no están dentro del core: están alrededor de él.",
+        "Expedientes incompletos. Alertas sin suficiente contexto. Excepciones que pasan entre áreas. Conciliaciones que requieren comparar fuentes. Reclamos que obligan a revisar movimientos, canal, documentación e historial antes de responder.",
+        "BECOME trabaja sobre esos puntos para conectar datos, documentación, políticas, personas, LLMs y agentes de IA dentro de un proceso más claro y trazable."
       ],
-      "oportunidadesTitular": "La oportunidad está entre el documento que entra y la decisión que debe poder explicarse.",
+      "oportunidadesTitular": "Dónde vemos oportunidad.",
       "oportunidades": [
         [
           "Originación y evaluación crediticia",
-          "Preparar expedientes, validar completitud, contrastar documentos, detectar inconsistencias y presentar al analista un caso mejor estructurado."
+          "Preparar expedientes, validar completitud, contrastar documentos, detectar inconsistencias y presentar al analista un caso mejor estructurado antes de la evaluación."
         ],
         [
-          "Operaciones alrededor del core bancario",
-          "Asistir excepciones, incidencias, conciliaciones, ajustes y consultas que hoy obligan a navegar varios sistemas y procedimientos."
+          "Operaciones alrededor del core",
+          "Asistir excepciones, incidencias, ajustes y consultas que hoy requieren navegar varios sistemas y procedimientos."
         ],
         [
-          "Fraude",
-          "Consolidar antecedentes, priorizar alertas y preparar el contexto que acelera la investigación."
+          "Fraude y monitoreo de alertas",
+          "Consolidar antecedentes, recuperar movimientos relevantes y preparar contexto para acelerar investigación y escalamiento."
         ],
         [
-          "KYC, AML y cumplimiento",
-          "Revisar documentación, recuperar políticas y normativa, preparar evidencias y dejar trazabilidad de lo consultado."
-        ],
-        [
-          "Cobranza",
-          "Priorizar casos, resumir el historial y preparar la siguiente gestión dentro de las políticas definidas."
-        ],
-        [
-          "Seguros",
-          "Ordenar expedientes, contrastar coberturas e identificar faltantes en suscripción, renovación o siniestros."
-        ],
-        [
-          "Reclamos y consumos no reconocidos",
-          "Recuperar movimientos, canal, historial y documentación para preparar la atención."
+          "KYC y prevención de LA/FT",
+          "Revisar documentación, recuperar políticas y normativa, preparar evidencia y dejar trazabilidad de las fuentes consultadas."
         ],
         [
           "Conciliaciones",
-          "Comparar fuentes, identificar diferencias y preparar las regularizaciones."
+          "Comparar fuentes, identificar diferencias y preparar regularizaciones antes de la revisión humana."
+        ],
+        [
+          "Reclamos y movimientos no reconocidos",
+          "Recuperar movimientos, canal, historial y documentación para preparar la atención y reducir pases entre equipos."
+        ],
+        [
+          "Cobranza y recuperaciones",
+          "Priorizar casos, resumir historial y preparar la siguiente gestión dentro de las políticas definidas."
+        ],
+        [
+          "Suscripción y siniestros",
+          "Ordenar expedientes, contrastar coberturas, identificar faltantes y preparar el caso antes de suscripción, liquidación o revisión."
+        ],
+        [
+          "Atención y canales digitales",
+          "Dar a ejecutivos, asistentes y canales digitales acceso a información vigente con escalamiento claro de excepciones."
         ]
       ],
-      "workflowsTitular": "Crédito, siniestros y cumplimiento cambian cuando el expediente llega leído, no decidido.",
+      "workflowsTitular": "Los procesos donde empieza el trabajo.",
       "workflows": [
-        "Originación y evaluación de crédito",
-        "Suscripción y renovación de pólizas",
-        "Gestión de siniestros y reclamos",
-        "KYC, AML y monitoreo continuo",
-        "Reporte regulatorio y auditoría interna",
-        "Servicio al cliente, cobranza y retención"
+        "Crédito",
+        "Fraude",
+        "Operaciones",
+        "Siniestros",
+        "Cumplimiento",
+        "Cobranza",
+        "Canales digitales"
       ],
       "capacidades": [
         [
           "Priorizar dónde está el valor",
-          "Mapear los procesos de crédito, fraude, operaciones, seguros o atención y ordenarlos por impacto, viabilidad, riesgo y velocidad de captura.",
+          "Mapear procesos de crédito, fraude, operaciones, seguros o atención y priorizarlos por impacto, viabilidad, riesgo y velocidad de captura de valor.",
           "BECOME DISCOVER™"
         ],
         [
           "Rediseñar una decisión",
-          "Definir qué información debe llegar, qué reglas aplican, dónde hay excepción, quién aprueba y qué evidencia debe quedar registrada.",
+          "Definir qué información debe llegar, qué reglas aplican, dónde existe una excepción, quién aprueba y qué evidencia debe quedar.",
           "Decision intelligence"
         ],
         [
           "Construir copilotos y agentes con control",
-          "Búsqueda sobre políticas y procedimientos, extracción documental, agentes acotados a una tarea y conexión por API a los sistemas autorizados.",
+          "Implementar RAG sobre políticas y procedimientos, extracción documental, agentes acotados a tareas y conexiones mediante APIs a sistemas autorizados.",
           "BECOME EMBED™"
         ],
         [
           "Desarrollar a los equipos",
-          "Programas aplicados para Finanzas, Legal, Riesgos, Operaciones y Atención sobre sus propios expedientes y documentos.",
+          "Programas aplicados para Finanzas, Legal, Compliance y Risk, Operaciones, Atención, Data y Tecnología sobre procesos y documentos reales.",
           "BECOME NOW™"
         ],
         [
           "Medir y transferir",
-          "Línea base, métricas, límites de autonomía, trazabilidad, responsable y manual de operación para que la capacidad quede dentro.",
-          "Transversal"
+          "Definir línea base, métricas, límites de autonomía, trazabilidad, responsable y manual de operación para que la capacidad quede dentro.",
+          ""
         ]
       ],
-      "tecnologiaTitular": "Si el sistema no puede citar qué leyó, no debe influir en la decisión.",
-      "tecnologia": "Extracción sobre documentos no estructurados, búsqueda sobre normativa y política interna con la fuente citada, agentes acotados a un paso del proceso, y registro de qué consultó el sistema antes de proponer. La supervisión humana no es una capa que se añade después: es parte del diseño del proceso.",
-      "metricasTitular": "Un expediente que tarda menos no sirve si nadie puede explicar por qué se aprobó.",
+      "tecnologiaTitular": "La IA puede preparar una decisión. No debe esconder cómo llegó a ella.",
+      "tecnologia": "Según el caso: extracción documental, RAG, búsqueda semántica, agentes de IA, APIs, permisos, logs, evaluación, human-in-the-loop y reglas de escalamiento. Se diseñan siempre la fuente y la evidencia, los permisos, la trazabilidad, los puntos de aprobación, las rutas de excepción y los límites explícitos de autonomía.",
+      "metricasTitular": "Qué medimos.",
       "metricas": [
         [
           "Tiempo de ciclo",
-          "Cuánto tarda un expediente desde que entra hasta que hay decisión."
+          ""
         ],
         [
           "Completitud a la primera",
-          "Qué proporción de casos llega a revisión sin faltantes."
+          ""
         ],
         [
           "Retrabajo",
-          "Cuántas veces vuelve un caso al paso anterior."
+          ""
         ],
         [
-          "Excepciones",
-          "Cuántas hay, quién las resuelve y en cuánto tiempo."
+          "Tiempo de resolución de excepciones",
+          ""
+        ],
+        [
+          "Tiempo de preparación por analista",
+          ""
+        ],
+        [
+          "Tiempo de atención",
+          ""
+        ],
+        [
+          "Tasa de escalamiento",
+          ""
         ],
         [
           "Trazabilidad",
-          "Qué proporción de decisiones tiene registrado en qué se basó."
+          ""
+        ],
+        [
+          "Adopción",
+          ""
         ]
       ],
-      "empezarTitular": "Empieza donde el volumen es alto y la excepción todavía tiene dueño.",
+      "empezarTitular": "Cómo empezar.",
       "empezar": [
-        "Un programa BECOME NOW™ con el equipo de riesgo, finanzas o legal, sobre sus propios expedientes.",
-        "Un BECOME DISCOVER™ acotado a un proceso concreto —originación o siniestros— para decidir dónde está el valor y qué controles hacen falta.",
-        "Un BECOME EMBED™ sobre el proceso ya priorizado, con supervisión y trazabilidad definidas desde el diseño."
+        "BECOME NOW™ si el reto está en cómo trabaja el equipo.",
+        "BECOME DISCOVER™ si todavía hay que decidir dónde invertir.",
+        "BECOME EMBED™ si ya existe un proceso priorizado que debe llegar a operación."
       ],
-      "cierre": "Empieza por la decisión que hoy tarda demasiado.",
-      "cierreTexto": "Tráenos un expediente, la decisión que habilita y los controles que hoy deben revisarse a mano. Identificaremos qué puede prepararse con IA, qué debe seguir bajo criterio profesional y cómo conservar la evidencia de principio a fin."
+      "cierre": "Empieza por el proceso donde hoy un analista necesita abrir demasiadas fuentes antes de decidir.",
+      "cierreTexto": "Cuéntanos qué decisión, proceso o experiencia necesita cambiar. Te ayudaremos a identificar el punto de partida más adecuado.",
+      "casos": [
+        "Copiloto de expediente crediticio: organiza documentos, detecta faltantes y prepara el caso para el analista.",
+        "Asistente de fraude: consolida movimientos, alertas y antecedentes antes de investigación.",
+        "Agente de conciliación: compara fuentes y prepara diferencias para regularización.",
+        "Asistente de cumplimiento: consulta políticas y normativa con fuente visible.",
+        "Copiloto de siniestros: ordena cobertura, documentación y pendientes antes de revisión.",
+        "Asistente de reclamos: prepara el caso con movimientos, historial y documentos."
+      ]
     },
     "en": {
       "nombre": "Banking, Insurance & Fintech",
@@ -264,138 +294,164 @@
       "nombre": "Minería y energía",
       "menu": "Planeamiento, mina, concentradora, mantenimiento, seguridad, logística y operaciones intensivas en activos.",
       "h1": "La operación ya genera la señal. El reto es convertirla en acción a tiempo.",
-      "lead": "Una operación intensiva en activos genera más información de la que alcanza a usar. La oportunidad vive en el intervalo entre lo que la operación ya sabe y el momento en que alguien actúa.",
+      "lead": "Cada guardia produce información sobre mineral, equipos, producción, mantenimiento, seguridad, agua, relaves, logística y restricciones. El valor aparece cuando ese conocimiento llega antes a la persona que debe actuar, con la fuente, el contexto y el límite de decisión claros.",
       "contexto": [
-        "Una operación minera o una planta produce señales continuas: sensores, mantenimiento, turnos, permisos, incidentes, proveedores. Casi todo se registra y muy poco llega a tiempo a quien decide. El cuello de botella pocas veces es el modelo: es que el conocimiento vive en informes, correos y personas con veinte años de oficio.",
-        "Es además un entorno donde la seguridad y la licencia para operar no son un apartado del proyecto: son la condición. Cualquier capacidad que se instale tiene que dejar claro qué decide una persona, qué no decide un sistema y cómo queda registrado."
+        "Una operación minera peruana habla de planeamiento mina, perforación y voladura, carguío y acarreo, chancado, molienda, flotación, planta concentradora, mantenimiento, confiabilidad, paradas de planta, relaves y transporte de concentrado.",
+        "BECOME no parte de «un caso de IA». Parte del punto donde un supervisor, planificador, ingeniero, mantenedor o área de soporte necesita reunir demasiada información antes de actuar."
       ],
-      "oportunidadesTitular": "La operación ya produce la señal. El valor aparece cuando llega antes que la desviación.",
+      "oportunidadesTitular": "Dónde vemos oportunidad.",
       "oportunidades": [
         [
           "Geología y planeamiento mina",
-          "Consolidar antecedentes, restricciones, planes, desviaciones y supuestos antes de una decisión de planeamiento."
+          "Consolidar antecedentes geológicos, restricciones, planes, desviaciones y supuestos para preparar revisiones de corto y largo plazo."
         ],
         [
           "Perforación y voladura",
-          "Ordenar diseños, cumplimiento, resultados y lecciones aprendidas de disparos anteriores."
+          "Ordenar diseños, cumplimiento, resultados y eventos para acelerar análisis posteriores y lecciones aprendidas."
         ],
         [
           "Carguío y acarreo",
-          "Preparar el análisis de demoras, disponibilidad, tiempos de ciclo y eventos de flota."
+          "Preparar análisis de demoras, disponibilidad, tiempos de ciclo, eventos de flota y causas operativas."
         ],
         [
           "Chancado",
-          "Recuperar historial, procedimientos y eventos para preparar el análisis de restricciones y detenciones."
+          "Recuperar historial de eventos, procedimientos y reportes para preparar análisis de restricciones y detenciones."
         ],
         [
           "Molienda y flotación",
-          "Consolidar información operacional y antecedentes para apoyar el análisis de variabilidad."
+          "Consolidar información operacional y antecedentes para apoyar análisis de variabilidad y preparación de acciones."
         ],
         [
           "Planta concentradora",
-          "Dar acceso rápido a procedimientos, bitácoras, reportes, manuales y precedentes."
+          "Dar acceso rápido a procedimientos, bitácoras, reportes, manuales y precedentes para operaciones, mantenimiento e ingeniería."
         ],
         [
           "Mantenimiento y confiabilidad",
-          "Reunir órdenes de trabajo, historial, manuales, fallas anteriores, repuestos y backlog antes de una intervención."
+          "Reunir órdenes de trabajo, historial, manuales, fallas anteriores, repuestos y backlog antes de planificar una intervención."
         ],
         [
           "Paradas de planta",
-          "Preparar alcance, ruta crítica, permisos, contratistas, riesgos, materiales y pendientes."
+          "Preparar alcance, ruta crítica, permisos, contratistas, riesgos, materiales, lecciones aprendidas y pendientes."
         ],
         [
           "Reportes de guardia",
-          "Convertir registros dispersos en reportes consistentes y comparables entre turnos."
+          "Convertir bitácoras, eventos y pendientes dispersos en reportes consistentes y comparables."
         ],
         [
-          "Relaves, agua y cumplimiento",
-          "Recuperar documentación, inspecciones y compromisos con trazabilidad."
+          "Relaves y agua",
+          "Recuperar documentación, inspecciones, compromisos y procedimientos para facilitar seguimiento y trazabilidad."
         ],
         [
           "Logística y transporte de concentrado",
-          "Consolidar incidencias, programación y restricciones."
+          "Consolidar incidencias, programación, restricciones y antecedentes para gestionar excepciones."
         ],
         [
-          "Contratos y servicios",
-          "Comparar propuestas, hitos, valorizaciones y cumplimiento."
+          "Contratos y servicios especializados",
+          "Comparar propuestas, condiciones, entregables, hitos, valorizaciones y cumplimiento."
+        ],
+        [
+          "Ingeniería y conocimiento técnico",
+          "Encontrar memorias, estudios, planos, procedimientos, criterios y precedentes con vínculo a la fuente original."
         ]
       ],
-      "workflowsTitular": "El turno, la parada y el permiso son donde el conocimiento se vuelve acción.",
+      "workflowsTitular": "Los procesos donde empieza el trabajo.",
       "casos": [
-        "Copiloto de guardia.",
-        "Asistente de mantenimiento.",
-        "Agente de preparación de parada.",
-        "Asistente de conocimiento de concentradora.",
-        "Analista asistido de demoras de carguío y acarreo."
+        "Copiloto de guardia: lee bitácoras, eventos y pendientes autorizados y prepara un resumen estructurado para el cambio de guardia, con vínculo a las fuentes.",
+        "Asistente de mantenimiento: reúne historial, órdenes de trabajo, manuales, fallas anteriores y backlog de un equipo antes de la intervención. El diagnóstico sigue en mantenimiento.",
+        "Agente de preparación de parada: consolida pendientes, permisos, responsables y evidencias; señala información faltante antes de ejecución.",
+        "Asistente de conocimiento de concentradora: permite consultar procedimientos, manuales y precedentes de chancado, molienda o flotación con citas a documentación interna.",
+        "Analista asistido de demoras de carguío y acarreo: agrupa eventos y prepara hipótesis de causas para revisión de Operaciones, sin tomar decisiones de despacho.",
+        "Asistente de contratos de servicio: compara alcance, hitos, obligaciones, valorizaciones y pendientes para revisión del responsable."
       ],
       "workflows": [
-        "Planificación y ejecución de mantenimiento",
-        "Gestión de turnos y reportabilidad operativa",
-        "Permisos, HSE y gestión de incidentes",
-        "Compras, contratos y gestión de proveedores",
-        "Estudios de ingeniería y gestión de precedentes",
-        "Relacionamiento comunitario y reporte de sostenibilidad"
+        "Planeamiento",
+        "Mina",
+        "Concentradora",
+        "Mantenimiento",
+        "Seguridad",
+        "Logística",
+        "Operaciones intensivas en activos"
       ],
       "capacidades": [
         [
-          "Encontrar el proceso donde el conocimiento llega tarde",
-          "Mapear decisiones, fuentes, excepciones, dependencias y el tiempo que pasa entre la señal y la acción.",
+          "Identificar el proceso donde el conocimiento llega tarde",
+          "Mapear decisiones, fuentes, excepciones, dependencias y tiempo perdido entre señal y acción.",
           "BECOME DISCOVER™"
         ],
         [
-          "Volver consultable el conocimiento operacional",
-          "Búsqueda empresarial sobre manuales, procedimientos, bitácoras, reportes y precedentes, con la fuente siempre a la vista.",
+          "Convertir conocimiento operacional en capacidad consultable",
+          "Diseñar búsqueda empresarial y RAG sobre manuales, procedimientos, bitácoras, reportes y precedentes, con la fuente visible.",
           "Knowledge intelligence"
         ],
         [
-          "Construir copilotos de guardia, mantenimiento y parada",
-          "Asistentes que preparan contexto, pendientes y evidencia sin asumir decisiones críticas de seguridad ni de proceso.",
+          "Construir copilotos para guardias, mantenimiento y paradas",
+          "Asistentes que preparan contexto, pendientes, documentación y evidencia sin asumir decisiones críticas de seguridad o proceso.",
           "BECOME EMBED™"
         ],
         [
           "Desarrollar capacidades en los equipos",
-          "Programas aplicados para Operaciones, Mantenimiento, Ingeniería, Cadena de Suministro y las áreas corporativas.",
+          "Programas aplicados para Operaciones, Mantenimiento, Ingeniería, Supply Chain, PMO y áreas corporativas.",
           "BECOME NOW™"
         ],
         [
-          "Diseñar el control operativo",
+          "Diseñar control operativo",
           "Definir qué puede preparar un sistema, qué exige aprobación humana, qué se registra y cómo se reconstruye una acción después.",
-          "Transversal"
+          ""
         ]
       ],
-      "tecnologiaTitular": "En seguridad, la IA prepara evidencia; la decisión nunca sale de la persona.",
-      "tecnologia": "Búsqueda sobre documentación técnica extensa con la fuente citada, extracción sobre informes y órdenes de trabajo, y asistentes acotados a un procedimiento concreto. Donde una recomendación puede afectar la seguridad, el sistema prepara la evidencia y la decisión queda íntegramente en la persona responsable.",
-      "metricasTitular": "La mejora se mide entre la señal registrada y la acción operativa.",
+      "tecnologiaTitular": "En seguridad y operación crítica, la IA prepara contexto. La persona mantiene la decisión.",
+      "tecnologia": "Puede combinar RAG sobre documentación técnica, búsqueda semántica, resumen de guardias, clasificación de eventos, agentes para tareas administrativas acotadas, APIs a sistemas autorizados, logs y trazabilidad, y aprobación humana. No se diseña autonomía sobre decisiones críticas de seguridad, geotecnia, voladura, despacho, proceso o mantenimiento sin el marco técnico y humano correspondiente.",
+      "metricasTitular": "Qué medimos.",
       "metricas": [
         [
-          "Señal a decisión",
-          "Cuánto pasa entre que algo se registra y alguien actúa."
+          "Tiempo de preparación de reportes",
+          ""
         ],
         [
-          "Consistencia de reporte",
-          "Qué proporción de informes se produce con el mismo criterio."
+          "Tiempo de búsqueda",
+          ""
         ],
         [
-          "Horas recuperadas",
-          "Cuánto tiempo de ingeniería dejaba de dedicarse a buscar información."
+          "Tiempo entre señal y preparación de decisión",
+          ""
         ],
         [
-          "Preparación de parada",
-          "Cuánto tarda alistar una intervención programada."
+          "Consistencia entre guardias",
+          ""
         ],
         [
-          "Observaciones documentales",
-          "Cuántas incidencias de documentación aparecen en permisos y auditorías."
+          "Retrabajo documental",
+          ""
+        ],
+        [
+          "Tiempo de preparación de parada",
+          ""
+        ],
+        [
+          "Cierre de pendientes",
+          ""
+        ],
+        [
+          "Uso del conocimiento técnico",
+          ""
+        ],
+        [
+          "Tiempo de análisis de demoras",
+          ""
+        ],
+        [
+          "Adopción por rol",
+          ""
         ]
       ],
-      "empezarTitular": "Empieza por el punto donde el conocimiento llega después de la decisión.",
+      "empezarTitular": "Cómo empezar.",
       "empezar": [
-        "Un programa BECOME NOW™ con operaciones, mantenimiento o compras, sobre sus propios procedimientos.",
-        "Un BECOME DISCOVER™ sobre un proceso donde el retraso de decisión sea medible.",
-        "Un BECOME EMBED™ para dejar funcionando la capacidad priorizada, con supervisión explícita donde toca seguridad."
+        "BECOME NOW™ si el reto está en cómo trabaja el equipo.",
+        "BECOME DISCOVER™ si todavía hay que decidir dónde invertir.",
+        "BECOME EMBED™ si ya existe un proceso priorizado que debe llegar a operación."
       ],
-      "cierre": "Empieza por la información que ya tienes y no llega a tiempo.",
-      "cierreTexto": "Muéstranos un proceso donde manuales, órdenes, informes o permisos ya existen, pero no llegan a tiempo al turno que debe actuar. Diseñaremos el punto de acceso, la trazabilidad y el límite humano antes de hablar de automatización."
+      "cierre": "Empieza por un proceso real de mina, planta o mantenimiento.",
+      "cierreTexto": "Muéstranos dónde hoy se pierde tiempo buscando antecedentes, preparando una guardia, revisando una parada o entendiendo una desviación."
     },
     "en": {
       "nombre": "Mining & Energy",
@@ -555,107 +611,154 @@
       "nombre": "Retail y consumo masivo",
       "menu": "Surtido, inventario, precios, promociones, e-commerce, tiendas, distribución y postventa.",
       "h1": "Cuando el mercado cambia cada semana, decidir tarde cuesta venta.",
-      "lead": "Surtido, precio, contenido y servicio se deciden semana a semana. La IA aporta cuando acorta ese ciclo sin perder el criterio comercial.",
+      "lead": "Retail y consumo masivo operan con miles de SKUs, stock, precios, promociones, tiendas, distribuidores, e-commerce y múltiples modalidades de entrega. BECOME ayuda a convertir esa complejidad en decisiones comerciales, ejecución y atención más rápidas, manteniendo criterio de marca y control operativo.",
       "contexto": [
-        "En retail y consumo el problema casi nunca es la falta de datos: es que decidir surtido, precio o contenido exige reunir cinco fuentes distintas y a alguien con criterio para leerlas. El cuello de botella aparece cuando el criterio necesario para decidir o publicar no escala al mismo ritmo que el volumen.",
-        "La otra mitad es el volumen de contenido. Fichas, campañas, respuestas, adaptaciones por canal y por mercado: trabajo repetitivo con un estándar de marca que todavía depende de conocimiento tácito difícil de reutilizar a escala. Escribirlo, y hacerlo aplicable, es la mitad de la transformación."
+        "El cuello de botella aparece cuando el criterio necesario para decidir, publicar o resolver una excepción no escala al mismo ritmo que el volumen.",
+        "La IA aporta cuando ayuda a preparar decisiones, mantener información consistente entre canales y resolver casos con mejor contexto."
       ],
-      "oportunidadesTitular": "La ventaja vive en decidir y publicar al ritmo al que cambia el mercado.",
+      "oportunidadesTitular": "Dónde vemos oportunidad.",
       "oportunidades": [
         [
-          "Contenido de producto a escala",
-          "Fichas, descripciones y adaptaciones por canal con el mismo tono y las mismas reglas de marca."
+          "Surtido y categorías",
+          "Reunir venta, margen, rotación, inventario y contexto comercial para preparar revisiones de categoría."
         ],
         [
-          "Preparación de decisiones comerciales",
-          "Reunir venta, stock, precio y contexto de mercado en un mismo resumen para la reunión semanal."
+          "Inventario y quiebres",
+          "Consolidar señales y excepciones para priorizar reposición, disponibilidad y causas de quiebre."
         ],
         [
-          "Atención al cliente",
-          "Resolver sobre la documentación real de producto, pedidos y políticas, con derivación clara a una persona."
+          "Precios y promociones",
+          "Preparar antecedentes, escenarios y resultados para acelerar análisis comerciales."
         ],
         [
-          "Campañas y comunicación",
-          "Producir variantes por segmento y canal a partir de un mismo mensaje aprobado."
+          "Catálogo y fichas",
+          "Generar, adaptar y validar descripciones y atributos por canal bajo reglas de producto y marca."
         ],
         [
-          "Surtido y proveedores",
-          "Comparar propuestas, condiciones y desempeño histórico sin rehacer el análisis cada vez."
+          "E-commerce y marketplace",
+          "Resolver excepciones de pedido, vendedor, despacho, devolución y postventa con mejor contexto."
         ],
         [
-          "Conocimiento de tienda",
-          "Procedimientos, promociones y excepciones consultables por el equipo en el punto de venta."
+          "Delivery y retiro en tienda",
+          "Preparar información sobre stock, modalidad, ventana de entrega, tienda, incidencia y reprogramación."
+        ],
+        [
+          "Cambios y devoluciones",
+          "Clasificar motivo, validar requisitos y preparar el caso antes de atención."
+        ],
+        [
+          "Trade marketing y punto de venta",
+          "Convertir lineamientos, promociones y materiales en conocimiento fácil de consultar por tienda y fuerza de ventas."
+        ],
+        [
+          "Sell-in y sell-out",
+          "Preparar análisis recurrentes por canal, distribuidor, categoría o cliente."
+        ],
+        [
+          "Atención y postventa",
+          "Dar a asistentes y equipos de servicio acceso a políticas, pedido, stock y estado con salida clara hacia una persona."
         ]
       ],
-      "workflowsTitular": "Surtido, contenido y servicio comparten el mismo reto: escala con criterio.",
+      "workflowsTitular": "Los procesos donde empieza el trabajo.",
       "workflows": [
-        "Alta y publicación de producto",
-        "Planificación comercial semanal",
-        "Producción y adaptación de campañas",
-        "Atención al cliente y postventa",
-        "Negociación y evaluación de proveedores",
-        "Operación de tienda y comunicación interna"
+        "Surtido",
+        "Inventario",
+        "Precios",
+        "Promociones",
+        "E-commerce",
+        "Tiendas",
+        "Distribución",
+        "Postventa"
       ],
       "capacidades": [
         [
-          "Priorizar el ciclo de mayor valor",
-          "Comparar oportunidades entre lo comercial, el catálogo, el pedido, la atención, el contenido y la tienda.",
+          "Priorizar el ciclo con mayor valor",
+          "Comparar oportunidades entre comercial, catálogo, pedido, atención, contenido y tienda.",
           "BECOME DISCOVER™"
         ],
         [
           "Diseñar copilotos de decisión comercial",
-          "Reunir señales de venta, stock, precio y contexto en una misma preparación para que la revise una persona.",
+          "Consolidar señales de venta, stock, precio y contexto en una misma preparación para revisión humana.",
           "Decision intelligence"
         ],
         [
           "Construir operaciones de contenido",
-          "Sistemas que generan y adaptan fichas y piezas dentro de las reglas de marca, producto y aprobación.",
+          "Sistemas que generan y adaptan fichas y piezas dentro de reglas de marca, producto y aprobación.",
           "BECOME EMBED™"
         ],
         [
           "Construir agentes de atención y excepción",
-          "Agentes acotados para pedidos, entrega, retiro en tienda, devoluciones y consultas, con salida clara hacia una persona.",
+          "Agentes acotados para pedidos, delivery, retiro, devoluciones y consultas, con escalamiento.",
           "BECOME EMBED™"
         ],
         [
-          "Desarrollar a Marketing, Comercial y Atención",
-          "Programas aplicados sobre los materiales, las decisiones y los procesos reales de cada área.",
+          "Desarrollar a Marketing, Comercial y CX",
+          "Programas aplicados a materiales, decisiones y procesos reales.",
           "BECOME NOW™"
+        ],
+        [
+          "Medir",
+          "Tiempo hasta el mercado, resolución, retrabajo, consistencia, incidencias y adopción.",
+          ""
         ]
       ],
-      "tecnologiaTitular": "La IA puede multiplicar piezas. Las reglas de marca deciden si puede publicarlas.",
-      "tecnologia": "Generación con reglas de marca explícitas y revisión humana antes de publicar, búsqueda sobre catálogo y políticas, y agentes de atención con un alcance definido y una salida clara hacia una persona. El estándar de marca deja de ser criterio tácito y pasa a ser una instrucción verificable.",
-      "metricasTitular": "Velocidad sin consistencia solo crea retrabajo a escala.",
+      "tecnologiaTitular": "La IA puede multiplicar producción; las reglas y aprobaciones deciden qué puede publicarse o ejecutarse.",
+      "tecnologia": "LLMs, catálogo estructurado, RAG sobre políticas, APIs, reglas de marca, revisión humana y logs.",
+      "metricasTitular": "Qué medimos.",
       "metricas": [
         [
           "Tiempo de publicación",
-          "Cuánto tarda una ficha o una campaña desde el encargo hasta el aire."
+          ""
         ],
         [
           "Aprobación a la primera",
-          "Qué proporción del contenido pasa revisión sin correcciones."
+          ""
         ],
         [
-          "Preparación de la reunión",
-          "Cuánto tiempo cuesta llegar con el análisis listo."
+          "Disponibilidad y excepciones",
+          ""
         ],
         [
-          "Resolución sin escalar",
-          "Qué proporción de consultas se cierra sin pasar a una persona."
+          "Tiempo de preparación comercial",
+          ""
+        ],
+        [
+          "Primera respuesta",
+          ""
+        ],
+        [
+          "Resolución",
+          ""
+        ],
+        [
+          "Incidencias por pedido",
+          ""
         ],
         [
           "Consistencia de marca",
-          "Cuántas desviaciones detecta la revisión."
+          ""
+        ],
+        [
+          "Adopción",
+          ""
         ]
       ],
-      "empezarTitular": "Empieza por el ciclo semanal que siempre llega tarde.",
+      "empezarTitular": "Cómo empezar.",
       "empezar": [
-        "Un programa BECOME NOW™ con marketing, comercial o atención, sobre sus propios materiales.",
-        "Un BECOME DISCOVER™ si lo que falta es decidir dónde invertir primero entre contenido, decisión comercial y servicio.",
-        "Un BECOME EMBED™ para dejar funcionando el flujo de contenido o el agente de atención dentro de la operación."
+        "BECOME NOW™ si el reto está en cómo trabaja el equipo.",
+        "BECOME DISCOVER™ si todavía hay que decidir dónde invertir.",
+        "BECOME EMBED™ si ya existe un proceso priorizado que debe llegar a operación."
       ],
-      "cierre": "Empieza por el ciclo que hoy no alcanza a cerrar.",
-      "cierreTexto": "Cuéntanos qué se repite cada semana: fichas que no llegan, análisis comerciales que empiezan tarde o consultas que escalan por falta de información. Elegiremos un ciclo donde velocidad, consistencia y resultado puedan medirse juntos."
+      "cierre": "Empieza por el ciclo comercial u operativo que se repite todas las semanas.",
+      "cierreTexto": "Surtido, stock, catálogo, pedidos o postventa: elige uno donde velocidad y calidad puedan medirse juntas.",
+      "casos": [
+        "Copiloto de reunión comercial.",
+        "Agente de excepción de pedido.",
+        "Asistente de catálogo y fichas.",
+        "Copiloto de trade marketing.",
+        "Asistente de políticas de devolución.",
+        "Asistente de conocimiento para tienda."
+      ]
     },
     "en": {
       "nombre": "Retail & Consumer Goods",
@@ -784,107 +887,162 @@
       "nombre": "Turismo y hotelería",
       "menu": "Reservas, revenue, atención al huésped, operación hotelera, eventos, reputación y fidelización.",
       "h1": "La experiencia se gana o se pierde en cientos de momentos pequeños.",
-      "lead": "Reservas, cambios, incidencias y postventa ocurren en picos. La IA sirve cuando sostiene el criterio del servicio justo donde hoy se pierde por volumen.",
+      "lead": "Una reserva, una modificación, un check-in, una solicitud, una incidencia o una reseña ocurren mientras la operación sigue corriendo. BECOME conecta reservas, revenue, atención, conocimiento y operación hotelera para responder más rápido sin perder el estándar de servicio.",
       "contexto": [
-        "Un hotel, una aerolínea o un operador vive de momentos: la consulta antes de reservar, el cambio de última hora, la incidencia durante el viaje, el reclamo después. Cada uno es corto, específico y depende de información repartida entre reservas, políticas, tarifas y proveedores.",
-        "El servicio se degrada por volumen, no por falta de criterio. Y el criterio existe: está en las personas con más años. Convertirlo en algo consultable y aplicable en el momento es la transformación; cambiar el canal de atención, no."
+        "La experiencia depende de que el equipo tenga el contexto correcto en el momento correcto: disponibilidad, tarifa, política, reserva, preferencias, solicitudes, beneficios y pendientes.",
+        "La IA funciona cuando acerca ese contexto al servicio y reduce la búsqueda entre áreas, sin convertir una excepción en una decisión automática."
       ],
-      "oportunidadesTitular": "Cada minuto importa cuando la experiencia ya está ocurriendo.",
+      "oportunidadesTitular": "Dónde vemos oportunidad.",
       "oportunidades": [
         [
-          "Atención previa a la reserva",
-          "Responder sobre disponibilidad, condiciones y políticas con la información vigente."
+          "Reservas y conversión",
+          "Responder sobre disponibilidad, servicios, condiciones y políticas, y preparar oportunidades de venta adicional y cruzada."
         ],
         [
-          "Cambios e incidencias",
-          "Reunir el caso completo —reserva, política, historial— antes de que una persona decida."
+          "Revenue management",
+          "Preparar ocupación, tarifa, demanda, eventos y antecedentes para revisión del equipo de revenue."
         ],
         [
-          "Postventa y reclamos",
-          "Clasificar, contrastar contra la política y preparar la respuesta con la excepción marcada."
+          "Antes de la llegada",
+          "Consolidar reserva, preferencias, requerimientos y pendientes antes de la llegada del huésped."
         ],
         [
-          "Contenido y distribución",
-          "Descripciones, condiciones y adaptaciones por canal y por mercado, con reglas propias."
+          "Check-in y check-out",
+          "Dar al equipo contexto sobre reserva, beneficios, pagos y solicitudes."
         ],
         [
-          "Conocimiento operativo",
-          "Procedimientos, estándares y escalamientos consultables por el equipo en turno."
+          "Atención al huésped",
+          "Recuperar servicios, políticas, solicitudes e historial relevante para responder."
         ],
         [
-          "Voz del huésped",
-          "Convertir reseñas y encuestas en temas accionables por propiedad, ruta o temporada."
+          "Housekeeping y mantenimiento",
+          "Ordenar solicitudes, incidencias y pendientes entre áreas."
+        ],
+        [
+          "Cambios, cancelaciones y no-show",
+          "Reunir reserva, tarifa, condición e historial antes de que una persona resuelva una excepción."
+        ],
+        [
+          "Reclamos y recuperación de servicio",
+          "Clasificar el caso, recuperar antecedentes y preparar respuesta o compensación para decisión humana."
+        ],
+        [
+          "Reputación",
+          "Agrupar reseñas, encuestas y comentarios por hotel, servicio o temporada."
+        ],
+        [
+          "Ventas corporativas, grupos y eventos",
+          "Preparar propuestas, requerimientos, salones, capacidades, catering, tarifas y seguimiento."
+        ],
+        [
+          "Fidelización",
+          "Recuperar nivel, beneficios, estadías e información relevante del programa."
         ]
       ],
-      "workflowsTitular": "La reserva, la incidencia y el cambio de turno no pueden perder el contexto.",
+      "workflowsTitular": "Los procesos donde empieza el trabajo.",
       "workflows": [
-        "Consulta previa y conversión de reserva",
-        "Gestión de cambios y cancelaciones",
-        "Atención de incidencias en viaje o en estadía",
-        "Reclamos y compensaciones",
-        "Distribución de contenido y tarifas por canal",
-        "Operación de turno y traspaso entre equipos"
+        "Reservas",
+        "Revenue",
+        "Atención al huésped",
+        "Operación hotelera",
+        "Eventos",
+        "Reputación",
+        "Fidelización"
       ],
       "capacidades": [
         [
-          "Priorizar el momento que más presión concentra",
-          "Comparar reserva, llegada, estancia, incidencia y postestancia por volumen, impacto en la experiencia y viabilidad.",
-          "BECOME DISCOVER™"
-        ],
-        [
-          "Construir copilotos de reserva y atención",
-          "Disponibilidad, servicios, condiciones y políticas, con escalamiento explícito de cualquier excepción.",
+          "Agentes y copilotos de reservas",
+          "Disponibilidad, políticas, servicios y escalamiento.",
           "BECOME EMBED™"
         ],
         [
-          "Volver consultable la operación",
-          "Procedimientos y estándares por rol, accesibles en el turno, sin buscar entre carpetas ni preguntar a quien esté libre.",
+          "Asistente de conocimiento de operación",
+          "Procedimientos y estándares por rol.",
           "Knowledge intelligence"
         ],
         [
-          "Coordinar incidencias entre áreas",
-          "Un mismo contexto para recepción, pisos y mantenimiento, con el pendiente y el responsable a la vista.",
+          "Preparación de revenue",
+          "Síntesis de señales para decisión del responsable.",
+          "Decision intelligence"
+        ],
+        [
+          "Coordinación de incidencias",
+          "Contexto común entre recepción, housekeeping y mantenimiento.",
           "BECOME EMBED™"
         ],
         [
-          "Desarrollar a Atención, Operaciones y Comercial",
-          "Programas aplicados sobre las consultas, las incidencias y las cotizaciones reales del hotel o la agencia.",
+          "Copiloto de grupos y eventos",
+          "Requerimientos, propuestas y pendientes.",
+          "BECOME EMBED™"
+        ],
+        [
+          "Inteligencia sobre la voz del huésped",
+          "Sintetizar reseñas y encuestas.",
+          "Knowledge intelligence"
+        ],
+        [
+          "Desarrollar a los equipos",
+          "Atención, operaciones, revenue, comercial y marketing.",
           "BECOME NOW™"
         ]
       ],
-      "tecnologiaTitular": "Una política puede consultarse; una excepción siempre debe escalarse.",
-      "tecnologia": "Agentes con alcance acotado y salida explícita a una persona, búsqueda sobre políticas y condiciones vigentes, y clasificación de casos con la excepción señalada. Nada que comprometa una compensación o una excepción de política se resuelve sin decisión humana.",
-      "metricasTitular": "La experiencia mejora cuando el primer contacto ya llega con el caso completo.",
+      "tecnologiaTitular": "La IA acerca el contexto al servicio. La excepción sigue siendo una decisión de una persona.",
+      "tecnologia": "Según el caso: RAG sobre políticas y procedimientos, agentes acotados de reserva y atención, APIs a los sistemas de reserva y operación autorizados, permisos, trazabilidad, revisión humana y reglas de escalamiento.",
+      "metricasTitular": "Qué medimos.",
       "metricas": [
         [
           "Primera respuesta",
-          "Cuánto tarda el primer contacto útil."
-        ],
-        [
-          "Resolución sin escalar",
-          "Qué proporción de casos se cierra en el primer nivel."
+          ""
         ],
         [
           "Tiempo de resolución",
-          "Cuánto dura una incidencia de principio a fin."
+          ""
+        ],
+        [
+          "Escalamientos",
+          ""
         ],
         [
           "Consistencia entre turnos",
-          "Cuánto varía el criterio según quién atiende."
+          ""
         ],
         [
-          "Temas recurrentes",
-          "Cuántos motivos repetidos se cierran por período."
+          "Conversión de consultas",
+          ""
+        ],
+        [
+          "Tiempo de cotización",
+          ""
+        ],
+        [
+          "Incidencias",
+          ""
+        ],
+        [
+          "Satisfacción",
+          ""
+        ],
+        [
+          "Tiempo administrativo recuperado",
+          ""
         ]
       ],
-      "empezarTitular": "Empieza por el momento que concentra volumen y deteriora el servicio.",
+      "empezarTitular": "Cómo empezar.",
       "empezar": [
-        "Un programa BECOME NOW™ con atención, operaciones o revenue, sobre sus propios casos.",
-        "Un BECOME DISCOVER™ si hay que decidir qué momento de la experiencia se transforma primero.",
-        "Un BECOME EMBED™ para dejar el agente o el flujo de incidencias operando con sus límites definidos."
+        "BECOME NOW™ si el reto está en cómo trabaja el equipo.",
+        "BECOME DISCOVER™ si todavía hay que decidir dónde invertir.",
+        "BECOME EMBED™ si ya existe un proceso priorizado que debe llegar a operación."
       ],
-      "cierre": "Empieza por el momento en que hoy se pierde el servicio.",
-      "cierreTexto": "Tráenos el momento que más presión concentra —antes de reservar, durante una incidencia o después de la experiencia— y los sistemas que hoy fragmentan el caso. Diseñaremos una respuesta más rápida sin automatizar excepciones ni compromisos que requieren a una persona."
+      "cierre": "Empieza por el momento donde el huésped espera y el equipo necesita contexto.",
+      "cierreTexto": "Cuéntanos qué decisión, proceso o experiencia necesita cambiar. Te ayudaremos a identificar el punto de partida más adecuado.",
+      "casos": [
+        "Asistente de reservas.",
+        "Copiloto de preparación de llegada.",
+        "Agente de incidencias.",
+        "Asistente de grupos y eventos.",
+        "Copiloto de reputación.",
+        "Asistente de conocimiento para recepción."
+      ]
     },
     "en": {
       "nombre": "Travel & Hospitality",
@@ -1013,155 +1171,183 @@
       "nombre": "Inmobiliario y construcción",
       "menu": "Terrenos, proyectos, ventas, contratos, obra, valorizaciones, entrega y postventa.",
       "h1": "Un proyecto cambia todos los días. La información también.",
-      "lead": "Contratos, expedientes técnicos, permisos y valorizaciones concentran el riesgo del proyecto. La IA aporta justo donde hoy se lee por muestreo.",
+      "lead": "Comercial, legal, ingeniería, obra, proveedores, supervisión y cliente trabajan sobre documentos, versiones, compromisos y fechas que cambian durante todo el proyecto. La IA aporta donde una decisión depende de encontrar la versión correcta, identificar un pendiente o reunir antecedentes antes de que se conviertan en demora.",
       "contexto": [
-        "Un proyecto inmobiliario o de construcción avanza sobre documentos: contratos, adendas, expedientes técnicos, permisos, valorizaciones, órdenes de cambio. El riesgo aparece cuando algo estaba escrito y nadie llegó a leerlo a tiempo.",
-        "Es además una industria de coordinación: propietario, constructora, supervisión, proveedores y autoridad trabajan sobre versiones distintas de la misma verdad. La IA no reemplaza esa coordinación; hace que quien coordina llegue con el caso ya leído."
+        "Inmobiliario: terrenos, factibilidad, producto, inventario comercial, leads, separación, financiamiento, minuta, entrega y postventa.",
+        "Construcción: planeamiento, producción, BIM, consultas técnicas, metrados, valorizaciones, administración contractual, cambios, procura y cierre."
       ],
-      "oportunidadesTitular": "El valor aparece cuando una obligación escrita se detecta antes de convertirse en demora.",
+      "oportunidadesTitular": "Dónde vemos oportunidad.",
       "oportunidades": [
         [
           "Terrenos y factibilidad",
-          "Ordenar antecedentes, parámetros, documentos, restricciones y supuestos de un terreno antes de decidir."
+          "Ordenar antecedentes, parámetros, restricciones, documentos y supuestos para preparar evaluación."
         ],
         [
-          "Desarrollo y expedientes",
-          "Controlar completitud, observaciones, versiones y pendientes del expediente."
+          "Producto e inventario comercial",
+          "Consultar unidades, precio, disponibilidad, características, estacionamientos, acabados y promociones."
         ],
         [
-          "Inventario comercial",
-          "Consultar unidades, precios, disponibilidad, características, estacionamientos y promociones vigentes."
-        ],
-        [
-          "Leads",
-          "Resumir las interacciones de un interesado y preparar la siguiente acción comercial."
+          "Leads y seguimiento",
+          "Resumir interacciones, identificar intención y preparar la siguiente acción."
         ],
         [
           "Separación y cierre",
-          "Dar visibilidad al paso entre separación, cuota inicial, carta de aprobación, minuta y banco."
+          "Dar visibilidad al paso entre separación, cuota inicial, carta de aprobación, minuta y coordinación con el banco."
         ],
         [
           "Entrega",
-          "Ordenar citas, documentación y pendientes de entrega."
+          "Ordenar citas, documentación, pendientes y evidencias."
         ],
         [
           "Postventa",
-          "Clasificar observaciones, recuperar antecedentes y dar seguimiento al responsable."
+          "Clasificar observaciones, recuperar antecedentes de proyecto y unidad, y dar seguimiento al responsable."
         ],
         [
-          "Planeamiento y producción de obra",
-          "Preparar avance, restricciones, frentes, compromisos y desviaciones."
+          "Planeamiento y producción",
+          "Preparar avance, restricciones, frentes, compromisos y desviaciones para reuniones de producción."
         ],
         [
           "BIM",
-          "Facilitar la consulta y la trazabilidad entre modelos, planos, documentos y cambios."
+          "Facilitar consulta y trazabilidad entre modelos, planos, documentos y cambios."
         ],
         [
           "RFIs y consultas técnicas",
-          "Recuperar especificaciones, planos y antecedentes antes de preparar la respuesta."
+          "Recuperar especificaciones, planos, antecedentes y respuestas previas antes de preparar una consulta o una respuesta."
         ],
         [
           "Metrados",
-          "Organizar el sustento, las versiones y su trazabilidad."
+          "Organizar sustento, versiones y trazabilidad."
         ],
         [
           "Valorizaciones",
-          "Preparar avance, metrados, sustento y observaciones."
+          "Preparar avance, metrados, sustento, observaciones y pendientes para revisión."
         ],
         [
           "Administración contractual",
-          "Encontrar obligaciones, comunicaciones, hitos y plazos dentro del contrato."
+          "Encontrar obligaciones, comunicaciones, hitos, plazos y precedentes."
         ],
         [
           "Cambios y adicionales",
-          "Comparar versiones y preparar el expediente de sustento."
+          "Comparar versiones, identificar impacto documental y preparar expediente de sustento."
         ],
         [
-          "Subcontratos, compras y procura",
-          "Comparar propuestas, entregables, obligaciones, cumplimiento y comparativos técnicos y comerciales."
+          "Subcontratos y procura",
+          "Comparar propuestas, entregables, obligaciones, requisitos y cumplimiento."
         ],
         [
           "Cierre de obra",
-          "Ordenar punch lists, dossiers, as-built, manuales, garantías y pendientes."
+          "Ordenar listas de pendientes, dossiers, planos as-built, manuales, garantías y evidencias."
         ]
       ],
-      "workflowsTitular": "Contratos, permisos y cambios necesitan una misma lectura del proyecto.",
+      "workflowsTitular": "Los procesos donde empieza el trabajo.",
       "casos": [
         "Copiloto comercial inmobiliario.",
         "Agente de expediente de venta.",
         "Asistente de RFI.",
         "Asistente de valorización.",
         "Agente de postventa.",
-        "Asistente de conocimiento de proyecto."
+        "Asistente de conocimiento de proyecto.",
+        "Asistente contractual."
       ],
       "workflows": [
-        "Evaluación y cierre de contratos",
-        "Preparación y seguimiento de permisos",
-        "Gestión de órdenes de cambio",
-        "Valorizaciones y control de avance",
-        "Licitación y homologación de proveedores",
-        "Venta y postventa inmobiliaria"
+        "Terrenos",
+        "Proyectos",
+        "Ventas",
+        "Contratos",
+        "Obra",
+        "Valorizaciones",
+        "Entrega",
+        "Postventa"
       ],
       "capacidades": [
         [
-          "Priorizar dónde una demora cuesta más",
-          "Comparar el ciclo comercial, el expediente, la obra y la postventa por impacto en plazo, costo y riesgo contractual.",
-          "BECOME DISCOVER™"
-        ],
-        [
-          "Construir el copiloto comercial y el expediente de venta",
-          "Inventario, precios y documentación aprobada en una consulta, y el paso de separación a minuta con sus pendientes a la vista.",
+          "Copiloto comercial con inventario y documentación aprobada",
+          "Consulta de unidades, precios, disponibilidad y condiciones sobre información vigente.",
           "BECOME EMBED™"
         ],
         [
-          "Construir asistentes de RFI, metrados y valorización",
-          "Recuperar especificaciones, planos y precedentes, y preparar el sustento antes de que lo revise el responsable.",
+          "Agente de expediente de venta",
+          "Seguimiento del paso de lead a separación y a minuta, con los pendientes a la vista.",
           "BECOME EMBED™"
         ],
         [
-          "Leer contratos y cambios con trazabilidad",
-          "Encontrar obligaciones, hitos y comunicaciones, y comparar versiones para preparar el expediente de sustento.",
-          "Contract intelligence"
+          "Asistente de RFI e inteligencia contractual",
+          "Recuperar especificaciones, antecedentes, obligaciones y correspondencia antes de responder.",
+          "Knowledge intelligence"
         ],
         [
-          "Desarrollar a Finanzas Inmobiliarias, PMO y Obra",
-          "Programas aplicados sobre los contratos, valorizaciones y expedientes reales del proyecto.",
+          "Asistente de metrados y valorizaciones",
+          "Preparar avance, sustento, observaciones y pendientes para revisión.",
+          "BECOME EMBED™"
+        ],
+        [
+          "Desarrollar a los equipos",
+          "Programas aplicados para Finanzas Inmobiliarias, Ventas, Marketing, CX, PMO, Legal, Operaciones y Supply Chain.",
           "BECOME NOW™"
+        ],
+        [
+          "Priorizar e incorporar",
+          "DISCOVER™ prioriza dónde está el valor; EMBED™ incorpora la capacidad a CRM, ERP, gestión documental u otros sistemas autorizados.",
+          "BECOME DISCOVER™"
         ]
       ],
-      "tecnologiaTitular": "Comparar versiones ayuda; la conclusión legal o técnica sigue teniendo firma.",
-      "tecnologia": "Extracción y comparación entre versiones de documentos extensos, búsqueda sobre normativa aplicable y expedientes previos con la fuente citada, y revisión asistida que señala hallazgos para que una persona los valide. La conclusión legal o técnica sigue siendo de un profesional.",
-      "metricasTitular": "Una revisión más rápida importa si evita una observación, un cambio o una disputa.",
+      "tecnologiaTitular": "La IA puede comparar y preparar. La conclusión técnica, legal o comercial mantiene responsable.",
+      "tecnologia": "Extracción documental, comparación de versiones, RAG, búsqueda empresarial, APIs, permisos, trazabilidad y revisión humana.",
+      "metricasTitular": "Qué medimos.",
       "metricas": [
         [
-          "Tiempo de revisión",
-          "Cuánto tarda revisar un contrato o un expediente completo."
+          "Tiempo de respuesta comercial",
+          ""
         ],
         [
-          "Hallazgos antes de firma",
-          "Cuántos se detectan a tiempo y no después."
+          "De lead a separación",
+          ""
         ],
         [
-          "Observaciones de permiso",
-          "Cuántas se evitan por documentación completa."
+          "De separación a minuta",
+          ""
         ],
         [
-          "Cierre de órdenes de cambio",
-          "Cuánto tarda una desde que se levanta hasta que se aprueba."
+          "Pendientes por expediente",
+          ""
         ],
         [
-          "Respuesta comercial",
-          "Cuánto tarda una consulta de cliente en tener respuesta con sustento."
+          "Tiempo de entrega y postventa",
+          ""
+        ],
+        [
+          "Tiempo de respuesta de RFI",
+          ""
+        ],
+        [
+          "Ciclo de valorización",
+          ""
+        ],
+        [
+          "Tiempo de revisión contractual",
+          ""
+        ],
+        [
+          "Cierre de cambios",
+          ""
+        ],
+        [
+          "Retrabajo por versión",
+          ""
+        ],
+        [
+          "Tiempo de búsqueda de información",
+          ""
         ]
       ],
-      "empezarTitular": "Empieza donde una versión equivocada cuesta más.",
+      "empezarTitular": "Cómo empezar.",
       "empezar": [
-        "Un programa BECOME NOW™ con legal, control de proyectos o comercial, sobre sus propios documentos.",
-        "Un BECOME DISCOVER™ sobre el punto del proyecto donde el riesgo documental es mayor.",
-        "Un BECOME EMBED™ para dejar operando la revisión asistida dentro del flujo real de aprobación."
+        "BECOME NOW™ si el reto está en cómo trabaja el equipo.",
+        "BECOME DISCOVER™ si todavía hay que decidir dónde invertir.",
+        "BECOME EMBED™ si ya existe un proceso priorizado que debe llegar a operación."
       ],
-      "cierre": "Empieza por el documento que hoy nadie alcanza a leer entero.",
-      "cierreTexto": "Muéstranos el documento que más riesgo concentra y el flujo que lo revisa, observa y aprueba. Identificaremos dónde la IA puede comparar, recuperar precedentes o señalar faltantes sin sustituir la conclusión del profesional responsable."
+      "cierre": "Empieza por el punto del proyecto donde una versión, un pendiente o una aprobación puede convertirse en demora.",
+      "cierreTexto": "Cuéntanos qué decisión, proceso o experiencia necesita cambiar. Te ayudaremos a identificar el punto de partida más adecuado."
     },
     "en": {
       "nombre": "Real Estate & Construction",
@@ -1338,111 +1524,153 @@
       "nombre": "Salud y farmacéutica",
       "menu": "Citas, admisión, autorizaciones, facturación, abastecimiento, documentación y operaciones no clínicas.",
       "h1": "Antes y alrededor de la atención hay una operación enorme que también puede mejorar.",
-      "lead": "Trabajamos sobre los procesos administrativos, documentales y operativos que rodean la atención. No sobre el diagnóstico ni sobre el tratamiento.",
+      "lead": "Clínicas, redes de salud, aseguradoras y farmacéuticas gestionan citas, admisión, autorizaciones, facturación, reembolsos, abastecimiento, documentación y conocimiento interno. BECOME aplica IA en esos procesos para recuperar tiempo y mejorar consistencia sin entrar en diagnóstico, tratamiento ni decisión clínica.",
       "limite": {
-        "titulo": "Dónde está el límite, dicho antes que nada",
-        "texto": "BECOME no desarrolla ni valida capacidades de diagnóstico, tratamiento, triaje clínico o interpretación de estudios, y no asesora sobre la conformidad regulatoria de dispositivos médicos. Cuando un proceso roza una decisión clínica, ese límite se define en el diseño y la decisión permanece íntegramente en el profesional de salud."
+        "titulo": "Dónde no intervenimos.",
+        "texto": "BECOME no desarrolla ni valida capacidades de diagnóstico, tratamiento, triaje clínico, interpretación de estudios, recomendación médica ni sustitución del criterio del profesional de salud."
       },
       "contexto": [
-        "Una institución de salud o una empresa farmacéutica dedica una parte enorme de su esfuerzo a trabajo que no es clínico: admisión, autorizaciones, facturación, documentación interna, compras, formación del personal, atención administrativa al usuario. Ahí la IA aplicada tiene un efecto directo y verificable.",
-        "Y es también donde el riesgo se puede acotar con honestidad. Un proceso administrativo se puede medir, auditar y corregir sin tocar una decisión clínica. Empezar por ahí no es empezar por lo fácil: es empezar por donde se puede sostener lo que se promete."
+        "El trabajo empieza en el trámite, no en la consulta: lo que ocurre antes y alrededor de la atención es donde se pierde tiempo administrativo.",
+        "Cuando un proceso se acerca a una decisión clínica, el límite se define antes de construir y la decisión permanece en el profesional responsable."
       ],
-      "oportunidadesTitular": "La primera oportunidad está alrededor de la atención, no dentro de la decisión clínica.",
+      "oportunidadesTitular": "Dónde vemos oportunidad.",
       "oportunidades": [
         [
-          "Admisión y autorizaciones",
-          "Reunir y verificar la documentación administrativa de un caso antes de la revisión."
+          "Citas y reprogramaciones",
+          "Asistir disponibilidad, requisitos, recordatorios y cambios de cita."
+        ],
+        [
+          "Admisión",
+          "Preparar información y documentación administrativa antes del registro."
+        ],
+        [
+          "Autorizaciones y cartas de garantía",
+          "Reunir documentación, validar completitud y preparar el caso para revisión."
         ],
         [
           "Facturación y conciliación",
-          "Comparar prestaciones, cobertura y condiciones, y marcar las diferencias."
+          "Comparar prestaciones, cobertura, documentos y diferencias para acelerar revisión administrativa."
         ],
         [
-          "Documentación y procedimientos internos",
-          "Procedimientos, políticas y normativa consultables con la fuente citada."
-        ],
-        [
-          "Compras y cadena de suministro",
-          "Comparar propuestas, condiciones y antecedentes de proveedores."
+          "Reembolsos",
+          "Verificar requisitos, ordenar expedientes y preparar observaciones antes de revisión."
         ],
         [
           "Atención administrativa",
-          "Resolver consultas de horarios, requisitos y coberturas, con límites explícitos y derivación a una persona."
+          "Resolver consultas sobre citas, horarios, cobertura, documentación y estado de trámites dentro de un alcance explícito."
         ],
         [
-          "Formación del personal",
-          "Programas sobre los procesos y documentos reales de cada área, con criterios de validación."
+          "Abastecimiento",
+          "Preparar comparativos, información de proveedores, disponibilidad y excepciones."
+        ],
+        [
+          "Gestión documental",
+          "Clasificar, extraer y recuperar documentos administrativos y operativos."
+        ],
+        [
+          "Conocimiento interno",
+          "Permitir que los equipos consulten políticas, procedimientos y manuales con fuente visible."
+        ],
+        [
+          "Farmacéutica",
+          "Apoyar procesos corporativos, comerciales y documentales usando información aprobada por las áreas responsables."
         ]
       ],
-      "workflowsTitular": "Admisión, autorización y facturación pueden avanzar sin invadir el acto clínico.",
+      "workflowsTitular": "Los procesos donde empieza el trabajo.",
       "workflows": [
-        "Admisión y gestión de autorizaciones",
-        "Facturación, cobertura y conciliación",
-        "Gestión documental y de procedimientos internos",
-        "Compras y cadena de suministro",
-        "Atención administrativa al usuario",
-        "Formación y habilitación del personal"
+        "Citas",
+        "Admisión",
+        "Autorizaciones",
+        "Facturación",
+        "Abastecimiento",
+        "Documentación",
+        "Operaciones no clínicas"
       ],
       "capacidades": [
         [
-          "Encontrar un trámite administrativo medible",
-          "Ordenar los trámites por volumen, tiempo, retrabajo, riesgo y viabilidad, y elegir uno que no toque la decisión clínica.",
+          "Encontrar un proceso administrativo medible",
+          "Priorizar trámites por volumen, tiempo, retrabajo, riesgo y viabilidad.",
           "BECOME DISCOVER™"
         ],
         [
-          "Diseñar asistentes que saben cuándo escalar",
-          "Recuperación sobre políticas y procedimientos, extracción documental y un límite explícito ante cualquier consulta que deje de ser administrativa.",
+          "Diseñar asistentes con límites claros",
+          "RAG, extracción documental y asistentes que saben cuándo escalar.",
           "Decision intelligence"
         ],
         [
-          "Implementar el proceso administrativo asistido",
-          "Integrar la capacidad priorizada con las fuentes y sistemas autorizados, con permisos y registro de lo consultado.",
+          "Implementar procesos administrativos asistidos",
+          "Integrar una capacidad priorizada a fuentes y sistemas autorizados.",
           "BECOME EMBED™"
         ],
         [
-          "Desarrollar capacidades corporativas",
-          "Programas aplicados para Operaciones, Recursos Humanos, Compras, Finanzas, Legal y Marketing sobre su trabajo real.",
+          "Desarrollar capacidades",
+          "Trabajo con Operaciones, Recursos Humanos, Compras, Finanzas, Legal, Marketing y otras áreas corporativas.",
           "BECOME NOW™"
         ],
         [
           "Diseñar privacidad y trazabilidad",
-          "Definir fuentes, permisos, tratamiento de datos personales, registro, escalamiento y revisión humana antes de operar.",
-          "Transversal"
+          "Definir fuentes, permisos, tratamiento de datos, logs, escalamiento y revisión humana antes de operar.",
+          ""
         ]
       ],
-      "tecnologiaTitular": "El sistema debe saber cuándo una consulta deja de ser administrativa.",
-      "tecnologia": "Extracción sobre documentación administrativa, búsqueda sobre procedimientos internos con la fuente citada, y asistentes con alcance declarado y derivación obligatoria cuando la consulta deja de ser administrativa. El tratamiento de datos personales de salud se define antes de construir, no después.",
-      "metricasTitular": "Recuperar tiempo asistencial empieza por medir el trabajo documental que lo consume.",
+      "tecnologiaTitular": "El alcance se define antes de construir, y la decisión clínica nunca entra en él.",
+      "tecnologia": "Según el caso: RAG sobre políticas y procedimientos, extracción documental, asistentes acotados con reglas de escalamiento, APIs a sistemas autorizados, permisos, tratamiento de datos, logs y revisión humana.",
+      "metricasTitular": "Qué medimos.",
       "metricas": [
         [
-          "Tiempo de tramitación",
-          "Cuánto tarda un trámite administrativo de principio a fin."
+          "Tiempo de trámite",
+          ""
         ],
         [
           "Expedientes completos",
-          "Qué proporción llega a revisión sin faltantes."
+          ""
         ],
         [
-          "Retrabajo en facturación",
-          "Cuántas correcciones se hacen después de emitir."
+          "Retrabajo administrativo",
+          ""
         ],
         [
-          "Respuesta administrativa",
-          "Cuánto tarda una consulta de usuario en resolverse."
+          "Tiempo de respuesta",
+          ""
         ],
         [
-          "Horas recuperadas",
-          "Cuánto tiempo del personal dejaba de dedicarse a tareas documentales."
+          "Escalamientos",
+          ""
+        ],
+        [
+          "Horas administrativas recuperadas",
+          ""
+        ],
+        [
+          "Consistencia",
+          ""
+        ],
+        [
+          "Adopción",
+          ""
+        ],
+        [
+          "Cumplimiento del alcance",
+          ""
         ]
       ],
-      "empezarTitular": "Empieza donde el trámite retrasa la atención sin formar parte de ella.",
+      "empezarTitular": "Cómo empezar.",
       "empezar": [
-        "Un programa BECOME NOW™ con administración, compras o recursos humanos, sobre sus propios procesos.",
-        "Un BECOME DISCOVER™ para priorizar entre trámite, facturación y atención administrativa.",
-        "Un BECOME EMBED™ sobre el proceso administrativo priorizado, con el tratamiento de datos definido desde el diseño."
+        "BECOME NOW™ si el reto está en cómo trabaja el equipo.",
+        "BECOME DISCOVER™ si todavía hay que decidir dónde invertir.",
+        "BECOME EMBED™ si ya existe un proceso priorizado que debe llegar a operación."
       ],
-      "cierre": "Empieza por el trámite que hoy consume el tiempo de quien atiende.",
-      "cierreTexto": "Cuéntanos qué trámite administrativo consume hoy tiempo del personal, retrasa al usuario o genera correcciones. Trabajaremos sobre ese proceso y sus datos, dejando fuera desde el inicio cualquier decisión de diagnóstico, tratamiento o triaje."
+      "cierre": "Empieza por el trámite que consume tiempo sin formar parte de la decisión clínica.",
+      "cierreTexto": "Cuéntanos qué decisión, proceso o experiencia necesita cambiar. Te ayudaremos a identificar el punto de partida más adecuado.",
+      "casos": [
+        "Asistente de citas y reprogramaciones.",
+        "Agente de completitud de autorización.",
+        "Asistente de carta de garantía.",
+        "Asistente de reembolso.",
+        "Copiloto de facturación administrativa.",
+        "Asistente de conocimiento de procedimientos.",
+        "Asistente de abastecimiento."
+      ]
     },
     "en": {
       "nombre": "Healthcare & Pharma",

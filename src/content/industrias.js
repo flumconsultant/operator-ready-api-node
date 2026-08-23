@@ -5,7 +5,7 @@
  *
  * En este sitio ya existe `/es/servicios/become-now/finanzas`: un programa de
  * capacitación para el ÁREA de finanzas, sea cual sea la empresa. Y ahora
- * existe `/es/industrias/servicios-financieros`: cómo se transforma una empresa
+ * existe `/es/industrias/banca-seguros-fintech`: cómo se transforma una empresa
  * cuyo NEGOCIO es financiero. Son dos cosas distintas y confundirlas produce
  * dos páginas compitiendo por lo mismo, que es de los pocos errores de SEO que
  * se castigan de verdad.

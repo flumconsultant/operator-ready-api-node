@@ -118,37 +118,37 @@ export const PAGES = {
 
   '/es/industrias': [
     'IA por industria: banca, minería, retail y más | BECOME',
-    'IA aplicada a banca, minería, retail, hotelería, inmobiliario, construcción y salud, con procesos y métricas propios de cada industria.',
+    'IA aplicada a banca, minería, retail, hotelería, inmobiliario, construcción y salud. Casos, procesos, controles y métricas específicos por industria.',
     '/en/industries',
   ],
   '/es/industrias/banca-seguros-fintech': [
     'IA para banca, seguros y fintech | BECOME',
-    'IA aplicada a crédito, fraude, operaciones, KYC, AML, siniestros, cobranza, conciliaciones y canales digitales, con trazabilidad y supervisión humana.',
+    'IA aplicada a crédito, fraude, operaciones, KYC, LA/FT, siniestros, cobranza, conciliaciones, reclamos y canales digitales.',
     '/en/industries/banking-insurance-fintech',
   ],
   '/es/industrias/mineria-energia': [
     'IA para minería y operaciones mineras | BECOME',
-    'IA aplicada a planeamiento mina, perforación y voladura, carguío y acarreo, chancado, molienda, flotación, mantenimiento y paradas de planta.',
+    'IA aplicada a planeamiento mina, perforación y voladura, carguío y acarreo, chancado, molienda, flotación, mantenimiento, paradas y conocimiento operativo.',
     '/en/industries/mining-energy',
   ],
   '/es/industrias/retail-consumo-masivo': [
     'IA para retail y consumo masivo | BECOME',
-    'IA aplicada a surtido, inventario, precios, promociones, catálogo, e-commerce, delivery, retiro en tienda, devoluciones y atención al cliente.',
+    'IA aplicada a surtido, inventario, precios, promociones, catálogo, e-commerce, pedidos, delivery, retiro en tienda, devoluciones y atención.',
     '/en/industries/retail-consumer-goods',
   ],
   '/es/industrias/turismo-hoteleria': [
     'IA para turismo y hotelería | BECOME',
-    'IA para reservas, revenue management, atención al huésped, check-in, operación hotelera, eventos, reputación y fidelización.',
+    'IA para reservas, revenue, atención al huésped, check-in, housekeeping, eventos, reputación, fidelización y operación hotelera.',
     '/en/industries/travel-hospitality',
   ],
   '/es/industrias/inmobiliario-construccion': [
     'IA para inmobiliarias y construcción | BECOME',
-    'IA aplicada a terrenos, factibilidad, ventas, separaciones, minutas, contratos, BIM, RFIs, metrados, valorizaciones, cambios, entrega y postventa.',
+    'IA aplicada a terrenos, factibilidad, leads, separaciones, minutas, BIM, RFIs, metrados, valorizaciones, contratos, entrega y postventa.',
     '/en/industries/real-estate-construction',
   ],
   '/es/industrias/salud-farmaceutica': [
     'IA para salud y farmacéutica | BECOME',
-    'IA aplicada a citas, admisión, autorizaciones, facturación, reembolsos, abastecimiento, documentación y operaciones no clínicas.',
+    'IA aplicada a citas, admisión, autorizaciones, cartas de garantía, facturación, reembolsos, abastecimiento, documentación y operaciones no clínicas.',
     '/en/industries/healthcare-pharma',
   ],
 
