@@ -117,10 +117,64 @@ reintentos (cinco fallos por hora y dominio).
 
 ## 3. Entrar y asegurar el servidor
 
-Desde tu ordenador (Terminal en Mac, PowerShell en Windows):
+Hay dos formas de entrar, y las dos valen:
+
+**A) Desde el navegador (el «Terminal del navegador» de hPanel).** En
+*VPS → Administrar → Terminal del navegador*. No hay que instalar nada ni
+configurar claves: se abre una consola ya dentro del servidor, como `root`. Es
+lo más rápido para empezar, y es también el plan B el día que te quedes fuera
+por SSH.
+
+**B) Desde tu ordenador, por SSH.** Es lo que vas a querer a medio plazo:
+copiar y pegar funciona bien, la sesión no se cae y puedes trabajar con tus
+propios archivos.
+
+Toda la guía funciona igual en las dos. Si usas la del navegador, lee esto
+primero:
+
+> ### Trabajar desde el terminal del navegador
+>
+> - **Ya eres `root`.** El prompt dice `root@srv836595:~#`. Todos los comandos
+>   que en la guía llevan `sudo` funcionan igual sin él; déjalo puesto, no
+>   molesta.
+>
+> - **Copiar y pegar va con `Ctrl+Shift+V`** (o clic derecho → *Pegar*).
+>   `Ctrl+V` a secas no funciona en una terminal. Para copiar, seleccionas con
+>   el ratón y `Ctrl+Shift+C`.
+>
+> - **La sesión se cae si cierras la pestaña, y con ella lo que estuviera
+>   corriendo.** Esto importa de verdad en el paso 7: construir la web tarda
+>   entre 5 y 10 minutos, y si se corta a la mitad hay que empezar de nuevo.
+>   La solución es `screen`, que deja el trabajo corriendo aunque se pierda la
+>   conexión:
+>
+>   ```bash
+>   screen -S pulse          # abre una sesión que sobrevive
+>   # …lanzas aquí el comando largo…
+>   # Ctrl+A y luego D  → sales dejándolo corriendo
+>   screen -r pulse          # vuelves a entrar, desde donde sea
+>   ```
+>
+>   Si no está instalado: `apt install -y screen`.
+>
+> - **Los pasos 3.2 y 3.3 (usuario y clave SSH) puedes saltártelos** mientras
+>   trabajes solo desde aquí: la clave SSH sirve para entrar desde tu
+>   ordenador, y desde el navegador entras con la contraseña del panel. Ahora
+>   bien, **el paso 5 sí necesita generar una clave** en el servidor, y eso se
+>   hace desde esta misma terminal sin problema.
+>
+> - **Para editar archivos, `nano`.** Se guarda con `Ctrl+O`, `Enter`, y se
+>   sale con `Ctrl+X`. Pegar dentro de nano funciona igual, con
+>   `Ctrl+Shift+V`.
+>
+> - **Si pegas un bloque de varias líneas**, entran todas de golpe y se
+>   ejecutan. Es lo normal y está bien; solo asegúrate de haber copiado el
+>   bloque entero.
+
+Si vas por SSH, desde tu ordenador (Terminal en Mac, PowerShell en Windows):
 
 ```bash
-ssh root@LA-IP-DEL-VPS
+ssh root@31.97.41.59
 ```
 
 La primera vez pregunta si confías en el servidor: `yes`. Luego pide la
@@ -344,6 +398,10 @@ docker compose -f pulse/docker-compose.yml --env-file pulse/.env up -d --build
 La primera vez tarda **entre 5 y 10 minutos**: descarga Node, Postgres y Caddy,
 e instala las dependencias. Las siguientes son de un minuto.
 
+> Si estás en el terminal del navegador, lanza esto dentro de `screen` (ver el
+> paso 3): si se cae la pestaña a mitad de un build de ocho minutos, el build
+> se va con ella.
+
 Mira que los cuatro estén arriba:
 
 ```bash
@@ -451,6 +509,7 @@ TRAEFIK_ENTRYPOINT=websecure
 **Paso 7, levantarlo.** Con dos `-f`, y el segundo es el de Traefik:
 
 ```bash
+screen -S pulse            # si estás en el terminal del navegador
 cd /opt/pulse/pulse
 docker compose -f docker-compose.yml -f docker-compose.traefik.yml \
   --env-file .env up -d --build
