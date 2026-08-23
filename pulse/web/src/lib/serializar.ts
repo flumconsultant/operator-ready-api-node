@@ -26,7 +26,7 @@ export type ReconocimientoSerializado = {
   creadoEn: string;
   de: PersonaSerializada;
   para: PersonaSerializada;
-  valor: { id: string; nombre: string; emoji: string };
+  valor: { id: string; nombre: string; icono: string };
   reacciones: { emoji: string; user: { id: string; nombre: string } }[];
   comentarios: {
     id: string;
@@ -43,9 +43,17 @@ export type CelebracionSerializada = {
   persona: PersonaSerializada;
 };
 
+export type PresentacionSerializada = {
+  id: string;
+  texto: string;
+  creadaEn: string;
+  user: PersonaSerializada;
+};
+
 export type EntradaSerializada =
   | { clase: "reconocimiento"; fecha: string; reconocimiento: ReconocimientoSerializado }
-  | { clase: "celebracion"; fecha: string; celebracion: CelebracionSerializada };
+  | { clase: "celebracion"; fecha: string; celebracion: CelebracionSerializada }
+  | { clase: "presentacion"; fecha: string; presentacion: PresentacionSerializada };
 
 export function serializarReconocimiento(r: FilaFeed): ReconocimientoSerializado {
   return {
@@ -77,17 +85,30 @@ function serializarCelebracion(c: Celebracion): CelebracionSerializada {
 }
 
 export function serializarEntradas(entradas: EntradaFeed[]): EntradaSerializada[] {
-  return entradas.map((e) =>
-    e.clase === "reconocimiento"
-      ? {
-          clase: "reconocimiento",
-          fecha: e.fecha.toISOString(),
-          reconocimiento: serializarReconocimiento(e.reconocimiento),
-        }
-      : {
-          clase: "celebracion",
-          fecha: e.fecha.toISOString(),
-          celebracion: serializarCelebracion(e.celebracion),
-        },
-  );
+  return entradas.map((e): EntradaSerializada => {
+    if (e.clase === "reconocimiento") {
+      return {
+        clase: "reconocimiento",
+        fecha: e.fecha.toISOString(),
+        reconocimiento: serializarReconocimiento(e.reconocimiento),
+      };
+    }
+    if (e.clase === "celebracion") {
+      return {
+        clase: "celebracion",
+        fecha: e.fecha.toISOString(),
+        celebracion: serializarCelebracion(e.celebracion),
+      };
+    }
+    return {
+      clase: "presentacion",
+      fecha: e.fecha.toISOString(),
+      presentacion: {
+        id: e.presentacion.id,
+        texto: e.presentacion.texto,
+        creadaEn: e.presentacion.creadaEn.toISOString(),
+        user: e.presentacion.user,
+      },
+    };
+  });
 }

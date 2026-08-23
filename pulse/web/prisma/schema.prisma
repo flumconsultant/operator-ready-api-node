@@ -47,30 +47,34 @@ enum AccionAuditada {
 
 /// Un workspace: una empresa cliente. Todo lo demás cuelga de aquí.
 model Company {
-  id                 String   @id @default(cuid())
+  id                 String    @id @default(cuid())
   nombre             String
-  slug               String   @unique
-  plan               String   @default("piloto")
+  slug               String    @unique
+  plan               String    @default("piloto")
   /// Nombre del archivo en el almacén de imágenes. Sustituye al wordmark de
   /// Pulse en la barra lateral y en la pantalla de acceso: quien entra tiene
   /// que ver su empresa, no la nuestra.
   logo               String?
+  /// Cuándo se terminó el asistente de puesta en marcha. Nulo significa que la
+  /// empresa acaba de crearse y su administrador todavía no la ha configurado.
+  onboardingEn       DateTime?
   /// Dominio de correo de la empresa. Si está puesto, al invitar se avisa
   /// cuando una dirección no lo cumple — no se bloquea, porque los becarios y
   /// los externos existen.
   dominioCorreo      String?
   /// Servidor de Discord conectado, si lo hay.
-  discordGuildId     String?  @unique
+  discordGuildId     String?   @unique
   /// Canal donde el bot publica el espejo del feed.
   discordCanalFeedId String?
   /// Tope de reconocimientos que se procesan con IA al mes. El PRD pide
   /// vigilar el coste de la API desde el primer día; esto es ese freno.
-  limiteIaMensual    Int      @default(2000)
-  creadaEn           DateTime @default(now())
+  limiteIaMensual    Int       @default(2000)
+  creadaEn           DateTime  @default(now())
 
   usuarios        User[]
   valores         Value[]
   auditoria       AuditLog[]
+  presentaciones  Presentacion[]
   reconocimientos Recognition[]
   insights        WeeklyInsight[]
 
@@ -84,8 +88,10 @@ model Value {
   companyId   String
   nombre      String
   descripcion String?
-  /// Emoji con el que sale en Discord y en el feed.
-  emoji       String  @default("✨")
+  /// Clave del catálogo de iconos (lib/iconos-valores.tsx). Se guarda la clave
+  /// y no el SVG: el día que cambie el trazo de un icono, cambia en todos los
+  /// valores de todas las empresas sin tocar la base.
+  icono       String  @default("chispa")
   orden       Int     @default(0)
   activo      Boolean @default(true)
 
@@ -127,6 +133,9 @@ model User {
   invitacionExpira DateTime?
   /// Cuándo entró por primera vez. Sirve para saber a quién hay que perseguir.
   primerAcceso     DateTime?
+  /// Cuándo terminó su asistente de bienvenida. Nulo lo lanza en el siguiente
+  /// acceso; se puede saltar, y saltarlo también lo marca.
+  onboardingEn     DateTime?
 
   company        Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
   dados          Recognition[]  @relation("reconocimientosDados")
@@ -136,6 +145,7 @@ model User {
   notificaciones Notification[] @relation("destinatario")
   provocadas     Notification[] @relation("actor")
   auditoria      AuditLog[]     @relation("auditor")
+  presentacion   Presentacion?
   accounts       Account[]
   sessions       Session[]
 
@@ -198,6 +208,27 @@ model Reaction {
 
   @@unique([recognitionId, userId])
   @@map("reactions")
+}
+
+/// La presentación de quien se incorpora.
+///
+/// Es lo que Workvivo llama «Say Hi»: quien entra por primera vez se presenta y
+/// eso aparece en el feed, para que el resto sepa quién es antes de cruzárselo
+/// en una reunión. No es un reconocimiento —no la escribe una persona sobre
+/// otra— así que tiene su propia tabla en vez de un campo «tipo» en
+/// `recognitions` que habría que filtrar en cada consulta del feed.
+model Presentacion {
+  id        String   @id @default(cuid())
+  companyId String
+  userId    String   @unique
+  texto     String
+  creadaEn  DateTime @default(now())
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([companyId, creadaEn])
+  @@map("presentaciones")
 }
 
 /// Un comentario en un reconocimiento. Sin hilos anidados a propósito: en un

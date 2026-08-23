@@ -5,6 +5,7 @@ import { DiscordLogo } from "@phosphor-icons/react/dist/ssr";
 
 import type { ReconocimientoSerializado } from "@/lib/serializar";
 import Avatar from "./Avatar";
+import IconoValor from "./IconoValor";
 import Fecha from "./Fecha";
 import Reacciones from "./Reacciones";
 import Comentarios from "./Comentarios";
@@ -67,7 +68,7 @@ export default function Reconocimiento({
       </header>
 
       <p className="insignia-valor">
-        <span aria-hidden="true">{r.valor.emoji}</span>
+        <IconoValor icono={r.valor.icono} />
         {r.valor.nombre}
       </p>
 

@@ -6,6 +6,7 @@ import { ArrowClockwise } from "@phosphor-icons/react/dist/ssr";
 import type { EntradaSerializada } from "@/lib/serializar";
 import Reconocimiento from "./Reconocimiento";
 import Celebracion from "./Celebracion";
+import Presentacion from "./Presentacion";
 
 // La columna del feed, con «cargar más».
 //
@@ -73,20 +74,21 @@ export default function ListaFeed({
   return (
     <>
       <div className="feed">
-        {entradas.map((entrada) =>
-          entrada.clase === "reconocimiento" ? (
-            <Reconocimiento
-              key={`r-${entrada.reconocimiento.id}`}
-              reconocimiento={entrada.reconocimiento}
-              usuarioActual={usuarioActual}
-            />
-          ) : (
-            <Celebracion
-              key={clave(entrada)}
-              celebracion={entrada.celebracion}
-            />
-          ),
-        )}
+        {entradas.map((entrada) => {
+          if (entrada.clase === "reconocimiento") {
+            return (
+              <Reconocimiento
+                key={`r-${entrada.reconocimiento.id}`}
+                reconocimiento={entrada.reconocimiento}
+                usuarioActual={usuarioActual}
+              />
+            );
+          }
+          if (entrada.clase === "celebracion") {
+            return <Celebracion key={clave(entrada)} celebracion={entrada.celebracion} />;
+          }
+          return <Presentacion key={clave(entrada)} presentacion={entrada.presentacion} />;
+        })}
       </div>
 
       {error && (
@@ -119,7 +121,7 @@ export default function ListaFeed({
 }
 
 function clave(entrada: EntradaSerializada) {
-  return entrada.clase === "reconocimiento"
-    ? `r-${entrada.reconocimiento.id}`
-    : `c-${entrada.celebracion.tipo}-${entrada.celebracion.persona.id}-${entrada.fecha}`;
+  if (entrada.clase === "reconocimiento") return `r-${entrada.reconocimiento.id}`;
+  if (entrada.clase === "presentacion") return `p-${entrada.presentacion.id}`;
+  return `c-${entrada.celebracion.tipo}-${entrada.celebracion.persona.id}-${entrada.fecha}`;
 }

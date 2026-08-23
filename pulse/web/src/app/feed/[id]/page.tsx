@@ -5,7 +5,7 @@ import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { prisma } from "@/lib/prisma";
 import { reconocimiento } from "@/lib/reconocimientos";
 import { serializarReconocimiento } from "@/lib/serializar";
-import { sesionRequerida } from "@/lib/sesion";
+import { sesionConfigurada } from "@/lib/sesion";
 import Marco from "@/componentes/Marco";
 import Reconocimiento from "@/componentes/Reconocimiento";
 
@@ -22,7 +22,7 @@ export default async function Publicacion({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const usuario = await sesionRequerida();
+  const usuario = await sesionConfigurada();
   const { id } = await params;
 
   const [r, yo] = await Promise.all([

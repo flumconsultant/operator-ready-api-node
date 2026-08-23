@@ -42,14 +42,14 @@ export async function metricasDeEmpresa(companyId: string, dias = 30) {
 
   const valores = await prisma.value.findMany({
     where: { companyId },
-    select: { id: true, nombre: true, emoji: true },
+    select: { id: true, nombre: true, icono: true },
   });
   const nombrePorId = new Map(valores.map((v) => [v.id, v]));
 
   const ranking = porValor.map((fila) => ({
     id: fila.valueId,
     nombre: nombrePorId.get(fila.valueId)?.nombre ?? "—",
-    emoji: nombrePorId.get(fila.valueId)?.emoji ?? "✨",
+    icono: nombrePorId.get(fila.valueId)?.icono ?? "chispa",
     total: fila._count._all,
   }));
 

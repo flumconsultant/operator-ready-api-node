@@ -119,9 +119,19 @@ red de Docker y desde ningún otro sitio.
 
 Pulse es una red interna, no un formulario de RRHH. Lo que hay:
 
-- **Composer** con tu cara y una pregunta, no cuatro campos siempre abiertos.
-  Un formulario desplegado arriba del feed dice «esto es una herramienta de
-  RRHH»; un campo que pregunta dice «esto es para ti».
+- **Los valores, a la vista y pulsables.** Están en la primera pantalla, no
+  escondidos en un desplegable: si para ver qué valora tu empresa hay que abrir
+  un menú, nadie los ve. Pulsar uno abre el modal con ese valor ya elegido, lo
+  que cambia el orden mental —primero el valor, después la persona— y es lo que
+  hace que se usen en vez de quedarse en un póster.
+- **Iconos de verdad, no emoji.** Los valores llevan un icono de un catálogo de
+  veintiocho, elegidos para lo que una empresa suele poner como valor. Un emoji
+  se dibuja distinto en Windows, en Android y en un Mac, no hereda el color del
+  sistema de diseño, y pedir «escribe un emoji» en un campo de texto produce
+  cajas vacías y banderas puestas por error.
+- **Presentaciones.** Quien se incorpora se presenta y eso aparece una vez en el
+  feed — es el «Say Hi» de Workvivo. Se distingue de un reconocimiento porque no
+  lo es: lo escribe alguien sobre sí mismo.
 - **Foto en la publicación.** Va a un volumen en disco, no a la base ni a un
   bucket. Todo lo que sube el navegador se reencodifica a WebP con sharp, que
   de paso **borra los metadatos EXIF** — una foto de móvil lleva las
@@ -163,7 +173,9 @@ Lo que se dejó fuera a propósito, y por qué:
 
 | Función | Por qué no está |
 |---|---|
+| Kudos a varias personas a la vez | Es la función de StarMeUp que más falta, y la única de esta lista que no se descarta: cambia el modelo de datos —un reconocimiento pasa a tener varios destinatarios— y con él las métricas, el mapa de influencia, el feed y el bot. Merece su propia pasada, no ir de propina en esta. |
 | Puntos canjeables y catálogo de premios | Está fuera del alcance del PRD, y convierte el reconocimiento en una moneda: la gente empieza a reconocer para que le devuelvan el favor. Si se añade, que sea con datos del piloto delante. |
+| Menciones con @ | Workvivo las tiene y hacen falta en cuanto el feed se usa de verdad. Necesitan un selector dentro del campo de texto y un formato de guardado propio. |
 | Ranking público de quién recibe más | Premia a quien tiene el equipo más grande. El mapa de influencia mide otra cosa —cuánta gente distinta te reconoce— y vive en el panel de RRHH, no en el feed. |
 | Espacios o grupos | Con 50-500 personas, un solo feed todavía se lee entero. Los grupos se justifican cuando deja de leerse. |
 | Encuestas y sondeos | Fuera del alcance del MVP. La tesis del producto es medir el clima **sin** encuestas. |
@@ -190,7 +202,41 @@ queda reservado para lo accionable.
 
 ## 6. Montar una empresa
 
-Todo se hace desde `/admin`, que tiene tres pestañas.
+### El asistente de puesta en marcha
+
+La primera vez que entra el administrador de una empresa recién creada, Pulse
+no le enseña un feed vacío: le enseña un asistente de tres pasos —identidad y
+logotipo, valores, equipo— y hasta que no lo termina no puede entrar al resto.
+El orden no es casual: sin valores no se puede reconocer, y sin gente no hay a
+quién.
+
+Los valores vienen propuestos y **marcados para poder desmarcarlos**. Una
+empresa que arranca con cinco valores que no eligió tiene cinco valores que
+nadie usa.
+
+Cada persona pasa después por su propio asistente la primera vez que entra: su
+foto, su cargo, su cumpleaños y su fecha de ingreso, y una presentación que se
+publica una sola vez en el feed. Los dos pasos se pueden saltar — la primera
+pantalla de un producto que alguien no eligió instalar no puede ser un peaje.
+
+Para verlos como los verá un cliente:
+
+```bash
+npm run db:semilla -- --nueva   # deja la empresa y la gente sin configurar
+```
+
+### El administrador es el único que configura
+
+Hay tres permisos y **solo uno configura la empresa**: el administrador. Es
+quien ve las cuatro pestañas de `/admin` y quien pasa por el asistente de
+puesta en marcha. Un manager ve el panel de su equipo; un colaborador, el feed.
+
+La interfaz impide quedarse sin administrador: no puedes quitarte a ti mismo el
+rol, ni desactivarte, ni desactivar al último que quede activo.
+
+### Las cuatro pestañas
+
+Todo se hace desde `/admin`.
 
 **Empresa.** Nombre, logotipo, dominio de correo, conexión con Discord y el
 tope mensual de la capa de IA. El logotipo sustituye al nombre de Pulse en la

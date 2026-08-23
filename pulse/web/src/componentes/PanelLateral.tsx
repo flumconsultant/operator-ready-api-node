@@ -3,6 +3,7 @@ import { CalendarHeart, TrendUp, HandHeart } from "@phosphor-icons/react/dist/ss
 
 import { diaYMes } from "@/lib/fechas";
 import Avatar from "./Avatar";
+import IconoValor from "./IconoValor";
 
 type Datos = Awaited<ReturnType<typeof import("@/lib/panel-lateral").datosDelPanel>>;
 
@@ -47,7 +48,7 @@ export default function PanelLateral({ datos }: { datos: Datos }) {
             {ranking.map((v) => (
               <li key={v.id}>
                 <span className="rail__valor-nombre">
-                  <span aria-hidden="true">{v.emoji}</span>
+                  <IconoValor icono={v.icono} />
                   {v.nombre}
                 </span>
                 {/* La barra es decorativa: la cifra ya está escrita al lado,

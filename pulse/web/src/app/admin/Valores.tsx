@@ -2,11 +2,14 @@
 
 import { useRef } from "react";
 
+import IconoValor from "@/componentes/IconoValor";
+import SelectorIcono from "@/componentes/SelectorIcono";
+
 type Valor = {
   id: string;
   nombre: string;
   descripcion: string | null;
-  emoji: string;
+  icono: string;
   activo: boolean;
 };
 
@@ -45,7 +48,10 @@ export default function Valores({
             {valores.map((v) => (
               <tr key={v.id}>
                 <td>
-                  {v.emoji} {v.nombre}
+                  <span className="insignia-valor">
+                    <IconoValor icono={v.icono} />
+                    {v.nombre}
+                  </span>
                 </td>
                 <td style={{ color: "var(--text-muted)" }}>
                   {v.descripcion ?? "—"}
@@ -80,26 +86,25 @@ export default function Valores({
           formulario.current?.reset();
         }}
       >
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "80px 1fr",
-            gap: "var(--space-4)",
-          }}
-        >
-          <div className="campo">
-            <label htmlFor="emoji">Emoji</label>
-            <input id="emoji" name="emoji" defaultValue="✨" maxLength={4} />
-          </div>
-          <div className="campo">
-            <label htmlFor="nombre">Nombre del valor</label>
-            <input id="nombre" name="nombre" required maxLength={40} />
-          </div>
-        </div>
         <div className="campo">
-          <label htmlFor="descripcion">Descripción (opcional)</label>
-          <input id="descripcion" name="descripcion" maxLength={160} />
+          <label htmlFor="nombre">Nombre del valor</label>
+          <input id="nombre" name="nombre" required maxLength={40} />
         </div>
+
+        <div className="campo">
+          <label htmlFor="descripcion">Descripción</label>
+          <input
+            id="descripcion"
+            name="descripcion"
+            maxLength={160}
+            placeholder="Una frase que explique cómo se ve este valor en el día a día."
+          />
+          <p className="meta">
+            Es lo que le dice a alguien cuándo usar este valor y no otro.
+          </p>
+        </div>
+
+        <SelectorIcono />
         <button className="boton" type="submit">
           Añadir valor
         </button>

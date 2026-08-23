@@ -30,7 +30,7 @@ export async function datosDelPanel(companyId: string, userId: string) {
     }),
     prisma.value.findMany({
       where: { companyId, activo: true },
-      select: { id: true, nombre: true, emoji: true },
+      select: { id: true, nombre: true, icono: true },
     }),
     prisma.recognition.findMany({
       where: { companyId, deUserId: userId, creadoEn: { gte: hace30 } },
@@ -48,7 +48,7 @@ export async function datosDelPanel(companyId: string, userId: string) {
     .map((v) => ({
       id: v.valueId,
       nombre: porId.get(v.valueId)!.nombre,
-      emoji: porId.get(v.valueId)!.emoji,
+      icono: porId.get(v.valueId)!.icono,
       total: v._count._all,
       porcentaje: Math.round((v._count._all / maximo) * 100),
     }));

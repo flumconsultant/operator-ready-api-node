@@ -11,12 +11,17 @@ import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
+// Con --nueva, la empresa y las personas quedan sin configurar, para poder
+// recorrer los dos asistentes de puesta en marcha como los verá un cliente.
+const nueva = process.argv.includes("--nueva");
+
+// nombre, clave del icono (ver src/lib/iconos-valores.tsx), descripción
 const VALORES = [
-  ["Colaboración", "🤝", "Sale de su carril para que otro llegue."],
-  ["Obsesión por el cliente", "🎯", "Decide mirando al cliente, no al proceso."],
-  ["Criterio", "🧭", "Decide bien con información incompleta."],
-  ["Aprender rápido", "🌱", "Cambia de opinión cuando aparece el dato."],
-  ["Cuidar al equipo", "🫱", "Se nota cuando no está."],
+  ["Colaboración", "colaboracion", "Sale de su carril para que otro llegue."],
+  ["Obsesión por el cliente", "cliente", "Decide mirando al cliente, no al proceso."],
+  ["Criterio", "criterio", "Decide bien con información incompleta."],
+  ["Aprender rápido", "aprendizaje", "Cambia de opinión cuando aparece el dato."],
+  ["Cuidar al equipo", "cuidado", "Se nota cuando no está."],
 ] as const;
 
 // nombre, correo, rol, equipo, cargo, día de cumpleaños (MM-DD), año de ingreso
@@ -80,6 +85,9 @@ async function main() {
       nombre: "Empresa Demo",
       slug: "demo",
       plan: "piloto",
+      // La demo entra directa al feed: es para enseñar el producto, no para
+      // recorrer los asistentes. Para verlos, `npm run db:semilla -- --nueva`.
+      onboardingEn: nueva ? null : new Date(),
       // Se rellenan a mano cuando se conecta un servidor de Discord real.
       discordGuildId: null,
       discordCanalFeedId: null,
@@ -87,12 +95,12 @@ async function main() {
   });
 
   const valores = [];
-  for (const [i, [nombre, emoji, descripcion]] of VALORES.entries()) {
+  for (const [i, [nombre, icono, descripcion]] of VALORES.entries()) {
     valores.push(
       await prisma.value.upsert({
         where: { companyId_nombre: { companyId: empresa.id, nombre } },
-        update: { emoji, descripcion, orden: i },
-        create: { companyId: empresa.id, nombre, emoji, descripcion, orden: i },
+        update: { icono, descripcion, orden: i },
+        create: { companyId: empresa.id, nombre, icono, descripcion, orden: i },
       }),
     );
   }
@@ -124,6 +132,7 @@ async function main() {
       cumpleanos,
       fechaIngreso,
       companyId: empresa.id,
+      onboardingEn: nueva ? null : new Date(),
     };
 
     usuarios.push(
@@ -138,6 +147,7 @@ async function main() {
           // Repartidos en el tiempo para que la alerta de desconexión de 60
           // días tenga a quién señalar.
           invitadoEn: new Date(Date.now() - 120 * 24 * 60 * 60 * 1000),
+          onboardingEn: nueva ? null : new Date(),
         },
       }),
     );

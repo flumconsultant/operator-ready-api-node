@@ -4,10 +4,11 @@ import { Buildings, Cake, CalendarCheck, Sparkle } from "@phosphor-icons/react/d
 import { prisma } from "@/lib/prisma";
 import { muro } from "@/lib/reconocimientos";
 import { serializarReconocimiento } from "@/lib/serializar";
-import { sesionRequerida } from "@/lib/sesion";
+import { sesionConfigurada } from "@/lib/sesion";
 import { diaYMes } from "@/lib/fechas";
 import Marco from "@/componentes/Marco";
 import Avatar from "@/componentes/Avatar";
+import IconoValor from "@/componentes/IconoValor";
 import Reconocimiento from "@/componentes/Reconocimiento";
 
 export const dynamic = "force-dynamic";
@@ -17,7 +18,7 @@ export default async function Persona({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const usuario = await sesionRequerida();
+  const usuario = await sesionConfigurada();
   const { id } = await params;
 
   // El filtro por empresa es lo que impide ver el perfil de alguien de otra
@@ -59,7 +60,7 @@ export default async function Persona({
 
   const valores = await prisma.value.findMany({
     where: { id: { in: porValor.map((v) => v.valueId) } },
-    select: { id: true, nombre: true, emoji: true },
+    select: { id: true, nombre: true, icono: true },
   });
   const porId = new Map(valores.map((v) => [v.id, v]));
 
@@ -129,7 +130,7 @@ export default async function Persona({
               {porValor.map((v) => (
                 <li key={v.valueId}>
                   <span className="insignia-valor">
-                    <span aria-hidden="true">{porId.get(v.valueId)?.emoji}</span>
+                    <IconoValor icono={porId.get(v.valueId)?.icono} />
                     {porId.get(v.valueId)?.nombre}
                   </span>
                   <span className="meta">

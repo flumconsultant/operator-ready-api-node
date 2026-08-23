@@ -136,7 +136,7 @@ export async function comentar(datos: {
 export const inclusionFeed = {
   de: { select: { id: true, nombre: true, imagen: true, equipo: true, cargo: true } },
   para: { select: { id: true, nombre: true, imagen: true, equipo: true, cargo: true } },
-  valor: { select: { id: true, nombre: true, emoji: true } },
+  valor: { select: { id: true, nombre: true, icono: true } },
   reacciones: {
     select: {
       emoji: true,
@@ -157,9 +157,23 @@ export type FilaFeed = Prisma.RecognitionGetPayload<{
 /// juntos por fecha. El tipo es una unión y no dos listas porque el feed es
 /// una sola columna cronológica; separarlas obligaría a ordenar en el
 /// componente, que es donde peor se hace.
+export type PresentacionFeed = {
+  id: string;
+  texto: string;
+  creadaEn: Date;
+  user: {
+    id: string;
+    nombre: string;
+    imagen: string | null;
+    equipo: string | null;
+    cargo: string | null;
+  };
+};
+
 export type EntradaFeed =
   | { clase: "reconocimiento"; fecha: Date; reconocimiento: FilaFeed }
-  | { clase: "celebracion"; fecha: Date; celebracion: Celebracion };
+  | { clase: "celebracion"; fecha: Date; celebracion: Celebracion }
+  | { clase: "presentacion"; fecha: Date; presentacion: PresentacionFeed };
 
 export async function feed(
   companyId: string,
@@ -189,7 +203,20 @@ export async function feed(
     ? pagina[pagina.length - 1].creadoEn
     : new Date(hasta.getTime() - 30 * 24 * 60 * 60 * 1000);
 
-  const celebraciones = await celebracionesEntre(companyId, desde, hasta);
+  const [celebraciones, presentaciones] = await Promise.all([
+    celebracionesEntre(companyId, desde, hasta),
+    // Las presentaciones caen en el mismo tramo de tiempo que la página, para
+    // que aparezcan donde les toca y no todas arriba.
+    prisma.presentacion.findMany({
+      where: { companyId, creadaEn: { gte: desde, lte: hasta } },
+      include: {
+        user: {
+          select: { id: true, nombre: true, imagen: true, equipo: true, cargo: true },
+        },
+      },
+      orderBy: { creadaEn: "desc" },
+    }),
+  ]);
 
   const entradas: EntradaFeed[] = [
     ...pagina.map(
@@ -201,6 +228,13 @@ export async function feed(
     ),
     ...celebraciones.map(
       (c): EntradaFeed => ({ clase: "celebracion", fecha: c.fecha, celebracion: c }),
+    ),
+    ...presentaciones.map(
+      (p): EntradaFeed => ({
+        clase: "presentacion",
+        fecha: p.creadaEn,
+        presentacion: p,
+      }),
     ),
   ].sort((a, b) => b.fecha.getTime() - a.fecha.getTime());
 

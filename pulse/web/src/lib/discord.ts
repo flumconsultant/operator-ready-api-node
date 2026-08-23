@@ -38,7 +38,7 @@ export async function avisarADiscord(recognitionId: string) {
         de: r.de.nombre,
         para: r.para.nombre,
         paraDiscordId: r.para.discordId,
-        valor: `${r.valor.emoji} ${r.valor.nombre}`,
+        valor: r.valor.nombre,
         mensaje: r.mensaje,
       }),
       signal: AbortSignal.timeout(5000),

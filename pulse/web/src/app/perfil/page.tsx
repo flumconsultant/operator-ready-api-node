@@ -1,7 +1,7 @@
 import { revalidatePath } from "next/cache";
 
 import { prisma } from "@/lib/prisma";
-import { sesionRequerida } from "@/lib/sesion";
+import { sesionConfigurada } from "@/lib/sesion";
 import { guardarImagen } from "@/lib/imagenes";
 import Marco from "@/componentes/Marco";
 import FormularioPerfil from "./FormularioPerfil";
@@ -10,7 +10,7 @@ export const metadata = { title: "Mi perfil" };
 export const dynamic = "force-dynamic";
 
 export default async function Perfil() {
-  const usuario = await sesionRequerida();
+  const usuario = await sesionConfigurada();
 
   const yo = await prisma.user.findUniqueOrThrow({
     where: { id: usuario.id },
@@ -28,7 +28,7 @@ export default async function Perfil() {
 
   async function guardar(datos: FormData) {
     "use server";
-    const u = await sesionRequerida();
+    const u = await sesionConfigurada();
 
     const foto = datos.get("foto");
     let imagen: string | undefined;

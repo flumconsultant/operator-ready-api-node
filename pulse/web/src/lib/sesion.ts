@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { auth } from "./auth";
+import { dondeEmpezar, rutaDe } from "./onboarding";
 
 // El guardián de las páginas privadas.
 //
@@ -16,14 +17,24 @@ export async function sesionRequerida() {
   return sesion.user;
 }
 
-export async function sesionDeAdmin() {
+/// Como `sesionRequerida`, pero además desvía a quien todavía tiene un
+/// asistente pendiente. Lo usan las páginas normales; los propios asistentes
+/// usan `sesionRequerida` a secas o se redirigirían a sí mismos para siempre.
+export async function sesionConfigurada() {
   const usuario = await sesionRequerida();
+  const ruta = rutaDe(await dondeEmpezar(usuario));
+  if (ruta) redirect(ruta);
+  return usuario;
+}
+
+export async function sesionDeAdmin() {
+  const usuario = await sesionConfigurada();
   if (usuario.rol !== "ADMIN") redirect("/feed");
   return usuario;
 }
 
 export async function sesionDeManager() {
-  const usuario = await sesionRequerida();
+  const usuario = await sesionConfigurada();
   if (usuario.rol === "COLABORADOR") redirect("/feed");
   return usuario;
 }

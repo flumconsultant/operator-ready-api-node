@@ -8,6 +8,7 @@ import { metricasDeEmpresa } from "@/lib/metricas";
 import { mapaDeInfluencia, personasDesconectadas } from "@/lib/ia/influencia";
 import { iaActiva } from "@/lib/entorno";
 import Marco from "@/componentes/Marco";
+import IconoValor from "@/componentes/IconoValor";
 import Valores from "./Valores";
 
 export const metadata = { title: "Cultura y valores" };
@@ -41,7 +42,7 @@ export default async function Admin() {
       data: {
         companyId: s.user.companyId,
         nombre,
-        emoji: String(datos.get("emoji") ?? "✨").trim() || "✨",
+        icono: String(datos.get("icono") ?? "chispa"),
         descripcion: String(datos.get("descripcion") ?? "").trim() || null,
       },
       select: { id: true },
@@ -170,7 +171,10 @@ export default async function Admin() {
                 {metricas.ranking.map((v) => (
                   <tr key={v.id}>
                     <td>
-                      {v.emoji} {v.nombre}
+                      <span className="insignia-valor">
+                        <IconoValor icono={v.icono} />
+                        {v.nombre}
+                      </span>
                     </td>
                     <td>{v.total}</td>
                     <td>

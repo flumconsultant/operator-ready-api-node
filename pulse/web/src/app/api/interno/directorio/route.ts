@@ -24,7 +24,7 @@ export async function GET(peticion: Request) {
       valores: {
         where: { activo: true },
         orderBy: [{ orden: "asc" }, { nombre: "asc" }],
-        select: { id: true, nombre: true, emoji: true },
+        select: { id: true, nombre: true, icono: true },
       },
     },
   });

@@ -3,7 +3,7 @@ import { revalidatePath } from "next/cache";
 import { BellSimple } from "@phosphor-icons/react/dist/ssr";
 
 import { listar, marcarTodasLeidas } from "@/lib/notificaciones";
-import { sesionRequerida } from "@/lib/sesion";
+import { sesionConfigurada } from "@/lib/sesion";
 import Marco from "@/componentes/Marco";
 import Avatar from "@/componentes/Avatar";
 import Fecha from "@/componentes/Fecha";
@@ -12,12 +12,12 @@ export const metadata = { title: "Novedades" };
 export const dynamic = "force-dynamic";
 
 export default async function Notificaciones() {
-  const usuario = await sesionRequerida();
+  const usuario = await sesionConfigurada();
   const notificaciones = await listar(usuario.id);
 
   async function marcarLeidas() {
     "use server";
-    const u = await sesionRequerida();
+    const u = await sesionConfigurada();
     await marcarTodasLeidas(u.id);
     revalidatePath("/notificaciones");
     revalidatePath("/feed");

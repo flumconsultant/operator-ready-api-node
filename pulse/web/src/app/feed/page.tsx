@@ -1,18 +1,18 @@
 import { prisma } from "@/lib/prisma";
 import { feed } from "@/lib/reconocimientos";
 import { serializarEntradas } from "@/lib/serializar";
-import { sesionRequerida } from "@/lib/sesion";
+import { sesionConfigurada } from "@/lib/sesion";
 import { datosDelPanel } from "@/lib/panel-lateral";
 import Marco from "@/componentes/Marco";
 import PanelLateral from "@/componentes/PanelLateral";
 import ListaFeed from "@/componentes/ListaFeed";
-import Composer from "./Composer";
+import Reconocer from "./Reconocer";
 
 export const metadata = { title: "Feed" };
 export const dynamic = "force-dynamic";
 
 export default async function Feed() {
-  const usuario = await sesionRequerida();
+  const usuario = await sesionConfigurada();
   const companyId = usuario.companyId;
 
   const [pagina, valores, companeros, yo, panel] = await Promise.all([
@@ -20,7 +20,7 @@ export default async function Feed() {
     prisma.value.findMany({
       where: { companyId, activo: true },
       orderBy: [{ orden: "asc" }, { nombre: "asc" }],
-      select: { id: true, nombre: true, emoji: true },
+      select: { id: true, nombre: true, icono: true, descripcion: true },
     }),
     prisma.user.findMany({
       where: { companyId, activo: true, NOT: { id: usuario.id } },
@@ -38,7 +38,7 @@ export default async function Feed() {
     <Marco actual="/feed">
       <div className="con-rail">
         <div className="columna-feed">
-          <Composer yo={yo} valores={valores} companeros={companeros} />
+          <Reconocer yo={yo} valores={valores} companeros={companeros} />
 
           {pagina.entradas.length === 0 ? (
             <div className="vacio">
