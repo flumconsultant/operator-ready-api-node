@@ -25,6 +25,11 @@ on:
       - claude/insights-diario
   # Permite lanzarlo a mano desde la pestaña Actions sin tocar el código
   workflow_dispatch:
+    inputs:
+      difundir:
+        description: 'Reenviar por correo un artículo ya publicado (nombre del archivo, p. ej. que-puede-hacer-un-agente-sin-supervision.json). Vacío = comportamiento normal.'
+        required: false
+        default: ''
 
 # Dos despliegues a la vez dejarían public_html a medias entre dos versiones.
 # Se encolan, y no se cancela el que ya está subiendo archivos.
@@ -45,6 +50,16 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Historia completa, y no el clon de un solo commit que trae por
+          # defecto. El aviso por correo compara el commit anterior con el
+          # actual para saber qué artículo es nuevo, y en un clon superficial
+          # ese commit anterior sencillamente no existe: la comparación falla,
+          # el error se traga, y el paso informa de que no hay artículos nuevos.
+          #
+          # Eso es lo que pasó con «Qué puede hacer un agente sin supervisión»:
+          # el despliegue terminó en verde y nadie recibió nada.
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -673,16 +688,22 @@ jobs:
           esac
 
       - name: Avisar por correo de los artículos nuevos
-        # Publicar es desplegar, así que este es el único sitio donde se sabe,
-        # con certeza y sin preguntarle a nadie, que un artículo acaba de
-        # ponerse en pie. El trabajo diario solo empuja; el aviso sale de aquí.
+        # ---- Por qué este paso se reescribió ----
         #
-        # Se compara con el commit anterior: un archivo que ya existía y solo
-        # cambió una coma no vuelve a enviarse. Lo que dispara el envío es que
-        # el archivo sea NUEVO y esté publicado.
-        if: success()
+        # Decía «ningún artículo nuevo en este despliegue» tanto cuando no
+        # había ninguno como cuando NO PODÍA SABERLO, y las dos cosas se leen
+        # igual en el log: verde. El 23 de agosto se publicó «Qué puede hacer
+        # un agente sin supervisión», el despliegue terminó en verde y ningún
+        # suscriptor recibió nada.
+        #
+        # La causa era el clon superficial —arreglado arriba con fetch-depth—
+        # pero el fallo de verdad es de este paso: un guardián que no distingue
+        # «no hay nada que hacer» de «no he podido mirar» es peor que no
+        # tenerlo, porque informa de éxito cuando ha fallado.
         env:
           DIFUSION_TOKEN: ${{ secrets.DIFUSION_TOKEN }}
+          ANTES: ${{ github.event.before }}
+          A_MANO: ${{ github.event.inputs.difundir }}
         run: |
           set -uo pipefail
           if [ -z "${DIFUSION_TOKEN:-}" ]; then
@@ -690,12 +711,35 @@ jobs:
             exit 0
           fi
 
-          NUEVOS=$(git diff --name-only --diff-filter=A "${{ github.event.before }}" "${GITHUB_SHA}" -- src/content/insights/ 2>/dev/null | grep '\.json$' || true)
-          if [ -z "$NUEVOS" ]; then
-            echo "Ningún artículo nuevo en este despliegue."
-            exit 0
+          # Reenvío a mano desde la pestaña Actions. Es la salida para un
+          # artículo que se quedó sin aviso.
+          if [ -n "${A_MANO:-}" ]; then
+            NUEVOS="src/content/insights/${A_MANO}"
+            if [ ! -f "$NUEVOS" ]; then
+              echo "::error::No existe $NUEVOS. Usa el nombre del archivo tal como está en src/content/insights/."
+              exit 1
+            fi
+            echo "Reenvío pedido a mano: $NUEVOS"
+          else
+            # ¿Se puede comparar siquiera? Un commit que no está en la copia
+            # local hace fallar el diff, y sin esta comprobación ese fallo se
+            # confunde con «no hay artículos nuevos».
+            if [ -z "${ANTES:-}" ] || [ "$ANTES" = "0000000000000000000000000000000000000000" ]; then
+              echo "Primer push a esta rama: no hay commit anterior con el que comparar."
+              exit 0
+            fi
+            if ! git cat-file -e "${ANTES}^{commit}" 2>/dev/null; then
+              echo "::error::El commit anterior ${ANTES} no está en la copia del repositorio, así que no se puede saber qué artículo es nuevo. El checkout tiene que usar fetch-depth: 0."
+              exit 1
+            fi
+            NUEVOS=$(git diff --name-only --diff-filter=A "$ANTES" "${GITHUB_SHA}" -- src/content/insights/ | grep '\.json$' || true)
+            if [ -z "$NUEVOS" ]; then
+              echo "Comparado ${ANTES:0:7}..${GITHUB_SHA:0:7}: ningún artículo nuevo en este despliegue."
+              exit 0
+            fi
           fi
 
+          FALLOS=0
           for f in $NUEVOS; do
             [ -f "$f" ] || continue
             if [ "$(python3 -c "import json,sys;print(json.load(open(sys.argv[1])).get('estado'))" "$f")" != "publicado" ]; then
@@ -708,14 +752,13 @@ jobs:
           a = json.load(open(sys.argv[1])); lang = sys.argv[2]; t = a.get(lang)
           if not t or not t.get('slug'):
               print(''); raise SystemExit
-          seccion = 'insights'
           print(json.dumps({
               'accion': 'difundir',
               'token': os.environ['DIFUSION_TOKEN'],
               'idioma': lang,
               'titulo': t['titulo'],
               'entradilla': t.get('entradilla') or t.get('descripcion') or '',
-              'ruta': f"/{lang}/{seccion}/{t['slug']}",
+              'ruta': f"/{lang}/insights/{t['slug']}",
           }, ensure_ascii=False))
           PY
               )
@@ -723,8 +766,15 @@ jobs:
               RES=$(curl -sS --max-time 180 -X POST -H 'Content-Type: application/json' \
                       -d "$CARGA" "https://meetbecome.com/api/suscripcion.php" || true)
               echo "$LANG → ${RES:-(sin respuesta)}"
+              # Una respuesta que no confirma el envío es un fallo, no un aviso:
+              # el propósito entero del paso es que el correo salga.
+              case "$RES" in
+                *'"ok":true'*) ;;
+                *) echo "::error::La difusión en $LANG no salió: ${RES:-(sin respuesta del servidor)}"; FALLOS=$((FALLOS+1)) ;;
+              esac
             done
           done
+          [ "$FALLOS" -eq 0 ] || exit 1
 
       - name: Resumen
         # El resumen dice qué secretos están puestos y cuáles faltan. No sus
