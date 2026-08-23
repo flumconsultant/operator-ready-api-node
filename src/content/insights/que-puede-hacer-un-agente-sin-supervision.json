@@ -1,0 +1,235 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-08-23",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "agentic-work",
+  "formato": "framework",
+  "es": {
+    "slug": "que-puede-hacer-un-agente-sin-supervision",
+    "titulo": "Qué puede hacer un agente sin supervisión",
+    "entradilla": "El marco de «clasificar por riesgo» suena a método. En la práctica nadie en la sala puede aplicarlo a un caso real hasta que ya salió mal.",
+    "descripcion": "El criterio para que un agente actúe sin supervisión no es el riesgo: son tres variables escritas antes, que cualquiera puede auditar.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Todo marco de gobernanza dice lo mismo: clasifica por nivel de riesgo, y lo de bajo riesgo lo decide el agente solo. Suena a método. Ponle un caso real delante a cualquier comité, un reembolso que no encaja en ninguna categoría, una excepción que nadie previó, y nadie sabe decir, ahí, en ese momento, si eso era de riesgo bajo o alto."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La palabra «riesgo» no es el problema. El problema es que nadie la bajó a algo que se pueda mirar en un caso concreto sin discutir media hora. Y mientras no exista esa bajada, el criterio no vive en un documento: vive en la cabeza de quien esté de guardia ese día, y cambia según quién esté de guardia."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El resultado son dos organizaciones distintas conviviendo en la misma empresa. Una donde el agente decide de más, porque nadie se atrevió a frenarlo a tiempo, y el primer incidente obliga a retirarle autonomía de golpe, casi siempre más de la que tenía que perder. Y otra donde el agente no decide nada solo, porque ante la duda todo se escala, y entonces el proyecto que iba a ahorrar tiempo añade una cola."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "El corte no existe hasta que hace falta."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Se nota antes de que pase nada grave. Un agente que procesa devoluciones tiene autorizados «importes bajos», y nadie ha escrito el número. Alguien lo fija en una reunión, de memoria, y ese número no vuelve a revisarse aunque el negocio cambie de tamaño. El criterio de reversibilidad, si la decisión se puede deshacer sin daño, ni siquiera se menciona: se asume que todo lo que hace un agente de importe bajo es reversible, y no siempre lo es."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El límite de autonomía es un número que alguien recuerda, no uno escrito en ningún sitio que se pueda auditar.",
+          "Nadie distingue una decisión reversible de una que no lo es; solo se mira el importe, y un importe bajo puede ser irreversible igual.",
+          "El perímetro se amplía en la práctica antes que en el papel: alguien lo estira «por esta vez» y esa vez se vuelve la norma.",
+          "La detección de que el agente se salió de su perímetro llega por una queja de cliente, no por una alerta interna.",
+          "Cada equipo que opera un agente distinto tiene su propio criterio no escrito, así que la misma pregunta se responde distinto según el pasillo."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema detrás",
+        "texto": "El corte no es de riesgo. Son tres variables, y ninguna es una sensación."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Riesgo es una palabra que sirve para la diapositiva y no sirve para decidir un caso a las tres de la tarde. Lo que sí decide un caso son tres cosas que se pueden mirar y medir: cuánto dinero mueve la decisión, si se puede deshacer sin daño una vez tomada, y a cuánta gente afecta si sale mal. Un agente que aprueba un reembolso de importe bajo, reversible y que afecta a una sola persona, no necesita el mismo corte que uno que cancela un contrato: mismo «riesgo bajo» en la diapositiva, corte completamente distinto en la realidad."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un comité que dice «clasificamos por riesgo» y no puede aplicarlo a un caso concreto en menos de un minuto no tiene un criterio: tiene una palabra que usa para sentirse tranquilo.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Qué hay que escribir",
+        "texto": "Cuatro piezas antes de dar autonomía a un agente."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Corte",
+            "definicion": "Un número o una regla explícita por variable: importe máximo, qué cuenta como reversible en ese proceso, cuántas personas puede afectar una decisión sola. No un nivel de riesgo con nombre. Tres cifras."
+          },
+          {
+            "termino": "Autoridad para ampliar",
+            "definicion": "Quién puede mover el perímetro y con qué evidencia. Si cualquiera puede estirarlo «por esta vez» sin dejar rastro, el perímetro escrito no vale nada."
+          },
+          {
+            "termino": "Detección",
+            "definicion": "Cómo se sabe que el agente se salió de su perímetro sin esperar la queja del cliente. Una alerta cuando se acerca al límite, no un informe que se lee después del incidente."
+          },
+          {
+            "termino": "Revisión",
+            "definicion": "Cada cuánto se vuelve a mirar el corte con datos de operación reales, no con la sensación de que «está yendo bien». El negocio cambia de tamaño y el número fijado al principio deja de servir."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguna de las cuatro exige más modelo ni más ingeniería. Exige que alguien con autoridad sobre el proceso se siente a escribirlas antes de que el agente tome la primera decisión, no después de la primera que salió mal."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Coge el proceso donde ya tienes un agente actuando y pregúntale a quien lo opera, sin mirar el código: ¿qué pasaría si mañana entra un caso al doble del importe que estás dejando pasar solo? Si la respuesta es «no lo sé» o «lo vería el equipo», ahí está el hueco. Y no es del modelo."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cómo se decide qué puede hacer un agente sin supervisión humana?",
+            "respuesta": "Con tres variables escritas antes de construirlo: cuánto dinero mueve la decisión, si se puede deshacer sin daño una vez tomada, y a cuánta gente afecta si sale mal. Un nivel de riesgo con nombre no basta porque nadie puede aplicarlo a un caso concreto en el momento; un número por variable sí, y se puede auditar."
+          },
+          {
+            "pregunta": "¿Quién debe tener autoridad para ampliar el perímetro de un agente?",
+            "respuesta": "La misma persona que responde por el resultado de ese proceso, no quien lo construyó ni quien lo opera día a día. Ampliar el perímetro sin esa autoridad nombrada es exactamente cómo un límite escrito deja de significar nada: alguien lo estira «por esta vez» y esa vez se convierte en la norma sin que nadie lo decidiera."
+          },
+          {
+            "pregunta": "¿Cómo se detecta que un agente se salió de su perímetro?",
+            "respuesta": "Con una alerta que se dispara cuando la decisión se acerca al límite escrito, no con la queja de un cliente ni con un informe que alguien lee semanas después. Si la primera señal de que el agente se pasó de su corte llega desde fuera de la empresa, la detección no existe: solo existe el daño."
+          },
+          {
+            "pregunta": "¿Con qué frecuencia hay que revisar el límite de autonomía de un agente?",
+            "respuesta": "Cada vez que cambie el tamaño del proceso donde opera, y como mínimo cada trimestre con datos reales de operación, no con la sensación de que va bien. El número fijado el primer día casi nunca sigue siendo el correcto seis meses después, y nadie lo nota si no hay una fecha puesta para volver a mirarlo."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Definamos el corte de tu agente",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "what-can-an-agent-do-without-oversight",
+    "titulo": "What Can an Agent Do Without Oversight",
+    "entradilla": "The \"classify by risk\" framework sounds like a method. In practice nobody in the room can apply it to a real case until it has already gone wrong.",
+    "descripcion": "The cutoff for what an agent can decide alone isn't risk level. It's three numbers, written in advance, that anyone can check.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Every governance framework says the same thing: classify by risk level, and whatever counts as low risk gets decided by the agent alone. It sounds like a method. Put a real case in front of any committee, a refund that doesn't fit any category, an exception nobody planned for, and nobody can say, right there, in that moment, whether it was low risk or high."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The word \"risk\" isn't the problem. The problem is that nobody has brought it down to something you can check against an actual case without a half hour debate. And until that translation exists, the criterion doesn't live in a document. It lives in whoever happens to be on call that day, and it changes depending on who that is."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The result is two different organisations living inside the same company. One where the agent decides too much, because nobody dared rein it in on time, and the first incident forces a sudden pullback, usually of more autonomy than it ever should have had. And one where the agent decides nothing alone, because every doubt gets escalated, and the project meant to save time adds a queue instead."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "The cutoff doesn't exist until it's needed."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "It shows up before anything serious happens. An agent that processes refunds is cleared for \"low amounts\", and nobody has written the number down. Someone sets it in a meeting, from memory, and it never gets revisited even as the business changes size. Reversibility, whether the decision can be undone without harm, doesn't even come up: everyone assumes anything low value an agent does is reversible, and it isn't always."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The autonomy limit is a number someone remembers, not one written anywhere that can be audited.",
+          "Nobody separates a reversible decision from one that isn't; only the amount gets checked, and a low amount can still be irreversible.",
+          "The perimeter widens in practice before it does on paper: someone stretches it \"just this once\", and that once becomes the norm.",
+          "The first sign an agent stepped outside its perimeter is a customer complaint, not an internal alert.",
+          "Every team running a different agent has its own unwritten rule, so the same question gets answered differently depending on who you ask."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "The cutoff isn't risk. It's three variables, and none of them is a gut feeling."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Risk is a word that works on a slide and does nothing for a decision at three in the afternoon. What actually decides a case is three things you can check and measure: how much money the decision moves, whether it can be undone without harm once it's made, and how many people it affects if it goes wrong. An agent approving a low value, reversible refund that affects one person doesn't need the same cutoff as one cancelling a contract. Same \"low risk\" on the slide, completely different cutoff in reality."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A committee that says \"we classify by risk\" and can't apply it to a real case in under a minute doesn't have a criterion. It has a word it uses to feel comfortable.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "What has to be written",
+        "texto": "Four pieces, before an agent gets any autonomy."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Cutoff",
+            "definicion": "An explicit number or rule per variable: a maximum amount, what counts as reversible in that process, how many people a single decision can affect. Not a risk level with a name. Three figures."
+          },
+          {
+            "termino": "Authority to expand",
+            "definicion": "Who can move the perimeter, and with what evidence. If anyone can stretch it \"just this once\" without leaving a trace, the written perimeter is worth nothing."
+          },
+          {
+            "termino": "Detection",
+            "definicion": "How you know the agent stepped outside its perimeter without waiting for the customer complaint. An alert when it approaches the limit, not a report read after the incident."
+          },
+          {
+            "termino": "Review",
+            "definicion": "How often the cutoff gets checked against real operating data, not against a sense that \"it's going fine\". The business changes size, and the number set at the start stops working."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of the four needs more model or more engineering. It needs someone with authority over the process to sit down and write them before the agent makes its first decision, not after the first one that went wrong."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take the process where you already have an agent running and ask whoever operates it, without looking at the code: what happens if a case comes in tomorrow at twice the amount you're letting it clear alone? If the answer is \"I don't know\" or \"the team would catch it\", that's the gap. And it isn't the model's fault."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How do you decide what an agent can do without human oversight?",
+            "respuesta": "With three variables written before you build it: how much money the decision moves, whether it can be undone without harm once made, and how many people it affects if it goes wrong. A named risk level isn't enough because nobody can apply it to a real case in the moment; a number per variable is, and it can be audited."
+          },
+          {
+            "pregunta": "Who should have authority to expand an agent's perimeter?",
+            "respuesta": "The same person who already answers for the outcome of that process, not whoever built the agent or runs it day to day. Expanding the perimeter without that named authority is exactly how a written limit stops meaning anything: someone stretches it \"just this once\", and that once becomes the rule without anyone deciding it should."
+          },
+          {
+            "pregunta": "How do you detect that an agent stepped outside its perimeter?",
+            "respuesta": "With an alert that fires when a decision approaches the written limit, not with a customer complaint or a report someone reads weeks later. If the first sign an agent crossed its cutoff comes from outside the company, detection doesn't exist. Only the damage does."
+          },
+          {
+            "pregunta": "How often should you review an agent's autonomy limit?",
+            "respuesta": "Every time the process it runs in changes size, and at minimum once a quarter against real operating data, not against a sense that things are going well. The number set on day one is almost never still right six months later, and nobody notices unless a date is already on the calendar to check."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's define your agent's cutoff",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}

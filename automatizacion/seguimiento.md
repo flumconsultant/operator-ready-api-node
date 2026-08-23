@@ -30,6 +30,7 @@ abandonar a la primera algo que solo necesitaba más cuerpo.
 | `por-que-tus-pilotos-de-ia-no-llegan-a-produccion` | 2026-08-20 | ¿Por qué mis pilotos de IA no llegan a producción? | — | `nuevo` | Máxima intención de compra. Sin consultora global en español |
 | `como-se-redisena-un-proceso-para-que-lo-ejecute-una-ia` | 2026-08-21 | ¿Cómo se rediseña un proceso para que lo ejecute en parte una IA? | — | `nuevo` | SERP más blanda del barrido, sin consultora global compitiendo |
 | `por-que-tu-equipo-no-usa-la-ia-que-le-diste` | 2026-08-22 | ¿Cómo consigo que mi equipo use de verdad las herramientas de IA? | — | `nuevo` | Campo competitivo más débil del barrido, nadie toca el conflicto de incentivos |
+| `que-puede-hacer-un-agente-sin-supervision` | 2026-08-23 | ¿Cómo se decide qué puede hacer un agente sin supervisión humana? | — | `nuevo` | Recomendación #1 del informe 2026-08-23. Vecino de «quién responde cuando responde un agente»: aquel da el dueño del resultado, este da el corte (importe, reversibilidad, alcance) para trazar el perímetro antes del incidente |
 
 ## Qué está funcionando
 
