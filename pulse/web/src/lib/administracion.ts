@@ -344,6 +344,30 @@ export async function cambiarEstado(
   return { ok: true as const };
 }
 
+// ---- Vinculación con Discord ---------------------------------------------
+
+/// Genera el código de un solo uso que la persona escribe en `/vincular`.
+///
+/// Seis caracteres de un alfabeto sin las letras que se confunden al leerlas en
+/// voz alta o al teclearlas de una captura: nada de O contra 0, ni I contra 1.
+/// Caduca en quince minutos porque es un código corto: lo que lo protege no es
+/// su longitud sino que dure poco.
+export async function generarCodigoDiscord(userId: string) {
+  const ALFABETO = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const bytes = randomBytes(6);
+  const codigo = [...bytes].map((b) => ALFABETO[b % ALFABETO.length]).join("");
+
+  await prisma.user.update({
+    where: { id: userId },
+    data: {
+      codigoDiscord: codigo,
+      codigoDiscordExpira: new Date(Date.now() + 15 * 60 * 1000),
+    },
+  });
+
+  return codigo;
+}
+
 // ---- Alta por lista ------------------------------------------------------
 
 export type FilaPegada = {

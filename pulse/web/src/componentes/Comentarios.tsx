@@ -1,12 +1,14 @@
 "use client";
 
-import { useRef, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { PaperPlaneTilt, ChatCircle } from "@phosphor-icons/react/dist/ssr";
+import { PaperPlaneTiltIcon, ChatCircleIcon } from "@phosphor-icons/react/dist/ssr";
 
 import Avatar from "./Avatar";
 import Fecha from "./Fecha";
+import TextoConMenciones from "./TextoConMenciones";
+import CampoConMenciones, { type Mencionable } from "./CampoConMenciones";
 
 // La fecha llega como cadena ISO, igual que el resto del feed: ver
 // lib/serializar.ts sobre por qué.
@@ -27,11 +29,13 @@ export default function Comentarios({
   recognitionId,
   comentarios,
   usuarioActual,
+  companeros = [],
   siempreAbierto = false,
 }: {
   recognitionId: string;
   comentarios: Comentario[];
   usuarioActual: { id: string; nombre: string; imagen: string | null };
+  companeros?: Mencionable[];
   siempreAbierto?: boolean;
 }) {
   const router = useRouter();
@@ -40,13 +44,12 @@ export default function Comentarios({
   const [enviando, setEnviando] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [expandido, setExpandido] = useState(siempreAbierto);
-  const campo = useRef<HTMLTextAreaElement>(null);
 
   const ocultos = expandido ? 0 : Math.max(0, comentarios.length - 2);
   const visibles = expandido ? comentarios : comentarios.slice(-2);
 
   async function enviar(evento: React.FormEvent) {
-    evento.preventDefault();
+    evento.preventDefault?.();
     const limpio = texto.trim();
     if (!limpio) return;
 
@@ -79,7 +82,7 @@ export default function Comentarios({
           className="comentarios__ver-mas"
           onClick={() => setExpandido(true)}
         >
-          <ChatCircle size={16} aria-hidden="true" />
+          <ChatCircleIcon size={16} aria-hidden="true" />
           Ver {ocultos} comentario{ocultos === 1 ? "" : "s"} más
         </button>
       )}
@@ -92,7 +95,7 @@ export default function Comentarios({
               <Link href={`/persona/${c.user.id}`} className="comentario__autor">
                 {c.user.nombre}
               </Link>{" "}
-              {c.texto}
+              <TextoConMenciones texto={c.texto} />
             </p>
             <span className="meta">
               <Fecha valor={c.creadoEn} />
@@ -107,28 +110,19 @@ export default function Comentarios({
           <label className="visually-hidden" htmlFor={`comentario-${recognitionId}`}>
             Escribe un comentario
           </label>
-          <textarea
+          {/* Enter envía y Mayúsculas+Enter hace salto de línea, como en
+              cualquier chat — salvo cuando la lista de menciones está abierta,
+              donde Enter elige. De eso se encarga el propio campo. */}
+          <CampoConMenciones
             id={`comentario-${recognitionId}`}
-            ref={campo}
-            rows={1}
-            value={texto}
-            maxLength={600}
+            valor={texto}
+            alCambiar={setTexto}
+            personas={companeros}
+            maximo={600}
+            filas={1}
+            autoCrecer
             placeholder="Añade algo…"
-            onChange={(e) => {
-              setTexto(e.target.value);
-              // El campo crece con el texto en vez de tener una barra de
-              // scroll de tres líneas.
-              e.target.style.height = "auto";
-              e.target.style.height = `${Math.min(e.target.scrollHeight, 160)}px`;
-            }}
-            onKeyDown={(e) => {
-              // Enter envía, Mayúsculas+Enter hace salto de línea. Es lo que
-              // espera cualquiera que haya usado un chat.
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                void enviar(e);
-              }
-            }}
+            alPulsarEnter={() => void enviar(new Event("submit") as unknown as React.FormEvent)}
           />
           {error && (
             <p className="error" role="alert">
@@ -142,7 +136,7 @@ export default function Comentarios({
           disabled={enviando || !texto.trim()}
           aria-label="Publicar comentario"
         >
-          <PaperPlaneTilt size={18} weight="fill" aria-hidden="true" />
+          <PaperPlaneTiltIcon size={18} weight="fill" aria-hidden="true" />
         </button>
       </form>
     </div>

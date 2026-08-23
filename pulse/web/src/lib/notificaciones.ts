@@ -40,7 +40,7 @@ export async function participantes(recognitionId: string) {
     where: { id: recognitionId },
     select: {
       deUserId: true,
-      paraUserId: true,
+      destinatarios: { select: { userId: true } },
       comentarios: { select: { userId: true }, distinct: ["userId"] },
     },
   });
@@ -49,7 +49,7 @@ export async function participantes(recognitionId: string) {
   return [
     ...new Set([
       r.deUserId,
-      r.paraUserId,
+      ...r.destinatarios.map((d) => d.userId),
       ...r.comentarios.map((c) => c.userId),
     ]),
   ];

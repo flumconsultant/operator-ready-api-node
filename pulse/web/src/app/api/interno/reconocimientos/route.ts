@@ -74,7 +74,7 @@ export async function POST(peticion: Request) {
   const resultado = await crearReconocimiento({
     companyId: empresa.id,
     deUserId: de.id,
-    paraUserId: para.id,
+    paraUserIds: [para.id],
     valueId: datos.valueId,
     mensaje: datos.mensaje,
     canal: "DISCORD",

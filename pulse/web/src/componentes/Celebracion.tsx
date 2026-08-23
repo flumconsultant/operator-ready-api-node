@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Cake, Confetti } from "@phosphor-icons/react/dist/ssr";
+import { CakeIcon, ConfettiIcon } from "@phosphor-icons/react/dist/ssr";
 
 import type { CelebracionSerializada as Datos } from "@/lib/serializar";
 import Avatar from "./Avatar";
@@ -20,7 +20,7 @@ export default function Celebracion({ celebracion: c }: { celebracion: Datos }) 
   return (
     <article className="celebracion">
       <span className="celebracion__icono" aria-hidden="true">
-        {cumpleanos ? <Cake size={22} weight="fill" /> : <Confetti size={22} weight="fill" />}
+        {cumpleanos ? <CakeIcon size={22} weight="fill" /> : <ConfettiIcon size={22} weight="fill" />}
       </span>
 
       <Avatar persona={c.persona} tamano="md" />

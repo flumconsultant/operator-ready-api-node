@@ -185,7 +185,7 @@ async function main() {
         data: {
           companyId: empresa.id,
           deUserId: de.id,
-          paraUserId: para.id,
+          destinatarios: { create: [{ userId: para.id }] },
           valueId: valores[(dia + k) % valores.length].id,
           mensaje: MENSAJES[(dia + k * 3) % MENSAJES.length],
           canal: (dia + k) % 3 === 0 ? "DISCORD" : "WEB",
@@ -230,6 +230,31 @@ async function main() {
         });
       }
     }
+  }
+
+  // Un kudo a tres personas y una mención, para que la demo enseñe las dos
+  // cosas sin tener que crearlas a mano.
+  const productoYOperaciones = activos.filter((u) =>
+    ["ana@demo.pe", "martin@demo.pe", "rosa@demo.pe"].includes(u.email),
+  );
+  const carlos = usuarios.find((u) => u.email === "carlos@demo.pe")!;
+  const diego = usuarios.find((u) => u.email === "diego@demo.pe")!;
+
+  if (productoYOperaciones.length === 3) {
+    await prisma.recognition.create({
+      data: {
+        companyId: empresa.id,
+        deUserId: carlos.id,
+        valueId: valores[0].id,
+        mensaje: `Sacaron el cierre de julio en tres días entre los tres, con @[${diego.nombre}](${diego.id}) cubriendo lo que faltaba de operaciones.`,
+        canal: "WEB",
+        creadoEn: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+        destinatarios: {
+          create: productoYOperaciones.map((u) => ({ userId: u.id })),
+        },
+      },
+    });
+    creados++;
   }
 
   console.log(

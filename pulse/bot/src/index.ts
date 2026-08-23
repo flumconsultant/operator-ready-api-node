@@ -8,6 +8,7 @@ import {
 
 import { entorno } from "./entorno.js";
 import * as reconocer from "./comando-reconocer.js";
+import * as vincular from "./comando-vincular.js";
 
 // El bot de Discord de BECOME Pulse.
 //
@@ -29,6 +30,9 @@ cliente.on(Events.InteractionCreate, async (interaccion) => {
     }
     if (interaccion.isChatInputCommand() && interaccion.commandName === "reconocer") {
       return await reconocer.ejecutar(interaccion);
+    }
+    if (interaccion.isChatInputCommand() && interaccion.commandName === "vincular") {
+      return await vincular.ejecutar(interaccion);
     }
   } catch (error) {
     console.error("[bot] interacción fallida:", error);
@@ -66,8 +70,7 @@ const servidor = createServer(async (peticion, respuesta) => {
     const datos = JSON.parse(cuerpo) as {
       canalId: string;
       de: string;
-      para: string;
-      paraDiscordId: string | null;
+      destinatarios: { nombre: string; discordId: string | null }[];
       valor: string;
       mensaje: string;
     };
@@ -77,11 +80,12 @@ const servidor = createServer(async (peticion, respuesta) => {
       return responder(400, { error: "El canal no admite mensajes." });
     }
 
-    // Si la persona reconocida tiene su Discord enlazado se la menciona de
-    // verdad: la notificación es la mitad del valor de que esto viva en Discord.
-    const para = datos.paraDiscordId
-      ? `<@${datos.paraDiscordId}>`
-      : `**${datos.para}**`;
+    // A quien tiene su Discord enlazado se le menciona de verdad: la
+    // notificación es la mitad del valor de que esto viva en Discord. A quien
+    // no, se le pone en negrita.
+    const para = datos.destinatarios
+      .map((d) => (d.discordId ? `<@${d.discordId}>` : `**${d.nombre}**`))
+      .join(", ");
 
     await (canal as TextChannel).send({
       embeds: [

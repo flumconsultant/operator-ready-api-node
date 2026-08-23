@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Camera, Check } from "@phosphor-icons/react/dist/ssr";
+import { CameraIcon, CheckIcon } from "@phosphor-icons/react/dist/ssr";
 
 import Avatar from "@/componentes/Avatar";
 
@@ -50,7 +50,7 @@ export default function AsistentePersona({
                 aria-current={i === paso ? "step" : undefined}
               >
                 <span className="pasos__numero" aria-hidden="true">
-                  {i < paso ? <Check size={14} weight="bold" /> : i + 1}
+                  {i < paso ? <CheckIcon size={14} weight="bold" /> : i + 1}
                 </span>
                 {texto}
               </li>
@@ -86,7 +86,7 @@ export default function AsistentePersona({
 
               <div>
                 <label className="boton boton--discreto">
-                  <Camera size={18} aria-hidden="true" />
+                  <CameraIcon size={18} aria-hidden="true" />
                   Subir una foto
                   <input
                     type="file"

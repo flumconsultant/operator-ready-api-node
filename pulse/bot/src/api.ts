@@ -51,6 +51,17 @@ export function directorio(guildId: string) {
   );
 }
 
+export function vincular(datos: {
+  guildId: string;
+  discordId: string;
+  codigo: string;
+}) {
+  return llamar<{ nombre: string; empresa: string }>("/api/interno/vincular", {
+    method: "POST",
+    body: JSON.stringify(datos),
+  });
+}
+
 export function reconocer(datos: {
   guildId: string;
   deDiscordId: string;

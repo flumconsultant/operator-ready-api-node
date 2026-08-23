@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
+import { ArrowLeftIcon } from "@phosphor-icons/react/dist/ssr";
 
 import { prisma } from "@/lib/prisma";
 import { reconocimiento } from "@/lib/reconocimientos";
@@ -25,11 +25,16 @@ export default async function Publicacion({
   const usuario = await sesionConfigurada();
   const { id } = await params;
 
-  const [r, yo] = await Promise.all([
+  const [r, yo, companeros] = await Promise.all([
     reconocimiento(usuario.companyId, id),
     prisma.user.findUniqueOrThrow({
       where: { id: usuario.id },
       select: { id: true, nombre: true, imagen: true },
+    }),
+    prisma.user.findMany({
+      where: { companyId: usuario.companyId, activo: true },
+      orderBy: { nombre: "asc" },
+      select: { id: true, nombre: true, imagen: true, equipo: true },
     }),
   ]);
 
@@ -39,7 +44,7 @@ export default async function Publicacion({
     <Marco actual="/feed">
       <div className="columna-feed">
         <Link href="/feed" className="enlace-volver">
-          <ArrowLeft size={18} aria-hidden="true" />
+          <ArrowLeftIcon size={18} aria-hidden="true" />
           Volver al feed
         </Link>
 
@@ -47,6 +52,8 @@ export default async function Publicacion({
           <Reconocimiento
             reconocimiento={serializarReconocimiento(r)}
             usuarioActual={yo}
+            companeros={companeros}
+            puedeModerar={usuario.rol === "ADMIN"}
             permalink
           />
         </div>

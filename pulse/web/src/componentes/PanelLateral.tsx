@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CalendarHeart, TrendUp, HandHeart } from "@phosphor-icons/react/dist/ssr";
+import { CalendarHeartIcon, TrendUpIcon, HandHeartIcon } from "@phosphor-icons/react/dist/ssr";
 
 import { diaYMes } from "@/lib/fechas";
 import Avatar from "./Avatar";
@@ -15,7 +15,7 @@ export default function PanelLateral({ datos }: { datos: Datos }) {
       {proximas.length > 0 && (
         <section className="rail__bloque">
           <h2 className="rail__titulo">
-            <CalendarHeart size={18} weight="fill" aria-hidden="true" />
+            <CalendarHeartIcon size={18} weight="fill" aria-hidden="true" />
             Esta semana
           </h2>
           <ul className="rail__lista">
@@ -41,7 +41,7 @@ export default function PanelLateral({ datos }: { datos: Datos }) {
       {ranking.length > 0 && (
         <section className="rail__bloque">
           <h2 className="rail__titulo">
-            <TrendUp size={18} weight="fill" aria-hidden="true" />
+            <TrendUpIcon size={18} weight="fill" aria-hidden="true" />
             Lo que más se reconoce
           </h2>
           <ul className="rail__valores">
@@ -67,7 +67,7 @@ export default function PanelLateral({ datos }: { datos: Datos }) {
       {sugerencias.length > 0 && (
         <section className="rail__bloque">
           <h2 className="rail__titulo">
-            <HandHeart size={18} weight="fill" aria-hidden="true" />
+            <HandHeartIcon size={18} weight="fill" aria-hidden="true" />
             No les has reconocido nada
           </h2>
           <ul className="rail__lista">

@@ -1,5 +1,5 @@
 import { prisma } from "./prisma";
-import { inclusionFeed } from "./reconocimientos";
+import { inclusionFeed, textoLegible } from "./reconocimientos";
 
 // El espejo del feed en Discord.
 //
@@ -18,9 +18,12 @@ export async function avisarADiscord(recognitionId: string) {
     where: { id: recognitionId },
     include: {
       ...inclusionFeed,
-      // Se pide discordId aparte del resto: el feed web no lo necesita, pero
-      // aquí es lo que convierte «Ana» en una mención real que le suena el móvil.
-      para: { select: { nombre: true, discordId: true } },
+      // Se piden los discordId además del resto: el feed web no los necesita,
+      // pero aquí son lo que convierte «Ana» en una mención real a la que le
+      // suena el móvil.
+      destinatarios: {
+        include: { user: { select: { nombre: true, discordId: true } } },
+      },
       company: { select: { discordCanalFeedId: true } },
     },
   });
@@ -36,10 +39,12 @@ export async function avisarADiscord(recognitionId: string) {
       body: JSON.stringify({
         canalId: r.company.discordCanalFeedId,
         de: r.de.nombre,
-        para: r.para.nombre,
-        paraDiscordId: r.para.discordId,
+        destinatarios: r.destinatarios.map((d) => ({
+          nombre: d.user.nombre,
+          discordId: d.user.discordId,
+        })),
         valor: r.valor.nombre,
-        mensaje: r.mensaje,
+        mensaje: textoLegible(r.mensaje),
       }),
       signal: AbortSignal.timeout(5000),
     });

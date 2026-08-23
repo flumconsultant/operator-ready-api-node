@@ -114,11 +114,30 @@ red de Docker y desde ningún otro sitio.
 | `infra/Caddyfile` | El reverse proxy. |
 | `scripts/sincronizar-tokens.mjs` | Regenera `tokens.css` desde `tokens/` de la raíz. |
 | `web/scripts/revisar-interfaz.mjs` | Comprueba contraste, foco, áreas pulsables y encabezados. |
+| `web/scripts/crear-empresa.ts` | Da de alta una empresa nueva con su primer administrador. |
+| `web/pruebas/` | Las pruebas automáticas: `npm test`. |
 
 ## 5. El feed
 
 Pulse es una red interna, no un formulario de RRHH. Lo que hay:
 
+- **Kudos a varias personas.** Un logro de equipo se reconoce una vez a cinco
+  personas, no cinco veces por separado. Es lo que StarMeUp llama kudos. El
+  tope son diez: por encima deja de ser un reconocimiento y pasa a ser un
+  correo circular. La tarjeta enseña hasta tres caras y resume el resto —cinco
+  avatares solapados en 640px dejan de distinguirse—, y los nombres que no
+  caben siguen estando ahí para un lector de pantalla.
+- **Menciones con @.** Se guardan como `@[Nombre](id)` dentro del propio texto:
+  el texto sigue siendo texto —se puede buscar, recortar y mandar a la API de
+  Claude sin preprocesarlo— y a la vez lleva dentro a quién se refiere. Guardar
+  solo «@Ana» no serviría: hay dos Anas en cualquier empresa de cincuenta
+  personas. A quien se menciona le llega «te mencionó», que dice más que
+  «comentó un reconocimiento».
+- **Retirar una publicación.** La puede retirar su autor o un administrador,
+  con un motivo que va a la auditoría. No se borra: un borrado se llevaría los
+  comentarios y las reacciones de otras personas. Si la retira un
+  administrador, su autor se entera — que algo desaparezca sin explicación es
+  peor que la publicación.
 - **Los valores, a la vista y pulsables.** Están en la primera pantalla, no
   escondidos en un desplegable: si para ver qué valora tu empresa hay que abrir
   un menú, nadie los ve. Pulsar uno abre el modal con ese valor ya elegido, lo
@@ -173,9 +192,9 @@ Lo que se dejó fuera a propósito, y por qué:
 
 | Función | Por qué no está |
 |---|---|
-| Kudos a varias personas a la vez | Es la función de StarMeUp que más falta, y la única de esta lista que no se descarta: cambia el modelo de datos —un reconocimiento pasa a tener varios destinatarios— y con él las métricas, el mapa de influencia, el feed y el bot. Merece su propia pasada, no ir de propina en esta. |
 | Puntos canjeables y catálogo de premios | Está fuera del alcance del PRD, y convierte el reconocimiento en una moneda: la gente empieza a reconocer para que le devuelvan el favor. Si se añade, que sea con datos del piloto delante. |
-| Menciones con @ | Workvivo las tiene y hacen falta en cuanto el feed se usa de verdad. Necesitan un selector dentro del campo de texto y un formato de guardado propio. |
+| Espacios o grupos | Con 50-500 personas un solo feed todavía se lee entero. Se justifican cuando deje de leerse. |
+| Encuestas y sondeos | Fuera del alcance del MVP. La tesis del producto es medir el clima **sin** encuestas. |
 | Ranking público de quién recibe más | Premia a quien tiene el equipo más grande. El mapa de influencia mide otra cosa —cuánta gente distinta te reconoce— y vive en el panel de RRHH, no en el feed. |
 | Espacios o grupos | Con 50-500 personas, un solo feed todavía se lee entero. Los grupos se justifican cuando deja de leerse. |
 | Encuestas y sondeos | Fuera del alcance del MVP. La tesis del producto es medir el clima **sin** encuestas. |
@@ -367,9 +386,15 @@ réplicas y RRHH recibe el resumen dos veces.
    cada despliegue: Discord limita cuántas veces al día se puede.
 4. Vincula el servidor desde **Cultura → Empresa**, pegando los dos
    identificadores de Discord.
-5. Pon el ID de Discord de cada persona en su ficha, en **Cultura → Personas**.
-   Es lo que queda por automatizar: en v2 debería ser un `/vincular` en el
-   propio bot.
+5. Cada persona se enlaza sola: en **Mi perfil** genera un código y escribe
+   `/vincular CÓDIGO` en cualquier canal del servidor. El código lo genera
+   estando ya autenticada en Pulse, y ahí está la seguridad: el bot solo sabe
+   qué cuenta de Discord escribió el comando, y sin el código no podría
+   demostrar que esa cuenta pertenece a nadie. Caduca en quince minutos y se
+   quema al usarse.
+
+   El administrador también puede ponerlo a mano en la ficha de cada persona,
+   en **Cultura → Personas**, para los casos en que alguien no se aclare.
 
 El bot no toca Postgres. Todo se lo pide a la web por una API interna
 autenticada con `INTERNAL_API_TOKEN`, así hay una sola definición de las reglas
@@ -403,13 +428,11 @@ no salen del servidor.
 
 | Pendiente | Motivo |
 |---|---|
-| `/vincular` en el bot | Enlazar Discord con Pulse se hace hoy escribiendo el ID en la ficha de cada persona. Funciona para una empresa piloto y no para la segunda. |
-| Registro de una empresa nueva | La primera empresa la crea la semilla. Para dar de alta un cliente nuevo hoy hay que insertar una fila en `companies`. Es un formulario más, y solo hace falta cuando haya un segundo cliente. |
+| Registro público de empresas | Se dan de alta con `npm run empresa:crear`, que crea la empresa, su primer administrador y el enlace de invitación. Es un script y no un formulario a propósito: Pulse se vende con acompañamiento, y un endpoint público que crea empresas sin autenticación es una invitación a llenar la base de compañías vacías. Cuando exista un flujo comercial de autoservicio, esa misma función es la que llamará. |
 | Correo real | Sin `SMTP_URL`, el enlace de acceso por magic link se escribe en el log del contenedor en vez de enviarse. Las invitaciones no dependen de esto: su enlace se copia a mano. |
 | Menciones con @ dentro del mensaje | El texto se guarda plano. Es lo siguiente que pide un feed en cuanto se usa de verdad. |
 | Reconocer a varias personas a la vez | StarMeUp lo tiene y tiene sentido para un logro de equipo. Cambia el modelo de datos, así que no entró en esta pasada. |
-| Moderar o borrar una publicación | No hay forma de retirar un reconocimiento desafortunado. Para un piloto con acompañamiento se puede vivir con ello; para el segundo cliente, no. |
-| Pruebas automáticas | No hay ninguna. El pipeline comprueba tipos y build, y `npm run revisar:interfaz` cubre contraste, foco y áreas pulsables, pero no es lo mismo que una suite. |
+| Cobertura de pruebas más allá de la lógica pura | `npm test` cubre lo que se rompe en silencio —fechas, menciones, celebraciones, listas pegadas— con 40 casos. Lo que no hay son pruebas de integración contra una base de datos real; eso lo cubre hoy `npm run revisar:interfaz` y las pruebas a mano. |
 | Inglés | El MVP es solo español, como dice el PRD. |
 
 Ninguna de estas es un bloqueo para arrancar un piloto. La primera sí lo es

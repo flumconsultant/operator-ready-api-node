@@ -15,27 +15,31 @@ export async function metricasDeEmpresa(companyId: string, dias = 30) {
     porValor,
     porCanal,
   ] = await Promise.all([
-    prisma.recognition.count({ where: { companyId, creadoEn: { gte: desde } } }),
+    prisma.recognition.count({
+      where: { companyId, retiradoEn: null, creadoEn: { gte: desde } },
+    }),
     prisma.user.count({ where: { companyId, activo: true } }),
     prisma.recognition.findMany({
-      where: { companyId, creadoEn: { gte: desde } },
+      where: { companyId, retiradoEn: null, creadoEn: { gte: desde } },
       select: { deUserId: true },
       distinct: ["deUserId"],
     }),
-    prisma.recognition.findMany({
-      where: { companyId, creadoEn: { gte: desde } },
-      select: { paraUserId: true },
-      distinct: ["paraUserId"],
+    prisma.recognitionRecipient.findMany({
+      where: {
+        reconocimiento: { companyId, retiradoEn: null, creadoEn: { gte: desde } },
+      },
+      select: { userId: true },
+      distinct: ["userId"],
     }),
     prisma.recognition.groupBy({
       by: ["valueId"],
-      where: { companyId, creadoEn: { gte: desde } },
+      where: { companyId, retiradoEn: null, creadoEn: { gte: desde } },
       _count: { _all: true },
       orderBy: { _count: { valueId: "desc" } },
     }),
     prisma.recognition.groupBy({
       by: ["canal"],
-      where: { companyId, creadoEn: { gte: desde } },
+      where: { companyId, retiradoEn: null, creadoEn: { gte: desde } },
       _count: { _all: true },
     }),
   ]);
@@ -93,19 +97,27 @@ export async function metricasDeEquipo(
   const [dados, recibidos] = await Promise.all([
     prisma.recognition.groupBy({
       by: ["deUserId"],
-      where: { companyId, deUserId: { in: ids }, creadoEn: { gte: desde } },
+      where: {
+        companyId,
+        retiradoEn: null,
+        deUserId: { in: ids },
+        creadoEn: { gte: desde },
+      },
       _count: { _all: true },
     }),
-    prisma.recognition.groupBy({
-      by: ["paraUserId"],
-      where: { companyId, paraUserId: { in: ids }, creadoEn: { gte: desde } },
+    prisma.recognitionRecipient.groupBy({
+      by: ["userId"],
+      where: {
+        userId: { in: ids },
+        reconocimiento: { companyId, retiradoEn: null, creadoEn: { gte: desde } },
+      },
       _count: { _all: true },
     }),
   ]);
 
   const mapaDados = new Map(dados.map((d) => [d.deUserId, d._count._all]));
   const mapaRecibidos = new Map(
-    recibidos.map((r) => [r.paraUserId, r._count._all]),
+    recibidos.map((r) => [r.userId, r._count._all]),
   );
 
   return {

@@ -2,7 +2,7 @@
 
 import { useEffect, useOptimistic, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { SmileyWink } from "@phosphor-icons/react/dist/ssr";
+import { SmileyWinkIcon } from "@phosphor-icons/react/dist/ssr";
 
 // Las reacciones del feed.
 //
@@ -117,7 +117,7 @@ export default function Reacciones({
           aria-expanded={abierto}
           aria-haspopup="true"
         >
-          <SmileyWink size={20} aria-hidden="true" />
+          <SmileyWinkIcon size={20} aria-hidden="true" />
           <span>{estado.mia ? "Cambiar reacción" : "Reaccionar"}</span>
         </button>
 

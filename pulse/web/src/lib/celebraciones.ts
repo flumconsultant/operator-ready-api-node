@@ -70,13 +70,16 @@ export async function celebracionesEntre(
   return salida.sort((a, b) => b.fecha.getTime() - a.fecha.getTime());
 }
 
-/// Devuelve la fecha de este año (o del anterior) en que cae el aniversario de
-/// `original`, si esa fecha está dentro de la ventana.
+/// Devuelve la fecha del año en curso (o del anterior) en que cae el
+/// aniversario de `original`, si esa fecha está dentro de la ventana.
 ///
 /// Se comprueban dos años porque una ventana que cruza el 31 de diciembre
 /// contiene aniversarios de los dos: sin esto, del 28 de diciembre al 3 de
 /// enero no se celebra nada.
-function enLaVentana(original: Date, desde: Date, hasta: Date): Date | null {
+///
+/// Se exporta solo para poder probarla: es la única parte de este módulo que
+/// puede equivocarse sin que se note hasta que a alguien no le felicitan.
+export function enLaVentana(original: Date, desde: Date, hasta: Date): Date | null {
   for (const ano of [hasta.getUTCFullYear(), hasta.getUTCFullYear() - 1]) {
     const mes = original.getUTCMonth();
     const dia = original.getUTCDate();

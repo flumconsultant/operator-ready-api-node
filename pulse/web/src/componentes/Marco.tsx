@@ -1,10 +1,10 @@
 import Link from "next/link";
 import {
-  House,
-  UsersThree,
-  ChartLineUp,
-  BellSimple,
-  SignOut,
+  HouseIcon,
+  UsersThreeIcon,
+  ChartLineUpIcon,
+  BellSimpleIcon,
+  SignOutIcon,
 } from "@phosphor-icons/react/dist/ssr";
 
 import { signOut } from "@/lib/auth";
@@ -26,10 +26,10 @@ import Avatar from "./Avatar";
 // alguien vuelve.
 
 const ENLACES = [
-  { href: "/feed", texto: "Feed", Icono: House, roles: ["ADMIN", "MANAGER", "COLABORADOR"] },
-  { href: "/notificaciones", texto: "Novedades", Icono: BellSimple, roles: ["ADMIN", "MANAGER", "COLABORADOR"] },
-  { href: "/panel", texto: "Mi equipo", Icono: UsersThree, roles: ["ADMIN", "MANAGER"] },
-  { href: "/admin", texto: "Cultura", Icono: ChartLineUp, roles: ["ADMIN"] },
+  { href: "/feed", texto: "Feed", Icono: HouseIcon, roles: ["ADMIN", "MANAGER", "COLABORADOR"] },
+  { href: "/notificaciones", texto: "Novedades", Icono: BellSimpleIcon, roles: ["ADMIN", "MANAGER", "COLABORADOR"] },
+  { href: "/panel", texto: "Mi equipo", Icono: UsersThreeIcon, roles: ["ADMIN", "MANAGER"] },
+  { href: "/admin", texto: "Cultura", Icono: ChartLineUpIcon, roles: ["ADMIN"] },
 ] as const;
 
 export default async function Marco({
@@ -132,7 +132,7 @@ export default async function Marco({
             }}
           >
             <button type="submit" className="lateral__salir">
-              <SignOut size={18} aria-hidden="true" />
+              <SignOutIcon size={18} aria-hidden="true" />
               Salir
             </button>
           </form>

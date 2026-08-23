@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { sesionConfigurada } from "@/lib/sesion";
 import { guardarImagen } from "@/lib/imagenes";
+import { generarCodigoDiscord } from "@/lib/administracion";
 import Marco from "@/componentes/Marco";
 import FormularioPerfil from "./FormularioPerfil";
 
@@ -23,7 +24,13 @@ export default async function Perfil() {
       bio: true,
       cumpleanos: true,
       fechaIngreso: true,
+      discordId: true,
     },
+  });
+
+  const empresa = await prisma.company.findUniqueOrThrow({
+    where: { id: usuario.companyId },
+    select: { discordGuildId: true },
   });
 
   async function guardar(datos: FormData) {
@@ -71,6 +78,14 @@ export default async function Perfil() {
     revalidatePath(`/persona/${u.id}`);
   }
 
+  async function codigoDiscord() {
+    "use server";
+    const u = await sesionConfigurada();
+    const codigo = await generarCodigoDiscord(u.id);
+    revalidatePath("/perfil");
+    return { codigo };
+  }
+
   return (
     <Marco actual="/perfil">
       <div className="columna-feed">
@@ -89,6 +104,11 @@ export default async function Perfil() {
             fechaIngreso: yo.fechaIngreso?.toISOString().slice(0, 10) ?? "",
           }}
           guardar={guardar}
+          discord={{
+            enlazado: Boolean(yo.discordId),
+            servidorConectado: Boolean(empresa.discordGuildId),
+            generarCodigo: codigoDiscord,
+          }}
         />
       </div>
     </Marco>

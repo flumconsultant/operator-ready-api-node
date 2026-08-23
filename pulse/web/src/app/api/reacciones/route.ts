@@ -28,8 +28,17 @@ export async function POST(peticion: Request) {
   // Comprobar la empresa aquí evita reaccionar a un reconocimiento de otra
   // compañía pasando un id a mano.
   const reconocimiento = await prisma.recognition.findFirst({
-    where: { id: cuerpo.recognitionId, companyId: sesion.user.companyId },
-    select: { id: true, deUserId: true, paraUserId: true },
+    where: {
+      id: cuerpo.recognitionId,
+      companyId: sesion.user.companyId,
+      // No se reacciona a algo retirado.
+      retiradoEn: null,
+    },
+    select: {
+      id: true,
+      deUserId: true,
+      destinatarios: { select: { userId: true } },
+    },
   });
   if (!reconocimiento) {
     return NextResponse.json({ error: "No encontrado." }, { status: 404 });
@@ -75,7 +84,7 @@ export async function POST(peticion: Request) {
     // `notificar` ya descarta al propio actor, así que quien reacciona a algo
     // suyo no se autoavisa, y el Set evita duplicar cuando ambos coinciden.
     const destinatarios = new Set([
-      reconocimiento.paraUserId,
+      ...reconocimiento.destinatarios.map((d) => d.userId),
       reconocimiento.deUserId,
     ]);
 
@@ -87,9 +96,9 @@ export async function POST(peticion: Request) {
           recognitionId: reconocimiento.id,
           tipo: "REACCION",
           texto:
-            userId === reconocimiento.paraUserId
-              ? `${nombre} reaccionó al reconocimiento que recibiste`
-              : `${nombre} reaccionó al reconocimiento que escribiste`,
+            userId === reconocimiento.deUserId
+              ? `${nombre} reaccionó al reconocimiento que escribiste`
+              : `${nombre} reaccionó al reconocimiento que recibiste`,
           enlace: `/feed/${reconocimiento.id}`,
         }),
       ),

@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  ChartLineUp,
-  Buildings,
-  UsersThree,
-  ShieldCheck,
+  ChartLineUpIcon,
+  BuildingsIcon,
+  UsersThreeIcon,
+  ShieldCheckIcon,
 } from "@phosphor-icons/react/dist/ssr";
 
 // Las tres pantallas de administración.
@@ -17,10 +17,10 @@ import {
 // solo lo ve un administrador, que es una persona por empresa.
 
 const PESTANAS = [
-  { href: "/admin", texto: "Cultura", Icono: ChartLineUp },
-  { href: "/admin/personas", texto: "Personas", Icono: UsersThree },
-  { href: "/admin/empresa", texto: "Empresa", Icono: Buildings },
-  { href: "/admin/auditoria", texto: "Auditoría", Icono: ShieldCheck },
+  { href: "/admin", texto: "Cultura", Icono: ChartLineUpIcon },
+  { href: "/admin/personas", texto: "Personas", Icono: UsersThreeIcon },
+  { href: "/admin/empresa", texto: "Empresa", Icono: BuildingsIcon },
+  { href: "/admin/auditoria", texto: "Auditoría", Icono: ShieldCheckIcon },
 ];
 
 export default function PestanasAdmin() {

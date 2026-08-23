@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { HandWaving } from "@phosphor-icons/react/dist/ssr";
+import { HandWavingIcon } from "@phosphor-icons/react/dist/ssr";
 
 import type { PresentacionSerializada } from "@/lib/serializar";
 import Avatar from "./Avatar";
@@ -24,7 +24,7 @@ export default function Presentacion({
         <Avatar persona={p.user} tamano="lg" />
         <div>
           <p className="presentacion__saluda">
-            <HandWaving size={18} weight="fill" aria-hidden="true" />
+            <HandWavingIcon size={18} weight="fill" aria-hidden="true" />
             Se ha incorporado
           </p>
           <p className="presentacion__nombre">

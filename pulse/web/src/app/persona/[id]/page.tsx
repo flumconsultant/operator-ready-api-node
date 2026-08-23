@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { Buildings, Cake, CalendarCheck, Sparkle } from "@phosphor-icons/react/dist/ssr";
+import { BuildingsIcon, CakeIcon, CalendarCheck, SparkleIcon } from "@phosphor-icons/react/dist/ssr";
 
 import { prisma } from "@/lib/prisma";
 import { muro } from "@/lib/reconocimientos";
@@ -44,15 +44,25 @@ export default async function Persona({
       where: { id: usuario.id },
       select: { id: true, nombre: true, imagen: true },
     }),
+    // Se agrupa sobre los reconocimientos que esta persona recibió, buscados
+    // por la tabla de destinatarios.
     prisma.recognition.groupBy({
       by: ["valueId"],
-      where: { companyId: usuario.companyId, paraUserId: persona.id },
+      where: {
+        companyId: usuario.companyId,
+        retiradoEn: null,
+        destinatarios: { some: { userId: persona.id } },
+      },
       _count: { _all: true },
       orderBy: { _count: { valueId: "desc" } },
       take: 4,
     }),
     prisma.recognition.findMany({
-      where: { companyId: usuario.companyId, paraUserId: persona.id },
+      where: {
+        companyId: usuario.companyId,
+        retiradoEn: null,
+        destinatarios: { some: { userId: persona.id } },
+      },
       select: { deUserId: true },
       distinct: ["deUserId"],
     }),
@@ -65,7 +75,7 @@ export default async function Persona({
   const porId = new Map(valores.map((v) => [v.id, v]));
 
   const dados = await prisma.recognition.count({
-    where: { companyId: usuario.companyId, deUserId: persona.id },
+    where: { companyId: usuario.companyId, retiradoEn: null, deUserId: persona.id },
   });
 
   return (
@@ -81,7 +91,7 @@ export default async function Persona({
             <ul className="perfil__hechos">
               {persona.equipo && (
                 <li>
-                  <Buildings size={16} aria-hidden="true" />
+                  <BuildingsIcon size={16} aria-hidden="true" />
                   {persona.equipo}
                 </li>
               )}
@@ -93,7 +103,7 @@ export default async function Persona({
               )}
               {persona.cumpleanos && (
                 <li>
-                  <Cake size={16} aria-hidden="true" />
+                  <CakeIcon size={16} aria-hidden="true" />
                   {/* Solo el día y el mes: el año de nacimiento no es asunto
                       de nadie y no hace falta para felicitar. */}
                   {diaYMes(persona.cumpleanos)}
@@ -123,7 +133,7 @@ export default async function Persona({
         {porValor.length > 0 && (
           <section className="tarjeta">
             <h2 className="titulo-seccion">
-              <Sparkle size={18} weight="fill" aria-hidden="true" />
+              <SparkleIcon size={18} weight="fill" aria-hidden="true" />
               Por lo que le reconocen
             </h2>
             <ul className="lista-valores">
@@ -159,6 +169,7 @@ export default async function Persona({
                 key={r.id}
                 reconocimiento={serializarReconocimiento(r)}
                 usuarioActual={yo}
+                puedeModerar={usuario.rol === "ADMIN"}
               />
             ))}
           </div>

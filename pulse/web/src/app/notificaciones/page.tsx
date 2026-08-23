@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { revalidatePath } from "next/cache";
-import { BellSimple } from "@phosphor-icons/react/dist/ssr";
+import { BellSimpleIcon } from "@phosphor-icons/react/dist/ssr";
 
 import { listar, marcarTodasLeidas } from "@/lib/notificaciones";
 import { sesionConfigurada } from "@/lib/sesion";
@@ -44,7 +44,7 @@ export default async function Notificaciones() {
 
         {notificaciones.length === 0 ? (
           <div className="vacio">
-            <BellSimple size={32} aria-hidden="true" />
+            <BellSimpleIcon size={32} aria-hidden="true" />
             <h2>Nada nuevo</h2>
             <p>
               Aquí aparecerán los reconocimientos que recibas y los comentarios
@@ -66,7 +66,7 @@ export default async function Notificaciones() {
                     <Avatar persona={n.actor} tamano="md" enlazado={false} />
                   ) : (
                     <span className="notificacion__icono" aria-hidden="true">
-                      <BellSimple size={20} weight="fill" />
+                      <BellSimpleIcon size={20} weight="fill" />
                     </span>
                   )}
                   <span className="notificacion__cuerpo">

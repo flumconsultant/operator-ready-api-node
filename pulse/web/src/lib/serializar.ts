@@ -25,7 +25,8 @@ export type ReconocimientoSerializado = {
   canal: "WEB" | "DISCORD";
   creadoEn: string;
   de: PersonaSerializada;
-  para: PersonaSerializada;
+  destinatarios: PersonaSerializada[];
+  retirado: boolean;
   valor: { id: string; nombre: string; icono: string };
   reacciones: { emoji: string; user: { id: string; nombre: string } }[];
   comentarios: {
@@ -63,7 +64,8 @@ export function serializarReconocimiento(r: FilaFeed): ReconocimientoSerializado
     canal: r.canal,
     creadoEn: r.creadoEn.toISOString(),
     de: r.de,
-    para: r.para,
+    destinatarios: r.destinatarios.map((d) => d.user),
+    retirado: Boolean(r.retiradoEn),
     valor: r.valor,
     reacciones: r.reacciones,
     comentarios: r.comentarios.map((c) => ({

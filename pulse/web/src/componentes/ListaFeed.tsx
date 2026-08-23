@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowClockwise } from "@phosphor-icons/react/dist/ssr";
+import { ArrowClockwiseIcon } from "@phosphor-icons/react/dist/ssr";
 
 import type { EntradaSerializada } from "@/lib/serializar";
 import Reconocimiento from "./Reconocimiento";
+import type { Mencionable } from "./CampoConMenciones";
 import Celebracion from "./Celebracion";
 import Presentacion from "./Presentacion";
 
@@ -25,11 +26,15 @@ export default function ListaFeed({
   cursorInicial,
   hayMasInicial,
   usuarioActual,
+  companeros = [],
+  puedeModerar = false,
 }: {
   inicial: EntradaSerializada[];
   cursorInicial: string | null;
   hayMasInicial: boolean;
   usuarioActual: { id: string; nombre: string; imagen: string | null };
+  companeros?: Mencionable[];
+  puedeModerar?: boolean;
 }) {
   const [entradas, setEntradas] = useState(inicial);
   const [cursor, setCursor] = useState(cursorInicial);
@@ -81,6 +86,8 @@ export default function ListaFeed({
                 key={`r-${entrada.reconocimiento.id}`}
                 reconocimiento={entrada.reconocimiento}
                 usuarioActual={usuarioActual}
+                companeros={companeros}
+                puedeModerar={puedeModerar}
               />
             );
           }
@@ -104,7 +111,7 @@ export default function ListaFeed({
           onClick={cargarMas}
           disabled={cargando}
         >
-          <ArrowClockwise
+          <ArrowClockwiseIcon
             size={18}
             aria-hidden="true"
             className={cargando ? "girando" : undefined}

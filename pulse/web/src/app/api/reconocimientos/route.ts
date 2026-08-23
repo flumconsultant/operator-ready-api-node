@@ -16,7 +16,8 @@ async function leerCuerpo(peticion: Request) {
     const foto = datos.get("foto");
     return {
       campos: {
-        paraUserId: String(datos.get("paraUserId") ?? ""),
+        // getAll: el composer manda una clave repetida por destinatario.
+        paraUserIds: datos.getAll("paraUserIds").map(String).filter(Boolean),
         valueId: String(datos.get("valueId") ?? ""),
         mensaje: String(datos.get("mensaje") ?? ""),
       },

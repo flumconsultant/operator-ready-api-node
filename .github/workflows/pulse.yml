@@ -57,6 +57,12 @@ jobs:
         working-directory: pulse/web
         run: npx tsc --noEmit
 
+      # Las pruebas van antes del build: si la lógica está rota, no hace falta
+      # esperar tres minutos a compilar para enterarse.
+      - name: Pruebas
+        working-directory: pulse/web
+        run: npm test
+
       - name: Construir la web
         working-directory: pulse/web
         env:

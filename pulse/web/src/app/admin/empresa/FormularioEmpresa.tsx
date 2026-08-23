@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
-import { Buildings, DiscordLogo, Sparkle, UploadSimple } from "@phosphor-icons/react/dist/ssr";
+import { BuildingsIcon, DiscordLogoIcon, SparkleIcon, UploadSimpleIcon } from "@phosphor-icons/react/dist/ssr";
 
 type Empresa = {
   nombre: string;
@@ -68,7 +68,7 @@ export default function FormularioEmpresa({
 
       <section className="tarjeta bloque-config">
         <h2 className="titulo-seccion">
-          <Buildings size={18} weight="fill" aria-hidden="true" />
+          <BuildingsIcon size={18} weight="fill" aria-hidden="true" />
           Identidad
         </h2>
 
@@ -89,7 +89,7 @@ export default function FormularioEmpresa({
 
           <div>
             <label className="boton boton--discreto">
-              <UploadSimple size={18} aria-hidden="true" />
+              <UploadSimpleIcon size={18} aria-hidden="true" />
               {empresa.logo ? "Cambiar logotipo" : "Subir logotipo"}
               <input
                 type="file"
@@ -148,7 +148,7 @@ export default function FormularioEmpresa({
 
       <section className="tarjeta bloque-config">
         <h2 className="titulo-seccion">
-          <DiscordLogo size={18} weight="fill" aria-hidden="true" />
+          <DiscordLogoIcon size={18} weight="fill" aria-hidden="true" />
           Discord
         </h2>
         <p>
@@ -186,7 +186,7 @@ export default function FormularioEmpresa({
 
       <section className="tarjeta bloque-config">
         <h2 className="titulo-seccion">
-          <Sparkle size={18} weight="fill" aria-hidden="true" />
+          <SparkleIcon size={18} weight="fill" aria-hidden="true" />
           Capa de IA
         </h2>
 

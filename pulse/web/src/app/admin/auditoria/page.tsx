@@ -1,5 +1,5 @@
 import type { AccionAuditada } from "@prisma/client";
-import { ShieldCheck } from "@phosphor-icons/react/dist/ssr";
+import { ShieldCheckIcon } from "@phosphor-icons/react/dist/ssr";
 
 import { sesionDeAdmin } from "@/lib/sesion";
 import { listarAuditoria, type Cambio } from "@/lib/auditoria";
@@ -21,6 +21,8 @@ const ETIQUETAS: Record<AccionAuditada, string> = {
   VALOR_CREADO: "Valor creado",
   VALOR_RETIRADO: "Valor retirado",
   VALOR_REACTIVADO: "Valor reactivado",
+  PUBLICACION_RETIRADA: "Publicación retirada",
+  EMPRESA_CREADA: "Empresa creada",
 };
 
 // Las acciones que quitan acceso o dan permisos se marcan aparte: son las que
@@ -29,6 +31,7 @@ const SENSIBLES = new Set<AccionAuditada>([
   "PERSONA_DESACTIVADA",
   "PERSONA_EDITADA",
   "EMPRESA_ACTUALIZADA",
+  "PUBLICACION_RETIRADA",
 ]);
 
 export default async function Auditoria({
@@ -76,7 +79,7 @@ export default async function Auditoria({
 
       {registros.length === 0 ? (
         <div className="vacio">
-          <ShieldCheck size={32} aria-hidden="true" />
+          <ShieldCheckIcon size={32} aria-hidden="true" />
           <h2>Nada registrado todavía</h2>
           <p>
             Aquí van a aparecer las altas, los cambios de permisos, las

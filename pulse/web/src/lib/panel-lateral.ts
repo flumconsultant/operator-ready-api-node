@@ -23,7 +23,7 @@ export async function datosDelPanel(companyId: string, userId: string) {
     celebracionesEntre(companyId, ahora, enUnaSemana),
     prisma.recognition.groupBy({
       by: ["valueId"],
-      where: { companyId, creadoEn: { gte: hace30 } },
+      where: { companyId, retiradoEn: null, creadoEn: { gte: hace30 } },
       _count: { _all: true },
       orderBy: { _count: { valueId: "desc" } },
       take: 4,
@@ -32,10 +32,17 @@ export async function datosDelPanel(companyId: string, userId: string) {
       where: { companyId, activo: true },
       select: { id: true, nombre: true, icono: true },
     }),
-    prisma.recognition.findMany({
-      where: { companyId, deUserId: userId, creadoEn: { gte: hace30 } },
-      select: { paraUserId: true },
-      distinct: ["paraUserId"],
+    prisma.recognitionRecipient.findMany({
+      where: {
+        reconocimiento: {
+          companyId,
+          retiradoEn: null,
+          deUserId: userId,
+          creadoEn: { gte: hace30 },
+        },
+      },
+      select: { userId: true },
+      distinct: ["userId"],
     }),
     prisma.user.findUnique({ where: { id: userId }, select: { equipo: true } }),
   ]);
@@ -55,7 +62,7 @@ export async function datosDelPanel(companyId: string, userId: string) {
 
   // Primero del propio equipo: sugerir reconocer a alguien con quien no se
   // trabaja produce reconocimientos vacíos, que es peor que ninguno.
-  const fuera = [userId, ...yaReconocidos.map((r) => r.paraUserId)];
+  const fuera = [userId, ...yaReconocidos.map((r) => r.userId)];
   const seleccion = {
     id: true,
     nombre: true,

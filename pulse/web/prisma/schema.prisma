@@ -26,6 +26,7 @@ enum TipoNotificacion {
   RECONOCIMIENTO_RECIBIDO
   COMENTARIO
   REACCION
+  MENCION
 }
 
 /// Lo que queda registrado en la auditoría. Son acciones de administración y
@@ -43,6 +44,8 @@ enum AccionAuditada {
   VALOR_CREADO
   VALOR_RETIRADO
   VALOR_REACTIVADO
+  PUBLICACION_RETIRADA
+  EMPRESA_CREADA
 }
 
 /// Un workspace: una empresa cliente. Todo lo demás cuelga de aquí.
@@ -104,47 +107,52 @@ model Value {
 }
 
 model User {
-  id               String    @id @default(cuid())
-  companyId        String
-  nombre           String
-  email            String    @unique
+  id                  String    @id @default(cuid())
+  companyId           String
+  nombre              String
+  email               String    @unique
   /// Hash bcrypt. Nulo si la persona solo entra por magic link.
-  passwordHash     String?
-  emailVerified    DateTime?
+  passwordHash        String?
+  emailVerified       DateTime?
   /// Nombre del archivo en el almacén de imágenes, no una URL completa: el
   /// dominio cambia entre local, piloto y producción, y una URL guardada se
   /// queda apuntando al anterior.
-  imagen           String?
-  rol              Rol       @default(COLABORADOR)
-  equipo           String?
-  cargo            String?
-  bio              String?
+  imagen              String?
+  rol                 Rol       @default(COLABORADOR)
+  equipo              String?
+  cargo               String?
+  bio                 String?
   /// Día y mes son lo único que se usa; el año se guarda porque una fecha
   /// parcial complica más de lo que protege, y no se muestra nunca.
-  cumpleanos       DateTime?
-  fechaIngreso     DateTime?
-  discordId        String?   @unique
-  activo           Boolean   @default(true)
-  invitadoEn       DateTime  @default(now())
+  cumpleanos          DateTime?
+  fechaIngreso        DateTime?
+  discordId           String?   @unique
+  /// Código de un solo uso para enlazar Discord desde el propio bot, sin que
+  /// el administrador tenga que copiar identificadores a mano.
+  codigoDiscord       String?   @unique
+  codigoDiscordExpira DateTime?
+  activo              Boolean   @default(true)
+  invitadoEn          DateTime  @default(now())
   /// Invitación pendiente. Es un mecanismo propio y no el magic link de
   /// Auth.js: el enlace se puede copiar y mandar por WhatsApp, que es lo que
   /// va a pasar en un piloto sin servidor de correo montado.
-  tokenInvitacion  String?   @unique
-  invitacionExpira DateTime?
+  tokenInvitacion     String?   @unique
+  invitacionExpira    DateTime?
   /// Cuándo entró por primera vez. Sirve para saber a quién hay que perseguir.
-  primerAcceso     DateTime?
+  primerAcceso        DateTime?
   /// Cuándo terminó su asistente de bienvenida. Nulo lo lanza en el siguiente
   /// acceso; se puede saltar, y saltarlo también lo marca.
-  onboardingEn     DateTime?
+  onboardingEn        DateTime?
 
-  company        Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  dados          Recognition[]  @relation("reconocimientosDados")
-  recibidos      Recognition[]  @relation("reconocimientosRecibidos")
+  company        Company                @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  dados          Recognition[]          @relation("reconocimientosDados")
+  recibidos      RecognitionRecipient[] @relation("reconocimientosRecibidos")
+  moderados      Recognition[]          @relation("moderador")
   reacciones     Reaction[]
   comentarios    Comment[]
-  notificaciones Notification[] @relation("destinatario")
-  provocadas     Notification[] @relation("actor")
-  auditoria      AuditLog[]     @relation("auditor")
+  notificaciones Notification[]         @relation("destinatario")
+  provocadas     Notification[]         @relation("actor")
+  auditoria      AuditLog[]             @relation("auditor")
   presentacion   Presentacion?
   accounts       Account[]
   sessions       Session[]
@@ -157,17 +165,16 @@ model User {
 /// asíncrona: un reconocimiento se guarda y se ve en el feed aunque la API de
 /// Claude esté caída o el cupo del mes esté agotado.
 model Recognition {
-  id         String   @id @default(cuid())
-  companyId  String
-  deUserId   String
-  paraUserId String
-  valueId    String
-  mensaje    String
+  id        String   @id @default(cuid())
+  companyId String
+  deUserId  String
+  valueId   String
+  mensaje   String
   /// Una foto por reconocimiento, como en cualquier feed. Es el nombre del
   /// archivo, no una URL, por el mismo motivo que en User.imagen.
-  imagen     String?
-  canal      Canal    @default(WEB)
-  creadoEn   DateTime @default(now())
+  imagen    String?
+  canal     Canal    @default(WEB)
+  creadoEn  DateTime @default(now())
 
   /// -1 (frío) a 1 (cálido). Nulo mientras no se ha analizado.
   sentimientoScore Float?
@@ -176,19 +183,46 @@ model Recognition {
   sentimientoTono  String?
   analizadoEn      DateTime?
 
+  /// Retirado por su autor o por un administrador. No se borra: un borrado se
+  /// llevaría por delante los comentarios y las reacciones de otras personas,
+  /// y el histórico del valor. Retirado deja de verse en el feed y deja de
+  /// contar en las métricas.
+  retiradoEn     DateTime?
+  retiradoPorId  String?
+  motivoRetirada String?
+
   company        Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
   de             User           @relation("reconocimientosDados", fields: [deUserId], references: [id], onDelete: Cascade)
-  para           User           @relation("reconocimientosRecibidos", fields: [paraUserId], references: [id], onDelete: Cascade)
   valor          Value          @relation(fields: [valueId], references: [id])
+  retiradoPor    User?          @relation("moderador", fields: [retiradoPorId], references: [id], onDelete: SetNull)
   reacciones     Reaction[]
   comentarios    Comment[]
   notificaciones Notification[]
 
+  /// Uno o varios. Es lo que StarMeUp llama kudos: un logro de equipo se
+  /// reconoce una vez a cinco personas, no cinco veces por separado.
+  destinatarios RecognitionRecipient[]
+
   @@index([companyId, creadoEn])
-  @@index([paraUserId, creadoEn])
   @@index([deUserId, creadoEn])
   @@index([companyId, analizadoEn])
+  @@index([companyId, retiradoEn, creadoEn])
   @@map("recognitions")
+}
+
+/// Quién recibe un reconocimiento. Es una tabla y no una columna porque son
+/// varios, y la clave compuesta impide que la misma persona aparezca dos veces
+/// en el mismo kudo.
+model RecognitionRecipient {
+  recognitionId String
+  userId        String
+
+  reconocimiento Recognition @relation(fields: [recognitionId], references: [id], onDelete: Cascade)
+  user           User        @relation("reconocimientosRecibidos", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([recognitionId, userId])
+  @@index([userId])
+  @@map("recognition_recipients")
 }
 
 /// La reacción del feed. Una por persona y reconocimiento, cambiable: quien

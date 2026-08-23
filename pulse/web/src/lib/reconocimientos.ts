@@ -4,20 +4,43 @@ import { Canal, Prisma } from "@prisma/client";
 import { prisma } from "./prisma";
 import { notificar, participantes } from "./notificaciones";
 import { celebracionesEntre, type Celebracion } from "./celebraciones";
+import { aTextoPlano, idsMencionados, largoVisible } from "./menciones";
 
-// Crear un reconocimiento, leer el feed y comentar. Lo usan la web y el bot de
-// Discord, y por eso vive aquí y no dentro de una ruta: las reglas —no
-// reconocerse a sí mismo, el valor tiene que ser de tu empresa, la otra persona
+// Crear un reconocimiento, leer el feed, comentar y retirar. Lo usan la web y el
+// bot de Discord, y por eso vive aquí y no dentro de una ruta: las reglas —no
+// reconocerse a sí mismo, el valor tiene que ser de tu empresa, las personas
 // también— tienen que ser las mismas vengan de donde vengan.
 
+const MENSAJE_MIN = 10;
+const MENSAJE_MAX = 1000;
+/// Un kudo a más de diez personas deja de ser un reconocimiento y pasa a ser un
+/// correo circular. El límite está para que la restricción sea explícita y no
+/// una consulta que se cae con doscientos destinatarios.
+export const MAX_DESTINATARIOS = 10;
+
 export const NuevoReconocimiento = z.object({
-  paraUserId: z.string().min(1),
+  paraUserIds: z
+    .array(z.string().min(1))
+    .min(1, "Elige al menos a una persona.")
+    .max(MAX_DESTINATARIOS, `No puedes reconocer a más de ${MAX_DESTINATARIOS} personas a la vez.`)
+    // Marcar a la misma persona dos veces en la interfaz no debería ser un
+    // error, simplemente cuenta una.
+    .transform((ids) => [...new Set(ids)]),
   valueId: z.string().min(1),
   mensaje: z
     .string()
     .trim()
-    .min(10, "Cuenta qué hizo. Con menos de diez caracteres no se entiende.")
-    .max(1000, "Máximo 1000 caracteres."),
+    .min(1, "Escribe qué hizo.")
+    .max(MENSAJE_MAX + 400, "El mensaje es demasiado largo.")
+    // El largo se mide sobre el texto que se lee, no sobre el guardado: una
+    // mención ocupa cuarenta caracteres del formato interno y ninguno para
+    // quien escribe.
+    .refine((m) => largoVisible(m) >= MENSAJE_MIN, {
+      message: "Cuenta qué hizo. Con menos de diez caracteres no se entiende.",
+    })
+    .refine((m) => largoVisible(m) <= MENSAJE_MAX, {
+      message: `Máximo ${MENSAJE_MAX} caracteres.`,
+    }),
 });
 
 export type ResultadoCreacion =
@@ -27,20 +50,36 @@ export type ResultadoCreacion =
 export async function crearReconocimiento(datos: {
   companyId: string;
   deUserId: string;
-  paraUserId: string;
+  paraUserIds: string[];
   valueId: string;
   mensaje: string;
   imagen?: string | null;
   canal: Canal;
 }): Promise<ResultadoCreacion> {
-  if (datos.deUserId === datos.paraUserId) {
-    return { ok: false, error: "No puedes reconocerte a ti mismo." };
+  const destinatarios = [...new Set(datos.paraUserIds)].filter(
+    (id) => id !== datos.deUserId,
+  );
+
+  if (destinatarios.length === 0) {
+    return {
+      ok: false,
+      error:
+        datos.paraUserIds.length > 0
+          ? "No puedes reconocerte a ti mismo."
+          : "Elige al menos a una persona.",
+    };
+  }
+  if (destinatarios.length > MAX_DESTINATARIOS) {
+    return {
+      ok: false,
+      error: `No puedes reconocer a más de ${MAX_DESTINATARIOS} personas a la vez.`,
+    };
   }
 
-  const [destino, valor, autor] = await Promise.all([
-    prisma.user.findFirst({
-      where: { id: datos.paraUserId, companyId: datos.companyId, activo: true },
-      select: { id: true },
+  const [personas, valor, autor] = await Promise.all([
+    prisma.user.findMany({
+      where: { id: { in: destinatarios }, companyId: datos.companyId, activo: true },
+      select: { id: true, nombre: true },
     }),
     prisma.value.findFirst({
       where: { id: datos.valueId, companyId: datos.companyId, activo: true },
@@ -52,39 +91,100 @@ export async function crearReconocimiento(datos: {
     }),
   ]);
 
-  if (!destino) return { ok: false, error: "Esa persona no está en tu empresa." };
+  if (personas.length !== destinatarios.length) {
+    return { ok: false, error: "Alguna de esas personas no está en tu empresa." };
+  }
   if (!valor) return { ok: false, error: "Ese valor no existe o está desactivado." };
 
   const creado = await prisma.recognition.create({
     data: {
       companyId: datos.companyId,
       deUserId: datos.deUserId,
-      paraUserId: datos.paraUserId,
       valueId: datos.valueId,
       mensaje: datos.mensaje.trim(),
       imagen: datos.imagen ?? null,
       canal: datos.canal,
+      destinatarios: { create: personas.map((p) => ({ userId: p.id })) },
     },
     select: { id: true },
   });
 
-  await notificar({
-    userId: datos.paraUserId,
-    actorId: datos.deUserId,
-    recognitionId: creado.id,
-    tipo: "RECONOCIMIENTO_RECIBIDO",
-    texto: `${autor?.nombre ?? "Alguien"} te reconoció por ${valor.nombre}`,
-    enlace: `/feed/${creado.id}`,
-  });
+  const quien = autor?.nombre ?? "Alguien";
+
+  await Promise.all([
+    ...personas.map((p) =>
+      notificar({
+        userId: p.id,
+        actorId: datos.deUserId,
+        recognitionId: creado.id,
+        tipo: "RECONOCIMIENTO_RECIBIDO",
+        texto:
+          personas.length === 1
+            ? `${quien} te reconoció por ${valor.nombre}`
+            : `${quien} os reconoció a ${personas.length} por ${valor.nombre}`,
+        enlace: `/feed/${creado.id}`,
+      }),
+    ),
+    avisarMencionados({
+      companyId: datos.companyId,
+      texto: datos.mensaje,
+      actorId: datos.deUserId,
+      actorNombre: quien,
+      recognitionId: creado.id,
+      // A quien ya se avisó por ser destinatario no se le avisa dos veces por
+      // aparecer también mencionado en el texto.
+      excluir: personas.map((p) => p.id),
+    }),
+  ]);
 
   return { ok: true, id: creado.id };
+}
+
+/// Avisa a quien se menciona en un texto, si está en la empresa y activo.
+async function avisarMencionados(datos: {
+  companyId: string;
+  texto: string;
+  actorId: string;
+  actorNombre: string;
+  recognitionId: string;
+  excluir?: string[];
+}) {
+  const ids = idsMencionados(datos.texto).filter(
+    (id) => !datos.excluir?.includes(id),
+  );
+  if (ids.length === 0) return;
+
+  // El filtro por empresa importa: el texto lo escribe una persona y podría
+  // llevar el id de alguien de otra compañía, pegado a mano.
+  const mencionados = await prisma.user.findMany({
+    where: { id: { in: ids }, companyId: datos.companyId, activo: true },
+    select: { id: true },
+  });
+
+  await Promise.all(
+    mencionados.map((m) =>
+      notificar({
+        userId: m.id,
+        actorId: datos.actorId,
+        recognitionId: datos.recognitionId,
+        tipo: "MENCION",
+        texto: `${datos.actorNombre} te mencionó`,
+        enlace: `/feed/${datos.recognitionId}`,
+      }),
+    ),
+  );
 }
 
 // ---- Comentarios ---------------------------------------------------------
 
 export const NuevoComentario = z.object({
   recognitionId: z.string().min(1),
-  texto: z.string().trim().min(1, "Escribe algo.").max(600, "Máximo 600 caracteres."),
+  texto: z
+    .string()
+    .trim()
+    .min(1, "Escribe algo.")
+    .max(1000, "El comentario es demasiado largo.")
+    .refine((t) => largoVisible(t) <= 600, { message: "Máximo 600 caracteres." }),
 });
 
 export async function comentar(datos: {
@@ -94,16 +194,16 @@ export async function comentar(datos: {
   texto: string;
 }): Promise<ResultadoCreacion> {
   // El filtro por empresa impide comentar en un reconocimiento de otra
-  // compañía pasando su id a mano.
+  // compañía pasando su id a mano. El de retirada impide seguir comentando en
+  // algo que ya no se ve.
   const reconocimiento = await prisma.recognition.findFirst({
-    where: { id: datos.recognitionId, companyId: datos.companyId },
+    where: { id: datos.recognitionId, companyId: datos.companyId, retiradoEn: null },
     select: { id: true },
   });
   if (!reconocimiento) return { ok: false, error: "No encontrado." };
 
   // Se leen los participantes ANTES de insertar: si no, quien comenta aparece
-  // en su propia lista y se ahorra una comprobación que `notificar` ya hace,
-  // pero además se ahorra una consulta.
+  // en su propia lista.
   const aAvisar = await participantes(reconocimiento.id);
 
   const comentario = await prisma.comment.create({
@@ -115,33 +215,88 @@ export async function comentar(datos: {
     select: { id: true, user: { select: { nombre: true } } },
   });
 
-  await Promise.all(
-    aAvisar.map((userId) =>
-      notificar({
-        userId,
-        actorId: datos.userId,
-        recognitionId: reconocimiento.id,
-        tipo: "COMENTARIO",
-        texto: `${comentario.user.nombre} comentó un reconocimiento`,
-        enlace: `/feed/${reconocimiento.id}`,
-      }),
-    ),
-  );
+  const quien = comentario.user.nombre;
+  const mencionados = idsMencionados(datos.texto);
+
+  await Promise.all([
+    // A quien está mencionado se le avisa de la mención, que dice más, y no del
+    // comentario genérico.
+    ...aAvisar
+      .filter((userId) => !mencionados.includes(userId))
+      .map((userId) =>
+        notificar({
+          userId,
+          actorId: datos.userId,
+          recognitionId: reconocimiento.id,
+          tipo: "COMENTARIO",
+          texto: `${quien} comentó un reconocimiento`,
+          enlace: `/feed/${reconocimiento.id}`,
+        }),
+      ),
+    avisarMencionados({
+      companyId: datos.companyId,
+      texto: datos.texto,
+      actorId: datos.userId,
+      actorNombre: quien,
+      recognitionId: reconocimiento.id,
+    }),
+  ]);
 
   return { ok: true, id: comentario.id };
 }
 
+// ---- Moderación ----------------------------------------------------------
+
+/// Retirar una publicación. La puede retirar su autor o un administrador.
+///
+/// No se borra. Un borrado se llevaría por delante los comentarios y las
+/// reacciones de otras personas, y el histórico de por qué se reconocía a la
+/// gente. Retirado deja de verse en el feed y deja de contar en las métricas.
+export async function retirarReconocimiento(datos: {
+  companyId: string;
+  actorId: string;
+  esAdmin: boolean;
+  recognitionId: string;
+  motivo: string;
+}) {
+  const r = await prisma.recognition.findFirst({
+    where: { id: datos.recognitionId, companyId: datos.companyId },
+    select: { id: true, deUserId: true, retiradoEn: true },
+  });
+  if (!r) return { ok: false as const, error: "No encontrado." };
+  if (r.retiradoEn) return { ok: false as const, error: "Ya estaba retirado." };
+
+  if (!datos.esAdmin && r.deUserId !== datos.actorId) {
+    return {
+      ok: false as const,
+      error: "Solo puede retirarlo quien lo escribió o un administrador.",
+    };
+  }
+
+  await prisma.recognition.update({
+    where: { id: r.id },
+    data: {
+      retiradoEn: new Date(),
+      retiradoPorId: datos.actorId,
+      motivoRetirada: datos.motivo.trim().slice(0, 300) || null,
+    },
+  });
+
+  return { ok: true as const, autorId: r.deUserId };
+}
+
 // ---- Lectura -------------------------------------------------------------
 
+const persona = {
+  select: { id: true, nombre: true, imagen: true, equipo: true, cargo: true },
+} as const;
+
 export const inclusionFeed = {
-  de: { select: { id: true, nombre: true, imagen: true, equipo: true, cargo: true } },
-  para: { select: { id: true, nombre: true, imagen: true, equipo: true, cargo: true } },
+  de: persona,
+  destinatarios: { include: { user: persona } },
   valor: { select: { id: true, nombre: true, icono: true } },
   reacciones: {
-    select: {
-      emoji: true,
-      user: { select: { id: true, nombre: true } },
-    },
+    select: { emoji: true, user: { select: { id: true, nombre: true } } },
   },
   comentarios: {
     include: { user: { select: { id: true, nombre: true, imagen: true } } },
@@ -153,10 +308,6 @@ export type FilaFeed = Prisma.RecognitionGetPayload<{
   include: typeof inclusionFeed;
 }>;
 
-/// Lo que se pinta en el feed: reconocimientos y celebraciones, ordenados
-/// juntos por fecha. El tipo es una unión y no dos listas porque el feed es
-/// una sola columna cronológica; separarlas obligaría a ordenar en el
-/// componente, que es donde peor se hace.
 export type PresentacionFeed = {
   id: string;
   texto: string;
@@ -175,6 +326,10 @@ export type EntradaFeed =
   | { clase: "celebracion"; fecha: Date; celebracion: Celebracion }
   | { clase: "presentacion"; fecha: Date; presentacion: PresentacionFeed };
 
+/// Lo retirado no se ve. Se aplica en todas las lecturas desde esta constante
+/// para que añadir una consulta nueva no signifique acordarse de filtrarlo.
+export const VISIBLE = { retiradoEn: null } as const;
+
 export async function feed(
   companyId: string,
   opciones: { limite?: number; antesDe?: Date } = {},
@@ -184,20 +339,19 @@ export async function feed(
   const reconocimientos = await prisma.recognition.findMany({
     where: {
       companyId,
+      ...VISIBLE,
       ...(opciones.antesDe ? { creadoEn: { lt: opciones.antesDe } } : {}),
     },
     include: inclusionFeed,
     orderBy: { creadoEn: "desc" },
-    // Se pide uno de más para saber si hay página siguiente sin contar el
-    // total, que en una tabla que solo crece es una consulta cara y para nada.
+    // Uno de más para saber si hay página siguiente sin contar el total, que en
+    // una tabla que solo crece es una consulta cara y para nada.
     take: limite + 1,
   });
 
   const hayMas = reconocimientos.length > limite;
   const pagina = hayMas ? reconocimientos.slice(0, limite) : reconocimientos;
 
-  // Las celebraciones se buscan en el mismo tramo de tiempo que cubre esta
-  // página de reconocimientos, para que caigan intercaladas donde toca.
   const hasta = opciones.antesDe ?? new Date();
   const desde = pagina.length
     ? pagina[pagina.length - 1].creadoEn
@@ -205,8 +359,6 @@ export async function feed(
 
   const [celebraciones, presentaciones] = await Promise.all([
     celebracionesEntre(companyId, desde, hasta),
-    // Las presentaciones caen en el mismo tramo de tiempo que la página, para
-    // que aparezcan donde les toca y no todas arriba.
     prisma.presentacion.findMany({
       where: { companyId, creadaEn: { gte: desde, lte: hasta } },
       include: {
@@ -247,17 +399,21 @@ export async function feed(
 
 export function reconocimiento(companyId: string, id: string) {
   return prisma.recognition.findFirst({
-    where: { id, companyId },
+    where: { id, companyId, ...VISIBLE },
     include: inclusionFeed,
   });
 }
 
-/// El muro de una persona: lo que ha recibido, para su perfil.
+/// El muro de una persona: lo que ha recibido.
 export function muro(companyId: string, userId: string, limite = 20) {
   return prisma.recognition.findMany({
-    where: { companyId, paraUserId: userId },
+    where: { companyId, ...VISIBLE, destinatarios: { some: { userId } } },
     include: inclusionFeed,
     orderBy: { creadoEn: "desc" },
     take: limite,
   });
 }
+
+/// El texto legible de un reconocimiento, sin el formato de las menciones.
+/// Es lo que se manda a Discord y a la API de Claude.
+export const textoLegible = aTextoPlano;

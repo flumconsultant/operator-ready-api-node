@@ -2,10 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ImageSquare, X } from "@phosphor-icons/react/dist/ssr";
+import { ImageSquareIcon, XIcon } from "@phosphor-icons/react/dist/ssr";
 
 import Avatar from "./Avatar";
 import IconoValor from "./IconoValor";
+import CampoConMenciones from "./CampoConMenciones";
+import { largoVisible } from "@/lib/menciones";
 
 // El modal para enviar un kudo.
 //
@@ -23,6 +25,9 @@ export type ValorElegible = { id: string; nombre: string; icono: string; descrip
 export type Companero = { id: string; nombre: string; equipo: string | null; imagen: string | null };
 
 const LARGO_MAXIMO = 1000;
+/// El mismo tope que aplica el servidor. Repetirlo aquí es lo que hace que el
+/// buscador se apague antes de dejar elegir a alguien que se va a rechazar.
+const MAXIMO_PERSONAS = 10;
 
 export default function ModalKudo({
   abierto,
@@ -46,7 +51,10 @@ export default function ModalKudo({
   const entradaFoto = useRef<HTMLInputElement>(null);
 
   const [valueId, setValor] = useState(valorInicial ?? "");
-  const [paraUserId, setPara] = useState(personaInicial ?? "");
+  const [elegidas, setElegidas] = useState<string[]>(
+    personaInicial ? [personaInicial] : [],
+  );
+  const [busqueda, setBusqueda] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [foto, setFoto] = useState<File | null>(null);
   const [vistaPrevia, setVistaPrevia] = useState<string | null>(null);
@@ -57,7 +65,8 @@ export default function ModalKudo({
   useEffect(() => {
     if (abierto) {
       setValor(valorInicial ?? "");
-      setPara(personaInicial ?? "");
+      setElegidas(personaInicial ? [personaInicial] : []);
+      setBusqueda("");
     }
   }, [abierto, valorInicial, personaInicial]);
 
@@ -73,6 +82,7 @@ export default function ModalKudo({
     setVistaPrevia(null);
     setFoto(null);
     setMensaje("");
+    setBusqueda("");
     setError(null);
     if (entradaFoto.current) entradaFoto.current.value = "";
   }
@@ -83,7 +93,10 @@ export default function ModalKudo({
     setError(null);
 
     const cuerpo = new FormData();
-    cuerpo.set("paraUserId", paraUserId);
+    // Uno por destinatario: FormData admite claves repetidas y el endpoint las
+    // lee con getAll, así que un kudo a cinco personas no necesita otro
+    // formato ni serializar un JSON dentro de un campo.
+    for (const id of elegidas) cuerpo.append("paraUserIds", id);
     cuerpo.set("valueId", valueId);
     cuerpo.set("mensaje", mensaje);
     if (foto) cuerpo.set("foto", foto);
@@ -103,8 +116,17 @@ export default function ModalKudo({
   }
 
   const elegido = valores.find((v) => v.id === valueId);
-  const restantes = LARGO_MAXIMO - mensaje.length;
-  const listo = paraUserId && valueId && mensaje.trim().length >= 10;
+  const listo =
+    elegidas.length > 0 &&
+    valueId &&
+    largoVisible(mensaje) >= 10 &&
+    largoVisible(mensaje) <= LARGO_MAXIMO;
+
+  const filtrados = companeros.filter((c) => {
+    if (elegidas.includes(c.id)) return false;
+    const q = busqueda.trim().toLowerCase();
+    return !q || c.nombre.toLowerCase().includes(q) || (c.equipo ?? "").toLowerCase().includes(q);
+  });
 
   return (
     <dialog
@@ -139,7 +161,7 @@ export default function ModalKudo({
             className="boton-icono"
             onClick={() => dialogo.current?.close()}
           >
-            <X size={20} aria-hidden="true" />
+            <XIcon size={20} aria-hidden="true" />
             <span className="visually-hidden">Cerrar</span>
           </button>
         </header>
@@ -183,43 +205,88 @@ export default function ModalKudo({
           </fieldset>
 
           <div className="campo">
-            <label htmlFor="kudo-para">A quién</label>
-            <select
+            <label htmlFor="kudo-para">
+              A quién
+              {elegidas.length > 1 && (
+                <span className="campo__contador"> · {elegidas.length} personas</span>
+              )}
+            </label>
+
+            {elegidas.length > 0 && (
+              <ul className="elegidas">
+                {elegidas.map((id) => {
+                  const p = companeros.find((c) => c.id === id);
+                  if (!p) return null;
+                  return (
+                    <li key={id}>
+                      <Avatar persona={p} tamano="sm" enlazado={false} />
+                      {p.nombre}
+                      <button
+                        type="button"
+                        onClick={() => setElegidas((v) => v.filter((x) => x !== id))}
+                      >
+                        <XIcon size={14} weight="bold" aria-hidden="true" />
+                        <span className="visually-hidden">Quitar a {p.nombre}</span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+
+            <input
               id="kudo-para"
-              required
-              value={paraUserId}
-              onChange={(e) => setPara(e.target.value)}
-            >
-              <option value="" disabled>
-                Elige a una persona
-              </option>
-              {companeros.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.nombre}
-                  {c.equipo ? ` — ${c.equipo}` : ""}
-                </option>
-              ))}
-            </select>
+              type="search"
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+              placeholder={
+                elegidas.length === 0
+                  ? "Busca a una persona"
+                  : `Añade a alguien más (hasta ${MAXIMO_PERSONAS})`
+              }
+              disabled={elegidas.length >= MAXIMO_PERSONAS}
+              autoComplete="off"
+            />
+
+            {elegidas.length < MAXIMO_PERSONAS && (
+              <ul className="candidatos" role="listbox" aria-label="Personas">
+                {filtrados.slice(0, 6).map((c) => (
+                  <li key={c.id}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setElegidas((v) => [...v, c.id]);
+                        setBusqueda("");
+                      }}
+                    >
+                      <Avatar persona={c} tamano="sm" enlazado={false} />
+                      <span>
+                        {c.nombre}
+                        {c.equipo && <span className="candidatos__equipo">{c.equipo}</span>}
+                      </span>
+                    </button>
+                  </li>
+                ))}
+                {filtrados.length === 0 && busqueda.trim() && (
+                  <li className="candidatos__vacio">Nadie coincide con «{busqueda}».</li>
+                )}
+              </ul>
+            )}
           </div>
 
           <div className="campo">
             <label htmlFor="kudo-mensaje">Qué hizo</label>
             <div className="modal__mensaje">
               <Avatar persona={yo} tamano="sm" enlazado={false} />
-              <textarea
+              <CampoConMenciones
                 id="kudo-mensaje"
-                required
-                minLength={10}
-                maxLength={LARGO_MAXIMO}
-                rows={4}
-                value={mensaje}
-                onChange={(e) => setMensaje(e.target.value)}
+                valor={mensaje}
+                alCambiar={setMensaje}
+                personas={companeros}
+                maximo={LARGO_MAXIMO}
                 placeholder="Cuenta el hecho concreto. «Gracias por todo» se olvida; «te quedaste el viernes a cerrar julio» no."
               />
             </div>
-            <p className="meta" style={{ textAlign: "right" }} aria-live="polite">
-              {restantes} caracteres
-            </p>
           </div>
 
           {vistaPrevia && (
@@ -236,7 +303,7 @@ export default function ModalKudo({
                   if (entradaFoto.current) entradaFoto.current.value = "";
                 }}
               >
-                <X size={18} weight="bold" aria-hidden="true" />
+                <XIcon size={18} weight="bold" aria-hidden="true" />
                 <span className="visually-hidden">Quitar la foto</span>
               </button>
             </div>
@@ -245,7 +312,7 @@ export default function ModalKudo({
 
         <footer className="modal__pie">
           <label className="boton-icono composer__adjuntar">
-            <ImageSquare size={20} aria-hidden="true" />
+            <ImageSquareIcon size={20} aria-hidden="true" />
             <span>{foto ? "Cambiar foto" : "Añadir foto"}</span>
             <input
               ref={entradaFoto}

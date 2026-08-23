@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Plus, Trash, UploadSimple } from "@phosphor-icons/react/dist/ssr";
+import { CheckIcon, PlusIcon, TrashIcon, UploadSimpleIcon } from "@phosphor-icons/react/dist/ssr";
 
 import IconoValor from "@/componentes/IconoValor";
 import SelectorIcono from "@/componentes/SelectorIcono";
@@ -65,7 +65,7 @@ export default function AsistenteEmpresa({
                 aria-current={i === paso ? "step" : undefined}
               >
                 <span className="pasos__numero" aria-hidden="true">
-                  {i < paso ? <Check size={14} weight="bold" /> : i + 1}
+                  {i < paso ? <CheckIcon size={14} weight="bold" /> : i + 1}
                 </span>
                 {texto}
               </li>
@@ -110,7 +110,7 @@ export default function AsistenteEmpresa({
               </div>
               <div>
                 <label className="boton boton--discreto">
-                  <UploadSimple size={18} aria-hidden="true" />
+                  <UploadSimpleIcon size={18} aria-hidden="true" />
                   Subir logotipo
                   <input
                     type="file"
@@ -222,7 +222,7 @@ export default function AsistenteEmpresa({
                         setValores((prev) => prev.filter((_, j) => j !== i))
                       }
                     >
-                      <Trash size={18} aria-hidden="true" />
+                      <TrashIcon size={18} aria-hidden="true" />
                       <span className="visually-hidden">
                         Quitar el valor {v.nombre || `número ${i + 1}`}
                       </span>
@@ -270,7 +270,7 @@ export default function AsistenteEmpresa({
                 ])
               }
             >
-              <Plus size={18} aria-hidden="true" />
+              <PlusIcon size={18} aria-hidden="true" />
               Añadir otro valor
             </button>
 

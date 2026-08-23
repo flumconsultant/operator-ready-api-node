@@ -14,7 +14,9 @@
     "db:semilla": "tsx prisma/seed.ts",
     "typecheck": "tsc --noEmit",
     "resumen": "tsx scripts/resumen.ts",
-    "revisar:interfaz": "node scripts/revisar-interfaz.mjs"
+    "revisar:interfaz": "node scripts/revisar-interfaz.mjs",
+    "empresa:crear": "tsx scripts/crear-empresa.ts",
+    "test": "node --test --import tsx pruebas/*.test.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.120.0",

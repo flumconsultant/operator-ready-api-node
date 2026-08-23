@@ -33,16 +33,29 @@ export async function mapaDeInfluencia(
 ): Promise<NodoInfluencia[]> {
   const desde = new Date(Date.now() - dias * 24 * 60 * 60 * 1000);
 
-  const aristas = await prisma.recognition.findMany({
-    where: { companyId, creadoEn: { gte: desde } },
+  // Una arista por cada pareja (quien reconoce, quien recibe). Un kudo a cinco
+  // personas produce cinco aristas, que es exactamente lo que mide el grafo: a
+  // cuánta gente distinta llega el reconocimiento de cada quien.
+  const filas = await prisma.recognition.findMany({
+    where: { companyId, retiradoEn: null, creadoEn: { gte: desde } },
     select: {
       deUserId: true,
-      paraUserId: true,
       especificidad: true,
       de: { select: { equipo: true } },
-      para: { select: { id: true, nombre: true, equipo: true } },
+      destinatarios: {
+        select: { user: { select: { id: true, nombre: true, equipo: true } } },
+      },
     },
   });
+
+  const aristas = filas.flatMap((r) =>
+    r.destinatarios.map((d) => ({
+      deUserId: r.deUserId,
+      especificidad: r.especificidad,
+      de: r.de,
+      para: d.user,
+    })),
+  );
 
   type Acumulado = {
     nombre: string;
@@ -57,7 +70,7 @@ export async function mapaDeInfluencia(
   for (const arista of aristas) {
     // Auto-reconocerse no cuenta. La interfaz no lo permite, pero la API
     // interna la usa un bot y conviene no fiarse.
-    if (arista.deUserId === arista.paraUserId) continue;
+    if (arista.deUserId === arista.para.id) continue;
 
     const actual = porPersona.get(arista.para.id) ?? {
       nombre: arista.para.nombre,
@@ -128,8 +141,10 @@ export async function personasDesconectadas(companyId: string, dias = 60) {
       // Quien se incorporó hace menos que la ventana todavía no puede estar
       // "desconectado": aún no ha tenido tiempo.
       invitadoEn: { lt: desde },
-      dados: { none: { creadoEn: { gte: desde } } },
-      recibidos: { none: { creadoEn: { gte: desde } } },
+      dados: { none: { creadoEn: { gte: desde }, retiradoEn: null } },
+      recibidos: {
+        none: { reconocimiento: { creadoEn: { gte: desde }, retiradoEn: null } },
+      },
     },
     select: { id: true, nombre: true, email: true, equipo: true, invitadoEn: true },
     orderBy: { nombre: "asc" },

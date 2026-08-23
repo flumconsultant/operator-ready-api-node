@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import {
-  ArrowClockwise,
-  Check,
-  Copy,
-  PencilSimple,
-  Prohibit,
-  UserPlus,
-  Users,
-  X,
+  ArrowClockwiseIcon,
+  CheckIcon,
+  CopyIcon,
+  PencilSimpleIcon,
+  ProhibitIcon,
+  UserPlusIcon,
+  UsersIcon,
+  XIcon,
 } from "@phosphor-icons/react/dist/ssr";
 
 import Avatar from "@/componentes/Avatar";
@@ -114,7 +114,7 @@ export default function Personas({
             setError(null);
           }}
         >
-          <UserPlus size={18} aria-hidden="true" />
+          <UserPlusIcon size={18} aria-hidden="true" />
           Invitar a alguien
         </button>
 
@@ -126,7 +126,7 @@ export default function Personas({
             setError(null);
           }}
         >
-          <Users size={18} aria-hidden="true" />
+          <UsersIcon size={18} aria-hidden="true" />
           Pegar una lista
         </button>
       </div>
@@ -299,7 +299,7 @@ export default function Personas({
                           className="boton-icono"
                           onClick={() => setEditando(p.id)}
                         >
-                          <PencilSimple size={18} aria-hidden="true" />
+                          <PencilSimpleIcon size={18} aria-hidden="true" />
                           <span className="visually-hidden">Editar a {p.nombre}</span>
                         </button>
 
@@ -314,7 +314,7 @@ export default function Personas({
                           >
                             <input type="hidden" name="userId" value={p.id} />
                             <button type="submit" className="boton-icono">
-                              <ArrowClockwise size={18} aria-hidden="true" />
+                              <ArrowClockwiseIcon size={18} aria-hidden="true" />
                               <span className="visually-hidden">
                                 Generar un enlace nuevo para {p.nombre}
                               </span>
@@ -333,9 +333,9 @@ export default function Personas({
                           <input type="hidden" name="activo" value={p.activo ? "no" : "si"} />
                           <button type="submit" className="boton-icono">
                             {p.activo ? (
-                              <Prohibit size={18} aria-hidden="true" />
+                              <ProhibitIcon size={18} aria-hidden="true" />
                             ) : (
-                              <Check size={18} aria-hidden="true" />
+                              <CheckIcon size={18} aria-hidden="true" />
                             )}
                             <span className="visually-hidden">
                               {p.activo ? `Desactivar a ${p.nombre}` : `Reactivar a ${p.nombre}`}
@@ -478,11 +478,11 @@ function EnlaceInvitacion({
             }
           }}
         >
-          {copiado ? <Check size={18} aria-hidden="true" /> : <Copy size={18} aria-hidden="true" />}
+          {copiado ? <CheckIcon size={18} aria-hidden="true" /> : <CopyIcon size={18} aria-hidden="true" />}
           {copiado ? "Copiado" : "Copiar enlace"}
         </button>
         <button type="button" className="boton-icono" onClick={alCerrar}>
-          <X size={18} aria-hidden="true" />
+          <XIcon size={18} aria-hidden="true" />
           <span className="visually-hidden">Cerrar</span>
         </button>
       </div>

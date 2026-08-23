@@ -2456,3 +2456,173 @@ legend {
 .selector-icono__resumen + .selector-icono__rejilla {
   margin-top: var(--space-3);
 }
+
+/* ---- Menciones ----------------------------------------------------------- */
+
+.mencion {
+  color: var(--text-accent);
+  font-weight: var(--weight-body-medium);
+  text-decoration: none;
+}
+
+.mencion:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.campo-menciones {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.campo-menciones__pie {
+  margin: var(--space-2) 0 0;
+  text-align: right;
+}
+
+/* La lista de personas al escribir «@». Va por encima del modal, que ya está
+ * en su propia capa. */
+.menciones-sugeridas {
+  position: absolute;
+  z-index: var(--z-modal);
+  left: 0;
+  right: 0;
+  bottom: calc(100% + var(--space-2));
+  list-style: none;
+  margin: 0;
+  padding: var(--space-2);
+  max-height: 240px;
+  overflow-y: auto;
+  background: var(--surface-card);
+  border: var(--border-hair) solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-raised);
+}
+
+.menciones-sugeridas button,
+.candidatos button {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-body);
+  font: var(--type-body);
+  text-align: left;
+  cursor: pointer;
+}
+
+.menciones-sugeridas button:hover,
+.menciones-sugeridas button[data-resaltado],
+.candidatos button:hover {
+  background: var(--bg-sunken);
+}
+
+.menciones-sugeridas button[data-resaltado] {
+  box-shadow: inset 2px 0 0 var(--electric-green);
+}
+
+.menciones-sugeridas__equipo,
+.candidatos__equipo {
+  display: block;
+  color: var(--text-faint);
+  font-size: var(--text-body-sm);
+}
+
+/* ---- Varios destinatarios ------------------------------------------------ */
+
+.elegidas {
+  list-style: none;
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.elegidas li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2) var(--space-1) var(--space-1);
+  border: var(--border-hair) solid var(--green-line);
+  border-radius: var(--radius-pill);
+  background: var(--green-tint);
+  color: var(--text-accent);
+  font: var(--type-body);
+  font-size: var(--text-body-sm);
+}
+
+.elegidas button {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.elegidas button:hover {
+  background: var(--green-tint-strong);
+}
+
+.candidatos {
+  list-style: none;
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  border: var(--border-hair) solid var(--border-hairline);
+  border-radius: var(--radius-md);
+}
+
+.candidatos__vacio {
+  padding: var(--space-4);
+  color: var(--text-faint);
+  font: var(--type-body);
+  font-size: var(--text-body-sm);
+}
+
+.campo__contador {
+  color: var(--text-accent);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* Las caras solapadas: quien reconoce y hasta tres destinatarios. */
+.publicacion__caras > :not(:first-child) {
+  margin-left: -9px;
+}
+
+.publicacion__acciones {
+  margin-left: auto;
+  align-self: flex-start;
+}
+
+/* ---- Vinculación con Discord --------------------------------------------- */
+
+.codigo-vinculacion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-4);
+  margin: 0;
+}
+
+.codigo-vinculacion code {
+  font: var(--weight-display) 28px/1 var(--font-mono);
+  letter-spacing: 0.18em;
+  color: var(--text-heading);
+  background: var(--green-tint);
+  border: var(--border-hair) solid var(--green-line);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-5);
+}
