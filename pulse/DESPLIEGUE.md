@@ -188,30 +188,49 @@ apt update && apt upgrade -y
 
 Si al terminar pide reiniciar, hazlo con `reboot` y vuelve a entrar al minuto.
 
-### 3.2 Crear tu usuario
+### 3.2 y 3.3 — Un usuario aparte, o seguir con `root`
 
-Trabajar como `root` todo el rato es la forma más fácil de romper algo sin
-querer.
+**Esto es opcional, y conviene decidirlo antes de tocar nada.** Las dos
+opciones son defendibles:
+
+- **Seguir con `root`.** Es lo más simple, y con el terminal del navegador es
+  además lo más natural: ahí entras como `root` siempre. Para un piloto que
+  administras tú solo, vale.
+- **Un usuario aparte.** Es la buena práctica: trabajar como `root` todo el
+  rato es la forma más fácil de romper algo sin querer, y el día que entre
+  alguien más a tocar el servidor querrás darle su propio acceso.
+
+**Si eliges seguir con `root`, sáltate 3.2 y 3.3 enteros** y pasa al
+cortafuegos. Lo único que conviene mirar es que no te hayas cerrado la puerta:
+
+```bash
+sshd -T | grep -Ei 'permitrootlogin|passwordauthentication'
+```
+
+Eso enseña la configuración **efectiva**, que no siempre es la que pone en
+`/etc/ssh/sshd_config`. Si dice `permitrootlogin yes`, todo en orden.
+
+#### 3.2 Crear tu usuario
 
 ```bash
 adduser become            # te pide una contraseña; ponla larga y guárdala
 usermod -aG sudo become
 ```
 
-### 3.3 Entrar con clave en vez de con contraseña
+#### 3.3 Entrar con clave en vez de con contraseña
 
 **En tu ordenador**, no en el VPS. Si ya tienes una clave SSH (mira si existe
 `~/.ssh/id_ed25519.pub`), sáltate el primer comando:
 
 ```bash
 ssh-keygen -t ed25519 -C "become"        # Enter a todo
-ssh-copy-id become@LA-IP-DEL-VPS         # pide la contraseña de `become`
+ssh-copy-id become@31.97.41.59           # pide la contraseña de `become`
 ```
 
 Comprueba que entras sin contraseña:
 
 ```bash
-ssh become@LA-IP-DEL-VPS
+ssh become@31.97.41.59
 ```
 
 Si entra directo, ya puedes cerrar la puerta de las contraseñas. **En el VPS**:
@@ -224,7 +243,45 @@ sudo systemctl restart ssh
 
 > **No cierres esta terminal todavía.** Abre otra y comprueba que sigues
 > pudiendo entrar. Si te equivocaste, con la sesión abierta lo arreglas; si la
-> cerraste, hay que entrar por la consola web de Hostinger.
+> cerraste, entra por el terminal del navegador de hPanel, que no depende de
+> SSH y por eso es tu red de seguridad.
+
+#### Si ya lo hiciste y te arrepentiste: volver a `root`
+
+Lo que bloquea no es el usuario nuevo, es la línea `PermitRootLogin no`.
+Desde el terminal del navegador, que entra como `root` pase lo que pase:
+
+```bash
+# Cómo está de verdad ahora mismo.
+sshd -T | grep -Ei 'permitrootlogin|passwordauthentication'
+
+# Volver a permitirlo.
+sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+
+# Ubuntu trae archivos que PISAN al principal. Si esto devuelve algo
+# —lo típico es 50-cloud-init.conf—, edítalo con nano y pon los dos en `yes`:
+# el de sshd_config.d/ gana sobre el principal.
+grep -rEn 'PermitRootLogin|PasswordAuthentication' /etc/ssh/sshd_config.d/ 2>/dev/null
+
+systemctl restart ssh
+sshd -T | grep -Ei 'permitrootlogin|passwordauthentication'
+```
+
+Y para quitar el usuario que ya no quieres, con su carpeta:
+
+```bash
+deluser --remove-home become
+```
+
+Prueba `ssh root@31.97.41.59` desde otra ventana **antes** de cerrar el
+terminal del navegador.
+
+> `root` con contraseña en una IP pública recibe intentos de acceso a todas
+> horas, desde el primer día. Si más adelante quieres cerrar eso sin renunciar
+> a entrar como `root`, la fórmula es `PermitRootLogin prohibit-password` con
+> una clave SSH puesta: entras como `root` igual, solo que sin escribir
+> contraseña. Mientras tanto, `fail2ban` (paso 3.5) tapa lo peor.
 
 ### 3.4 El cortafuegos
 
@@ -467,10 +524,11 @@ nada de n8n, ni reiniciar el proxy, ni editar ningún archivo suyo.
 
 ### Lo que cambia
 
-**Paso 3.2 y 3.3 (usuario y clave).** Estás entrando como `root`. Si te vale
-así para el piloto, sáltatelos; si quieres hacerlo bien, créate el usuario
-`become` y usa ese. No cambia nada del resto de la guía salvo que `sudo` pasa a
-hacer falta.
+**Pasos 3.2 y 3.3 (usuario y clave).** Opcionales, y para un piloto que
+administras tú solo **la respuesta razonable es saltárselos** y seguir con
+`root`: el terminal del navegador entra como `root` de todas formas. Si ya los
+hiciste y prefieres volver atrás, está en
+[«Si ya lo hiciste y te arrepentiste»](#si-ya-lo-hiciste-y-te-arrepentiste-volver-a-root).
 
 **Paso 3.4, el cortafuegos.** Comprueba con `sudo ufw status`. Si dice
 `inactive`, **no lo actives ahora**: encender el cortafuegos de golpe en un
