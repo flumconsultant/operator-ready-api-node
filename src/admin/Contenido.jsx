@@ -1,6 +1,7 @@
 import React from 'react';
 import * as api from './api.js';
 import { Boton, Aviso } from './piezas.jsx';
+import { IconoVolver } from './iconos.jsx';
 import { Formulario, BarraPublicar, AvanceElemento, VistaGoogle } from './Formulario.jsx';
 import { avance } from './avance.js';
 import './panel.css';
@@ -42,6 +43,7 @@ export default function Contenido() {
      nombres no dice cuál de los doce está a medias: hay que abrirlos uno a uno
      para descubrirlo. La lista lo dice sin entrar en ninguno. */
   const [enLista, setEnLista] = React.useState(true);
+  const [versiones, setVersiones] = React.useState(null);
   const [busca, setBusca] = React.useState('');
   const [clave, setClave] = React.useState('');
   const [idioma, setIdioma] = React.useState('es');
@@ -118,6 +120,20 @@ export default function Contenido() {
   };
 
   const cambiarElemento = (cl) => { setClave(cl); setEnLista(false); cargarValores(abierto.datos, abierto.esquema, cl, idioma); setNota(''); };
+
+  /* El historial es del ARCHIVO, no del elemento: las seis industrias viven en
+     el mismo JSON, así que los commits son los mismos para las seis. Se dice
+     así en la columna —«últimos cambios en Industrias»— en vez de fingir una
+     precisión que el repositorio no da. */
+  React.useEffect(() => {
+    if (!abierto || enLista) return undefined;
+    let vivo = true;
+    setVersiones(null);
+    api.historial(abierto.esquema.id, idioma)
+      .then((d) => vivo && setVersiones(d.versiones || []))
+      .catch(() => vivo && setVersiones([]));
+    return () => { vivo = false; };
+  }, [abierto?.esquema?.id, idioma, enLista]);   // eslint-disable-line react-hooks/exhaustive-deps
   const cambiarIdioma = (l) => abrir(abierto.esquema.id, l, abierto.claves.findIndex((k) => k.clave === clave));
 
   const guardar = async () => {
@@ -268,13 +284,71 @@ export default function Contenido() {
     return typeof v === 'string' && typeof c.maximo === 'number' && v.length > c.maximo;
   });
 
+  const yo = avance(esquema.campos, valores);
+  const nombre = claves.find((k) => k.clave === clave)?.nombre || esquema.titulo;
+
+  /* Cuántos campos faltan por traducir al otro idioma, para la columna de
+     estado. Sale de los datos del otro idioma que ya se pidieron al abrir el
+     esquema; si no llegaron, la línea sencillamente no aparece. */
+  const posicion = claves.findIndex((k) => k.clave === clave);
+  const otroClave = otros?.claves?.[posicion]?.clave;
+  const enElOtro = otros && otroClave != null
+    ? avance(esquema.campos, dentro(otros.datos, otros.esquema, otroClave, otros.idioma) || {})
+    : null;
+
+  const cuando = (iso) => {
+    const t = Date.parse(iso);
+    if (!t) return '';
+    const dias = Math.floor((Date.now() - t) / 86400000);
+    if (dias <= 0) return 'hoy';
+    if (dias === 1) return 'ayer';
+    if (dias < 31) return `hace ${dias} días`;
+    const meses = Math.round(dias / 30);
+    return meses === 1 ? 'hace 1 mes' : `hace ${meses} meses`;
+  };
+
   return (
     <div className="pnl-lienzo pnl-lienzo--publica" style={{ padding: 0 }}>
-      <div className="pnl-barra">
-        <h2 className="pnl-titulo">{esquema.titulo}</h2>
-        <div className="pnl-acciones">
-          <Boton onClick={() => (claves.length > 1 ? setEnLista(true) : setAbierto(null))} disabled={guardando}>Volver</Boton>
+      {/* La barra de arriba, que en escritorio cruza las tres columnas: dónde
+          estás, en qué idioma escribes y el botón de publicar. */}
+      <div className="pnl-editor-cab">
+        <button type="button" className="pnl-btn pnl-btn--quieto" onClick={() => (claves.length > 1 ? setEnLista(true) : setAbierto(null))} disabled={guardando}>
+          <IconoVolver /><span>{claves.length > 1 ? esquema.titulo : 'Volver'}</span>
+        </button>
+        <span className="pnl-editor-nombre">{nombre}</span>
+        {/* Segmentado y no dos botones: el activo se distingue por superficie,
+            no por el verde, que está reservado para la acción principal. */}
+        <div className="pnl-segmento" role="group" aria-label="Idioma que se edita">
+          {(esquema.idiomas || ['es']).map((l) => (
+            <button key={l} type="button" aria-pressed={l === idioma} onClick={() => cambiarIdioma(l)}>
+              {l.toUpperCase()}
+            </button>
+          ))}
         </div>
+        {/* Aquí no va pastilla de estado: en estrecho la lleva la barra de
+            avance de debajo y en ancho lo dice el propio botón. Estuvo un rato
+            en los tres sitios a la vez y el resultado era «SIN PUBLICAR» dos
+            veces en la misma pantalla. */}
+        {/* Publicar, en la barra y solo en escritorio ancho. Abajo la tarjeta
+            flotante sigue estando: en el móvil el botón tiene que quedar donde
+            está el pulgar, no al principio de un formulario de veinte campos. */}
+        <div className="pnl-solo-ancho">
+          <Boton
+            variante="fuerte"
+            onClick={guardar}
+            disabled={guardando || !sucio || problemas.length > 0}
+          >
+            {guardando ? 'Publicando…' : problemas.length > 0 ? 'Revisa los campos marcados' : !sucio ? 'Sin cambios' : 'Publicar'}
+          </Boton>
+        </div>
+      </div>
+
+      {/* El avance del elemento, solo donde no hay panel de estado. En
+          escritorio ancho la misma cifra vive a la derecha, y repetirla dos
+          veces en la misma pantalla no informa: hace dudar de cuál es la
+          buena. */}
+      <div className="pnl-solo-estrecho">
+        <AvanceElemento campos={esquema.campos} valores={valores} sucio={sucio} />
       </div>
 
       <Aviso tono="mal">{error}</Aviso>
@@ -285,59 +359,64 @@ export default function Contenido() {
         </Aviso>
       )}
 
-      {/* Elegir qué se edita. Se guarda un elemento y un idioma cada vez: un
-          botón que guardara los doce a la vez convertiría un error pequeño en
-          doce errores. */}
-      <div className="pnl-acciones">
-        {/* Segmentado y no dos botones: el activo se distingue por superficie,
-            no por el verde, que está reservado para la acción principal. */}
-        <div className="pnl-segmento" role="group" aria-label="Idioma que se edita">
-          {(esquema.idiomas || ['es']).map((l) => (
-            <button key={l} type="button" aria-pressed={l === idioma} onClick={() => cambiarIdioma(l)}>
-              {l.toUpperCase()}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <AvanceElemento
-        campos={esquema.campos}
-        valores={valores}
-        sucio={sucio}
-        titulo={claves.find((k) => k.clave === clave)?.nombre}
-      />
-
-      {/* Dos columnas a partir de 1320 px: el formulario y, a su derecha, la
-          vista previa de Google fija. Por debajo de ese ancho la vista previa
-          viaja dentro del formulario, encima de los campos: en el móvil no hay
-          sitio para una segunda columna, y bajarla al final la dejaría fuera de
-          la pantalla justo mientras se escribe el título. */}
-      <div className="pnl-conlado">
-        <div className="pnl-columna">
-          <div className="pnl-serp--dentro">
-            <VistaGoogle campos={esquema.campos} valores={valores} />
-          </div>
-
-          {/* La clave y el idioma en la firma: al cambiar de elemento el
-              formulario se monta de nuevo y las secciones vuelven a su estado
-              inicial. */}
-          <Formulario
-            key={`${esquema.id}·${clave}·${idioma}`}
-            campos={esquema.campos}
-            valores={valores}
-            alCambiar={(id, v) => setValores((x) => ({ ...x, [id]: v }))}
-          />
-        </div>
+      {/* Tres columnas a partir de 1320 px: el índice de secciones, el
+          formulario y el panel de estado. Por debajo de ese ancho es una sola
+          columna, el índice vuelve a ser una tira de chips pegada arriba y el
+          panel de estado se retira: en 390 px no hay sitio para tres columnas
+          y fingirlo deja tres columnas de 120 px que no sirven para nada. */}
+      <div className="pnl-editor">
+        <Formulario
+          key={`${esquema.id}·${clave}·${idioma}`}
+          campos={esquema.campos}
+          valores={valores}
+          alCambiar={(id, v) => setValores((x) => ({ ...x, [id]: v }))}
+          encabezado={(
+            <>
+              <strong>{nombre}</strong>
+              <span>{esquema.campos.length} campos · {(esquema.idiomas || ['es']).length} idiomas</span>
+            </>
+          )}
+        />
 
         <aside className="pnl-lado" aria-label="Estado de esta página">
           <VistaGoogle campos={esquema.campos} valores={valores} />
+
           <div className="pnl-lado-estado">
             <p className="pnl-hoy-etiqueta">Estado de la página</p>
             <dl className="pnl-lado-lista">
-              <div><dt>Campos escritos</dt><dd>{avance(esquema.campos, valores).escritos}/{avance(esquema.campos, valores).total}</dd></div>
-              <div><dt>Idioma</dt><dd>{idioma.toUpperCase()}</dd></div>
-              <div><dt>Sin publicar</dt><dd>{sucio ? 'sí' : 'no'}</dd></div>
+              <div><dt>Campos escritos</dt><dd>{yo.escritos}/{yo.total}</dd></div>
+              {enElOtro && (
+                <div>
+                  <dt>Sin traducir al {otros.idioma === 'en' ? 'inglés' : 'español'}</dt>
+                  <dd>{String(enElOtro.total - enElOtro.escritos).padStart(2, '0')}</dd>
+                </div>
+              )}
+              {versiones?.[0]?.fecha && (
+                <div><dt>Última publicación</dt><dd>{cuando(versiones[0].fecha)}</dd></div>
+              )}
             </dl>
+          </div>
+
+          {/* El historial. Son los commits que tocaron este archivo: el
+              repositorio ya es el historial de versiones, y montar una tabla
+              propia habría sido guardar dos veces lo mismo con el riesgo de que
+              las dos dejaran de coincidir.
+           *
+              No hay «Restaurar». Devolver la web a una versión anterior con un
+              toque, sin ver antes qué cambia y desde un móvil, es más peligroso
+              que el problema que resuelve. */}
+          <div className="pnl-lado-estado">
+            <p className="pnl-hoy-etiqueta">Últimos cambios en {esquema.titulo}</p>
+            {versiones === null && <p className="pnl-ayuda" style={{ marginTop: 8 }}>Cargando…</p>}
+            {versiones?.length === 0 && <p className="pnl-ayuda" style={{ marginTop: 8 }}>Sin historial que enseñar.</p>}
+            <ol className="pnl-historial">
+              {(versiones || []).map((v, i) => (
+                <li key={`${v.fecha}-${i}`} data-actual={i === 0 || undefined}>
+                  <span className="pnl-historial-que">{v.que}</span>
+                  <span className="pnl-historial-quien">{cuando(v.fecha)} · {v.quien}</span>
+                </li>
+              ))}
+            </ol>
           </div>
         </aside>
       </div>

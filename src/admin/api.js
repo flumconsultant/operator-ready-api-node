@@ -65,6 +65,9 @@ export const listarPaginas = (carpeta = 'paginas') => llamar('listar-paginas', {
 export const listarEsquemas = () => llamar('listar-esquemas');
 export const abrirEsquema = (esquema, idioma) => llamar('abrir-esquema', { esquema, idioma });
 export const guardarContenido = (datos) => llamar('guardar-contenido', datos);
+/* El historial de versiones de un archivo de contenido: los commits que lo
+   tocaron. No hay tabla propia de versiones porque el repositorio ya es una. */
+export const historial = (esquema, idioma) => llamar('historial', { esquema, idioma });
 export const guardarPagina = (datos) => llamar('guardar-pagina', datos);
 export const suscriptores = () => llamar('suscriptores');
 export const diagnosticoCorreo = () => llamar('diagnostico-correo');

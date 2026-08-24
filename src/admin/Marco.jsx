@@ -66,6 +66,12 @@ function Navegacion({ vista, alCambiar, alNavegar }) {
             key={id}
             type="button"
             className="pnl-nav-item"
+            /* El nombre va también como rótulo accesible y como globo del
+               navegador: en el editor de escritorio la columna se queda en
+               76 px y la palabra deja de verse, y un botón sin nombre es un
+               botón que hay que adivinar. */
+            aria-label={rotulo}
+            title={rotulo}
             aria-current={vista === id ? 'page' : undefined}
             onClick={() => { alCambiar(id); alNavegar?.(); }}
           >
@@ -121,6 +127,11 @@ export default function Marco({ vista, alCambiar, quien, acciones, children }) {
       <aside className="pnl-lateral">
         <div className="pnl-lateral-marca">
           <strong>BECOME</strong>
+          {/* La inicial, para cuando la columna se queda en 76 px con el editor
+              abierto: «BECOME» no cabe y se sale por el borde. Es la misma
+              marca dicha en un carácter, y va oculta a los lectores de pantalla
+              porque el nombre completo sigue estando al lado. */}
+          <span className="pnl-marca-corta" aria-hidden="true">B</span>
           <span className="pnl-quien">{quien}</span>
         </div>
         <Navegacion vista={vista} alCambiar={alCambiar} />

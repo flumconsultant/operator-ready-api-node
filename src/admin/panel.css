@@ -724,7 +724,6 @@ select.pnl-entrada { width: auto; max-width: 100%; }
 .pnl-idioma[data-hecho] { border-color: var(--pnl-linea-fuerte); color: var(--pnl-tinta-2); }
 
 /* --- el panel derecho del escritorio --------------------------------------- */
-.pnl-conlado { display: grid; gap: var(--pnl-5); align-items: start; }
 .pnl-lado { display: none; }
 
 @media (min-width: 64rem) {
@@ -734,15 +733,6 @@ select.pnl-entrada { width: auto; max-width: 100%; }
   .pnl-hoy-rejilla { grid-template-columns: repeat(4, 1fr); }
 }
 
-@media (min-width: 82.5rem) {
-  /* 1320 px: el ancho a partir del cual caben el formulario y el panel derecho
-     sin que ninguno de los dos se estreche por debajo de lo legible. Por debajo
-     de eso, la vista previa vuelve a su sitio dentro del formulario. */
-  .pnl-conlado { grid-template-columns: minmax(0, 1fr) 320px; }
-  .pnl-lado { display: grid; gap: var(--pnl-4); position: sticky; top: var(--pnl-4); }
-  .pnl-conlado .pnl-lado .pnl-serp { margin-bottom: 0; }
-  .pnl-conlado > .pnl-columna .pnl-serp--dentro { display: none; }
-}
 
 /* --- la lista de elementos de un esquema ------------------------------------
    Filas separadas por hairline y sin tarjetas: doce tarjetas apiladas en un
@@ -787,4 +777,154 @@ select.pnl-entrada { width: auto; max-width: 100%; }
 
 @media (min-width: 64rem) {
   .pnl-doble[data-previa] { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+
+/* =============================================================================
+   El editor en escritorio: riel, índice, formulario y estado
+   =============================================================================
+   Cuatro columnas a partir de 1320 px, que es el ancho del handoff y no un
+   número redondo: por debajo, alguna de las cuatro se estrecha por debajo de lo
+   legible y entonces cuatro columnas son peor que una.
+
+   Debajo de ese ancho todo esto desaparece sin dejar rastro: una sola columna,
+   el índice vuelve a ser la tira de chips pegada arriba y el panel de estado se
+   retira. No son dos diseños; es la misma retícula con sitio o sin él.
+   ============================================================================= */
+
+/* Una sola columna por defecto, y con `minmax(0, 1fr)` explícito.
+ *
+ * Sin ese minmax, un hijo de una retícula tiene anchura mínima automática: el
+ * índice de secciones —que es una fila de chips que no encogen— empujaba la
+ * columna hasta 1329 px dentro de una pantalla de 390, y el panel entero se
+ * desplazaba en horizontal. El `overflow-x: auto` del índice no lo evita
+ * porque el que crecía era el contenedor, no el contenido. */
+.pnl-editor { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--pnl-5); align-items: start; }
+.pnl-editor > *, .pnl-formulario, .pnl-secciones { min-width: 0; }
+
+/* La cuenta de campos del chip: solo en la columna de escritorio. En un chip de
+   móvil se pega al nombre y se lee «Identidad02». */
+.pnl-chip-cuenta { display: none; }
+
+/* La barra del editor: de dónde vienes, qué editas, en qué idioma y si hay algo
+   sin publicar. Pegada arriba, porque en un formulario de veinte campos el
+   idioma en el que se escribe es la información que más se olvida. */
+.pnl-editor-cab {
+  position: sticky; top: 0; z-index: 6;
+  display: flex; align-items: center; gap: var(--pnl-3); flex-wrap: wrap;
+  margin: 0 calc(var(--pnl-4) * -1) var(--pnl-4);
+  padding: var(--pnl-2) var(--pnl-4);
+  background: var(--pnl-fondo);
+  border-bottom: 1px solid var(--pnl-linea);
+}
+.pnl-editor-nombre { font: var(--type-h4); font-size: 17px; color: var(--pnl-tinta); flex: 1; min-width: 0; }
+
+/* El historial. Una línea de tiempo sobria: qué cambió arriba, cuándo y quién
+   debajo, y un punto que marca la versión que está publicada ahora mismo. */
+.pnl-historial { list-style: none; display: grid; gap: var(--pnl-3); margin: var(--pnl-3) 0 0; padding: 0; }
+.pnl-historial li { display: grid; gap: 2px; padding-left: var(--pnl-4); position: relative; }
+.pnl-historial li::before {
+  content: ''; position: absolute; left: 0; top: 6px;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--pnl-linea-fuerte);
+}
+.pnl-historial li[data-actual]::before { background: var(--pnl-verde); }
+.pnl-historial-que { font-size: 13px; line-height: 1.35; color: var(--pnl-tinta-2); }
+.pnl-historial-quien { font: var(--type-mono); font-size: 11px; color: var(--pnl-tenue); }
+
+/* El encabezado del índice: de qué elemento son estas secciones. Oculto por
+   defecto porque en el móvil el nombre ya está en la barra de arriba y
+   repetirlo gasta la primera pantalla. */
+.pnl-indice-cab { display: none; }
+
+@media (min-width: 82.5rem) {
+  .pnl-editor {
+    grid-template-columns: 250px minmax(0, 1fr) 320px;
+    gap: 0;
+  }
+  /* El formulario deja de ser una caja y presta sus dos hijos —el índice y las
+     secciones— a la retícula de arriba. Es lo que permite que el índice sea una
+     columna de verdad, con su borde de altura completa, en vez de una tira
+     dentro del formulario. */
+  .pnl-formulario { display: contents; }
+
+  .pnl-indice {
+    flex-direction: column; gap: 0;
+    align-self: start; top: var(--pnl-4);
+    overflow: visible;
+    margin: 0; padding: var(--pnl-5) 0;
+    border-bottom: 0; border-right: 1px solid var(--pnl-linea);
+  }
+  .pnl-indice-cab {
+    display: grid; gap: var(--pnl-1);
+    padding: 0 22px var(--pnl-3);
+  }
+  .pnl-indice-cab strong { font-size: 17px; color: var(--pnl-tinta); }
+  .pnl-indice-cab span { font: var(--type-mono); font-size: 11px; color: var(--pnl-tenue); }
+
+  /* El chip se convierte en fila. Misma marca de posición que la columna de
+     módulos —una línea verde fina a la izquierda— para que «dónde estoy» se
+     diga siempre igual en todo el panel. */
+  .pnl-chip {
+    width: 100%; justify-content: flex-start; gap: var(--pnl-3);
+    padding: 0 22px; font-size: 15px;
+    border: 0; border-left: 2px solid transparent; border-radius: 0;
+    display: flex; align-items: center;
+  }
+  .pnl-chip:hover { background: rgba(0, 255, 136, .08); border-color: transparent; border-left-color: transparent; }
+  .pnl-chip[aria-current="true"] {
+    background: rgba(0, 255, 136, .08); border-left-color: var(--pnl-verde); color: var(--pnl-tinta);
+  }
+  .pnl-chip-nombre { flex: 1; min-width: 0; text-align: left; }
+  .pnl-chip-cuenta { display: inline; font: var(--type-mono); font-size: 11px; color: var(--pnl-tenue); }
+
+  .pnl-secciones { padding: 0 28px; min-width: 0; }
+
+  .pnl-lado {
+    display: grid; gap: var(--pnl-4);
+    position: sticky; top: var(--pnl-4);
+    padding: var(--pnl-5) 0 var(--pnl-5) var(--pnl-5);
+    border-left: 1px solid var(--pnl-linea);
+  }
+  .pnl-lado .pnl-serp { margin-bottom: 0; }
+
+  /* Y el riel: con el editor abierto, la columna de módulos se queda en 76 px y
+     solo iconos.
+   *
+   * Es la única pantalla donde se hace, y por eso se hace. Cuatro columnas
+   * necesitan el ancho, y aquí el nombre del módulo importa menos que en
+   * cualquier otro sitio: quien está editando una industria ya sabe en qué
+   * módulo está. Fuera del editor la columna vuelve a llevar icono Y palabra,
+   * que es lo que evita tener que aprenderse los dibujos.
+   *
+   * El nombre no se pierde: sigue en el `aria-label` de cada botón y sale como
+   * globo del navegador al posar el ratón. */
+  .pnl-marco:has(.pnl-editor) .pnl-lateral { width: 76px; flex-basis: 76px; padding: var(--pnl-4) 0; }
+  .pnl-marco:has(.pnl-editor) .pnl-lateral .pnl-nav-item { justify-content: center; padding: 0; }
+  .pnl-marco:has(.pnl-editor) .pnl-lateral .pnl-nav-item > span,
+  .pnl-marco:has(.pnl-editor) .pnl-lateral .pnl-quien { display: none; }
+  .pnl-marco:has(.pnl-editor) .pnl-lateral-marca { align-items: center; padding: 0 0 var(--pnl-4); }
+  .pnl-marco:has(.pnl-editor) .pnl-lateral-marca strong { font-size: 20px; }
+  .pnl-marco:has(.pnl-editor) .pnl-principal { padding: 0; }
+  .pnl-marco:has(.pnl-editor) .pnl-editor-cab { margin-left: 0; margin-right: 0; padding: var(--pnl-3) var(--pnl-5); }
+
+  /* Con el panel de estado a la vista, la tarjeta flotante de publicar sobra:
+     el estado ya está escrito arriba y el botón vive en la barra del editor. */
+  .pnl-marco:has(.pnl-editor) .pnl-publicar { position: static; width: auto; margin-top: var(--pnl-5); }
+}
+
+/* Lo que solo existe cuando no hay sitio para el panel de estado. */
+@media (min-width: 82.5rem) { .pnl-solo-estrecho { display: none !important; } }
+.pnl-solo-ancho { display: none; }
+@media (min-width: 82.5rem) { .pnl-solo-ancho { display: block; } }
+
+/* La inicial de la marca: solo cuando la columna es un riel de 76 px. */
+.pnl-marca-corta { display: none; }
+@media (min-width: 82.5rem) {
+  .pnl-marco:has(.pnl-editor) .pnl-lateral-marca strong { display: none; }
+  .pnl-marco:has(.pnl-editor) .pnl-marca-corta {
+    display: block;
+    font-family: var(--font-display); font-weight: 700; font-size: 22px;
+    letter-spacing: .02em; color: var(--pnl-tinta);
+  }
+  /* Con el botón de publicar en la barra, la tarjeta flotante sobra. */
+  .pnl-marco:has(.pnl-editor) .pnl-publicar { display: none; }
 }

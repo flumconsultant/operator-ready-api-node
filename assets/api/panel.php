@@ -382,6 +382,54 @@ if ($accion === 'abrir-esquema') {
                     'claves' => contenido_claves($esq, $datos, $lang)]);
 }
 
+/* El historial de un archivo de contenido.
+ *
+ * ---- De dónde sale, y por qué no hay que guardarlo ----
+ *
+ * Este panel publica escribiendo en el repositorio, así que el historial de
+ * versiones ya existe: son los commits que tocaron ese archivo. Montar una
+ * tabla propia de versiones habría sido guardar por segunda vez algo que git
+ * guarda mejor, y con el riesgo de que las dos versiones del historial dejaran
+ * de coincidir.
+ *
+ * Se piden cinco. Es lo que cabe en el panel derecho sin desplazar, y quien
+ * necesite más tiene el repositorio entero.
+ *
+ * Lo que NO hace es restaurar. Restaurar desde aquí sería publicar en la web
+ * una versión anterior con un toque, sin ver antes qué cambia, y desde un
+ * móvil. El historial dice qué pasó; deshacerlo es una decisión que merece
+ * mirar el cambio primero.
+ */
+if ($accion === 'historial') {
+    $id   = (string) ($cuerpo['esquema'] ?? $_GET['esquema'] ?? '');
+    $lang = (string) ($cuerpo['idioma'] ?? $_GET['idioma'] ?? '');
+    $esq  = esquema_leer($config, $rama, $id);
+    if (!$esq) responder(404, ['ok' => false, 'error' => 'sin_esquema', 'mensaje' => 'Ese esquema no existe.']);
+    $idiomas = (array) ($esq['idiomas'] ?? ['es']);
+    if (!in_array($lang, $idiomas, true)) $lang = (string) $idiomas[0];
+    $ruta = contenido_archivo($esq, $lang);
+    if ($ruta === '') responder(500, ['ok' => false, 'error' => 'esquema_roto', 'mensaje' => 'El esquema no apunta a un archivo válido.']);
+
+    $r = github($config, 'commits?path=' . rawurlencode($ruta) . '&sha=' . rawurlencode($rama) . '&per_page=5');
+    /* Un historial que no se puede leer no es un fallo del panel: es una
+       columna que se queda vacía. Se responde en verde con la lista vacía para
+       que el editor siga funcionando. */
+    if ($r['codigo'] !== 200 || !is_array($r['datos'])) responder(200, ['ok' => true, 'versiones' => []]);
+
+    $versiones = [];
+    foreach ($r['datos'] as $c) {
+        $mensaje = (string) ($c['commit']['message'] ?? '');
+        $versiones[] = [
+            'fecha'  => (string) ($c['commit']['author']['date'] ?? ''),
+            'quien'  => (string) ($c['commit']['author']['name'] ?? ''),
+            /* Solo la primera línea. El cuerpo de un commit de este repositorio
+               son párrafos explicando la decisión, y aquí no caben. */
+            'que'    => trim(explode("\n", $mensaje)[0]),
+        ];
+    }
+    responder(200, ['ok' => true, 'versiones' => $versiones]);
+}
+
 if ($accion === 'guardar-contenido') {
     $id     = (string) ($cuerpo['esquema'] ?? '');
     $indice = $cuerpo['indice'] ?? null;      // qué elemento de la colección

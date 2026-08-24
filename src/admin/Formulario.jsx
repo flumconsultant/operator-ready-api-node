@@ -225,7 +225,7 @@ export const agrupar = (campos) => {
  * hasta probarlo: al cambiar de industria quedaban abiertas las secciones de
  * la anterior, que no son las mismas que hacen falta ahora.
  */
-export function Formulario({ campos, valores, alCambiar }) {
+export function Formulario({ campos, valores, alCambiar, encabezado }) {
   const secciones = React.useMemo(() => agrupar(campos), [campos]);
   const solaSeccion = secciones.length < 2;
   const [abiertas, setAbiertas] = React.useState(() => new Set(secciones.slice(0, 1).map((s) => s.id)));
@@ -265,6 +265,10 @@ export function Formulario({ campos, valores, alCambiar }) {
     <div className="pnl-formulario">
       {!solaSeccion && (
         <nav className="pnl-indice" aria-label="Secciones de este formulario">
+          {/* Solo se ve en escritorio, donde el índice es una columna y tiene
+              sitio para decir de qué elemento son estas secciones. En el móvil
+              el nombre ya está en la barra de arriba. */}
+          {encabezado && <div className="pnl-indice-cab">{encabezado}</div>}
           {secciones.map((s) => {
             /* El punto dice si esa sección está escrita SIN entrar en ella.
                Antes había que abrir las nueve para descubrir que faltaba una:
@@ -283,13 +287,22 @@ export function Formulario({ campos, valores, alCambiar }) {
                 onClick={() => ir(s.id)}
               >
                 <span className="pnl-punto" data-estado={estado} aria-hidden="true" />
-                {s.titulo}
+                <span className="pnl-chip-nombre">{s.titulo}</span>
+                {/* La cuenta de campos, solo en la columna de escritorio: en un
+                    chip de móvil son cuatro caracteres más por sección y el
+                    índice deja de caber de un vistazo. */}
+                <span className="pnl-chip-cuenta" aria-hidden="true">{String(s.campos.length).padStart(2, '0')}</span>
               </button>
             );
           })}
         </nav>
       )}
 
+      {/* Las secciones, envueltas. El envoltorio existe por el escritorio: allí
+          el índice y las secciones son dos columnas de la misma retícula, y
+          para eso el formulario tiene que aportar exactamente dos hijos. Sin
+          este div, cada sección sería una columna. */}
+      <div className="pnl-secciones">
       {secciones.map((s) => {
         const abierta = solaSeccion || abiertas.has(s.id);
         const filas = filasDe(s.campos, valores);
@@ -315,6 +328,7 @@ export function Formulario({ campos, valores, alCambiar }) {
           </section>
         );
       })}
+      </div>
     </div>
   );
 }

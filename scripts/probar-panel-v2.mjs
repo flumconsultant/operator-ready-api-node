@@ -78,6 +78,11 @@ const RESPUESTAS = {
       { email: 'jsalas@ejemplo.pe', estado: 'pendiente', idioma: 'es', alta_en: '2026-07-19', confirmado_en: null, origen: '' },
     ], fallos: [] },
   'diagnostico-correo': { ok: true, estado: 'bien' },
+  historial: { ok: true, versiones: [
+    { fecha: new Date(Date.now() - 2 * 86400000).toISOString(), quien: 'Carlos', que: 'Reordenó Oportunidades y reescribió el resumen' },
+    { fecha: new Date(Date.now() - 6 * 86400000).toISOString(), quien: 'Agente', que: 'Añadió dos métricas de la última planta' },
+    { fecha: new Date(Date.now() - 40 * 86400000).toISOString(), quien: 'Ana', que: 'Tradujo Portada y Cierre al inglés' },
+  ] },
 };
 
 /* ---- El recorrido -------------------------------------------------------- */
@@ -190,10 +195,10 @@ const movil = await abrirPanel(390, 844);
   await pg.locator('.pnl-fila-elem').first().click();
   await pg.waitForTimeout(700);
 
-  di(await pg.locator('.pnl-avance-barra').count() === 1, 'el editor lleva la barra de avance del elemento');
+  di(await pg.locator('.pnl-avance-barra').count() === 1, 'en el móvil el editor lleva la barra de avance del elemento');
   const cifra = await pg.locator('.pnl-avance-cifra').innerText();
   di(/^\d+\/\d+$/.test(cifra), `y su cifra · ${cifra}`);
-  di((await pg.locator('.pnl-pastilla').first().innerText()).toLowerCase().includes('al día'), 'y la pastilla dice «Al día» antes de tocar nada');
+  di((await pg.locator('.pnl-avance .pnl-pastilla').innerText()).toLowerCase().includes('al día'), 'y la pastilla dice «Al día» antes de tocar nada');
 
   const puntos = await pg.locator('.pnl-punto').count();
   di(puntos > 0, `el índice lleva ${puntos} puntos de estado`);
@@ -205,7 +210,13 @@ const movil = await abrirPanel(390, 844);
   const primera = pg.locator('.pnl-entrada').first();
   await primera.fill('Manufactura industrial de prueba');
   await pg.waitForTimeout(300);
-  di((await pg.locator('.pnl-pastilla').first().innerText()).toLowerCase().includes('sin publicar'), 'al escribir, la pastilla pasa a «Sin publicar»');
+  di((await pg.locator('.pnl-avance .pnl-pastilla').innerText()).toLowerCase().includes('sin publicar'), 'al escribir, la pastilla pasa a «Sin publicar»');
+  di(await pg.locator('.pnl-pastilla').count() === 1, 'y lo dice UNA vez, no tres');
+
+  /* Nada se sale por el lado. Un panel que se desplaza en horizontal en un
+     móvil es un panel donde la mitad de los controles quedan fuera. */
+  const desborda = await pg.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+  di(!desborda, 'el editor no se desborda a lo ancho en 390 px');
 
   await pg.screenshot({ path: `${SALIDA}/3-editor-movil.png`, fullPage: true });
 }
@@ -268,6 +279,17 @@ await movil.ctx.close();
   const lado = pg.locator('.pnl-lado');
   di(await lado.isVisible(), 'a 1440 px aparece el panel derecho con la vista previa y el estado');
   di((await lado.innerText()).includes('Campos escritos'), 'y dice cuántos campos están escritos');
+
+  /* Las tres columnas del handoff, medidas y no supuestas. */
+  const anchos = await pg.evaluate(() => {
+    const g = document.querySelector('.pnl-editor');
+    return g ? getComputedStyle(g).gridTemplateColumns : '';
+  });
+  di(anchos.startsWith('250px') && anchos.endsWith('320px'), `el editor son tres columnas: índice, formulario y estado · ${anchos}`);
+  di(await pg.locator('.pnl-indice').evaluate((n) => getComputedStyle(n).flexDirection) === 'column', 'el índice de secciones es una columna vertical, no una tira de chips');
+  di(await pg.locator('.pnl-lateral').evaluate((n) => n.getBoundingClientRect().width) === 76, 'y la columna de módulos se queda en un riel de 76 px');
+  di(await pg.locator('.pnl-historial li').count() > 0, 'el panel derecho enseña el historial de versiones');
+  di((await pg.locator('.pnl-editor-cab').innerText()).includes('Sin cambios'), 'y el botón de publicar está en la barra del editor');
 
   await pg.screenshot({ path: `${SALIDA}/5-editor-escritorio.png`, fullPage: false });
   await ctx.close();
