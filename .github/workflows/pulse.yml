@@ -116,7 +116,18 @@ jobs:
           RAMA: ${{ github.ref_name }}
         run: |
           mkdir -p ~/.ssh
-          printf '%s\n' "$CLAVE" > ~/.ssh/id_ed25519
+
+          # La clave se acepta de dos formas. En texto plano, como sale de
+          # `cat`, es la habitual; pero copiar varias líneas desde la terminal
+          # del navegador de un panel de hosting pierde saltos de línea con
+          # facilidad, y entonces la clave llega rota. Por eso se admite
+          # también en una sola línea, como la deja `base64 -w0`: copiar una
+          # línea no falla nunca.
+          if printf '%s' "$CLAVE" | grep -q 'BEGIN'; then
+            printf '%s\n' "$CLAVE" > ~/.ssh/id_ed25519
+          else
+            printf '%s' "$CLAVE" | tr -d ' \n' | base64 -d > ~/.ssh/id_ed25519
+          fi
           chmod 600 ~/.ssh/id_ed25519
 
           # Comprobar la clave ANTES de usarla. Sin esto, un secreto mal
