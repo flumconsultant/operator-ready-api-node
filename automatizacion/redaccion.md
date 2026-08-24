@@ -200,7 +200,11 @@ sustantivo abstracto más adverbio dramático huele a máquina a un kilómetro.
 ### El inglés
 
 Es una **versión**, no una traducción. Mismo argumento y misma tensión, escrito
-por alguien que piensa en inglés. Si una frase suena a traducida, está mal. Los
+por alguien que piensa en inglés. Y sin lenguaje de proveedor de IA:
+«unlock the power of», «seamless», «leverage», «cutting-edge», «game-changing».
+La lista está en `scripts/lexico.mjs` y la comprueba el guardián. Ninguna de
+esas palabras está mal; todas son intercambiables, y lo que es intercambiable no
+dice nada. Si una frase suena a traducida, está mal. Los
 coloquialismos no se traducen literalmente: se busca el equivalente que un
 directivo anglosajón usaría.
 

@@ -33,46 +33,8 @@ import { join } from 'node:path';
 const RAIZ = 'dist/_pages/en';
 const HOME = 'dist/_pages/en.html';
 
-/* Generic AI language. Each entry carries what to do instead, because a
-   warning that only says «don't» leaves the writer inventing the replacement,
-   and that is where a voice gets lost. */
-const GENERICO = [
-  [/unlock(ing)? the power of/gi, 'say what the capability actually does'],
-  [/\bleverage\b/gi, 'use / apply'],
-  [/\bharness(ing)?\b/gi, 'use / apply'],
-  [/\bcutting[- ]edge\b/gi, 'name the technology instead'],
-  [/\brevolutionary\b/gi, 'describe the change concretely'],
-  [/\brevolutioni[sz]e\b/gi, 'describe the change concretely'],
-  [/\bgame[- ]changing\b/gi, 'describe the change concretely'],
-  [/\bseamless(ly)?\b/gi, 'say what does not break'],
-  [/\bnext[- ]generation\b/gi, 'name the technology instead'],
-  [/\bfuture[- ]proof\b/gi, 'say what keeps working and why'],
-  [/\bsupercharge\b/gi, 'say what gets faster and by what measure'],
-  [/transform your business with ai/gi, 'name the business outcome'],
-  [/\bintelligent solutions?\b/gi, 'name the capability'],
-  [/ai[- ]powered innovation/gi, 'name the capability'],
-  [/digital transformation journey/gi, 'name the change'],
-];
+const { GENERICO, CASTELLANO } = await import('./lexico.mjs');
 
-/* Spanish inside an English page. Only words that cannot be anything else in
-   English: no false friends, no proper nouns, no brand names. «Discover» and
-   «Embed» are English words and BECOME service names, so they are not here. */
-const CASTELLANO = [
-  [/\bcapacitaci[oó]n\b/gi, 'training'],
-  [/\boperaciones\b/gi, 'operations'],
-  [/\bfinanzas\b/gi, 'finance'],
-  [/\brecursos humanos\b/gi, 'human resources'],
-  [/\bindustrias\b/gi, 'industries'],
-  [/\bservicios\b/gi, 'services'],
-  [/\bnosotros\b/gi, 'about'],
-  [/\bempresas?\b/gi, 'enterprise / company'],
-  [/\bconocimiento\b/gi, 'knowledge'],
-  [/\bestrategia\b/gi, 'strategy'],
-  [/\bc[oó]mo\b/gi, 'how'],
-  [/\bqu[eé]\b/gi, 'what'],
-  [/\bdesarrollo\b/gi, 'development'],
-  [/\bcasos de uso\b/gi, 'use cases'],
-];
 
 /* Industry slugs that moved. A link to one of these is a link to a redirect,
    and the canonical rule is zero of them.

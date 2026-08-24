@@ -23,7 +23,7 @@ import { fileURLToPath } from 'node:url';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
 import { IMAGENES as CATALOGO } from '../src/content/imagenes.js';
-import { ANGLICISMOS } from './lexico.mjs';
+import { ANGLICISMOS, GENERICO, CASTELLANO } from './lexico.mjs';
 
 /**
  * Quién firma no está escrito aquí: sale de las fichas de autor, que se editan
@@ -245,6 +245,23 @@ export function validar(art, { archivo = '', slugsAjenos = new Set() } = {}) {
         const vistos = new Set();
         for (const m of texto.matchAll(expresion)) vistos.add(m[0]);
         for (const v of vistos) d(`anglicismo en el cuerpo español: "${v}" — usa ${arreglo}`);
+      }
+    }
+
+    /* Y en el lado inglés, las dos listas que revisa el despliegue: lenguaje
+       genérico de proveedor de IA —«unlock the power of», «seamless»,
+       «leverage»— y español colado dentro de una página en inglés.
+     *
+       Es exactamente el mismo agujero que el de los anglicismos, en el otro
+       idioma, y por eso se tapa a la vez: no tiene sentido arreglar el lado
+       español y dejar el inglés esperando a que le toque. */
+    if (lang === 'en') {
+      for (const [nivel, reglas] of [['lenguaje genérico de proveedor de IA', GENERICO], ['español dentro del inglés', CASTELLANO]]) {
+        for (const [expresion, arreglo] of reglas) {
+          const vistos = new Set();
+          for (const m of texto.matchAll(expresion)) vistos.add(m[0]);
+          for (const v of vistos) d(`${nivel}: "${v}" — usa ${arreglo}`);
+        }
       }
     }
 
