@@ -139,6 +139,13 @@ jobs:
       #
       # Corre antes de subir a propósito. Las mismas comprobaciones contra el
       # sitio ya publicado llegarían tarde: el error estaría en producción.
+      # El panel, usado en un navegador de verdad: la pantalla de inicio, los
+      # anillos de avance, los filtros, la vista previa de Google y que nada se
+      # monte encima de la barra inferior en el móvil. Compilar no comprueba
+      # nada de eso.
+      - name: El panel se puede usar
+        run: node scripts/probar-panel-v2.mjs
+
       - name: QA de indexación
         run: node scripts/qa-indexacion.mjs
 

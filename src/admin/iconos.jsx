@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Article, Files, SquaresFour, BookOpen, UserCircle, EnvelopeSimple,
   List, X, CaretDown, CaretUp, ArrowUp, ArrowDown, Trash,
-  SignOut, ArrowSquareOut, Plus, ArrowLeft,
+  SignOut, ArrowSquareOut, Plus, ArrowLeft, House, DotsThree,
 } from '@phosphor-icons/react';
 
 /**
@@ -44,6 +44,7 @@ const decorativo = (Glifo) => function Icono({ tamano = 'normal' }) {
 /* Los seis módulos. El icono no es un adorno: en una lista de seis nombres
    parecidos, la forma se reconoce antes que la palabra, y quien usa esto todos
    los días acaba yendo a la forma. */
+export const IconoHoy           = decorativo(House);
 export const IconoArticulos     = decorativo(Article);
 export const IconoPaginas       = decorativo(Files);
 export const IconoContenido     = decorativo(SquaresFour);
@@ -63,9 +64,11 @@ export const IconoSalir   = decorativo(SignOut);
 export const IconoFuera   = decorativo(ArrowSquareOut);
 export const IconoNuevo   = decorativo(Plus);
 export const IconoVolver  = decorativo(ArrowLeft);
+export const IconoMas     = decorativo(DotsThree);
 
 /** El icono de cada módulo, por su id. */
 export const ICONO_MODULO = {
+  hoy: IconoHoy,
   articulos: IconoArticulos,
   paginas: IconoPaginas,
   contenido: IconoContenido,

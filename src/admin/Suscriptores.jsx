@@ -152,6 +152,21 @@ export default function Suscriptores({ alCerrar }) {
   const t = datos?.totales || {};
   const total = (t.confirmado || 0) + (t.pendiente || 0) + (t.baja || 0);
 
+  /* Cuántos se apuntaron este mes. Se cuenta sobre los que llegan —los 50 más
+     recientes— y por eso el rótulo dice «de los últimos 50»: una cifra que
+     parece del total y es de una muestra es una cifra que engaña, y esta se
+     mira justo para saber si la lista crece. */
+  const mes = new Date().toISOString().slice(0, 7);
+  const nuevos = (datos?.ultimos || []).filter((s) => String(s.alta_en || '').slice(0, 7) === mes).length;
+
+  /* Las iniciales de una dirección de correo. Dos letras del nombre antes de
+     la arroba: no identifican a nadie, pero dan a cada fila una forma distinta
+     y eso es lo que permite volver a encontrar la que se estaba mirando
+     después de desplazar la lista. */
+  const iniciales = (email) => String(email || '?').split('@')[0]
+    .split(/[.\-_+]/).filter(Boolean).slice(0, 2)
+    .map((x) => x[0].toUpperCase()).join('') || String(email || '?')[0].toUpperCase();
+
   return (
     <div style={{ display: 'grid', gap: 20 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
@@ -184,12 +199,15 @@ export default function Suscriptores({ alCerrar }) {
       {datos?.configurado && (
         <>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 12 }}>
-            {[['confirmado', 'Confirmados'], ['pendiente', 'Pendientes'], ['baja', 'Bajas']].map(([k, nombre]) => (
+            {[['confirmado', 'Confirmados'], ['pendiente', 'Pendientes'], ['baja', 'Bajas'], ['nuevos', 'Altas este mes']].map(([k, nombre]) => (
               <div key={k} style={{ background: marco.papel, border: marco.linea, borderRadius: 2, padding: 16 }}>
                 <Etiqueta>{nombre}</Etiqueta>
                 <p style={{ margin: '4px 0 0', fontFamily: 'var(--font-display)', fontWeight: 'var(--weight-display-strong)', fontSize: 30, color: COLOR[k] }}>
-                  {t[k] || 0}
+                  {k === 'nuevos' ? nuevos : (t[k] || 0)}
                 </p>
+                {k === 'nuevos' && (
+                  <span style={{ font: 'var(--type-mono)', fontSize: 11, color: 'var(--text-faint)' }}>de los últimos 50</span>
+                )}
               </div>
             ))}
           </div>
@@ -218,7 +236,17 @@ export default function Suscriptores({ alCerrar }) {
                     <tr key={s.email}>
                       {/* overflow-wrap: una dirección larga reflota en vez de
                           ensanchar la tabla y sacar el resto de la pantalla. */}
-                      <td style={{ padding: '10px 14px', borderBottom: marco.linea, overflowWrap: 'anywhere' }}>{s.email}</td>
+                      <td style={{ padding: '10px 14px', borderBottom: marco.linea, overflowWrap: 'anywhere' }}>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
+                          <span aria-hidden="true" style={{
+                            flex: 'none', display: 'grid', placeItems: 'center',
+                            width: 28, height: 28, borderRadius: '50%',
+                            background: 'var(--pnl-sup-2, #141A3A)', border: '1px solid var(--pnl-linea, rgba(226,232,240,.14))',
+                            font: 'var(--type-mono)', fontSize: 11, color: 'var(--text-muted)',
+                          }}>{iniciales(s.email)}</span>
+                          {s.email}
+                        </span>
+                      </td>
                       <td style={{ padding: '10px 14px', borderBottom: marco.linea, color: COLOR[s.estado], whiteSpace: 'nowrap' }}>{s.estado}</td>
                       <td style={{ padding: '10px 14px', borderBottom: marco.linea }}>{s.idioma}</td>
                       {/* Cifras tabulares: las fechas de una columna quedan

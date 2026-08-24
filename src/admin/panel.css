@@ -540,3 +540,251 @@ select.pnl-entrada { width: auto; max-width: 100%; }
   border: 1px solid var(--pnl-linea-fuerte); border-radius: var(--pnl-r);
   font: var(--type-mono); font-size: 11px; color: var(--pnl-tinta-2);
 }
+
+/* =============================================================================
+   La segunda vuelta del diseño
+   =============================================================================
+   Lo que sigue es la v2 del handoff: la pantalla de inicio, los anillos de
+   avance, la vista previa de Google, los puntos de estado y la barra de
+   pestañas. Todo con los mismos tokens de arriba; ni un color nuevo.
+
+   La regla que más se rompe y que aquí se respeta: UN solo verde por pantalla.
+   En el editor el verde es «Publicar», así que los puntos de sección escritos
+   son verdes solo porque el botón de publicar vive en una barra flotante que no
+   compite con ellos en la misma mirada. En la pantalla de inicio el verde es la
+   cifra de deuda, y por eso los módulos van en gris.
+   ============================================================================= */
+
+/* --- el punto de estado de cada sección ------------------------------------
+   Seis píxeles. Es lo que cabe dentro de un chip sin empujar el texto, y por
+   eso hay tres estados y no cinco: a ese tamaño, dos verdes distintos son el
+   mismo verde. El estado va además en el `aria-label` del chip. */
+.pnl-punto {
+  display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  margin-right: var(--pnl-2); vertical-align: middle;
+}
+.pnl-punto[data-estado="escrita"] { background: var(--pnl-verde); }
+.pnl-punto[data-estado="revisar"] { background: var(--pnl-tinta); }
+.pnl-punto[data-estado="vacia"]   { background: rgba(226, 232, 240, .28); }
+
+/* --- la cabecera del elemento: cuánto lleva y si está publicado ------------ */
+.pnl-avance { display: grid; gap: var(--pnl-2); margin-bottom: var(--pnl-4); }
+.pnl-avance-fila { display: flex; align-items: center; gap: var(--pnl-3); flex-wrap: wrap; }
+.pnl-avance-titulo { font: var(--type-h4); font-size: 17px; color: var(--pnl-tinta); flex: 1; min-width: 0; }
+.pnl-avance-cifra {
+  font: var(--type-mono); font-size: 13px; color: var(--pnl-tinta-2);
+  font-variant-numeric: tabular-nums;
+}
+.pnl-avance-barra {
+  height: 4px; border-radius: 999px; background: var(--pnl-linea); overflow: hidden;
+  /* Acotada. A ancho completo en un monitor son mil cien píxeles de verde
+     cruzando la pantalla, y entonces el objeto más llamativo del editor es una
+     barra que solo dice «no falta nada» — por delante del botón de publicar,
+     que es lo único que hace algo. Una señal de estado no debe pesar más que
+     la acción. */
+  max-width: 420px;
+}
+.pnl-avance-barra > span {
+  display: block; height: 100%; background: var(--pnl-verde);
+  transition: width 240ms cubic-bezier(.22, 1, .36, 1);
+}
+
+/* La pastilla de estado. Sin publicar lleva hairline fuerte y texto claro; al
+   día se queda tenue. Nada de rojo ni ámbar: tener cambios sin publicar no es
+   un error, es un estado, y pintarlo de alarma enseña a ignorar las alarmas. */
+.pnl-pastilla {
+  padding: 3px var(--pnl-2);
+  border: 1px solid var(--pnl-linea); border-radius: 999px;
+  font: var(--type-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--pnl-tenue); white-space: nowrap;
+}
+.pnl-pastilla[data-sucio] { border-color: var(--pnl-linea-fuerte); color: var(--pnl-tinta); }
+
+/* --- así se verá en Google -------------------------------------------------
+   El azul es el de los enlaces de Google en su tema oscuro, y es el único color
+   de este archivo que no sale del design system de BECOME. Es a propósito: esto
+   no es una pieza del panel, es la foto de otro sitio. Pintarla con nuestros
+   colores la convertiría en decoración y dejaría de servir para lo que sirve,
+   que es reconocer de un vistazo un resultado de búsqueda. */
+.pnl-serp {
+  margin: 0 0 var(--pnl-4);
+  padding: var(--pnl-3) var(--pnl-4);
+  background: var(--pnl-sup); border: 1px solid var(--pnl-linea); border-radius: var(--pnl-r);
+}
+.pnl-serp figcaption {
+  font: var(--type-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--pnl-tenue); margin-bottom: var(--pnl-2);
+}
+.pnl-serp-ruta { margin: 0; font: var(--type-mono); font-size: 12px; color: var(--pnl-tinta-2); overflow-wrap: anywhere; }
+.pnl-serp-titulo { margin: 2px 0 0; font-size: 17px; line-height: 1.3; color: #8AB4F8; overflow-wrap: anywhere; }
+.pnl-serp-desc { margin: 4px 0 0; font-size: 13px; line-height: 1.45; color: var(--pnl-tinta-2); overflow-wrap: anywhere; }
+.pnl-serp-falta { color: var(--pnl-tenue); font-style: italic; }
+.pnl-serp-corte { margin: var(--pnl-2) 0 0; font-size: 12px; color: var(--pnl-tenue); }
+
+/* --- la pantalla de inicio -------------------------------------------------- */
+.pnl-hoy { display: grid; gap: var(--pnl-5); padding-bottom: var(--pnl-6); }
+.pnl-hoy-cab { display: grid; gap: var(--pnl-1); }
+.pnl-hoy-fecha {
+  margin: 0; font: var(--type-mono); font-size: 11px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--pnl-tenue);
+}
+
+.pnl-hoy-agente {
+  display: grid; gap: var(--pnl-2); justify-items: start;
+  padding: var(--pnl-4); background: var(--pnl-sup);
+  border: 1px solid var(--pnl-linea); border-radius: var(--pnl-r);
+}
+.pnl-hoy-etiqueta {
+  margin: 0; font: var(--type-mono); font-size: 10px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--pnl-tenue);
+}
+.pnl-hoy-titular { margin: 0; font: var(--type-h4); font-size: 19px; line-height: 1.3; color: var(--pnl-tinta); }
+.pnl-hoy-meta { display: flex; align-items: center; gap: var(--pnl-3); margin: 0; flex-wrap: wrap; }
+.pnl-hoy-cuando { font: var(--type-mono); font-size: 12px; color: var(--pnl-tenue); }
+.pnl-hoy-esperando { margin: 0; color: var(--pnl-tenue); }
+
+/* Las dos deudas. Aquí vive el único verde de la pantalla. */
+.pnl-hoy-deudas { display: grid; gap: var(--pnl-3); grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.pnl-hoy-deuda {
+  display: grid; gap: var(--pnl-1); justify-items: start; text-align: left;
+  min-height: var(--pnl-toque); padding: var(--pnl-3) var(--pnl-4);
+  background: transparent; border: 1px solid var(--pnl-linea); border-radius: var(--pnl-r);
+  color: var(--pnl-tinta-2); font: inherit; cursor: pointer;
+}
+.pnl-hoy-deuda:hover { border-color: var(--pnl-linea-fuerte); }
+.pnl-hoy-deuda strong { font: var(--type-mono); font-size: 30px; line-height: 1; color: var(--pnl-verde); }
+.pnl-hoy-deuda span { font-size: 13px; line-height: 1.35; }
+
+.pnl-hoy-rotulo {
+  margin: 0; font: var(--type-mono); font-size: 11px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--pnl-tenue);
+}
+.pnl-hoy-rejilla { display: grid; gap: var(--pnl-3); grid-template-columns: 1fr 1fr; }
+.pnl-mod {
+  display: grid; gap: var(--pnl-2); justify-items: start; text-align: left;
+  min-height: 108px; padding: var(--pnl-4);
+  background: var(--pnl-sup); border: 1px solid var(--pnl-linea); border-radius: var(--pnl-r);
+  color: var(--pnl-tinta-2); font: inherit; cursor: pointer;
+}
+.pnl-mod:hover { background: var(--pnl-sup-2); border-color: var(--pnl-linea-fuerte); }
+.pnl-mod-icono { display: inline-flex; color: var(--pnl-tenue); }
+.pnl-mod-nombre { font-size: 15px; color: var(--pnl-tinta); }
+.pnl-mod-cifra { font: var(--type-mono); font-size: 12px; color: var(--pnl-tenue); font-variant-numeric: tabular-nums; }
+.pnl-mod-barra { width: 100%; height: 3px; border-radius: 999px; background: var(--pnl-linea); overflow: hidden; }
+.pnl-mod-barra > span { display: block; height: 100%; background: var(--pnl-tinta-2); }
+
+/* --- la barra de pestañas del móvil ----------------------------------------
+   Fija abajo, con el hueco de la franja del iPhone descontado: sin
+   `safe-area-inset-bottom` el último botón queda debajo de la barra del sistema
+   y hay que estirar el pulgar hasta un sitio donde el toque no llega. */
+.pnl-pestanas {
+  position: sticky; bottom: 0; z-index: 20;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  background: var(--pnl-fondo); border-top: 1px solid var(--pnl-linea);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.pnl-pestana {
+  display: grid; gap: 2px; justify-items: center; align-content: center;
+  min-height: 56px; padding: var(--pnl-2) 0;
+  background: transparent; border: 0; color: var(--pnl-tenue);
+  font: inherit; font-size: 11px; cursor: pointer;
+}
+/* Dónde estás: la misma gramática que la columna lateral —una línea verde fina
+   marcando la posición— y no un icono verde entero. Un icono relleno de verde
+   en la esquina del ojo compite con la cifra de deuda, que es lo único de esa
+   pantalla que pide una acción. La línea marca sin gritar. */
+.pnl-pestana { border-top: 2px solid transparent; }
+.pnl-pestana[aria-current="page"] { color: var(--pnl-tinta); border-top-color: var(--pnl-verde); }
+
+/* --- el anillo de avance de cada elemento ----------------------------------
+   Un `conic-gradient` y no un SVG: es un solo elemento, escala con la letra y
+   no añade nodos a una lista que puede tener treinta filas. El agujero del
+   centro lo hace un pseudo-elemento del color del fondo. */
+.pnl-anillo {
+  position: relative; flex: 0 0 auto;
+  width: 32px; height: 32px; border-radius: 50%;
+}
+.pnl-anillo::after {
+  content: ''; position: absolute; inset: 4px;
+  background: var(--pnl-fondo); border-radius: 50%;
+}
+.pnl-anillo > span {
+  position: absolute; inset: 0; display: grid; place-items: center; z-index: 1;
+  font: var(--type-mono); font-size: 9px; color: var(--pnl-tinta-2);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Las pastillas de idioma de cada fila: dicen si ese idioma está escrito. */
+.pnl-idiomas { display: inline-flex; gap: var(--pnl-1); }
+.pnl-idioma {
+  padding: 2px 6px; border: 1px solid var(--pnl-linea); border-radius: var(--pnl-r);
+  font: var(--type-mono); font-size: 10px; letter-spacing: .08em;
+  color: rgba(226, 232, 240, .38);
+}
+.pnl-idioma[data-hecho] { border-color: var(--pnl-linea-fuerte); color: var(--pnl-tinta-2); }
+
+/* --- el panel derecho del escritorio --------------------------------------- */
+.pnl-conlado { display: grid; gap: var(--pnl-5); align-items: start; }
+.pnl-lado { display: none; }
+
+@media (min-width: 64rem) {
+  /* La barra de pestañas es del móvil: en el ordenador ya está la columna
+     lateral, y dos navegaciones a la vez son dos sitios donde buscar lo mismo. */
+  .pnl-pestanas { display: none; }
+  .pnl-hoy-rejilla { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (min-width: 82.5rem) {
+  /* 1320 px: el ancho a partir del cual caben el formulario y el panel derecho
+     sin que ninguno de los dos se estreche por debajo de lo legible. Por debajo
+     de eso, la vista previa vuelve a su sitio dentro del formulario. */
+  .pnl-conlado { grid-template-columns: minmax(0, 1fr) 320px; }
+  .pnl-lado { display: grid; gap: var(--pnl-4); position: sticky; top: var(--pnl-4); }
+  .pnl-conlado .pnl-lado .pnl-serp { margin-bottom: 0; }
+  .pnl-conlado > .pnl-columna .pnl-serp--dentro { display: none; }
+}
+
+/* --- la lista de elementos de un esquema ------------------------------------
+   Filas separadas por hairline y sin tarjetas: doce tarjetas apiladas en un
+   móvil son doce marcos que compiten con su propio contenido. */
+.pnl-filas { display: grid; }
+.pnl-fila-elem {
+  display: flex; align-items: center; gap: var(--pnl-3);
+  width: 100%; min-height: 68px; padding: var(--pnl-3) 0;
+  background: transparent; border: 0; border-bottom: 1px solid var(--pnl-linea);
+  color: var(--pnl-tinta-2); font: inherit; text-align: left; cursor: pointer;
+}
+.pnl-fila-elem:hover { background: rgba(0, 255, 136, .06); }
+.pnl-fila-texto { display: grid; gap: 2px; flex: 1; min-width: 0; }
+.pnl-fila-texto strong { font-size: 17px; color: var(--pnl-tinta); overflow-wrap: anywhere; }
+.pnl-fila-meta { font: var(--type-mono); font-size: 11px; color: var(--pnl-tenue); }
+
+/* Lo que solo oye un lector de pantalla. El anillo y las pastillas dicen el
+   estado con forma y contraste; esto lo dice con palabras. */
+.pnl-sr {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+
+.pnl-lado-estado {
+  padding: var(--pnl-3) var(--pnl-4);
+  background: var(--pnl-sup); border: 1px solid var(--pnl-linea); border-radius: var(--pnl-r);
+}
+.pnl-lado-lista { display: grid; gap: var(--pnl-2); margin: var(--pnl-2) 0 0; }
+.pnl-lado-lista > div { display: flex; justify-content: space-between; gap: var(--pnl-3); }
+.pnl-lado-lista dt { font-size: 13px; color: var(--pnl-tenue); }
+.pnl-lado-lista dd {
+  margin: 0; font: var(--type-mono); font-size: 13px; color: var(--pnl-tinta-2);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- el editor de artículo y su vista previa --------------------------------
+   Apiladas por defecto y en dos columnas solo a partir de 1024 px. La vista
+   previa usa los estilos de la web pública —fondo claro— así que aquí, además,
+   se le pone su propio contexto de apilamiento por debajo de la barra inferior:
+   sin eso, un bloque claro de la previsualización tapaba las pestañas. */
+.pnl-doble { display: grid; gap: var(--pnl-5); align-items: start; position: relative; z-index: 0; }
+
+@media (min-width: 64rem) {
+  .pnl-doble[data-previa] { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}

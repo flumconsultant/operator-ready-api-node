@@ -6,6 +6,7 @@ import Autores from './Autores.jsx';
 import Suscriptores from './Suscriptores.jsx';
 import Paginas from './Paginas.jsx';
 import Contenido from './Contenido.jsx';
+import Hoy from './Hoy.jsx';
 import { Etiqueta, Texto, Boton, Fila, Aviso } from './piezas.jsx';
 import Marco from './Marco.jsx';
 import { IconoSalir, IconoFuera } from './iconos.jsx';
@@ -201,7 +202,10 @@ export default function Panel() {
   /* La pantalla de autores es una vista aparte y no una pestaña dentro del
      editor: se toca una vez cada muchos meses, y meterla junto a lo que se usa
      todos los días solo estorba. */
-  const [vista, setVista] = React.useState('articulos');
+  /* Se entra por Hoy y no por la lista de artículos. La lista contesta «qué
+     hay»; Hoy contesta «qué pasó y qué falta», que es la pregunta con la que
+     alguien abre el panel desde el móvil. */
+  const [vista, setVista] = React.useState('hoy');
 
   const cerrarSesion = async () => {
     await api.salir().catch(() => {});
@@ -287,7 +291,9 @@ export default function Panel() {
       <Aviso tono="mal">{error}</Aviso>
       <Aviso tono="bien">{nota}</Aviso>
 
-      {vista === 'conocimiento' && !abierto ? (
+      {vista === 'hoy' && !abierto ? (
+        <Hoy quien={sesion.nombre} alIr={setVista} />
+      ) : vista === 'conocimiento' && !abierto ? (
         <Paginas carpeta="conocimiento" titulo="Conocimiento de BECOME"
                  vacio="Aquí vive lo que un agente necesita saber para hablar por BECOME: quién eres, qué no haces, qué respondes. Cada documento lleva escrita la pregunta que contesta." />
       ) : vista === 'contenido' && !abierto ? (

@@ -9,3 +9,6 @@ _*.mjs
 # se versionan, para poder ver qué cambió entre una revisión de texto y otra.
 contenido/*.zip
 contenido/revision/*.zip
+
+# Las capturas del recorrido del panel: se regeneran al ejecutarlo.
+capturas-panel/

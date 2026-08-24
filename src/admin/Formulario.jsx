@@ -1,4 +1,5 @@
 import React from 'react';
+import { avance, estadoSeccion, ROTULO_ESTADO } from './avance.js';
 import { Boton } from './piezas.jsx';
 import { IconoSubir, IconoBajar, IconoQuitar, IconoArriba, IconoAbajo, IconoNuevo } from './iconos.jsx';
 import './panel.css';
@@ -264,11 +265,28 @@ export function Formulario({ campos, valores, alCambiar }) {
     <div className="pnl-formulario">
       {!solaSeccion && (
         <nav className="pnl-indice" aria-label="Secciones de este formulario">
-          {secciones.map((s) => (
-            <button key={s.id} type="button" className="pnl-chip" aria-current={s.id === visible ? 'true' : undefined} onClick={() => ir(s.id)}>
-              {s.titulo}
-            </button>
-          ))}
+          {secciones.map((s) => {
+            /* El punto dice si esa sección está escrita SIN entrar en ella.
+               Antes había que abrir las nueve para descubrir que faltaba una:
+               en un formulario de veinte campos que se recorre con el pulgar,
+               eso son nueve toques para saber dónde está el trabajo.
+               El estado va también en el rótulo accesible, porque un punto de
+               color no lo lee nadie con un lector de pantalla. */
+            const estado = estadoSeccion(s.campos, valores);
+            return (
+              <button
+                key={s.id}
+                type="button"
+                className="pnl-chip"
+                aria-current={s.id === visible ? 'true' : undefined}
+                aria-label={`${s.titulo}, ${ROTULO_ESTADO[estado]}`}
+                onClick={() => ir(s.id)}
+              >
+                <span className="pnl-punto" data-estado={estado} aria-hidden="true" />
+                {s.titulo}
+              </button>
+            );
+          })}
         </nav>
       )}
 
@@ -281,7 +299,7 @@ export function Formulario({ campos, valores, alCambiar }) {
               <button type="button" className="pnl-seccion-cab" aria-expanded={abierta} onClick={() => alternar(s.id)}>
                 <span className="pnl-seccion-titulo">{s.titulo}</span>
                 <span className="pnl-seccion-cuenta">
-                  {s.campos.length} {s.campos.length === 1 ? 'campo' : 'campos'}
+                  {(() => { const a = avance(s.campos, valores); return `${a.escritos}/${a.total} campos`; })()}
                   {filas > 0 && ` · ${filas} ${filas === 1 ? 'fila' : 'filas'}`}
                 </span>
                 <span className="pnl-seccion-flecha">{abierta ? <IconoArriba /> : <IconoAbajo />}</span>
@@ -325,5 +343,127 @@ export function BarraPublicar({ sucio, guardando, problemas = 0, onPublicar, eti
           : 'Publicar guarda la versión y lanza el despliegue. Tarda unos minutos en verse en la web.'}
       </p>
     </div>
+  );
+}
+
+/**
+ * La cabecera del elemento: cuánto lleva escrito y si hay algo sin publicar.
+ *
+ * ---- Por qué una barra y no solo un número ----
+ *
+ * «16/20» dice la cifra exacta y no dice si eso es mucho. La barra se entiende
+ * de un vistazo y el número queda al lado para quien necesite el dato. Las dos
+ * cosas, no una: el número solo obliga a hacer la división mentalmente, la
+ * barra sola no dice cuántos campos faltan por escribir.
+ *
+ * ---- Y por qué la pastilla dice SIN PUBLICAR ----
+ *
+ * En este panel guardar es publicar y el sitio tarda minutos en compilarse. Sin
+ * esta pastilla, alguien que escribe, cierra y vuelve no tiene forma de saber
+ * si lo suyo llegó a salir. El estado es del elemento, no del botón.
+ */
+export function AvanceElemento({ campos, valores, sucio, titulo }) {
+  const a = avance(campos, valores);
+  return (
+    <div className="pnl-avance">
+      <div className="pnl-avance-fila">
+        {titulo && <span className="pnl-avance-titulo">{titulo}</span>}
+        <span className="pnl-avance-cifra">{a.escritos}/{a.total}</span>
+        <span className="pnl-pastilla" data-sucio={sucio || undefined}>
+          {sucio ? 'Sin publicar' : 'Al día'}
+        </span>
+      </div>
+      <div
+        className="pnl-avance-barra"
+        role="progressbar"
+        aria-valuenow={a.escritos}
+        aria-valuemin={0}
+        aria-valuemax={a.total}
+        aria-label={`${a.escritos} de ${a.total} campos escritos`}
+      >
+        <span style={{ width: `${a.pct}%` }} />
+      </div>
+    </div>
+  );
+}
+
+/* Qué campo del esquema es el título, cuál la descripción y cuál la ruta.
+ *
+ * Se busca por identificador y no se pide que el esquema lo declare: los
+ * esquemas ya existen y escritos están, y una vista previa que solo aparece
+ * después de tocar seis archivos JSON es una vista previa que no aparece. Si no
+ * encuentra título y descripción, no se dibuja nada. */
+const PISTAS = {
+  titulo: ['metatitulo', 'metatitle', 'seotitulo', 'seotitle', 'titulo', 'title'],
+  descripcion: ['metadescripcion', 'metadescription', 'seodesc', 'seodescripcion', 'descripcion', 'description'],
+  ruta: ['slug', 'ruta', 'path', 'url'],
+};
+
+const buscar = (campos, pistas) => {
+  const norm = (x) => String(x).toLowerCase().replace(/[^a-z]/g, '');
+  for (const pista of pistas) {
+    const c = (campos || []).find((x) => norm(x.id) === pista);
+    if (c) return c;
+  }
+  for (const pista of pistas) {
+    const c = (campos || []).find((x) => norm(x.id).includes(pista));
+    if (c) return c;
+  }
+  return null;
+};
+
+/**
+ * Cómo se va a ver esto en Google, mientras se escribe.
+ *
+ * ---- El problema que resuelve ----
+ *
+ * El contador dice «62/60» y quien escribe tiene que imaginarse qué significa
+ * eso en un resultado de búsqueda. Aquí no hay que imaginarlo: el título se
+ * corta en pantalla por donde lo va a cortar Google, y se ve que la frase queda
+ * sin el final. Es la misma información que el contador, dicha de la única
+ * forma que no hace falta interpretar.
+ *
+ * Los límites son 60 y 155 caracteres. No son exactos —Google mide en píxeles
+ * y depende del dispositivo— y por eso el corte se dibuja con puntos
+ * suspensivos en vez de con una línea roja: aproximado y honesto es mejor que
+ * preciso y falso.
+ *
+ * El azul es el de los enlaces de Google en su tema oscuro. No es del design
+ * system de BECOME a propósito: esto no es una pieza del panel, es una foto de
+ * otro sitio, y pintarla con nuestros colores la volvería decorativa.
+ */
+export function VistaGoogle({ campos, valores, sitio = 'meetbecome.com' }) {
+  const cT = buscar(campos, PISTAS.titulo);
+  const cD = buscar(campos, PISTAS.descripcion);
+  const cR = buscar(campos, PISTAS.ruta);
+  if (!cT || !cD) return null;
+
+  const texto = (c) => (c && typeof valores?.[c.id] === 'string' ? valores[c.id] : '');
+  const recorta = (s, max) => (s.length > max ? `${s.slice(0, max).replace(/\s+\S*$/, '')}…` : s);
+
+  const titulo = texto(cT);
+  const desc = texto(cD);
+  const ruta = texto(cR).replace(/^\/?/, '/');
+
+  return (
+    <figure className="pnl-serp">
+      <figcaption>Así se verá en Google</figcaption>
+      <p className="pnl-serp-ruta">{sitio}{ruta === '/' ? '' : ruta}</p>
+      <p className="pnl-serp-titulo">
+        {titulo ? recorta(titulo, 60) : <span className="pnl-serp-falta">Sin título todavía</span>}
+      </p>
+      <p className="pnl-serp-desc">
+        {desc ? recorta(desc, 155) : <span className="pnl-serp-falta">Sin descripción todavía</span>}
+      </p>
+      {(titulo.length > 60 || desc.length > 155) && (
+        <p className="pnl-serp-corte">
+          {titulo.length > 60 && desc.length > 155
+            ? 'El título y la descripción se cortan por donde marcan los puntos.'
+            : titulo.length > 60
+              ? 'El título se corta por donde marcan los puntos.'
+              : 'La descripción se corta por donde marcan los puntos.'}
+        </p>
+      )}
+    </figure>
   );
 }

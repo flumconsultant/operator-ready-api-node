@@ -1,7 +1,8 @@
 import React from 'react';
 import * as api from './api.js';
 import { Boton, Aviso } from './piezas.jsx';
-import { Formulario, BarraPublicar } from './Formulario.jsx';
+import { Formulario, BarraPublicar, AvanceElemento, VistaGoogle } from './Formulario.jsx';
+import { avance } from './avance.js';
 import './panel.css';
 
 /**
@@ -30,6 +31,18 @@ import './panel.css';
 export default function Contenido() {
   const [esquemas, setEsquemas] = React.useState([]);
   const [abierto, setAbierto] = React.useState(null);   // { esquema, datos, claves }
+  /* Los datos del OTRO idioma, solo para saber qué está traducido. No se editan
+     desde aquí: se piden una vez al abrir el esquema y sirven para pintar las
+     pastillas ES/EN de la lista. Sin ellos, «sin traducir» sería una suposición,
+     y un filtro que supone es un filtro que esconde trabajo real. */
+  const [otros, setOtros] = React.useState(null);
+  const [filtro, setFiltro] = React.useState('todas');
+  /* Tres niveles y no dos: esquemas → elementos → editor. Antes el elemento se
+     elegía en un desplegable dentro del editor, y un desplegable de doce
+     nombres no dice cuál de los doce está a medias: hay que abrirlos uno a uno
+     para descubrirlo. La lista lo dice sin entrar en ninguno. */
+  const [enLista, setEnLista] = React.useState(true);
+  const [busca, setBusca] = React.useState('');
   const [clave, setClave] = React.useState('');
   const [idioma, setIdioma] = React.useState('es');
   const [valores, setValores] = React.useState({});
@@ -88,13 +101,23 @@ export default function Contenido() {
       const i = posicion != null && posicion >= 0 && posicion < lista.length ? posicion : 0;
       const elegida = lista[i]?.clave ?? '';
       setAbierto({ esquema: d.esquema, datos: d.datos, claves: lista });
-      setIdioma(d.idioma); setClave(elegida);
+      setIdioma(d.idioma); setClave(elegida); setEnLista(lista.length > 1);
       cargarValores(d.datos, d.esquema, elegida, d.idioma);
+
+      /* El otro idioma, en segundo plano y sin bloquear nada. Si falla, las
+         pastillas se quedan sin pintar y el resto del panel funciona igual:
+         saber qué está traducido es útil, no imprescindible. */
+      const otroIdioma = (d.esquema.idiomas || []).find((x) => x !== d.idioma);
+      if (otroIdioma) {
+        api.abrirEsquema(id, otroIdioma)
+          .then((o) => setOtros({ idioma: otroIdioma, datos: o.datos, esquema: o.esquema, claves: o.claves || [] }))
+          .catch(() => setOtros(null));
+      } else setOtros(null);
     } catch (e) { setError(e.message); }
     finally { setCargando(false); }
   };
 
-  const cambiarElemento = (cl) => { setClave(cl); cargarValores(abierto.datos, abierto.esquema, cl, idioma); setNota(''); };
+  const cambiarElemento = (cl) => { setClave(cl); setEnLista(false); cargarValores(abierto.datos, abierto.esquema, cl, idioma); setNota(''); };
   const cambiarIdioma = (l) => abrir(abierto.esquema.id, l, abierto.claves.findIndex((k) => k.clave === clave));
 
   const guardar = async () => {
@@ -131,6 +154,110 @@ export default function Contenido() {
   }
 
   const { esquema, claves } = abierto;
+
+  /* El avance de cada elemento, en los dos idiomas.
+   *
+   * Se cuenta aquí y no en el servidor porque los datos del esquema ya están
+   * descargados enteros: pedir una cifra que se puede calcular con lo que ya
+   * hay en memoria es una petición de red por cada fila de la lista.
+   *
+   * La correspondencia con el otro idioma es por POSICIÓN, no por clave. Es la
+   * misma razón que ya está escrita más arriba: «escalar-ia» y
+   * «scale-ai-beyond-pilots» son el mismo elemento con dos direcciones. */
+  const resumen = claves.map((k, i) => {
+    const propio = avance(esquema.campos, dentro(abierto.datos, esquema, k.clave, idioma) || {});
+    const otroClave = otros?.claves?.[i]?.clave;
+    const otro = otros && otroClave != null
+      ? avance(esquema.campos, dentro(otros.datos, otros.esquema, otroClave, otros.idioma) || {})
+      : null;
+    return { ...k, i, propio, otro };
+  });
+
+  if (enLista && claves.length > 1) {
+    const norm = (x) => String(x || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const visibles = resumen.filter((r) => {
+      if (busca && !norm(r.nombre).includes(norm(busca))) return false;
+      if (filtro === 'sinescribir') return r.propio.escritos < r.propio.total;
+      if (filtro === 'sintraducir') return r.otro && r.otro.escritos < r.otro.total;
+      return true;
+    });
+
+    return (
+      <div className="pnl-lienzo" style={{ padding: 0 }}>
+        <div className="pnl-barra">
+          <h2 className="pnl-titulo">{esquema.titulo}</h2>
+          <div className="pnl-acciones">
+            <Boton onClick={() => setAbierto(null)}>Volver</Boton>
+          </div>
+        </div>
+
+        <Aviso tono="mal">{error}</Aviso>
+        <Aviso tono="bien">{nota}</Aviso>
+
+        <input
+          className="pnl-entrada"
+          type="search"
+          placeholder={`Buscar en ${esquema.titulo.toLowerCase()}`}
+          aria-label={`Buscar en ${esquema.titulo}`}
+          value={busca}
+          onChange={(e) => setBusca(e.target.value)}
+          style={{ marginBottom: 'var(--pnl-3)' }}
+        />
+
+        {/* Los filtros son los dos estados que provocan trabajo. «Todas» está
+            porque un filtro del que no se puede salir es una trampa. El de
+            «sin traducir» solo aparece si el esquema tiene dos idiomas: un
+            filtro que siempre devuelve la lista entera enseña a no usarlos. */}
+        <div className="pnl-indice" style={{ position: 'static', margin: '0 0 var(--pnl-4)', borderBottom: 0, padding: 0 }}>
+          {[['todas', 'Todas'], ['sinescribir', 'Sin escribir'], ...(otros ? [['sintraducir', 'Sin traducir']] : [])].map(([id, rotulo]) => (
+            <button key={id} type="button" className="pnl-chip" aria-current={filtro === id ? 'true' : undefined} onClick={() => setFiltro(id)}>
+              {rotulo}
+            </button>
+          ))}
+        </div>
+
+        {visibles.length === 0 && (
+          <p className="pnl-ayuda">Nada que enseñar con este filtro.</p>
+        )}
+
+        <div className="pnl-filas">
+          {visibles.map((r) => (
+            <button key={r.clave} type="button" className="pnl-fila-elem" onClick={() => cambiarElemento(r.clave)}>
+              <span className="pnl-anillo" style={{ background: `conic-gradient(var(--pnl-verde) ${r.propio.pct}%, var(--pnl-linea) 0)` }} aria-hidden="true">
+                <span>{r.propio.pct}</span>
+              </span>
+              <span className="pnl-fila-texto">
+                <strong>{r.nombre}</strong>
+                <span className="pnl-fila-meta">
+                  {r.propio.escritos === r.propio.total
+                    ? `${r.propio.total} campos escritos`
+                    : `${r.propio.escritos} de ${r.propio.total} campos`}
+                </span>
+              </span>
+              {/* Las pastillas dicen si ese idioma está completo. Van con su
+                  rótulo accesible porque «ES» apagado y «ES» encendido son la
+                  misma palabra para quien no ve el contraste. */}
+              <span className="pnl-idiomas">
+                <span className="pnl-idioma" data-hecho={r.propio.escritos === r.propio.total || undefined}>
+                  {idioma.toUpperCase()}
+                </span>
+                {r.otro && (
+                  <span className="pnl-idioma" data-hecho={r.otro.escritos === r.otro.total || undefined}>
+                    {otros.idioma.toUpperCase()}
+                  </span>
+                )}
+              </span>
+              <span className="pnl-sr">
+                {r.propio.escritos === r.propio.total ? `Completo en ${idioma.toUpperCase()}.` : `Falta contenido en ${idioma.toUpperCase()}.`}
+                {r.otro && (r.otro.escritos === r.otro.total ? ` Completo en ${otros.idioma.toUpperCase()}.` : ` Falta contenido en ${otros.idioma.toUpperCase()}.`)}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   const sucio = JSON.stringify(valores) !== JSON.stringify(inicial);
 
   /* Lo que impide publicar, dicho antes de intentarlo. El servidor lo vuelve a
@@ -146,7 +273,7 @@ export default function Contenido() {
       <div className="pnl-barra">
         <h2 className="pnl-titulo">{esquema.titulo}</h2>
         <div className="pnl-acciones">
-          <Boton onClick={() => setAbierto(null)} disabled={guardando}>Volver</Boton>
+          <Boton onClick={() => (claves.length > 1 ? setEnLista(true) : setAbierto(null))} disabled={guardando}>Volver</Boton>
         </div>
       </div>
 
@@ -162,11 +289,6 @@ export default function Contenido() {
           botón que guardara los doce a la vez convertiría un error pequeño en
           doce errores. */}
       <div className="pnl-acciones">
-        {claves.length > 1 && (
-          <select className="pnl-entrada" aria-label="Elemento a editar" value={clave} onChange={(e) => cambiarElemento(e.target.value)}>
-            {claves.map((k) => <option key={k.clave} value={k.clave}>{k.nombre}</option>)}
-          </select>
-        )}
         {/* Segmentado y no dos botones: el activo se distingue por superficie,
             no por el verde, que está reservado para la acción principal. */}
         <div className="pnl-segmento" role="group" aria-label="Idioma que se edita">
@@ -178,14 +300,47 @@ export default function Contenido() {
         </div>
       </div>
 
-      {/* La clave y el idioma en la firma: al cambiar de elemento el formulario
-          se monta de nuevo y las secciones vuelven a su estado inicial. */}
-      <Formulario
-        key={`${esquema.id}·${clave}·${idioma}`}
+      <AvanceElemento
         campos={esquema.campos}
         valores={valores}
-        alCambiar={(id, v) => setValores((x) => ({ ...x, [id]: v }))}
+        sucio={sucio}
+        titulo={claves.find((k) => k.clave === clave)?.nombre}
       />
+
+      {/* Dos columnas a partir de 1320 px: el formulario y, a su derecha, la
+          vista previa de Google fija. Por debajo de ese ancho la vista previa
+          viaja dentro del formulario, encima de los campos: en el móvil no hay
+          sitio para una segunda columna, y bajarla al final la dejaría fuera de
+          la pantalla justo mientras se escribe el título. */}
+      <div className="pnl-conlado">
+        <div className="pnl-columna">
+          <div className="pnl-serp--dentro">
+            <VistaGoogle campos={esquema.campos} valores={valores} />
+          </div>
+
+          {/* La clave y el idioma en la firma: al cambiar de elemento el
+              formulario se monta de nuevo y las secciones vuelven a su estado
+              inicial. */}
+          <Formulario
+            key={`${esquema.id}·${clave}·${idioma}`}
+            campos={esquema.campos}
+            valores={valores}
+            alCambiar={(id, v) => setValores((x) => ({ ...x, [id]: v }))}
+          />
+        </div>
+
+        <aside className="pnl-lado" aria-label="Estado de esta página">
+          <VistaGoogle campos={esquema.campos} valores={valores} />
+          <div className="pnl-lado-estado">
+            <p className="pnl-hoy-etiqueta">Estado de la página</p>
+            <dl className="pnl-lado-lista">
+              <div><dt>Campos escritos</dt><dd>{avance(esquema.campos, valores).escritos}/{avance(esquema.campos, valores).total}</dd></div>
+              <div><dt>Idioma</dt><dd>{idioma.toUpperCase()}</dd></div>
+              <div><dt>Sin publicar</dt><dd>{sucio ? 'sí' : 'no'}</dd></div>
+            </dl>
+          </div>
+        </aside>
+      </div>
 
       <BarraPublicar sucio={sucio} guardando={guardando} problemas={problemas.length} onPublicar={guardar} />
     </div>

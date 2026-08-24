@@ -4,6 +4,7 @@ import { PILARES, FORMATOS, minutosDeLectura } from '../content/insights.js';
 import Bloque from './Bloque.jsx';
 import { Etiqueta, Texto, Area, Selector, Contador, Boton, Fila, Aviso, marco } from './piezas.jsx';
 import * as api from './api.js';
+import { VistaGoogle } from './Formulario.jsx';
 
 /**
  * El editor de un artículo.
@@ -190,7 +191,15 @@ export default function Editor({ articulo, alCambiar, publicadoAntes }) {
         </Fila>
       </Fila>
 
-      <div style={{ display: 'grid', gridTemplateColumns: previa ? 'minmax(0, 1fr) minmax(0, 1fr)' : '1fr', gap: 24, alignItems: 'start' }}>
+      {/* Dos columnas solo cuando hay sitio.
+       *
+       * Estaba escrito como estilo en línea, así que las dos columnas se
+       * repartían el ancho también en un móvil: ciento ochenta píxeles para el
+       * formulario y ciento ochenta para la vista previa, y la vista previa
+       * —que es clara, porque es la web— se montaba encima de la barra
+       * inferior. Se veía a simple vista y ningún compilador podía avisarlo.
+       * Ahora la decisión la toma el CSS, que sí sabe cuánto mide la pantalla. */}
+      <div className="pnl-doble" data-previa={previa || undefined}>
         {/* ---- formulario ---- */}
         <div style={{ display: 'grid', gap: 16 }}>
           <div style={{ background: marco.papel, border: marco.linea, borderRadius: 2, padding: 16, display: 'grid', gap: 12 }}>
@@ -210,6 +219,15 @@ export default function Editor({ articulo, alCambiar, publicadoAntes }) {
               </Fila>
               <Area valor={t.descripcion} alCambiar={(v) => pon('descripcion', v)} />
             </div>
+
+          {/* Cómo se va a ver en el resultado de búsqueda, mientras se escribe.
+              El contador dice «62/60» y hay que imaginarse qué significa eso;
+              aquí el título se corta en pantalla por donde lo va a cortar
+              Google y se ve que la frase queda sin final. */}
+          <VistaGoogle
+            campos={[{ id: 'titulo' }, { id: 'descripcion' }, { id: 'slug' }]}
+            valores={{ titulo: t.titulo, descripcion: t.descripcion || t.entradilla || '', slug: t.slug ? `/${lang}/insights/${t.slug}` : '' }}
+          />
           </div>
 
           {/* El post de LinkedIn. Solo en español: la página de empresa publica

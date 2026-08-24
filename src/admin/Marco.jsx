@@ -1,5 +1,5 @@
 import React from 'react';
-import { ICONO_MODULO, IconoMenu, IconoCerrar } from './iconos.jsx';
+import { ICONO_MODULO, IconoMenu, IconoCerrar, IconoMas } from './iconos.jsx';
 import './panel.css';
 
 /**
@@ -39,12 +39,21 @@ import './panel.css';
  */
 
 export const MODULOS = [
+  ['hoy', 'Hoy'],
   ['articulos', 'Artículos'],
   ['paginas', 'Páginas'],
   ['contenido', 'Contenido'],
   ['conocimiento', 'Conocimiento'],
   ['autores', 'Autores'],
   ['suscriptores', 'Suscriptores'],
+];
+
+/* Los tres destinos diarios de la barra inferior. El cuarto botón —«Más»— no
+   es un módulo: abre el cajón con los seis. */
+const PESTANAS = [
+  ['hoy', 'Hoy'],
+  ['contenido', 'Contenido'],
+  ['articulos', 'Artículos'],
 ];
 
 function Navegacion({ vista, alCambiar, alNavegar }) {
@@ -158,6 +167,43 @@ export default function Marco({ vista, alCambiar, quien, acciones, children }) {
         <main id="pnl-contenido" className="pnl-principal" ref={principal} tabIndex={-1}>
           {children}
         </main>
+
+        {/* La barra de pestañas del móvil.
+         *
+         * Cuatro destinos y no seis, porque una barra de seis pone cada objetivo
+         * en 65 píxeles de ancho y el pulgar de nadie mide eso. Los tres que
+         * están son los tres a los que se entra a diario; el cuarto abre el
+         * cajón con todo lo demás, y por eso dice «Más» y no el nombre de un
+         * módulo: un botón que promete un sitio y abre una lista miente.
+         *
+         * Convive con el cajón en lugar de sustituirlo. Quitar el cajón habría
+         * dejado Autores y Suscriptores sin ninguna puerta en el móvil. */}
+        <nav className="pnl-pestanas" aria-label="Ir a">
+          {PESTANAS.map(([id, rotulo]) => {
+            const Icono = ICONO_MODULO[id];
+            return (
+              <button
+                key={id}
+                type="button"
+                className="pnl-pestana"
+                aria-current={vista === id ? 'page' : undefined}
+                onClick={() => alCambiar(id)}
+              >
+                <Icono />
+                <span>{rotulo}</span>
+              </button>
+            );
+          })}
+          <button
+            type="button"
+            className="pnl-pestana"
+            aria-expanded={cajon}
+            onClick={() => setCajon(true)}
+          >
+            <IconoMas />
+            <span>Más</span>
+          </button>
+        </nav>
       </div>
     </div>
   );
