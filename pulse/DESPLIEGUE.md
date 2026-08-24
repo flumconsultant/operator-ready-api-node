@@ -754,6 +754,18 @@ Ese último comando imprime la **clave privada**, entre las líneas
 `-----BEGIN OPENSSH PRIVATE KEY-----` y `-----END OPENSSH PRIVATE KEY-----`.
 Cópiala entera, esas dos líneas incluidas.
 
+> **Si trabajas desde el terminal del navegador, usa mejor esta otra forma.**
+> Copiar seis líneas ahí pierde saltos de línea con facilidad, y una clave a la
+> que le falta un salto no funciona sin decir por qué:
+>
+> ```bash
+> base64 -w0 ~/.ssh/despliegue; echo
+> ```
+>
+> Eso escupe la misma clave en **una sola línea** —un churro que empieza por
+> `LS0tLS1CRUdJTi…`— y una línea se copia sin fallar. El pipeline acepta las
+> dos formas y decide por el contenido, así que no hay que avisarle de nada.
+
 > Esta sí es secreta, al revés que la `.pub`. Va directa al gestor de secretos
 > de GitHub, que la cifra: no la pegues en un chat, ni en un correo, ni en un
 > archivo del repositorio.
