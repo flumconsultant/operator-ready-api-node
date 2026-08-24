@@ -676,43 +676,40 @@ no coincide; un `503`, que `CRON_TOKEN` está vacío en el `.env`.
 
 ### 9.2 Las copias
 
-Hay dos cosas que no se pueden reconstruir: **la base de datos** y **las fotos
-subidas**. Todo lo demás sale del repositorio.
+Hay dos cosas en todo el servidor que no se pueden reconstruir: **la base de
+datos** y **las fotos que sube la gente**. Todo lo demás sale del repositorio.
+
+El script ya está escrito en el repositorio, así que no hay que pegar nada:
 
 ```bash
-sudo mkdir -p /opt/copias && sudo chown $USER:$USER /opt/copias
-nano /opt/pulse/copia.sh
+sudo mkdir -p /opt/copias && chown $USER:$USER /opt/copias
+bash /opt/pulse/pulse/scripts/copia.sh
 ```
 
-```bash
-#!/usr/bin/env bash
-# Copia diaria de Pulse: base de datos e imágenes. Guarda 14 días.
-set -euo pipefail
-cd /opt/pulse
-COMPOSE="docker compose -f pulse/docker-compose.yml --env-file pulse/.env"
-DIA=$(date +%F)
-
-$COMPOSE exec -T db pg_dump -U pulse pulse | gzip > "/opt/copias/base-$DIA.sql.gz"
-$COMPOSE exec -T web tar -cz -C /app subidas > "/opt/copias/imagenes-$DIA.tar.gz"
-
-find /opt/copias -name '*.gz' -mtime +14 -delete
-```
+Esa primera ejecución a mano es la prueba: dice cuánto ocupa cada copia y
+avisa si algo salió vacío. Luego, para que corra sola cada noche:
 
 ```bash
-chmod +x /opt/pulse/copia.sh
 sudo tee /etc/cron.d/pulse-copias >/dev/null <<'EOF'
 # Copia de seguridad de Pulse, todas las noches a las 03:30 UTC.
-30 3 * * * become /opt/pulse/copia.sh >> /var/log/pulse-copias.log 2>&1
+30 3 * * * root /opt/pulse/pulse/scripts/copia.sh >> /var/log/pulse-copias.log 2>&1
 EOF
 ```
 
-Pruébalo ahora mismo: `/opt/pulse/copia.sh && ls -lh /opt/copias`.
+Lo que hace el script, por si hay que tocarlo:
+
+- Vuelca la base con `pg_dump` y empaqueta la carpeta de imágenes.
+- Escribe primero a un archivo `.parcial` y lo renombra al terminar. Si la
+  copia se corta a la mitad —el servidor se reinicia, se llena el disco— no
+  queda un archivo truncado con pinta de copia buena.
+- Comprueba que el resultado pesa algo y que el gzip está entero. Una copia de
+  20 bytes es un error que nadie descubre hasta el día que hace falta.
+- Borra las de más de 14 días.
 
 > **Una copia que vive en el mismo servidor no es una copia.** Si el VPS se
 > pierde, se pierde con él. En cuanto haya datos de un cliente de verdad, esto
 > tiene que salir del servidor: `rclone` a un bucket, o la copia automática que
-> vende Hostinger (unos pocos dólares al mes, y es lo más barato que vas a
-> comprar nunca).
+> vende Hostinger, que es lo más barato que vas a comprar nunca.
 
 ### 9.3 Restaurar
 
