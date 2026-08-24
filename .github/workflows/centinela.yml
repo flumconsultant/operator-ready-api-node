@@ -90,6 +90,13 @@ jobs:
       # que se quedó sin anunciar y ya está fuera de la ventana de tres días: eso
       # no se manda solo —un correo que dice «nuevo artículo» tres días después
       # no es cierto— pero tampoco se calla.
+      # Las tres firmas del dominio. No arreglan nada solas: informan de por qué
+      # un correo que sale bien acaba en spam, que es una pregunta distinta de
+      # «¿salió?» y que ningún log del despliegue contesta.
+      - name: ¿El dominio puede demostrar que el correo es suyo?
+        continue-on-error: true
+        run: node scripts/correo-dns.mjs
+
       - name: ¿Salió el correo de los artículos publicados?
         id: correo
         continue-on-error: true

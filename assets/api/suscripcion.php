@@ -264,6 +264,18 @@ if ($accion === 'difundir') {
 
     $leer = $idioma === 'en' ? 'Read the article' : 'Leer el artículo';
     $baja = $idioma === 'en' ? 'Unsubscribe' : 'Darse de baja';
+    /* El pie de identidad. No es letra pequeña legal: es una señal de
+       legitimidad que los filtros de correo miran.
+     *
+       Un boletín que no dice quién lo manda ni por qué te llega se parece,
+       byte a byte, a uno que compró la dirección. Decirlo —quién es la
+       empresa, dónde está, y que esta dirección se dio de alta en el sitio—
+       es de las pocas cosas del contenido que mueven la aguja en un dominio
+       joven, y además es lo que exige cualquier ley de correo comercial. */
+    $porQue = $idioma === 'en'
+        ? 'You are receiving this because you subscribed at meetbecome.com.'
+        : 'Recibes este correo porque te suscribiste en meetbecome.com.';
+    $quien = 'FLUM E.I.R.L. · RUC 20616001711 · Av. José Gálvez Barrenechea 200, La Victoria, Lima, Perú';
     $enviados = 0; $fallos = 0; $fp = null;
 
     foreach ($lista as $s) {
@@ -276,13 +288,14 @@ if ($accion === 'difundir') {
                que el servidor de correo corte por exceso de conexiones. */
             if ($fp === null) $fp = correo_abrir($cfg);
             correo_enviar($fp, $cfg, $s['email'], $titulo,
-                "$titulo\n\n$entrada\n\n$leer: $urlArt\n\n$baja: $urlBaja",
+                "$titulo\n\n$entrada\n\n$leer: $urlArt\n\n$porQue\n$quien\n\n$baja: $urlBaja",
                 '<div style="font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:1.6;color:#1a1f2e;max-width:520px">'
                 . '<h1 style="font-size:24px;line-height:1.3;margin:0 0 12px">' . htmlspecialchars($titulo) . '</h1>'
                 . '<p style="color:#3d4557">' . htmlspecialchars($entrada) . '</p>'
                 . '<p><a href="' . htmlspecialchars($urlArt) . '" style="display:inline-block;background:#00ff88;color:#05070f;'
                 . 'padding:14px 22px;border-radius:2px;text-decoration:none;font-weight:600">' . $leer . '</a></p>'
                 . '<p style="color:#8b93a7;font-size:13px;border-top:1px solid #e6e8ee;padding-top:14px;margin-top:28px">'
+                . htmlspecialchars($porQue) . '<br>' . htmlspecialchars($quien) . '<br>'
                 . '<a href="' . htmlspecialchars($urlBaja) . '" style="color:#8b93a7">' . $baja . '</a></p></div>');
             $enviados++;
             usleep(250000);
