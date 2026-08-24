@@ -1,0 +1,247 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-08-24",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "value-adoption",
+  "formato": "framework",
+  "es": {
+    "slug": "como-medir-el-retorno-real-de-la-ia",
+    "titulo": "Cómo medir el retorno real de la IA",
+    "entradilla": "En el comité alguien enseña una diapositiva con «ahorramos tiempo» y la pregunta que nadie hace es: ¿comparado con qué? Sin esa respuesta, el número no mide nada.",
+    "descripcion": "El ROI de una iniciativa de IA no se mide con adopción: hace falta línea base, ventana de atribución y saber a dónde fue el tiempo liberado.",
+    "linkedin": {
+      "texto": "Un comité aprueba presupuesto de IA sabiendo que en seis meses alguien va a preguntar qué devolvió.\n\nLa respuesta que suele llegar es un reporte de adopción: cuentas activas, prompts al día, una encuesta con nota alta. Ninguna de esas cifras contesta si el negocio ganó algo, y sin una línea base fijada antes de empezar, tampoco hay forma honesta de saberlo.\n\nEn este análisis de BECOME desarrollamos el método para aislar ese retorno del resto del ruido del negocio.",
+      "hashtags": ["IA", "Finanzas", "Estrategia"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "En el comité alguien enseña una diapositiva con «ahorramos tiempo» y la pregunta que nadie hace es: ¿comparado con qué? Sin esa respuesta, el número no mide nada. Es una cifra con forma de argumento."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Lo he visto en más de un comité de dirección. Seis meses después de aprobar el presupuesto de una iniciativa de IA, alguien vuelve con un reporte de adopción. Cuántas cuentas activas, cuántos prompts al día, una encuesta de satisfacción con nota alta. Todo eso mide uso. Ninguno de esos números contesta la pregunta que hizo el CFO cuando aprobó el gasto, que fue otra: esto, ¿movió algo en la cuenta de resultados?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y ahí empieza el problema, porque nadie en la sala sabe responder eso con honestidad. No por falta de datos: sobran. Falta el método para separar lo que hizo la IA de lo que hizo el negocio solo, que en la mayoría de los casos es indistinguible a simple vista."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Cómo se mide el retorno real de una iniciativa de IA?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La respuesta que circula hoy es una lista de métricas de escaparate maquilladas de rigor: adopción, satisfacción, número de casos de uso en producción. Sirven para el reporte trimestral y no sirven para defender el segundo año de presupuesto, porque ninguna aísla el efecto de la IA del resto de lo que pasaba en el negocio al mismo tiempo."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El reporte compara el trimestre con IA contra el trimestre sin IA, pero en medio también cambió el volumen de demanda, la plantilla o el proceso.",
+          "Nadie definió una línea base antes de empezar, así que el «antes» se reconstruye de memoria seis meses después.",
+          "El tiempo que la herramienta libera se reporta como ahorro aunque nadie verificó a qué se destinó esa hora.",
+          "El ROI se calcula sobre el piloto, con el equipo más motivado y el caso más fácil, y se proyecta como si fuera a repetirse igual en el resto de la operación.",
+          "La cifra que sube en el dashboard es la de uso, no la de resultado, porque es la que existe y la que se puede sacar sin pedirle nada a finanzas."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema detrás",
+        "texto": "El tiempo liberado no es retorno hasta que aterriza en algo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Una hora que la IA le devuelve a un analista no vale nada por sí sola. Vale si se convierte en menos horas trabajadas, en más output del mismo equipo, o en una tarea distinta que antes no se hacía y ahora sí. Si esa hora se rellena sola con más trabajo de la misma cola, que es lo que pasa la mayoría de las veces, el retorno no existe aunque el reporte de uso diga que la herramienta se usa mucho."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y sin línea base ni ventana de comparación, cualquier mejora que se observe puede venir de la IA o puede venir de que el trimestre fue mejor por otra razón: se contrató a alguien, se simplificó un proceso, bajó la demanda. Atribuirle esa mejora entera a la IA porque coincidió en el tiempo es la forma más común de comprar humo con datos reales."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un dashboard de adopción no es un caso de negocio. Es la prueba de que alguien usó la herramienta, no de que la empresa ganó algo por usarla.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El método",
+        "texto": "Cuatro variables que hay que fijar antes de medir, no después."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Línea base",
+            "definicion": "El estado del proceso antes de la IA, medido con el mismo indicador que se va a usar después: tiempo por caso, coste por transacción, tasa de error. Se fija antes de empezar, no se reconstruye de memoria al final."
+          },
+          {
+            "termino": "Ventana de atribución",
+            "definicion": "El periodo en el que se compara el antes y el después, controlando qué más cambió en ese tramo: volumen, plantilla, proceso. Sin esa lista, la mejora se le atribuye entera a la IA por defecto."
+          },
+          {
+            "termino": "Destino del tiempo",
+            "definicion": "A dónde fue la hora liberada: menos headcount, más output del mismo equipo, o una tarea nueva de valor distinto. Si nadie puede nombrar el destino, esa hora no cuenta como retorno."
+          },
+          {
+            "termino": "Grupo de comparación",
+            "definicion": "Un equipo o proceso equivalente que no usó la IA en el mismo periodo. No hace falta un experimento de laboratorio: basta una unidad de negocio parecida que sirva de referencia de cuánto habría cambiado igual sin la herramienta."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguna de las cuatro exige más presupuesto. Exige decidirlas antes de aprobar la iniciativa, no cuando alguien pide el número en el comité. El equipo que las fija por adelantado llega con un caso de negocio. El que no, llega con un dashboard de uso y la esperanza de que nadie pregunte comparado con qué."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Coge la iniciativa de IA que ya lleva más tiempo corriendo y pregunta, para cada resultado que se le atribuye, cuál habría sido esa misma cifra sin la herramienta. Si nadie en la sala puede contestar con un número, no hay caso de negocio: hay una corazonada con gráfico."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cómo se mide el retorno real de una iniciativa de IA?",
+            "respuesta": "Fijando antes de empezar una línea base con el mismo indicador que se va a comparar después, una ventana de tiempo que controle qué más cambió en el negocio, y el destino concreto del tiempo que la herramienta libera. Sin esas tres decisiones tomadas por adelantado, cualquier número que se presente después es una estimación disfrazada de medición."
+          },
+          {
+            "pregunta": "¿Por qué la adopción no es lo mismo que el retorno de la IA?",
+            "respuesta": "La adopción mide cuánta gente usa la herramienta y con qué frecuencia, que es un dato de comportamiento. El retorno mide si eso cambió algo en el coste, el tiempo o el ingreso de la empresa, que es un dato financiero. Una iniciativa puede tener adopción alta y retorno cero si el tiempo liberado se diluye en más trabajo de la misma cola."
+          },
+          {
+            "pregunta": "¿Cómo se separa el efecto de la IA del resto de cambios del negocio?",
+            "respuesta": "Con una ventana de atribución que registre qué más se movió en el mismo periodo: cambios de plantilla, de volumen o de proceso. Sin ese registro, cualquier mejora observada se le atribuye por defecto a la IA aunque la causa real sea otra, y esa atribución fácil no sobrevive la primera pregunta seria de un CFO."
+          },
+          {
+            "pregunta": "¿Qué pasa con el tiempo que la IA libera si nadie mide a dónde va?",
+            "respuesta": "Se rellena solo con más trabajo de la misma cola, y entonces el día de la persona sigue viéndose igual de lleno aunque la herramienta esté funcionando. Ese tiempo solo cuenta como retorno cuando alguien decide explícitamente su destino, menos horas, más output o una tarea de valor distinto, y verifica después que de verdad fue ahí."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Construyamos tu caso de negocio",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-to-measure-the-real-roi-of-ai",
+    "titulo": "How to measure the real ROI of AI",
+    "entradilla": "In the boardroom someone puts up a slide that says we saved time, and nobody asks the question that matters: compared to what. Without that answer, the number measures nothing.",
+    "descripcion": "AI ROI can't be measured with adoption. It takes a baseline, an attribution window, and a clear answer for where the freed-up time went.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "In the boardroom someone puts up a slide that says we saved time, and nobody asks the question that matters: compared to what. Without that answer, the number measures nothing. It's a figure shaped like an argument."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "I have sat in more than one board meeting where, six months after approving an AI budget, someone comes back with an adoption report. Active seats, prompts per day, a satisfaction score with a high number. All of that measures usage. None of it answers the question the CFO actually asked when the budget got approved, which was different: did this move anything on the P&L."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "And that is where it falls apart, because nobody in the room can honestly answer that. Not for lack of data. There is plenty of data. What is missing is the method to separate what the AI did from what the business would have done anyway, and in most cases the two are impossible to tell apart by eye."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "How do you measure the actual value of an AI initiative?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The answer circulating today is a list of vanity metrics dressed up as rigor: adoption, satisfaction, number of use cases in production. They work for a quarterly update and fail the moment someone has to defend a second year of budget, because none of them isolates the AI's effect from everything else happening in the business at the same time."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The report compares the quarter with AI against the quarter without it, while headcount, demand or the process itself also changed in between.",
+          "Nobody set a baseline before starting, so the 'before' gets reconstructed from memory six months later.",
+          "The time the tool frees up gets reported as savings even though nobody checked what that hour actually went toward.",
+          "ROI gets calculated on the pilot, with the most motivated team and the easiest case, then projected as if it would repeat identically across the rest of the operation.",
+          "The number that climbs on the dashboard is usage, not outcome, because usage is the one number that exists without asking finance for anything."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "Freed-up time isn't a return until it lands somewhere."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "An hour AI hands back to an analyst is worth nothing on its own. It is worth something if it turns into fewer hours worked, more output from the same team, or a different task that used to go undone. If that hour refills itself with more of the same queue, which is what happens most of the time, there is no return, no matter what the usage report says."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "And without a baseline or a comparison window, any improvement you observe could come from the AI or from the quarter simply being better for another reason: a new hire, a simplified process, lower demand. Crediting the whole gain to AI because it happened at the same time is the most common way to buy smoke with real data."
+      },
+      {
+        "tipo": "cita",
+        "texto": "An adoption dashboard is not a business case. It's proof that someone used the tool, not that the company gained anything from it.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The method",
+        "texto": "Four variables to fix before measuring, not after."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Baseline",
+            "definicion": "The state of the process before AI, measured with the same indicator you will use afterward: time per case, cost per transaction, error rate. Set before you start, not reconstructed from memory at the end."
+          },
+          {
+            "termino": "Attribution window",
+            "definicion": "The period over which you compare before and after, tracking what else changed in that stretch: volume, headcount, process. Without that list, the improvement gets credited to AI by default."
+          },
+          {
+            "termino": "Where the time went",
+            "definicion": "Fewer heads, more output from the same team, or a new task of different value. If nobody can name the destination, that hour doesn't count as return."
+          },
+          {
+            "termino": "Comparison group",
+            "definicion": "An equivalent team or process that didn't use the AI over the same period. No lab experiment required: a similar business unit works as a reference for how much would have changed anyway."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of the four requires more budget. They require deciding on them before the initiative gets approved, not when someone asks for the number in committee. The team that fixes them upfront shows up with a business case. The one that doesn't shows up with a usage dashboard and hopes nobody asks compared to what."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take the AI initiative that has been running longest and ask, for every result credited to it, what that same number would have been without the tool. If nobody in the room can answer with a number, there is no business case. There is a hunch with a chart attached."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How do you measure the actual value of an AI initiative?",
+            "respuesta": "By fixing a baseline before you start, using the same indicator you will compare later, an attribution window that tracks what else changed in the business, and a defined destination for the time the tool frees up. Without those three decisions made in advance, any number presented afterward is an estimate dressed up as measurement."
+          },
+          {
+            "pregunta": "Why isn't adoption the same as AI return?",
+            "respuesta": "Adoption measures how many people use the tool and how often, which is a behavioural number. Return measures whether that changed cost, time or revenue, which is a financial one. An initiative can show high adoption and zero return if the freed-up time dissolves into more of the same queue."
+          },
+          {
+            "pregunta": "How do you separate AI's effect from other business changes?",
+            "respuesta": "With an attribution window that records what else moved in the same period: headcount, volume, process changes. Without that record, any improvement observed gets credited to AI by default even when the real cause was something else, and that easy attribution never survives a CFO's first serious question."
+          },
+          {
+            "pregunta": "What happens to AI-freed time if nobody tracks where it goes?",
+            "respuesta": "It refills itself with more of the same queue, so the person's day still looks just as full even though the tool is working. That time only counts as return once someone explicitly decides its destination, fewer hours, more output or a different task, and checks afterward that it actually went there."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's build your business case",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
