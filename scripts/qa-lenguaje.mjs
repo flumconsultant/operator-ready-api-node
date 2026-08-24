@@ -89,40 +89,9 @@ const NOMBRES = [
   [/Life Sciences/g, 'Salud y farmacéutica'],
 ];
 
-/* Anglicismos que en el cuerpo español deben ir traducidos. Se buscan como
-   palabra suelta para no marcar «AI agents» dentro de un nombre propio ni
-   «workflow» dentro de una URL. */
-const ANGLICISMOS = [
-  [/\bworkflows?\b/gi, 'procesos / flujos de trabajo'],
-  /* En minúscula es un anglicismo; en mayúscula es el nombre de uno de los
-     cinco sistemas —Agents, inside— y eso es naming de marca. */
-  [/\bagents\b/g, 'agentes de IA'],
-  [/\bcopilots\b/gi, 'copilotos'],
-  [/\bspreadsheets\b/gi, 'hojas de cálculo'],
-  [/\bdata sources\b/gi, 'fuentes de datos'],
-  [/\bresponsible use\b/gi, 'uso responsable'],
-  [/\bhuman review\b/gi, 'revisión humana'],
-  [/\bprototypes\b/gi, 'prototipos'],
-  [/\bdecision system\b/gi, 'sistema de decisión asistida'],
-  [/\bexception paths\b/gi, 'rutas de excepción'],
-  [/\bautonomy boundaries\b/gi, 'límites de autonomía'],
-  [/\bquality criteria\b/gi, 'criterios de calidad'],
-  [/\bengagements?\b/gi, 'proyecto / intervención'],
-  [/\baccountable lead\b/gi, 'responsable principal'],
-  [/\bclient team\b/gi, 'equipo del cliente'],
-  [/\boutputs?\b/gi, 'entregable / resultado'],
-  [/\bfeasibility\b/gi, 'viabilidad'],
-  [/\bexperiences\b/gi, 'experiencias'],
-  [/\bproducts\b/g, 'productos'],
-  [/\badoption\b/gi, 'adopción'],
-  [/\bgovernance\b/gi, 'gobierno / gobernanza'],
-  [/\baccountability\b/gi, 'responsabilidad'],
-  [/\bskills\b/g, 'capacidades'],
-  [/\benterprise search\b/gi, 'búsqueda empresarial'],
-  [/\bfoundation models\b/gi, 'modelos fundacionales'],
-  [/\bguardrails\b/gi, 'controles'],
-  [/\brunbooks?\b/gi, 'manual de operación'],
-];
+const { ANGLICISMOS } = await import('./lexico.mjs');
+
+
 
 /* Lo que se queda en inglés a propósito: naming de marca y terminología que
    traducida pierde precisión o directamente no se usa traducida. Si una de

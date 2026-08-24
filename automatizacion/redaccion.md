@@ -185,6 +185,10 @@ sustantivo abstracto más adverbio dramático huele a máquina a un kilómetro.
 - **Clichés y muletillas:** «en un mundo cada vez más», «es importante destacar»,
   «cabe resaltar», «en la era digital», «game changer», «sin lugar a dudas»,
   «la clave del éxito», «en resumen». Cero.
+- **Anglicismos en el cuerpo español.** «output», «workflow», «guardrails»,
+  «engagement», «governance». La lista entera está en `scripts/lexico.mjs` y la
+  comprueba el guardián. Nombres de marca y siglas —AI-native, LLM, RAG, API—
+  no cuentan.
 - **Cifras sin fuente.** Si hay un porcentaje, hay un «Fuente: …» escrito en el
   artículo. Si no lo has comprobado buscándolo, el dato no existe y se quita.
 - **Nombres de clientes.** Ninguno, ni reales ni inventados.

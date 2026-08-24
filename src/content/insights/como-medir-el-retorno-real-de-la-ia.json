@@ -52,7 +52,7 @@
       },
       {
         "tipo": "parrafo",
-        "texto": "Una hora que la IA le devuelve a un analista no vale nada por sí sola. Vale si se convierte en menos horas trabajadas, en más output del mismo equipo, o en una tarea distinta que antes no se hacía y ahora sí. Si esa hora se rellena sola con más trabajo de la misma cola, que es lo que pasa la mayoría de las veces, el retorno no existe aunque el reporte de uso diga que la herramienta se usa mucho."
+        "texto": "Una hora que la IA le devuelve a un analista no vale nada por sí sola. Vale si se convierte en menos horas trabajadas, en más trabajo entregado por el mismo equipo, o en una tarea distinta que antes no se hacía y ahora sí. Si esa hora se rellena sola con más trabajo de la misma cola, que es lo que pasa la mayoría de las veces, el retorno no existe aunque el reporte de uso diga que la herramienta se usa mucho."
       },
       {
         "tipo": "parrafo",
@@ -81,7 +81,7 @@
           },
           {
             "termino": "Destino del tiempo",
-            "definicion": "A dónde fue la hora liberada: menos headcount, más output del mismo equipo, o una tarea nueva de valor distinto. Si nadie puede nombrar el destino, esa hora no cuenta como retorno."
+            "definicion": "A dónde fue la hora liberada: menos headcount, más trabajo entregado por el mismo equipo, o una tarea nueva de valor distinto. Si nadie puede nombrar el destino, esa hora no cuenta como retorno."
           },
           {
             "termino": "Grupo de comparación",
@@ -115,7 +115,7 @@
           },
           {
             "pregunta": "¿Qué pasa con el tiempo que la IA libera si nadie mide a dónde va?",
-            "respuesta": "Se rellena solo con más trabajo de la misma cola, y entonces el día de la persona sigue viéndose igual de lleno aunque la herramienta esté funcionando. Ese tiempo solo cuenta como retorno cuando alguien decide explícitamente su destino, menos horas, más output o una tarea de valor distinto, y verifica después que de verdad fue ahí."
+            "respuesta": "Se rellena solo con más trabajo de la misma cola, y entonces el día de la persona sigue viéndose igual de lleno aunque la herramienta esté funcionando. Ese tiempo solo cuenta como retorno cuando alguien decide explícitamente su destino, menos horas, más trabajo entregado o una tarea de valor distinto, y verifica después que de verdad fue ahí."
           }
         ]
       },

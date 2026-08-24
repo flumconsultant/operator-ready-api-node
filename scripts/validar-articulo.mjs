@@ -23,6 +23,7 @@ import { fileURLToPath } from 'node:url';
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
 import { IMAGENES as CATALOGO } from '../src/content/imagenes.js';
+import { ANGLICISMOS } from './lexico.mjs';
 
 /**
  * Quién firma no está escrito aquí: sale de las fichas de autor, que se editan
@@ -233,6 +234,19 @@ export function validar(art, { archivo = '', slugsAjenos = new Set() } = {}) {
 
     const bajo = texto.toLowerCase();
     for (const m of MULETILLAS) if (bajo.includes(m)) d(`muletilla de texto generado: "${m}"`);
+
+    /* Anglicismos, y solo en el lado español. Es la MISMA lista que revisa el
+       despliegue: hasta hoy este guardián no la miraba, así que un artículo
+       podía pasar aquí, publicarse en el repositorio y morir en el despliegue
+       por una palabra. Cuando eso ocurre, el día se queda sin artículo y quien
+       lo escribió ya no está delante para arreglarlo. */
+    if (lang === 'es') {
+      for (const [expresion, arreglo] of ANGLICISMOS) {
+        const vistos = new Set();
+        for (const m of texto.matchAll(expresion)) vistos.add(m[0]);
+        for (const v of vistos) d(`anglicismo en el cuerpo español: "${v}" — usa ${arreglo}`);
+      }
+    }
 
     /* La comprobación que más importa. Un artículo firmado por una persona real
        que publica una cifra inventada no se arregla borrándolo después: ya lo
