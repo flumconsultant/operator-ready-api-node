@@ -44,7 +44,9 @@ on:
 
 permissions:
   actions: write
-  contents: read
+  # Escritura porque la comprobación del correo, si tiene que mandar algo,
+  # apunta en el registro que ya lo mandó.
+  contents: write
 
 concurrency:
   group: centinela
@@ -72,6 +74,53 @@ jobs:
         continue-on-error: true
         id: endpoints
         run: node scripts/centinela-api.mjs
+
+      # ---- Y el correo, que es la parte que se cae en silencio ----
+      #
+      # Un artículo puede estar perfectamente publicado en la web y no haberle
+      # llegado a nadie. Ha pasado dos veces: el 23 de agosto por un clon
+      # superficial y el 24 porque el despliegue que traía el artículo murió
+      # antes de llegar al paso del correo.
+      #
+      # Esta es la segunda oportunidad, y es independiente del despliegue: si el
+      # de la mañana no mandó el correo, este lo manda. El script lleva su propio
+      # registro, así que ejecutarlo dos veces no manda dos correos.
+      #
+      # Con `--vigilar`, además, se pone en rojo si hay algún artículo publicado
+      # que se quedó sin anunciar y ya está fuera de la ventana de tres días: eso
+      # no se manda solo —un correo que dice «nuevo artículo» tres días después
+      # no es cierto— pero tampoco se calla.
+      - name: ¿Salió el correo de los artículos publicados?
+        id: correo
+        continue-on-error: true
+        env:
+          DIFUSION_TOKEN: ${{ secrets.DIFUSION_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          # Si hay un despliegue en marcha, no se toca el correo.
+          #
+          # Los dos ejecutan el mismo script y el mismo registro. Si coinciden,
+          # los dos lo leen sin el artículo, los dos lo mandan, y al suscriptor
+          # le llega dos veces. Un correo que falta se manda con un clic; uno
+          # duplicado no se puede recoger.
+          EN_MARCHA=$(gh run list --workflow=deploy.yml --status=in_progress --json databaseId --jq 'length' 2>/dev/null || echo 0)
+          if [ "${EN_MARCHA:-0}" != "0" ]; then
+            echo "Hay un despliegue en marcha: él se encarga del correo. No se toca."
+            exit 0
+          fi
+          node scripts/difundir.mjs --vigilar
+
+      - name: Guardar lo anunciado por correo
+        if: always()
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- .github/correo-enviado.json; then exit 0; fi
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .github/correo-enviado.json
+          git commit -m 'Anunciado por correo desde el centinela [skip ci]'
+          git push origin HEAD:main
 
       - name: ¿Está publicado lo que dice el repositorio?
         id: primera
@@ -116,6 +165,12 @@ jobs:
         if: steps.primera.outcome == 'failure' && github.event_name == 'workflow_run'
         run: |
           echo "::error::El despliegue terminó bien pero el sitio no sirve todo lo publicado. Revisa el paso «¿Está publicado lo que dice el repositorio?»."
+          exit 1
+
+      - name: Fallar si el correo no salió
+        if: steps.correo.outcome == 'failure'
+        run: |
+          echo "::error::Hay artículos publicados sin anunciar por correo, o un envío falló. Revisa el paso «¿Salió el correo de los artículos publicados?»."
           exit 1
 
       - name: Fallar si algún endpoint no responde como debe

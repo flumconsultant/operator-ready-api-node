@@ -52,6 +52,11 @@ const GRACIA_DIAS = 3;
 const TOKEN = process.env.DIFUSION_TOKEN;
 const SOLO = process.env.SOLO || '';
 const ENSAYO = process.argv.includes('--ensayo');
+/* Modo vigilancia, para el centinela. La diferencia es qué se considera un
+   fallo: en un despliegue, un artículo viejo sin anunciar no debe teñir de rojo
+   una publicación que no tiene nada que ver; en el centinela sí, porque el
+   centinela existe justamente para que eso no pase inadvertido. */
+const VIGILAR = process.argv.includes('--vigilar');
 
 if (ENSAYO) console.log('— ENSAYO: no se va a enviar ningún correo —\n');
 
@@ -70,6 +75,11 @@ const dias = (fecha) => Math.floor((Date.now() - Date.parse(`${fecha}T00:00:00Z`
 /* Qué toca anunciar. Un artículo entra si está publicado, si no está en el
    registro y si es reciente. El orden es por fecha: si algún día se acumulan
    dos, sale antes el más viejo, que es como se leerían. */
+/* Los que se quedaron fuera de la ventana sin anunciar. No se mandan solos
+   —tres días después, un correo que dice «nuevo artículo» ya no es cierto— pero
+   tampoco se callan. */
+const olvidados = [];
+
 const pendientes = readdirSync(CARPETA)
   .filter((f) => f.endsWith('.json'))
   .filter((f) => (SOLO ? f === SOLO : true))
@@ -80,17 +90,33 @@ const pendientes = readdirSync(CARPETA)
     if (enviados.has(archivo)) return false;
     const d = dias(a.fecha);
     if (!(d >= 0 && d <= GRACIA_DIAS)) {
-      console.log(`${archivo} no está en el registro pero es de hace ${d} días: no se manda. Para forzarlo, SOLO=${archivo}.`);
+      olvidados.push({ archivo, fecha: a.fecha, dias: d });
       return false;
     }
     return true;
   })
   .sort((x, y) => String(x.a.fecha).localeCompare(String(y.a.fecha)));
 
+const avisarDeOlvidados = () => {
+  if (!olvidados.length) return;
+  const uno = olvidados.length === 1;
+  console.log(`::warning::${olvidados.length} ${uno ? 'artículo publicado no llegó a anunciarse por correo y ya está' : 'artículos publicados no llegaron a anunciarse por correo y ya están'} fuera de la ventana de ${GRACIA_DIAS} días.`);
+  for (const o of olvidados) {
+    console.log(`   · ${o.archivo} (${o.fecha}, hace ${o.dias} días) — para mandarlo: Actions → Desplegar a Hostinger → Run workflow → difundir = ${o.archivo}`);
+  }
+};
+
 if (!pendientes.length) {
+  avisarDeOlvidados();
+  if (olvidados.length && VIGILAR) {
+    console.log('\n::error::Hay artículos publicados que nunca se anunciaron por correo. Decide si se mandan o se dan por perdidos: hasta entonces esto seguirá en rojo.');
+    process.exit(1);
+  }
   console.log('No hay ningún artículo pendiente de anunciar por correo.');
   process.exit(0);
 }
+
+avisarDeOlvidados();
 
 /* El más reciente, y solo ese. Un despliegue que manda cuatro correos seguidos
    a la lista no es un despliegue: es un incidente. */
@@ -159,6 +185,10 @@ if (!ENSAYO) {
 console.log('');
 if (fallos) {
   console.log(`${fallos} ${fallos === 1 ? 'envío falló' : 'envíos fallaron'}.`);
+  process.exit(1);
+}
+if (olvidados.length && VIGILAR) {
+  console.log('::error::Hay artículos publicados que nunca se anunciaron por correo. Decide si se mandan o se dan por perdidos: hasta entonces esto seguirá en rojo.');
   process.exit(1);
 }
 console.log(`Anunciado${toca.length === 1 ? '' : 's'} ${toca.length} ${toca.length === 1 ? 'artículo' : 'artículos'}.`);
