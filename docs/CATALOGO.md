@@ -50,13 +50,13 @@ AQUI VIVEN DATOS DE PERSONAS REALES. Correos de terceros con consentimiento demo
 
 **SMTP del dominio · meetbecome.com** — Envía los formularios de contacto y los correos de la lista de suscripción.
 
-- Implementación: `assets/api/contacto.php · assets/api/correo.php`
+- Implementación: `assets/api/contacto.php · assets/api/correo.php · scripts/difundir.mjs`
 - Se dispara: formulario-del-sitio, difusion
-- Acciones: enviar (irreversible)
-- Registro de lo hecho: no lleva
+- Acciones: enviar (irreversible), difundir-articulo (irreversible)
+- Registro de lo hecho: .github/correo-enviado.json
 - Centinela: scripts/centinela-api.mjs · el endpoint vive y rechaza un envío vacío
 
-El despliegue falla si faltan los secretos: sin ellos el formulario que trae clientes queda mudo. Sin modo ensayo, y es deuda con motivo: enviar es irreversible y llega a una bandeja real, y el endpoint vive dentro del sitio en PHP, no en un script que se pueda lanzar a medias. Lo que sí se comprueba es que el endpoint esté vivo y rechace un envío vacío, que es todo lo que puede hacerse sin efectos.
+El despliegue falla si faltan los secretos: sin ellos el formulario que trae clientes queda mudo. «enviar» —el formulario de contacto— sigue sin modo ensayo, y es deuda con motivo: llega a una bandeja real y el endpoint vive dentro del sitio en PHP, no en un script que se pueda lanzar a medias. Lo que sí se comprueba es que el endpoint esté vivo y rechace un envío vacío. «difundir-articulo» sí lo tiene: hace todo el recorrido —elegir qué artículo toca, componer la carga— y se detiene antes de llamar al servidor. Lleva registro de lo ya enviado porque la ventana del diff de git falló dos veces: un clon superficial y un despliegue fallido dejaron sin correo a los suscriptores. Y manda como mucho un artículo por ejecución: aquí se publica uno al día, y dos pendientes significan que algo se rompió.
 
 ### hostinger-ftp
 

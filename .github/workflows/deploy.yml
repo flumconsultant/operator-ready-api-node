@@ -33,6 +33,10 @@ on:
 
 # Dos despliegues a la vez dejarían public_html a medias entre dos versiones.
 # Se encolan, y no se cancela el que ya está subiendo archivos.
+permissions:
+  # Escritura porque el paso del correo guarda el registro de lo ya enviado.
+  contents: write
+
 concurrency:
   group: despliegue-produccion
   cancel-in-progress: false
@@ -705,93 +709,48 @@ jobs:
           esac
 
       - name: Avisar por correo de los artículos nuevos
-        # ---- Por qué este paso se reescribió ----
+        # ---- Por qué esto ya no mira el diff de git ----
         #
-        # Decía «ningún artículo nuevo en este despliegue» tanto cuando no
-        # había ninguno como cuando NO PODÍA SABERLO, y las dos cosas se leen
-        # igual en el log: verde. El 23 de agosto se publicó «Qué puede hacer
-        # un agente sin supervisión», el despliegue terminó en verde y ningún
-        # suscriptor recibió nada.
+        # Miraba `git diff --diff-filter=A` entre el commit anterior y este, y
+        # ha fallado dos veces en dos días por dos motivos distintos:
         #
-        # La causa era el clon superficial —arreglado arriba con fetch-depth—
-        # pero el fallo de verdad es de este paso: un guardián que no distingue
-        # «no hay nada que hacer» de «no he podido mirar» es peor que no
-        # tenerlo, porque informa de éxito cuando ha fallado.
+        #   · 23 de agosto: clon superficial. El commit anterior no estaba en la
+        #     copia local, el diff no devolvía nada y el paso lo leía como «no
+        #     hay artículos nuevos». Se arregló con fetch-depth: 0.
+        #   · 24 de agosto: despliegue fallido. El artículo se añadió en un
+        #     commit cuyo despliegue murió en el QA de lenguaje. En el siguiente
+        #     —el que sí terminó bien— ese archivo ya no era «añadido» sino
+        #     «modificado», así que nadie lo anunció. Salió a la web y no salió
+        #     por correo.
+        #
+        # Los dos son el mismo error de fondo: la ventana del diff es por push y
+        # lo que hay que saber es por artículo. Un reintento, un arreglo o dos
+        # commits seguidos la consumen, y consumida no se recupera.
+        #
+        # Ahora hay un registro de lo ya enviado, como el de LinkedIn, y no
+        # depende de qué commit vino antes.
         env:
           DIFUSION_TOKEN: ${{ secrets.DIFUSION_TOKEN }}
-          ANTES: ${{ github.event.before }}
-          A_MANO: ${{ github.event.inputs.difundir }}
+          SOLO: ${{ github.event.inputs.difundir }}
+        run: node scripts/difundir.mjs
+
+      # El registro tiene que sobrevivir al trabajo, o el siguiente despliegue
+      # volvería a mandar el mismo correo. Con «[skip ci]» por costumbre: un
+      # commit hecho con GITHUB_TOKEN no dispara workflows, pero el día que eso
+      # cambie no quiero descubrirlo por un bucle de despliegues.
+      - name: Guardar lo anunciado por correo
+        if: always()
         run: |
-          set -uo pipefail
-          if [ -z "${DIFUSION_TOKEN:-}" ]; then
-            echo "Sin DIFUSION_TOKEN no se avisa a nadie. Es opcional."
+          set -euo pipefail
+          if git diff --quiet -- .github/correo-enviado.json; then
+            echo "El registro no cambió."
             exit 0
           fi
-
-          # Reenvío a mano desde la pestaña Actions. Es la salida para un
-          # artículo que se quedó sin aviso.
-          if [ -n "${A_MANO:-}" ]; then
-            NUEVOS="src/content/insights/${A_MANO}"
-            if [ ! -f "$NUEVOS" ]; then
-              echo "::error::No existe $NUEVOS. Usa el nombre del archivo tal como está en src/content/insights/."
-              exit 1
-            fi
-            echo "Reenvío pedido a mano: $NUEVOS"
-          else
-            # ¿Se puede comparar siquiera? Un commit que no está en la copia
-            # local hace fallar el diff, y sin esta comprobación ese fallo se
-            # confunde con «no hay artículos nuevos».
-            if [ -z "${ANTES:-}" ] || [ "$ANTES" = "0000000000000000000000000000000000000000" ]; then
-              echo "Primer push a esta rama: no hay commit anterior con el que comparar."
-              exit 0
-            fi
-            if ! git cat-file -e "${ANTES}^{commit}" 2>/dev/null; then
-              echo "::error::El commit anterior ${ANTES} no está en la copia del repositorio, así que no se puede saber qué artículo es nuevo. El checkout tiene que usar fetch-depth: 0."
-              exit 1
-            fi
-            NUEVOS=$(git diff --name-only --diff-filter=A "$ANTES" "${GITHUB_SHA}" -- src/content/insights/ | grep '\.json$' || true)
-            if [ -z "$NUEVOS" ]; then
-              echo "Comparado ${ANTES:0:7}..${GITHUB_SHA:0:7}: ningún artículo nuevo en este despliegue."
-              exit 0
-            fi
-          fi
-
-          FALLOS=0
-          for f in $NUEVOS; do
-            [ -f "$f" ] || continue
-            if [ "$(python3 -c "import json,sys;print(json.load(open(sys.argv[1])).get('estado'))" "$f")" != "publicado" ]; then
-              echo "$f es un borrador; no se avisa."
-              continue
-            fi
-            for LANG in es en; do
-              CARGA=$(DIFUSION_TOKEN="$DIFUSION_TOKEN" python3 - "$f" "$LANG" <<'PY'
-          import json, os, sys
-          a = json.load(open(sys.argv[1])); lang = sys.argv[2]; t = a.get(lang)
-          if not t or not t.get('slug'):
-              print(''); raise SystemExit
-          print(json.dumps({
-              'accion': 'difundir',
-              'token': os.environ['DIFUSION_TOKEN'],
-              'idioma': lang,
-              'titulo': t['titulo'],
-              'entradilla': t.get('entradilla') or t.get('descripcion') or '',
-              'ruta': f"/{lang}/insights/{t['slug']}",
-          }, ensure_ascii=False))
-          PY
-              )
-              [ -n "$CARGA" ] || continue
-              RES=$(curl -sS --max-time 180 -X POST -H 'Content-Type: application/json' \
-                      -d "$CARGA" "https://meetbecome.com/api/suscripcion.php" || true)
-              echo "$LANG → ${RES:-(sin respuesta)}"
-              # Una respuesta que no confirma el envío es un fallo, no un aviso:
-              # el propósito entero del paso es que el correo salga.
-              case "$RES" in
-                *'"ok":true'*) ;;
-                *) echo "::error::La difusión en $LANG no salió: ${RES:-(sin respuesta del servidor)}"; FALLOS=$((FALLOS+1)) ;;
-              esac
-            done
-          done
-          [ "$FALLOS" -eq 0 ] || exit 1
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .github/correo-enviado.json
+          git commit -m 'Anunciado por correo [skip ci]'
+          git push origin HEAD:main
 
       - name: Resumen
         # El resumen dice qué secretos están puestos y cuáles faltan. No sus
