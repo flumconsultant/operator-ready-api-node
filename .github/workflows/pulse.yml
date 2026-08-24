@@ -118,12 +118,36 @@ jobs:
           mkdir -p ~/.ssh
           printf '%s\n' "$CLAVE" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
+
+          # Comprobar la clave ANTES de usarla. Sin esto, un secreto mal
+          # pegado —copiar desde una terminal del navegador se come los saltos
+          # de línea— falla dentro de ssh sin decir por qué, y el log queda
+          # vacío. Aquí se ve en una línea. La huella no es secreta: identifica
+          # la clave sin revelarla, y sirve para compararla con la que está
+          # autorizada en el servidor.
+          if ssh-keygen -yf ~/.ssh/id_ed25519 > /tmp/publica 2>/tmp/error; then
+            echo "Clave válida. Huella: $(ssh-keygen -lf /tmp/publica)"
+          else
+            echo "::error::VPS_SSH_KEY no es una clave privada legible."
+            echo "Motivo: $(cat /tmp/error)"
+            echo "Casi siempre es que se perdieron los saltos de línea al"
+            echo "copiarla. Tiene que empezar por -----BEGIN OPENSSH PRIVATE"
+            echo "KEY----- y acabar por -----END OPENSSH PRIVATE KEY-----,"
+            echo "con todas sus líneas."
+            exit 1
+          fi
+
           ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
           # El .env vive en el VPS y no pasa por aquí. El pipeline solo trae el
           # código y reconstruye; las claves nunca salen del servidor.
           # La ruta se pasa como argumento: el heredoc va entrecomillado para
           # que nada se expanda en el runner, así que dentro no existe $RUTA.
-          ssh -i ~/.ssh/id_ed25519 "$USUARIO@$HOST" bash -s -- "${RUTA:-/opt/pulse}" "$RAMA" <<'REMOTO'
+          # BatchMode: si la clave no vale, que falle diciéndolo en vez de
+          # ponerse a pedir una contraseña y tragarse el script como si fuera
+          # lo que se teclea.
+          ssh -o BatchMode=yes -o ConnectTimeout=15 \
+            -i ~/.ssh/id_ed25519 "$USUARIO@$HOST" \
+            bash -s -- "${RUTA:-/opt/pulse}" "$RAMA" <<'REMOTO'
             set -euo pipefail
             cd "$1"
             git fetch origin "$2"
