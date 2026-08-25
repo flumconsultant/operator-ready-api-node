@@ -1,0 +1,243 @@
+{
+  "estado": "borrador",
+  "fecha": "2026-08-26",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "agentic-work",
+  "formato": "field-note",
+  "es": {
+    "slug": "que-se-rompe-cuando-el-trabajo-corre-solo",
+    "titulo": "Qué se rompe cuando el trabajo corre solo",
+    "entradilla": "Automatizar un proceso cambia su forma de fallar. Deja de fallar a gritos y empieza a fallar en silencio, que es bastante peor.",
+    "descripcion": "Automatizar cambia cómo falla un proceso: deja de avisar. Dos fallos propios y las cuatro preguntas antes de dejar algo corriendo solo.",
+    "linkedin": {
+      "texto": "Un proceso que una persona ejecuta cada día tiene algo que se pierde al automatizarlo: un testigo.\n\nSi el informe no sale el lunes, alguien lo nota el lunes, porque alguien lo estaba haciendo. Cuando ese mismo proceso pasa a correr solo, lo que queda en lugar del testigo es un registro que dice «correcto», y eso no es lo mismo que decir que funcionó.\n\nContamos dos fallos propios de esta misma semana, y las cuatro preguntas que conviene contestar antes de dejar algo corriendo sin nadie delante.",
+      "hashtags": [
+        "IA",
+        "Automatizacion",
+        "Operaciones"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Automatizar un proceso cambia su forma de fallar. Deja de fallar a gritos y empieza a fallar en silencio, que es bastante peor."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay una diferencia entre un proceso que una persona ejecuta cada día y uno que corre solo, y no es la velocidad ni el coste. Es que el primero tiene un testigo. Si el lunes el informe no sale, alguien lo nota el lunes, porque alguien lo estaba haciendo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cuando ese mismo proceso pasa a ejecutarse sin nadie delante, el testigo desaparece. Y lo que queda en su lugar es un registro de ejecución que dice «correcto», que no es lo mismo que decir «funcionó»."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "El proceso termina en verde y el resultado no llega."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "En este sitio publicamos un artículo al día, y lo hace un mecanismo, no una persona. Escribe, valida, publica, despliega y avisa por correo a quien está suscrito. Cinco pasos encadenados, todos automáticos. Dos veces en dos días el correo no salió, y las dos veces el mecanismo terminó en verde."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "La primera vez, el paso del correo comparaba la versión anterior del repositorio con la nueva para saber qué artículo era nuevo, y la copia que tenía delante estaba incompleta.",
+          "La comparación no devolvió nada, y el paso lo interpretó como «no hay artículos nuevos» en lugar de como «no he podido mirar».",
+          "La segunda vez, el artículo entró en un despliegue que murió antes de llegar al paso del correo.",
+          "El despliegue siguiente ya no lo veía como nuevo: entre esos dos puntos el archivo no se había creado, solo modificado.",
+          "En los dos casos el resultado fue idéntico. Artículo publicado en la web, nadie avisado, ninguna alarma."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema detrás",
+        "texto": "Un paso que no distingue «no hay nada» de «no pude mirar»."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Los dos fallos tienen la misma raíz, y no es la que parece. No fue un error de programación ni una caída del servidor. Fue una decisión de diseño: el mecanismo deducía qué tenía que hacer a partir del contexto de su propia ejecución."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ese contexto es frágil. Depende de qué vino antes, de si la ejecución anterior llegó a terminar, de qué había en la copia local. Cuando se pierde, la deducción devuelve «nada que hacer». Y «nada que hacer» se ve exactamente igual que «hecho» en cualquier panel de control."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un guardián que no distingue «no hay nada que hacer» de «no he podido mirar» no es un guardián. Es un informe de éxito que llega igual el día que falla.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Cuatro preguntas antes de dejar algo corriendo solo."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Dónde vive la memoria",
+            "definicion": "Si lo que hay que hacer se deduce de la ejecución en curso, cualquier interrupción borra esa memoria. Tiene que vivir fuera del proceso: un registro de lo ya hecho, que no dependa de qué ocurrió justo antes ni de si la vuelta anterior terminó."
+          },
+          {
+            "termino": "Qué se ve cuando no pasa nada",
+            "definicion": "Un fallo silencioso se descubre semanas después y por casualidad. Cualquier estado distinto del esperado tiene que producir una señal visible, aunque el proceso no pueda arreglarlo solo. Avisar y resolver son dos trabajos distintos, y el primero no es opcional."
+          },
+          {
+            "termino": "Quién comprueba el efecto",
+            "definicion": "Terminar sin error dice que el proceso corrió. No dice que el correo saliera, que el archivo llegara o que el cliente recibiera algo. Alguien tiene que preguntar por el efecto, desde fuera del propio proceso y con su propio calendario."
+          },
+          {
+            "termino": "Cuántas oportunidades tiene",
+            "definicion": "Un proceso con una sola oportunidad al día falla un día entero. Con una segunda comprobación independiente, el mismo fallo se convierte en un retraso de unas horas que nadie llega a notar."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguna de las cuatro es una pregunta técnica. Las cuatro se pueden contestar en una reunión, antes de escribir la primera línea de código, y las cuatro se contestan mal por defecto cuando nadie las hace."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Coge el proceso automático que lleva más tiempo corriendo en tu empresa y haz una sola pregunta: la última vez que no produjo su resultado, cuánto tardó alguien en enterarse. Si la respuesta es que nunca ha fallado, la pregunta correcta es cómo lo sabes."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cómo se detecta un proceso automático que falla en silencio?",
+            "respuesta": "Comprobando el efecto y no la ejecución. Que el trabajo termine sin error dice que corrió; no dice que el correo saliera, que el archivo llegara o que el cliente recibiera algo. La comprobación tiene que preguntar por lo segundo, ejecutarse desde fuera del propio proceso y tener su propio calendario, para que un fallo del proceso no se lleve por delante también a quien lo vigila."
+          },
+          {
+            "pregunta": "¿Por qué un proceso automatizado falla distinto que uno manual?",
+            "respuesta": "Porque pierde al testigo. Quien ejecuta un proceso a mano detecta el fallo en el acto, aunque no sepa arreglarlo. Un proceso automático solo comunica lo que se le pidió comunicar, y casi siempre se le pide comunicar si terminó, no si sirvió de algo."
+          },
+          {
+            "pregunta": "¿Qué hay que dejar escrito antes de automatizar un proceso?",
+            "respuesta": "Dónde vive la memoria de lo ya hecho, qué señal se emite cuando el resultado no llega, quién comprueba el efecto y cada cuánto, y cuántas oportunidades tiene el proceso de recuperarse antes de que alguien tenga que intervenir a mano."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos qué corre solo en tu operación",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "what-breaks-when-work-runs-on-its-own",
+    "titulo": "What breaks when work runs on its own",
+    "entradilla": "Automating a process changes the way it fails. It stops failing loudly and starts failing quietly, which is considerably worse.",
+    "descripcion": "Automation changes how a process fails: it stops announcing it. Two failures of our own, and four questions to settle before it runs alone.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Automating a process changes the way it fails. It stops failing loudly and starts failing quietly, which is considerably worse."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "There is a difference between a process a person runs every day and one that runs by itself, and it is not speed or cost. It is that the first one has a witness. If the report does not go out on Monday, someone notices on Monday, because someone was doing it."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The moment that same process runs with nobody watching, the witness is gone. What replaces it is a run log that says «completed», and completed is not the same word as worked."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "The job ends green and the result never arrives."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "This site publishes one article a day, and a mechanism does it, not a person. It writes, validates, publishes, deploys and emails the people who subscribed. Five chained steps, all automatic. Twice in two days the email did not go out, and both times the mechanism finished green."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The first time, the email step compared the previous version of the repository against the new one to work out which article was new, and the copy it had in front of it was incomplete.",
+          "The comparison came back empty, and the step read that as «no new articles» rather than as «I could not look».",
+          "The second time, the article arrived in a deployment that died before reaching the email step.",
+          "The next deployment no longer saw it as new: between those two points the file had not been created, only modified.",
+          "Both times the outcome was identical. Article live on the web, nobody told, no alarm anywhere."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "What sits underneath",
+        "texto": "A step that cannot tell «nothing to do» from «I could not look»."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Both failures share a root cause, and it is not the obvious one. It was not a coding mistake or a server outage. It was a design decision: the mechanism inferred what it had to do from the context of its own run."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That context is fragile. It depends on what came before, on whether the previous run finished, on what was in the local copy. When it is lost, the inference returns «nothing to do». And nothing to do looks exactly like done on any dashboard."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A guard that cannot tell «nothing to do» from «I could not look» is not a guard. It is a success report that arrives just the same on the day it fails.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The frame",
+        "texto": "Four questions before you let something run alone."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Where the memory lives",
+            "definicion": "If the work to be done is inferred from the run in progress, any interruption wipes that memory. It has to live outside the process: a record of what is already done, independent of what happened just before or whether the last pass finished."
+          },
+          {
+            "termino": "What is visible when nothing happens",
+            "definicion": "A quiet failure surfaces weeks later and by accident. Any state other than the expected one has to raise a visible signal, even when the process cannot fix it. Flagging and fixing are two separate jobs, and the first one is not optional."
+          },
+          {
+            "termino": "Who checks the effect",
+            "definicion": "Finishing without error says the process ran. It does not say the email went out, the file landed, or the customer received anything. Someone has to ask about the effect, from outside the process itself and on its own schedule."
+          },
+          {
+            "termino": "How many chances it gets",
+            "definicion": "A process with one shot a day fails for a whole day. Add a second, independent check and the same failure turns into a delay of a few hours that nobody gets to notice."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of the four is a technical question. All four can be settled in a meeting, before the first line of code is written, and all four get settled badly by default when nobody asks them."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take the automated process that has been running longest in your organisation and ask one thing: the last time it failed to produce its result, how long did it take anyone to find out. If the answer is that it has never failed, the right question is how you know."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How do you spot an automated process that fails quietly?",
+            "respuesta": "By checking the effect rather than the run. A job finishing without error tells you it ran; it does not tell you the email went out, the file landed, or the customer received anything. The check has to ask the second question, run from outside the process itself, and keep its own schedule, so that a failure of the process does not also take out whoever is watching it."
+          },
+          {
+            "pregunta": "Why does an automated process fail differently from a manual one?",
+            "respuesta": "Because it loses the witness. A person running a process by hand notices the failure on the spot, even without knowing how to fix it. An automated process only reports what it was asked to report, and it is almost always asked to report whether it finished, not whether it achieved anything."
+          },
+          {
+            "pregunta": "What has to be written down before automating a process?",
+            "respuesta": "Where the memory of completed work lives, what signal fires when the result does not arrive, who checks the effect and how often, and how many chances the process gets to recover before a person has to step in."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's look at what runs alone in your operation",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
