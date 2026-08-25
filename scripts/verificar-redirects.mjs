@@ -45,6 +45,49 @@ const MUDANZAS = [
   ['/en/industries/healthcare-life-sciences', '/en/industries/healthcare-pharma'],
 ];
 
+/* Direcciones sueltas que respondían mal. Cada una: [pedida, esperada].
+ *
+ * «/home» y «/es/» son de la auditoría del 24 de agosto: la primera respondía
+ * 200 con la página genérica —contenido duplicado— y la segunda 403, porque
+ * «es» es una carpeta de verdad en el servidor (ahí vive el feed) y el listado
+ * de carpetas está desactivado. Un 403 en la portada en español es peor que un
+ * 404: le dice al buscador que la página existe y que no puede verla. */
+const SUELTAS = [
+  ['/home', '/es'],
+  ['/inicio', '/es'],
+  ['/es/', '/es'],
+  ['/en/', '/en'],
+  ['/es/servicios/', '/es/servicios'],
+];
+
+/* Lo que NO existe tiene que decir que no existe.
+ *
+ * Antes cualquier dirección inventada caía en la aplicación y respondía 200.
+ * Para un buscador eso es un «soft 404»: una página que dice existir y no
+ * existe. Google las descarta y gasta rastreo en ellas, que es rastreo que no
+ * se gasta en las que sí importan. */
+const NO_EXISTEN = [
+  '/pagina-que-no-existe',
+  '/es/pagina-que-no-existe',
+  '/es/insights/articulo-inventado',
+  '/es/industrias/industria-inventada',
+  '/en/services/not-a-service',
+];
+
+/* Y lo que tiene que seguir respondiendo 200 aunque no sea una página
+   prerenderizada. El panel es la única ruta que dibuja React, y si la regla del
+   404 se pasa de lista se lleva por delante la herramienta de trabajo. Los
+   feeds y el sitemap están anunciados en robots.txt: un sitemap que responde
+   404 es peor que no anunciarlo. */
+const VIVAS = [
+  '/admin',
+  '/sitemap.xml',
+  '/robots.txt',
+  '/es/feed.xml',
+  '/en/feed.xml',
+  '/404.html',
+];
+
 /* Las seis nuevas tienen que responder 200. Si una diera 404, el 301 estaría
    mandando a los buscadores a una página que no existe, que es peor que no
    haber redirigido. */
@@ -100,6 +143,37 @@ for (const [vieja, nueva] of MUDANZAS) {
   }
 }
 
+console.log('\n── Direcciones sueltas que tienen que redirigir');
+for (const [pedida, esperada] of SUELTAS) {
+  try {
+    const r = await pedir(`${SITIO}${pedida}`);
+    tabla.push({ vieja: pedida, codigo: r.codigo, location: r.destino || '—', nueva: esperada, codigoNueva: '' });
+    if (r.codigo !== 301) { di(false, `${pedida} responde ${r.codigo}${r.codigo === 403 ? ' — es una carpeta real y el listado está desactivado' : r.codigo === 200 ? ' — duplica una página que ya existe' : ''}`); continue; }
+    const destino = r.destino.replace(SITIO, '');
+    if (destino !== esperada) { di(false, `${pedida} → 301 pero hacia «${destino}», no hacia «${esperada}»`); continue; }
+    const seguido = await pedir(`${SITIO}${esperada}`);
+    tabla[tabla.length - 1].codigoNueva = seguido.codigo;
+    if (seguido.codigo !== 200) { di(false, `${pedida} → 301 → ${esperada} responde ${seguido.codigo}, no 200`); continue; }
+    di(true, `${pedida} → 301 → ${esperada} → 200`);
+  } catch (e) { di(false, `${pedida} no se pudo consultar: ${e.message}`); }
+}
+
+console.log('\n── Lo que no existe tiene que responder 404');
+for (const ruta of NO_EXISTEN) {
+  try {
+    const r = await pedir(`${SITIO}${ruta}`);
+    di(r.codigo === 404, `${ruta} responde ${r.codigo}${r.codigo === 200 ? ' — soft 404: dice existir y no existe' : ''}`);
+  } catch (e) { di(false, `${ruta} no se pudo consultar: ${e.message}`); }
+}
+
+console.log('\n── Y lo que tiene que seguir vivo');
+for (const ruta of VIVAS) {
+  try {
+    const r = await pedir(`${SITIO}${ruta}`);
+    di(r.codigo === 200, `${ruta} responde ${r.codigo}${r.codigo === 404 ? ' — la regla del 404 se lo ha llevado por delante' : ''}`);
+  } catch (e) { di(false, `${ruta} no se pudo consultar: ${e.message}`); }
+}
+
 console.log('');
 for (const ruta of NUEVAS) {
   try {
@@ -141,4 +215,4 @@ if (fallos.length) {
   console.log(`\n${fallos.length} ${fallos.length === 1 ? 'dirección no cumple' : 'direcciones no cumplen'}.`);
   process.exit(1);
 }
-console.log(`Las ${MUDANZAS.length} direcciones viejas redirigen con 301 y las ${NUEVAS.length} nuevas responden 200.`);
+console.log(`Las ${MUDANZAS.length} direcciones viejas y las ${SUELTAS.length} sueltas redirigen con 301, las ${NO_EXISTEN.length} inventadas responden 404, y las ${VIVAS.length + NUEVAS.length} que tienen que estar vivas responden 200.`);

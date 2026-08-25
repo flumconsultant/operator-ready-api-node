@@ -200,6 +200,24 @@ for (const p of PENDIENTES) {
   if (enSitemap && enlazada) bien(`${p} · en el sitemap y enlazada desde ${padre}`);
 }
 
+/* ---- La página de 404 ----------------------------------------------------
+ *
+ * Existe desde que el servidor dejó de contestar 200 a las direcciones
+ * inventadas. Sin este archivo, ese 404 lo dibujaría Apache con su página gris
+ * por defecto —sin marca, sin salida, y en inglés—, que es peor experiencia que
+ * el problema que vino a resolver.
+ *
+ * Y con noindex: sin él, Google acabaría teniendo una entrada que dice «Esta
+ * página no existe» entre los resultados de meetbecome.com. */
+if (!existsSync('dist/404.html')) {
+  mal('no hay dist/404.html, y el servidor está configurado para servirla en cada dirección que no existe');
+} else {
+  const p404 = readFileSync('dist/404.html', 'utf8');
+  if (!/name="robots"[^>]*noindex/i.test(p404)) mal('dist/404.html no lleva noindex: acabaría indexada');
+  else if (!/href="\/es"/.test(p404)) mal('dist/404.html no ofrece ninguna salida hacia el sitio');
+  else bien('la página de 404 existe, lleva noindex y ofrece salida');
+}
+
 /* ---- El límite clínico de Salud ----------------------------------------- */
 
 /* Las frases exactas que publica hoy la página, en cada idioma. No es una

@@ -155,9 +155,27 @@
   RedirectMatch 301 ^/es/framework/?$                                /es/como-transformamos
   RedirectMatch 301 ^/en/framework/?$                                /en/how-we-transform
 
+  # Direcciones sueltas que quedaron de antes del sitio bilingüe. «/home» sigue
+  # apareciendo en herramientas de auditoría y en algún enlace viejo: respondía
+  # 200 con la página genérica, que para un buscador es una página duplicada
+  # más, no un error.
+  RewriteRule ^home/?$ /es [R=301,L]
+  RewriteRule ^inicio/?$ /es [R=301,L]
+
   # ───────────────────────────────────────────────────────────────────────────
   # Barra final
   # ───────────────────────────────────────────────────────────────────────────
+  # PRIMERO las dos raíces de idioma, y sin la condición de directorio.
+  #
+  # «/es/» y «/en/» SÍ son carpetas de verdad en el servidor: ahí viven los dos
+  # feeds, /es/feed.xml y /en/feed.xml. Por eso la regla general de abajo —que
+  # excluye directorios— no las tocaba, Apache buscaba un índice que no existe,
+  # el listado está desactivado, y la respuesta era un 403.
+  #
+  # Un 403 en la portada en español de un sitio bilingüe es peor que un 404: le
+  # dice al buscador que la página existe y que no tiene permiso para verla.
+  RewriteRule ^(es|en)/$ /$1 [R=301,L]
+
   # /es/servicios/ y /es/servicios son la misma página para una persona y dos
   # direcciones distintas para un buscador. Y la de la barra era además la peor
   # de las dos: la regla de _pages busca «_pages/es/servicios/.html», no lo
@@ -189,13 +207,34 @@
   RewriteRule ^(.+)$ /_pages/$1.html [L]
 
   # ───────────────────────────────────────────────────────────────────────────
-  # 3. Reescritura de la SPA
+  # 3. El panel, y el 404 de verdad
   # ───────────────────────────────────────────────────────────────────────────
-  # Si el archivo o la carpeta existen de verdad, se sirven tal cual. Cualquier
-  # otra cosa la resuelve el enrutador de React dentro de index.html.
+  # Hasta aquí, cualquier dirección inventada caía en index.html y respondía
+  # 200. Para una persona eso es una página que se ve rara; para un buscador es
+  # un «soft 404»: una página que dice existir y no existe. Google las detecta,
+  # las descarta, y de paso desconfía del resto del sitio — gasta rastreo en
+  # direcciones que no llevan a nada.
+  #
+  # Ahora solo hay dos formas de recibir un 200 sin ser un archivo real:
+  #
+  #   · Tener cabecera propia en _pages/, que es como se sirven las 94 páginas
+  #     del sitio (regla de arriba).
+  #   · Ser /admin, la única ruta que no se prerenderiza porque no es contenido
+  #     y no debe estarlo: la dibuja React tras pedir la sesión.
+  #
+  # Todo lo demás responde 404 con la página de abajo.
+  #
+  # Lo que se pierde es el respaldo que tenía la regla de _pages: si un día
+  # faltara un archivo de cabecera, esa ruta ya no caería en la SPA, daría 404.
+  # Se acepta a cambio de no publicar soft 404, y no queda a ciegas: el gate de
+  # publicación comprueba antes de subir que las 94 páginas existen, y el
+  # centinela comprueba después que el sitio las sirve.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^admin(/.*)?$ /index.html [L]
+
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
+  RewriteRule . - [R=404,L]
 </IfModule>
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -301,6 +340,11 @@
 # Falta deliberadamente una Content-Security-Policy: mal escrita rompe el sitio
 # en silencio, y escribirla bien exige inventariar antes todo lo que carga la
 # página. Es el siguiente paso, no este.
+
+# La página que se sirve cuando una dirección no existe. Fuera de los bloques
+# de módulo: `ErrorDocument` es de Apache y no depende de mod_rewrite, así que
+# funciona incluso si la reescritura estuviera desactivada.
+ErrorDocument 404 /404.html
 
 # El listado de carpetas queda desactivado
 Options -Indexes
