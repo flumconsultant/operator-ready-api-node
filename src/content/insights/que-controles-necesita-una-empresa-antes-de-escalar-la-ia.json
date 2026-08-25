@@ -1,0 +1,255 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-08-25",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "responsible-scale",
+  "formato": "executive-brief",
+  "es": {
+    "slug": "que-controles-necesita-una-empresa-antes-de-escalar-la-ia",
+    "titulo": "Qué controles pide un consejo antes de escalar IA",
+    "entradilla": "El comité de riesgo pidió una política de datos de IA y la tuvo en tres días. Lo que no tiene, seis meses después, es una respuesta a la pregunta que de verdad importa: qué pasa cuando el control dice que no y el negocio decide seguir igual.",
+    "descripcion": "Escalar IA se frena cuando nadie decide quién puede frenar un caso ya aprobado, con qué umbral y qué pasa si el negocio insiste.",
+    "linkedin": {
+      "texto": "Un consejo aprueba una política de IA y se siente cubierto. Lo está en papel.\n\nLo que casi ningún consejo ha decidido es quién tiene autoridad para frenar un caso de uso ya en marcha cuando el control levanta la mano, con qué umbral, y qué pasa si el negocio insiste igual. Sin esa respuesta escrita, la política es una intención, no un control.\n\nEn este análisis de BECOME desarrollamos las cinco decisiones que un consejo tiene que firmar antes de escalar, y no después de un incidente.",
+      "hashtags": ["IA", "Gobierno", "Consejo"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "El comité de riesgo pidió una política de datos de IA y la tuvo en tres días. Lo que no tiene, seis meses después, es una respuesta a la pregunta que de verdad importa: qué pasa cuando el control dice que no y el negocio decide seguir igual."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "He visto el mismo patrón en más de un consejo. Alguien pide «los controles de IA» antes de aprobar el escalado y, en semanas, aparece una carpeta gruesa: política de uso responsable, checklist de sesgos, cláusula de privacidad revisada por legal. Todo correcto, todo de higiene, y ninguno contesta lo único que un auditor va a preguntar de verdad: quién tiene autoridad para frenar un caso ya aprobado, con qué umbral, y qué pasa si el negocio insiste."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El problema no es la falta de controles. Es tratarlos como una lista de documentos que se firman una vez, en vez de un mecanismo de decisión que se activa cada vez que algo se sale de lo previsto. Una política sin quien la haga cumplir es un PDF con buenas intenciones."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Qué controles necesita una empresa antes de escalar la IA?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La respuesta que circula hoy es una lista de higiene: principios éticos, checklist de riesgo, comité asesor. Marcos como ISO/IEC 42001 o el NIST AI RMF ayudan a ordenar esa lista, pero ni uno ni otro dice, para tu empresa en concreto, quién firma cuando el control levanta la mano. Esa decisión le corresponde al consejo, no a la norma, y la mayoría todavía no la ha tomado."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El comité de ética revisa el caso una vez, al aprobarlo, y nunca vuelve a mirarlo mientras está en producción.",
+          "Hay una política de uso responsable, pero nadie sabe decir qué área la hace cumplir ni qué pasa si un equipo la ignora.",
+          "El umbral de riesgo existe en una diapositiva y no en un proceso: nadie ha probado qué ocurre cuando un caso real lo cruza.",
+          "Cuando el control dice que no, la decisión final la toma quien tiene más poder en la sala, no quien tiene la autoridad escrita.",
+          "El auditor externo pide el registro de decisiones y la respuesta es un correo perdido de hace ocho meses."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema detrás",
+        "texto": "Nadie ha decidido quién gana cuando el control y el negocio no están de acuerdo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Todo marco de gobierno de IA asume que el control gana automáticamente. En la sala de consejo no funciona así. El caso que atrasa el cierre trimestral, o el que ya prometió el CEO en la última llamada con inversores, pesa distinto a como pesa cualquier política. Si no está escrito de antemano quién decide cuando eso choca con el control, gana quien tiene más poder ese día, y el control queda como un trámite que se sorteó."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y hay algo más incómodo todavía. Un consejo que aprueba una lista larga de controles se siente cubierto. Lo está en papel. No lo está en la práctica si nadie puede nombrar, para el último caso que se escaló, quién lo revisó, con qué criterio y cuándo. Ese vacío no se nota hasta que hay un incidente, y entonces el consejo descubre que firmó una política, no un mecanismo."
+        },
+      {
+        "tipo": "cita",
+        "texto": "Un consejo que aprueba controles de IA sin nombrar quién los hace cumplir no gestiona el riesgo. Lo aplaza hasta el día del incidente.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "¿Qué tiene que estar escrito antes de escalar?"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Umbral",
+            "definicion": "El importe, alcance o nivel de reversibilidad a partir del cual un caso necesita aprobación del comité y no solo del equipo que lo construye. Sin un número o un criterio escrito, cada equipo fija el suyo."
+          },
+          {
+            "termino": "Autoridad de veto",
+            "definicion": "Quién puede frenar un caso ya aprobado cuando el control detecta algo, y con qué rapidez se ejecuta esa decisión. Si esa persona necesita convocar de nuevo al mismo comité, el veto no existe: existe una reunión."
+          },
+          {
+            "termino": "Registro de decisiones",
+            "definicion": "Qué se decidió, quién lo decidió y con qué evidencia, para cada caso que cruzó el umbral. Es lo primero que pide un auditor, y lo que casi nunca existe cuando lo pide."
+          },
+          {
+            "termino": "Cadencia de revisión",
+            "definicion": "Cada cuánto se vuelve a mirar un caso ya aprobado, no solo al escalarlo. Un modelo que pasó el control en marzo puede estar operando distinto en octubre, y nadie lo ha revisado desde entonces."
+          },
+          {
+            "termino": "Salida",
+            "definicion": "Qué pasa cuando el control dice que no y el negocio insiste igual: quién tiene la última palabra, y qué queda documentado cuando la decisión se toma en contra de la recomendación del comité."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguna de las cinco es una norma técnica. Son cinco decisiones de gobierno corporativo, del tipo que un consejo ya sabe tomar en otras áreas: riesgo financiero, cumplimiento normativo, seguridad. La diferencia con la IA es que estas cinco todavía no se han tomado, porque el tema entró a la agenda como un asunto técnico y quedó delegado a un comité sin autoridad para pararle los pies al negocio."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Coge el último caso que se escaló y pregunta quién habría firmado su freno si el control hubiera dicho que no. Si nadie en la sala puede contestar con un nombre, no tienes un marco de control: tienes una carpeta de documentos que nadie ha probado bajo presión."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Qué controles necesita una empresa antes de escalar la IA?",
+            "respuesta": "Cinco decisiones escritas de antemano: el umbral que obliga a pedir aprobación, quién tiene autoridad para vetar un caso ya en marcha, el registro de esas decisiones, la cadencia con la que se revisan los casos ya aprobados y qué pasa cuando el control y el negocio no están de acuerdo. Sin esas cinco, una política de IA es una intención, no un control."
+          },
+          {
+            "pregunta": "¿Qué diferencia hay entre una política de IA y un control de IA?",
+            "respuesta": "La política dice qué se espera, en principio: uso responsable, revisión de sesgos, privacidad. El control dice quién verifica que eso pasa de verdad, con qué frecuencia y qué ocurre si no pasa. Una empresa puede tener una política impecable y ningún control, y eso es exactamente lo que un auditor detecta en la primera pregunta."
+          },
+          {
+            "pregunta": "¿Quién debe tener autoridad para frenar un caso de uso de IA ya aprobado?",
+            "respuesta": "Alguien con autoridad de negocio, no solo técnica, y con la potestad de actuar sin convocar de nuevo al comité completo. Si frenar un caso exige la misma reunión que lo aprobó, el freno tarda semanas, y en ese tiempo el caso sigue operando exactamente como si el control no existiera."
+          },
+          {
+            "pregunta": "¿Qué marcos sirven de referencia para escalar IA con controles?",
+            "respuesta": "ISO/IEC 42001 y el NIST AI RMF ordenan el catálogo de riesgos y dan una estructura de gestión, y ayudan a que el ejercicio no empiece de cero. Ninguno de los dos sustituye la decisión que le corresponde al consejo: quién tiene autoridad para decir que no dentro de esta empresa, en concreto, cuando el control y el negocio no coinciden."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Diseñemos tu marco de control",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "what-controls-does-a-board-need-before-scaling-ai",
+    "titulo": "What controls does a board need before scaling AI",
+    "entradilla": "The risk committee asked for an AI data policy and had it in three days. What it still doesn't have, six months later, is an answer to the question that actually matters: what happens when the control says no and the business decides to proceed anyway.",
+    "descripcion": "Scaling AI stalls when nobody decides who can veto an approved use case, at what threshold, and what happens if the business overrides it.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "The risk committee asked for an AI data policy and had it in three days. What it still doesn't have, six months later, is an answer to the question that actually matters: what happens when the control says no and the business decides to proceed anyway."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "I have watched the same pattern play out in more than one boardroom. Someone asks for the AI controls before approving a scale up, and within weeks a thick folder appears: a responsible use policy, a bias checklist, a privacy clause reviewed by legal. All correct, all hygiene, and none of it answers the one thing an auditor will actually ask: who has the authority to stop a use case that is already approved, at what threshold, and what happens if the business pushes back."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The gap is not a missing control. It is treating controls as a stack of documents signed once, instead of a decision mechanism that activates every time something drifts from what was approved. A policy nobody enforces is a PDF with good intentions."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "What controls does a company need before scaling AI?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The answer circulating today is a hygiene list: ethical principles, a risk checklist, an advisory committee. Frameworks like ISO/IEC 42001 or the NIST AI RMF help structure that list, but neither one tells your specific company who signs off when the control raises a hand. That call belongs to the board, not the standard, and most boards haven't made it yet."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The ethics committee reviews the case once, at approval, and never looks at it again once it's live.",
+          "There is a responsible use policy, but nobody can say which function enforces it or what happens when a team ignores it.",
+          "The risk threshold lives on a slide, not in a process. Nobody has tested what happens when a real case crosses it.",
+          "When the control says no, the final call goes to whoever holds more power in the room, not whoever holds the written authority.",
+          "The external auditor asks for the decision log, and the answer is a buried email from eight months ago."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "Nobody has decided who wins when the control and the business disagree."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Every AI governance framework assumes the control wins automatically. That is not how a boardroom works. The use case that would delay the quarterly close, or the one the CEO already promised on an investor call, carries a weight no policy weighs the same way. If nobody has written down in advance who decides when that collides with the control, whoever holds more power that day wins, and the control becomes a formality that got worked around."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "And there is something more uncomfortable still. A board that approves a long list of controls feels covered. It is covered on paper. It is not covered in practice if nobody can name, for the last use case that got scaled, who reviewed it, on what criteria, and when. That gap goes unnoticed until there is an incident, and then the board discovers it signed off on a policy, not a mechanism."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A board that approves AI controls without naming who enforces them is not managing risk. It is postponing it to the day of the incident.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "What has to be written down before you scale?"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Threshold",
+            "definicion": "The size, scope or reversibility level at which a use case needs committee sign-off instead of just the team that built it. Without a written number or criterion, every team sets its own."
+          },
+          {
+            "termino": "Veto authority",
+            "definicion": "Who can stop an already-approved use case once the control flags something, and how fast that call gets executed. If stopping it requires reconvening the same committee that approved it, the veto doesn't exist. A meeting does."
+          },
+          {
+            "termino": "Decision log",
+            "definicion": "What got decided, by whom, and on what evidence, for every use case that crossed the threshold. It is the first thing an auditor asks for, and it almost never exists when they do."
+          },
+          {
+            "termino": "Review cadence",
+            "definicion": "How often an already-approved case gets looked at again, not just at scale up. A model that cleared review in March can be behaving differently by October, and nobody has checked since."
+          },
+          {
+            "termino": "Exit",
+            "definicion": "What happens when the control says no and the business pushes back anyway: who has the final word, and what gets documented when the call goes against the committee's recommendation."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of the five is a technical standard. They are five corporate governance decisions, the kind a board already knows how to make in other areas: financial risk, regulatory compliance, security. The only difference with AI is that these five haven't been made yet, because the topic entered the agenda as a technical matter and got delegated to a committee with no authority to stop the business."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take the last use case that got scaled and ask who would have signed off on stopping it if the control had said no. If nobody in the room can answer with a name, you don't have a control framework. You have a folder of documents nobody has tested under pressure."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "What controls does a company need before scaling AI?",
+            "respuesta": "Five decisions made in writing beforehand: the threshold that triggers a sign-off requirement, who has authority to veto a case already in motion, a log of those decisions, how often already-approved cases get reviewed, and what happens when the control and the business disagree. Without those five, an AI policy is an intention, not a control."
+          },
+          {
+            "pregunta": "What's the difference between an AI policy and an AI control?",
+            "respuesta": "A policy states what's expected, in principle: responsible use, bias review, privacy. A control states who verifies that it actually happens, how often, and what occurs if it doesn't. A company can have a flawless policy and no control at all, and that is exactly what an auditor's first question exposes."
+          },
+          {
+            "pregunta": "Who should have the authority to stop an already-approved AI use case?",
+            "respuesta": "Someone with business authority, not only technical authority, who can act without reconvening the full committee. If stopping a case requires the same meeting that approved it, the stop takes weeks, and during that time the case keeps running exactly as if the control never existed."
+          },
+          {
+            "pregunta": "Which frameworks are useful references for scaling AI with controls?",
+            "respuesta": "ISO/IEC 42001 and the NIST AI RMF organize the risk catalogue and provide a management structure, so the exercise doesn't start from zero. Neither one replaces the decision that belongs to the board: who has the authority to say no inside this specific company, when the control and the business don't agree."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's design your control framework",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}

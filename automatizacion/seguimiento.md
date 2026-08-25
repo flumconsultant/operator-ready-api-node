@@ -32,6 +32,7 @@ abandonar a la primera algo que solo necesitaba más cuerpo.
 | `por-que-tu-equipo-no-usa-la-ia-que-le-diste` | 2026-08-22 | ¿Cómo consigo que mi equipo use de verdad las herramientas de IA? | — | `nuevo` | Campo competitivo más débil del barrido, nadie toca el conflicto de incentivos |
 | `que-puede-hacer-un-agente-sin-supervision` | 2026-08-23 | ¿Cómo se decide qué puede hacer un agente sin supervisión humana? | — | `nuevo` | Recomendación #1 del informe 2026-08-23. Vecino de «quién responde cuando responde un agente»: aquel da el dueño del resultado, este da el corte (importe, reversibilidad, alcance) para trazar el perímetro antes del incidente |
 | `como-medir-el-retorno-real-de-la-ia` | 2026-08-24 | ¿Cómo se mide el retorno real de una iniciativa de IA? | — | `nuevo` | Recomendación #2 del informe 2026-08-23. La pregunta más abierta del barrido en español: sin Big Four ni HBR compitiendo, y ningún actor da un método de atribución replicable (línea base, ventana, destino del tiempo liberado) |
+| `que-controles-necesita-una-empresa-antes-de-escalar-la-ia` | 2026-08-25 | ¿Qué controles necesita una empresa antes de escalar la IA? | — | `nuevo` | Recomendación #3 del informe 2026-08-23. Fragmentado, sin actor dominante ni marcos citados por nombre; nadie dice quién firma cuando el control dice que no y el negocio insiste |
 
 ## Qué está funcionando
 
