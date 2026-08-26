@@ -1,0 +1,311 @@
+{
+  "estado": "borrador",
+  "fecha": "2026-08-26",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "agentic-work",
+  "formato": "framework",
+  "es": {
+    "slug": "que-entregas-en-cada-nivel-de-automatizacion",
+    "titulo": "Qué entregas en cada nivel de automatización",
+    "entradilla": "Hay cuatro formas de dejar que un agente repita trabajo, y se distinguen por una sola cosa: qué deja de decidir la persona en cada una.",
+    "descripcion": "Los cuatro tipos de bucle según el equipo de Claude Code, traducidos a decisiones de negocio, y qué se rompe al llegar al último nivel.",
+    "linkedin": {
+      "texto": "El equipo de Claude Code publicó una clasificación de bucles agénticos, y su parte más útil no es técnica.\n\nEs una columna: qué entregas en cada nivel. Primero entregas la comprobación. Después la condición de parada. Después el disparador. En el último nivel entregas la instrucción misma, y ya no hay nadie delante cuando el trabajo ocurre.\n\nAhí es donde cambia el modo de fallar. Contamos dos fallos propios de esta semana, en nuestro propio sitio, y las cuatro preguntas que conviene contestar antes de subir al último escalón.",
+      "hashtags": [
+        "IA",
+        "Automatizacion",
+        "Operaciones"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Hay cuatro formas de dejar que un agente repita trabajo, y se distinguen por una sola cosa: qué deja de decidir la persona en cada una."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El equipo que construye Claude Code publicó a finales de junio una clasificación de lo que llaman bucles agénticos. Llega en buen momento, porque la conversación sobre el asunto lleva meses siendo confusa: cada quien usa la palabra para algo distinto, y bajo el mismo término conviven cosas que no se parecen en nada."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Su definición es corta y sirve como criterio: un bucle es un agente repitiendo ciclos de trabajo hasta que se cumple una condición de parada. Lo importante de esa frase es la última parte. Si no hay condición de parada escrita, no hay bucle: hay una tarea larga que alguien está mirando."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un bucle es un agente repitiendo ciclos de trabajo hasta que se cumple una condición de parada.",
+        "fuente": "Equipo de Claude Code, Anthropic (30 de junio de 2026)"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Cuatro niveles, y en cada uno se suelta algo distinto."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Los cuatro se ordenan por cómo se disparan y cómo se detienen. Leídos en orden, forman una escalera, y cada escalón le quita a la persona una decisión de las manos."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Por turnos",
+            "definicion": "Lo dispara una persona con una instrucción, y termina cuando el agente considera que acabó o que le falta contexto. Sirve para tareas cortas que no forman parte de un proceso regular. La persona sigue haciendo la comprobación del resultado, y ahí está el cuello de botella."
+          },
+          {
+            "termino": "Por objetivo",
+            "definicion": "Se escribe qué significa terminado antes de empezar, y cada vez que el agente intenta parar, un evaluador comprueba esa condición y lo devuelve al trabajo hasta cumplirla o agotar un número de intentos fijado. Exige criterios que se puedan medir, como pruebas que pasan o una puntuación que se supera."
+          },
+          {
+            "termino": "Por tiempo",
+            "definicion": "Lo dispara un intervalo, no una persona. Sirve para trabajo que se repite igual y en el que solo cambian los datos de entrada, y para vigilar sistemas ajenos preguntándoles cada cierto rato qué ha cambiado. Se detiene cuando alguien lo cancela o cuando el trabajo se completa."
+          },
+          {
+            "termino": "Proactivo",
+            "definicion": "Lo dispara un evento o un calendario, sin nadie delante en ese momento. Cada tarea termina cuando cumple su objetivo, y el mecanismo entero sigue vivo hasta que alguien lo apaga. Es el nivel para corrientes recurrentes de trabajo bien definido: incidencias que entran, clasificaciones, migraciones."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Lo más útil de esa clasificación no es técnica y cabe en una columna. En el primer nivel entregas la comprobación. En el segundo, la condición de parada. En el tercero, el disparador. En el cuarto entregas la instrucción misma. Esa es la pregunta que hay que hacerse antes de subir un escalón, y no es una pregunta de sistemas: qué estoy dejando de decidir, y quién responde por esa decisión cuando salga mal."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "En el último escalón, el proceso termina en verde y el resultado no llega."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay algo que la escalera no dice y que solo se aprende operándola. Al subir del tercer nivel al cuarto no cambia solo quién dispara el trabajo. Cambia cómo falla. Un proceso que ejecuta una persona tiene un testigo: si el lunes el informe no sale, alguien lo nota el lunes, porque alguien lo estaba haciendo. Cuando ese mismo proceso corre sin nadie delante, el testigo desaparece y lo que queda en su lugar es un registro de ejecución que dice «correcto», que no es lo mismo que decir «funcionó»."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "En este sitio publicamos un artículo al día y lo hace un mecanismo, no una persona. Escribe, valida, publica, despliega y avisa por correo a quien está suscrito. Es un bucle proactivo de manual. Dos veces en dos días el correo no salió, y las dos veces el mecanismo terminó en verde."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "La primera vez, el paso del correo comparaba la versión anterior del repositorio con la nueva para saber qué artículo era nuevo, y la copia que tenía delante estaba incompleta.",
+          "La comparación no devolvió nada, y el paso lo interpretó como «no hay artículos nuevos» en lugar de como «no he podido mirar».",
+          "La segunda vez, el artículo entró en un despliegue que murió antes de llegar al paso del correo.",
+          "El despliegue siguiente ya no lo veía como nuevo: entre esos dos puntos el archivo no se había creado, solo modificado.",
+          "En los dos casos el resultado fue idéntico. Artículo publicado en la web, nadie avisado, ninguna alarma."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema detrás",
+        "texto": "Un paso que no distingue «no hay nada» de «no pude mirar»."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Los dos fallos tienen la misma raíz, y no es la que parece. No fue un error de programación ni una caída del servidor. Fue una condición de parada mal escrita: el mecanismo deducía si tenía trabajo pendiente a partir del contexto de su propia ejecución."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ese contexto es frágil. Depende de qué vino antes, de si la vuelta anterior llegó a terminar, de qué había en la copia local. Cuando se pierde, la deducción devuelve «nada que hacer». Y «nada que hacer» se ve exactamente igual que «hecho» en cualquier panel de control. Es el mismo consejo del artículo original dicho desde el otro lado: escribe la condición de parada. Solo que operándolo se descubre una segunda parte, que es escribir también qué pasa cuando esa condición no se puede evaluar."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Antes de subir de escalón",
+        "texto": "Cuatro preguntas que se contestan en una reunión."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Dónde vive la memoria",
+            "definicion": "Si lo que hay que hacer se deduce de la ejecución en curso, cualquier interrupción borra esa memoria. Tiene que vivir fuera del proceso: un registro de lo ya hecho que no dependa de qué ocurrió justo antes ni de si la vuelta anterior terminó."
+          },
+          {
+            "termino": "Qué se ve cuando no pasa nada",
+            "definicion": "Un fallo silencioso se descubre semanas después y por casualidad. Cualquier estado distinto del esperado tiene que producir una señal visible, aunque el proceso no pueda arreglarlo solo. Avisar y resolver son dos trabajos distintos, y el primero no es opcional."
+          },
+          {
+            "termino": "Quién comprueba el efecto",
+            "definicion": "Terminar sin error dice que el proceso corrió. No dice que el correo saliera, que el archivo llegara o que el cliente recibiera algo. Alguien tiene que preguntar por el efecto, desde fuera del proceso y con su propio calendario, para que un fallo no se lleve por delante también a quien lo vigila."
+          },
+          {
+            "termino": "Cuántas oportunidades tiene",
+            "definicion": "Un proceso con una sola oportunidad al día falla un día entero. Con una segunda comprobación independiente, el mismo fallo se convierte en un retraso de unas horas que nadie llega a notar."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "El consejo del artículo original es el correcto: mira el trabajo que ya haces, elige una tarea donde tú seas el cuello de botella y pregunta qué pieza podrías entregar. ¿Sabes escribir la comprobación? ¿Está el objetivo lo bastante claro? ¿El trabajo llega en un horario? Empieza por el escalón más bajo que resuelva el problema. Subir de nivel antes de tiempo no acelera nada y quita visibilidad."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Qué es un bucle agéntico y en qué se diferencia de una automatización de las de siempre?",
+            "respuesta": "Un bucle agéntico es un agente repitiendo ciclos de trabajo hasta que se cumple una condición de parada. La diferencia con una automatización clásica es que el agente decide qué hacer en cada vuelta en lugar de ejecutar pasos fijos. Eso lo hace útil cuando los casos varían, y también hace imprescindible escribir la condición de parada: sin ella, quien decide cuándo está terminado es el propio agente."
+          },
+          {
+            "pregunta": "¿Cuándo conviene pasar de un bucle por tiempo a uno proactivo?",
+            "respuesta": "Cuando el trabajo es recurrente, está bien definido y ya se sabe comprobar si salió bien. Si todavía hace falta que alguien mire cada resultado, subir de nivel solo traslada el trabajo, no lo quita. Y antes de subir conviene tener resueltas las cuatro preguntas de este artículo, porque el nivel proactivo es donde los fallos dejan de avisar."
+          },
+          {
+            "pregunta": "¿Cómo se controla el coste de un bucle?",
+            "respuesta": "Con límites escritos. El equipo de Claude Code señala cinco: elegir el nivel más simple que resuelva la tarea, definir criterios de parada específicos, probar sobre una porción pequeña antes de una tanda grande, usar programas deterministas para lo que no necesita razonarse, y no ejecutar el bucle más a menudo de lo que cambia aquello que vigila. El modelo elegido y el nivel de esfuerzo son las dos palancas que más mueven la factura."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos qué puede correr solo en tu operación",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "what-you-hand-off-at-each-level-of-automation",
+    "titulo": "What you hand off at each level of automation",
+    "entradilla": "There are four ways to let an agent repeat work, and one thing separates them: what the person stops deciding at each step.",
+    "descripcion": "The four loop types defined by the Claude Code team, read as business decisions, and what breaks once you reach the last level.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "There are four ways to let an agent repeat work, and one thing separates them: what the person stops deciding at each step."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The team building Claude Code published a classification of what they call agentic loops at the end of June. It arrives at a useful moment, because the conversation around the word has been muddled for months: everyone uses it for something slightly different, and things with nothing in common end up sharing a label."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Their definition is short enough to work as a test: a loop is an agent repeating cycles of work until a stop condition is met. The weight sits in the last three words. With no written stop condition there is no loop, only a long task that somebody is watching."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A loop is an agent repeating cycles of work until a stop condition is met.",
+        "fuente": "Claude Code team, Anthropic (30 June 2026)"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The frame",
+        "texto": "Four levels, and each one releases something different."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The four are ordered by how they start and how they stop. Read in order they form a ladder, and every rung takes one more decision out of a person's hands."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Turn-based",
+            "definicion": "A person starts it with an instruction, and it ends when the agent judges the task done or finds it needs more context. Good for short work that is not part of a regular process. The person still performs the check on the result, and that is where the bottleneck sits."
+          },
+          {
+            "termino": "Goal-based",
+            "definicion": "Done is written down before the work starts, and every time the agent tries to stop, an evaluator tests that condition and sends it back until the goal is met or a set number of attempts runs out. It demands criteria you can measure, like tests passing or a score being cleared."
+          },
+          {
+            "termino": "Time-based",
+            "definicion": "An interval starts it, not a person. Good for work that repeats identically while only the inputs change, and for watching outside systems by asking them at intervals what moved. It stops when someone cancels it or the work completes."
+          },
+          {
+            "termino": "Proactive",
+            "definicion": "An event or a schedule starts it, with nobody present at the time. Each task ends when its goal is met, and the mechanism itself stays alive until someone switches it off. This is the level for recurring streams of well-defined work: incoming reports, triage, migrations."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The most valuable part of that classification is not technical and fits in one column. At the first level you hand off the check. At the second, the stop condition. At the third, the trigger. At the fourth you hand off the instruction itself. That is the question worth asking before climbing a rung, and it is not a systems question: what am I no longer deciding, and who answers for that decision when it goes wrong."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "On the last rung, the job ends green and the result never arrives."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "There is something the ladder does not say, and it is only learned by running one. Climbing from the third level to the fourth does not just change who starts the work. It changes how the work fails. A process a person runs has a witness: if the report does not go out on Monday, someone notices on Monday, because someone was doing it. Once that process runs with nobody present, the witness is gone, and what replaces it is a run log that says «completed», which is not the same word as worked."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "This site publishes one article a day and a mechanism does it, not a person. It writes, validates, publishes, deploys and emails the people who subscribed. A textbook proactive loop. Twice in two days the email did not go out, and both times the mechanism finished green."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The first time, the email step compared the previous version of the repository against the new one to work out which article was new, and the copy it had in front of it was incomplete.",
+          "The comparison came back empty, and the step read that as «no new articles» rather than as «I could not look».",
+          "The second time, the article arrived in a deployment that died before reaching the email step.",
+          "The next deployment no longer saw it as new: between those two points the file had not been created, only modified.",
+          "Both times the outcome was identical. Article live on the web, nobody told, no alarm anywhere."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "What sits underneath",
+        "texto": "A step that cannot tell «nothing to do» from «I could not look»."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Both failures share a root cause, and it is not the obvious one. It was not a coding mistake or a server outage. It was a badly written stop condition: the mechanism inferred whether it had pending work from the context of its own run."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That context is fragile. It depends on what came before, on whether the last pass finished, on what was in the local copy. When it is lost, the inference returns «nothing to do». And nothing to do looks exactly like done on any dashboard. It is the original article's advice seen from the other side: write the stop condition. Running one adds a second half, which is writing down what happens when that condition cannot be evaluated at all."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Before you climb a rung",
+        "texto": "Four questions that get settled in a meeting."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Where the memory lives",
+            "definicion": "If the work to be done is inferred from the run in progress, any interruption wipes that memory. It has to live outside the process: a record of what is already done, independent of what happened just before or whether the last pass finished."
+          },
+          {
+            "termino": "What is visible when nothing happens",
+            "definicion": "A quiet failure surfaces weeks later and by accident. Any state other than the expected one has to raise a visible signal, even when the process cannot fix it. Flagging and fixing are two separate jobs, and the first one is not optional."
+          },
+          {
+            "termino": "Who checks the effect",
+            "definicion": "Finishing without error says the process ran. It does not say the email went out, the file landed, or the customer received anything. Someone has to ask about the effect, from outside the process and on its own schedule, so a failure does not also take out whoever is watching."
+          },
+          {
+            "termino": "How many chances it gets",
+            "definicion": "A process with one shot a day fails for a whole day. Add a second, independent check and the same failure turns into a delay of a few hours that nobody gets to notice."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "The original article gets the advice right: look at the work you already do, pick one task where you are the bottleneck, and ask which piece you could hand off. Can you write the check? Is the goal clear enough? Does the work arrive on a schedule? Start at the lowest rung that solves the problem. Climbing early buys no speed and costs visibility."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "What is an agentic loop, and how is it different from ordinary automation?",
+            "respuesta": "An agentic loop is an agent repeating cycles of work until a stop condition is met. The difference from classic automation is that the agent decides what to do on each pass instead of running fixed steps. That makes it useful when cases vary, and it also makes the written stop condition essential: without one, the agent is the party deciding when the job is finished."
+          },
+          {
+            "pregunta": "When is it right to move from a time-based loop to a proactive one?",
+            "respuesta": "When the work is recurring, well defined, and you already know how to check whether it came out right. If a person still has to look at every result, climbing a rung only moves the work rather than removing it. And the four questions in this article are worth settling first, because the proactive level is where failures stop announcing themselves."
+          },
+          {
+            "pregunta": "How do you keep the cost of a loop under control?",
+            "respuesta": "With written limits. The Claude Code team points at five: pick the simplest level that solves the task, define specific stop criteria, pilot on a small slice before a large run, use deterministic scripts for anything that does not need reasoning, and never run the loop more often than the thing it watches actually changes. The model and the effort level chosen are the two biggest levers on the bill."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's look at what could run alone in your operation",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
