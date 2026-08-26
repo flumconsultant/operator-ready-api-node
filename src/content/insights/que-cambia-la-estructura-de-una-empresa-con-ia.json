@@ -1,0 +1,239 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-08-26",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "operating-model",
+  "formato": "perspective",
+  "es": {
+    "slug": "que-cambia-la-estructura-de-una-empresa-con-ia",
+    "titulo": "Qué cambia la estructura con la IA de verdad",
+    "entradilla": "Todo plan de reestructuración con IA repite la misma frase: el control pasa de TI al negocio. Suena a decisión. En la práctica cabe en cualquier diapositiva porque no obliga a mover una sola caja del organigrama.",
+    "descripcion": "El organigrama no cambia con IA hasta que se deciden tres cosas: qué cajas se fusionan, cómo se mide un manager mixto y qué pasa con el presupuesto.",
+    "linkedin": {
+      "texto": "«El control pasa de TI al negocio» es la frase que más se repite en los comités de reestructuración con IA, y la que menos le cuesta a nadie.\n\nNo dice qué caja del organigrama desaparece. No dice cómo se mide a un manager cuando la mitad de su equipo son agentes. No dice cómo se aprueba un presupuesto que dejó de ser plantilla fija y pasó a ser consumo variable.\n\nEn este análisis de BECOME bajamos esa frase a las tres decisiones que sí mueven una caja del organigrama.",
+      "hashtags": ["IA", "Organigrama", "Liderazgo"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Todo plan de reestructuración con IA repite la misma frase: el control pasa de TI al negocio. Suena a decisión. En la práctica cabe en cualquier diapositiva porque no obliga a nadie a mover una sola caja del organigrama."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Lo he visto en más de un comité de dirección. Se aprueba la iniciativa, se redibuja el organigrama en una lámina bonita, y seis meses después el proceso de aprobación sigue siendo exactamente el mismo. Las mismas firmas, las mismas tres reuniones, la misma persona esperando a que otra conteste un correo. Lo único que cambió fue el nombre de una caja: ahora dice «Centro de Excelencia de IA» en vez de «Sistemas»."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y es que «el control pasa de TI al negocio» no es un cambio de estructura. Es una frase que no compromete a nada: no dice qué caja desaparece, no dice quién deja de firmar, no dice qué presupuesto deja de existir. Se puede repetir en cualquier comité sin que nadie tenga que defender después una decisión concreta. Por eso gusta tanto."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Qué cambia en la estructura de una empresa cuando adopta IA de verdad?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Lo que circula es intención, no organigrama. Se habla de democratizar la decisión, de acercar el dato al negocio, de romper silos. Ningún directivo se opone a esas frases porque ninguna obliga a nada. El problema aparece cuando alguien pregunta, en la misma sala, qué caja concreta desaparece del organigrama la semana que viene. Ahí el silencio dura más de lo que debería."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El organigrama nuevo tiene un recuadro que dice «IA» pegado con una línea punteada al resto, y nadie sabe si reporta o solo asesora.",
+          "Un manager sigue midiéndose por cuántas personas tiene a cargo, aunque la mitad de su trabajo real ya es revisar decisiones de un agente que ningún reporte de plantilla cuenta.",
+          "El presupuesto del área sigue siendo una cifra de headcount aprobada en enero, mientras el gasto real crece cada mes en consumo de modelos que nadie proyectó.",
+          "Dos áreas reclaman el mismo proceso porque el agente que lo ejecuta vive, en el papel, dentro de una sola de las dos.",
+          "Cuando el agente se equivoca, la caja del organigrama que debía responder por eso todavía no existe: se improvisa un comité esa misma tarde."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema de fondo",
+        "texto": "El organigrama no cambia por decreto. Cambia en tres sitios, y ninguno es una lámina."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El primero es qué cajas se fusionan de verdad. No basta con crear una caja nueva encima de las viejas: si servicio al cliente y operaciones siguen firmando cada una su parte del mismo proceso porque un agente ahora lo cruza entero, la fusión no ocurrió. Se dibujó. El segundo es el span of control: cuando un manager supervisa personas y agentes al mismo tiempo, la pregunta de cuántas personas tiene a cargo deja de servir para medir su carga real, y casi ninguna empresa ha decidido con qué la reemplaza. El tercero es el presupuesto: mientras el coste siga aprobándose como plantilla fija de enero a diciembre, y el gasto real sea consumo variable que sube y baja con el volumen, finanzas sigue aprobando un número que no describe lo que pasa."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un organigrama que no dice qué caja desaparece no es una reestructuración. Es un cartel nuevo sobre la puerta de la misma oficina.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Qué preguntar",
+        "texto": "Tres preguntas que sí bajan al organigrama, y una cuarta que nadie hace."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Fusión real",
+            "definicion": "Qué cajas concretas se eliminan o se combinan, no qué capa nueva se añade encima. Si dos áreas siguen firmando por separado el mismo proceso, no hubo fusión: hubo una lámina nueva."
+          },
+          {
+            "termino": "Span de control mixto",
+            "definicion": "Con qué se mide la carga de un manager cuando parte de su equipo son agentes: no personas a cargo, sino decisiones que pasan por su firma y el tiempo que le toma revisarlas."
+          },
+          {
+            "termino": "Presupuesto variable",
+            "definicion": "Cómo se rehace el ciclo de aprobación cuando el gasto deja de ser una cifra fija de plantilla y pasa a moverse con el volumen que procesa el agente. Quién autoriza ese rango, no un número cerrado."
+          },
+          {
+            "termino": "Dueño del incidente",
+            "definicion": "Qué caja del organigrama responde cuando el agente se equivoca en un proceso que cruza dos áreas. Si la respuesta es «se decide en el momento», la caja no existe todavía."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguna de las cuatro se resuelve con una lámina nueva. Se resuelve sentando a las dos áreas que hoy comparten el proceso y decidiendo, con nombre y apellido, quién se queda con la caja y quién la pierde. Esa conversación incomoda, porque alguien pierde presupuesto y alguien pierde gente. Por eso el comité prefiere quedarse en «acercar la decisión al negocio»: no le cuesta nada a nadie."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Coge el proceso donde ya tienes un agente operando de punta a punta y pregunta, delante del comité, qué caja del organigrama deja de firmar su parte. Si la respuesta tarda más de un minuto, el organigrama no cambió: solo se le puso un nombre nuevo."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Qué cambia en la estructura de una empresa cuando adopta IA de verdad?",
+            "respuesta": "Cambian tres cosas que no aparecen en una lámina de organigrama: qué cajas se fusionan o desaparecen de verdad, cómo se mide la carga de un manager cuando parte de su equipo son agentes, y cómo se rehace el presupuesto cuando el coste deja de ser plantilla fija y pasa a ser consumo variable. Si ninguna de las tres se decidió con nombre y apellido, el organigrama nuevo es solo un cartel distinto sobre la misma oficina."
+          },
+          {
+            "pregunta": "¿Cómo cambia el span of control cuando un manager supervisa agentes además de personas?",
+            "respuesta": "El número de personas a cargo deja de describir la carga real del manager, porque parte de su trabajo ahora es revisar y corregir decisiones que toma un agente, no coordinar personas. La mayoría de las empresas todavía mide el span de control solo por cabezas, así que un manager puede aparecer con poca carga en el reporte de plantilla mientras revisa cientos de decisiones automatizadas por semana que ese reporte no cuenta."
+          },
+          {
+            "pregunta": "¿Cómo se rehace el presupuesto cuando el coste de IA pasa de plantilla a consumo variable?",
+            "respuesta": "Dejando de aprobar una cifra fija de enero a diciembre y aprobando en su lugar un rango de consumo esperado, con alguien nombrado para autorizar el gasto cuando se acerca al límite superior. El error más común es seguir presupuestando la IA como si fuera una nueva contratación, con un número cerrado, cuando el gasto real sube y baja con el volumen de trabajo que procesa el agente cada mes."
+          },
+          {
+            "pregunta": "¿Quién responde en el organigrama cuando un agente se equivoca en un proceso que cruza dos áreas?",
+            "respuesta": "Tiene que ser una caja nombrada antes del incidente, no un comité que se arma después. Si el proceso lo ejecuta un agente que vive, en el papel, dentro de una sola área, pero el resultado afecta a otra, las dos van a señalarse mutuamente hasta que alguien decida, por adelantado, cuál de las dos firma la responsabilidad completa."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Rediseñemos tu estructura",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "what-changes-in-company-structure-with-ai",
+    "titulo": "What Changes in Structure With Real AI",
+    "entradilla": "Every AI restructuring plan repeats the same line: control moves from IT to the business. It sounds like a decision. In practice it fits any slide, because it never forces anyone to move a single box on the org chart.",
+    "descripcion": "An org chart does not change with AI until three things get decided: which boxes merge, how a mixed manager gets measured, and what happens to the budget.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Every AI restructuring plan repeats the same line: control moves from IT to the business. It sounds like a decision. In practice it fits any slide, because it never forces anyone to move a single box on the org chart."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "I have sat in more than one board meeting where the initiative gets approved, the org chart gets redrawn on a nice slide, and six months later the approval process is exactly the same. Same signatures, same three meetings, same person waiting on someone else's email. The only thing that changed is the label on one box: it now says AI Center of Excellence instead of IT."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Control moves from IT to the business is not a structural change. It is a sentence that commits to nothing: it does not say which box disappears, who stops signing off, which budget line stops existing. You can repeat it in any committee without ever having to defend a real decision afterward. That is exactly why it gets repeated so much."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "What actually changes in a company's structure when it adopts AI for real?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "What circulates is intent, not org chart. People talk about democratizing decisions, bringing data closer to the business, breaking down silos. No executive objects to any of that, because none of it commits to anything. The trouble starts the moment someone asks, in that same room, which specific box comes off the chart next week. The silence that follows lasts longer than it should."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The new org chart has a box labelled AI, connected to everything else with a dotted line, and nobody can say whether it reports or just advises.",
+          "A manager still gets measured on how many people report to them, even though half their real workload is now reviewing an agent's decisions, and no headcount report captures that.",
+          "The department budget is still a fixed headcount figure approved in January, while actual spend climbs every month in model consumption nobody projected.",
+          "Two departments claim the same process because the agent running it lives, on paper, inside only one of them.",
+          "When the agent gets something wrong, the box on the chart that should answer for it does not exist yet, so a committee gets improvised that same afternoon."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "The chart does not change by decree. It changes in three places, and none of them is a slide."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The first is which boxes actually merge. Adding a new box on top of the old ones is not enough: if customer service and operations still each sign off their own slice of a process an agent now runs end to end, the merger did not happen. It got drawn. The second is span of control: once a manager oversees people and agents at the same time, headcount stops measuring their real load, and almost no company has decided what replaces it. The third is budget: as long as cost keeps getting approved as fixed headcount from January to December while actual spend is variable consumption that rises and falls with volume, finance keeps signing off on a number that does not describe what is actually happening."
+      },
+      {
+        "tipo": "cita",
+        "texto": "An org chart that does not say which box disappears is not a restructuring. It is a new sign on the same office door.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "What to ask",
+        "texto": "Three questions that actually reach the org chart, and a fourth nobody asks."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Real merger",
+            "definicion": "Which specific boxes get eliminated or combined, not which new layer gets added on top. If two departments still sign off the same process separately, no merger happened. A slide got redrawn."
+          },
+          {
+            "termino": "Mixed span of control",
+            "definicion": "What replaces headcount as the measure of a manager's real load once part of their team is agents: decisions that pass through their sign-off and the time spent reviewing them, not people managed."
+          },
+          {
+            "termino": "Variable budget",
+            "definicion": "How the approval cycle gets rebuilt once spend stops being a fixed headcount number and starts moving with the volume the agent processes. Who authorizes that range, not a closed figure."
+          },
+          {
+            "termino": "Incident owner",
+            "definicion": "Which box answers when the agent gets something wrong in a process that crosses two departments. If the answer is we decide in the moment, the box does not exist yet."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of the four gets solved with a new slide. They get solved by sitting the two departments that currently share the process in a room and deciding, by name, who keeps the box and who loses it. That conversation is uncomfortable, because someone loses budget and someone loses people. Which is exactly why the committee prefers to stay at bringing decisions closer to the business. It costs nobody anything."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take the process where an agent already runs end to end and ask, in front of the committee, which box on the chart stops signing off its part. If the answer takes more than a minute, the chart did not change. It just got a new name."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "What actually changes in a company's structure when it adopts AI for real?",
+            "respuesta": "Three things that never show up on an org chart slide change: which boxes actually merge or disappear, how a manager's real load gets measured once part of their team is agents, and how the budget gets rebuilt once cost stops being fixed headcount and becomes variable consumption. If none of the three gets decided by name, the new chart is just a different sign on the same office."
+          },
+          {
+            "pregunta": "How does span of control change when a manager oversees agents as well as people?",
+            "respuesta": "Headcount stops describing the manager's real workload, because part of their job is now reviewing and correcting decisions an agent makes, not coordinating people. Most companies still measure span of control by heads alone, so a manager can show up as lightly loaded on a headcount report while reviewing hundreds of automated decisions a week that report never counts."
+          },
+          {
+            "pregunta": "How do you rebuild the budget once AI cost shifts from headcount to variable consumption?",
+            "respuesta": "By approving an expected consumption range instead of a fixed January-to-December figure, with a named owner for authorizing spend once it nears the upper bound. The most common mistake is still budgeting AI like a new hire, with one closed number, when actual spend rises and falls with how much volume the agent processes each month."
+          },
+          {
+            "pregunta": "Who answers on the org chart when an agent makes a mistake in a process that crosses two departments?",
+            "respuesta": "It has to be a named box decided before the incident, not a committee assembled after it. If the process is run by an agent that lives, on paper, inside a single department, but the outcome affects another, the two will point at each other until someone decides in advance which one signs off on full responsibility."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's redesign your structure",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
