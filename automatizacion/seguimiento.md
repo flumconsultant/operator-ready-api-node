@@ -34,6 +34,7 @@ abandonar a la primera algo que solo necesitaba más cuerpo.
 | `como-medir-el-retorno-real-de-la-ia` | 2026-08-24 | ¿Cómo se mide el retorno real de una iniciativa de IA? | — | `nuevo` | Recomendación #2 del informe 2026-08-23. La pregunta más abierta del barrido en español: sin Big Four ni HBR compitiendo, y ningún actor da un método de atribución replicable (línea base, ventana, destino del tiempo liberado) |
 | `que-controles-necesita-una-empresa-antes-de-escalar-la-ia` | 2026-08-25 | ¿Qué controles necesita una empresa antes de escalar la IA? | — | `nuevo` | Recomendación #3 del informe 2026-08-23. Fragmentado, sin actor dominante ni marcos citados por nombre; nadie dice quién firma cuando el control dice que no y el negocio insiste |
 | `que-cambia-la-estructura-de-una-empresa-con-ia` | 2026-08-26 | ¿Qué cambia en la estructura de una empresa cuando adopta IA de verdad? | — | `nuevo` | Recomendación #4 del informe 2026-08-23. Consenso vacío («el control pasa de TI al negocio»); la especificidad de organigrama —qué cajas se fusionan, span de control mixto, presupuesto de plantilla a consumo variable— estaba libre |
+| `como-se-gobierna-la-ia-sin-frenar-al-negocio` | 2026-08-27 | ¿Cómo se gobierna la IA sin frenar al negocio? | — | `nuevo` | Recomendación #5 del informe 2026-08-23. El «clasifica por riesgo» se enuncia en todas partes y no se opera en ninguna; faltaba la taxonomía con ejemplos y el plazo de decisión del propio comité |
 
 ## Qué está funcionando
 
