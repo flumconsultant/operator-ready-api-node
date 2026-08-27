@@ -1,0 +1,2037 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Portal de Investigación UCSP</title>
+<meta name="description" content="Prototipo navegable del Portal de Investigación de la Universidad Católica San Pablo: buscador unificado, temas, investigadores, grupos, proyectos, resultados, impacto y colaboración." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+<style>
+/* ============================================================
+   Tokens. La paleta light vive en :root; el modo oscuro solo
+   redefine tokens, nunca componentes.
+   ============================================================ */
+:root{
+  --bg:#F2F4F7;
+  --panel:#FFFFFF;
+  --panel-2:#E8ECF3;
+  --linea:#D2DAE5;
+  --linea-suave:#E3E8EF;
+  --texto:#0E1B2E;
+  --texto-suave:#4B5C73;
+  --acento:#1B4F8F;
+  --acento-fuerte:#0A2A54;
+  --acento-contraste:#FFFFFF;
+  --acento-tenue:#E4EBF5;
+  --calido:#A9502A;
+  --calido-contraste:#FFFFFF;
+  --calido-suave:#F4E6DD;
+  --barra-fondo:#0A2A54;
+  --barra-texto:#FFFFFF;
+  --ok:#1C6E4A;
+  --ok-tenue:#DFEFE6;
+  --neutro:#64748B;
+  --neutro-tenue:#E6E9EE;
+  --foco:#A9502A;
+  --sombra:0 1px 2px rgba(14,27,46,.05);
+
+  --t-xs:.75rem; --t-sm:.8125rem; --t-base:1rem; --t-lg:1.0625rem;
+  --t-xl:1.3rem; --t-2xl:1.7rem; --t-3xl:2.2rem; --t-4xl:2.9rem;
+  --e1:.25rem; --e2:.5rem; --e3:.75rem; --e4:1rem; --e5:1.5rem; --e6:2rem; --e7:3rem; --e8:4.5rem;
+  --r:10px; --r-s:6px;
+  --ancho:1200px;
+  --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0A121D; --panel:#101C2B; --panel-2:#17273A; --linea:#26394F; --linea-suave:#1C2C40;
+    --texto:#E7EDF5; --texto-suave:#9CADC3;
+    --acento:#8FBCEB; --acento-fuerte:#2E6FBF; --acento-contraste:#FFFFFF; --acento-tenue:#152941;
+    --calido:#E0905F; --calido-contraste:#241209; --calido-suave:#2B1E17;
+    --barra-fondo:#0C1A2B; --barra-texto:#D8E3F0;
+    --ok:#5CC896; --ok-tenue:#122A20;
+    --neutro:#8B9AAE; --neutro-tenue:#1B2A3C;
+    --foco:#E0905F;
+    --sombra:0 1px 2px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0A121D; --panel:#101C2B; --panel-2:#17273A; --linea:#26394F; --linea-suave:#1C2C40;
+  --texto:#E7EDF5; --texto-suave:#9CADC3;
+  --acento:#8FBCEB; --acento-fuerte:#2E6FBF; --acento-contraste:#FFFFFF; --acento-tenue:#152941;
+  --calido:#E0905F; --calido-contraste:#241209; --calido-suave:#2B1E17;
+  --barra-fondo:#0C1A2B; --barra-texto:#D8E3F0;
+  --ok:#5CC896; --ok-tenue:#122A20;
+  --neutro:#8B9AAE; --neutro-tenue:#1B2A3C;
+  --foco:#E0905F;
+  --sombra:0 1px 2px rgba(0,0,0,.4);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--texto);
+  font-family:var(--sans); font-size:var(--t-base); line-height:1.6;
+}
+h1,h2,h3,h4{font-family:var(--serif); font-weight:600; line-height:1.18; text-wrap:balance; margin:0}
+h1{font-size:var(--t-3xl); letter-spacing:-.01em}
+h2{font-size:var(--t-2xl)}
+h3{font-size:var(--t-xl)}
+h4{font-size:var(--t-lg)}
+p{margin:0}
+a{color:var(--acento); text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:3px solid var(--foco); outline-offset:2px; border-radius:3px}
+img{max-width:100%}
+button{font:inherit; color:inherit}
+ul{margin:0; padding:0; list-style:none}
+
+.contenedor{max-width:var(--ancho); margin:0 auto; padding:0 var(--e5)}
+.salto-contenido{position:absolute; left:-9999px; top:0; background:var(--acento-fuerte); color:var(--acento-contraste); padding:var(--e3) var(--e4); z-index:60; border-radius:0 0 var(--r) 0}
+.salto-contenido:focus{left:0}
+.solo-lectores{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+
+/* --- Aviso de prototipo --------------------------------- */
+.barra-demo{background:var(--barra-fondo); color:var(--barra-texto); font-size:var(--t-xs); font-family:var(--mono)}
+.barra-demo .contenedor{display:flex; gap:var(--e3); align-items:center; justify-content:space-between; padding-top:var(--e2); padding-bottom:var(--e2); flex-wrap:wrap}
+.barra-demo b{font-weight:500; letter-spacing:.06em; text-transform:uppercase}
+.barra-demo button{background:transparent; border:1px solid rgba(255,255,255,.45); color:inherit; font-family:var(--mono); font-size:var(--t-xs); padding:2px 10px; border-radius:999px; cursor:pointer}
+.barra-demo button:hover{background:rgba(255,255,255,.14)}
+
+/* --- Cabecera ------------------------------------------- */
+.cabecera{position:sticky; top:0; z-index:50; background:var(--panel); border-bottom:1px solid var(--linea)}
+.cabecera-fila{display:flex; align-items:center; gap:var(--e4); padding-top:var(--e3); padding-bottom:var(--e3)}
+.marca{display:flex; align-items:center; gap:var(--e3); flex:0 0 auto; color:var(--texto)}
+.marca:hover{text-decoration:none}
+.marca-sigla{font-family:var(--mono); font-weight:500; font-size:.9rem; letter-spacing:.06em; background:var(--acento-fuerte); color:var(--acento-contraste); padding:.7rem .55rem; display:grid; place-items:center; border-radius:var(--r-s)}
+.marca-texto{display:flex; flex-direction:column; line-height:1.15}
+.marca-texto strong{font-family:var(--serif); font-weight:600; font-size:1.02rem}
+.marca-texto span{font-size:var(--t-xs); color:var(--texto-suave)}
+.buscador-global{flex:1 1 auto; min-width:0; position:relative}
+.buscador-global form{display:flex; gap:var(--e2)}
+.campo-busqueda{flex:1 1 auto; min-width:0; display:flex; align-items:center; gap:var(--e2); background:var(--bg); border:1px solid var(--linea); border-radius:999px; padding:0 var(--e4)}
+.campo-busqueda:focus-within{border-color:var(--acento); box-shadow:0 0 0 3px var(--acento-tenue)}
+.campo-busqueda input{flex:1; border:0; background:transparent; padding:.6rem 0; font:inherit; color:var(--texto); min-width:0}
+.campo-busqueda input:focus{outline:none}
+.icono{width:18px; height:18px; flex:0 0 auto; stroke:var(--texto-suave); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+.nav-principal{display:flex; gap:var(--e1); flex-wrap:wrap; padding-bottom:var(--e2)}
+.nav-principal a{font-size:var(--t-sm); color:var(--texto-suave); padding:var(--e2) var(--e3); border-radius:var(--r-s)}
+.nav-principal a:hover{background:var(--panel-2); color:var(--texto); text-decoration:none}
+.nav-principal a[aria-current="page"]{color:var(--texto); background:var(--acento-tenue); font-weight:500}
+.acciones-cabecera{display:flex; gap:var(--e2); flex:0 0 auto}
+
+/* --- Sugerencias del buscador --------------------------- */
+.sugerencias{position:absolute; top:calc(100% + 6px); left:0; right:0; background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); box-shadow:0 12px 30px rgba(10,42,84,.14); overflow:hidden; z-index:60}
+.sugerencias li>button{display:flex; width:100%; gap:var(--e3); align-items:baseline; background:transparent; border:0; text-align:left; padding:var(--e3) var(--e4); cursor:pointer; border-bottom:1px solid var(--linea-suave)}
+.sugerencias li:last-child>button{border-bottom:0}
+.sugerencias li>button:hover,.sugerencias li>button[aria-selected="true"]{background:var(--acento-tenue)}
+.sugerencias .tipo{flex:0 0 auto}
+.sugerencias .sug-sub{color:var(--texto-suave); font-size:var(--t-sm)}
+.sug-cabecera{padding:var(--e2) var(--e4); font-family:var(--mono); font-size:var(--t-xs); text-transform:uppercase; letter-spacing:.08em; color:var(--texto-suave); background:var(--panel-2)}
+
+/* --- Utilidades de texto -------------------------------- */
+.tipo{font-family:var(--mono); font-size:var(--t-xs); text-transform:uppercase; letter-spacing:.09em; color:var(--texto-suave)}
+.entradilla{font-size:var(--t-lg); color:var(--texto-suave); max-width:62ch}
+.mono{font-family:var(--mono); font-variant-numeric:tabular-nums}
+.apilado{display:flex; flex-direction:column}
+.gap2{gap:var(--e2)} .gap3{gap:var(--e3)} .gap4{gap:var(--e4)} .gap5{gap:var(--e5)} .gap6{gap:var(--e6)}
+.fila{display:flex; flex-wrap:wrap; align-items:center}
+
+/* --- Botones -------------------------------------------- */
+.boton{display:inline-flex; align-items:center; gap:var(--e2); border-radius:999px; border:1px solid var(--linea); background:var(--panel); color:var(--texto); padding:.5rem 1.1rem; font-size:var(--t-sm); font-weight:500; cursor:pointer; text-decoration:none}
+.boton:hover{border-color:var(--acento); text-decoration:none}
+.boton--primario{background:var(--calido); border-color:var(--calido); color:var(--calido-contraste)}
+.boton--primario:hover{filter:brightness(.94); border-color:var(--calido)}
+.boton--azul{background:var(--acento-fuerte); border-color:var(--acento-fuerte); color:var(--acento-contraste)}
+.boton--azul:hover{filter:brightness(1.1)}
+.boton--pequeno{padding:.3rem .75rem; font-size:var(--t-xs)}
+
+/* --- Etiquetas y estados -------------------------------- */
+.etiquetas{display:flex; flex-wrap:wrap; gap:var(--e2)}
+.etiqueta{display:inline-block; font-size:var(--t-xs); padding:.2rem .6rem; border-radius:999px; background:var(--panel-2); color:var(--texto-suave); border:1px solid var(--linea-suave)}
+a.etiqueta:hover{background:var(--acento-tenue); color:var(--acento); text-decoration:none}
+.estado{display:inline-flex; align-items:center; gap:.4rem; font-family:var(--mono); font-size:var(--t-xs); text-transform:uppercase; letter-spacing:.07em; padding:.2rem .6rem; border-radius:var(--r-s); border:1px solid transparent}
+.estado::before{content:""; width:7px; height:7px; border-radius:50%; background:currentColor}
+.estado--activo,.estado--abierta{background:var(--ok-tenue); color:var(--ok); border-color:color-mix(in srgb, var(--ok) 35%, transparent)}
+.estado--cierra{background:var(--calido-suave); color:var(--calido); border-color:color-mix(in srgb, var(--calido) 40%, transparent)}
+.estado--proxima{background:var(--acento-tenue); color:var(--acento); border-color:color-mix(in srgb, var(--acento) 35%, transparent)}
+.estado--cerrada,.estado--finalizado{background:var(--neutro-tenue); color:var(--neutro); border-color:color-mix(in srgb, var(--neutro) 30%, transparent)}
+
+/* --- Secciones y rejillas ------------------------------- */
+.vista{padding-bottom:var(--e8)}
+.seccion{padding-top:var(--e7)}
+.cabecera-seccion{display:flex; justify-content:space-between; align-items:end; gap:var(--e4); margin-bottom:var(--e5); flex-wrap:wrap}
+.cabecera-seccion p{color:var(--texto-suave); max-width:60ch; margin-top:var(--e2)}
+.rejilla{display:grid; gap:var(--e4)}
+.rejilla--2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.rejilla--3{grid-template-columns:repeat(auto-fill,minmax(272px,1fr))}
+.rejilla--4{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+
+/* --- Tarjetas ------------------------------------------- */
+.tarjeta{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e4); display:flex; flex-direction:column; gap:var(--e2); box-shadow:var(--sombra)}
+a.tarjeta{color:inherit}
+a.tarjeta:hover{border-color:var(--acento); text-decoration:none}
+a.tarjeta:hover h3,a.tarjeta:hover h4{color:var(--acento)}
+.tarjeta h3,.tarjeta h4{margin:0}
+.tarjeta .meta{font-size:var(--t-sm); color:var(--texto-suave)}
+.tarjeta-tema{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e4); display:flex; flex-direction:column; gap:var(--e2); color:inherit}
+.tarjeta-tema:hover{border-color:var(--calido); text-decoration:none}
+.tarjeta-tema strong{font-family:var(--serif); font-size:var(--t-lg); font-weight:600}
+.tarjeta-tema .cuentas{font-family:var(--mono); font-size:var(--t-xs); color:var(--texto-suave); font-variant-numeric:tabular-nums}
+.persona{display:flex; gap:var(--e3); align-items:center}
+.avatar{width:52px; height:52px; border-radius:50%; flex:0 0 auto; display:grid; place-items:center; font-family:var(--serif); font-size:1.05rem; background:var(--acento-tenue); color:var(--acento-fuerte); border:1px solid var(--linea)}
+:root[data-theme="dark"] .avatar,:root:not([data-theme="light"]) .avatar{color:var(--acento)}
+.avatar--grande{width:104px; height:104px; font-size:2rem}
+
+/* --- Home ----------------------------------------------- */
+.hero{padding-top:var(--e7); padding-bottom:var(--e6)}
+.hero h1{font-size:var(--t-4xl); max-width:16ch}
+.hero .entradilla{margin-top:var(--e4)}
+.hero-busqueda{margin-top:var(--e5); max-width:760px}
+.hero-busqueda .campo-busqueda{padding:.35rem .5rem .35rem 1.2rem; border-radius:999px; background:var(--panel)}
+.hero-busqueda .campo-busqueda input{padding:.85rem 0; font-size:var(--t-lg)}
+.ejemplos{margin-top:var(--e3); display:flex; gap:var(--e2); flex-wrap:wrap; align-items:center; font-size:var(--t-sm); color:var(--texto-suave)}
+.accesos{margin-top:var(--e6); display:grid; gap:var(--e4); grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.acceso{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e5); color:inherit; display:flex; flex-direction:column; gap:var(--e2)}
+.acceso:hover{border-color:var(--calido); text-decoration:none}
+.acceso strong{font-family:var(--serif); font-size:var(--t-xl); font-weight:600}
+.acceso span{color:var(--texto-suave); font-size:var(--t-sm)}
+.cifras{display:grid; gap:var(--e4); grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.cifra{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e5); color:inherit; display:flex; flex-direction:column; gap:var(--e1)}
+.cifra:hover{border-color:var(--acento); text-decoration:none}
+.cifra b{font-family:var(--mono); font-size:2.6rem; font-weight:500; line-height:1; font-variant-numeric:tabular-nums; color:var(--acento-fuerte)}
+:root[data-theme="dark"] .cifra b,:root:not([data-theme="light"]) .cifra b{color:var(--acento)}
+.cifra span{color:var(--texto-suave); font-size:var(--t-sm)}
+.cifra .ver{font-size:var(--t-sm); color:var(--acento); margin-top:var(--e2)}
+.banda{background:var(--panel); border-top:1px solid var(--linea); border-bottom:1px solid var(--linea); margin-top:var(--e7)}
+.banda .seccion{padding-bottom:var(--e7)}
+
+/* --- Buscador: resultados ------------------------------- */
+.layout-busqueda{display:grid; grid-template-columns:264px minmax(0,1fr); gap:var(--e6); align-items:start; padding-top:var(--e5)}
+.facetas{position:sticky; top:150px; display:flex; flex-direction:column; gap:var(--e5)}
+.faceta h3{font-family:var(--sans); font-size:var(--t-sm); font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--texto-suave); margin-bottom:var(--e3)}
+.faceta ul{display:flex; flex-direction:column; gap:var(--e2)}
+.faceta label{display:flex; gap:var(--e2); align-items:center; font-size:var(--t-sm); cursor:pointer}
+.faceta label input{accent-color:var(--acento-fuerte); width:16px; height:16px; flex:0 0 auto}
+.faceta label .cuenta{margin-left:auto; font-family:var(--mono); font-size:var(--t-xs); color:var(--texto-suave); font-variant-numeric:tabular-nums}
+.faceta select,.faceta input[type="search"]{width:100%; padding:.45rem .6rem; border:1px solid var(--linea); border-radius:var(--r-s); background:var(--panel); color:var(--texto); font:inherit; font-size:var(--t-sm)}
+.pestanas{display:flex; gap:var(--e1); border-bottom:1px solid var(--linea); overflow-x:auto; padding-bottom:0}
+.pestanas button{background:transparent; border:0; border-bottom:2px solid transparent; padding:var(--e3) var(--e3); font-size:var(--t-sm); color:var(--texto-suave); cursor:pointer; white-space:nowrap}
+.pestanas button:hover{color:var(--texto)}
+.pestanas button[aria-selected="true"]{color:var(--texto); border-bottom-color:var(--calido); font-weight:600}
+.pestanas .cuenta{font-family:var(--mono); font-size:var(--t-xs); color:var(--texto-suave); margin-left:.35rem; font-variant-numeric:tabular-nums}
+.barra-resultados{display:flex; justify-content:space-between; align-items:center; gap:var(--e3); flex-wrap:wrap; padding:var(--e4) 0}
+.barra-resultados .conteo{font-size:var(--t-sm); color:var(--texto-suave)}
+.barra-resultados .conteo strong{color:var(--texto); font-family:var(--mono); font-variant-numeric:tabular-nums}
+.chips-filtro{display:flex; gap:var(--e2); flex-wrap:wrap; padding-bottom:var(--e3)}
+.chip{display:inline-flex; align-items:center; gap:.4rem; background:var(--acento-tenue); color:var(--acento); border:1px solid color-mix(in srgb, var(--acento) 30%, transparent); border-radius:999px; padding:.2rem .5rem .2rem .7rem; font-size:var(--t-xs); cursor:pointer}
+.chip:hover{background:var(--panel-2)}
+.chip .x{font-family:var(--mono); font-size:.95rem; line-height:1}
+.resultados{display:flex; flex-direction:column; gap:var(--e3)}
+.resultado{display:block; background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e4); color:inherit}
+.resultado:hover{border-color:var(--acento); text-decoration:none}
+.resultado .fila-tipo{display:flex; gap:var(--e3); align-items:center; margin-bottom:var(--e2); flex-wrap:wrap}
+.resultado h3{font-size:var(--t-lg)}
+.resultado:hover h3{color:var(--acento)}
+.resultado p{color:var(--texto-suave); font-size:var(--t-sm); margin-top:var(--e2)}
+.resultado mark{background:var(--calido-suave); color:inherit; padding:0 .15em; border-radius:3px}
+.sin-resultados{background:var(--panel); border:1px dashed var(--linea); border-radius:var(--r); padding:var(--e6); text-align:center; display:flex; flex-direction:column; gap:var(--e3); align-items:center}
+.abrir-filtros{display:none}
+
+/* --- Fichas de entidad ---------------------------------- */
+.migas{font-size:var(--t-sm); color:var(--texto-suave); padding-top:var(--e5)}
+.migas a{color:var(--texto-suave)}
+.migas span{margin:0 .4rem}
+.ficha-cabecera{padding-top:var(--e4); padding-bottom:var(--e5); border-bottom:1px solid var(--linea)}
+.ficha-cabecera h1{margin-top:var(--e2); max-width:26ch}
+.layout-ficha{display:grid; grid-template-columns:minmax(0,1fr) 320px; gap:var(--e7); align-items:start; padding-top:var(--e6)}
+.bloque{margin-bottom:var(--e6)}
+.bloque h2{font-size:var(--t-xl); margin-bottom:var(--e4); padding-bottom:var(--e2); border-bottom:1px solid var(--linea-suave)}
+.bloque p+p{margin-top:var(--e3)}
+.prosa{max-width:68ch; color:var(--texto)}
+.rail{position:sticky; top:150px; display:flex; flex-direction:column; gap:var(--e4)}
+.caja{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e4); display:flex; flex-direction:column; gap:var(--e3)}
+.caja h3{font-family:var(--sans); font-size:var(--t-sm); font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--texto-suave)}
+.caja--cta{background:var(--calido-suave); border-color:color-mix(in srgb, var(--calido) 35%, transparent)}
+.datos{display:flex; flex-direction:column; gap:var(--e3); margin:0}
+.datos div{display:flex; flex-direction:column; gap:2px}
+.datos dt{font-family:var(--mono); font-size:var(--t-xs); text-transform:uppercase; letter-spacing:.07em; color:var(--texto-suave)}
+.datos dd{margin:0; font-size:var(--t-sm)}
+.relaciones{display:flex; flex-direction:column; gap:var(--e2)}
+.relaciones a{display:flex; justify-content:space-between; gap:var(--e3); font-size:var(--t-sm); padding:.35rem 0; border-bottom:1px solid var(--linea-suave)}
+.relaciones a:last-child{border-bottom:0}
+.relaciones a .cuenta{font-family:var(--mono); font-size:var(--t-xs); color:var(--texto-suave)}
+.lista-limpia{display:flex; flex-direction:column; gap:var(--e3)}
+.lista-limpia li{display:flex; gap:var(--e3); align-items:baseline}
+.lista-limpia .vinieta{font-family:var(--mono); font-size:var(--t-xs); color:var(--calido); flex:0 0 auto}
+.linea-publicacion{padding:var(--e3) 0; border-bottom:1px solid var(--linea-suave)}
+.linea-publicacion:last-child{border-bottom:0}
+.linea-publicacion .meta{font-size:var(--t-sm); color:var(--texto-suave); margin-top:2px}
+.cita{background:var(--panel-2); border:1px solid var(--linea); border-radius:var(--r-s); padding:var(--e4); font-family:var(--mono); font-size:var(--t-sm); line-height:1.7; white-space:pre-wrap; overflow-x:auto}
+.evidencias{display:grid; gap:var(--e3); grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.evidencia{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e4)}
+.evidencia b{display:block; font-family:var(--mono); font-size:1.7rem; font-weight:500; color:var(--calido); line-height:1.1}
+.evidencia span{font-size:var(--t-sm); color:var(--texto-suave)}
+
+/* --- Formulario de colaboración ------------------------- */
+.perfiles{display:grid; gap:var(--e3); grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
+.perfil{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e4); text-align:left; cursor:pointer; display:flex; flex-direction:column; gap:var(--e2)}
+.perfil:hover{border-color:var(--calido)}
+.perfil[aria-pressed="true"]{border-color:var(--calido); background:var(--calido-suave); box-shadow:inset 0 0 0 1px var(--calido)}
+.perfil strong{font-family:var(--serif); font-size:var(--t-lg)}
+.perfil span{font-size:var(--t-sm); color:var(--texto-suave)}
+.formulario{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e5); display:grid; gap:var(--e4); max-width:760px}
+.campo{display:flex; flex-direction:column; gap:var(--e2)}
+.campo label{font-size:var(--t-sm); font-weight:500}
+.campo .ayuda{font-size:var(--t-xs); color:var(--texto-suave)}
+.campo input,.campo select,.campo textarea{border:1px solid var(--linea); border-radius:var(--r-s); background:var(--bg); color:var(--texto); padding:.6rem .75rem; font:inherit; font-size:var(--t-sm)}
+.campo input:focus,.campo select:focus,.campo textarea:focus{outline:none; border-color:var(--acento); box-shadow:0 0 0 3px var(--acento-tenue)}
+.campo textarea{min-height:120px; resize:vertical}
+.dos-columnas{display:grid; gap:var(--e4); grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.aviso{background:var(--acento-tenue); border:1px solid color-mix(in srgb, var(--acento) 25%, transparent); border-radius:var(--r-s); padding:var(--e3) var(--e4); font-size:var(--t-sm)}
+.aviso--ok{background:var(--ok-tenue); border-color:color-mix(in srgb, var(--ok) 30%, transparent)}
+
+/* --- Convocatorias -------------------------------------- */
+.convocatoria{display:grid; grid-template-columns:minmax(0,1fr) auto; gap:var(--e4); align-items:start; background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e4)}
+.convocatoria .datos-conv{display:flex; gap:var(--e4); flex-wrap:wrap; font-size:var(--t-sm); color:var(--texto-suave); margin-top:var(--e2)}
+
+/* --- Pregunta a la investigación (capa IA) -------------- */
+.ia{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e5); display:flex; flex-direction:column; gap:var(--e4)}
+.ia-respuesta{border-left:3px solid var(--calido); padding-left:var(--e4); display:flex; flex-direction:column; gap:var(--e3)}
+.ia-fuentes{display:flex; flex-direction:column; gap:var(--e2)}
+.ia-fuentes a{font-size:var(--t-sm)}
+.ia-sugeridas{display:flex; gap:var(--e2); flex-wrap:wrap}
+.voto{display:flex; gap:var(--e2); align-items:center; font-size:var(--t-sm); color:var(--texto-suave)}
+
+/* --- Panel de requerimientos ---------------------------- */
+.panel-rf{position:fixed; inset:0 0 0 auto; width:min(480px,100%); background:var(--panel); border-left:1px solid var(--linea); box-shadow:-16px 0 40px rgba(10,42,84,.18); z-index:70; overflow-y:auto; padding:var(--e5); display:none}
+.panel-rf[open]{display:block}
+.panel-rf .cerrar{position:absolute; top:var(--e4); right:var(--e4)}
+.rf-grupo{margin-top:var(--e5)}
+.rf-grupo h3{font-family:var(--sans); font-size:var(--t-sm); text-transform:uppercase; letter-spacing:.06em; color:var(--texto-suave); margin-bottom:var(--e3)}
+.rf-lista{display:flex; flex-direction:column; gap:var(--e2)}
+.rf-lista li{display:flex; gap:var(--e3); font-size:var(--t-sm); align-items:baseline}
+.rf-lista code{font-family:var(--mono); font-size:var(--t-xs); color:var(--calido); flex:0 0 auto}
+.velo{position:fixed; inset:0; background:rgba(10,27,46,.5); z-index:65; display:none}
+.velo[data-abierto="si"]{display:block}
+
+/* --- Pie ------------------------------------------------ */
+.pie{background:var(--panel); border-top:1px solid var(--linea); margin-top:var(--e8); padding:var(--e7) 0 var(--e6)}
+.pie-rejilla{display:grid; gap:var(--e5); grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.pie h3{font-family:var(--sans); font-size:var(--t-sm); text-transform:uppercase; letter-spacing:.06em; color:var(--texto-suave); margin-bottom:var(--e3)}
+.pie ul{display:flex; flex-direction:column; gap:var(--e2)}
+.pie a{font-size:var(--t-sm); color:var(--texto)}
+.pie-legal{margin-top:var(--e6); padding-top:var(--e4); border-top:1px solid var(--linea-suave); font-size:var(--t-xs); color:var(--texto-suave); display:flex; justify-content:space-between; gap:var(--e4); flex-wrap:wrap}
+
+/* --- Responsive ----------------------------------------- */
+@media (max-width:1000px){
+  .layout-ficha{grid-template-columns:minmax(0,1fr)}
+  .rail{position:static}
+}
+@media (max-width:860px){
+  :root{--t-3xl:1.9rem; --t-4xl:2.2rem}
+  .contenedor{padding:0 var(--e4)}
+  .cabecera{position:static}
+  .cabecera-fila{flex-wrap:wrap}
+  .nav-principal{flex-wrap:nowrap; overflow-x:auto; padding-bottom:var(--e3)}
+  .buscador-global{order:3; flex-basis:100%}
+  .layout-busqueda{grid-template-columns:minmax(0,1fr); gap:var(--e4)}
+  .abrir-filtros{display:inline-flex}
+  .facetas{position:static; display:none; background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e4)}
+  .facetas[data-abierto="si"]{display:flex}
+  .convocatoria{grid-template-columns:minmax(0,1fr)}
+  .panel-rf{width:100%}
+}
+@media (prefers-reduced-motion: no-preference){
+  .vista{animation:entrar .28s ease-out}
+  @keyframes entrar{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+}
+</style>
+</head>
+<body>
+<a class="salto-contenido" href="#principal">Saltar al contenido</a>
+
+<div class="barra-demo">
+  <div class="contenedor">
+    <b>Prototipo · Portal de Investigación UCSP</b>
+    <span>Datos de demostración: los grupos son reales y públicos; investigadores, proyectos y publicaciones son ficticios para probar el modelo.</span>
+    <button type="button" id="btn-rf">Ver cobertura RF</button>
+  </div>
+</div>
+
+<header class="cabecera">
+  <div class="contenedor">
+    <div class="cabecera-fila">
+      <a class="marca" href="#/">
+        <span class="marca-sigla" aria-hidden="true">UCSP</span>
+        <span class="marca-texto">
+          <strong>Investigación</strong>
+          <span>Universidad Católica San Pablo</span>
+        </span>
+      </a>
+      <div class="buscador-global" id="buscador-global"></div>
+      <div class="acciones-cabecera">
+        <a class="boton boton--pequeno" href="#/preguntar">Preguntar</a>
+        <a class="boton boton--pequeno boton--primario" href="#/colaborar">Colaborar</a>
+      </div>
+    </div>
+    <nav class="nav-principal" id="nav" aria-label="Navegación principal"></nav>
+  </div>
+</header>
+
+<main id="principal" tabindex="-1"></main>
+
+<footer class="pie">
+  <div class="contenedor">
+    <div class="pie-rejilla">
+      <div>
+        <h3>Descubrir</h3>
+        <ul>
+          <li><a href="#/temas">Explorar por temas</a></li>
+          <li><a href="#/buscar?tipo=investigador">Investigadores</a></li>
+          <li><a href="#/buscar?tipo=grupo">Grupos y centros</a></li>
+          <li><a href="#/buscar?tipo=proyecto">Proyectos</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Resultados</h3>
+        <ul>
+          <li><a href="#/buscar?tipo=publicacion">Publicaciones</a></li>
+          <li><a href="#/buscar?tipo=patente">Patentes y tecnologías</a></li>
+          <li><a href="#/buscar?tipo=capacidad">Capacidades y laboratorios</a></li>
+          <li><a href="#/impacto">Historias de impacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Participar</h3>
+        <ul>
+          <li><a href="#/colaborar">Colaborar con UCSP</a></li>
+          <li><a href="#/convocatorias">Convocatorias</a></li>
+          <li><a href="#/preguntar">Preguntar a la investigación</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Gestión y gobierno</h3>
+        <ul>
+          <li><a href="#/gobierno">Dirección de Investigación</a></li>
+          <li><a href="#/gobierno">Políticas y reglamentos</a></li>
+          <li><a href="#/gobierno">Ética de la investigación</a></li>
+          <li><a href="#/gobierno">Oficina de proyectos (OPTI)</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="pie-legal">
+      <span>Prototipo de trabajo. No es un sitio oficial de la Universidad Católica San Pablo.</span>
+      <span class="mono">Cobertura del prototipo: 109 de 134 requerimientos funcionales</span>
+    </div>
+  </div>
+</footer>
+
+<div class="velo" id="velo"></div>
+<aside class="panel-rf" id="panel-rf" role="dialog" aria-modal="true" aria-labelledby="titulo-rf"></aside>
+
+<script>
+/* =============================================================
+   PORTAL DE INVESTIGACIÓN UCSP — prototipo navegable
+   -------------------------------------------------------------
+   Todo el prototipo funciona sobre este conjunto de datos. Los
+   grupos, centros e institutos son los que la UCSP publica hoy;
+   personas, proyectos, publicaciones, patentes, capacidades,
+   historias y convocatorias son DATOS DE DEMOSTRACIÓN, escritos
+   para poder probar el modelo de entidades y sus relaciones.
+   ============================================================= */
+
+const TEMAS = [
+  {slug:'inteligencia-artificial', nombre:'Inteligencia artificial', resumen:'Aprendizaje automático, visión por computador y modelos predictivos aplicados a la industria, la infraestructura y la educación de la región sur del Perú.', disciplinas:['Ciencia de la computación','Ingeniería'], ods:['ODS 9']},
+  {slug:'mineria-y-geotecnia', nombre:'Minería y geotecnia', resumen:'Comportamiento de suelos y geomateriales, estabilidad de taludes y monitoreo de operaciones mineras en contextos áridos y sísmicos.', disciplinas:['Ingeniería civil','Geociencias'], ods:['ODS 9','ODS 12']},
+  {slug:'ingenieria-sismorresistente', nombre:'Ingeniería sismorresistente', resumen:'Aislamiento sísmico, disipadores de energía, vulnerabilidad y reforzamiento estructural del patrimonio construido de Arequipa.', disciplinas:['Ingeniería civil'], ods:['ODS 11']},
+  {slug:'materiales', nombre:'Ciencia de materiales', resumen:'Geomateriales alternativos, caracterización de sillar y materiales cementicios de bajo impacto ambiental.', disciplinas:['Ciencia de materiales','Química'], ods:['ODS 9','ODS 12']},
+  {slug:'salud-mental', nombre:'Salud mental', resumen:'Bienestar psicológico, salud mental adolescente y evaluación de intervenciones clínicas y comunitarias.', disciplinas:['Psicología'], ods:['ODS 3']},
+  {slug:'educacion', nombre:'Educación', resumen:'Aprendizaje temprano, formación docente, evaluación de aprendizajes y tecnología educativa en escuelas públicas.', disciplinas:['Educación'], ods:['ODS 4']},
+  {slug:'familia-y-poblaciones-vulnerables', nombre:'Familia y poblaciones vulnerables', resumen:'Estudios sobre familia, primera infancia, migración y comunidades en riesgo en la macrorregión sur.', disciplinas:['Psicología','Sociología'], ods:['ODS 1','ODS 10']},
+  {slug:'criminologia', nombre:'Criminología y violencia', resumen:'Violencia de pareja, violencia contra niñas, niños y adolescentes, y delincuencia juvenil desde la psicología y el derecho.', disciplinas:['Psicología','Derecho'], ods:['ODS 16']},
+  {slug:'economia-y-empresa', nombre:'Economía y empresa', resumen:'Productividad, informalidad, competitividad regional y comportamiento de las micro y pequeñas empresas.', disciplinas:['Economía','Administración'], ods:['ODS 8']},
+  {slug:'innovacion-y-emprendimiento', nombre:'Innovación y emprendimiento', resumen:'Innovación empresarial, transferencia tecnológica y modelos de negocio en ecosistemas emergentes.', disciplinas:['Administración','Ingeniería industrial'], ods:['ODS 8','ODS 9']},
+  {slug:'patrimonio-y-ciudad', nombre:'Patrimonio y ciudad', resumen:'Arquitectura, historia urbana y conservación del centro histórico de Arequipa y su paisaje cultural.', disciplinas:['Arquitectura','Historia'], ods:['ODS 11']},
+  {slug:'agua-y-sostenibilidad', nombre:'Agua y sostenibilidad', resumen:'Gestión hídrica en cuencas áridas, calidad del agua y adaptación al cambio climático.', disciplinas:['Ingeniería ambiental'], ods:['ODS 6','ODS 13']}
+];
+
+const GRUPOS = [
+  {slug:'citem', nombre:'Grupo de Investigación en Ciencia y Tecnología de Materiales', sigla:'CITEM', tipo:'Grupo de investigación', resumen:'Estudia y caracteriza materiales de construcción y geomateriales alternativos con criterios de desempeño y de impacto ambiental.', lineas:['Geomateriales alternativos','Materiales cementicios','Caracterización de sillar','Durabilidad'], temas:['materiales','mineria-y-geotecnia','patrimonio-y-ciudad'], director:'ana-quispe-valdivia', miembros:['ana-quispe-valdivia','luis-mendoza-carpio','sofia-berrios-nunez'], capacidades:['lab-materiales'], aliados:['Instituto Geológico regional (demo)','Empresa de cementos (demo)'], contacto:'citem@ejemplo-ucsp.edu.pe'},
+  {slug:'gi-ingenieria-estructural', nombre:'Grupo de Investigación de Ingeniería Estructural', sigla:'GIIE', tipo:'Grupo de investigación', resumen:'Investiga sistemas de protección sísmica, vulnerabilidad y reforzamiento estructural, incluyendo inteligencia artificial aplicada a la ingeniería estructural.', lineas:['Aislamiento sísmico','Disipadores de energía','Vulnerabilidad sísmica','Reforzamiento estructural','IA aplicada a estructuras'], temas:['ingenieria-sismorresistente','inteligencia-artificial','patrimonio-y-ciudad'], director:'ricardo-salas-linares', miembros:['ricardo-salas-linares','camila-tejada-flores','luis-mendoza-carpio'], capacidades:['lab-estructuras'], aliados:['Gobierno Regional de Arequipa (demo)'], contacto:'estructuras@ejemplo-ucsp.edu.pe'},
+  {slug:'giig', nombre:'Grupo de Investigación de Ingeniería Geotécnica', sigla:'GIIG', tipo:'Grupo de investigación', resumen:'Genera conocimiento sobre mecánica de suelos, geotecnia ambiental, geomateriales alternativos y estabilidad de taludes para obras civiles y mineras.', lineas:['Mecánica de suelos','Geotecnia ambiental','Estabilidad de taludes','Geomateriales alternativos'], temas:['mineria-y-geotecnia','materiales','agua-y-sostenibilidad'], director:'jorge-nunez-pacheco', miembros:['jorge-nunez-pacheco','camila-tejada-flores','diego-arenas-lopez'], capacidades:['lab-geotecnia'], aliados:['Operación minera del sur (demo)'], contacto:'giig@ejemplo-ucsp.edu.pe'},
+  {slug:'gi-criminologia', nombre:'Grupo de Investigación en Criminología', sigla:'GIC', tipo:'Grupo de investigación', resumen:'Grupo interdisciplinario de psicología y derecho que estudia el fenómeno criminal: violencia de pareja, violencia contra la niñez y adolescencia, y delincuencia juvenil.', lineas:['Violencia de pareja','Violencia contra NNA','Delincuencia juvenil','Psicología jurídica'], temas:['criminologia','familia-y-poblaciones-vulnerables','salud-mental'], director:'marcela-oviedo-rios', miembros:['marcela-oviedo-rios','patricia-luna-cardenas','fernando-yepez-rivas'], capacidades:[], aliados:['Ministerio Público — sede demo'], contacto:'criminologia@ejemplo-ucsp.edu.pe'},
+  {slug:'cip', nombre:'Centro de Investigación en Psicología', sigla:'CIP', tipo:'Centro de investigación', resumen:'Produce evidencia sobre bienestar, salud mental y desarrollo humano, y valida instrumentos de evaluación psicológica para población peruana.', lineas:['Salud mental adolescente','Validación de instrumentos','Bienestar y familia'], temas:['salud-mental','familia-y-poblaciones-vulnerables','educacion'], director:'patricia-luna-cardenas', miembros:['patricia-luna-cardenas','marcela-oviedo-rios','rosa-condori-ramos'], capacidades:['lab-conducta'], aliados:['Red de colegios públicos (demo)'], contacto:'cip@ejemplo-ucsp.edu.pe'},
+  {slug:'ceee', nombre:'Centro de Estudios en Economía y Empresa', sigla:'CEEE', tipo:'Centro de investigación', resumen:'Analiza productividad, informalidad y competitividad regional, y publica indicadores económicos de la macrorregión sur.', lineas:['Productividad','Informalidad','Competitividad regional','Economía del trabajo'], temas:['economia-y-empresa','innovacion-y-emprendimiento'], director:'alonso-herrera-paz', miembros:['alonso-herrera-paz','gabriela-mostajo-cruz'], capacidades:['observatorio-datos'], aliados:['Cámara de Comercio (demo)'], contacto:'ceee@ejemplo-ucsp.edu.pe'},
+  {slug:'cde', nombre:'Centro de Desarrollo de la Educación', sigla:'CDE', tipo:'Centro de investigación', resumen:'Investiga y acompaña procesos de mejora escolar, formación docente y evaluación de aprendizajes en escuelas públicas de la región.', lineas:['Formación docente','Evaluación de aprendizajes','Lectura inicial','Tecnología educativa'], temas:['educacion','inteligencia-artificial','familia-y-poblaciones-vulnerables'], director:'rosa-condori-ramos', miembros:['rosa-condori-ramos','gabriela-mostajo-cruz','sofia-berrios-nunez'], capacidades:[], aliados:['UGEL Arequipa Sur (demo)'], contacto:'cde@ejemplo-ucsp.edu.pe'},
+  {slug:'gi-arquitectura-historia-patrimonio', nombre:'Grupo de Investigación de Arquitectura, Historia y Patrimonio', sigla:'GIAHP', tipo:'Grupo de investigación', resumen:'Estudia la arquitectura, la historia urbana y la conservación del patrimonio construido de Arequipa y del sur andino.', lineas:['Historia urbana','Conservación del patrimonio','Paisaje cultural'], temas:['patrimonio-y-ciudad','materiales'], director:'diego-arenas-lopez', miembros:['diego-arenas-lopez','sofia-berrios-nunez'], capacidades:['lab-patrimonio-digital'], aliados:['Municipalidad Provincial (demo)'], contacto:'patrimonio@ejemplo-ucsp.edu.pe'},
+  {slug:'gi-innovacion-empresarial', nombre:'Grupo de Investigación de Innovación Empresarial', sigla:'GIIE-Emp', tipo:'Grupo de investigación', resumen:'Investiga innovación, modelos de negocio y transferencia tecnológica en pequeñas y medianas empresas del sur del Perú.', lineas:['Innovación abierta','Modelos de negocio','Transferencia tecnológica'], temas:['innovacion-y-emprendimiento','economia-y-empresa','inteligencia-artificial'], director:'gabriela-mostajo-cruz', miembros:['gabriela-mostajo-cruz','alonso-herrera-paz','martin-zeballos-ugarte'], capacidades:['observatorio-datos'], aliados:['Incubadora regional (demo)'], contacto:'innovacion@ejemplo-ucsp.edu.pe'},
+  {slug:'gi-poblaciones-vulnerables', nombre:'Grupo de Investigación de Poblaciones Vulnerables y en Riesgo', sigla:'GIPV', tipo:'Grupo de investigación', resumen:'Estudia condiciones de vida, riesgos y trayectorias de comunidades vulnerables, con foco en infancia, migración y periferias urbanas.', lineas:['Primera infancia','Migración','Periferias urbanas','Política social'], temas:['familia-y-poblaciones-vulnerables','educacion','agua-y-sostenibilidad'], director:'fernando-yepez-rivas', miembros:['fernando-yepez-rivas','rosa-condori-ramos','patricia-luna-cardenas'], capacidades:[], aliados:['ONG de infancia (demo)'], contacto:'poblaciones@ejemplo-ucsp.edu.pe'}
+];
+
+const INVESTIGADORES = [
+  {slug:'ana-quispe-valdivia', nombre:'Ana Quispe Valdivia', cargo:'Investigadora principal', unidad:'Departamento de Ingeniería Civil', grupos:['citem'], temas:['materiales','mineria-y-geotecnia'], orcid:'0000-0002-1825-0097', correo:'aquispe@ejemplo-ucsp.edu.pe', expertise:['Geomateriales alternativos','Durabilidad del concreto','Caracterización de sillar'], colabora:true, bio:'Investiga materiales de construcción de bajo impacto ambiental, con énfasis en el aprovechamiento de residuos mineros e industriales como adiciones cementicias. Su trabajo combina caracterización de laboratorio y ensayos de durabilidad en condiciones de clima árido. Coordina la línea de geomateriales alternativos y dirige tesis de pregrado y maestría en ingeniería civil.'},
+  {slug:'ricardo-salas-linares', nombre:'Ricardo Salas Linares', cargo:'Profesor investigador', unidad:'Departamento de Ingeniería Civil', grupos:['gi-ingenieria-estructural'], temas:['ingenieria-sismorresistente','inteligencia-artificial'], orcid:'0000-0001-5109-3700', correo:'rsalas@ejemplo-ucsp.edu.pe', expertise:['Aislamiento sísmico','Monitoreo estructural','Aprendizaje automático aplicado'], colabora:true, bio:'Trabaja en protección sísmica de edificaciones y en monitoreo de salud estructural con sensores de bajo costo. En los últimos años incorpora modelos de aprendizaje automático para detectar daño incipiente en estructuras instrumentadas y priorizar intervenciones de reforzamiento en edificaciones esenciales.'},
+  {slug:'camila-tejada-flores', nombre:'Camila Tejada Flores', cargo:'Investigadora asociada', unidad:'Departamento de Ingeniería Civil', grupos:['gi-ingenieria-estructural','giig'], temas:['ingenieria-sismorresistente','mineria-y-geotecnia','inteligencia-artificial'], orcid:'0000-0003-2345-6789', correo:'ctejada@ejemplo-ucsp.edu.pe', expertise:['Vulnerabilidad sísmica','Modelos predictivos','Riesgo geotécnico'], colabora:true, bio:'Investiga la vulnerabilidad sísmica del parque edificado y la evaluación de riesgo en laderas urbanas. Desarrolla modelos predictivos que combinan información geotécnica, catastral y de sensores para estimar exposición y priorizar zonas de intervención.'},
+  {slug:'jorge-nunez-pacheco', nombre:'Jorge Núñez Pacheco', cargo:'Investigador principal', unidad:'Departamento de Ingeniería Civil', grupos:['giig'], temas:['mineria-y-geotecnia','agua-y-sostenibilidad'], orcid:'0000-0002-9876-5432', correo:'jnunez@ejemplo-ucsp.edu.pe', expertise:['Mecánica de suelos','Estabilidad de taludes','Geotecnia ambiental'], colabora:true, bio:'Estudia el comportamiento de suelos volcánicos y depósitos de relaves en condiciones sísmicas, y la estabilidad de taludes en operaciones mineras del sur del país. Ha dirigido campañas de instrumentación de campo y ensayos triaxiales sobre geomateriales de la región.'},
+  {slug:'luis-mendoza-carpio', nombre:'Luis Mendoza Carpio', cargo:'Profesor investigador', unidad:'Departamento de Ingeniería Civil', grupos:['citem','gi-ingenieria-estructural'], temas:['materiales','ingenieria-sismorresistente'], orcid:'0000-0001-2233-4455', correo:'lmendoza@ejemplo-ucsp.edu.pe', expertise:['Reforzamiento estructural','Materiales cementicios','Ensayos no destructivos'], colabora:false, bio:'Trabaja en técnicas de reforzamiento de edificaciones de albañilería y sillar, y en ensayos no destructivos para evaluar el estado de estructuras patrimoniales. Coordina el laboratorio de materiales y la relación con empresas del sector construcción.'},
+  {slug:'marcela-oviedo-rios', nombre:'Marcela Oviedo Ríos', cargo:'Investigadora principal', unidad:'Departamento de Psicología', grupos:['gi-criminologia','cip'], temas:['criminologia','salud-mental'], orcid:'0000-0002-7766-1122', correo:'moviedo@ejemplo-ucsp.edu.pe', expertise:['Violencia de pareja','Psicología jurídica','Evaluación de riesgo'], colabora:true, bio:'Investiga la violencia de pareja y los factores de riesgo asociados a la reincidencia, combinando métodos cuantitativos y estudios con población judicializada. Ha participado en la validación de instrumentos de evaluación de riesgo adaptados al contexto peruano.'},
+  {slug:'patricia-luna-cardenas', nombre:'Patricia Luna Cárdenas', cargo:'Directora de centro', unidad:'Departamento de Psicología', grupos:['cip','gi-criminologia','gi-poblaciones-vulnerables'], temas:['salud-mental','familia-y-poblaciones-vulnerables'], orcid:'0000-0003-5544-3322', correo:'pluna@ejemplo-ucsp.edu.pe', expertise:['Salud mental adolescente','Psicometría','Intervenciones escolares'], colabora:true, bio:'Dirige el Centro de Investigación en Psicología y estudia salud mental adolescente en contextos escolares, con foco en ansiedad, depresión y factores protectores familiares. Lidera la adaptación y validación de escalas psicométricas para población peruana.'},
+  {slug:'fernando-yepez-rivas', nombre:'Fernando Yépez Rivas', cargo:'Investigador principal', unidad:'Departamento de Ciencias Sociales', grupos:['gi-poblaciones-vulnerables','gi-criminologia'], temas:['familia-y-poblaciones-vulnerables','criminologia'], orcid:'0000-0001-9988-7766', correo:'fyepez@ejemplo-ucsp.edu.pe', expertise:['Política social','Migración','Métodos mixtos'], colabora:true, bio:'Estudia trayectorias de familias migrantes y condiciones de vida en periferias urbanas de Arequipa. Su trabajo se apoya en encuestas longitudinales y trabajo de campo cualitativo, y alimenta recomendaciones de política social a gobiernos locales.'},
+  {slug:'rosa-condori-ramos', nombre:'Rosa Condori Ramos', cargo:'Investigadora principal', unidad:'Departamento de Educación', grupos:['cde','cip','gi-poblaciones-vulnerables'], temas:['educacion','familia-y-poblaciones-vulnerables'], orcid:'0000-0002-3344-5566', correo:'rcondori@ejemplo-ucsp.edu.pe', expertise:['Lectura inicial','Formación docente','Evaluación de aprendizajes'], colabora:true, bio:'Investiga el aprendizaje de la lectura en los primeros grados y el efecto de la formación docente en la práctica de aula. Ha coordinado estudios de aula en escuelas públicas de la región y evaluaciones de programas de acompañamiento pedagógico.'},
+  {slug:'gabriela-mostajo-cruz', nombre:'Gabriela Mostajo Cruz', cargo:'Profesora investigadora', unidad:'Departamento de Ciencias Económicas', grupos:['gi-innovacion-empresarial','ceee','cde'], temas:['innovacion-y-emprendimiento','economia-y-empresa','educacion'], orcid:'0000-0003-1122-9900', correo:'gmostajo@ejemplo-ucsp.edu.pe', expertise:['Innovación abierta','Transferencia tecnológica','Modelos de negocio'], colabora:true, bio:'Estudia cómo las pequeñas empresas de la región adoptan innovación y qué condiciones facilitan la transferencia tecnológica desde la universidad. Acompaña procesos de vinculación entre grupos de investigación y empresas.'},
+  {slug:'alonso-herrera-paz', nombre:'Alonso Herrera Paz', cargo:'Director de centro', unidad:'Departamento de Ciencias Económicas', grupos:['ceee','gi-innovacion-empresarial'], temas:['economia-y-empresa'], orcid:'0000-0001-4455-6677', correo:'aherrera@ejemplo-ucsp.edu.pe', expertise:['Productividad','Informalidad','Economía regional'], colabora:false, bio:'Dirige el Centro de Estudios en Economía y Empresa y analiza productividad e informalidad en la macrorregión sur. Publica indicadores periódicos sobre empleo y actividad económica regional utilizados por gremios y gobiernos locales.'},
+  {slug:'diego-arenas-lopez', nombre:'Diego Arenas López', cargo:'Investigador principal', unidad:'Departamento de Arquitectura', grupos:['gi-arquitectura-historia-patrimonio','giig'], temas:['patrimonio-y-ciudad','materiales'], orcid:'0000-0002-6677-8899', correo:'darenas@ejemplo-ucsp.edu.pe', expertise:['Historia urbana','Conservación del patrimonio','Levantamiento digital'], colabora:true, bio:'Investiga la transformación del centro histórico de Arequipa y las técnicas constructivas tradicionales en sillar. Combina archivo histórico con levantamiento digital y fotogrametría para documentar inmuebles patrimoniales en riesgo.'},
+  {slug:'sofia-berrios-nunez', nombre:'Sofía Berríos Núñez', cargo:'Investigadora junior', unidad:'Departamento de Ingeniería Civil', grupos:['citem','cde','gi-arquitectura-historia-patrimonio'], temas:['materiales','educacion','patrimonio-y-ciudad'], orcid:'0000-0003-9911-2233', correo:'sberrios@ejemplo-ucsp.edu.pe', expertise:['Caracterización de materiales','Divulgación científica'], colabora:true, bio:'Trabaja en la caracterización física y mecánica del sillar y en la documentación de materiales tradicionales de construcción. Coordina además actividades de divulgación científica con escuelas de la región.'},
+  {slug:'martin-zeballos-ugarte', nombre:'Martín Zeballos Ugarte', cargo:'Investigador asociado', unidad:'Departamento de Ingeniería Industrial', grupos:['gi-innovacion-empresarial'], temas:['innovacion-y-emprendimiento','inteligencia-artificial','mineria-y-geotecnia'], orcid:'0000-0001-7788-3344', correo:'mzeballos@ejemplo-ucsp.edu.pe', expertise:['Analítica de datos','Optimización de procesos','IA aplicada a operaciones'], colabora:true, bio:'Aplica analítica de datos y aprendizaje automático a la optimización de procesos industriales y mineros: mantenimiento predictivo, calidad y planificación de operaciones. Trabaja con empresas en proyectos conjuntos de corta duración.'}
+];
+
+const PROYECTOS = [
+  {slug:'monitoreo-estructural-ia', titulo:'Monitoreo de salud estructural con sensores de bajo costo e inteligencia artificial', estado:'Activo', inicio:2025, fin:2027, grupo:'gi-ingenieria-estructural', pi:'ricardo-salas-linares', equipo:['camila-tejada-flores','luis-mendoza-carpio'], temas:['ingenieria-sismorresistente','inteligencia-artificial'], ods:['ODS 9','ODS 11'], financiador:'CONCYTEC — ProCiencia', fondo:'Proyectos de investigación aplicada 2025', socios:['Gobierno Regional de Arequipa (demo)'], resumen:'Instrumenta edificaciones esenciales de Arequipa con sensores de bajo costo y entrena modelos de aprendizaje automático capaces de detectar daño incipiente antes de que sea visible en inspección.', desafio:'Las edificaciones esenciales de la ciudad se revisan por inspección visual y solo después de un sismo, cuando el daño ya ocurrió.', objetivos:['Instrumentar 12 edificaciones esenciales con sensores de bajo costo','Entrenar y validar modelos de detección de daño incipiente','Publicar un protocolo replicable de monitoreo para gobiernos locales']},
+  {slug:'ia-mineria-mantenimiento', titulo:'Aprendizaje automático para mantenimiento predictivo en operaciones mineras', estado:'Activo', inicio:2024, fin:2026, grupo:'gi-innovacion-empresarial', pi:'martin-zeballos-ugarte', equipo:['jorge-nunez-pacheco','camila-tejada-flores'], temas:['inteligencia-artificial','mineria-y-geotecnia','innovacion-y-emprendimiento'], ods:['ODS 9','ODS 12'], financiador:'Fondo de investigación UCSP', fondo:'Convocatoria interna 2024', socios:['Operación minera del sur (demo)'], resumen:'Desarrolla modelos de mantenimiento predictivo sobre datos de operación de equipos mineros, con el objetivo de reducir paradas no programadas y consumo energético.', desafio:'Las paradas no programadas de equipo pesado concentran una parte importante del costo operativo y hoy se gestionan de forma reactiva.', objetivos:['Construir un conjunto de datos operativos anonimizado','Comparar modelos de predicción de falla','Estimar el ahorro por parada evitada']},
+  {slug:'taludes-relaves', titulo:'Estabilidad sísmica de depósitos de relaves en suelos volcánicos', estado:'Activo', inicio:2025, fin:2028, grupo:'giig', pi:'jorge-nunez-pacheco', equipo:['camila-tejada-flores'], temas:['mineria-y-geotecnia','agua-y-sostenibilidad'], ods:['ODS 12','ODS 13'], financiador:'CONCYTEC — ProCiencia', fondo:'Proyectos básicos 2025', socios:['Operación minera del sur (demo)'], resumen:'Caracteriza el comportamiento dinámico de suelos volcánicos y depósitos de relaves de la región y evalúa escenarios de estabilidad ante sismos de subducción.', desafio:'Los criterios de diseño disponibles provienen de suelos distintos a los depósitos volcánicos característicos del sur peruano.', objetivos:['Ensayar geomateriales representativos de la región','Calibrar modelos constitutivos','Proponer criterios de diseño adaptados']},
+  {slug:'sillar-durabilidad', titulo:'Durabilidad del sillar y morteros compatibles para conservación patrimonial', estado:'Activo', inicio:2024, fin:2026, grupo:'citem', pi:'ana-quispe-valdivia', equipo:['sofia-berrios-nunez','diego-arenas-lopez','luis-mendoza-carpio'], temas:['materiales','patrimonio-y-ciudad'], ods:['ODS 11'], financiador:'Fondo de investigación UCSP', fondo:'Convocatoria interna 2024', socios:['Municipalidad Provincial (demo)'], resumen:'Caracteriza el deterioro del sillar en inmuebles del centro histórico y formula morteros de reparación compatibles con el material original.', desafio:'Las intervenciones recientes emplean morteros de cemento que aceleran el deterioro del sillar histórico.', objetivos:['Mapear patologías en inmuebles piloto','Formular y ensayar morteros compatibles','Publicar una guía de intervención']},
+  {slug:'residuos-mineros-cemento', titulo:'Residuos mineros como adición cementicia de bajo impacto', estado:'Activo', inicio:2026, fin:2028, grupo:'citem', pi:'ana-quispe-valdivia', equipo:['luis-mendoza-carpio'], temas:['materiales','mineria-y-geotecnia','agua-y-sostenibilidad'], ods:['ODS 9','ODS 12'], financiador:'Programa nacional de innovación (demo)', fondo:'Innovación empresarial 2026', socios:['Empresa de cementos (demo)'], resumen:'Evalúa el uso de residuos de operaciones mineras como adición en materiales cementicios, midiendo desempeño mecánico, durabilidad y huella de carbono.', desafio:'La región acumula pasivos y residuos con potencial cementicio que hoy no tienen ruta de valorización.', objetivos:['Caracterizar residuos disponibles','Evaluar desempeño mecánico y ambiental','Escalar una mezcla piloto con la empresa socia']},
+  {slug:'salud-mental-adolescente', titulo:'Salud mental adolescente y factores protectores en escuelas públicas', estado:'Activo', inicio:2025, fin:2027, grupo:'cip', pi:'patricia-luna-cardenas', equipo:['rosa-condori-ramos','marcela-oviedo-rios'], temas:['salud-mental','educacion','familia-y-poblaciones-vulnerables'], ods:['ODS 3','ODS 4'], financiador:'Fondo de investigación UCSP', fondo:'Convocatoria interna 2025', socios:['Red de colegios públicos (demo)','UGEL Arequipa Sur (demo)'], resumen:'Estudio longitudinal sobre ansiedad y depresión en adolescentes escolarizados y sobre el papel protector del vínculo familiar y escolar.', desafio:'No existe evidencia local suficiente para orientar programas escolares de salud mental en la región.', objetivos:['Medir prevalencia en una cohorte escolar','Identificar factores protectores','Diseñar una intervención breve evaluable']},
+  {slug:'violencia-pareja-riesgo', titulo:'Evaluación del riesgo de reincidencia en violencia de pareja', estado:'Activo', inicio:2024, fin:2026, grupo:'gi-criminologia', pi:'marcela-oviedo-rios', equipo:['patricia-luna-cardenas','fernando-yepez-rivas'], temas:['criminologia','salud-mental'], ods:['ODS 5','ODS 16'], financiador:'Fondo de investigación UCSP', fondo:'Convocatoria interna 2024', socios:['Ministerio Público — sede demo'], resumen:'Adapta y valida un instrumento de evaluación de riesgo de reincidencia en casos de violencia de pareja para su uso en el sistema de justicia peruano.', desafio:'Las decisiones de protección se toman sin instrumentos de riesgo validados para el contexto peruano.', objetivos:['Adaptar el instrumento','Validarlo con una muestra local','Formar a operadores del sistema de justicia']},
+  {slug:'lectura-inicial', titulo:'Lectura inicial y acompañamiento docente en zonas periurbanas', estado:'Activo', inicio:2025, fin:2027, grupo:'cde', pi:'rosa-condori-ramos', equipo:['sofia-berrios-nunez','fernando-yepez-rivas'], temas:['educacion','familia-y-poblaciones-vulnerables'], ods:['ODS 4','ODS 10'], financiador:'Cooperación internacional (demo)', fondo:'Educación básica 2025', socios:['UGEL Arequipa Sur (demo)'], resumen:'Evalúa un programa de acompañamiento docente para la enseñanza de la lectura en los primeros grados de escuelas periurbanas.', desafio:'Los resultados de lectura en segundo grado siguen por debajo de la meta regional pese a la inversión en capacitación.', objetivos:['Medir aprendizajes al inicio y al cierre','Observar prácticas de aula','Estimar el efecto del acompañamiento']},
+  {slug:'tutoria-ia-educacion', titulo:'Tutoría asistida por inteligencia artificial en matemática escolar', estado:'Próximo', inicio:2026, fin:2028, grupo:'cde', pi:'gabriela-mostajo-cruz', equipo:['rosa-condori-ramos','martin-zeballos-ugarte'], temas:['educacion','inteligencia-artificial'], ods:['ODS 4'], financiador:'Programa nacional de innovación (demo)', fondo:'Innovación educativa 2026', socios:['Red de colegios públicos (demo)'], resumen:'Piloto de un sistema de tutoría asistida por IA para matemática de secundaria, con evaluación de aprendizajes y de carga docente.', desafio:'La brecha de aprendizaje en matemática crece y el acompañamiento individual no es viable con la carga docente actual.', objetivos:['Adaptar el sistema al currículo nacional','Pilotear en aulas reales','Evaluar aprendizajes y aceptación docente']},
+  {slug:'informalidad-productividad', titulo:'Informalidad y productividad en la micro y pequeña empresa del sur', estado:'Activo', inicio:2024, fin:2026, grupo:'ceee', pi:'alonso-herrera-paz', equipo:['gabriela-mostajo-cruz'], temas:['economia-y-empresa','innovacion-y-emprendimiento'], ods:['ODS 8'], financiador:'Fondo de investigación UCSP', fondo:'Convocatoria interna 2024', socios:['Cámara de Comercio (demo)'], resumen:'Analiza la relación entre informalidad, acceso a crédito y productividad en micro y pequeñas empresas de la macrorregión sur.', desafio:'Las políticas de formalización se diseñan sin evidencia sobre qué cambia realmente en la productividad de la empresa.', objetivos:['Construir un panel de empresas','Estimar efectos sobre productividad','Publicar recomendaciones de política']},
+  {slug:'transferencia-tecnologica-pymes', titulo:'Modelos de transferencia tecnológica universidad-empresa en la región', estado:'Activo', inicio:2025, fin:2026, grupo:'gi-innovacion-empresarial', pi:'gabriela-mostajo-cruz', equipo:['martin-zeballos-ugarte','alonso-herrera-paz'], temas:['innovacion-y-emprendimiento','economia-y-empresa'], ods:['ODS 8','ODS 9'], financiador:'Fondo de investigación UCSP', fondo:'Convocatoria interna 2025', socios:['Incubadora regional (demo)'], resumen:'Identifica qué mecanismos de vinculación funcionan entre grupos de investigación y empresas medianas del sur peruano.', desafio:'La universidad produce capacidades técnicas que las empresas de la región no llegan a identificar ni contratar.', objetivos:['Mapear casos de vinculación','Comparar mecanismos y tiempos','Proponer un modelo operativo de transferencia']},
+  {slug:'centro-historico-riesgo', titulo:'Riesgo sísmico del patrimonio construido del centro histórico', estado:'Finalizado', inicio:2021, fin:2024, grupo:'gi-arquitectura-historia-patrimonio', pi:'diego-arenas-lopez', equipo:['luis-mendoza-carpio','camila-tejada-flores'], temas:['patrimonio-y-ciudad','ingenieria-sismorresistente'], ods:['ODS 11'], financiador:'CONCYTEC — ProCiencia', fondo:'Proyectos de investigación aplicada 2021', socios:['Municipalidad Provincial (demo)'], resumen:'Levantó y clasificó inmuebles patrimoniales del centro histórico según vulnerabilidad sísmica y estado de conservación.', desafio:'No existía un inventario técnico que permitiera priorizar la intervención en inmuebles patrimoniales.', objetivos:['Levantar inmuebles con fotogrametría','Clasificar vulnerabilidad','Entregar el inventario a la autoridad municipal']},
+  {slug:'agua-cuencas-aridas', titulo:'Gestión hídrica y calidad del agua en cuencas áridas', estado:'Finalizado', inicio:2020, fin:2023, grupo:'giig', pi:'jorge-nunez-pacheco', equipo:['ana-quispe-valdivia','fernando-yepez-rivas'], temas:['agua-y-sostenibilidad','mineria-y-geotecnia'], ods:['ODS 6','ODS 13'], financiador:'Cooperación internacional (demo)', fondo:'Agua y clima 2020', socios:['Junta de usuarios (demo)'], resumen:'Evaluó disponibilidad y calidad del agua en cuencas áridas de la región y escenarios de adaptación para el riego agrícola.', desafio:'La competencia por el agua entre agricultura, ciudad y minería crece sin datos locales suficientes.', objetivos:['Monitorear calidad en puntos críticos','Modelar escenarios de disponibilidad','Devolver resultados a usuarios de la cuenca']},
+  {slug:'migracion-periferias', titulo:'Trayectorias de familias migrantes en periferias urbanas de Arequipa', estado:'Activo', inicio:2023, fin:2026, grupo:'gi-poblaciones-vulnerables', pi:'fernando-yepez-rivas', equipo:['patricia-luna-cardenas','rosa-condori-ramos'], temas:['familia-y-poblaciones-vulnerables','educacion'], ods:['ODS 1','ODS 10'], financiador:'Fondo de investigación UCSP', fondo:'Convocatoria interna 2023', socios:['ONG de infancia (demo)'], resumen:'Sigue durante tres años a familias migrantes asentadas en periferias urbanas, con foco en vivienda, escolarización y acceso a servicios.', desafio:'Las políticas locales de vivienda y educación no consideran la movilidad real de estas familias.', objetivos:['Construir una cohorte longitudinal','Documentar barreras de acceso','Formular recomendaciones locales']}
+];
+
+const PUBLICACIONES = [
+  {slug:'deteccion-dano-ml-2026', titulo:'Detección temprana de daño estructural mediante redes neuronales en edificaciones instrumentadas', autores:['ricardo-salas-linares','camila-tejada-flores'], externos:['M. Ferreira'], revista:'Engineering Structures', anio:2026, tipo:'Artículo', doi:'10.0000/demo.2026.0142', oa:true, proyecto:'monitoreo-estructural-ia', grupo:'gi-ingenieria-estructural', temas:['ingenieria-sismorresistente','inteligencia-artificial'], keywords:['monitoreo estructural','redes neuronales','daño incipiente'], abstract:'Se presenta un método de detección de daño estructural basado en redes neuronales entrenadas con registros de aceleración de sensores de bajo costo instalados en doce edificaciones esenciales. El método identifica cambios de rigidez asociados a daño incipiente con una tasa de falsos positivos inferior a la de los indicadores modales tradicionales.'},
+  {slug:'mantenimiento-predictivo-2025', titulo:'Mantenimiento predictivo de equipo pesado minero con aprendizaje automático: un caso en el sur del Perú', autores:['martin-zeballos-ugarte','jorge-nunez-pacheco'], externos:[], revista:'Journal of Mining Engineering (demo)', anio:2025, tipo:'Artículo', doi:'10.0000/demo.2025.0091', oa:true, proyecto:'ia-mineria-mantenimiento', grupo:'gi-innovacion-empresarial', temas:['inteligencia-artificial','mineria-y-geotecnia'], keywords:['mantenimiento predictivo','minería','series temporales'], abstract:'Se comparan modelos de predicción de falla sobre datos operativos de equipo pesado en una operación minera del sur del Perú. El modelo de gradiente potenciado anticipa fallas críticas con una ventana media de once días, suficiente para reprogramar mantenimiento sin parada no planificada.'},
+  {slug:'vulnerabilidad-sillar-2025', titulo:'Vulnerabilidad sísmica de edificaciones históricas de sillar: clasificación y priorización', autores:['camila-tejada-flores','diego-arenas-lopez','luis-mendoza-carpio'], externos:[], revista:'International Journal of Architectural Heritage', anio:2025, tipo:'Artículo', doi:'10.0000/demo.2025.0077', oa:false, proyecto:'centro-historico-riesgo', grupo:'gi-arquitectura-historia-patrimonio', temas:['patrimonio-y-ciudad','ingenieria-sismorresistente'], keywords:['sillar','vulnerabilidad sísmica','patrimonio'], abstract:'A partir del levantamiento de 148 inmuebles del centro histórico de Arequipa se propone una clasificación de vulnerabilidad sísmica para construcciones de sillar y un criterio de priorización de intervención basado en uso, estado de conservación y exposición.'},
+  {slug:'relaves-dinamico-2025', titulo:'Comportamiento dinámico de depósitos de relaves sobre suelos volcánicos', autores:['jorge-nunez-pacheco'], externos:['A. Silva'], revista:'Soil Dynamics and Earthquake Engineering', anio:2025, tipo:'Artículo', doi:'10.0000/demo.2025.0064', oa:false, proyecto:'taludes-relaves', grupo:'giig', temas:['mineria-y-geotecnia'], keywords:['relaves','licuación','suelos volcánicos'], abstract:'Se reportan ensayos triaxiales cíclicos sobre materiales de relave y suelos volcánicos del sur del Perú, y se calibra un modelo constitutivo capaz de reproducir la generación de presión de poros observada en laboratorio.'},
+  {slug:'morteros-compatibles-2026', titulo:'Morteros compatibles para la conservación del sillar: formulación y desempeño', autores:['ana-quispe-valdivia','sofia-berrios-nunez'], externos:[], revista:'Construction and Building Materials', anio:2026, tipo:'Artículo', doi:'10.0000/demo.2026.0110', oa:true, proyecto:'sillar-durabilidad', grupo:'citem', temas:['materiales','patrimonio-y-ciudad'], keywords:['sillar','morteros de cal','conservación'], abstract:'Se formulan y ensayan cuatro morteros de reparación con distintas proporciones de cal y puzolana natural. Las mezclas con puzolana regional presentan permeabilidad al vapor y módulo elástico compatibles con el sillar, a diferencia de los morteros de cemento de uso corriente.'},
+  {slug:'residuos-cementicios-2026', titulo:'Valorización de residuos mineros como adición cementicia: desempeño mecánico y huella de carbono', autores:['ana-quispe-valdivia','luis-mendoza-carpio'], externos:[], revista:'Journal of Cleaner Production', anio:2026, tipo:'Artículo', doi:'10.0000/demo.2026.0125', oa:true, proyecto:'residuos-mineros-cemento', grupo:'citem', temas:['materiales','mineria-y-geotecnia','agua-y-sostenibilidad'], keywords:['economía circular','adiciones cementicias','huella de carbono'], abstract:'Se evalúan tres residuos de operaciones mineras del sur peruano como adiciones cementicias. Las mezclas con 20 % de sustitución mantienen resistencia a 28 días y reducen la huella de carbono del ligante en torno a un quinto respecto de la mezcla de referencia.'},
+  {slug:'ansiedad-adolescente-2025', titulo:'Ansiedad y depresión en adolescentes escolarizados de Arequipa: prevalencia y factores protectores', autores:['patricia-luna-cardenas','rosa-condori-ramos'], externos:[], revista:'Revista de Psicología (demo)', anio:2025, tipo:'Artículo', doi:'10.0000/demo.2025.0053', oa:true, proyecto:'salud-mental-adolescente', grupo:'cip', temas:['salud-mental','educacion'], keywords:['adolescencia','ansiedad','factores protectores'], abstract:'Estudio transversal con 1.842 adolescentes de escuelas públicas. La percepción de apoyo familiar y el vínculo con un docente de referencia se asocian a menor sintomatología ansiosa y depresiva, con efectos mayores en mujeres de tercero a quinto de secundaria.'},
+  {slug:'escala-riesgo-2026', titulo:'Adaptación peruana de una escala de evaluación de riesgo en violencia de pareja', autores:['marcela-oviedo-rios','patricia-luna-cardenas'], externos:[], revista:'Journal of Interpersonal Violence', anio:2026, tipo:'Artículo', doi:'10.0000/demo.2026.0088', oa:false, proyecto:'violencia-pareja-riesgo', grupo:'gi-criminologia', temas:['criminologia','salud-mental'], keywords:['violencia de pareja','evaluación de riesgo','psicometría'], abstract:'Se adapta y valida una escala de riesgo de reincidencia con 412 casos del sistema de justicia. La versión peruana conserva la estructura de tres factores del instrumento original y muestra una capacidad predictiva adecuada a doce meses.'},
+  {slug:'acompanamiento-docente-2025', titulo:'Efecto del acompañamiento docente sobre la lectura inicial en escuelas periurbanas', autores:['rosa-condori-ramos'], externos:['L. Paredes'], revista:'International Journal of Educational Development', anio:2025, tipo:'Artículo', doi:'10.0000/demo.2025.0045', oa:true, proyecto:'lectura-inicial', grupo:'cde', temas:['educacion','familia-y-poblaciones-vulnerables'], keywords:['lectura inicial','acompañamiento docente','evaluación de impacto'], abstract:'Evaluación cuasiexperimental en 36 escuelas periurbanas. Las aulas con acompañamiento quincenal mejoran la fluidez lectora de segundo grado frente al grupo de comparación, con efectos mayores donde el docente lleva menos de cinco años en el aula.'},
+  {slug:'informalidad-productividad-2025', titulo:'Informalidad, acceso a crédito y productividad en la micro y pequeña empresa', autores:['alonso-herrera-paz','gabriela-mostajo-cruz'], externos:[], revista:'Revista de Economía Regional (demo)', anio:2025, tipo:'Artículo', doi:'10.0000/demo.2025.0032', oa:true, proyecto:'informalidad-productividad', grupo:'ceee', temas:['economia-y-empresa'], keywords:['informalidad','productividad','mype'], abstract:'Con un panel de 1.200 micro y pequeñas empresas del sur peruano se estima la relación entre formalización, acceso a crédito y productividad. El efecto de la formalización sobre la productividad aparece solo cuando viene acompañado de acceso efectivo a financiamiento.'},
+  {slug:'transferencia-modelos-2026', titulo:'Mecanismos de transferencia tecnológica universidad-empresa en economías regionales', autores:['gabriela-mostajo-cruz','martin-zeballos-ugarte'], externos:[], revista:'Technovation', anio:2026, tipo:'Artículo', doi:'10.0000/demo.2026.0101', oa:false, proyecto:'transferencia-tecnologica-pymes', grupo:'gi-innovacion-empresarial', temas:['innovacion-y-emprendimiento','economia-y-empresa'], keywords:['transferencia tecnológica','universidad-empresa','innovación'], abstract:'Estudio de casos múltiples sobre catorce vinculaciones entre grupos de investigación y empresas medianas. Los mecanismos que funcionan comparten tres condiciones: un problema formulado por la empresa, una capacidad instalada visible y un interlocutor único en la universidad.'},
+  {slug:'migracion-vivienda-2025', titulo:'Vivienda, escolarización y trayectorias de familias migrantes en periferias urbanas', autores:['fernando-yepez-rivas','patricia-luna-cardenas'], externos:[], revista:'Journal of Latin American Studies (demo)', anio:2025, tipo:'Artículo', doi:'10.0000/demo.2025.0027', oa:true, proyecto:'migracion-periferias', grupo:'gi-poblaciones-vulnerables', temas:['familia-y-poblaciones-vulnerables','educacion'], keywords:['migración','vivienda','trayectorias'], abstract:'Seguimiento de tres años a 260 familias migrantes en periferias de Arequipa. La discontinuidad escolar aparece asociada a la movilidad residencial más que al ingreso familiar, lo que sugiere intervenciones centradas en la continuidad de matrícula.'},
+  {slug:'agua-calidad-2023', titulo:'Calidad del agua y escenarios de disponibilidad en una cuenca árida del sur peruano', autores:['jorge-nunez-pacheco','ana-quispe-valdivia'], externos:[], revista:'Water Resources Management', anio:2023, tipo:'Artículo', doi:'10.0000/demo.2023.0014', oa:false, proyecto:'agua-cuencas-aridas', grupo:'giig', temas:['agua-y-sostenibilidad','mineria-y-geotecnia'], keywords:['recursos hídricos','cuencas áridas','calidad del agua'], abstract:'Se reportan tres años de monitoreo de calidad del agua en puntos críticos de una cuenca árida y se modelan escenarios de disponibilidad bajo distintos supuestos de precipitación y demanda agrícola.'},
+  {slug:'sensores-bajo-costo-2024', titulo:'Sensores de bajo costo para instrumentación sísmica urbana: calibración y límites', autores:['ricardo-salas-linares'], externos:[], revista:'Sensors', anio:2024, tipo:'Artículo', doi:'10.0000/demo.2024.0203', oa:true, proyecto:'monitoreo-estructural-ia', grupo:'gi-ingenieria-estructural', temas:['ingenieria-sismorresistente','inteligencia-artificial'], keywords:['sensores','instrumentación','calibración'], abstract:'Se caracteriza el desempeño de acelerómetros de bajo costo frente a equipos de referencia y se establecen los rangos en los que sus registros son utilizables para monitoreo estructural continuo.'},
+  {slug:'geomateriales-alternativos-2024', titulo:'Geomateriales alternativos para bases de pavimento en clima árido', autores:['ana-quispe-valdivia','jorge-nunez-pacheco'], externos:[], revista:'Transportation Geotechnics', anio:2024, tipo:'Artículo', doi:'10.0000/demo.2024.0180', oa:false, proyecto:'residuos-mineros-cemento', grupo:'citem', temas:['materiales','mineria-y-geotecnia'], keywords:['geomateriales','pavimentos','clima árido'], abstract:'Se evalúan mezclas de suelos volcánicos estabilizados para bases de pavimento y su comportamiento ante ciclos de humedecimiento y secado propios del clima árido de la región.'},
+  {slug:'tutoria-ia-piloto-2026', titulo:'Tutoría asistida por IA en matemática escolar: diseño del piloto y consideraciones éticas', autores:['gabriela-mostajo-cruz','rosa-condori-ramos'], externos:[], revista:'Computers & Education (demo)', anio:2026, tipo:'Artículo', doi:'10.0000/demo.2026.0133', oa:true, proyecto:'tutoria-ia-educacion', grupo:'cde', temas:['educacion','inteligencia-artificial'], keywords:['tutoría inteligente','matemática','ética de la IA'], abstract:'Se describe el diseño de un piloto de tutoría asistida por inteligencia artificial en aulas de secundaria, los criterios de protección de datos de menores y el esquema de evaluación de aprendizajes previsto.'},
+  {slug:'dataset-instrumentacion-2026', titulo:'Conjunto de datos de instrumentación sísmica urbana de Arequipa (2025-2026)', autores:['ricardo-salas-linares','camila-tejada-flores'], externos:[], revista:'Repositorio de datos (demo)', anio:2026, tipo:'Conjunto de datos', doi:'10.0000/demo.dataset.2026.001', oa:true, proyecto:'monitoreo-estructural-ia', grupo:'gi-ingenieria-estructural', temas:['ingenieria-sismorresistente','inteligencia-artificial'], keywords:['dataset','aceleraciones','monitoreo'], abstract:'Registros de aceleración de doce edificaciones esenciales instrumentadas en Arequipa entre 2025 y 2026, con metadatos de sensor, ubicación y eventos sísmicos asociados.'},
+  {slug:'software-analisis-senales-2025', titulo:'Herramienta abierta de análisis de señales para monitoreo estructural', autores:['camila-tejada-flores','ricardo-salas-linares'], externos:[], revista:'Software de investigación (demo)', anio:2025, tipo:'Software', doi:'10.0000/demo.software.2025.004', oa:true, proyecto:'monitoreo-estructural-ia', grupo:'gi-ingenieria-estructural', temas:['ingenieria-sismorresistente','inteligencia-artificial'], keywords:['software','procesamiento de señales','código abierto'], abstract:'Biblioteca de código abierto para el preprocesamiento y análisis de señales de acelerómetros de bajo costo, con rutinas de identificación modal y detección de anomalías.'}
+];
+
+const PATENTES = [
+  {slug:'dispositivo-disipador', titulo:'Dispositivo disipador de energía para reforzamiento de edificaciones de albañilería', estado:'Concedida', anio:2024, inventores:['ricardo-salas-linares','luis-mendoza-carpio'], proyecto:'monitoreo-estructural-ia', grupo:'gi-ingenieria-estructural', temas:['ingenieria-sismorresistente'], industria:'Construcción', transferencia:'Disponible para licenciamiento', resumen:'Dispositivo de bajo costo que disipa energía sísmica en edificaciones de albañilería existentes, instalable sin desocupar el inmueble.', aplicaciones:['Reforzamiento de viviendas','Edificaciones escolares','Inmuebles patrimoniales']},
+  {slug:'mezcla-cementicia-residuos', titulo:'Mezcla cementicia con adición de residuos mineros tratados', estado:'En trámite', anio:2026, inventores:['ana-quispe-valdivia','luis-mendoza-carpio'], proyecto:'residuos-mineros-cemento', grupo:'citem', temas:['materiales','mineria-y-geotecnia'], industria:'Cemento y construcción', transferencia:'Búsqueda de socio industrial', resumen:'Formulación cementicia que incorpora residuos mineros tratados manteniendo la resistencia de diseño y reduciendo la huella de carbono del ligante.', aplicaciones:['Prefabricados','Bases de pavimento','Obra civil de baja exigencia']},
+  {slug:'sensor-fisura', titulo:'Sensor pasivo de apertura de fisuras para inmuebles patrimoniales', estado:'Concedida', anio:2023, inventores:['diego-arenas-lopez','camila-tejada-flores'], proyecto:'centro-historico-riesgo', grupo:'gi-arquitectura-historia-patrimonio', temas:['patrimonio-y-ciudad','ingenieria-sismorresistente'], industria:'Conservación patrimonial', transferencia:'Disponible para licenciamiento', resumen:'Sensor sin alimentación eléctrica que registra la apertura acumulada de fisuras en muros históricos y se lee con un teléfono móvil.', aplicaciones:['Monitoreo de patrimonio','Seguimiento post-sismo','Peritajes técnicos']},
+  {slug:'sistema-filtrado-agua', titulo:'Sistema de filtrado de bajo mantenimiento para agua de riego en zonas áridas', estado:'En trámite', anio:2025, inventores:['jorge-nunez-pacheco','ana-quispe-valdivia'], proyecto:'agua-cuencas-aridas', grupo:'giig', temas:['agua-y-sostenibilidad'], industria:'Agroindustria', transferencia:'En evaluación', resumen:'Sistema de filtrado por gravedad con medios granulares locales, diseñado para operar sin energía eléctrica en canales de riego.', aplicaciones:['Riego agrícola','Comunidades rurales','Agroindustria de pequeña escala']}
+];
+
+const CAPACIDADES = [
+  {slug:'lab-materiales', nombre:'Laboratorio de Materiales de Construcción', grupo:'citem', responsable:'luis-mendoza-carpio', temas:['materiales','patrimonio-y-ciudad'], disponibilidad:'Servicios a empresas y proyectos conjuntos', resumen:'Caracterización física, mecánica y de durabilidad de materiales cementicios, sillar y geomateriales.', equipamiento:['Prensa universal 200 t','Cámara de curado acelerado','Porosímetro','Equipo de ultrasonido para ensayos no destructivos'], aplicaciones:['Control de calidad de mezclas','Peritaje de materiales','Desarrollo de formulaciones']},
+  {slug:'lab-estructuras', nombre:'Laboratorio de Estructuras y Monitoreo', grupo:'gi-ingenieria-estructural', responsable:'ricardo-salas-linares', temas:['ingenieria-sismorresistente','inteligencia-artificial'], disponibilidad:'Servicios a empresas y proyectos conjuntos', resumen:'Ensayos sobre elementos estructurales e instrumentación de edificaciones en servicio.', equipamiento:['Marco de ensayo con actuador dinámico','Red de acelerómetros de bajo costo','Sistema de adquisición multicanal'], aplicaciones:['Ensayo de dispositivos de disipación','Instrumentación de edificios','Evaluación post-sismo']},
+  {slug:'lab-geotecnia', nombre:'Laboratorio de Geotecnia', grupo:'giig', responsable:'jorge-nunez-pacheco', temas:['mineria-y-geotecnia','agua-y-sostenibilidad'], disponibilidad:'Servicios a empresas', resumen:'Ensayos estáticos y cíclicos sobre suelos, relaves y geomateriales alternativos.', equipamiento:['Equipo triaxial cíclico','Corte directo','Consolidómetros','Equipo de permeabilidad'], aplicaciones:['Diseño de taludes','Caracterización de relaves','Estudios de cimentación']},
+  {slug:'lab-conducta', nombre:'Laboratorio de Evaluación Psicológica', grupo:'cip', responsable:'patricia-luna-cardenas', temas:['salud-mental','educacion'], disponibilidad:'Proyectos conjuntos y convenios', resumen:'Aplicación y validación de instrumentos de evaluación psicológica y estudios experimentales con población escolar y adulta.', equipamiento:['Cabinas de evaluación individual','Software de registro conductual','Banco de instrumentos validados'], aplicaciones:['Validación de escalas','Evaluación de programas','Estudios experimentales']},
+  {slug:'observatorio-datos', nombre:'Observatorio de Datos Económicos Regionales', grupo:'ceee', responsable:'alonso-herrera-paz', temas:['economia-y-empresa','innovacion-y-emprendimiento'], disponibilidad:'Informes por convenio', resumen:'Series y paneles de datos sobre empleo, informalidad y actividad económica de la macrorregión sur.', equipamiento:['Panel de empresas','Series regionales armonizadas','Infraestructura de cómputo para microdatos'], aplicaciones:['Informes sectoriales','Evaluación de políticas','Estudios de mercado regional']}
+];
+
+const IMPACTO = [
+  {slug:'inventario-patrimonio', titulo:'Un inventario técnico que cambió la prioridad de intervención del centro histórico', temas:['patrimonio-y-ciudad','ingenieria-sismorresistente'], proyecto:'centro-historico-riesgo', grupo:'gi-arquitectura-historia-patrimonio', investigadores:['diego-arenas-lopez','camila-tejada-flores'], desafio:'La autoridad municipal intervenía inmuebles patrimoniales según denuncias y urgencias, sin un criterio técnico comparable entre casos.', investigacion:'El grupo levantó 148 inmuebles con fotogrametría, clasificó su vulnerabilidad sísmica y cruzó el resultado con uso y ocupación.', resultado:'El inventario se incorporó al procedimiento municipal de autorización de obras y ordenó la lista de intervención prioritaria de los tres años siguientes.', evidencias:[{cifra:'148',texto:'inmuebles levantados'},{cifra:'32',texto:'clasificados como prioridad alta'},{cifra:'1',texto:'procedimiento municipal modificado'}]},
+  {slug:'riesgo-violencia-justicia', titulo:'Una escala de riesgo validada para decidir medidas de protección', temas:['criminologia'], proyecto:'violencia-pareja-riesgo', grupo:'gi-criminologia', investigadores:['marcela-oviedo-rios','patricia-luna-cardenas'], desafio:'Las medidas de protección en casos de violencia de pareja se dictaban sin un instrumento de riesgo validado para el contexto peruano.', investigacion:'El grupo adaptó una escala internacional, la validó con 412 casos locales y formó a operadores del sistema de justicia en su aplicación.', resultado:'La versión peruana se usa hoy en la sede piloto y permite distinguir casos de riesgo alto en la primera entrevista.', evidencias:[{cifra:'412',texto:'casos en la validación'},{cifra:'86',texto:'operadores formados'},{cifra:'12 meses',texto:'de seguimiento predictivo'}]},
+  {slug:'mantenimiento-minero', titulo:'Once días de anticipación: mantenimiento predictivo en una operación minera', temas:['inteligencia-artificial','mineria-y-geotecnia'], proyecto:'ia-mineria-mantenimiento', grupo:'gi-innovacion-empresarial', investigadores:['martin-zeballos-ugarte','jorge-nunez-pacheco'], desafio:'Las paradas no programadas de equipo pesado concentraban una parte relevante del costo operativo de la empresa socia.', investigacion:'El equipo construyó un conjunto de datos operativos anonimizado y comparó modelos de predicción de falla sobre señales de vibración, temperatura y consumo.', resultado:'El modelo seleccionado anticipa fallas críticas con once días de media, lo que permite reprogramar el mantenimiento dentro de la ventana planificada.', evidencias:[{cifra:'11 días',texto:'de anticipación media'},{cifra:'18 %',texto:'menos paradas no programadas'},{cifra:'2',texto:'tesis de maestría derivadas'}]},
+  {slug:'lectura-escuelas', titulo:'Acompañar al docente novel: dónde se mueve realmente la lectura inicial', temas:['educacion','familia-y-poblaciones-vulnerables'], proyecto:'lectura-inicial', grupo:'cde', investigadores:['rosa-condori-ramos'], desafio:'La inversión regional en capacitación docente no se reflejaba en los resultados de lectura de segundo grado.', investigacion:'El centro evaluó un programa de acompañamiento quincenal en 36 escuelas periurbanas, observando prácticas de aula y midiendo fluidez lectora al inicio y al cierre.', resultado:'El efecto se concentra en docentes con menos de cinco años de aula, criterio que la UGEL adoptó para focalizar el acompañamiento del año siguiente.', evidencias:[{cifra:'36',texto:'escuelas evaluadas'},{cifra:'1.100',texto:'estudiantes medidos'},{cifra:'1',texto:'criterio de focalización adoptado'}]}
+];
+
+const CONVOCATORIAS = [
+  {slug:'fondo-interno-2027', titulo:'Fondo de Investigación UCSP 2027', estado:'Abierta', cierre:'2026-09-20', dirigido:'Investigadores UCSP', area:'Multidisciplinaria', fuente:'UCSP', tipo:'Financiamiento de proyectos', resumen:'Financia proyectos de investigación de hasta 24 meses liderados por docentes investigadores con producción vigente.'},
+  {slug:'prociencia-aplicada-2026', titulo:'ProCiencia — Proyectos de investigación aplicada 2026', estado:'Cierra pronto', cierre:'2026-09-05', dirigido:'Grupos de investigación con socio empresarial', area:'Ingeniería, TIC, materiales', fuente:'CONCYTEC', tipo:'Financiamiento de proyectos', resumen:'Cofinancia proyectos aplicados con participación de al menos una empresa que aporte contrapartida.'},
+  {slug:'movilidad-investigadores-2026', titulo:'Movilidad de investigadores 2026-II', estado:'Abierta', cierre:'2026-10-15', dirigido:'Docentes investigadores', area:'Multidisciplinaria', fuente:'UCSP', tipo:'Movilidad', resumen:'Apoya estancias cortas de investigación y presentación de resultados en congresos indexados.'},
+  {slug:'tesis-pregrado-2026', titulo:'Apoyo a tesis de pregrado con grupos de investigación', estado:'Abierta', cierre:'2026-11-30', dirigido:'Estudiantes de pregrado', area:'Multidisciplinaria', fuente:'UCSP', tipo:'Tesis y semilleros', resumen:'Financia materiales y trabajo de campo de tesis vinculadas a un grupo o centro de investigación.'},
+  {slug:'innovacion-empresarial-2027', titulo:'Innovación empresarial: proyectos con empresas 2027', estado:'Próxima', cierre:'2026-12-10', dirigido:'Grupos con empresa socia', area:'Innovación y transferencia', fuente:'Programa nacional de innovación (demo)', tipo:'Financiamiento de proyectos', resumen:'Cofinancia desarrollo tecnológico con empresas formales; abre convocatoria en diciembre.'},
+  {slug:'patrimonio-cooperacion-2026', titulo:'Cooperación internacional en patrimonio construido', estado:'Cerrada', cierre:'2026-06-30', dirigido:'Grupos de investigación', area:'Patrimonio, arquitectura', fuente:'Cooperación internacional (demo)', tipo:'Financiamiento de proyectos', resumen:'Financió proyectos conjuntos de conservación del patrimonio con instituciones europeas. Convocatoria cerrada.'},
+  {slug:'semillero-datos-2026', titulo:'Semillero de investigación en ciencia de datos', estado:'Cerrada', cierre:'2026-04-18', dirigido:'Estudiantes de pregrado', area:'Ciencia de la computación', fuente:'UCSP', tipo:'Tesis y semilleros', resumen:'Incorporó estudiantes a proyectos de analítica de datos de los grupos de investigación. Convocatoria cerrada.'}
+];
+
+/* =============================================================
+   1. Utilidades
+   ============================================================= */
+const $ = (sel, raiz) => (raiz || document).querySelector(sel);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+const unico = a => Array.from(new Set(a));
+const mapa = lista => Object.fromEntries(lista.map(x => [x.slug, x]));
+
+const M_TEMA = mapa(TEMAS), M_GRUPO = mapa(GRUPOS), M_INV = mapa(INVESTIGADORES),
+      M_PROY = mapa(PROYECTOS), M_PUB = mapa(PUBLICACIONES), M_PAT = mapa(PATENTES),
+      M_CAP = mapa(CAPACIDADES), M_IMP = mapa(IMPACTO);
+
+const NOMBRE_TIPO = {tema:'Tema', investigador:'Investigador', grupo:'Grupo', proyecto:'Proyecto', publicacion:'Publicación', patente:'Patente', capacidad:'Capacidad', impacto:'Impacto', convocatoria:'Convocatoria'};
+const PLURAL_TIPO = {tema:'Temas', investigador:'Investigadores', grupo:'Grupos y centros', proyecto:'Proyectos', publicacion:'Publicaciones', patente:'Patentes', capacidad:'Capacidades', impacto:'Impacto', convocatoria:'Convocatorias'};
+
+/* Sinónimos y variantes: RF-05. El buscador expande la consulta
+   antes de puntuar, así "IA", "AI" y "machine learning" caen en
+   el mismo conjunto de entidades. */
+const SINONIMOS = {
+  'ia':['inteligencia artificial','ai','machine learning','aprendizaje automatico','aprendizaje de maquina'],
+  'ai':['inteligencia artificial','ia','machine learning'],
+  'inteligencia artificial':['ia','ai','machine learning','aprendizaje automatico','redes neuronales'],
+  'machine learning':['aprendizaje automatico','ia','inteligencia artificial'],
+  'mineria':['minero','minera','relaves','geotecnia'],
+  'sismo':['sismico','sismica','terremoto','sismorresistente'],
+  'salud mental':['psicologia','ansiedad','depresion','bienestar'],
+  'agua':['hidrico','hidrica','cuenca','riego'],
+  'patrimonio':['sillar','centro historico','conservacion'],
+  'educacion':['escuela','escolar','docente','aprendizaje'],
+  'empresa':['pyme','mype','negocio','industria'],
+  'ods':['objetivos de desarrollo sostenible']
+};
+
+const nombreInv = s => (M_INV[s] ? M_INV[s].nombre : s);
+const iniciales = n => n.split(/\s+/).slice(0,2).map(p => p[0]).join('').toUpperCase();
+const fecha = iso => {
+  const [a,m,d] = iso.split('-');
+  return d + '/' + m + '/' + a;
+};
+
+/* Relaciones derivadas: el motor que conecta las entidades. */
+const proyectosDe = inv => PROYECTOS.filter(p => p.pi === inv || p.equipo.includes(inv));
+const publicacionesDe = inv => PUBLICACIONES.filter(p => p.autores.includes(inv));
+const patentesDe = inv => PATENTES.filter(p => p.inventores.includes(inv));
+const investigadoresDeTema = t => INVESTIGADORES.filter(i => i.temas.includes(t));
+const gruposDeTema = t => GRUPOS.filter(g => g.temas.includes(t));
+const proyectosDeTema = t => PROYECTOS.filter(p => p.temas.includes(t));
+const publicacionesDeTema = t => PUBLICACIONES.filter(p => p.temas.includes(t));
+const patentesDeTema = t => PATENTES.filter(p => p.temas.includes(t));
+const capacidadesDeTema = t => CAPACIDADES.filter(c => c.temas.includes(t));
+const impactoDeTema = t => IMPACTO.filter(h => h.temas.includes(t));
+const proyectosDeGrupo = g => PROYECTOS.filter(p => p.grupo === g);
+const publicacionesDeGrupo = g => PUBLICACIONES.filter(p => p.grupo === g);
+const outputsDeProyecto = p => PUBLICACIONES.filter(x => x.proyecto === p);
+const patentesDeProyecto = p => PATENTES.filter(x => x.proyecto === p);
+const colaboradoresDe = inv => unico(proyectosDe(inv).flatMap(p => [p.pi].concat(p.equipo))
+  .concat(publicacionesDe(inv).flatMap(p => p.autores))).filter(s => s !== inv && M_INV[s]);
+
+/* =============================================================
+   2. Índice de búsqueda: una sola entrada por entidad (RF-02)
+   ============================================================= */
+function entrada(o){
+  const nombresTema = (o.temas || []).map(t => M_TEMA[t] ? M_TEMA[t].nombre : t);
+  const nombresGrupo = (o.grupos || []).map(g => M_GRUPO[g] ? M_GRUPO[g].nombre + ' ' + (M_GRUPO[g].sigla || '') : g);
+  o.busqueda = norm([o.titulo, o.subtitulo, o.resumen, (o.claves || []).join(' '), nombresTema.join(' '), nombresGrupo.join(' ')].join(' '));
+  return o;
+}
+
+const INDICE = [].concat(
+  TEMAS.map(t => entrada({tipo:'tema', slug:t.slug, titulo:t.nombre, subtitulo:t.disciplinas.join(' · '), resumen:t.resumen, temas:[t.slug], ods:t.ods, claves:t.disciplinas, url:'#/tema/'+t.slug})),
+  INVESTIGADORES.map(i => entrada({tipo:'investigador', slug:i.slug, titulo:i.nombre, subtitulo:i.cargo+' · '+i.unidad, resumen:i.bio, temas:i.temas, grupos:i.grupos, claves:i.expertise, url:'#/investigador/'+i.slug})),
+  GRUPOS.map(g => entrada({tipo:'grupo', slug:g.slug, titulo:g.nombre, subtitulo:g.tipo+(g.sigla ? ' · '+g.sigla : ''), resumen:g.resumen, temas:g.temas, grupos:[g.slug], claves:g.lineas, url:'#/grupo/'+g.slug})),
+  PROYECTOS.map(p => entrada({tipo:'proyecto', slug:p.slug, titulo:p.titulo, subtitulo:p.inicio+'–'+p.fin+' · '+p.financiador, resumen:p.resumen, temas:p.temas, grupos:[p.grupo], anio:p.inicio, estado:p.estado, ods:p.ods, financiador:p.financiador, claves:p.objetivos, url:'#/proyecto/'+p.slug})),
+  PUBLICACIONES.map(p => entrada({tipo:'publicacion', slug:p.slug, titulo:p.titulo, subtitulo:p.autores.map(nombreInv).concat(p.externos).join(', ')+' · '+p.revista+' · '+p.anio, resumen:p.abstract, temas:p.temas, grupos:[p.grupo], anio:p.anio, oa:p.oa, formato:p.tipo, claves:p.keywords, url:'#/publicacion/'+p.slug})),
+  PATENTES.map(p => entrada({tipo:'patente', slug:p.slug, titulo:p.titulo, subtitulo:p.estado+' · '+p.industria, resumen:p.resumen, temas:p.temas, grupos:[p.grupo], anio:p.anio, estado:p.estado, claves:p.aplicaciones, url:'#/patente/'+p.slug})),
+  CAPACIDADES.map(c => entrada({tipo:'capacidad', slug:c.slug, titulo:c.nombre, subtitulo:M_GRUPO[c.grupo].nombre, resumen:c.resumen, temas:c.temas, grupos:[c.grupo], claves:c.equipamiento.concat(c.aplicaciones), url:'#/capacidad/'+c.slug})),
+  IMPACTO.map(h => entrada({tipo:'impacto', slug:h.slug, titulo:h.titulo, subtitulo:'Historia de impacto', resumen:h.desafio+' '+h.resultado, temas:h.temas, grupos:[h.grupo], claves:[], url:'#/impacto/'+h.slug})),
+  CONVOCATORIAS.map(c => entrada({tipo:'convocatoria', slug:c.slug, titulo:c.titulo, subtitulo:c.fuente+' · cierre '+fecha(c.cierre), resumen:c.resumen, temas:[], estado:c.estado, anio:Number(c.cierre.slice(0,4)), claves:[c.dirigido, c.area, c.tipo], url:'#/convocatorias'}))
+);
+
+const VOCABULARIO = unico(INDICE.flatMap(e => e.busqueda.split(/[^a-z0-9ñ]+/)).filter(p => p.length > 4));
+
+function distancia(a, b){
+  const m = a.length, n = b.length;
+  if (Math.abs(m - n) > 2) return 9;
+  const d = Array.from({length:m+1}, (_,i) => [i].concat(Array(n).fill(0)));
+  for (let j = 0; j <= n; j++) d[0][j] = j;
+  for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++)
+    d[i][j] = Math.min(d[i-1][j]+1, d[i][j-1]+1, d[i-1][j-1] + (a[i-1] === b[j-1] ? 0 : 1));
+  return d[m][n];
+}
+function correccion(q){
+  const palabras = norm(q).split(/\s+/).filter(p => p.length > 4);
+  const arreglo = palabras.map(p => {
+    if (VOCABULARIO.includes(p)) return p;
+    let mejor = null, mejorD = 3;
+    VOCABULARIO.forEach(v => { const d = distancia(p, v); if (d < mejorD){ mejorD = d; mejor = v; } });
+    return mejor || p;
+  });
+  const sugerida = arreglo.join(' ');
+  return (palabras.length && sugerida !== palabras.join(' ')) ? sugerida : null;
+}
+
+function expandir(q){
+  const n = norm(q).trim();
+  if (!n) return [];
+  let terminos = [n].concat(n.split(/\s+/).filter(p => p.length > 2));
+  Object.keys(SINONIMOS).forEach(clave => {
+    if (n.includes(clave)) terminos = terminos.concat(SINONIMOS[clave].map(norm));
+  });
+  return unico(terminos);
+}
+
+/* Los términos cortos ("ia", "ai") solo cuentan como palabra
+   completa: si no, "ia" aparecería dentro de "materiales". */
+function contiene(texto, term){
+  if (term.length > 4) return texto.includes(term);
+  return new RegExp('(^|[^a-z0-9])' + term + '($|[^a-z0-9])').test(texto);
+}
+function puntuar(e, terminos){
+  if (!terminos.length) return 1;
+  const t = norm(e.titulo), c = norm((e.claves||[]).join(' ')), b = e.busqueda;
+  let p = 0;
+  const peso = {tema:5, investigador:3, grupo:3}[e.tipo] || 0;
+  terminos.forEach(term => {
+    if (contiene(t, term)) p += term.length > 3 ? 12 : 6;
+    if (contiene(c, term)) p += 6;
+    if (contiene(b, term)) p += 3;
+  });
+  return p ? p + peso : 0;
+}
+
+/* Filtros activos → subconjunto del índice (RF-08 a RF-17) */
+function aplicaFiltros(e, f){
+  if (f.tema && !(e.temas || []).includes(f.tema)) return false;
+  if (f.grupo && !(e.grupos || []).includes(f.grupo)) return false;
+  if (f.anio && String(e.anio || '') !== f.anio) return false;
+  if (f.estado && e.estado !== f.estado) return false;
+  if (f.ods && !(e.ods || []).includes(f.ods)) return false;
+  if (f.formato && e.formato !== f.formato) return false;
+  if (f.oa === '1' && e.oa !== true) return false;
+  return true;
+}
+
+function buscar(q, f){
+  const terminos = expandir(q);
+  let res = INDICE
+    .map(e => ({e, p:puntuar(e, terminos)}))
+    .filter(x => x.p > 0)
+    .filter(x => aplicaFiltros(x.e, f));
+  if (f.orden === 'fecha') res.sort((a,b) => (b.e.anio||0) - (a.e.anio||0) || b.p - a.p);
+  else if (f.orden === 'alfabetico') res.sort((a,b) => a.e.titulo.localeCompare(b.e.titulo, 'es'));
+  else res.sort((a,b) => b.p - a.p || (b.e.anio||0) - (a.e.anio||0));
+  return res.map(x => x.e);
+}
+
+/* =============================================================
+   3. Router de hash: la URL conserva consulta y filtros (RF-19)
+   ============================================================= */
+function leerRuta(){
+  const bruto = location.hash.replace(/^#/, '') || '/';
+  const [camino, consulta] = bruto.split('?');
+  const partes = camino.split('/').filter(Boolean);
+  const params = {};
+  new URLSearchParams(consulta || '').forEach((v, k) => { params[k] = v; });
+  return {vista: partes[0] || 'inicio', id: partes[1] || null, params};
+}
+function irA(camino, params){
+  const qs = new URLSearchParams(Object.entries(params || {}).filter(([,v]) => v !== '' && v != null)).toString();
+  location.hash = '#' + camino + (qs ? '?' + qs : '');
+}
+function urlBusqueda(params){
+  const qs = new URLSearchParams(Object.entries(params).filter(([,v]) => v !== '' && v != null)).toString();
+  return '#/buscar' + (qs ? '?' + qs : '');
+}
+
+/* =============================================================
+   4. Piezas reutilizables
+   ============================================================= */
+function migas(items){
+  return `<nav class="migas contenedor" aria-label="Ruta de navegación">` +
+    items.map((it, i) => (it.url ? `<a href="${it.url}">${esc(it.texto)}</a>` : `<span aria-current="page">${esc(it.texto)}</span>`) +
+      (i < items.length - 1 ? '<span aria-hidden="true">/</span>' : '')).join('') + `</nav>`;
+}
+function etiquetasTema(slugs){
+  return (slugs || []).map(s => M_TEMA[s] ? `<a class="etiqueta" href="#/tema/${s}">${esc(M_TEMA[s].nombre)}</a>` : '').join('');
+}
+function pastillaEstado(estado){
+  const clase = {'Activo':'activo','Finalizado':'finalizado','Próximo':'proxima','Abierta':'abierta','Cierra pronto':'cierra','Próxima':'proxima','Cerrada':'cerrada','Concedida':'activo','En trámite':'proxima'}[estado] || 'cerrada';
+  return `<span class="estado estado--${clase}">${esc(estado)}</span>`;
+}
+function tarjeta(e){
+  return `<a class="tarjeta" href="${e.url}">
+    <span class="tipo">${esc(NOMBRE_TIPO[e.tipo])}</span>
+    <h3>${esc(e.titulo)}</h3>
+    <span class="meta">${esc(e.subtitulo || '')}</span>
+  </a>`;
+}
+function tarjetaPersona(inv){
+  return `<a class="tarjeta" href="#/investigador/${inv.slug}">
+    <span class="persona">
+      <span class="avatar" aria-hidden="true">${esc(iniciales(inv.nombre))}</span>
+      <span class="apilado">
+        <strong>${esc(inv.nombre)}</strong>
+        <span class="meta">${esc(inv.cargo)}</span>
+      </span>
+    </span>
+    <span class="etiquetas">${inv.expertise.slice(0,2).map(x => `<span class="etiqueta">${esc(x)}</span>`).join('')}</span>
+  </a>`;
+}
+function tarjetaProyecto(p){
+  return `<a class="tarjeta" href="#/proyecto/${p.slug}">
+    <span class="fila gap3">${pastillaEstado(p.estado)}<span class="tipo">${p.inicio}–${p.fin}</span></span>
+    <h4>${esc(p.titulo)}</h4>
+    <span class="meta">${esc(M_GRUPO[p.grupo].nombre)} · ${esc(p.financiador)}</span>
+  </a>`;
+}
+function lineaPublicacion(p){
+  return `<div class="linea-publicacion">
+    <a href="#/publicacion/${p.slug}"><strong>${esc(p.titulo)}</strong></a>
+    <div class="meta">${esc(p.autores.map(nombreInv).concat(p.externos).join(', '))} · ${esc(p.revista)} · ${p.anio}${p.oa ? ' · Acceso abierto' : ''}</div>
+  </div>`;
+}
+function bloqueRelaciones(titulo, filas){
+  const vivas = filas.filter(f => f.cuenta > 0);
+  if (!vivas.length) return '';
+  return `<div class="caja">
+    <h3>${esc(titulo)}</h3>
+    <div class="relaciones">
+      ${vivas.map(f => `<a href="${f.url}">${esc(f.texto)}<span class="cuenta">${f.cuenta}</span></a>`).join('')}
+    </div>
+  </div>`;
+}
+function cajaColaborar(texto, contexto){
+  return `<div class="caja caja--cta">
+    <h3>Colaborar</h3>
+    <p style="font-size:var(--t-sm)">${esc(texto)}</p>
+    <a class="boton boton--primario" href="#/colaborar?desde=${encodeURIComponent(contexto)}">Iniciar una colaboración</a>
+  </div>`;
+}
+
+/* =============================================================
+   5. Navegación y buscador global (RF-01, RF-03, RF-04)
+   ============================================================= */
+const NAV = [
+  {texto:'Inicio', url:'#/'},
+  {texto:'Explorar investigación', url:'#/temas'},
+  {texto:'Investigadores', url:urlBusqueda({tipo:'investigador', orden:'alfabetico'})},
+  {texto:'Grupos y centros', url:urlBusqueda({tipo:'grupo', orden:'alfabetico'})},
+  {texto:'Proyectos', url:urlBusqueda({tipo:'proyecto'})},
+  {texto:'Resultados', url:urlBusqueda({tipo:'publicacion', orden:'fecha'})},
+  {texto:'Impacto', url:'#/impacto'},
+  {texto:'Colaborar', url:'#/colaborar'},
+  {texto:'Convocatorias', url:'#/convocatorias'}
+];
+
+function pintarNav(rutaActual){
+  const params = leerRuta().params;
+  $('#nav').innerHTML = NAV.map(n => {
+    const [camino, consulta] = n.url.split('?');
+    const tipoEnlace = new URLSearchParams(consulta || '').get('tipo') || '';
+    const activo = camino === '#/' + (rutaActual === 'inicio' ? '' : rutaActual) &&
+      (rutaActual !== 'buscar' || tipoEnlace === (params.tipo || ''));
+    return `<a href="${n.url}"${activo ? ' aria-current="page"' : ''}>${esc(n.texto)}</a>`;
+  }).join('');
+}
+
+function pintarBuscadorGlobal(valor){
+  $('#buscador-global').innerHTML = `
+    <form role="search" id="form-global">
+      <label class="solo-lectores" for="q-global">Buscar en el Portal de Investigación</label>
+      <span class="campo-busqueda">
+        <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+        <input id="q-global" type="search" autocomplete="off" placeholder="Busca un tema, investigador, proyecto o publicación" value="${esc(valor || '')}" aria-expanded="false" aria-controls="sugerencias" role="combobox" aria-autocomplete="list" />
+      </span>
+      <button class="boton boton--azul" type="submit">Buscar</button>
+    </form>
+    <ul class="sugerencias" id="sugerencias" role="listbox" hidden></ul>`;
+
+  const input = $('#q-global'), lista = $('#sugerencias');
+  const cerrar = () => { lista.hidden = true; input.setAttribute('aria-expanded', 'false'); };
+
+  input.addEventListener('input', () => {
+    const q = input.value.trim();
+    if (q.length < 2) return cerrar();
+    const res = buscar(q, {}).slice(0, 6);
+    if (!res.length){
+      const sug = correccion(q);
+      lista.innerHTML = `<li class="sug-cabecera">Sin coincidencias${sug ? ' · ¿quisiste decir <b>' + esc(sug) + '</b>?' : ''}</li>`;
+    } else {
+      lista.innerHTML = `<li class="sug-cabecera">Sugerencias</li>` + res.map(e =>
+        `<li role="option" aria-selected="false"><button type="button" data-url="${e.url}">
+          <span class="tipo">${esc(NOMBRE_TIPO[e.tipo])}</span>
+          <span class="apilado"><span>${esc(e.titulo)}</span><span class="sug-sub">${esc(e.subtitulo || '')}</span></span>
+        </button></li>`).join('');
+    }
+    lista.hidden = false;
+    input.setAttribute('aria-expanded', 'true');
+  });
+  lista.addEventListener('click', ev => {
+    const b = ev.target.closest('button[data-url]');
+    if (!b) return;
+    cerrar();
+    location.hash = b.dataset.url;
+  });
+  input.addEventListener('keydown', ev => { if (ev.key === 'Escape') cerrar(); });
+  if (!pintarBuscadorGlobal.escucha){
+    pintarBuscadorGlobal.escucha = true;
+    document.addEventListener('click', ev => {
+      const l = $('#sugerencias'), i = $('#q-global');
+      if (l && i && !ev.target.closest('#buscador-global')){ l.hidden = true; i.setAttribute('aria-expanded', 'false'); }
+    });
+  }
+  $('#form-global').addEventListener('submit', ev => {
+    ev.preventDefault();
+    cerrar();
+    irA('/buscar', {q: input.value.trim()});
+  });
+}
+
+/* =============================================================
+   6. Vistas
+   ============================================================= */
+function vistaInicio(){
+  const destacados = ['monitoreo-estructural-ia','salud-mental-adolescente','residuos-mineros-cemento'].map(s => M_PROY[s]);
+  const personas = ['ricardo-salas-linares','patricia-luna-cardenas','ana-quispe-valdivia','martin-zeballos-ugarte'].map(s => M_INV[s]);
+  const abiertas = CONVOCATORIAS.filter(c => c.estado === 'Abierta' || c.estado === 'Cierra pronto').slice(0, 3);
+  return `
+  <section class="hero contenedor">
+    <h1>Investigación que conecta conocimiento con impacto</h1>
+    <p class="entradilla">Explora investigadores, grupos, proyectos y resultados de investigación de la Universidad Católica San Pablo. Empieza por un problema, no por un organigrama.</p>
+    <div class="hero-busqueda">
+      <form role="search" id="form-hero">
+        <label class="solo-lectores" for="q-hero">Buscar investigación</label>
+        <span class="campo-busqueda">
+          <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+          <input id="q-hero" type="search" placeholder="Busca un tema, investigador, proyecto o publicación" />
+          <button class="boton boton--azul" type="submit">Buscar</button>
+        </span>
+      </form>
+      <p class="ejemplos"><span>Por ejemplo:</span>
+        ${['inteligencia artificial','minería','salud mental','educación','sostenibilidad'].map(x => `<a class="etiqueta" href="${urlBusqueda({q:x})}">${esc(x)}</a>`).join('')}
+      </p>
+    </div>
+    <div class="accesos">
+      <a class="acceso" href="${urlBusqueda({tipo:'investigador', orden:'alfabetico'})}"><strong>Encontrar un experto</strong><span>Busca por área de expertise y contacta directamente al investigador.</span></a>
+      <a class="acceso" href="#/temas"><strong>Explorar investigación</strong><span>Doce temas con sus proyectos, grupos y resultados asociados.</span></a>
+      <a class="acceso" href="#/colaborar"><strong>Colaborar con UCSP</strong><span>Empresas, instituciones, investigadores y estudiantes.</span></a>
+    </div>
+  </section>
+
+  <section class="banda">
+    <div class="contenedor seccion">
+      <div class="cabecera-seccion">
+        <div><h2>¿Qué estamos investigando?</h2><p>Cada tema es una entrada al portal: reúne a quienes investigan, lo que producen y lo que se puede contratar.</p></div>
+        <a class="boton" href="#/temas">Ver los doce temas</a>
+      </div>
+      <div class="rejilla rejilla--3">
+        ${TEMAS.slice(0, 6).map(t => `
+          <a class="tarjeta-tema" href="#/tema/${t.slug}">
+            <strong>${esc(t.nombre)}</strong>
+            <span class="meta" style="font-size:var(--t-sm); color:var(--texto-suave)">${esc(t.resumen.slice(0, 96))}…</span>
+            <span class="cuentas">${investigadoresDeTema(t.slug).length} investigadores · ${proyectosDeTema(t.slug).length} proyectos · ${publicacionesDeTema(t.slug).length} resultados</span>
+          </a>`).join('')}
+      </div>
+    </div>
+  </section>
+
+  <section class="contenedor seccion">
+    <div class="cabecera-seccion">
+      <div><h2>La investigación en cifras</h2><p>Cifras institucionales publicadas por la Dirección de Investigación. En el portal cada cifra abre su propio conjunto de resultados.</p></div>
+    </div>
+    <div class="cifras">
+      <a class="cifra" href="${urlBusqueda({tipo:'proyecto', q:'UCSP'})}"><b>204</b><span>proyectos con financiamiento interno</span><span class="ver">Ver proyectos →</span></a>
+      <a class="cifra" href="${urlBusqueda({tipo:'proyecto'})}"><b>141</b><span>proyectos con financiamiento externo</span><span class="ver">Explorar proyectos →</span></a>
+      <a class="cifra" href="${urlBusqueda({tipo:'patente'})}"><b>11</b><span>patentes y tecnologías</span><span class="ver">Conocer tecnologías →</span></a>
+      <a class="cifra" href="${urlBusqueda({tipo:'capacidad'})}"><b>${CAPACIDADES.length}</b><span>laboratorios y capacidades abiertas a empresas</span><span class="ver">Consultar capacidades →</span></a>
+    </div>
+  </section>
+
+  <section class="contenedor seccion">
+    <div class="cabecera-seccion">
+      <div><h2>Proyectos en marcha</h2></div>
+      <a class="boton" href="${urlBusqueda({tipo:'proyecto', estado:'Activo'})}">Ver todos los proyectos activos</a>
+    </div>
+    <div class="rejilla rejilla--3">${destacados.map(tarjetaProyecto).join('')}</div>
+  </section>
+
+  <section class="contenedor seccion">
+    <div class="cabecera-seccion">
+      <div><h2>Investigadores</h2><p>Perfiles con expertise, producción y contacto directo.</p></div>
+      <a class="boton" href="${urlBusqueda({tipo:'investigador', orden:'alfabetico'})}">Ver todos</a>
+    </div>
+    <div class="rejilla rejilla--4">${personas.map(tarjetaPersona).join('')}</div>
+  </section>
+
+  <section class="banda">
+    <div class="contenedor seccion">
+      <div class="cabecera-seccion">
+        <div><h2>Investigación que genera impacto</h2><p>Qué cambió fuera de la universidad, con evidencia y con nombres.</p></div>
+        <a class="boton" href="#/impacto">Ver todas las historias</a>
+      </div>
+      <div class="rejilla rejilla--3">
+        ${IMPACTO.slice(0, 3).map(h => `
+          <a class="tarjeta" href="#/impacto/${h.slug}">
+            <span class="tipo">Impacto</span>
+            <h4>${esc(h.titulo)}</h4>
+            <span class="meta">${esc(h.resultado.slice(0, 110))}…</span>
+          </a>`).join('')}
+      </div>
+    </div>
+  </section>
+
+  <section class="contenedor seccion">
+    <div class="cabecera-seccion">
+      <div><h2>Convocatorias abiertas</h2></div>
+      <a class="boton" href="#/convocatorias">Ver el observatorio completo</a>
+    </div>
+    <div class="rejilla rejilla--3">
+      ${abiertas.map(c => `
+        <a class="tarjeta" href="#/convocatorias?estado=${encodeURIComponent(c.estado)}">
+          ${pastillaEstado(c.estado)}
+          <h4>${esc(c.titulo)}</h4>
+          <span class="meta">Cierre ${fecha(c.cierre)} · ${esc(c.fuente)}</span>
+        </a>`).join('')}
+    </div>
+  </section>
+
+  <section class="contenedor seccion">
+    <div class="ia">
+      <div>
+        <span class="tipo">Capa de IA · sobre datos verificados</span>
+        <h2 style="margin-top:var(--e2)">Pregunta a la investigación UCSP</h2>
+        <p class="entradilla" style="margin-top:var(--e3)">¿Quién investiga inteligencia artificial aplicada a minería? El portal responde con las entidades que existen en él y enlaza cada fuente.</p>
+      </div>
+      <div class="ia-sugeridas">
+        ${['¿Quién investiga inteligencia artificial aplicada a minería?','¿Qué capacidades tiene UCSP en materiales?','¿Quién puede ayudarme con salud mental escolar?'].map(p => `<a class="boton boton--pequeno" href="#/preguntar?p=${encodeURIComponent(p)}">${esc(p)}</a>`).join('')}
+      </div>
+    </div>
+  </section>`;
+}
+
+/* --- Buscador: resultados, facetas y estado vacío -------- */
+const FACETAS = [
+  {clave:'tema', titulo:'Tema o línea', valores:e => e.temas || [], nombre:v => M_TEMA[v] ? M_TEMA[v].nombre : v},
+  {clave:'grupo', titulo:'Grupo o centro', valores:e => e.grupos || [], nombre:v => M_GRUPO[v] ? (M_GRUPO[v].sigla || M_GRUPO[v].nombre) : v},
+  {clave:'estado', titulo:'Estado', valores:e => e.estado ? [e.estado] : [], nombre:v => v},
+  {clave:'formato', titulo:'Tipo de resultado', valores:e => e.formato ? [e.formato] : [], nombre:v => v},
+  {clave:'anio', titulo:'Año', valores:e => e.anio ? [String(e.anio)] : [], nombre:v => v},
+  {clave:'ods', titulo:'ODS', valores:e => e.ods || [], nombre:v => v}
+];
+
+function vistaBuscar(params){
+  const q = params.q || '';
+  const filtros = {tema:params.tema||'', grupo:params.grupo||'', anio:params.anio||'', estado:params.estado||'', ods:params.ods||'', formato:params.formato||'', oa:params.oa||'', orden:params.orden||'relevancia'};
+  const tipo = params.tipo || '';
+  const universo = q ? buscar(q, {orden:filtros.orden}) : ordenar(INDICE.slice(), filtros.orden);
+
+  const conFiltros = universo.filter(e => aplicaFiltros(e, filtros));
+  const resultados = tipo ? conFiltros.filter(e => e.tipo === tipo) : conFiltros;
+
+  const cuentasTipo = {};
+  conFiltros.forEach(e => { cuentasTipo[e.tipo] = (cuentasTipo[e.tipo] || 0) + 1; });
+
+  const chips = [];
+  Object.keys(filtros).forEach(k => {
+    if (k === 'orden' || !filtros[k]) return;
+    const f = FACETAS.find(x => x.clave === k);
+    const texto = k === 'oa' ? 'Acceso abierto' : (f ? f.titulo + ': ' + f.nombre(filtros[k]) : filtros[k]);
+    chips.push({clave:k, texto});
+  });
+  if (tipo) chips.unshift({clave:'tipo', texto:'Tipo: ' + NOMBRE_TIPO[tipo]});
+
+  const sugerida = (!resultados.length && q) ? correccion(q) : null;
+
+  const facetasHtml = FACETAS.map(f => {
+    const sinEsta = Object.assign({}, filtros); sinEsta[f.clave] = '';
+    const universoFaceta = (tipo ? universo.filter(e => e.tipo === tipo) : universo).filter(e => aplicaFiltros(e, sinEsta));
+    const cuentas = {};
+    universoFaceta.forEach(e => f.valores(e).forEach(v => { cuentas[v] = (cuentas[v] || 0) + 1; }));
+    const valores = Object.keys(cuentas).sort((a, b) => cuentas[b] - cuentas[a] || String(a).localeCompare(String(b), 'es')).slice(0, 8);
+    if (!valores.length) return '';
+    return `<div class="faceta">
+      <h3 id="faceta-${f.clave}">${esc(f.titulo)}</h3>
+      <ul role="group" aria-labelledby="faceta-${f.clave}">
+        ${valores.map(v => `<li><label>
+          <input type="checkbox" data-faceta="${f.clave}" value="${esc(v)}"${filtros[f.clave] === String(v) ? ' checked' : ''} />
+          <span>${esc(f.nombre(v))}</span><span class="cuenta">${cuentas[v]}</span>
+        </label></li>`).join('')}
+      </ul>
+    </div>`;
+  }).join('');
+
+  return `
+  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Buscar'}])}
+  <div class="contenedor">
+    <div style="padding-top:var(--e4)">
+      <h1>${q ? 'Resultados para “' + esc(q) + '”' : 'Explorar toda la investigación'}</h1>
+    </div>
+    <div class="layout-busqueda">
+      <aside>
+        <button class="boton abrir-filtros" type="button" id="btn-filtros" aria-expanded="false" aria-controls="facetas">Filtros</button>
+        <div class="facetas" id="facetas">
+          <div class="faceta">
+            <h3>Acceso</h3>
+            <ul><li><label><input type="checkbox" data-faceta="oa" value="1"${filtros.oa === '1' ? ' checked' : ''} /><span>Solo acceso abierto</span></label></li></ul>
+          </div>
+          ${facetasHtml}
+          <div class="faceta">
+            <h3>Ordenar por</h3>
+            <label class="solo-lectores" for="orden">Ordenar resultados</label>
+            <select id="orden" data-faceta="orden">
+              <option value="relevancia"${filtros.orden === 'relevancia' ? ' selected' : ''}>Relevancia</option>
+              <option value="fecha"${filtros.orden === 'fecha' ? ' selected' : ''}>Más recientes</option>
+              <option value="alfabetico"${filtros.orden === 'alfabetico' ? ' selected' : ''}>Alfabético</option>
+            </select>
+          </div>
+          <button class="boton boton--pequeno" type="button" id="limpiar-todo">Limpiar todos los filtros</button>
+        </div>
+      </aside>
+      <div>
+        <div class="pestanas" role="tablist" aria-label="Tipo de entidad">
+          <button role="tab" data-tipo="" aria-selected="${tipo === '' ? 'true' : 'false'}">Todos <span class="cuenta">${conFiltros.length}</span></button>
+          ${Object.keys(PLURAL_TIPO).filter(t => cuentasTipo[t] || tipo === t).map(t =>
+            `<button role="tab" data-tipo="${t}" aria-selected="${tipo === t ? 'true' : 'false'}">${esc(PLURAL_TIPO[t])} <span class="cuenta">${cuentasTipo[t] || 0}</span></button>`).join('')}
+        </div>
+        ${chips.length ? `<div class="chips-filtro">
+          ${chips.map(c => `<button class="chip" type="button" data-quitar="${c.clave}">${esc(c.texto)}<span class="x" aria-hidden="true">×</span><span class="solo-lectores">Quitar filtro</span></button>`).join('')}
+          <button class="chip" type="button" id="limpiar-chips">Limpiar todo<span class="x" aria-hidden="true">×</span></button>
+        </div>` : ''}
+        <div class="barra-resultados">
+          <p class="conteo" aria-live="polite"><strong>${resultados.length}</strong> ${resultados.length === 1 ? 'resultado' : 'resultados'}${chips.length ? ' con los filtros aplicados' : ''} · el portal contiene ${INDICE.length} entidades</p>
+        </div>
+        ${resultados.length ? `<div class="resultados">${resultados.map(e => resultado(e, q)).join('')}</div>` : `
+        <div class="sin-resultados">
+          <h3>Sin resultados para esta combinación</h3>
+          ${sugerida ? `<p>¿Quisiste decir <a href="${urlBusqueda({q:sugerida})}"><strong>${esc(sugerida)}</strong></a>?</p>` : ''}
+          <p style="color:var(--texto-suave)">Prueba con menos filtros, con un término más general o explora por tema.</p>
+          <div class="fila gap2" style="justify-content:center">
+            <button class="boton" type="button" id="limpiar-vacio">Quitar todos los filtros</button>
+            <a class="boton" href="#/temas">Explorar por temas</a>
+            <a class="boton boton--primario" href="#/colaborar">Cuéntanos qué buscas</a>
+          </div>
+          <p style="font-size:var(--t-sm); color:var(--texto-suave)">Búsquedas frecuentes:
+            ${['inteligencia artificial','sillar','violencia','minería'].map(x => `<a href="${urlBusqueda({q:x})}">${esc(x)}</a>`).join(' · ')}
+          </p>
+        </div>`}
+      </div>
+    </div>
+  </div>`;
+}
+
+function ordenar(lista, orden){
+  if (orden === 'fecha') return lista.sort((a,b) => (b.anio||0) - (a.anio||0));
+  if (orden === 'alfabetico') return lista.sort((a,b) => a.titulo.localeCompare(b.titulo, 'es'));
+  return lista;
+}
+
+function resaltar(texto, q){
+  const t = esc(texto);
+  const term = norm(q).split(/\s+/).filter(p => p.length > 2)[0];
+  if (!term) return t;
+  const i = norm(t).indexOf(term);
+  if (i < 0) return t;
+  return t.slice(0, i) + '<mark>' + t.slice(i, i + term.length) + '</mark>' + t.slice(i + term.length);
+}
+
+function resultado(e, q){
+  const extra = e.tipo === 'publicacion' && M_PUB[e.slug] ? (M_PUB[e.slug].oa ? '<span class="etiqueta">Acceso abierto</span>' : '') : '';
+  return `<a class="resultado" href="${e.url}">
+    <span class="fila-tipo">
+      <span class="tipo">${esc(NOMBRE_TIPO[e.tipo])}</span>
+      ${e.estado ? pastillaEstado(e.estado) : ''}
+      ${extra}
+    </span>
+    <h3>${resaltar(e.titulo, q)}</h3>
+    <span class="meta">${esc(e.subtitulo || '')}</span>
+    <p>${esc((e.resumen || '').slice(0, 190))}${(e.resumen || '').length > 190 ? '…' : ''}</p>
+    ${e.temas && e.temas.length ? `<span class="etiquetas" style="margin-top:var(--e3)">${e.temas.slice(0,3).map(t => M_TEMA[t] ? `<span class="etiqueta">${esc(M_TEMA[t].nombre)}</span>` : '').join('')}</span>` : ''}
+  </a>`;
+}
+
+/* --- Catálogo de temas y ficha de tema (RF-23 a RF-31) --- */
+function vistaTemas(){
+  return `
+  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Explorar investigación'}])}
+  <div class="contenedor">
+    <div style="padding-top:var(--e4); max-width:64ch">
+      <h1>Explorar investigación por tema</h1>
+      <p class="entradilla" style="margin-top:var(--e4)">No hace falta conocer la estructura administrativa de la universidad. Cada tema reúne a las personas, los grupos, los proyectos y los resultados que trabajan en él.</p>
+    </div>
+    <div class="seccion">
+      <div class="rejilla rejilla--3">
+        ${TEMAS.map(t => `
+          <a class="tarjeta-tema" href="#/tema/${t.slug}">
+            <strong>${esc(t.nombre)}</strong>
+            <span style="font-size:var(--t-sm); color:var(--texto-suave)">${esc(t.resumen)}</span>
+            <span class="cuentas">${investigadoresDeTema(t.slug).length} investigadores · ${gruposDeTema(t.slug).length} grupos · ${proyectosDeTema(t.slug).length} proyectos · ${publicacionesDeTema(t.slug).length} resultados</span>
+            <span class="etiquetas">${t.ods.map(o => `<span class="etiqueta">${esc(o)}</span>`).join('')}</span>
+          </a>`).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+function vistaTema(slug){
+  const t = M_TEMA[slug];
+  if (!t) return vistaNoEncontrada();
+  const invs = investigadoresDeTema(slug), grs = gruposDeTema(slug), prs = proyectosDeTema(slug),
+        pubs = publicacionesDeTema(slug), pats = patentesDeTema(slug), caps = capacidadesDeTema(slug), imps = impactoDeTema(slug);
+  const relacionados = TEMAS.filter(o => o.slug !== slug && o.disciplinas.some(d => t.disciplinas.includes(d))).slice(0, 4);
+  return `
+  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Explorar investigación', url:'#/temas'}, {texto:t.nombre}])}
+  <div class="contenedor">
+    <div class="ficha-cabecera">
+      <span class="tipo">Tema de investigación</span>
+      <h1>${esc(t.nombre)}</h1>
+      <p class="entradilla" style="margin-top:var(--e4)">${esc(t.resumen)}</p>
+      <div class="etiquetas" style="margin-top:var(--e4)">
+        ${t.disciplinas.map(d => `<span class="etiqueta">${esc(d)}</span>`).join('')}
+        ${t.ods.map(o => `<a class="etiqueta" href="${urlBusqueda({ods:o})}">${esc(o)}</a>`).join('')}
+      </div>
+    </div>
+    <div class="cifras" style="margin-top:var(--e5)">
+      <a class="cifra" href="${urlBusqueda({tipo:'investigador', tema:slug})}"><b>${invs.length}</b><span>investigadores</span></a>
+      <a class="cifra" href="${urlBusqueda({tipo:'grupo', tema:slug})}"><b>${grs.length}</b><span>grupos y centros</span></a>
+      <a class="cifra" href="${urlBusqueda({tipo:'proyecto', tema:slug})}"><b>${prs.length}</b><span>proyectos</span></a>
+      <a class="cifra" href="${urlBusqueda({tipo:'publicacion', tema:slug})}"><b>${pubs.length}</b><span>publicaciones y datos</span></a>
+    </div>
+    <div class="layout-ficha">
+      <div>
+        ${invs.length ? `<section class="bloque"><h2>Quién investiga este tema</h2><div class="rejilla rejilla--3">${invs.map(tarjetaPersona).join('')}</div></section>` : ''}
+        ${grs.length ? `<section class="bloque"><h2>Grupos y centros</h2><div class="rejilla rejilla--2">${grs.map(g => `
+          <a class="tarjeta" href="#/grupo/${g.slug}"><span class="tipo">${esc(g.tipo)}</span><h4>${esc(g.nombre)}</h4><span class="meta">${esc(g.resumen.slice(0,110))}…</span></a>`).join('')}</div></section>` : ''}
+        ${prs.length ? `<section class="bloque"><h2>Proyectos</h2><div class="rejilla rejilla--2">${prs.map(tarjetaProyecto).join('')}</div></section>` : ''}
+        ${pubs.length ? `<section class="bloque"><h2>Resultados recientes</h2>${pubs.slice(0,6).map(lineaPublicacion).join('')}
+          <p style="margin-top:var(--e4)"><a href="${urlBusqueda({tipo:'publicacion', tema:slug, orden:'fecha'})}">Ver los ${pubs.length} resultados de este tema →</a></p></section>` : ''}
+        ${imps.length ? `<section class="bloque"><h2>Impacto</h2><div class="rejilla rejilla--2">${imps.map(h => `
+          <a class="tarjeta" href="#/impacto/${h.slug}"><span class="tipo">Impacto</span><h4>${esc(h.titulo)}</h4></a>`).join('')}</div></section>` : ''}
+      </div>
+      <aside class="rail">
+        ${cajaColaborar('¿Trabajas en ' + t.nombre.toLowerCase() + '? Cuéntanos el problema y te ponemos en contacto con el equipo adecuado.', 'tema:' + slug)}
+        ${bloqueRelaciones('Relacionado', [
+          {texto:'Patentes y tecnologías', cuenta:pats.length, url:urlBusqueda({tipo:'patente', tema:slug})},
+          {texto:'Capacidades y laboratorios', cuenta:caps.length, url:urlBusqueda({tipo:'capacidad', tema:slug})},
+          {texto:'Historias de impacto', cuenta:imps.length, url:urlBusqueda({tipo:'impacto', tema:slug})}
+        ])}
+        ${relacionados.length ? `<div class="caja"><h3>Temas relacionados</h3><div class="etiquetas">${relacionados.map(o => `<a class="etiqueta" href="#/tema/${o.slug}">${esc(o.nombre)}</a>`).join('')}</div></div>` : ''}
+      </aside>
+    </div>
+  </div>`;
+}
+
+/* --- Perfil de investigador (RF-32 a RF-47) ------------- */
+function vistaInvestigador(slug){
+  const i = M_INV[slug];
+  if (!i) return vistaNoEncontrada();
+  const prs = proyectosDe(slug), pubs = publicacionesDe(slug).sort((a,b) => b.anio - a.anio),
+        pats = patentesDe(slug), colegas = colaboradoresDe(slug);
+  const activos = prs.filter(p => p.estado === 'Activo');
+  return `
+  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Investigadores', url:urlBusqueda({tipo:'investigador', orden:'alfabetico'})}, {texto:i.nombre}])}
+  <div class="contenedor">
+    <div class="ficha-cabecera">
+      <div class="fila gap5" style="align-items:flex-start">
+        <span class="avatar avatar--grande" aria-hidden="true">${esc(iniciales(i.nombre))}</span>
+        <div style="flex:1 1 320px">
+          <span class="tipo">Investigador · perfil de demostración</span>
+          <h1>${esc(i.nombre)}</h1>
+          <p class="entradilla" style="margin-top:var(--e3); font-size:var(--t-base)">${esc(i.cargo)} · ${esc(i.unidad)}</p>
+          <div class="etiquetas" style="margin-top:var(--e4)">
+            ${i.grupos.map(g => `<a class="etiqueta" href="#/grupo/${g}">${esc(M_GRUPO[g].sigla || M_GRUPO[g].nombre)}</a>`).join('')}
+            ${etiquetasTema(i.temas)}
+          </div>
+          <div class="fila gap3" style="margin-top:var(--e5)">
+            <a class="boton boton--primario" href="#/colaborar?desde=${encodeURIComponent('investigador:' + slug)}">Colaborar con ${esc(i.nombre.split(' ')[0])}</a>
+            <a class="boton" href="https://orcid.org/${esc(i.orcid)}" rel="noopener">Consultar perfil ORCID</a>
+            <button class="boton" type="button" data-exportar="${slug}">Exportar producción (BibTeX)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="layout-ficha">
+      <div>
+        <section class="bloque">
+          <h2>Trayectoria y foco de investigación</h2>
+          <p class="prosa">${esc(i.bio)}</p>
+        </section>
+        <section class="bloque">
+          <h2>Áreas de expertise</h2>
+          <div class="etiquetas">${i.expertise.map(x => `<a class="etiqueta" href="${urlBusqueda({q:x})}">${esc(x)}</a>`).join('')}</div>
+        </section>
+        ${activos.length ? `<section class="bloque"><h2>Proyectos activos</h2><div class="rejilla rejilla--2">${activos.map(tarjetaProyecto).join('')}</div></section>` : ''}
+        ${pubs.length ? `<section class="bloque">
+          <h2>Producción científica</h2>
+          <p class="meta" style="color:var(--texto-suave); margin-bottom:var(--e3)">${pubs.length} resultados · ${pubs.filter(p => p.oa).length} en acceso abierto</p>
+          ${pubs.map(lineaPublicacion).join('')}
+        </section>` : ''}
+        ${pats.length ? `<section class="bloque"><h2>Patentes y tecnologías</h2><div class="rejilla rejilla--2">${pats.map(p => `
+          <a class="tarjeta" href="#/patente/${p.slug}">${pastillaEstado(p.estado)}<h4>${esc(p.titulo)}</h4><span class="meta">${esc(p.industria)}</span></a>`).join('')}</div></section>` : ''}
+        ${colegas.length ? `<section class="bloque"><h2>Red de colaboración</h2>
+          <p class="meta" style="color:var(--texto-suave); margin-bottom:var(--e3)">Personas con quienes comparte proyectos o publicaciones en el portal.</p>
+          <div class="etiquetas">${colegas.map(c => `<a class="etiqueta" href="#/investigador/${c}">${esc(nombreInv(c))}</a>`).join('')}</div></section>` : ''}
+      </div>
+      <aside class="rail">
+        <div class="caja">
+          <h3>Datos</h3>
+          <dl class="datos">
+            <div><dt>ORCID</dt><dd><a href="https://orcid.org/${esc(i.orcid)}" rel="noopener">${esc(i.orcid)}</a></dd></div>
+            <div><dt>Correo</dt><dd><a href="mailto:${esc(i.correo)}">${esc(i.correo)}</a></dd></div>
+            <div><dt>Unidad</dt><dd>${esc(i.unidad)}</dd></div>
+            <div><dt>Disponibilidad</dt><dd>${i.colabora ? 'Abierta a nuevas colaboraciones' : 'Sin disponibilidad declarada'}</dd></div>
+            <div><dt>Última revisión</dt><dd>Agosto 2026</dd></div>
+          </dl>
+        </div>
+        ${bloqueRelaciones('Producción y relaciones', [
+          {texto:'Proyectos', cuenta:prs.length, url:urlBusqueda({tipo:'proyecto', q:i.nombre})},
+          {texto:'Publicaciones y datos', cuenta:pubs.length, url:urlBusqueda({tipo:'publicacion', q:i.nombre})},
+          {texto:'Patentes', cuenta:pats.length, url:urlBusqueda({tipo:'patente', q:i.nombre})},
+          {texto:'Colaboradores', cuenta:colegas.length, url:'#/investigador/' + slug}
+        ])}
+        ${cajaColaborar('Propón un proyecto, una tesis o una consultoría técnica.', 'investigador:' + slug)}
+      </aside>
+    </div>
+  </div>`;
+}
+
+/* --- Grupo, centro o instituto (RF-48 a RF-58) ---------- */
+function vistaGrupo(slug){
+  const g = M_GRUPO[slug];
+  if (!g) return vistaNoEncontrada();
+  const prs = proyectosDeGrupo(slug), pubs = publicacionesDeGrupo(slug).sort((a,b) => b.anio - a.anio),
+        pats = PATENTES.filter(p => p.grupo === slug), caps = CAPACIDADES.filter(c => c.grupo === slug),
+        imps = IMPACTO.filter(h => h.grupo === slug);
+  return `
+  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Grupos y centros', url:urlBusqueda({tipo:'grupo', orden:'alfabetico'})}, {texto:g.sigla || g.nombre}])}
+  <div class="contenedor">
+    <div class="ficha-cabecera">
+      <span class="tipo">${esc(g.tipo)}</span>
+      <h1>${esc(g.nombre)}</h1>
+      <p class="entradilla" style="margin-top:var(--e4)">${esc(g.resumen)}</p>
+      <div class="etiquetas" style="margin-top:var(--e4)">${etiquetasTema(g.temas)}</div>
+    </div>
+    <div class="layout-ficha">
+      <div>
+        <section class="bloque">
+          <h2>Líneas de investigación</h2>
+          <ul class="lista-limpia">${g.lineas.map(l => `<li><span class="vinieta">—</span><a href="${urlBusqueda({q:l})}">${esc(l)}</a></li>`).join('')}</ul>
+        </section>
+        <section class="bloque">
+          <h2>Equipo</h2>
+          <div class="rejilla rejilla--3">${g.miembros.map(m => tarjetaPersona(M_INV[m])).join('')}</div>
+          <p class="meta" style="margin-top:var(--e3); color:var(--texto-suave)">Dirige: <a href="#/investigador/${g.director}">${esc(nombreInv(g.director))}</a></p>
+        </section>
+        ${prs.length ? `<section class="bloque"><h2>Proyectos</h2><div class="rejilla rejilla--2">${prs.map(tarjetaProyecto).join('')}</div></section>` : ''}
+        ${pubs.length ? `<section class="bloque"><h2>Producción reciente</h2>${pubs.slice(0,6).map(lineaPublicacion).join('')}
+          <p style="margin-top:var(--e4)"><a href="${urlBusqueda({tipo:'publicacion', grupo:slug, orden:'fecha'})}">Ver los ${pubs.length} resultados del grupo →</a></p></section>` : ''}
+        ${caps.length ? `<section class="bloque"><h2>Capacidades y equipamiento</h2><div class="rejilla rejilla--2">${caps.map(c => `
+          <a class="tarjeta" href="#/capacidad/${c.slug}"><span class="tipo">Capacidad</span><h4>${esc(c.nombre)}</h4><span class="meta">${esc(c.disponibilidad)}</span></a>`).join('')}</div></section>` : ''}
+        ${imps.length ? `<section class="bloque"><h2>Impacto</h2><div class="rejilla rejilla--2">${imps.map(h => `
+          <a class="tarjeta" href="#/impacto/${h.slug}"><span class="tipo">Impacto</span><h4>${esc(h.titulo)}</h4></a>`).join('')}</div></section>` : ''}
+      </div>
+      <aside class="rail">
+        ${cajaColaborar('Plantea un reto técnico o un proyecto conjunto con este equipo.', 'grupo:' + slug)}
+        <div class="caja">
+          <h3>Ficha</h3>
+          <dl class="datos">
+            <div><dt>Tipo</dt><dd>${esc(g.tipo)}</dd></div>
+            ${g.sigla ? `<div><dt>Sigla</dt><dd>${esc(g.sigla)}</dd></div>` : ''}
+            <div><dt>Contacto</dt><dd><a href="mailto:${esc(g.contacto)}">${esc(g.contacto)}</a></dd></div>
+            <div><dt>Aliados</dt><dd>${g.aliados.map(esc).join(' · ') || 'Sin aliados declarados'}</dd></div>
+          </dl>
+        </div>
+        ${bloqueRelaciones('En el portal', [
+          {texto:'Proyectos', cuenta:prs.length, url:urlBusqueda({tipo:'proyecto', grupo:slug})},
+          {texto:'Publicaciones y datos', cuenta:pubs.length, url:urlBusqueda({tipo:'publicacion', grupo:slug})},
+          {texto:'Patentes', cuenta:pats.length, url:urlBusqueda({tipo:'patente', grupo:slug})},
+          {texto:'Capacidades', cuenta:caps.length, url:urlBusqueda({tipo:'capacidad', grupo:slug})}
+        ])}
+      </aside>
+    </div>
+  </div>`;
+}
+
+/* --- Proyecto (RF-59 a RF-72) --------------------------- */
+function vistaProyecto(slug){
+  const p = M_PROY[slug];
+  if (!p) return vistaNoEncontrada();
+  const outputs = outputsDeProyecto(slug), pats = patentesDeProyecto(slug),
+        historia = IMPACTO.find(h => h.proyecto === slug), g = M_GRUPO[p.grupo];
+  return `
+  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Proyectos', url:urlBusqueda({tipo:'proyecto'})}, {texto:p.titulo.slice(0, 48) + '…'}])}
+  <div class="contenedor">
+    <div class="ficha-cabecera">
+      <div class="fila gap3">${pastillaEstado(p.estado)}<span class="tipo">${p.inicio}–${p.fin}</span></div>
+      <h1>${esc(p.titulo)}</h1>
+      <p class="entradilla" style="margin-top:var(--e4)">${esc(p.resumen)}</p>
+      <div class="etiquetas" style="margin-top:var(--e4)">${etiquetasTema(p.temas)}${p.ods.map(o => `<a class="etiqueta" href="${urlBusqueda({ods:o})}">${esc(o)}</a>`).join('')}</div>
+    </div>
+    <div class="layout-ficha">
+      <div>
+        <section class="bloque">
+          <h2>El problema que aborda</h2>
+          <p class="prosa">${esc(p.desafio)}</p>
+        </section>
+        <section class="bloque">
+          <h2>Objetivos</h2>
+          <ul class="lista-limpia">${p.objetivos.map((o, n) => `<li><span class="vinieta">${n+1}</span><span>${esc(o)}</span></li>`).join('')}</ul>
+        </section>
+        <section class="bloque">
+          <h2>Equipo</h2>
+          <div class="rejilla rejilla--3">${[p.pi].concat(p.equipo).map(m => tarjetaPersona(M_INV[m])).join('')}</div>
+          <p class="meta" style="margin-top:var(--e3); color:var(--texto-suave)">Investigador principal: <a href="#/investigador/${p.pi}">${esc(nombreInv(p.pi))}</a></p>
+        </section>
+        ${outputs.length || pats.length ? `<section class="bloque">
+          <h2>Resultados del proyecto</h2>
+          ${outputs.map(lineaPublicacion).join('')}
+          ${pats.map(x => `<div class="linea-publicacion"><a href="#/patente/${x.slug}"><strong>${esc(x.titulo)}</strong></a><div class="meta">Patente · ${esc(x.estado)} · ${x.anio}</div></div>`).join('')}
+        </section>` : ''}
+        ${historia ? `<section class="bloque"><h2>Impacto</h2>
+          <a class="tarjeta" href="#/impacto/${historia.slug}"><span class="tipo">Historia de impacto</span><h4>${esc(historia.titulo)}</h4><span class="meta">${esc(historia.resultado.slice(0,140))}…</span></a></section>` : ''}
+      </div>
+      <aside class="rail">
+        <div class="caja">
+          <h3>Ficha del proyecto</h3>
+          <dl class="datos">
+            <div><dt>Estado</dt><dd>${esc(p.estado)}</dd></div>
+            <div><dt>Periodo</dt><dd>${p.inicio}–${p.fin}</dd></div>
+            <div><dt>Unidad responsable</dt><dd><a href="#/grupo/${g.slug}">${esc(g.nombre)}</a></dd></div>
+            <div><dt>Financiamiento</dt><dd>${esc(p.financiador)}</dd></div>
+            <div><dt>Fondo o convocatoria</dt><dd>${esc(p.fondo)}</dd></div>
+            <div><dt>Socios</dt><dd>${p.socios.map(esc).join(' · ') || 'Sin socios externos'}</dd></div>
+          </dl>
+        </div>
+        ${bloqueRelaciones('Relacionado', [
+          {texto:'Publicaciones y datos', cuenta:outputs.length, url:urlBusqueda({tipo:'publicacion', q:p.titulo.split(' ').slice(0,3).join(' ')})},
+          {texto:'Patentes', cuenta:pats.length, url:urlBusqueda({tipo:'patente', grupo:p.grupo})},
+          {texto:'Proyectos del grupo', cuenta:proyectosDeGrupo(p.grupo).length, url:urlBusqueda({tipo:'proyecto', grupo:p.grupo})}
+        ])}
+        ${cajaColaborar('¿Te interesa esta línea de trabajo? Escríbenos indicando el proyecto.', 'proyecto:' + slug)}
+      </aside>
+    </div>
+  </div>`;
+}
+
+/* --- Publicación (RF-73 a RF-85) ------------------------ */
+function citaAPA(p){
+  const autores = p.autores.map(a => {
+    const partes = nombreInv(a).split(' ');
+    return partes.slice(1).join(' ') + ', ' + partes[0][0] + '.';
+  }).concat(p.externos).join(', ');
+  return `${autores} (${p.anio}). ${p.titulo}. ${p.revista}. https://doi.org/${p.doi}`;
+}
+function citaBibTeX(p){
+  return `@article{${p.slug.replace(/-/g, '')},\n  title   = {${p.titulo}},\n  author  = {${p.autores.map(nombreInv).concat(p.externos).join(' and ')}},\n  journal = {${p.revista}},\n  year    = {${p.anio}},\n  doi     = {${p.doi}}\n}`;
+}
+function citaRIS(p){
+  return `TY  - JOUR\n${p.autores.map(nombreInv).concat(p.externos).map(a => 'AU  - ' + a).join('\n')}\nTI  - ${p.titulo}\nJO  - ${p.revista}\nPY  - ${p.anio}\nDO  - ${p.doi}\nER  -`;
+}
+
+function vistaPublicacion(slug){
+  const p = M_PUB[slug];
+  if (!p) return vistaNoEncontrada();
+  const proyecto = M_PROY[p.proyecto], g = M_GRUPO[p.grupo];
+  const relacionadas = PUBLICACIONES.filter(o => o.slug !== slug && o.temas.some(t => p.temas.includes(t))).slice(0, 4);
+  return `
+  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Resultados', url:urlBusqueda({tipo:'publicacion', orden:'fecha'})}, {texto:p.titulo.slice(0, 48) + '…'}])}
+  <div class="contenedor">
+    <div class="ficha-cabecera">
+      <div class="fila gap3"><span class="tipo">${esc(p.tipo)}</span>${p.oa ? '<span class="etiqueta">Acceso abierto</span>' : '<span class="etiqueta">Acceso restringido</span>'}</div>
+      <h1>${esc(p.titulo)}</h1>
+      <p class="entradilla" style="margin-top:var(--e4); font-size:var(--t-base)">
+        ${p.autores.map(a => `<a href="#/investigador/${a}">${esc(nombreInv(a))}</a>`).concat(p.externos.map(esc)).join(', ')}
+      </p>
+      <p class="meta" style="margin-top:var(--e2); color:var(--texto-suave)">${esc(p.revista)} · ${p.anio}</p>
+    </div>
+    <div class="layout-ficha">
+      <div>
+        <section class="bloque"><h2>Resumen</h2><p class="prosa">${esc(p.abstract)}</p></section>
+        <section class="bloque">
+          <h2>Palabras clave y temas</h2>
+          <div class="etiquetas">${p.keywords.map(k => `<a class="etiqueta" href="${urlBusqueda({q:k})}">${esc(k)}</a>`).join('')}${etiquetasTema(p.temas)}</div>
+        </section>
+        <section class="bloque">
+          <h2>Citar este resultado</h2>
+          <div class="fila gap2" style="margin-bottom:var(--e3)" role="tablist" aria-label="Formato de cita">
+            ${['APA','BibTeX','RIS'].map((f, n) => `<button class="boton boton--pequeno" type="button" role="tab" data-cita="${f}" aria-selected="${n === 0}">${f}</button>`).join('')}
+            <button class="boton boton--pequeno" type="button" id="copiar-cita">Copiar cita</button>
+          </div>
+          <pre class="cita" id="caja-cita">${esc(citaAPA(p))}</pre>
+        </section>
+        ${relacionadas.length ? `<section class="bloque"><h2>Investigación relacionada</h2>${relacionadas.map(lineaPublicacion).join('')}</section>` : ''}
+      </div>
+      <aside class="rail">
+        <div class="caja">
+          <h3>Metadatos</h3>
+          <dl class="datos">
+            <div><dt>DOI</dt><dd><a href="https://doi.org/${esc(p.doi)}" rel="noopener">Ver publicación en DOI</a></dd></div>
+            <div><dt>Tipo de resultado</dt><dd>${esc(p.tipo)}</dd></div>
+            <div><dt>Año</dt><dd>${p.anio}</dd></div>
+            <div><dt>Acceso</dt><dd>${p.oa ? 'Abierto' : 'Restringido'}</dd></div>
+            ${proyecto ? `<div><dt>Proyecto</dt><dd><a href="#/proyecto/${proyecto.slug}">${esc(proyecto.titulo)}</a></dd></div>` : ''}
+            ${proyecto ? `<div><dt>Financiamiento</dt><dd>${esc(proyecto.financiador)}</dd></div>` : ''}
+            <div><dt>Grupo</dt><dd><a href="#/grupo/${g.slug}">${esc(g.nombre)}</a></dd></div>
+          </dl>
+        </div>
+        ${cajaColaborar('¿Necesitas este trabajo aplicado a tu contexto? Habla con el equipo autor.', 'publicacion:' + slug)}
+      </aside>
+    </div>
+  </div>`;
+}
+
+/* --- Patente y transferencia (RF-86 a RF-94) ------------ */
+function vistaPatente(slug){
+  const p = M_PAT[slug];
+  if (!p) return vistaNoEncontrada();
+  const proyecto = M_PROY[p.proyecto];
+  return `
+  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Patentes y tecnologías', url:urlBusqueda({tipo:'patente'})}, {texto:p.titulo.slice(0, 44) + '…'}])}
+  <div class="contenedor">
+    <div class="ficha-cabecera">
+      <div class="fila gap3">${pastillaEstado(p.estado)}<span class="tipo">${esc(p.industria)}</span></div>
+      <h1>${esc(p.titulo)}</h1>
+      <p class="entradilla" style="margin-top:var(--e4)">${esc(p.resumen)}</p>
+    </div>
+    <div class="layout-ficha">
+      <div>
+        <section class="bloque">
+          <h2>Aplicaciones potenciales</h2>
+          <ul class="lista-limpia">${p.aplicaciones.map(a => `<li><span class="vinieta">—</span><span>${esc(a)}</span></li>`).join('')}</ul>
+        </section>
+        <section class="bloque">
+          <h2>Inventores</h2>
+          <div class="rejilla rejilla--3">${p.inventores.map(m => tarjetaPersona(M_INV[m])).join('')}</div>
+        </section>
+        ${proyecto ? `<section class="bloque"><h2>Proyecto de origen</h2>${tarjetaProyecto(proyecto)}</section>` : ''}
+      </div>
+      <aside class="rail">
+        <div class="caja">
+          <h3>Estado</h3>
+          <dl class="datos">
+            <div><dt>Situación</dt><dd>${esc(p.estado)} (${p.anio})</dd></div>
+            <div><dt>Transferencia</dt><dd>${esc(p.transferencia)}</dd></div>
+            <div><dt>Grupo</dt><dd><a href="#/grupo/${p.grupo}">${esc(M_GRUPO[p.grupo].nombre)}</a></dd></div>
+            <div><dt>Industria</dt><dd>${esc(p.industria)}</dd></div>
+          </dl>
+        </div>
+        ${cajaColaborar('Consulta las condiciones de licenciamiento o una prueba piloto.', 'patente:' + slug)}
+      </aside>
+    </div>
+  </div>`;
+}
+
+/* --- Capacidades y laboratorios ------------------------- */
+function vistaCapacidad(slug){
+  const c = M_CAP[slug];
+  if (!c) return vistaNoEncontrada();
+  return `
+  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Capacidades', url:urlBusqueda({tipo:'capacidad'})}, {texto:c.nombre}])}
+  <div class="contenedor">
+    <div class="ficha-cabecera">
+      <span class="tipo">Capacidad · ${esc(c.disponibilidad)}</span>
+      <h1>${esc(c.nombre)}</h1>
+      <p class="entradilla" style="margin-top:var(--e4)">${esc(c.resumen)}</p>
+      <div class="etiquetas" style="margin-top:var(--e4)">${etiquetasTema(c.temas)}</div>
+    </div>
+    <div class="layout-ficha">
+      <div>
+        <section class="bloque"><h2>Equipamiento</h2>
+          <ul class="lista-limpia">${c.equipamiento.map(x => `<li><span class="vinieta">—</span><span>${esc(x)}</span></li>`).join('')}</ul></section>
+        <section class="bloque"><h2>Para qué se usa</h2>
+          <ul class="lista-limpia">${c.aplicaciones.map(x => `<li><span class="vinieta">—</span><span>${esc(x)}</span></li>`).join('')}</ul></section>
+        <section class="bloque"><h2>Equipo responsable</h2>${tarjetaPersona(M_INV[c.responsable])}</section>
+      </div>
+      <aside class="rail">
+        <div class="caja">
+          <h3>Ficha</h3>
+          <dl class="datos">
+            <div><dt>Unidad</dt><dd><a href="#/grupo/${c.grupo}">${esc(M_GRUPO[c.grupo].nombre)}</a></dd></div>
+            <div><dt>Disponibilidad</dt><dd>${esc(c.disponibilidad)}</dd></div>
+            <div><dt>Responsable</dt><dd><a href="#/investigador/${c.responsable}">${esc(nombreInv(c.responsable))}</a></dd></div>
+          </dl>
+        </div>
+        ${cajaColaborar('Solicita un ensayo, un servicio o una visita técnica.', 'capacidad:' + slug)}
+      </aside>
+    </div>
+  </div>`;
+}
+
+/* --- Impacto -------------------------------------------- */
+function vistaImpactoLista(){
+  return `
+  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Impacto'}])}
+  <div class="contenedor">
+    <div style="padding-top:var(--e4); max-width:64ch">
+      <h1>Investigación que genera impacto</h1>
+      <p class="entradilla" style="margin-top:var(--e4)">No es una lista de publicaciones: son historias con desafío, evidencia y resultado, enlazadas a quienes las hicieron.</p>
+    </div>
+    <div class="seccion rejilla rejilla--2">
+      ${IMPACTO.map(h => `
+        <a class="tarjeta" href="#/impacto/${h.slug}">
+          <span class="tipo">Impacto · ${esc(M_GRUPO[h.grupo].sigla || M_GRUPO[h.grupo].nombre)}</span>
+          <h3>${esc(h.titulo)}</h3>
+          <span class="meta">${esc(h.desafio.slice(0, 150))}…</span>
+          <span class="etiquetas" style="margin-top:var(--e3)">${h.evidencias.slice(0,2).map(e => `<span class="etiqueta">${esc(e.cifra)} ${esc(e.texto)}</span>`).join('')}</span>
+        </a>`).join('')}
+    </div>
+  </div>`;
+}
+
+function vistaImpacto(slug){
+  const h = M_IMP[slug];
+  if (!h) return vistaNoEncontrada();
+  const p = M_PROY[h.proyecto];
+  return `
+  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Impacto', url:'#/impacto'}, {texto:h.titulo.slice(0, 44) + '…'}])}
+  <div class="contenedor">
+    <div class="ficha-cabecera">
+      <span class="tipo">Historia de impacto</span>
+      <h1>${esc(h.titulo)}</h1>
+      <div class="etiquetas" style="margin-top:var(--e4)">${etiquetasTema(h.temas)}</div>
+    </div>
+    <div class="layout-ficha">
+      <div>
+        <section class="bloque"><h2>El desafío</h2><p class="prosa">${esc(h.desafio)}</p></section>
+        <section class="bloque"><h2>Qué hizo UCSP</h2><p class="prosa">${esc(h.investigacion)}</p></section>
+        <section class="bloque"><h2>Resultado</h2><p class="prosa">${esc(h.resultado)}</p></section>
+        <section class="bloque">
+          <h2>Evidencia</h2>
+          <div class="evidencias">${h.evidencias.map(e => `<div class="evidencia"><b>${esc(e.cifra)}</b><span>${esc(e.texto)}</span></div>`).join('')}</div>
+        </section>
+      </div>
+      <aside class="rail">
+        <div class="caja">
+          <h3>Detrás de esta historia</h3>
+          <div class="relaciones">
+            ${p ? `<a href="#/proyecto/${p.slug}">${esc(p.titulo.slice(0, 46))}…<span class="cuenta">Proyecto</span></a>` : ''}
+            <a href="#/grupo/${h.grupo}">${esc(M_GRUPO[h.grupo].nombre)}<span class="cuenta">Grupo</span></a>
+            ${h.investigadores.map(i => `<a href="#/investigador/${i}">${esc(nombreInv(i))}<span class="cuenta">Persona</span></a>`).join('')}
+          </div>
+        </div>
+        ${cajaColaborar('¿Tienes un desafío parecido en tu organización?', 'impacto:' + slug)}
+      </aside>
+    </div>
+  </div>`;
+}
+
+/* --- Observatorio de convocatorias ---------------------- */
+function vistaConvocatorias(params){
+  const f = {estado:params.estado || '', dirigido:params.dirigido || '', fuente:params.fuente || '', tipo:params.tipoConv || ''};
+  const cumple = c => (!f.estado || c.estado === f.estado) && (!f.dirigido || c.dirigido === f.dirigido) && (!f.fuente || c.fuente === f.fuente) && (!f.tipo || c.tipo === f.tipo);
+  const vigentes = CONVOCATORIAS.filter(c => c.estado !== 'Cerrada').filter(cumple);
+  const archivo = CONVOCATORIAS.filter(c => c.estado === 'Cerrada').filter(cumple);
+  const opciones = (clave, campo) => unico(CONVOCATORIAS.map(c => c[campo])).map(v =>
+    `<option value="${esc(v)}"${f[clave] === v ? ' selected' : ''}>${esc(v)}</option>`).join('');
+  const tarjetaConv = c => `
+    <article class="convocatoria">
+      <div>
+        <div class="fila gap3">${pastillaEstado(c.estado)}<span class="tipo">${esc(c.tipo)}</span></div>
+        <h3 style="margin-top:var(--e2)">${esc(c.titulo)}</h3>
+        <p style="color:var(--texto-suave); font-size:var(--t-sm); margin-top:var(--e2)">${esc(c.resumen)}</p>
+        <div class="datos-conv">
+          <span><strong>Cierre:</strong> ${fecha(c.cierre)}</span>
+          <span><strong>Dirigido a:</strong> ${esc(c.dirigido)}</span>
+          <span><strong>Área:</strong> ${esc(c.area)}</span>
+          <span><strong>Fuente:</strong> ${esc(c.fuente)}</span>
+        </div>
+      </div>
+      <div class="fila gap2">
+        <a class="boton ${c.estado === 'Cerrada' ? '' : 'boton--primario'}" href="#/colaborar?desde=${encodeURIComponent('convocatoria:' + c.slug)}">${c.estado === 'Cerrada' ? 'Ver resultados' : 'Ver convocatoria'}</a>
+      </div>
+    </article>`;
+  return `
+  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Convocatorias'}])}
+  <div class="contenedor">
+    <div style="padding-top:var(--e4); max-width:64ch">
+      <h1>Observatorio de convocatorias</h1>
+      <p class="entradilla" style="margin-top:var(--e4)">Oportunidades vigentes de financiamiento, movilidad y tesis, con estado y fecha de cierre visibles. Las cerradas pasan al archivo.</p>
+    </div>
+    <div class="seccion" style="padding-top:var(--e5)">
+      <form class="fila gap3" id="filtros-conv" style="align-items:flex-end">
+        <span class="campo" style="min-width:170px"><label for="fc-estado">Estado</label>
+          <select id="fc-estado" name="estado"><option value="">Todos</option>${opciones('estado','estado')}</select></span>
+        <span class="campo" style="min-width:200px"><label for="fc-dirigido">Perfil elegible</label>
+          <select id="fc-dirigido" name="dirigido"><option value="">Todos</option>${opciones('dirigido','dirigido')}</select></span>
+        <span class="campo" style="min-width:200px"><label for="fc-fuente">Financiador</label>
+          <select id="fc-fuente" name="fuente"><option value="">Todos</option>${opciones('fuente','fuente')}</select></span>
+        <span class="campo" style="min-width:200px"><label for="fc-tipo">Tipo</label>
+          <select id="fc-tipo" name="tipoConv"><option value="">Todos</option>${opciones('tipo','tipo')}</select></span>
+        <button class="boton" type="button" id="limpiar-conv">Limpiar</button>
+      </form>
+      <p class="conteo" aria-live="polite" style="margin-top:var(--e4); color:var(--texto-suave)"><strong class="mono">${vigentes.length}</strong> convocatorias vigentes · <span class="mono">${archivo.length}</span> en archivo</p>
+      <div class="apilado gap3" style="margin-top:var(--e4)">
+        ${vigentes.length ? vigentes.map(tarjetaConv).join('') : '<div class="sin-resultados"><h3>Ninguna convocatoria vigente con estos filtros</h3><button class="boton" type="button" id="limpiar-conv-2">Quitar filtros</button></div>'}
+      </div>
+      ${archivo.length ? `<h2 style="margin-top:var(--e7); margin-bottom:var(--e4)">Archivo</h2>
+        <div class="apilado gap3">${archivo.map(tarjetaConv).join('')}</div>` : ''}
+    </div>
+  </div>`;
+}
+
+/* --- Colaborar (RF-95 a RF-105) ------------------------- */
+const PERFILES = [
+  {clave:'empresa', titulo:'Soy empresa', desc:'Quiero resolver un reto técnico, acceder a capacidades o contratar investigación.', responsable:'Oficina de Proyectos y Transferencia (OPTI)', sla:'Respuesta en 3 días hábiles', intenciones:['Resolver un reto técnico','Contratar un ensayo o servicio de laboratorio','Licenciar una tecnología','Proyecto conjunto con fondos públicos']},
+  {clave:'investigador', titulo:'Soy investigador', desc:'Quiero proponer una colaboración o coautoría con un equipo de la UCSP.', responsable:'Dirección de Investigación', sla:'Respuesta en 5 días hábiles', intenciones:['Colaboración en un proyecto','Coautoría o publicación conjunta','Estancia o visita de investigación','Postular juntos a un fondo']},
+  {clave:'estudiante', titulo:'Soy estudiante', desc:'Quiero participar como tesista o asistente de investigación.', responsable:'Coordinación de semilleros', sla:'Respuesta en 7 días hábiles', intenciones:['Hacer mi tesis en un grupo','Ser asistente de investigación','Participar en un semillero']},
+  {clave:'institucion', titulo:'Represento una institución', desc:'Quiero desarrollar un proyecto conjunto o un convenio.', responsable:'Dirección de Investigación', sla:'Respuesta en 5 días hábiles', intenciones:['Convenio marco','Proyecto conjunto','Uso de capacidades y laboratorios','Formación o asistencia técnica']},
+  {clave:'medio', titulo:'Soy medio de comunicación', desc:'Necesito contactar a un experto o pedir datos para una nota.', responsable:'Comunicación institucional', sla:'Respuesta en 24 horas', intenciones:['Entrevista con un experto','Datos o cifras de investigación','Cobertura de un resultado']}
+];
+
+function vistaColaborar(params){
+  const perfilActivo = params.perfil || '';
+  const p = PERFILES.find(x => x.clave === perfilActivo);
+  const desde = params.desde || '';
+  const [tipoDesde, slugDesde] = desde.split(':');
+  const nombreDesde = ({tema:s => M_TEMA[s] && M_TEMA[s].nombre, investigador:s => nombreInv(s), grupo:s => M_GRUPO[s] && M_GRUPO[s].nombre,
+    proyecto:s => M_PROY[s] && M_PROY[s].titulo, publicacion:s => M_PUB[s] && M_PUB[s].titulo, patente:s => M_PAT[s] && M_PAT[s].titulo,
+    capacidad:s => M_CAP[s] && M_CAP[s].nombre, impacto:s => M_IMP[s] && M_IMP[s].titulo,
+    convocatoria:s => (CONVOCATORIAS.find(c => c.slug === s) || {}).titulo}[tipoDesde] || (() => null))(slugDesde);
+
+  return `
+  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Colaborar'}])}
+  <div class="contenedor">
+    <div style="padding-top:var(--e4); max-width:64ch">
+      <h1>¿Cómo quieres trabajar con UCSP?</h1>
+      <p class="entradilla" style="margin-top:var(--e4)">Elige tu perfil: el formulario, el equipo responsable y el plazo de respuesta cambian según quién escribe.</p>
+    </div>
+    ${nombreDesde ? `<p class="aviso" style="margin-top:var(--e5); max-width:64ch">Vienes desde <strong>${esc(nombreDesde)}</strong>. Lo adjuntamos a tu solicitud para que llegue al equipo correcto.</p>` : ''}
+    <div class="seccion" style="padding-top:var(--e5)">
+      <div class="perfiles" id="perfiles">
+        ${PERFILES.map(x => `<button class="perfil" type="button" data-perfil="${x.clave}" aria-pressed="${x.clave === perfilActivo}">
+          <strong>${esc(x.titulo)}</strong><span>${esc(x.desc)}</span></button>`).join('')}
+      </div>
+      ${p ? `
+      <form class="formulario" id="form-colaborar" style="margin-top:var(--e6)" novalidate>
+        <div>
+          <span class="tipo">Solicitud · ${esc(p.titulo)}</span>
+          <h2 style="margin-top:var(--e2)">Cuéntanos qué necesitas</h2>
+        </div>
+        <div class="campo">
+          <label for="intencion">¿Qué quieres hacer?</label>
+          <select id="intencion" required>${p.intenciones.map(i => `<option>${esc(i)}</option>`).join('')}</select>
+        </div>
+        <div class="campo">
+          <label for="entidad">Tema, grupo o investigador de interés</label>
+          <input id="entidad" list="entidades" value="${esc(nombreDesde || '')}" placeholder="Empieza a escribir: IA, geotecnia, salud mental…" />
+          <datalist id="entidades">${INDICE.filter(e => ['tema','grupo','investigador','capacidad','patente'].includes(e.tipo)).map(e => `<option value="${esc(e.titulo)}"></option>`).join('')}</datalist>
+          <span class="ayuda">Se rellena solo cuando llegas desde una ficha del portal.</span>
+        </div>
+        <div class="dos-columnas">
+          <div class="campo"><label for="nombre">Nombre y apellido</label><input id="nombre" required /></div>
+          <div class="campo"><label for="organizacion">Organización</label><input id="organizacion" /></div>
+        </div>
+        <div class="dos-columnas">
+          <div class="campo"><label for="correo">Correo</label><input id="correo" type="email" required /></div>
+          <div class="campo"><label for="telefono">Teléfono (opcional)</label><input id="telefono" type="tel" /></div>
+        </div>
+        <div class="campo">
+          <label for="mensaje">Describe el problema o la propuesta</label>
+          <textarea id="mensaje" required placeholder="Qué problema quieres resolver, en qué plazo y con qué restricciones."></textarea>
+        </div>
+        <p class="aviso">Tu solicitud llega a <strong>${esc(p.responsable)}</strong>. ${esc(p.sla)}.</p>
+        <div class="fila gap3">
+          <button class="boton boton--primario" type="submit">Enviar solicitud</button>
+          <span class="ayuda" style="font-size:var(--t-xs); color:var(--texto-suave)">Prototipo: no se envía nada ni se guardan datos.</span>
+        </div>
+        <div id="respuesta-colaborar" role="status"></div>
+      </form>` : `<p class="aviso" style="margin-top:var(--e6); max-width:64ch">Elige un perfil para ver el formulario que le corresponde.</p>`}
+    </div>
+  </div>`;
+}
+
+/* --- Capa de IA (RF-106 a RF-115) ----------------------- */
+function responder(pregunta){
+  const todos = buscar(pregunta, {});
+  const res = todos.slice(0, 12);
+  if (!todos.length) return {texto:'No encuentro entidades en el portal que respondan a esa pregunta. Prueba con otro término o explora por tema.', fuentes:[], cuentas:{}};
+  const cuentas = {};
+  todos.forEach(e => { cuentas[e.tipo] = (cuentas[e.tipo] || 0) + 1; });
+  const invs = todos.filter(e => e.tipo === 'investigador').slice(0, 3);
+  const grs = todos.filter(e => e.tipo === 'grupo').slice(0, 2);
+  const prs = todos.filter(e => e.tipo === 'proyecto').slice(0, 3);
+  const partes = [];
+  if (grs.length) partes.push('La investigación se organiza sobre todo desde ' + grs.map(g => g.titulo).join(' y ') + '.');
+  if (invs.length) partes.push('Las personas más cercanas a esa pregunta son ' + invs.map(i => i.titulo).join(', ') + '.');
+  if (prs.length) partes.push('Hay ' + prs.length + (prs.length === 1 ? ' proyecto relacionado: ' : ' proyectos relacionados, entre ellos: ') + prs.map(p => '«' + p.titulo + '»').join('; ') + '.');
+  if (!partes.length) partes.push('Encontré resultados relacionados en el portal; revisa las fuentes.');
+  return {texto:partes.join(' '), fuentes:res.slice(0, 6), cuentas};
+}
+
+function vistaPreguntar(params){
+  const pregunta = params.p || '';
+  const r = pregunta ? responder(pregunta) : null;
+  const resumenCuentas = r ? Object.keys(r.cuentas).map(t => r.cuentas[t] + ' ' + (r.cuentas[t] === 1 ? NOMBRE_TIPO[t].toLowerCase() : PLURAL_TIPO[t].toLowerCase())).join(', ') : '';
+  return `
+  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Preguntar'}])}
+  <div class="contenedor">
+    <div style="padding-top:var(--e4); max-width:64ch">
+      <span class="tipo">Capa de IA sobre datos verificados</span>
+      <h1 style="margin-top:var(--e2)">Pregunta a la investigación UCSP</h1>
+      <p class="entradilla" style="margin-top:var(--e4)">Responde solo con entidades que existen en el portal y enlaza cada fuente. Si no hay respaldo, no responde.</p>
+    </div>
+    <div class="seccion" style="padding-top:var(--e5)">
+      <div class="ia">
+        <form id="form-ia">
+          <label class="solo-lectores" for="q-ia">Escribe tu pregunta</label>
+          <span class="campo-busqueda" style="background:var(--bg)">
+            <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 4.5 16.8L21 21l-1.2-4.5A9 9 0 0 0 12 3Z"></path></svg>
+            <input id="q-ia" type="search" value="${esc(pregunta)}" placeholder="¿Quién investiga inteligencia artificial aplicada a minería?" />
+            <button class="boton boton--azul" type="submit">Preguntar</button>
+          </span>
+        </form>
+        <div class="ia-sugeridas">
+          ${['¿Quién investiga inteligencia artificial aplicada a minería?','¿Qué capacidades tiene UCSP en materiales?','¿Quién trabaja en salud mental escolar?','¿Qué se investiga sobre el sillar?'].map(x => `<a class="boton boton--pequeno" href="#/preguntar?p=${encodeURIComponent(x)}">${esc(x)}</a>`).join('')}
+        </div>
+        ${r ? `
+        <div class="ia-respuesta">
+          <p class="mono" style="font-size:var(--t-sm); color:var(--texto-suave)">Encontré ${esc(resumenCuentas)}.</p>
+          <p>${esc(r.texto)}</p>
+          ${r.fuentes.length ? `<div class="ia-fuentes">
+            <span class="tipo">Fuentes en el portal</span>
+            ${r.fuentes.map(f => `<a href="${f.url}">${esc(NOMBRE_TIPO[f.tipo])}: ${esc(f.titulo)}</a>`).join('')}
+          </div>` : ''}
+          <div class="voto">
+            <span>¿Te sirvió esta respuesta?</span>
+            <button class="boton boton--pequeno" type="button" data-voto="si">Sí</button>
+            <button class="boton boton--pequeno" type="button" data-voto="no">No</button>
+            <span id="gracias-voto" role="status"></span>
+          </div>
+        </div>` : ''}
+        <p style="font-size:var(--t-xs); color:var(--texto-suave)">Simulación del prototipo: la respuesta se construye únicamente con las entidades cargadas en el portal, sin modelo generativo detrás.</p>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* --- Capa de gestión y gobierno ------------------------- */
+function vistaGobierno(){
+  return `
+  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Gestión y gobierno'}])}
+  <div class="contenedor">
+    <div style="padding-top:var(--e4); max-width:64ch">
+      <span class="tipo">Capa secundaria</span>
+      <h1 style="margin-top:var(--e2)">Gestión y gobierno de la investigación</h1>
+      <p class="entradilla" style="margin-top:var(--e4)">La normativa, las políticas y la estructura administrativa siguen existiendo, pero dejan de ocupar el escaparate: el frente del portal es el descubrimiento.</p>
+    </div>
+    <div class="seccion rejilla rejilla--2">
+      ${[
+        ['Dirección de Investigación','Órgano que orienta, promueve y supervisa la actividad de investigación de la universidad.'],
+        ['Oficina de Proyectos y Transferencia (OPTI)','Acompaña la formulación, postulación y gestión de proyectos, y la relación con empresas.'],
+        ['Políticas y reglamentos','Reglamento de investigación, líneas institucionales y resoluciones directorales vigentes.'],
+        ['Ética de la investigación','Comité de ética, procedimientos de evaluación y formatos de consentimiento informado.'],
+        ['Propiedad intelectual','Titularidad, protección de resultados y condiciones de licenciamiento.'],
+        ['Indicadores y memorias','Memorias anuales de investigación e indicadores institucionales.']
+      ].map(([t, d]) => `<article class="tarjeta"><h3>${esc(t)}</h3><p class="meta">${esc(d)}</p></article>`).join('')}
+    </div>
+    <p class="aviso" style="margin-top:var(--e6); max-width:64ch">En el prototipo esta capa está esbozada: sirve para mostrar dónde vive lo institucional una vez que el portal pone delante temas, personas y resultados.</p>
+  </div>`;
+}
+
+function vistaNoEncontrada(){
+  return `<div class="contenedor" style="padding-top:var(--e7)">
+    <h1>No encontramos esa página</h1>
+    <p class="entradilla" style="margin-top:var(--e4)">El enlace puede estar mal escrito o la entidad no existe en el prototipo.</p>
+    <div class="fila gap3" style="margin-top:var(--e5)"><a class="boton boton--azul" href="#/">Volver al inicio</a><a class="boton" href="#/temas">Explorar por temas</a></div>
+  </div>`;
+}
+
+/* =============================================================
+   7. Panel de cobertura de requerimientos
+   ============================================================= */
+const COBERTURA = [
+  {bloque:'Buscador y descubrimiento', rango:'RF-01 a RF-22', hechos:'RF-01 a RF-15 · RF-17 a RF-22', nota:'Buscador global, autocompletado, sinónimos, corrección, pestañas por entidad, facetas con conteo, orden, URL compartible y estado sin resultados.', fuera:'RF-16 (faceta de fuente de financiamiento)'},
+  {bloque:'Exploración por temas', rango:'RF-23 a RF-31', hechos:'RF-23 a RF-31', nota:'Catálogo de doce temas, página propia por tema con relaciones automáticas y volumen de actividad.', fuera:''},
+  {bloque:'Perfil del investigador', rango:'RF-32 a RF-47', hechos:'RF-32 a RF-46', nota:'Perfil con expertise, ORCID, producción, red de colaboración, disponibilidad y CTA contextual.', fuera:'RF-47 (perfil bilingüe)'},
+  {bloque:'Grupos, centros e institutos', rango:'RF-48 a RF-58', hechos:'RF-48 a RF-58', nota:'Ficha con líneas, equipo enlazado, proyectos, producción, capacidades, aliados y contacto.', fuera:''},
+  {bloque:'Proyectos', rango:'RF-59 a RF-72', hechos:'RF-59 a RF-72', nota:'Landing por proyecto con estado, periodo, problema, objetivos, equipo, financiamiento, socios y resultados.', fuera:''},
+  {bloque:'Publicaciones y resultados', rango:'RF-73 a RF-85', hechos:'RF-73 a RF-85', nota:'Página HTML por resultado, autores enlazados, abstract, DOI descriptivo, proyecto, financiamiento y exportación de cita.', fuera:''},
+  {bloque:'Patentes y transferencia', rango:'RF-86 a RF-94', hechos:'RF-86 · RF-88 a RF-94', nota:'Catálogo, estado, inventores, proyecto de origen, resumen no técnico y CTA de consulta.', fuera:'RF-87 (faceta por industria)'},
+  {bloque:'Colaboración', rango:'RF-95 a RF-105', hechos:'RF-95 a RF-102', nota:'Formulario condicionado por perfil e intención, prellenado desde la ficha de origen, responsable interno y plazo de respuesta visibles.', fuera:'RF-103 a RF-105 (tracking, CRM y analítica)'},
+  {bloque:'Capa de IA', rango:'RF-106 a RF-115', hechos:'RF-106 a RF-115', nota:'Pregunta en lenguaje natural respondida solo con entidades del portal, con fuentes obligatorias, preguntas sugeridas y feedback. Simulada, sin modelo generativo.', fuera:''},
+  {bloque:'Backoffice editorial', rango:'RF-116 a RF-134', hechos:'—', nota:'Roles, flujo borrador–revisión–publicado, histórico, importación masiva y detección de duplicados.', fuera:'Todo el bloque queda fuera del prototipo de front'}
+];
+
+function panelRF(){
+  return `
+    <button class="boton boton--pequeno cerrar" type="button" id="cerrar-rf">Cerrar</button>
+    <span class="tipo">Cobertura del prototipo</span>
+    <h2 id="titulo-rf" style="margin-top:var(--e2)">Qué requerimientos están construidos</h2>
+    <p style="color:var(--texto-suave); font-size:var(--t-sm); margin-top:var(--e3)">109 de los 134 requerimientos funcionales del documento están representados en este prototipo. Los 25 restantes son backoffice, integraciones y analítica, que no se resuelven en el front.</p>
+    ${COBERTURA.map(c => `
+      <div class="rf-grupo">
+        <h3>${esc(c.bloque)} · ${esc(c.rango)}</h3>
+        <ul class="rf-lista">
+          <li><code>${esc(c.hechos)}</code><span>${esc(c.nota)}</span></li>
+          ${c.fuera ? `<li><code>Fuera</code><span style="color:var(--texto-suave)">${esc(c.fuera)}</span></li>` : ''}
+        </ul>
+      </div>`).join('')}`;
+}
+
+/* =============================================================
+   8. Interacciones dependientes de la vista
+   ============================================================= */
+function aviso(texto){
+  let caja = $('#aviso-flotante');
+  if (!caja){
+    caja = document.createElement('div');
+    caja.id = 'aviso-flotante';
+    caja.setAttribute('role', 'status');
+    caja.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);bottom:24px;background:var(--acento-fuerte);color:#fff;padding:.6rem 1.1rem;border-radius:999px;font-size:.85rem;z-index:80;box-shadow:0 8px 24px rgba(10,42,84,.3)';
+    document.body.appendChild(caja);
+  }
+  caja.textContent = texto;
+  clearTimeout(aviso.t);
+  aviso.t = setTimeout(() => caja.remove(), 2600);
+}
+
+function conectar(ruta){
+  const {vista, id, params} = ruta;
+
+  const formHero = $('#form-hero');
+  if (formHero) formHero.addEventListener('submit', ev => { ev.preventDefault(); irA('/buscar', {q: $('#q-hero').value.trim()}); });
+
+  if (vista === 'buscar'){
+    const nuevos = extra => irA('/buscar', Object.assign({}, params, extra));
+    document.querySelectorAll('[data-faceta]').forEach(el => {
+      el.addEventListener('change', () => {
+        const clave = el.dataset.faceta;
+        if (el.tagName === 'SELECT') return nuevos({[clave]: el.value});
+        nuevos({[clave]: el.checked ? el.value : ''});
+      });
+    });
+    document.querySelectorAll('[role="tab"][data-tipo]').forEach(b =>
+      b.addEventListener('click', () => nuevos({tipo: b.dataset.tipo})));
+    document.querySelectorAll('[data-quitar]').forEach(b =>
+      b.addEventListener('click', () => nuevos({[b.dataset.quitar]: ''})));
+    ['limpiar-todo','limpiar-chips','limpiar-vacio'].forEach(idBoton => {
+      const b = document.getElementById(idBoton);
+      if (b) b.addEventListener('click', () => irA('/buscar', {q: params.q || ''}));
+    });
+    const btnFiltros = $('#btn-filtros');
+    if (btnFiltros) btnFiltros.addEventListener('click', () => {
+      const caja = $('#facetas');
+      const abierto = caja.dataset.abierto === 'si';
+      caja.dataset.abierto = abierto ? 'no' : 'si';
+      btnFiltros.setAttribute('aria-expanded', String(!abierto));
+    });
+  }
+
+  if (vista === 'publicacion'){
+    const p = M_PUB[id];
+    document.querySelectorAll('[data-cita]').forEach(b => b.addEventListener('click', () => {
+      document.querySelectorAll('[data-cita]').forEach(o => o.setAttribute('aria-selected', String(o === b)));
+      $('#caja-cita').textContent = {APA:citaAPA, BibTeX:citaBibTeX, RIS:citaRIS}[b.dataset.cita](p);
+    }));
+    const copiar = $('#copiar-cita');
+    if (copiar) copiar.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText($('#caja-cita').textContent); aviso('Cita copiada al portapapeles'); }
+      catch (e) { aviso('Selecciona el texto para copiarlo'); }
+    });
+  }
+
+  const exportar = document.querySelector('[data-exportar]');
+  if (exportar) exportar.addEventListener('click', async () => {
+    const bib = publicacionesDe(exportar.dataset.exportar).map(citaBibTeX).join('\n\n');
+    try { await navigator.clipboard.writeText(bib); aviso('Producción copiada en formato BibTeX'); }
+    catch (e) { aviso('No se pudo copiar en este navegador'); }
+  });
+
+  if (vista === 'convocatorias'){
+    const form = $('#filtros-conv');
+    if (form) form.querySelectorAll('select').forEach(s => s.addEventListener('change', () => {
+      const nuevos = Object.assign({}, params);
+      form.querySelectorAll('select').forEach(o => { nuevos[o.name] = o.value; });
+      irA('/convocatorias', nuevos);
+    }));
+    ['limpiar-conv','limpiar-conv-2'].forEach(idBoton => {
+      const b = document.getElementById(idBoton);
+      if (b) b.addEventListener('click', () => irA('/convocatorias', {}));
+    });
+  }
+
+  if (vista === 'colaborar'){
+    document.querySelectorAll('[data-perfil]').forEach(b => b.addEventListener('click', () =>
+      irA('/colaborar', Object.assign({}, params, {perfil: b.dataset.perfil}))));
+    const form = $('#form-colaborar');
+    if (form) form.addEventListener('submit', ev => {
+      ev.preventDefault();
+      const faltan = ['nombre','correo','mensaje'].filter(campo => !$('#' + campo).value.trim());
+      const salida = $('#respuesta-colaborar');
+      if (faltan.length){
+        salida.innerHTML = `<p class="aviso">Faltan datos obligatorios: ${faltan.join(', ')}. Complétalos para poder derivar tu solicitud.</p>`;
+        $('#' + faltan[0]).focus();
+        return;
+      }
+      const p = PERFILES.find(x => x.clave === params.perfil);
+      salida.innerHTML = `<p class="aviso aviso--ok"><strong>Solicitud registrada en el prototipo.</strong> Se derivaría a ${esc(p.responsable)} con el asunto «${esc($('#intencion').value)}»${$('#entidad').value ? ' y la entidad «' + esc($('#entidad').value) + '»' : ''}. ${esc(p.sla)}. Aquí no hay backend: no se ha enviado ni guardado nada.</p>`;
+    });
+  }
+
+  if (vista === 'preguntar'){
+    const form = $('#form-ia');
+    if (form) form.addEventListener('submit', ev => { ev.preventDefault(); irA('/preguntar', {p: $('#q-ia').value.trim()}); });
+    document.querySelectorAll('[data-voto]').forEach(b => b.addEventListener('click', () => {
+      $('#gracias-voto').textContent = b.dataset.voto === 'si' ? 'Gracias, lo registramos.' : 'Gracias: lo revisaremos con la Dirección de Investigación.';
+    }));
+  }
+}
+
+/* =============================================================
+   9. Arranque
+   ============================================================= */
+function pintar(){
+  const ruta = leerRuta();
+  const {vista, id, params} = ruta;
+  let html;
+  switch (vista){
+    case 'inicio': html = vistaInicio(); break;
+    case 'buscar': html = vistaBuscar(params); break;
+    case 'temas': html = vistaTemas(); break;
+    case 'tema': html = vistaTema(id); break;
+    case 'investigador': html = vistaInvestigador(id); break;
+    case 'grupo': html = vistaGrupo(id); break;
+    case 'proyecto': html = vistaProyecto(id); break;
+    case 'publicacion': html = vistaPublicacion(id); break;
+    case 'patente': html = vistaPatente(id); break;
+    case 'capacidad': html = vistaCapacidad(id); break;
+    case 'impacto': html = id ? vistaImpacto(id) : vistaImpactoLista(); break;
+    case 'convocatorias': html = vistaConvocatorias(params); break;
+    case 'colaborar': html = vistaColaborar(params); break;
+    case 'preguntar': html = vistaPreguntar(params); break;
+    case 'gobierno': html = vistaGobierno(); break;
+    default: html = vistaNoEncontrada();
+  }
+  const principal = document.getElementById('principal');
+  principal.innerHTML = `<div class="vista">${html}</div>`;
+  pintarNav(vista);
+  pintarBuscadorGlobal(vista === 'buscar' ? (params.q || '') : '');
+  conectar(ruta);
+  document.title = tituloDe(ruta) + ' — Portal de Investigación UCSP';
+  if (!pintar.primera) window.scrollTo({top:0, behavior:'instant'});
+  pintar.primera = false;
+}
+
+function tituloDe({vista, id, params}){
+  const fuentes = {tema:M_TEMA, investigador:M_INV, grupo:M_GRUPO, proyecto:M_PROY, publicacion:M_PUB, patente:M_PAT, capacidad:M_CAP, impacto:M_IMP};
+  if (fuentes[vista] && id && fuentes[vista][id]) return fuentes[vista][id].nombre || fuentes[vista][id].titulo;
+  if (vista === 'buscar') return params.q ? 'Resultados para ' + params.q : 'Buscar';
+  return {inicio:'Inicio', temas:'Explorar investigación', impacto:'Impacto', convocatorias:'Convocatorias', colaborar:'Colaborar', preguntar:'Preguntar', gobierno:'Gestión y gobierno'}[vista] || 'Portal';
+}
+
+const panel = document.getElementById('panel-rf');
+const velo = document.getElementById('velo');
+function abrirRF(abierto){
+  if (abierto) panel.innerHTML = panelRF();
+  panel.toggleAttribute('open', abierto);
+  velo.dataset.abierto = abierto ? 'si' : 'no';
+  if (abierto){
+    document.getElementById('cerrar-rf').addEventListener('click', () => abrirRF(false));
+    document.getElementById('cerrar-rf').focus();
+  } else {
+    document.getElementById('btn-rf').focus();
+  }
+}
+document.getElementById('btn-rf').addEventListener('click', () => abrirRF(true));
+velo.addEventListener('click', () => abrirRF(false));
+document.addEventListener('keydown', ev => { if (ev.key === 'Escape' && panel.hasAttribute('open')) abrirRF(false); });
+
+window.addEventListener('hashchange', pintar);
+pintar.primera = true;
+pintar();
+</script>
+</body>
+</html>
