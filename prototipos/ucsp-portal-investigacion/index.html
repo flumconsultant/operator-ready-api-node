@@ -4,223 +4,279 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Portal de Investigación UCSP</title>
-<meta name="description" content="Prototipo navegable del Portal de Investigación de la Universidad Católica San Pablo: buscador unificado, temas, investigadores, grupos, proyectos, resultados, impacto y colaboración." />
+<meta name="description" content="Prototipo navegable del Portal de Investigación de la Universidad Católica San Pablo: descubrir, validar y conectar con investigadores, grupos, proyectos y resultados." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
 <style>
 /* ============================================================
-   Tokens. La paleta light vive en :root; el modo oscuro solo
-   redefine tokens, nunca componentes.
+   SISTEMA VISUAL
+   Azul institucional profundo + acento sillar (la piedra
+   volcánica de Arequipa). Titulares en EB Garamond, interfaz en
+   IBM Plex Sans, datos en IBM Plex Mono. Cada tema tiene su
+   propio matiz y su portada generada: el portal se lee como un
+   territorio, no como una tabla.
    ============================================================ */
 :root{
-  --bg:#F2F4F7;
+  --bg:#F3F6FA;
+  --bg-alt:#E9EFF7;
   --panel:#FFFFFF;
-  --panel-2:#E8ECF3;
-  --linea:#D2DAE5;
-  --linea-suave:#E3E8EF;
-  --texto:#0E1B2E;
-  --texto-suave:#4B5C73;
-  --acento:#1B4F8F;
-  --acento-fuerte:#0A2A54;
+  --panel-2:#EBF0F7;
+  --linea:#D3DEEC;
+  --linea-suave:#E5EBF4;
+  --texto:#0C1B2E;
+  --texto-suave:#4E5F77;
+  --acento:#1A5399;
+  --acento-fuerte:#0E2C52;
   --acento-contraste:#FFFFFF;
-  --acento-tenue:#E4EBF5;
-  --calido:#A9502A;
+  --acento-tenue:#E3ECF8;
+  --calido:#A5651F;
   --calido-contraste:#FFFFFF;
-  --calido-suave:#F4E6DD;
-  --barra-fondo:#0A2A54;
-  --barra-texto:#FFFFFF;
-  --ok:#1C6E4A;
-  --ok-tenue:#DFEFE6;
-  --neutro:#64748B;
-  --neutro-tenue:#E6E9EE;
-  --foco:#A9502A;
-  --sombra:0 1px 2px rgba(14,27,46,.05);
+  --calido-suave:#F6E9D9;
+  --ok:#1A6E4C;
+  --ok-tenue:#DDF0E6;
+  --neutro:#5F7086;
+  --neutro-tenue:#E7EBF1;
+  --foco:#A5651F;
+  --oscuro:#08182C;
+  --oscuro-2:#123256;
+  --sombra-1:0 1px 2px rgba(12,27,46,.06);
+  --sombra-2:0 10px 30px -12px rgba(12,27,46,.24);
+  --sombra-3:0 24px 60px -24px rgba(12,27,46,.35);
 
   --t-xs:.75rem; --t-sm:.8125rem; --t-base:1rem; --t-lg:1.0625rem;
-  --t-xl:1.3rem; --t-2xl:1.7rem; --t-3xl:2.2rem; --t-4xl:2.9rem;
-  --e1:.25rem; --e2:.5rem; --e3:.75rem; --e4:1rem; --e5:1.5rem; --e6:2rem; --e7:3rem; --e8:4.5rem;
-  --r:10px; --r-s:6px;
-  --ancho:1200px;
+  --t-xl:1.35rem; --t-2xl:1.85rem; --t-3xl:2.5rem; --t-4xl:3.6rem; --t-5xl:4.6rem;
+  --e1:.25rem; --e2:.5rem; --e3:.75rem; --e4:1rem; --e5:1.5rem; --e6:2rem; --e7:3rem; --e8:4.5rem; --e9:6rem;
+  --r:14px; --r-s:8px; --r-l:22px;
+  --ancho:1240px;
   --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
-  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --serif:"EB Garamond",Georgia,"Times New Roman",serif;
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --transicion:180ms cubic-bezier(.22,.61,.36,1);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#0A121D; --panel:#101C2B; --panel-2:#17273A; --linea:#26394F; --linea-suave:#1C2C40;
-    --texto:#E7EDF5; --texto-suave:#9CADC3;
-    --acento:#8FBCEB; --acento-fuerte:#2E6FBF; --acento-contraste:#FFFFFF; --acento-tenue:#152941;
-    --calido:#E0905F; --calido-contraste:#241209; --calido-suave:#2B1E17;
-    --barra-fondo:#0C1A2B; --barra-texto:#D8E3F0;
-    --ok:#5CC896; --ok-tenue:#122A20;
-    --neutro:#8B9AAE; --neutro-tenue:#1B2A3C;
-    --foco:#E0905F;
-    --sombra:0 1px 2px rgba(0,0,0,.4);
+    --bg:#070F1B; --bg-alt:#0B1725; --panel:#0E1B2B; --panel-2:#15263A; --linea:#22374F; --linea-suave:#1A2B41;
+    --texto:#E8EEF6; --texto-suave:#9DAFC6;
+    --acento:#8CBBEC; --acento-fuerte:#2A6AB8; --acento-contraste:#FFFFFF; --acento-tenue:#132741;
+    --calido:#DE9A55; --calido-contraste:#221306; --calido-suave:#2A1C0E;
+    --ok:#5AC894; --ok-tenue:#0F2A1F;
+    --neutro:#8698AE; --neutro-tenue:#18273A;
+    --foco:#DE9A55;
+    --oscuro:#050D18; --oscuro-2:#0E2743;
+    --sombra-1:0 1px 2px rgba(0,0,0,.45);
+    --sombra-2:0 10px 30px -12px rgba(0,0,0,.6);
+    --sombra-3:0 24px 60px -24px rgba(0,0,0,.75);
   }
 }
 :root[data-theme="dark"]{
-  --bg:#0A121D; --panel:#101C2B; --panel-2:#17273A; --linea:#26394F; --linea-suave:#1C2C40;
-  --texto:#E7EDF5; --texto-suave:#9CADC3;
-  --acento:#8FBCEB; --acento-fuerte:#2E6FBF; --acento-contraste:#FFFFFF; --acento-tenue:#152941;
-  --calido:#E0905F; --calido-contraste:#241209; --calido-suave:#2B1E17;
-  --barra-fondo:#0C1A2B; --barra-texto:#D8E3F0;
-  --ok:#5CC896; --ok-tenue:#122A20;
-  --neutro:#8B9AAE; --neutro-tenue:#1B2A3C;
-  --foco:#E0905F;
-  --sombra:0 1px 2px rgba(0,0,0,.4);
+  --bg:#070F1B; --bg-alt:#0B1725; --panel:#0E1B2B; --panel-2:#15263A; --linea:#22374F; --linea-suave:#1A2B41;
+  --texto:#E8EEF6; --texto-suave:#9DAFC6;
+  --acento:#8CBBEC; --acento-fuerte:#2A6AB8; --acento-contraste:#FFFFFF; --acento-tenue:#132741;
+  --calido:#DE9A55; --calido-contraste:#221306; --calido-suave:#2A1C0E;
+  --ok:#5AC894; --ok-tenue:#0F2A1F;
+  --neutro:#8698AE; --neutro-tenue:#18273A;
+  --foco:#DE9A55;
+  --oscuro:#050D18; --oscuro-2:#0E2743;
+  --sombra-1:0 1px 2px rgba(0,0,0,.45);
+  --sombra-2:0 10px 30px -12px rgba(0,0,0,.6);
+  --sombra-3:0 24px 60px -24px rgba(0,0,0,.75);
 }
 
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{
-  margin:0; background:var(--bg); color:var(--texto);
-  font-family:var(--sans); font-size:var(--t-base); line-height:1.6;
-}
-h1,h2,h3,h4{font-family:var(--serif); font-weight:600; line-height:1.18; text-wrap:balance; margin:0}
-h1{font-size:var(--t-3xl); letter-spacing:-.01em}
+html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
+body{margin:0; background:var(--bg); color:var(--texto); font-family:var(--sans); font-size:var(--t-base); line-height:1.62; overflow-x:hidden}
+h1,h2,h3,h4{font-family:var(--serif); font-weight:600; line-height:1.12; text-wrap:balance; margin:0; letter-spacing:-.005em}
+h1{font-size:var(--t-3xl)}
 h2{font-size:var(--t-2xl)}
 h3{font-size:var(--t-xl)}
-h4{font-size:var(--t-lg)}
+h4{font-size:var(--t-lg); line-height:1.25}
 p{margin:0}
 a{color:var(--acento); text-decoration:none}
 a:hover{text-decoration:underline}
-:focus-visible{outline:3px solid var(--foco); outline-offset:2px; border-radius:3px}
-img{max-width:100%}
-button{font:inherit; color:inherit}
+:focus-visible{outline:3px solid var(--foco); outline-offset:3px; border-radius:4px}
+img,svg{max-width:100%}
+button{font:inherit; color:inherit; cursor:pointer}
 ul{margin:0; padding:0; list-style:none}
+::selection{background:var(--calido); color:#fff}
 
 .contenedor{max-width:var(--ancho); margin:0 auto; padding:0 var(--e5)}
-.salto-contenido{position:absolute; left:-9999px; top:0; background:var(--acento-fuerte); color:var(--acento-contraste); padding:var(--e3) var(--e4); z-index:60; border-radius:0 0 var(--r) 0}
+.salto-contenido{position:absolute; left:-9999px; top:0; background:var(--acento-fuerte); color:#fff; padding:var(--e3) var(--e4); z-index:120; border-radius:0 0 var(--r-s) 0}
 .salto-contenido:focus{left:0}
 .solo-lectores{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+.mono{font-family:var(--mono); font-variant-numeric:tabular-nums}
+.apilado{display:flex; flex-direction:column}
+.fila{display:flex; flex-wrap:wrap; align-items:center}
+.gap1{gap:var(--e1)} .gap2{gap:var(--e2)} .gap3{gap:var(--e3)} .gap4{gap:var(--e4)} .gap5{gap:var(--e5)} .gap6{gap:var(--e6)}
+.icono{width:20px; height:20px; flex:0 0 auto; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round}
+.icono-s{width:16px; height:16px}
 
-/* --- Aviso de prototipo --------------------------------- */
-.barra-demo{background:var(--barra-fondo); color:var(--barra-texto); font-size:var(--t-xs); font-family:var(--mono)}
-.barra-demo .contenedor{display:flex; gap:var(--e3); align-items:center; justify-content:space-between; padding-top:var(--e2); padding-bottom:var(--e2); flex-wrap:wrap}
-.barra-demo b{font-weight:500; letter-spacing:.06em; text-transform:uppercase}
-.barra-demo button{background:transparent; border:1px solid rgba(255,255,255,.45); color:inherit; font-family:var(--mono); font-size:var(--t-xs); padding:2px 10px; border-radius:999px; cursor:pointer}
+/* --- Barra de prototipo --------------------------------- */
+.barra-demo{background:var(--oscuro); color:#C9D7E8; font-size:var(--t-xs); font-family:var(--mono)}
+.barra-demo .contenedor{display:flex; gap:var(--e3); align-items:center; justify-content:space-between; padding:.4rem var(--e5); flex-wrap:wrap}
+.barra-demo b{color:#fff; font-weight:500; letter-spacing:.08em; text-transform:uppercase}
+.barra-demo button{background:transparent; border:1px solid rgba(255,255,255,.28); color:#E3ECF8; font-family:var(--mono); font-size:var(--t-xs); padding:.15rem .7rem; border-radius:999px; transition:background var(--transicion)}
 .barra-demo button:hover{background:rgba(255,255,255,.14)}
 
 /* --- Cabecera ------------------------------------------- */
-.cabecera{position:sticky; top:0; z-index:50; background:var(--panel); border-bottom:1px solid var(--linea)}
-.cabecera-fila{display:flex; align-items:center; gap:var(--e4); padding-top:var(--e3); padding-bottom:var(--e3)}
+.cabecera{position:sticky; top:0; z-index:100; background:color-mix(in srgb, var(--panel) 88%, transparent); backdrop-filter:blur(14px) saturate(140%); border-bottom:1px solid var(--linea)}
+.cabecera-fila{display:flex; align-items:center; gap:var(--e4); padding:var(--e3) 0}
 .marca{display:flex; align-items:center; gap:var(--e3); flex:0 0 auto; color:var(--texto)}
 .marca:hover{text-decoration:none}
-.marca-sigla{font-family:var(--mono); font-weight:500; font-size:.9rem; letter-spacing:.06em; background:var(--acento-fuerte); color:var(--acento-contraste); padding:.7rem .55rem; display:grid; place-items:center; border-radius:var(--r-s)}
-.marca-texto{display:flex; flex-direction:column; line-height:1.15}
-.marca-texto strong{font-family:var(--serif); font-weight:600; font-size:1.02rem}
-.marca-texto span{font-size:var(--t-xs); color:var(--texto-suave)}
-.buscador-global{flex:1 1 auto; min-width:0; position:relative}
+.marca-escudo{width:42px; height:42px; border-radius:11px; background:linear-gradient(150deg, var(--acento-fuerte), var(--acento)); display:grid; place-items:center; color:#fff; font-family:var(--mono); font-size:.7rem; letter-spacing:.04em; box-shadow:var(--sombra-1)}
+.marca-texto{display:flex; flex-direction:column; line-height:1.2}
+.marca-texto strong{font-family:var(--serif); font-weight:600; font-size:1.14rem}
+.marca-texto span{font-size:.7rem; color:var(--texto-suave); text-transform:uppercase; letter-spacing:.09em}
+.buscador-global{flex:1 1 auto; min-width:0; position:relative; max-width:560px}
 .buscador-global form{display:flex; gap:var(--e2)}
-.campo-busqueda{flex:1 1 auto; min-width:0; display:flex; align-items:center; gap:var(--e2); background:var(--bg); border:1px solid var(--linea); border-radius:999px; padding:0 var(--e4)}
-.campo-busqueda:focus-within{border-color:var(--acento); box-shadow:0 0 0 3px var(--acento-tenue)}
-.campo-busqueda input{flex:1; border:0; background:transparent; padding:.6rem 0; font:inherit; color:var(--texto); min-width:0}
+.campo-busqueda{flex:1 1 auto; min-width:0; display:flex; align-items:center; gap:var(--e2); background:var(--bg); border:1px solid var(--linea); border-radius:999px; padding:0 var(--e4); transition:border-color var(--transicion), box-shadow var(--transicion)}
+.campo-busqueda:focus-within{border-color:var(--acento); box-shadow:0 0 0 4px var(--acento-tenue)}
+.campo-busqueda input{flex:1; border:0; background:transparent; padding:.55rem 0; font:inherit; color:var(--texto); min-width:0}
 .campo-busqueda input:focus{outline:none}
-.icono{width:18px; height:18px; flex:0 0 auto; stroke:var(--texto-suave); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+.campo-busqueda .icono{stroke:var(--texto-suave)}
+.acciones-cabecera{display:flex; gap:var(--e2); flex:0 0 auto; margin-left:auto}
 .nav-principal{display:flex; gap:var(--e1); flex-wrap:wrap; padding-bottom:var(--e2)}
-.nav-principal a{font-size:var(--t-sm); color:var(--texto-suave); padding:var(--e2) var(--e3); border-radius:var(--r-s)}
+.nav-principal a{display:flex; align-items:center; gap:.4rem; font-size:var(--t-sm); color:var(--texto-suave); padding:.4rem .7rem; border-radius:999px; transition:background var(--transicion), color var(--transicion)}
 .nav-principal a:hover{background:var(--panel-2); color:var(--texto); text-decoration:none}
-.nav-principal a[aria-current="page"]{color:var(--texto); background:var(--acento-tenue); font-weight:500}
-.acciones-cabecera{display:flex; gap:var(--e2); flex:0 0 auto}
+.nav-principal a[aria-current="page"]{color:var(--acento-contraste); background:var(--acento-fuerte); font-weight:500}
+.nav-principal .icono{width:15px; height:15px}
 
-/* --- Sugerencias del buscador --------------------------- */
-.sugerencias{position:absolute; top:calc(100% + 6px); left:0; right:0; background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); box-shadow:0 12px 30px rgba(10,42,84,.14); overflow:hidden; z-index:60}
-.sugerencias li>button{display:flex; width:100%; gap:var(--e3); align-items:baseline; background:transparent; border:0; text-align:left; padding:var(--e3) var(--e4); cursor:pointer; border-bottom:1px solid var(--linea-suave)}
+/* --- Sugerencias ---------------------------------------- */
+.sugerencias{position:absolute; top:calc(100% + 8px); left:0; right:0; background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); box-shadow:var(--sombra-3); overflow:hidden; z-index:110}
+.sugerencias li>button{display:flex; width:100%; gap:var(--e3); align-items:center; background:transparent; border:0; text-align:left; padding:.6rem var(--e4); border-bottom:1px solid var(--linea-suave); transition:background var(--transicion)}
 .sugerencias li:last-child>button{border-bottom:0}
-.sugerencias li>button:hover,.sugerencias li>button[aria-selected="true"]{background:var(--acento-tenue)}
-.sugerencias .tipo{flex:0 0 auto}
+.sugerencias li>button:hover{background:var(--acento-tenue)}
 .sugerencias .sug-sub{color:var(--texto-suave); font-size:var(--t-sm)}
-.sug-cabecera{padding:var(--e2) var(--e4); font-family:var(--mono); font-size:var(--t-xs); text-transform:uppercase; letter-spacing:.08em; color:var(--texto-suave); background:var(--panel-2)}
+.sug-cabecera{padding:.4rem var(--e4); font-family:var(--mono); font-size:var(--t-xs); text-transform:uppercase; letter-spacing:.1em; color:var(--texto-suave); background:var(--panel-2)}
 
-/* --- Utilidades de texto -------------------------------- */
-.tipo{font-family:var(--mono); font-size:var(--t-xs); text-transform:uppercase; letter-spacing:.09em; color:var(--texto-suave)}
-.entradilla{font-size:var(--t-lg); color:var(--texto-suave); max-width:62ch}
-.mono{font-family:var(--mono); font-variant-numeric:tabular-nums}
-.apilado{display:flex; flex-direction:column}
-.gap2{gap:var(--e2)} .gap3{gap:var(--e3)} .gap4{gap:var(--e4)} .gap5{gap:var(--e5)} .gap6{gap:var(--e6)}
-.fila{display:flex; flex-wrap:wrap; align-items:center}
+/* --- Insignias de tipo de entidad ----------------------- */
+.marca-tipo{width:36px; height:36px; border-radius:10px; display:grid; place-items:center; flex:0 0 auto;
+  background:color-mix(in srgb, var(--tinte, var(--acento)) 14%, transparent);
+  color:var(--tinte, var(--acento)); border:1px solid color-mix(in srgb, var(--tinte, var(--acento)) 26%, transparent)}
+.marca-tipo .icono{width:18px; height:18px}
+.tipo{font-family:var(--mono); font-size:var(--t-xs); text-transform:uppercase; letter-spacing:.11em; color:var(--texto-suave)}
+.entradilla{font-size:var(--t-lg); color:var(--texto-suave); max-width:62ch; line-height:1.65}
 
 /* --- Botones -------------------------------------------- */
-.boton{display:inline-flex; align-items:center; gap:var(--e2); border-radius:999px; border:1px solid var(--linea); background:var(--panel); color:var(--texto); padding:.5rem 1.1rem; font-size:var(--t-sm); font-weight:500; cursor:pointer; text-decoration:none}
-.boton:hover{border-color:var(--acento); text-decoration:none}
+.boton{display:inline-flex; align-items:center; gap:var(--e2); border-radius:999px; border:1px solid var(--linea); background:var(--panel); color:var(--texto); padding:.55rem 1.15rem; font-size:var(--t-sm); font-weight:500; text-decoration:none; transition:transform var(--transicion), border-color var(--transicion), background var(--transicion), box-shadow var(--transicion)}
+.boton:hover{border-color:var(--acento); text-decoration:none; transform:translateY(-1px); box-shadow:var(--sombra-1)}
+.boton:active{transform:translateY(0)}
 .boton--primario{background:var(--calido); border-color:var(--calido); color:var(--calido-contraste)}
-.boton--primario:hover{filter:brightness(.94); border-color:var(--calido)}
-.boton--azul{background:var(--acento-fuerte); border-color:var(--acento-fuerte); color:var(--acento-contraste)}
-.boton--azul:hover{filter:brightness(1.1)}
-.boton--pequeno{padding:.3rem .75rem; font-size:var(--t-xs)}
+.boton--primario:hover{border-color:var(--calido); filter:brightness(1.06)}
+.boton--azul{background:var(--acento-fuerte); border-color:var(--acento-fuerte); color:#fff}
+.boton--azul:hover{border-color:var(--acento-fuerte); filter:brightness(1.15)}
+.boton--claro{background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.3); color:#fff; backdrop-filter:blur(6px)}
+.boton--claro:hover{background:rgba(255,255,255,.2); border-color:rgba(255,255,255,.5)}
+.boton--pequeno{padding:.3rem .8rem; font-size:var(--t-xs)}
+.boton--bloque{width:100%; justify-content:center}
 
 /* --- Etiquetas y estados -------------------------------- */
 .etiquetas{display:flex; flex-wrap:wrap; gap:var(--e2)}
-.etiqueta{display:inline-block; font-size:var(--t-xs); padding:.2rem .6rem; border-radius:999px; background:var(--panel-2); color:var(--texto-suave); border:1px solid var(--linea-suave)}
-a.etiqueta:hover{background:var(--acento-tenue); color:var(--acento); text-decoration:none}
-.estado{display:inline-flex; align-items:center; gap:.4rem; font-family:var(--mono); font-size:var(--t-xs); text-transform:uppercase; letter-spacing:.07em; padding:.2rem .6rem; border-radius:var(--r-s); border:1px solid transparent}
+.etiqueta{display:inline-flex; align-items:center; gap:.35rem; font-size:var(--t-xs); padding:.22rem .65rem; border-radius:999px; background:var(--panel-2); color:var(--texto-suave); border:1px solid var(--linea-suave); transition:background var(--transicion), color var(--transicion)}
+a.etiqueta:hover{background:var(--acento-tenue); color:var(--acento); border-color:color-mix(in srgb, var(--acento) 30%, transparent); text-decoration:none}
+.etiqueta--tema::before{content:""; width:8px; height:8px; border-radius:3px; background:hsl(var(--h,212) 55% 45%)}
+.etiqueta--clara{background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.24); color:#E6EEF9}
+.estado{display:inline-flex; align-items:center; gap:.4rem; font-family:var(--mono); font-size:var(--t-xs); text-transform:uppercase; letter-spacing:.08em; padding:.22rem .65rem; border-radius:var(--r-s); border:1px solid transparent}
 .estado::before{content:""; width:7px; height:7px; border-radius:50%; background:currentColor}
-.estado--activo,.estado--abierta{background:var(--ok-tenue); color:var(--ok); border-color:color-mix(in srgb, var(--ok) 35%, transparent)}
-.estado--cierra{background:var(--calido-suave); color:var(--calido); border-color:color-mix(in srgb, var(--calido) 40%, transparent)}
-.estado--proxima{background:var(--acento-tenue); color:var(--acento); border-color:color-mix(in srgb, var(--acento) 35%, transparent)}
-.estado--cerrada,.estado--finalizado{background:var(--neutro-tenue); color:var(--neutro); border-color:color-mix(in srgb, var(--neutro) 30%, transparent)}
+.estado--activo,.estado--abierta{background:var(--ok-tenue); color:var(--ok); border-color:color-mix(in srgb, var(--ok) 32%, transparent)}
+.estado--cierra{background:var(--calido-suave); color:var(--calido); border-color:color-mix(in srgb, var(--calido) 38%, transparent)}
+.estado--proxima{background:var(--acento-tenue); color:var(--acento); border-color:color-mix(in srgb, var(--acento) 32%, transparent)}
+.estado--cerrada,.estado--finalizado{background:var(--neutro-tenue); color:var(--neutro); border-color:color-mix(in srgb, var(--neutro) 28%, transparent)}
 
-/* --- Secciones y rejillas ------------------------------- */
-.vista{padding-bottom:var(--e8)}
-.seccion{padding-top:var(--e7)}
-.cabecera-seccion{display:flex; justify-content:space-between; align-items:end; gap:var(--e4); margin-bottom:var(--e5); flex-wrap:wrap}
-.cabecera-seccion p{color:var(--texto-suave); max-width:60ch; margin-top:var(--e2)}
+/* --- Portadas generadas por tema ------------------------ */
+.cubierta{display:block; position:relative; overflow:hidden; border-radius:var(--r); background:
+  radial-gradient(120% 140% at 12% 8%, hsl(var(--h,212) 58% 34%) 0%, hsl(var(--h,212) 68% 18%) 48%, hsl(calc(var(--h,212) + 18) 66% 10%) 100%);
+  isolation:isolate}
+.cubierta svg{position:absolute; inset:0; width:100%; height:100%; opacity:.5; mix-blend-mode:screen; transition:transform 600ms cubic-bezier(.22,.61,.36,1)}
+.cubierta::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(4,12,22,.08) 0%, rgba(4,12,22,.34) 46%, rgba(4,12,22,.86) 100%)}
+.cubierta__texto{position:absolute; inset:auto 0 0 0; padding:var(--e4); color:#fff; z-index:2; display:flex; flex-direction:column; gap:.35rem}
+.cubierta__texto strong{font-family:var(--serif); font-size:1.35rem; font-weight:600; line-height:1.15; text-shadow:0 1px 12px rgba(0,0,0,.45)}
+.cubierta__cifra{position:absolute; top:var(--e4); right:var(--e4); z-index:2; font-family:var(--mono); font-size:var(--t-xs); color:#fff; background:rgba(6,16,28,.42); border:1px solid rgba(255,255,255,.22); padding:.2rem .6rem; border-radius:999px; backdrop-filter:blur(4px)}
+
+/* --- Hero ----------------------------------------------- */
+.hero{position:relative; background:linear-gradient(165deg, var(--oscuro) 0%, var(--oscuro-2) 62%, #16406B 100%); color:#EAF1FB; overflow:hidden; isolation:isolate}
+.hero canvas{position:absolute; inset:0; width:100%; height:100%; z-index:0; opacity:.85}
+.hero::after{content:""; position:absolute; inset:auto 0 -1px 0; height:96px; background:linear-gradient(180deg, transparent, var(--bg)); z-index:1; pointer-events:none}
+.hero .contenedor{position:relative; z-index:2}
+.hero-cuerpo{display:grid; grid-template-columns:minmax(0,7fr) minmax(0,4fr); gap:var(--e7); align-items:center; padding:var(--e8) 0 var(--e9)}
+.hero .cintillo{display:inline-flex; align-items:center; gap:.5rem; font-family:var(--mono); font-size:var(--t-xs); text-transform:uppercase; letter-spacing:.14em; color:#9FC4EE; border:1px solid rgba(255,255,255,.2); border-radius:999px; padding:.25rem .8rem; background:rgba(255,255,255,.06)}
+.hero h1{font-size:var(--t-5xl); color:#fff; margin-top:var(--e5); max-width:14ch; line-height:1.02; letter-spacing:-.02em}
+.hero h1 em{font-style:italic; color:#F0C08A}
+.hero p.entradilla{color:#BFD3EC; margin-top:var(--e5); max-width:52ch}
+.hero-busqueda{margin-top:var(--e6); max-width:660px}
+.hero-busqueda .campo-busqueda{background:rgba(255,255,255,.97); border-color:transparent; padding:.3rem .4rem .3rem 1.25rem; box-shadow:var(--sombra-3)}
+.hero-busqueda .campo-busqueda input{padding:.85rem 0; font-size:var(--t-lg); color:#0C1B2E}
+.hero-busqueda .campo-busqueda .icono{stroke:#4E5F77}
+.ejemplos{margin-top:var(--e4); display:flex; gap:var(--e2); flex-wrap:wrap; align-items:center; font-size:var(--t-sm); color:#9FB6D4}
+.hero-cifras{display:grid; gap:var(--e3)}
+.hero-cifra{display:flex; align-items:center; gap:var(--e4); padding:var(--e4) var(--e5); border-radius:var(--r); background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.14); color:#EAF1FB; backdrop-filter:blur(8px); transition:background var(--transicion), transform var(--transicion), border-color var(--transicion)}
+.hero-cifra:hover{background:rgba(255,255,255,.13); border-color:rgba(255,255,255,.3); transform:translateX(3px); text-decoration:none}
+.hero-cifra b{font-family:var(--mono); font-size:2.1rem; font-weight:500; line-height:1; color:#fff; font-variant-numeric:tabular-nums; min-width:3.2ch}
+.hero-cifra span{font-size:var(--t-sm); color:#B9CDE8; line-height:1.35}
+.hero-cifra .icono{margin-left:auto; stroke:#7FA6D6}
+
+/* --- Secciones ------------------------------------------ */
+.seccion{padding:var(--e8) 0}
+.seccion--compacta{padding:var(--e7) 0}
+.banda{background:var(--bg-alt); border-top:1px solid var(--linea); border-bottom:1px solid var(--linea)}
+.banda--oscura{background:linear-gradient(150deg, var(--oscuro), var(--oscuro-2)); color:#E7EFFA; border:0}
+.banda--oscura h2{color:#fff}
+.banda--oscura .entradilla{color:#B9CDE8}
+.cabecera-seccion{display:flex; justify-content:space-between; align-items:flex-end; gap:var(--e5); margin-bottom:var(--e6); flex-wrap:wrap}
+.cabecera-seccion .tipo{display:block; margin-bottom:var(--e2)}
+.cabecera-seccion p{color:var(--texto-suave); max-width:58ch; margin-top:var(--e3)}
 .rejilla{display:grid; gap:var(--e4)}
-.rejilla--2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-.rejilla--3{grid-template-columns:repeat(auto-fill,minmax(272px,1fr))}
-.rejilla--4{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.rejilla--2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.rejilla--3{grid-template-columns:repeat(auto-fill,minmax(285px,1fr))}
+.rejilla--4{grid-template-columns:repeat(auto-fill,minmax(215px,1fr))}
+
+/* --- Bento de temas ------------------------------------- */
+.bento{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--e4)}
+.bento>a{color:inherit}
+.bento>a:hover{text-decoration:none}
+.bento .grande{grid-column:span 2; grid-row:span 2}
+.tema-tarjeta{display:block; height:100%; border-radius:var(--r); overflow:hidden; transition:transform var(--transicion), box-shadow var(--transicion)}
+.tema-tarjeta .cubierta{height:100%; min-height:172px}
+.tema-tarjeta.grande .cubierta{min-height:360px}
+.tema-tarjeta.grande .cubierta__texto strong{font-size:2rem}
+.tema-tarjeta:hover{transform:translateY(-3px); box-shadow:var(--sombra-2)}
+.tema-tarjeta:hover .cubierta svg{transform:scale(1.06)}
+.cubierta__texto small{font-family:var(--mono); font-size:var(--t-xs); color:#C7DAF3; letter-spacing:.06em}
 
 /* --- Tarjetas ------------------------------------------- */
-.tarjeta{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e4); display:flex; flex-direction:column; gap:var(--e2); box-shadow:var(--sombra)}
+.tarjeta{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e5); display:flex; flex-direction:column; gap:var(--e3); box-shadow:var(--sombra-1); transition:transform var(--transicion), border-color var(--transicion), box-shadow var(--transicion)}
 a.tarjeta{color:inherit}
-a.tarjeta:hover{border-color:var(--acento); text-decoration:none}
-a.tarjeta:hover h3,a.tarjeta:hover h4{color:var(--acento)}
-.tarjeta h3,.tarjeta h4{margin:0}
+a.tarjeta:hover{border-color:color-mix(in srgb, var(--acento) 45%, transparent); transform:translateY(-3px); box-shadow:var(--sombra-2); text-decoration:none}
+a.tarjeta:hover h3, a.tarjeta:hover h4{color:var(--acento)}
 .tarjeta .meta{font-size:var(--t-sm); color:var(--texto-suave)}
-.tarjeta-tema{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e4); display:flex; flex-direction:column; gap:var(--e2); color:inherit}
-.tarjeta-tema:hover{border-color:var(--calido); text-decoration:none}
-.tarjeta-tema strong{font-family:var(--serif); font-size:var(--t-lg); font-weight:600}
-.tarjeta-tema .cuentas{font-family:var(--mono); font-size:var(--t-xs); color:var(--texto-suave); font-variant-numeric:tabular-nums}
-.persona{display:flex; gap:var(--e3); align-items:center}
-.avatar{width:52px; height:52px; border-radius:50%; flex:0 0 auto; display:grid; place-items:center; font-family:var(--serif); font-size:1.05rem; background:var(--acento-tenue); color:var(--acento-fuerte); border:1px solid var(--linea)}
-:root[data-theme="dark"] .avatar,:root:not([data-theme="light"]) .avatar{color:var(--acento)}
-.avatar--grande{width:104px; height:104px; font-size:2rem}
+.tarjeta--media{padding:0; overflow:hidden}
+.tarjeta--media .cubierta{height:132px; border-radius:0}
+.tarjeta--media .cuerpo{padding:var(--e5); display:flex; flex-direction:column; gap:var(--e3)}
+.tarjeta__pie{margin-top:auto; padding-top:var(--e3); border-top:1px solid var(--linea-suave); display:flex; align-items:center; justify-content:space-between; gap:var(--e3); font-size:var(--t-sm); color:var(--texto-suave)}
+.enlace-flecha{display:inline-flex; align-items:center; gap:.35rem; color:var(--acento); font-weight:500; font-size:var(--t-sm); white-space:nowrap}
+a.tarjeta:hover .enlace-flecha .icono{transform:translateX(3px)}
+.enlace-flecha .icono{transition:transform var(--transicion)}
 
-/* --- Home ----------------------------------------------- */
-.hero{padding-top:var(--e7); padding-bottom:var(--e6)}
-.hero h1{font-size:var(--t-4xl); max-width:16ch}
-.hero .entradilla{margin-top:var(--e4)}
-.hero-busqueda{margin-top:var(--e5); max-width:760px}
-.hero-busqueda .campo-busqueda{padding:.35rem .5rem .35rem 1.2rem; border-radius:999px; background:var(--panel)}
-.hero-busqueda .campo-busqueda input{padding:.85rem 0; font-size:var(--t-lg)}
-.ejemplos{margin-top:var(--e3); display:flex; gap:var(--e2); flex-wrap:wrap; align-items:center; font-size:var(--t-sm); color:var(--texto-suave)}
-.accesos{margin-top:var(--e6); display:grid; gap:var(--e4); grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-.acceso{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e5); color:inherit; display:flex; flex-direction:column; gap:var(--e2)}
-.acceso:hover{border-color:var(--calido); text-decoration:none}
-.acceso strong{font-family:var(--serif); font-size:var(--t-xl); font-weight:600}
-.acceso span{color:var(--texto-suave); font-size:var(--t-sm)}
-.cifras{display:grid; gap:var(--e4); grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
-.cifra{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e5); color:inherit; display:flex; flex-direction:column; gap:var(--e1)}
-.cifra:hover{border-color:var(--acento); text-decoration:none}
-.cifra b{font-family:var(--mono); font-size:2.6rem; font-weight:500; line-height:1; font-variant-numeric:tabular-nums; color:var(--acento-fuerte)}
-:root[data-theme="dark"] .cifra b,:root:not([data-theme="light"]) .cifra b{color:var(--acento)}
-.cifra span{color:var(--texto-suave); font-size:var(--t-sm)}
-.cifra .ver{font-size:var(--t-sm); color:var(--acento); margin-top:var(--e2)}
-.banda{background:var(--panel); border-top:1px solid var(--linea); border-bottom:1px solid var(--linea); margin-top:var(--e7)}
-.banda .seccion{padding-bottom:var(--e7)}
+/* --- Personas ------------------------------------------- */
+.avatar{width:52px; height:52px; border-radius:50%; flex:0 0 auto; display:grid; place-items:center; font-family:var(--serif); font-weight:600; font-size:1.05rem; color:#fff;
+  background:linear-gradient(145deg, hsl(var(--h,212) 55% 42%), hsl(calc(var(--h,212) + 24) 60% 24%)); box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.avatar--grande{width:128px; height:128px; font-size:2.6rem; border-radius:var(--r-l)}
+.persona-tarjeta{display:flex; flex-direction:column; gap:var(--e3); align-items:flex-start}
+.persona-tarjeta .avatar{width:60px; height:60px}
+.persona-tarjeta strong{font-family:var(--serif); font-size:1.15rem; font-weight:600; line-height:1.2}
 
-/* --- Buscador: resultados ------------------------------- */
-.layout-busqueda{display:grid; grid-template-columns:264px minmax(0,1fr); gap:var(--e6); align-items:start; padding-top:var(--e5)}
-.facetas{position:sticky; top:150px; display:flex; flex-direction:column; gap:var(--e5)}
-.faceta h3{font-family:var(--sans); font-size:var(--t-sm); font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--texto-suave); margin-bottom:var(--e3)}
-.faceta ul{display:flex; flex-direction:column; gap:var(--e2)}
-.faceta label{display:flex; gap:var(--e2); align-items:center; font-size:var(--t-sm); cursor:pointer}
+/* --- Buscador ------------------------------------------- */
+.layout-busqueda{display:grid; grid-template-columns:270px minmax(0,1fr); gap:var(--e6); align-items:start; padding-top:var(--e5)}
+.facetas{position:sticky; top:160px; display:flex; flex-direction:column; gap:var(--e5); background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e5); box-shadow:var(--sombra-1)}
+.faceta h3{font-family:var(--sans); font-size:var(--t-xs); font-weight:600; text-transform:uppercase; letter-spacing:.09em; color:var(--texto-suave); margin-bottom:var(--e3)}
+.faceta ul{display:flex; flex-direction:column; gap:.35rem}
+.faceta label{display:flex; gap:var(--e2); align-items:center; font-size:var(--t-sm); padding:.2rem .3rem; border-radius:var(--r-s); cursor:pointer; transition:background var(--transicion)}
+.faceta label:hover{background:var(--panel-2)}
 .faceta label input{accent-color:var(--acento-fuerte); width:16px; height:16px; flex:0 0 auto}
 .faceta label .cuenta{margin-left:auto; font-family:var(--mono); font-size:var(--t-xs); color:var(--texto-suave); font-variant-numeric:tabular-nums}
-.faceta select,.faceta input[type="search"]{width:100%; padding:.45rem .6rem; border:1px solid var(--linea); border-radius:var(--r-s); background:var(--panel); color:var(--texto); font:inherit; font-size:var(--t-sm)}
-.pestanas{display:flex; gap:var(--e1); border-bottom:1px solid var(--linea); overflow-x:auto; padding-bottom:0}
-.pestanas button{background:transparent; border:0; border-bottom:2px solid transparent; padding:var(--e3) var(--e3); font-size:var(--t-sm); color:var(--texto-suave); cursor:pointer; white-space:nowrap}
+.faceta select{width:100%; padding:.5rem .65rem; border:1px solid var(--linea); border-radius:var(--r-s); background:var(--bg); color:var(--texto); font:inherit; font-size:var(--t-sm)}
+.pestanas{display:flex; gap:var(--e1); border-bottom:1px solid var(--linea); overflow-x:auto; scrollbar-width:thin}
+.pestanas button{background:transparent; border:0; border-bottom:2px solid transparent; padding:var(--e3) var(--e3); font-size:var(--t-sm); color:var(--texto-suave); white-space:nowrap; transition:color var(--transicion), border-color var(--transicion)}
 .pestanas button:hover{color:var(--texto)}
 .pestanas button[aria-selected="true"]{color:var(--texto); border-bottom-color:var(--calido); font-weight:600}
 .pestanas .cuenta{font-family:var(--mono); font-size:var(--t-xs); color:var(--texto-suave); margin-left:.35rem; font-variant-numeric:tabular-nums}
@@ -228,127 +284,189 @@ a.tarjeta:hover h3,a.tarjeta:hover h4{color:var(--acento)}
 .barra-resultados .conteo{font-size:var(--t-sm); color:var(--texto-suave)}
 .barra-resultados .conteo strong{color:var(--texto); font-family:var(--mono); font-variant-numeric:tabular-nums}
 .chips-filtro{display:flex; gap:var(--e2); flex-wrap:wrap; padding-bottom:var(--e3)}
-.chip{display:inline-flex; align-items:center; gap:.4rem; background:var(--acento-tenue); color:var(--acento); border:1px solid color-mix(in srgb, var(--acento) 30%, transparent); border-radius:999px; padding:.2rem .5rem .2rem .7rem; font-size:var(--t-xs); cursor:pointer}
+.chip{display:inline-flex; align-items:center; gap:.4rem; background:var(--acento-tenue); color:var(--acento); border:1px solid color-mix(in srgb, var(--acento) 28%, transparent); border-radius:999px; padding:.22rem .5rem .22rem .75rem; font-size:var(--t-xs); transition:background var(--transicion)}
 .chip:hover{background:var(--panel-2)}
-.chip .x{font-family:var(--mono); font-size:.95rem; line-height:1}
+.chip .x{font-family:var(--mono); font-size:1rem; line-height:1}
 .resultados{display:flex; flex-direction:column; gap:var(--e3)}
-.resultado{display:block; background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e4); color:inherit}
-.resultado:hover{border-color:var(--acento); text-decoration:none}
-.resultado .fila-tipo{display:flex; gap:var(--e3); align-items:center; margin-bottom:var(--e2); flex-wrap:wrap}
-.resultado h3{font-size:var(--t-lg)}
+.resultado{display:grid; grid-template-columns:auto minmax(0,1fr); gap:var(--e4); background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e4) var(--e5); color:inherit; box-shadow:var(--sombra-1); transition:transform var(--transicion), border-color var(--transicion), box-shadow var(--transicion)}
+.resultado:hover{border-color:color-mix(in srgb, var(--acento) 45%, transparent); transform:translateY(-2px); box-shadow:var(--sombra-2); text-decoration:none}
 .resultado:hover h3{color:var(--acento)}
+.resultado .fila-tipo{display:flex; gap:var(--e3); align-items:center; margin-bottom:var(--e1); flex-wrap:wrap}
+.resultado h3{font-size:var(--t-lg)}
 .resultado p{color:var(--texto-suave); font-size:var(--t-sm); margin-top:var(--e2)}
-.resultado mark{background:var(--calido-suave); color:inherit; padding:0 .15em; border-radius:3px}
-.sin-resultados{background:var(--panel); border:1px dashed var(--linea); border-radius:var(--r); padding:var(--e6); text-align:center; display:flex; flex-direction:column; gap:var(--e3); align-items:center}
+.resultado mark{background:var(--calido-suave); color:inherit; padding:0 .18em; border-radius:3px}
+.miniatura{width:56px; height:56px; border-radius:12px; overflow:hidden}
+.miniatura .cubierta{height:100%; border-radius:12px}
+.sin-resultados{background:var(--panel); border:1px dashed var(--linea); border-radius:var(--r); padding:var(--e7); text-align:center; display:flex; flex-direction:column; gap:var(--e4); align-items:center}
 .abrir-filtros{display:none}
 
 /* --- Fichas de entidad ---------------------------------- */
 .migas{font-size:var(--t-sm); color:var(--texto-suave); padding-top:var(--e5)}
 .migas a{color:var(--texto-suave)}
-.migas span{margin:0 .4rem}
-.ficha-cabecera{padding-top:var(--e4); padding-bottom:var(--e5); border-bottom:1px solid var(--linea)}
-.ficha-cabecera h1{margin-top:var(--e2); max-width:26ch}
-.layout-ficha{display:grid; grid-template-columns:minmax(0,1fr) 320px; gap:var(--e7); align-items:start; padding-top:var(--e6)}
-.bloque{margin-bottom:var(--e6)}
-.bloque h2{font-size:var(--t-xl); margin-bottom:var(--e4); padding-bottom:var(--e2); border-bottom:1px solid var(--linea-suave)}
-.bloque p+p{margin-top:var(--e3)}
-.prosa{max-width:68ch; color:var(--texto)}
-.rail{position:sticky; top:150px; display:flex; flex-direction:column; gap:var(--e4)}
-.caja{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e4); display:flex; flex-direction:column; gap:var(--e3)}
-.caja h3{font-family:var(--sans); font-size:var(--t-sm); font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--texto-suave)}
-.caja--cta{background:var(--calido-suave); border-color:color-mix(in srgb, var(--calido) 35%, transparent)}
+.migas span{margin:0 .45rem; opacity:.6}
+.portada-ficha{position:relative; border-radius:var(--r-l); overflow:hidden; margin-top:var(--e4); min-height:270px; display:flex; align-items:flex-end}
+.portada-ficha .cubierta{position:absolute; inset:0; border-radius:0}
+.portada-ficha .cubierta svg{opacity:.34}
+.portada-ficha__contenido{position:relative; z-index:2; padding:var(--e6); color:#fff; width:100%}
+.portada-ficha h1{color:#fff; max-width:22ch; margin-top:var(--e3); text-shadow:0 2px 20px rgba(0,0,0,.4)}
+.portada-ficha .entradilla{color:#DCE8F7; margin-top:var(--e4); text-shadow:0 1px 10px rgba(0,0,0,.35)}
+.portada-ficha .tipo{color:#C3D8F2}
+.ficha-cabecera{padding:var(--e5) 0 var(--e6); border-bottom:1px solid var(--linea)}
+.ficha-cabecera h1{margin-top:var(--e3); max-width:26ch}
+.layout-ficha{display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:var(--e7); align-items:start; padding-top:var(--e6)}
+.bloque{margin-bottom:var(--e7)}
+.bloque>h2{font-size:var(--t-xl); margin-bottom:var(--e4); padding-bottom:var(--e3); border-bottom:1px solid var(--linea-suave)}
+.prosa{max-width:68ch; font-size:var(--t-lg); line-height:1.72}
+.prosa+.prosa{margin-top:var(--e3)}
+.rail{position:sticky; top:160px; display:flex; flex-direction:column; gap:var(--e4)}
+.caja{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e5); display:flex; flex-direction:column; gap:var(--e3); box-shadow:var(--sombra-1)}
+.caja h3{font-family:var(--sans); font-size:var(--t-xs); font-weight:600; text-transform:uppercase; letter-spacing:.09em; color:var(--texto-suave)}
+.caja--cta{background:linear-gradient(160deg, var(--calido-suave), color-mix(in srgb, var(--calido-suave) 55%, var(--panel))); border-color:color-mix(in srgb, var(--calido) 32%, transparent)}
 .datos{display:flex; flex-direction:column; gap:var(--e3); margin:0}
-.datos div{display:flex; flex-direction:column; gap:2px}
-.datos dt{font-family:var(--mono); font-size:var(--t-xs); text-transform:uppercase; letter-spacing:.07em; color:var(--texto-suave)}
+.datos div{display:flex; flex-direction:column; gap:1px}
+.datos dt{font-family:var(--mono); font-size:var(--t-xs); text-transform:uppercase; letter-spacing:.08em; color:var(--texto-suave)}
 .datos dd{margin:0; font-size:var(--t-sm)}
-.relaciones{display:flex; flex-direction:column; gap:var(--e2)}
-.relaciones a{display:flex; justify-content:space-between; gap:var(--e3); font-size:var(--t-sm); padding:.35rem 0; border-bottom:1px solid var(--linea-suave)}
+.relaciones{display:flex; flex-direction:column}
+.relaciones a{display:flex; align-items:center; justify-content:space-between; gap:var(--e3); font-size:var(--t-sm); padding:.5rem 0; border-bottom:1px solid var(--linea-suave); transition:padding-left var(--transicion)}
 .relaciones a:last-child{border-bottom:0}
-.relaciones a .cuenta{font-family:var(--mono); font-size:var(--t-xs); color:var(--texto-suave)}
+.relaciones a:hover{padding-left:.3rem}
+.relaciones a .cuenta{font-family:var(--mono); font-size:var(--t-xs); color:var(--texto-suave); background:var(--panel-2); border-radius:999px; padding:.1rem .5rem}
 .lista-limpia{display:flex; flex-direction:column; gap:var(--e3)}
-.lista-limpia li{display:flex; gap:var(--e3); align-items:baseline}
-.lista-limpia .vinieta{font-family:var(--mono); font-size:var(--t-xs); color:var(--calido); flex:0 0 auto}
-.linea-publicacion{padding:var(--e3) 0; border-bottom:1px solid var(--linea-suave)}
+.lista-limpia li{display:flex; gap:var(--e3); align-items:flex-start}
+.lista-limpia .vinieta{font-family:var(--mono); font-size:var(--t-xs); color:var(--calido); flex:0 0 auto; padding-top:.28rem; min-width:1.4rem}
+.linea-publicacion{display:flex; gap:var(--e4); padding:var(--e4) 0; border-bottom:1px solid var(--linea-suave)}
 .linea-publicacion:last-child{border-bottom:0}
-.linea-publicacion .meta{font-size:var(--t-sm); color:var(--texto-suave); margin-top:2px}
+.linea-publicacion .anio{font-family:var(--mono); font-size:var(--t-sm); color:var(--texto-suave); min-width:3.5ch; padding-top:.15rem}
+.linea-publicacion .meta{font-size:var(--t-sm); color:var(--texto-suave); margin-top:.2rem}
 .cita{background:var(--panel-2); border:1px solid var(--linea); border-radius:var(--r-s); padding:var(--e4); font-family:var(--mono); font-size:var(--t-sm); line-height:1.7; white-space:pre-wrap; overflow-x:auto}
-.evidencias{display:grid; gap:var(--e3); grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
-.evidencia{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e4)}
-.evidencia b{display:block; font-family:var(--mono); font-size:1.7rem; font-weight:500; color:var(--calido); line-height:1.1}
-.evidencia span{font-size:var(--t-sm); color:var(--texto-suave)}
 
-/* --- Formulario de colaboración ------------------------- */
-.perfiles{display:grid; gap:var(--e3); grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
-.perfil{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e4); text-align:left; cursor:pointer; display:flex; flex-direction:column; gap:var(--e2)}
-.perfil:hover{border-color:var(--calido)}
+/* --- Micrográficos -------------------------------------- */
+.gposicion{display:flex; align-items:flex-end; gap:8px; height:110px; padding-top:var(--e5)}
+.gbarra{flex:1 1 0; display:flex; flex-direction:column; align-items:center; gap:.35rem; min-width:0}
+.gbarra .tallo{width:100%; border-radius:4px 4px 0 0; background:linear-gradient(180deg, var(--acento), color-mix(in srgb, var(--acento) 55%, var(--panel))); min-height:3px; transition:height 500ms cubic-bezier(.22,.61,.36,1)}
+.gbarra .valor{font-family:var(--mono); font-size:var(--t-xs); color:var(--texto); font-variant-numeric:tabular-nums}
+.gbarra .eje{font-family:var(--mono); font-size:var(--t-xs); color:var(--texto-suave)}
+.grafico{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e5); box-shadow:var(--sombra-1)}
+.grafico figcaption{font-size:var(--t-sm); color:var(--texto-suave); margin-top:var(--e3)}
+.red-colaboracion{width:100%; height:auto; display:block}
+.red-colaboracion .arista{stroke:var(--linea); stroke-width:1.2}
+.red-colaboracion .nodo{fill:var(--acento)}
+.red-colaboracion .nodo--centro{fill:var(--calido)}
+.red-colaboracion text{font-family:var(--sans); font-size:9px; fill:var(--texto-suave)}
+
+/* --- Impacto -------------------------------------------- */
+.evidencias{display:grid; gap:var(--e4); grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.evidencia{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e5); box-shadow:var(--sombra-1)}
+.evidencia b{display:block; font-family:var(--mono); font-size:2.2rem; font-weight:500; color:var(--calido); line-height:1.05; font-variant-numeric:tabular-nums}
+.evidencia span{font-size:var(--t-sm); color:var(--texto-suave)}
+.historia{display:grid; grid-template-columns:minmax(0,4fr) minmax(0,8fr); gap:var(--e5); align-items:stretch; background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); overflow:hidden; color:inherit; box-shadow:var(--sombra-1); transition:transform var(--transicion), box-shadow var(--transicion), border-color var(--transicion)}
+.historia:hover{transform:translateY(-3px); box-shadow:var(--sombra-2); border-color:color-mix(in srgb, var(--acento) 40%, transparent); text-decoration:none}
+.historia .cubierta{min-height:220px; border-radius:0}
+.historia .cuerpo{padding:var(--e6); display:flex; flex-direction:column; gap:var(--e3); justify-content:center}
+
+/* --- Convocatorias -------------------------------------- */
+.convocatoria{display:grid; grid-template-columns:minmax(0,1fr) auto; gap:var(--e5); align-items:center; background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e5); box-shadow:var(--sombra-1); transition:transform var(--transicion), box-shadow var(--transicion)}
+.convocatoria:hover{transform:translateY(-2px); box-shadow:var(--sombra-2)}
+.convocatoria .datos-conv{display:flex; gap:var(--e4); flex-wrap:wrap; font-size:var(--t-sm); color:var(--texto-suave); margin-top:var(--e3)}
+.cuenta-atras{font-family:var(--mono); font-size:var(--t-xs); color:var(--calido)}
+
+/* --- Formularios ---------------------------------------- */
+.perfiles{display:grid; gap:var(--e3); grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.perfil{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e5); text-align:left; display:flex; flex-direction:column; gap:var(--e3); box-shadow:var(--sombra-1); transition:transform var(--transicion), border-color var(--transicion), box-shadow var(--transicion)}
+.perfil:hover{border-color:var(--calido); transform:translateY(-3px); box-shadow:var(--sombra-2)}
 .perfil[aria-pressed="true"]{border-color:var(--calido); background:var(--calido-suave); box-shadow:inset 0 0 0 1px var(--calido)}
-.perfil strong{font-family:var(--serif); font-size:var(--t-lg)}
+.perfil strong{font-family:var(--serif); font-size:1.2rem}
 .perfil span{font-size:var(--t-sm); color:var(--texto-suave)}
-.formulario{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e5); display:grid; gap:var(--e4); max-width:760px}
+.formulario{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e6); display:grid; gap:var(--e5); max-width:780px; box-shadow:var(--sombra-1)}
 .campo{display:flex; flex-direction:column; gap:var(--e2)}
 .campo label{font-size:var(--t-sm); font-weight:500}
 .campo .ayuda{font-size:var(--t-xs); color:var(--texto-suave)}
-.campo input,.campo select,.campo textarea{border:1px solid var(--linea); border-radius:var(--r-s); background:var(--bg); color:var(--texto); padding:.6rem .75rem; font:inherit; font-size:var(--t-sm)}
-.campo input:focus,.campo select:focus,.campo textarea:focus{outline:none; border-color:var(--acento); box-shadow:0 0 0 3px var(--acento-tenue)}
-.campo textarea{min-height:120px; resize:vertical}
+.campo input,.campo select,.campo textarea{border:1px solid var(--linea); border-radius:var(--r-s); background:var(--bg); color:var(--texto); padding:.7rem .8rem; font:inherit; font-size:var(--t-sm); transition:border-color var(--transicion), box-shadow var(--transicion)}
+.campo input:focus,.campo select:focus,.campo textarea:focus{outline:none; border-color:var(--acento); box-shadow:0 0 0 4px var(--acento-tenue)}
+.campo textarea{min-height:130px; resize:vertical}
 .dos-columnas{display:grid; gap:var(--e4); grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-.aviso{background:var(--acento-tenue); border:1px solid color-mix(in srgb, var(--acento) 25%, transparent); border-radius:var(--r-s); padding:var(--e3) var(--e4); font-size:var(--t-sm)}
+.aviso{background:var(--acento-tenue); border:1px solid color-mix(in srgb, var(--acento) 22%, transparent); border-radius:var(--r-s); padding:var(--e4); font-size:var(--t-sm)}
 .aviso--ok{background:var(--ok-tenue); border-color:color-mix(in srgb, var(--ok) 30%, transparent)}
 
-/* --- Convocatorias -------------------------------------- */
-.convocatoria{display:grid; grid-template-columns:minmax(0,1fr) auto; gap:var(--e4); align-items:start; background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e4)}
-.convocatoria .datos-conv{display:flex; gap:var(--e4); flex-wrap:wrap; font-size:var(--t-sm); color:var(--texto-suave); margin-top:var(--e2)}
-
-/* --- Pregunta a la investigación (capa IA) -------------- */
-.ia{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e5); display:flex; flex-direction:column; gap:var(--e4)}
-.ia-respuesta{border-left:3px solid var(--calido); padding-left:var(--e4); display:flex; flex-direction:column; gap:var(--e3)}
-.ia-fuentes{display:flex; flex-direction:column; gap:var(--e2)}
-.ia-fuentes a{font-size:var(--t-sm)}
+/* --- Capa de IA ----------------------------------------- */
+.ia{background:var(--panel); border:1px solid var(--linea); border-radius:var(--r-l); padding:var(--e6); display:flex; flex-direction:column; gap:var(--e5); box-shadow:var(--sombra-2)}
+.banda--oscura .ia{background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.16); color:#EAF1FB; backdrop-filter:blur(10px)}
+.banda--oscura .ia .campo-busqueda{background:rgba(255,255,255,.97)}
+.banda--oscura .ia .campo-busqueda input{color:#0C1B2E}
+.ia-respuesta{border-left:3px solid var(--calido); padding-left:var(--e5); display:flex; flex-direction:column; gap:var(--e4)}
+.ia-fuentes{display:flex; flex-direction:column; gap:var(--e2); background:var(--panel-2); border-radius:var(--r-s); padding:var(--e4)}
+.banda--oscura .ia-fuentes{background:rgba(255,255,255,.07)}
+.ia-fuentes a{font-size:var(--t-sm); display:flex; gap:var(--e2); align-items:center}
 .ia-sugeridas{display:flex; gap:var(--e2); flex-wrap:wrap}
 .voto{display:flex; gap:var(--e2); align-items:center; font-size:var(--t-sm); color:var(--texto-suave)}
 
-/* --- Panel de requerimientos ---------------------------- */
-.panel-rf{position:fixed; inset:0 0 0 auto; width:min(480px,100%); background:var(--panel); border-left:1px solid var(--linea); box-shadow:-16px 0 40px rgba(10,42,84,.18); z-index:70; overflow-y:auto; padding:var(--e5); display:none}
-.panel-rf[open]{display:block}
-.panel-rf .cerrar{position:absolute; top:var(--e4); right:var(--e4)}
-.rf-grupo{margin-top:var(--e5)}
-.rf-grupo h3{font-family:var(--sans); font-size:var(--t-sm); text-transform:uppercase; letter-spacing:.06em; color:var(--texto-suave); margin-bottom:var(--e3)}
-.rf-lista{display:flex; flex-direction:column; gap:var(--e2)}
-.rf-lista li{display:flex; gap:var(--e3); font-size:var(--t-sm); align-items:baseline}
-.rf-lista code{font-family:var(--mono); font-size:var(--t-xs); color:var(--calido); flex:0 0 auto}
-.velo{position:fixed; inset:0; background:rgba(10,27,46,.5); z-index:65; display:none}
+/* --- Panel RF ------------------------------------------- */
+.panel-rf{position:fixed; inset:0 0 0 auto; width:min(520px,100%); background:var(--panel); border-left:1px solid var(--linea); box-shadow:var(--sombra-3); z-index:130; overflow-y:auto; padding:var(--e6); display:none}
+.panel-rf[open]{display:block; animation:entraPanel 260ms cubic-bezier(.22,.61,.36,1)}
+@keyframes entraPanel{from{transform:translateX(28px); opacity:0} to{transform:none; opacity:1}}
+.panel-rf .cerrar{position:absolute; top:var(--e5); right:var(--e5)}
+.rf-grupo{margin-top:var(--e5); padding-top:var(--e4); border-top:1px solid var(--linea-suave)}
+.rf-grupo h3{font-family:var(--sans); font-size:var(--t-sm); text-transform:uppercase; letter-spacing:.07em; color:var(--texto-suave); margin-bottom:var(--e3)}
+.rf-lista{display:flex; flex-direction:column; gap:var(--e3)}
+.rf-lista li{display:flex; gap:var(--e3); font-size:var(--t-sm); align-items:flex-start}
+.rf-lista code{font-family:var(--mono); font-size:var(--t-xs); color:var(--calido); flex:0 0 auto; background:var(--calido-suave); padding:.1rem .45rem; border-radius:var(--r-s)}
+.rf-lista code.fuera{color:var(--neutro); background:var(--neutro-tenue)}
+.velo{position:fixed; inset:0; background:rgba(6,16,28,.55); backdrop-filter:blur(2px); z-index:125; display:none}
 .velo[data-abierto="si"]{display:block}
 
 /* --- Pie ------------------------------------------------ */
-.pie{background:var(--panel); border-top:1px solid var(--linea); margin-top:var(--e8); padding:var(--e7) 0 var(--e6)}
-.pie-rejilla{display:grid; gap:var(--e5); grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
-.pie h3{font-family:var(--sans); font-size:var(--t-sm); text-transform:uppercase; letter-spacing:.06em; color:var(--texto-suave); margin-bottom:var(--e3)}
-.pie ul{display:flex; flex-direction:column; gap:var(--e2)}
-.pie a{font-size:var(--t-sm); color:var(--texto)}
-.pie-legal{margin-top:var(--e6); padding-top:var(--e4); border-top:1px solid var(--linea-suave); font-size:var(--t-xs); color:var(--texto-suave); display:flex; justify-content:space-between; gap:var(--e4); flex-wrap:wrap}
+.pie{background:linear-gradient(160deg, var(--oscuro), var(--oscuro-2)); color:#C6D6EA; margin-top:var(--e9); padding:var(--e8) 0 var(--e6)}
+.pie-rejilla{display:grid; gap:var(--e6); grid-template-columns:repeat(auto-fit,minmax(min(190px,100%),1fr))}
+.pie-rejilla>div:first-child{grid-column:span 2}
+@media (max-width:700px){.pie-rejilla>div:first-child{grid-column:span 1}}
+.pie h3{font-family:var(--sans); font-size:var(--t-xs); text-transform:uppercase; letter-spacing:.09em; color:#7E9CC2; margin-bottom:var(--e3)}
+.pie ul{display:flex; flex-direction:column; gap:.45rem}
+.pie a{font-size:var(--t-sm); color:#DCE7F5}
+.pie a:hover{color:#fff}
+.pie .marca-texto strong,.pie .marca-texto span{color:#fff}
+.pie-legal{margin-top:var(--e7); padding-top:var(--e4); border-top:1px solid rgba(255,255,255,.12); font-size:var(--t-xs); color:#8AA5C6; display:flex; justify-content:space-between; gap:var(--e4); flex-wrap:wrap}
+
+/* --- Movimiento ----------------------------------------- */
+.revelar{opacity:0; transform:translateY(14px)}
+.revelar.visible{opacity:1; transform:none; transition:opacity 480ms cubic-bezier(.22,.61,.36,1), transform 480ms cubic-bezier(.22,.61,.36,1)}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .revelar,.revelar.visible{opacity:1; transform:none; transition:none}
+  *,*::before,*::after{animation-duration:.001ms !important; transition-duration:.001ms !important}
+}
 
 /* --- Responsive ----------------------------------------- */
-@media (max-width:1000px){
+@media (max-width:1100px){
+  .hero-cuerpo{grid-template-columns:minmax(0,1fr); gap:var(--e6); padding:var(--e8) 0 var(--e7)}
+  .hero-cifras{grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); display:grid}
   .layout-ficha{grid-template-columns:minmax(0,1fr)}
   .rail{position:static}
+  .bento{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .bento .grande{grid-column:span 2; grid-row:span 1}
+  .tema-tarjeta.grande .cubierta{min-height:240px}
 }
 @media (max-width:860px){
-  :root{--t-3xl:1.9rem; --t-4xl:2.2rem}
+  :root{--t-3xl:2rem; --t-4xl:2.4rem; --t-5xl:2.7rem; --t-2xl:1.6rem}
   .contenedor{padding:0 var(--e4)}
   .cabecera{position:static}
   .cabecera-fila{flex-wrap:wrap}
-  .nav-principal{flex-wrap:nowrap; overflow-x:auto; padding-bottom:var(--e3)}
-  .buscador-global{order:3; flex-basis:100%}
+  .buscador-global{order:3; flex-basis:100%; max-width:none}
+  .acciones-cabecera{margin-left:0}
+  .nav-principal{flex-wrap:nowrap; overflow-x:auto; padding-bottom:var(--e3); scrollbar-width:none}
   .layout-busqueda{grid-template-columns:minmax(0,1fr); gap:var(--e4)}
   .abrir-filtros{display:inline-flex}
-  .facetas{position:static; display:none; background:var(--panel); border:1px solid var(--linea); border-radius:var(--r); padding:var(--e4)}
+  .facetas{position:static; display:none}
   .facetas[data-abierto="si"]{display:flex}
+  .historia{grid-template-columns:minmax(0,1fr)}
+  .historia .cuerpo{padding:var(--e5)}
   .convocatoria{grid-template-columns:minmax(0,1fr)}
+  .portada-ficha{min-height:220px}
+  .portada-ficha__contenido{padding:var(--e5)}
+  .bento{grid-template-columns:minmax(0,1fr)}
+  .bento .grande{grid-column:span 1}
   .panel-rf{width:100%}
-}
-@media (prefers-reduced-motion: no-preference){
-  .vista{animation:entrar .28s ease-out}
-  @keyframes entrar{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+  .seccion{padding:var(--e7) 0}
+  .barra-demo span{display:none}
 }
 </style>
 </head>
@@ -357,8 +475,8 @@ a.tarjeta:hover h3,a.tarjeta:hover h4{color:var(--acento)}
 
 <div class="barra-demo">
   <div class="contenedor">
-    <b>Prototipo · Portal de Investigación UCSP</b>
-    <span>Datos de demostración: los grupos son reales y públicos; investigadores, proyectos y publicaciones son ficticios para probar el modelo.</span>
+    <b>Prototipo</b>
+    <span>Grupos y cifras institucionales reales; investigadores, proyectos y resultados son datos de demostración.</span>
     <button type="button" id="btn-rf">Ver cobertura RF</button>
   </div>
 </div>
@@ -367,17 +485,14 @@ a.tarjeta:hover h3,a.tarjeta:hover h4{color:var(--acento)}
   <div class="contenedor">
     <div class="cabecera-fila">
       <a class="marca" href="#/">
-        <span class="marca-sigla" aria-hidden="true">UCSP</span>
+        <span class="marca-escudo" aria-hidden="true">UCSP</span>
         <span class="marca-texto">
           <strong>Investigación</strong>
           <span>Universidad Católica San Pablo</span>
         </span>
       </a>
       <div class="buscador-global" id="buscador-global"></div>
-      <div class="acciones-cabecera">
-        <a class="boton boton--pequeno" href="#/preguntar">Preguntar</a>
-        <a class="boton boton--pequeno boton--primario" href="#/colaborar">Colaborar</a>
-      </div>
+      <div class="acciones-cabecera" id="acciones-cabecera"></div>
     </div>
     <nav class="nav-principal" id="nav" aria-label="Navegación principal"></nav>
   </div>
@@ -389,20 +504,27 @@ a.tarjeta:hover h3,a.tarjeta:hover h4{color:var(--acento)}
   <div class="contenedor">
     <div class="pie-rejilla">
       <div>
+        <span class="marca">
+          <span class="marca-escudo" aria-hidden="true">UCSP</span>
+          <span class="marca-texto"><strong>Investigación</strong><span>Universidad Católica San Pablo</span></span>
+        </span>
+        <p style="font-size:var(--t-sm); margin-top:var(--e4); max-width:34ch; color:#9DB6D4">Una investigación que no solo está publicada: se puede encontrar, comprender, relacionar y activar.</p>
+      </div>
+      <div>
         <h3>Descubrir</h3>
         <ul>
           <li><a href="#/temas">Explorar por temas</a></li>
-          <li><a href="#/buscar?tipo=investigador">Investigadores</a></li>
-          <li><a href="#/buscar?tipo=grupo">Grupos y centros</a></li>
+          <li><a href="#/buscar?tipo=investigador&amp;orden=alfabetico">Investigadores</a></li>
+          <li><a href="#/buscar?tipo=grupo&amp;orden=alfabetico">Grupos y centros</a></li>
           <li><a href="#/buscar?tipo=proyecto">Proyectos</a></li>
         </ul>
       </div>
       <div>
         <h3>Resultados</h3>
         <ul>
-          <li><a href="#/buscar?tipo=publicacion">Publicaciones</a></li>
+          <li><a href="#/buscar?tipo=publicacion&amp;orden=fecha">Publicaciones</a></li>
           <li><a href="#/buscar?tipo=patente">Patentes y tecnologías</a></li>
-          <li><a href="#/buscar?tipo=capacidad">Capacidades y laboratorios</a></li>
+          <li><a href="#/buscar?tipo=capacidad">Capacidades</a></li>
           <li><a href="#/impacto">Historias de impacto</a></li>
         </ul>
       </div>
@@ -415,7 +537,7 @@ a.tarjeta:hover h3,a.tarjeta:hover h4{color:var(--acento)}
         </ul>
       </div>
       <div>
-        <h3>Gestión y gobierno</h3>
+        <h3>Gestión</h3>
         <ul>
           <li><a href="#/gobierno">Dirección de Investigación</a></li>
           <li><a href="#/gobierno">Políticas y reglamentos</a></li>
@@ -435,16 +557,6 @@ a.tarjeta:hover h3,a.tarjeta:hover h4{color:var(--acento)}
 <aside class="panel-rf" id="panel-rf" role="dialog" aria-modal="true" aria-labelledby="titulo-rf"></aside>
 
 <script>
-/* =============================================================
-   PORTAL DE INVESTIGACIÓN UCSP — prototipo navegable
-   -------------------------------------------------------------
-   Todo el prototipo funciona sobre este conjunto de datos. Los
-   grupos, centros e institutos son los que la UCSP publica hoy;
-   personas, proyectos, publicaciones, patentes, capacidades,
-   historias y convocatorias son DATOS DE DEMOSTRACIÓN, escritos
-   para poder probar el modelo de entidades y sus relaciones.
-   ============================================================= */
-
 const TEMAS = [
   {slug:'inteligencia-artificial', nombre:'Inteligencia artificial', resumen:'Aprendizaje automático, visión por computador y modelos predictivos aplicados a la industria, la infraestructura y la educación de la región sur del Perú.', disciplinas:['Ciencia de la computación','Ingeniería'], ods:['ODS 9']},
   {slug:'mineria-y-geotecnia', nombre:'Minería y geotecnia', resumen:'Comportamiento de suelos y geomateriales, estabilidad de taludes y monitoreo de operaciones mineras en contextos áridos y sísmicos.', disciplinas:['Ingeniería civil','Geociencias'], ods:['ODS 9','ODS 12']},
@@ -595,6 +707,7 @@ const SINONIMOS = {
 };
 
 const nombreInv = s => (M_INV[s] ? M_INV[s].nombre : s);
+const plural = (n, sing, plur) => n + ' ' + (n === 1 ? sing : plur);
 const iniciales = n => n.split(/\s+/).slice(0,2).map(p => p[0]).join('').toUpperCase();
 const fecha = iso => {
   const [a,m,d] = iso.split('-');
@@ -737,8 +850,220 @@ function urlBusqueda(params){
   return '#/buscar' + (qs ? '?' + qs : '');
 }
 
+
 /* =============================================================
-   4. Piezas reutilizables
+   4. Lenguaje visual: iconos, portadas generadas y micrográficos
+   -------------------------------------------------------------
+   No hay fotografías: cada tema tiene un matiz propio y una
+   portada dibujada con SVG a partir de su nombre, de modo que
+   el portal se reconoce por color y textura y no por tablas.
+   ============================================================= */
+const ICONOS = {
+  buscar:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/>',
+  flecha:'<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>',
+  externo:'<path d="M8 16 16 8"/><path d="M9 8h7v7"/>',
+  inicio:'<path d="m4 11 8-7 8 7"/><path d="M6 10v9h12v-9"/>',
+  tema:'<circle cx="12" cy="12" r="8.5"/><path d="m15 9-2 5-5 2 2-5z"/>',
+  investigador:'<circle cx="12" cy="8.5" r="3.7"/><path d="M5 20c.8-3.6 3.6-5.4 7-5.4s6.2 1.8 7 5.4"/>',
+  grupo:'<circle cx="9" cy="9" r="3.2"/><path d="M3 19c.7-3 2.9-4.6 6-4.6s5.3 1.6 6 4.6"/><path d="M16 6.4a3 3 0 0 1 0 5.6"/><path d="M17.6 14.8c1.9.6 3.1 2 3.6 4.2"/>',
+  proyecto:'<path d="M9.5 3v5.2L4.8 17a2.2 2.2 0 0 0 2 3.2h10.4a2.2 2.2 0 0 0 2-3.2L14.5 8.2V3"/><path d="M8.5 3h7"/><path d="M7.5 14h9"/>',
+  publicacion:'<path d="M6 3.5h8.5L19 8v12.5H6z"/><path d="M14 3.5V8h5"/><path d="M9 12.5h7"/><path d="M9 16h5"/>',
+  patente:'<path d="M12 3.5 20 8v8l-8 4.5L4 16V8z"/><path d="M12 9.5v5"/><path d="M9.5 12h5"/>',
+  capacidad:'<path d="M10 3.5v5.6L5.5 17a2 2 0 0 0 1.7 3h9.6a2 2 0 0 0 1.7-3L14 9.1V3.5"/><path d="M8.5 3.5h7"/><circle cx="11" cy="16" r="1"/><circle cx="14.5" cy="14" r=".8"/>',
+  impacto:'<path d="M4 17.5 9.5 12l3.5 3.2L20 7.5"/><path d="M15.5 7.5H20V12"/>',
+  convocatoria:'<rect x="4" y="5.5" width="16" height="14.5" rx="2.4"/><path d="M4 10h16"/><path d="M9 3.5v4"/><path d="M15 3.5v4"/>',
+  colaborar:'<path d="M12 20.5S4 15.8 4 10.2A4.2 4.2 0 0 1 12 8a4.2 4.2 0 0 1 8 2.2c0 5.6-8 10.3-8 10.3z"/>',
+  ia:'<path d="M12 3.5 13.9 9l5.6 2-5.6 2-1.9 5.5L10.1 13 4.5 11l5.6-2z"/>',
+  filtro:'<path d="M4.5 7h15"/><path d="M7.5 12h9"/><path d="M10.5 17h3"/>',
+  cerrar:'<path d="m6.5 6.5 11 11"/><path d="m17.5 6.5-11 11"/>',
+  correo:'<rect x="3.5" y="5.5" width="17" height="13" rx="2.2"/><path d="m4 7 8 5.5L20 7"/>',
+  identidad:'<rect x="3.5" y="5" width="17" height="14" rx="2.4"/><circle cx="9" cy="11" r="2.2"/><path d="M5.5 16.5c.5-1.6 1.8-2.4 3.5-2.4s3 .8 3.5 2.4"/><path d="M15 10h3.5"/><path d="M15 13.5h3.5"/>',
+  reloj:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/>',
+  grafico:'<path d="M4.5 19.5h15"/><rect x="6.5" y="11" width="3" height="6" rx="1"/><rect x="11" y="7" width="3" height="10" rx="1"/><rect x="15.5" y="13" width="3" height="4" rx="1"/>',
+  edificio:'<path d="M4.5 20.5V6.2L12 3.5l7.5 2.7v14.3"/><path d="M9 20.5v-4.2h6v4.2"/><path d="M9 9h2M13 9h2M9 12.5h2M13 12.5h2"/>',
+  cita:'<path d="M9 8.5C6.5 9.3 5.2 11 5.2 13.4c0 1.7 1.1 2.9 2.6 2.9s2.6-1.1 2.6-2.6-1-2.5-2.3-2.6"/><path d="M18 8.5c-2.5.8-3.8 2.5-3.8 4.9 0 1.7 1.1 2.9 2.6 2.9s2.6-1.1 2.6-2.6-1-2.5-2.3-2.6"/>',
+  descarga:'<path d="M12 4v10"/><path d="m8 10.5 4 4 4-4"/><path d="M5 19h14"/>'
+};
+const ICONO_TIPO = {tema:'tema', investigador:'investigador', grupo:'grupo', proyecto:'proyecto', publicacion:'publicacion', patente:'patente', capacidad:'capacidad', impacto:'impacto', convocatoria:'convocatoria'};
+function icono(nombre, clase){
+  return `<svg class="icono ${clase || ''}" viewBox="0 0 24 24" aria-hidden="true">${ICONOS[nombre] || ICONOS.flecha}</svg>`;
+}
+
+/* Un matiz por tema: identifica al tema en portadas, avatares y
+   etiquetas, y se mantiene estable en toda la navegación. */
+const MATIZ = {
+  'inteligencia-artificial':212, 'mineria-y-geotecnia':26, 'ingenieria-sismorresistente':258,
+  'materiales':38, 'salud-mental':336, 'educacion':168, 'familia-y-poblaciones-vulnerables':6,
+  'criminologia':288, 'economia-y-empresa':96, 'innovacion-y-emprendimiento':190,
+  'patrimonio-y-ciudad':318, 'agua-y-sostenibilidad':196
+};
+const matiz = slug => MATIZ[slug] != null ? MATIZ[slug] : 212;
+const matizDe = temas => matiz((temas || [])[0]);
+
+/* Generador determinista: el mismo tema dibuja siempre la misma
+   portada, aunque cambie de sitio en la página. */
+function semilla(txt){
+  let h = 2166136261;
+  for (let i = 0; i < txt.length; i++){ h ^= txt.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return () => { h += 0x6D2B79F5; let t = h; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+}
+function patron(clave, variante){
+  const r = semilla(clave), p = [];
+  const tipo = variante != null ? variante : Math.floor(r() * 6);
+  if (tipo === 0){                                   // curvas de nivel
+    for (let i = 0; i < 9; i++){
+      const y = 30 + i * 28 + r() * 10;
+      let d = `M-20 ${y}`;
+      for (let x = 0; x <= 440; x += 55) d += ` Q ${x + 27} ${y - 24 - r() * 26} ${x + 55} ${y - i * 1.5}`;
+      p.push(`<path d="${d}" fill="none" stroke="#fff" stroke-width="${1 + r()}" opacity="${.35 + r() * .35}"/>`);
+    }
+  } else if (tipo === 1){                            // red de nodos
+    const n = [];
+    for (let i = 0; i < 26; i++) n.push([r() * 420 - 10, r() * 320 - 10]);
+    n.forEach((a, i) => n.slice(i + 1).forEach(b => {
+      const d = Math.hypot(a[0] - b[0], a[1] - b[1]);
+      if (d < 95) p.push(`<line x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" stroke="#fff" stroke-width=".9" opacity="${(1 - d / 95) * .6}"/>`);
+    }));
+    n.forEach(a => p.push(`<circle cx="${a[0].toFixed(1)}" cy="${a[1].toFixed(1)}" r="${1.6 + r() * 2.6}" fill="#fff" opacity="${.5 + r() * .4}"/>`));
+  } else if (tipo === 2){                            // ondas
+    for (let i = 0; i < 7; i++){
+      const y = 40 + i * 38, a = 12 + r() * 20;
+      let d = `M-20 ${y}`;
+      for (let x = -20; x <= 420; x += 10) d += ` L ${x} ${(y + Math.sin((x / 42) + i) * a).toFixed(1)}`;
+      p.push(`<path d="${d}" fill="none" stroke="#fff" stroke-width="${.9 + r() * 1.3}" opacity="${.3 + r() * .35}"/>`);
+    }
+  } else if (tipo === 3){                            // trama de puntos
+    for (let x = 0; x < 420; x += 22) for (let y = 0; y < 320; y += 22){
+      const v = r();
+      p.push(`<circle cx="${x}" cy="${y}" r="${(1 + v * 4).toFixed(1)}" fill="#fff" opacity="${(.15 + v * .5).toFixed(2)}"/>`);
+    }
+  } else if (tipo === 4){                            // celosía de sillar
+    for (let f = 0; f < 7; f++) for (let c = 0; c < 9; c++){
+      const x = c * 48 + (f % 2 ? 24 : 0) - 20, y = f * 46 - 10;
+      if (r() > .45) p.push(`<rect x="${x}" y="${y}" width="42" height="40" rx="4" fill="none" stroke="#fff" stroke-width="1.1" opacity="${(.25 + r() * .5).toFixed(2)}"/>`);
+      else p.push(`<rect x="${x}" y="${y}" width="42" height="40" rx="4" fill="#fff" opacity="${(.05 + r() * .16).toFixed(2)}"/>`);
+    }
+  } else {                                           // arcos concéntricos
+    const cx = 60 + r() * 260, cy = 40 + r() * 200;
+    for (let i = 1; i < 12; i++)
+      p.push(`<circle cx="${cx.toFixed(0)}" cy="${cy.toFixed(0)}" r="${i * 26}" fill="none" stroke="#fff" stroke-width="${.8 + r() * 1.2}" opacity="${(.5 - i * .03).toFixed(2)}"/>`);
+  }
+  return `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${p.join('')}</svg>`;
+}
+
+/* Portada: degradado en el matiz del tema + patrón generado. */
+function cubierta(clave, opciones){
+  const o = opciones || {};
+  return `<span class="cubierta" style="--h:${o.h != null ? o.h : matiz(clave)}">
+    ${patron(clave, o.variante)}
+    ${o.cifra ? `<span class="cubierta__cifra">${esc(o.cifra)}</span>` : ''}
+    ${o.titulo ? `<span class="cubierta__texto">
+        ${o.sobretitulo ? `<small>${esc(o.sobretitulo)}</small>` : ''}
+        <strong>${esc(o.titulo)}</strong>
+        ${o.pie ? `<small>${esc(o.pie)}</small>` : ''}
+      </span>` : ''}
+  </span>`;
+}
+
+/* Micrográfico: producción por año. Serie única, valores
+   etiquetados directamente (sin leyenda ni tooltip que ocultar). */
+function graficoAnios(pubs, titulo){
+  if (pubs.length < 3) return '';
+  const anios = {};
+  pubs.forEach(p => { anios[p.anio] = (anios[p.anio] || 0) + 1; });
+  const claves = Object.keys(anios).sort();
+  const max = Math.max.apply(null, claves.map(a => anios[a]));
+  return `<figure class="grafico" style="margin:0">
+    <figcaption style="margin:0 0 var(--e2) 0; font-family:var(--mono); font-size:var(--t-xs); text-transform:uppercase; letter-spacing:.09em">${esc(titulo)}</figcaption>
+    <div class="gposicion" role="img" aria-label="${esc(titulo)}: ${claves.map(a => a + ', ' + anios[a]).join('; ')}">
+      ${claves.map(a => `<span class="gbarra">
+        <span class="valor">${anios[a]}</span>
+        <span class="tallo" style="height:${Math.round((anios[a] / max) * 74) + 4}px"></span>
+        <span class="eje">${a}</span>
+      </span>`).join('')}
+    </div>
+  </figure>`;
+}
+
+/* Red de colaboración: quién comparte proyectos o autoría. */
+function redColaboracion(slug, colegas){
+  if (colegas.length < 2) return '';
+  const w = 320, h = 230, cx = w / 2, cy = h / 2, r = 82;
+  const nodos = colegas.slice(0, 8).map((c, i, a) => {
+    const ang = (i / a.length) * Math.PI * 2 - Math.PI / 2;
+    return {slug:c, x:cx + Math.cos(ang) * r, y:cy + Math.sin(ang) * r, ang};
+  });
+  return `<svg class="red-colaboracion" viewBox="0 0 ${w} ${h}" role="img" aria-label="Red de colaboración de ${esc(nombreInv(slug))} con ${colegas.length} personas">
+    ${nodos.map(n => `<line class="arista" x1="${cx}" y1="${cy}" x2="${n.x.toFixed(1)}" y2="${n.y.toFixed(1)}"/>`).join('')}
+    ${nodos.map(n => `<g><circle class="nodo" cx="${n.x.toFixed(1)}" cy="${n.y.toFixed(1)}" r="6"/>
+      <text x="${n.x.toFixed(1)}" y="${(n.y + (Math.sin(n.ang) >= 0 ? 18 : -12)).toFixed(1)}" text-anchor="middle">${esc(nombreInv(n.slug).split(' ')[0])}</text></g>`).join('')}
+    <circle class="nodo--centro" cx="${cx}" cy="${cy}" r="11"/>
+    <text x="${cx}" y="${cy + 30}" text-anchor="middle" style="font-weight:600">${esc(nombreInv(slug).split(' ')[0])}</text>
+  </svg>`;
+}
+
+/* Malla animada del hero: los nodos son entidades y las líneas,
+   relaciones. Con reduced-motion se dibuja un solo fotograma. */
+function mallaHero(lienzo){
+  const ctx = lienzo.getContext('2d');
+  const reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let ancho = 0, alto = 0, puntos = [], animacion = null;
+  function medir(){
+    const caja = lienzo.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    ancho = caja.width; alto = caja.height;
+    lienzo.width = ancho * dpr; lienzo.height = alto * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const n = Math.min(70, Math.round(ancho * alto / 16000));
+    puntos = Array.from({length:n}, () => ({
+      x:Math.random() * ancho, y:Math.random() * alto,
+      vx:(Math.random() - .5) * .16, vy:(Math.random() - .5) * .16,
+      r:Math.random() * 1.9 + .8, grande:Math.random() > .88
+    }));
+  }
+  function pintar(){
+    ctx.clearRect(0, 0, ancho, alto);
+    for (let i = 0; i < puntos.length; i++){
+      const a = puntos[i];
+      for (let j = i + 1; j < puntos.length; j++){
+        const b = puntos[j], d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < 132){
+          ctx.strokeStyle = `rgba(147,190,240,${(1 - d / 132) * .3})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        }
+      }
+    }
+    puntos.forEach(p => {
+      ctx.fillStyle = p.grande ? 'rgba(240,192,138,.9)' : 'rgba(190,219,250,.75)';
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.grande ? p.r * 1.9 : p.r, 0, Math.PI * 2); ctx.fill();
+    });
+  }
+  function paso(){
+    puntos.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < -10) p.x = ancho + 10; if (p.x > ancho + 10) p.x = -10;
+      if (p.y < -10) p.y = alto + 10; if (p.y > alto + 10) p.y = -10;
+    });
+    pintar();
+    animacion = requestAnimationFrame(paso);
+  }
+  medir(); pintar();
+  if (!reducido) animacion = requestAnimationFrame(paso);
+  const alRedimensionar = () => { medir(); pintar(); };
+  window.addEventListener('resize', alRedimensionar);
+  // Se detiene cuando el hero deja de verse: no gasta batería en balde.
+  const observador = new IntersectionObserver(entradas => {
+    const visible = entradas[0].isIntersecting;
+    if (!visible && animacion){ cancelAnimationFrame(animacion); animacion = null; }
+    else if (visible && !animacion && !reducido) animacion = requestAnimationFrame(paso);
+  }, {threshold:0});
+  observador.observe(lienzo);
+  return () => { if (animacion) cancelAnimationFrame(animacion); observador.disconnect(); window.removeEventListener('resize', alRedimensionar); };
+}
+
+/* =============================================================
+   5. Piezas reutilizables
    ============================================================= */
 function migas(items){
   return `<nav class="migas contenedor" aria-label="Ruta de navegación">` +
@@ -746,43 +1071,80 @@ function migas(items){
       (i < items.length - 1 ? '<span aria-hidden="true">/</span>' : '')).join('') + `</nav>`;
 }
 function etiquetasTema(slugs){
-  return (slugs || []).map(s => M_TEMA[s] ? `<a class="etiqueta" href="#/tema/${s}">${esc(M_TEMA[s].nombre)}</a>` : '').join('');
+  return (slugs || []).map(s => M_TEMA[s] ? `<a class="etiqueta etiqueta--tema" style="--h:${matiz(s)}" href="#/tema/${s}">${esc(M_TEMA[s].nombre)}</a>` : '').join('');
 }
 function pastillaEstado(estado){
-  const clase = {'Activo':'activo','Finalizado':'finalizado','Próximo':'proxima','Abierta':'abierta','Cierra pronto':'cierra','Próxima':'proxima','Cerrada':'cerrada','Concedida':'activo','En trámite':'proxima'}[estado] || 'cerrada';
+  const clase = {'Activo':'activo','Finalizado':'finalizado','Próximo':'proxima','Abierta':'abierta','Cierra pronto':'cierra','Cerrada':'cerrada','Concedida':'activo','En trámite':'proxima'}[estado] || 'cerrada';
   return `<span class="estado estado--${clase}">${esc(estado)}</span>`;
 }
-function tarjeta(e){
-  return `<a class="tarjeta" href="${e.url}">
-    <span class="tipo">${esc(NOMBRE_TIPO[e.tipo])}</span>
-    <h3>${esc(e.titulo)}</h3>
-    <span class="meta">${esc(e.subtitulo || '')}</span>
-  </a>`;
+function marcaTipo(tipo){
+  return `<span class="marca-tipo" style="--tinte:var(--acento)" aria-hidden="true">${icono(ICONO_TIPO[tipo] || 'tema')}</span>`;
+}
+function enlaceFlecha(texto){
+  return `<span class="enlace-flecha">${esc(texto)}${icono('flecha','icono-s')}</span>`;
+}
+function avatar(inv, clase){
+  return `<span class="avatar ${clase || ''}" style="--h:${matizDe(inv.temas)}" aria-hidden="true">${esc(iniciales(inv.nombre))}</span>`;
 }
 function tarjetaPersona(inv){
-  return `<a class="tarjeta" href="#/investigador/${inv.slug}">
-    <span class="persona">
-      <span class="avatar" aria-hidden="true">${esc(iniciales(inv.nombre))}</span>
-      <span class="apilado">
-        <strong>${esc(inv.nombre)}</strong>
-        <span class="meta">${esc(inv.cargo)}</span>
-      </span>
+  const pubs = publicacionesDe(inv.slug).length, prs = proyectosDe(inv.slug).length;
+  return `<a class="tarjeta persona-tarjeta revelar" href="#/investigador/${inv.slug}">
+    ${avatar(inv)}
+    <span>
+      <strong>${esc(inv.nombre)}</strong>
+      <span class="meta" style="display:block">${esc(inv.cargo)}</span>
     </span>
     <span class="etiquetas">${inv.expertise.slice(0,2).map(x => `<span class="etiqueta">${esc(x)}</span>`).join('')}</span>
+    <span class="tarjeta__pie"><span class="mono">${plural(prs, 'proyecto', 'proyectos')} · ${plural(pubs, 'resultado', 'resultados')}</span>${enlaceFlecha('Ver perfil')}</span>
   </a>`;
 }
 function tarjetaProyecto(p){
-  return `<a class="tarjeta" href="#/proyecto/${p.slug}">
-    <span class="fila gap3">${pastillaEstado(p.estado)}<span class="tipo">${p.inicio}–${p.fin}</span></span>
-    <h4>${esc(p.titulo)}</h4>
-    <span class="meta">${esc(M_GRUPO[p.grupo].nombre)} · ${esc(p.financiador)}</span>
+  return `<a class="tarjeta tarjeta--media revelar" href="#/proyecto/${p.slug}">
+    ${cubierta(p.slug, {h:matizDe(p.temas), cifra:p.inicio + '–' + p.fin})}
+    <span class="cuerpo">
+      <span class="fila gap3">${pastillaEstado(p.estado)}<span class="tipo">${esc(M_GRUPO[p.grupo].sigla || M_GRUPO[p.grupo].nombre)}</span></span>
+      <h4>${esc(p.titulo)}</h4>
+      <span class="meta">${esc(p.financiador)}</span>
+      <span class="tarjeta__pie"><span class="mono">IP · ${esc(nombreInv(p.pi))}</span>${enlaceFlecha('Ver proyecto')}</span>
+    </span>
+  </a>`;
+}
+function tarjetaGrupo(g){
+  return `<a class="tarjeta revelar" href="#/grupo/${g.slug}">
+    <span class="fila gap3">${marcaTipo('grupo')}<span class="tipo">${esc(g.tipo)}</span></span>
+    <h4>${esc(g.nombre)}</h4>
+    <span class="meta">${esc(g.resumen.slice(0, 118))}…</span>
+    <span class="etiquetas">${g.lineas.slice(0,3).map(l => `<span class="etiqueta">${esc(l)}</span>`).join('')}</span>
+    <span class="tarjeta__pie"><span class="mono">${plural(g.miembros.length, 'persona', 'personas')} · ${plural(proyectosDeGrupo(g.slug).length, 'proyecto', 'proyectos')}</span>${enlaceFlecha('Ver grupo')}</span>
   </a>`;
 }
 function lineaPublicacion(p){
   return `<div class="linea-publicacion">
-    <a href="#/publicacion/${p.slug}"><strong>${esc(p.titulo)}</strong></a>
-    <div class="meta">${esc(p.autores.map(nombreInv).concat(p.externos).join(', '))} · ${esc(p.revista)} · ${p.anio}${p.oa ? ' · Acceso abierto' : ''}</div>
+    <span class="anio mono">${p.anio}</span>
+    <span>
+      <a href="#/publicacion/${p.slug}"><strong>${esc(p.titulo)}</strong></a>
+      <span class="meta" style="display:block">${esc(p.autores.map(nombreInv).concat(p.externos).join(', '))} · ${esc(p.revista)}</span>
+      <span class="etiquetas" style="margin-top:.4rem"><span class="etiqueta">${esc(p.tipo)}</span>${p.oa ? '<span class="etiqueta">Acceso abierto</span>' : ''}</span>
+    </span>
   </div>`;
+}
+function tarjetaTema(t, grande){
+  return `<a class="tema-tarjeta revelar ${grande ? 'grande' : ''}" href="#/tema/${t.slug}">
+    ${cubierta(t.slug, {titulo:t.nombre, sobretitulo:t.disciplinas[0],
+      pie:`${plural(investigadoresDeTema(t.slug).length, 'investigador', 'investigadores')} · ${plural(proyectosDeTema(t.slug).length, 'proyecto', 'proyectos')} · ${plural(publicacionesDeTema(t.slug).length, 'resultado', 'resultados')}`})}
+  </a>`;
+}
+function tarjetaImpacto(h){
+  return `<a class="historia revelar" href="#/impacto/${h.slug}">
+    ${cubierta(h.slug, {h:matizDe(h.temas)})}
+    <span class="cuerpo">
+      <span class="tipo">Impacto · ${esc(M_GRUPO[h.grupo].sigla || M_GRUPO[h.grupo].nombre)}</span>
+      <h3>${esc(h.titulo)}</h3>
+      <span class="meta">${esc(h.resultado.slice(0, 130))}…</span>
+      <span class="etiquetas">${h.evidencias.slice(0,3).map(e => `<span class="etiqueta"><b class="mono">${esc(e.cifra)}</b> ${esc(e.texto)}</span>`).join('')}</span>
+      ${enlaceFlecha('Leer la historia')}
+    </span>
+  </a>`;
 }
 function bloqueRelaciones(titulo, filas){
   const vivas = filas.filter(f => f.cuenta > 0);
@@ -798,23 +1160,22 @@ function cajaColaborar(texto, contexto){
   return `<div class="caja caja--cta">
     <h3>Colaborar</h3>
     <p style="font-size:var(--t-sm)">${esc(texto)}</p>
-    <a class="boton boton--primario" href="#/colaborar?desde=${encodeURIComponent(contexto)}">Iniciar una colaboración</a>
+    <a class="boton boton--primario boton--bloque" href="#/colaborar?desde=${encodeURIComponent(contexto)}">${icono('colaborar','icono-s')} Iniciar una colaboración</a>
   </div>`;
 }
 
 /* =============================================================
-   5. Navegación y buscador global (RF-01, RF-03, RF-04)
+   6. Cabecera, navegación y buscador global
    ============================================================= */
 const NAV = [
-  {texto:'Inicio', url:'#/'},
-  {texto:'Explorar investigación', url:'#/temas'},
-  {texto:'Investigadores', url:urlBusqueda({tipo:'investigador', orden:'alfabetico'})},
-  {texto:'Grupos y centros', url:urlBusqueda({tipo:'grupo', orden:'alfabetico'})},
-  {texto:'Proyectos', url:urlBusqueda({tipo:'proyecto'})},
-  {texto:'Resultados', url:urlBusqueda({tipo:'publicacion', orden:'fecha'})},
-  {texto:'Impacto', url:'#/impacto'},
-  {texto:'Colaborar', url:'#/colaborar'},
-  {texto:'Convocatorias', url:'#/convocatorias'}
+  {texto:'Inicio', icono:'inicio', url:'#/'},
+  {texto:'Explorar', icono:'tema', url:'#/temas'},
+  {texto:'Investigadores', icono:'investigador', url:urlBusqueda({tipo:'investigador', orden:'alfabetico'})},
+  {texto:'Grupos y centros', icono:'grupo', url:urlBusqueda({tipo:'grupo', orden:'alfabetico'})},
+  {texto:'Proyectos', icono:'proyecto', url:urlBusqueda({tipo:'proyecto'})},
+  {texto:'Resultados', icono:'publicacion', url:urlBusqueda({tipo:'publicacion', orden:'fecha'})},
+  {texto:'Impacto', icono:'impacto', url:'#/impacto'},
+  {texto:'Convocatorias', icono:'convocatoria', url:'#/convocatorias'}
 ];
 
 function pintarNav(rutaActual){
@@ -824,8 +1185,11 @@ function pintarNav(rutaActual){
     const tipoEnlace = new URLSearchParams(consulta || '').get('tipo') || '';
     const activo = camino === '#/' + (rutaActual === 'inicio' ? '' : rutaActual) &&
       (rutaActual !== 'buscar' || tipoEnlace === (params.tipo || ''));
-    return `<a href="${n.url}"${activo ? ' aria-current="page"' : ''}>${esc(n.texto)}</a>`;
+    return `<a href="${n.url}"${activo ? ' aria-current="page"' : ''}>${icono(n.icono)}${esc(n.texto)}</a>`;
   }).join('');
+  $('#acciones-cabecera').innerHTML =
+    `<a class="boton boton--pequeno" href="#/preguntar">${icono('ia','icono-s')} Preguntar</a>
+     <a class="boton boton--pequeno boton--primario" href="#/colaborar">${icono('colaborar','icono-s')} Colaborar</a>`;
 }
 
 function pintarBuscadorGlobal(valor){
@@ -833,10 +1197,9 @@ function pintarBuscadorGlobal(valor){
     <form role="search" id="form-global">
       <label class="solo-lectores" for="q-global">Buscar en el Portal de Investigación</label>
       <span class="campo-busqueda">
-        <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+        ${icono('buscar')}
         <input id="q-global" type="search" autocomplete="off" placeholder="Busca un tema, investigador, proyecto o publicación" value="${esc(valor || '')}" aria-expanded="false" aria-controls="sugerencias" role="combobox" aria-autocomplete="list" />
       </span>
-      <button class="boton boton--azul" type="submit">Buscar</button>
     </form>
     <ul class="sugerencias" id="sugerencias" role="listbox" hidden></ul>`;
 
@@ -853,8 +1216,8 @@ function pintarBuscadorGlobal(valor){
     } else {
       lista.innerHTML = `<li class="sug-cabecera">Sugerencias</li>` + res.map(e =>
         `<li role="option" aria-selected="false"><button type="button" data-url="${e.url}">
-          <span class="tipo">${esc(NOMBRE_TIPO[e.tipo])}</span>
-          <span class="apilado"><span>${esc(e.titulo)}</span><span class="sug-sub">${esc(e.subtitulo || '')}</span></span>
+          ${marcaTipo(e.tipo)}
+          <span class="apilado"><span>${esc(e.titulo)}</span><span class="sug-sub">${esc(NOMBRE_TIPO[e.tipo])} · ${esc((e.subtitulo || '').slice(0, 58))}</span></span>
         </button></li>`).join('');
     }
     lista.hidden = false;
@@ -874,136 +1237,131 @@ function pintarBuscadorGlobal(valor){
       if (l && i && !ev.target.closest('#buscador-global')){ l.hidden = true; i.setAttribute('aria-expanded', 'false'); }
     });
   }
-  $('#form-global').addEventListener('submit', ev => {
-    ev.preventDefault();
-    cerrar();
-    irA('/buscar', {q: input.value.trim()});
-  });
+  $('#form-global').addEventListener('submit', ev => { ev.preventDefault(); cerrar(); irA('/buscar', {q: input.value.trim()}); });
 }
 
 /* =============================================================
-   6. Vistas
+   7. Inicio
    ============================================================= */
 function vistaInicio(){
   const destacados = ['monitoreo-estructural-ia','salud-mental-adolescente','residuos-mineros-cemento'].map(s => M_PROY[s]);
   const personas = ['ricardo-salas-linares','patricia-luna-cardenas','ana-quispe-valdivia','martin-zeballos-ugarte'].map(s => M_INV[s]);
   const abiertas = CONVOCATORIAS.filter(c => c.estado === 'Abierta' || c.estado === 'Cierra pronto').slice(0, 3);
   return `
-  <section class="hero contenedor">
-    <h1>Investigación que conecta conocimiento con impacto</h1>
-    <p class="entradilla">Explora investigadores, grupos, proyectos y resultados de investigación de la Universidad Católica San Pablo. Empieza por un problema, no por un organigrama.</p>
-    <div class="hero-busqueda">
-      <form role="search" id="form-hero">
-        <label class="solo-lectores" for="q-hero">Buscar investigación</label>
-        <span class="campo-busqueda">
-          <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
-          <input id="q-hero" type="search" placeholder="Busca un tema, investigador, proyecto o publicación" />
-          <button class="boton boton--azul" type="submit">Buscar</button>
-        </span>
-      </form>
-      <p class="ejemplos"><span>Por ejemplo:</span>
-        ${['inteligencia artificial','minería','salud mental','educación','sostenibilidad'].map(x => `<a class="etiqueta" href="${urlBusqueda({q:x})}">${esc(x)}</a>`).join('')}
-      </p>
+  <section class="hero">
+    <canvas id="malla-hero" aria-hidden="true"></canvas>
+    <div class="contenedor">
+      <div class="hero-cuerpo">
+        <div>
+          <span class="cintillo">${icono('ia','icono-s')} Portal de investigación</span>
+          <h1>Investigación que conecta <em>conocimiento</em> con impacto</h1>
+          <p class="entradilla">Explora investigadores, grupos, proyectos y resultados de la Universidad Católica San Pablo. Empieza por un problema, no por un organigrama.</p>
+          <div class="hero-busqueda">
+            <form role="search" id="form-hero">
+              <label class="solo-lectores" for="q-hero">Buscar investigación</label>
+              <span class="campo-busqueda">
+                ${icono('buscar')}
+                <input id="q-hero" type="search" placeholder="Busca un tema, investigador, proyecto o publicación" />
+                <button class="boton boton--azul" type="submit">Buscar</button>
+              </span>
+            </form>
+            <p class="ejemplos"><span>Prueba con:</span>
+              ${['inteligencia artificial','minería','salud mental','sillar','educación'].map(x => `<a class="etiqueta etiqueta--clara" href="${urlBusqueda({q:x})}">${esc(x)}</a>`).join('')}
+            </p>
+          </div>
+        </div>
+        <div class="hero-cifras">
+          <a class="hero-cifra" href="${urlBusqueda({tipo:'proyecto', q:'UCSP'})}"><b>204</b><span>proyectos con financiamiento interno</span>${icono('flecha')}</a>
+          <a class="hero-cifra" href="${urlBusqueda({tipo:'proyecto'})}"><b>141</b><span>proyectos con financiamiento externo</span>${icono('flecha')}</a>
+          <a class="hero-cifra" href="${urlBusqueda({tipo:'patente'})}"><b>11</b><span>patentes y tecnologías</span>${icono('flecha')}</a>
+          <a class="hero-cifra" href="${urlBusqueda({tipo:'capacidad'})}"><b>${CAPACIDADES.length}</b><span>laboratorios abiertos a empresas</span>${icono('flecha')}</a>
+        </div>
+      </div>
     </div>
-    <div class="accesos">
-      <a class="acceso" href="${urlBusqueda({tipo:'investigador', orden:'alfabetico'})}"><strong>Encontrar un experto</strong><span>Busca por área de expertise y contacta directamente al investigador.</span></a>
-      <a class="acceso" href="#/temas"><strong>Explorar investigación</strong><span>Doce temas con sus proyectos, grupos y resultados asociados.</span></a>
-      <a class="acceso" href="#/colaborar"><strong>Colaborar con UCSP</strong><span>Empresas, instituciones, investigadores y estudiantes.</span></a>
+  </section>
+
+  <section class="seccion contenedor">
+    <div class="cabecera-seccion">
+      <div>
+        <span class="tipo">Explorar</span>
+        <h2>¿Qué estamos investigando?</h2>
+        <p>Cada tema reúne a quienes investigan, lo que producen y lo que se puede contratar. Doce entradas al portal.</p>
+      </div>
+      <a class="boton" href="#/temas">Ver los doce temas ${icono('flecha','icono-s')}</a>
+    </div>
+    <div class="bento">
+      ${tarjetaTema(M_TEMA['inteligencia-artificial'], true)}
+      ${['mineria-y-geotecnia','salud-mental'].map(s => tarjetaTema(M_TEMA[s])).join('')}
+      ${['educacion','patrimonio-y-ciudad'].map(s => tarjetaTema(M_TEMA[s])).join('')}
+      ${tarjetaTema(M_TEMA['ingenieria-sismorresistente'], true)}
+      ${['materiales','innovacion-y-emprendimiento'].map(s => tarjetaTema(M_TEMA[s])).join('')}
     </div>
   </section>
 
   <section class="banda">
-    <div class="contenedor seccion">
+    <div class="seccion contenedor">
       <div class="cabecera-seccion">
-        <div><h2>¿Qué estamos investigando?</h2><p>Cada tema es una entrada al portal: reúne a quienes investigan, lo que producen y lo que se puede contratar.</p></div>
-        <a class="boton" href="#/temas">Ver los doce temas</a>
+        <div><span class="tipo">En marcha</span><h2>Proyectos activos</h2></div>
+        <a class="boton" href="${urlBusqueda({tipo:'proyecto', estado:'Activo'})}">Ver todos los proyectos ${icono('flecha','icono-s')}</a>
       </div>
-      <div class="rejilla rejilla--3">
-        ${TEMAS.slice(0, 6).map(t => `
-          <a class="tarjeta-tema" href="#/tema/${t.slug}">
-            <strong>${esc(t.nombre)}</strong>
-            <span class="meta" style="font-size:var(--t-sm); color:var(--texto-suave)">${esc(t.resumen.slice(0, 96))}…</span>
-            <span class="cuentas">${investigadoresDeTema(t.slug).length} investigadores · ${proyectosDeTema(t.slug).length} proyectos · ${publicacionesDeTema(t.slug).length} resultados</span>
-          </a>`).join('')}
-      </div>
+      <div class="rejilla rejilla--3">${destacados.map(tarjetaProyecto).join('')}</div>
     </div>
   </section>
 
-  <section class="contenedor seccion">
+  <section class="seccion contenedor">
     <div class="cabecera-seccion">
-      <div><h2>La investigación en cifras</h2><p>Cifras institucionales publicadas por la Dirección de Investigación. En el portal cada cifra abre su propio conjunto de resultados.</p></div>
-    </div>
-    <div class="cifras">
-      <a class="cifra" href="${urlBusqueda({tipo:'proyecto', q:'UCSP'})}"><b>204</b><span>proyectos con financiamiento interno</span><span class="ver">Ver proyectos →</span></a>
-      <a class="cifra" href="${urlBusqueda({tipo:'proyecto'})}"><b>141</b><span>proyectos con financiamiento externo</span><span class="ver">Explorar proyectos →</span></a>
-      <a class="cifra" href="${urlBusqueda({tipo:'patente'})}"><b>11</b><span>patentes y tecnologías</span><span class="ver">Conocer tecnologías →</span></a>
-      <a class="cifra" href="${urlBusqueda({tipo:'capacidad'})}"><b>${CAPACIDADES.length}</b><span>laboratorios y capacidades abiertas a empresas</span><span class="ver">Consultar capacidades →</span></a>
-    </div>
-  </section>
-
-  <section class="contenedor seccion">
-    <div class="cabecera-seccion">
-      <div><h2>Proyectos en marcha</h2></div>
-      <a class="boton" href="${urlBusqueda({tipo:'proyecto', estado:'Activo'})}">Ver todos los proyectos activos</a>
-    </div>
-    <div class="rejilla rejilla--3">${destacados.map(tarjetaProyecto).join('')}</div>
-  </section>
-
-  <section class="contenedor seccion">
-    <div class="cabecera-seccion">
-      <div><h2>Investigadores</h2><p>Perfiles con expertise, producción y contacto directo.</p></div>
-      <a class="boton" href="${urlBusqueda({tipo:'investigador', orden:'alfabetico'})}">Ver todos</a>
+      <div><span class="tipo">Personas</span><h2>Encuentra al experto</h2><p>Perfiles con expertise, producción verificable y contacto directo.</p></div>
+      <a class="boton" href="${urlBusqueda({tipo:'investigador', orden:'alfabetico'})}">Ver los ${INVESTIGADORES.length} investigadores ${icono('flecha','icono-s')}</a>
     </div>
     <div class="rejilla rejilla--4">${personas.map(tarjetaPersona).join('')}</div>
   </section>
 
+  <section class="seccion contenedor">
+    <div class="cabecera-seccion">
+      <div><span class="tipo">Impacto</span><h2>Qué cambió fuera de la universidad</h2><p>Historias con desafío, evidencia y resultado, enlazadas a quienes las hicieron.</p></div>
+      <a class="boton" href="#/impacto">Todas las historias ${icono('flecha','icono-s')}</a>
+    </div>
+    <div class="rejilla" style="gap:var(--e5)">${IMPACTO.slice(0, 2).map(tarjetaImpacto).join('')}</div>
+  </section>
+
   <section class="banda">
-    <div class="contenedor seccion">
+    <div class="seccion contenedor">
       <div class="cabecera-seccion">
-        <div><h2>Investigación que genera impacto</h2><p>Qué cambió fuera de la universidad, con evidencia y con nombres.</p></div>
-        <a class="boton" href="#/impacto">Ver todas las historias</a>
+        <div><span class="tipo">Oportunidades</span><h2>Convocatorias abiertas</h2></div>
+        <a class="boton" href="#/convocatorias">Observatorio completo ${icono('flecha','icono-s')}</a>
       </div>
       <div class="rejilla rejilla--3">
-        ${IMPACTO.slice(0, 3).map(h => `
-          <a class="tarjeta" href="#/impacto/${h.slug}">
-            <span class="tipo">Impacto</span>
-            <h4>${esc(h.titulo)}</h4>
-            <span class="meta">${esc(h.resultado.slice(0, 110))}…</span>
+        ${abiertas.map(c => `
+          <a class="tarjeta revelar" href="#/convocatorias?estado=${encodeURIComponent(c.estado)}">
+            <span class="fila gap3">${pastillaEstado(c.estado)}</span>
+            <h4>${esc(c.titulo)}</h4>
+            <span class="meta">${esc(c.dirigido)} · ${esc(c.fuente)}</span>
+            <span class="tarjeta__pie"><span class="cuenta-atras">${icono('reloj','icono-s')} Cierre ${fecha(c.cierre)}</span>${enlaceFlecha('Ver')}</span>
           </a>`).join('')}
       </div>
     </div>
   </section>
 
-  <section class="contenedor seccion">
-    <div class="cabecera-seccion">
-      <div><h2>Convocatorias abiertas</h2></div>
-      <a class="boton" href="#/convocatorias">Ver el observatorio completo</a>
-    </div>
-    <div class="rejilla rejilla--3">
-      ${abiertas.map(c => `
-        <a class="tarjeta" href="#/convocatorias?estado=${encodeURIComponent(c.estado)}">
-          ${pastillaEstado(c.estado)}
-          <h4>${esc(c.titulo)}</h4>
-          <span class="meta">Cierre ${fecha(c.cierre)} · ${esc(c.fuente)}</span>
-        </a>`).join('')}
-    </div>
-  </section>
-
-  <section class="contenedor seccion">
-    <div class="ia">
-      <div>
-        <span class="tipo">Capa de IA · sobre datos verificados</span>
-        <h2 style="margin-top:var(--e2)">Pregunta a la investigación UCSP</h2>
-        <p class="entradilla" style="margin-top:var(--e3)">¿Quién investiga inteligencia artificial aplicada a minería? El portal responde con las entidades que existen en él y enlaza cada fuente.</p>
+  <section class="banda banda--oscura">
+    <div class="seccion contenedor">
+      <div class="cabecera-seccion">
+        <div>
+          <span class="tipo" style="color:#9FC4EE">Capa de IA sobre datos verificados</span>
+          <h2>Pregunta a la investigación UCSP</h2>
+          <p class="entradilla">«¿Quién investiga inteligencia artificial aplicada a minería?» El portal responde con las entidades que existen en él y enlaza cada fuente. Si no hay respaldo, no responde.</p>
+        </div>
+        <a class="boton boton--claro" href="#/preguntar">${icono('ia','icono-s')} Probar la pregunta</a>
       </div>
       <div class="ia-sugeridas">
-        ${['¿Quién investiga inteligencia artificial aplicada a minería?','¿Qué capacidades tiene UCSP en materiales?','¿Quién puede ayudarme con salud mental escolar?'].map(p => `<a class="boton boton--pequeno" href="#/preguntar?p=${encodeURIComponent(p)}">${esc(p)}</a>`).join('')}
+        ${['¿Quién investiga inteligencia artificial aplicada a minería?','¿Qué capacidades tiene UCSP en materiales?','¿Quién trabaja en salud mental escolar?'].map(p => `<a class="boton boton--claro boton--pequeno" href="#/preguntar?p=${encodeURIComponent(p)}">${esc(p)}</a>`).join('')}
       </div>
     </div>
   </section>`;
 }
 
-/* --- Buscador: resultados, facetas y estado vacío -------- */
+/* =============================================================
+   8. Buscador: resultados, facetas y estado vacío
+   ============================================================= */
 const FACETAS = [
   {clave:'tema', titulo:'Tema o línea', valores:e => e.temas || [], nombre:v => M_TEMA[v] ? M_TEMA[v].nombre : v},
   {clave:'grupo', titulo:'Grupo o centro', valores:e => e.grupos || [], nombre:v => M_GRUPO[v] ? (M_GRUPO[v].sigla || M_GRUPO[v].nombre) : v},
@@ -1013,12 +1371,18 @@ const FACETAS = [
   {clave:'ods', titulo:'ODS', valores:e => e.ods || [], nombre:v => v}
 ];
 
+function miniatura(e){
+  if (e.tipo === 'investigador' && M_INV[e.slug]) return avatar(M_INV[e.slug]);
+  if (['tema','proyecto','impacto'].includes(e.tipo))
+    return `<span class="miniatura">${cubierta(e.slug, {h:matizDe(e.temas)})}</span>`;
+  return `<span class="marca-tipo" style="--tinte:hsl(${matizDe(e.temas)} 52% 42%); width:44px; height:44px; border-radius:12px">${icono(ICONO_TIPO[e.tipo] || 'tema')}</span>`;
+}
+
 function vistaBuscar(params){
   const q = params.q || '';
   const filtros = {tema:params.tema||'', grupo:params.grupo||'', anio:params.anio||'', estado:params.estado||'', ods:params.ods||'', formato:params.formato||'', oa:params.oa||'', orden:params.orden||'relevancia'};
   const tipo = params.tipo || '';
   const universo = q ? buscar(q, {orden:filtros.orden}) : ordenar(INDICE.slice(), filtros.orden);
-
   const conFiltros = universo.filter(e => aplicaFiltros(e, filtros));
   const resultados = tipo ? conFiltros.filter(e => e.tipo === tipo) : conFiltros;
 
@@ -1029,8 +1393,7 @@ function vistaBuscar(params){
   Object.keys(filtros).forEach(k => {
     if (k === 'orden' || !filtros[k]) return;
     const f = FACETAS.find(x => x.clave === k);
-    const texto = k === 'oa' ? 'Acceso abierto' : (f ? f.titulo + ': ' + f.nombre(filtros[k]) : filtros[k]);
-    chips.push({clave:k, texto});
+    chips.push({clave:k, texto: k === 'oa' ? 'Acceso abierto' : (f ? f.titulo + ': ' + f.nombre(filtros[k]) : filtros[k])});
   });
   if (tipo) chips.unshift({clave:'tipo', texto:'Tipo: ' + NOMBRE_TIPO[tipo]});
 
@@ -1058,11 +1421,12 @@ function vistaBuscar(params){
   ${migas([{texto:'Inicio', url:'#/'}, {texto:'Buscar'}])}
   <div class="contenedor">
     <div style="padding-top:var(--e4)">
-      <h1>${q ? 'Resultados para “' + esc(q) + '”' : 'Explorar toda la investigación'}</h1>
+      <span class="tipo">Buscador unificado</span>
+      <h1 style="margin-top:var(--e2)">${q ? 'Resultados para “' + esc(q) + '”' : 'Explorar toda la investigación'}</h1>
     </div>
     <div class="layout-busqueda">
       <aside>
-        <button class="boton abrir-filtros" type="button" id="btn-filtros" aria-expanded="false" aria-controls="facetas">Filtros</button>
+        <button class="boton abrir-filtros" type="button" id="btn-filtros" aria-expanded="false" aria-controls="facetas">${icono('filtro','icono-s')} Filtros</button>
         <div class="facetas" id="facetas">
           <div class="faceta">
             <h3>Acceso</h3>
@@ -1078,7 +1442,7 @@ function vistaBuscar(params){
               <option value="alfabetico"${filtros.orden === 'alfabetico' ? ' selected' : ''}>Alfabético</option>
             </select>
           </div>
-          <button class="boton boton--pequeno" type="button" id="limpiar-todo">Limpiar todos los filtros</button>
+          <button class="boton boton--pequeno boton--bloque" type="button" id="limpiar-todo">Limpiar todos los filtros</button>
         </div>
       </aside>
       <div>
@@ -1087,7 +1451,7 @@ function vistaBuscar(params){
           ${Object.keys(PLURAL_TIPO).filter(t => cuentasTipo[t] || tipo === t).map(t =>
             `<button role="tab" data-tipo="${t}" aria-selected="${tipo === t ? 'true' : 'false'}">${esc(PLURAL_TIPO[t])} <span class="cuenta">${cuentasTipo[t] || 0}</span></button>`).join('')}
         </div>
-        ${chips.length ? `<div class="chips-filtro">
+        ${chips.length ? `<div class="chips-filtro" style="padding-top:var(--e4)">
           ${chips.map(c => `<button class="chip" type="button" data-quitar="${c.clave}">${esc(c.texto)}<span class="x" aria-hidden="true">×</span><span class="solo-lectores">Quitar filtro</span></button>`).join('')}
           <button class="chip" type="button" id="limpiar-chips">Limpiar todo<span class="x" aria-hidden="true">×</span></button>
         </div>` : ''}
@@ -1096,6 +1460,7 @@ function vistaBuscar(params){
         </div>
         ${resultados.length ? `<div class="resultados">${resultados.map(e => resultado(e, q)).join('')}</div>` : `
         <div class="sin-resultados">
+          <span class="marca-tipo" style="width:52px; height:52px; border-radius:14px">${icono('buscar')}</span>
           <h3>Sin resultados para esta combinación</h3>
           ${sugerida ? `<p>¿Quisiste decir <a href="${urlBusqueda({q:sugerida})}"><strong>${esc(sugerida)}</strong></a>?</p>` : ''}
           <p style="color:var(--texto-suave)">Prueba con menos filtros, con un término más general o explora por tema.</p>
@@ -1118,7 +1483,6 @@ function ordenar(lista, orden){
   if (orden === 'alfabetico') return lista.sort((a,b) => a.titulo.localeCompare(b.titulo, 'es'));
   return lista;
 }
-
 function resaltar(texto, q){
   const t = esc(texto);
   const term = norm(q).split(/\s+/).filter(p => p.length > 2)[0];
@@ -1127,40 +1491,40 @@ function resaltar(texto, q){
   if (i < 0) return t;
   return t.slice(0, i) + '<mark>' + t.slice(i, i + term.length) + '</mark>' + t.slice(i + term.length);
 }
-
 function resultado(e, q){
-  const extra = e.tipo === 'publicacion' && M_PUB[e.slug] ? (M_PUB[e.slug].oa ? '<span class="etiqueta">Acceso abierto</span>' : '') : '';
-  return `<a class="resultado" href="${e.url}">
-    <span class="fila-tipo">
-      <span class="tipo">${esc(NOMBRE_TIPO[e.tipo])}</span>
-      ${e.estado ? pastillaEstado(e.estado) : ''}
-      ${extra}
+  const pub = e.tipo === 'publicacion' ? M_PUB[e.slug] : null;
+  return `<a class="resultado revelar" href="${e.url}">
+    ${miniatura(e)}
+    <span>
+      <span class="fila-tipo">
+        <span class="tipo">${esc(NOMBRE_TIPO[e.tipo])}</span>
+        ${e.estado ? pastillaEstado(e.estado) : ''}
+        ${pub && pub.oa ? '<span class="etiqueta">Acceso abierto</span>' : ''}
+        ${e.anio ? `<span class="mono" style="font-size:var(--t-xs); color:var(--texto-suave)">${e.anio}</span>` : ''}
+      </span>
+      <h3>${resaltar(e.titulo, q)}</h3>
+      <span class="meta">${esc(e.subtitulo || '')}</span>
+      <p>${esc((e.resumen || '').slice(0, 185))}${(e.resumen || '').length > 185 ? '…' : ''}</p>
+      ${e.temas && e.temas.length ? `<span class="etiquetas" style="margin-top:var(--e3)">${e.temas.slice(0,3).map(t => M_TEMA[t] ? `<span class="etiqueta etiqueta--tema" style="--h:${matiz(t)}">${esc(M_TEMA[t].nombre)}</span>` : '').join('')}</span>` : ''}
     </span>
-    <h3>${resaltar(e.titulo, q)}</h3>
-    <span class="meta">${esc(e.subtitulo || '')}</span>
-    <p>${esc((e.resumen || '').slice(0, 190))}${(e.resumen || '').length > 190 ? '…' : ''}</p>
-    ${e.temas && e.temas.length ? `<span class="etiquetas" style="margin-top:var(--e3)">${e.temas.slice(0,3).map(t => M_TEMA[t] ? `<span class="etiqueta">${esc(M_TEMA[t].nombre)}</span>` : '').join('')}</span>` : ''}
   </a>`;
 }
 
-/* --- Catálogo de temas y ficha de tema (RF-23 a RF-31) --- */
+/* =============================================================
+   9. Temas
+   ============================================================= */
 function vistaTemas(){
   return `
   ${migas([{texto:'Inicio', url:'#/'}, {texto:'Explorar investigación'}])}
   <div class="contenedor">
-    <div style="padding-top:var(--e4); max-width:64ch">
-      <h1>Explorar investigación por tema</h1>
+    <div style="padding-top:var(--e4); max-width:62ch">
+      <span class="tipo">Explorar</span>
+      <h1 style="margin-top:var(--e2)">Doce temas, un mismo mapa</h1>
       <p class="entradilla" style="margin-top:var(--e4)">No hace falta conocer la estructura administrativa de la universidad. Cada tema reúne a las personas, los grupos, los proyectos y los resultados que trabajan en él.</p>
     </div>
     <div class="seccion">
-      <div class="rejilla rejilla--3">
-        ${TEMAS.map(t => `
-          <a class="tarjeta-tema" href="#/tema/${t.slug}">
-            <strong>${esc(t.nombre)}</strong>
-            <span style="font-size:var(--t-sm); color:var(--texto-suave)">${esc(t.resumen)}</span>
-            <span class="cuentas">${investigadoresDeTema(t.slug).length} investigadores · ${gruposDeTema(t.slug).length} grupos · ${proyectosDeTema(t.slug).length} proyectos · ${publicacionesDeTema(t.slug).length} resultados</span>
-            <span class="etiquetas">${t.ods.map(o => `<span class="etiqueta">${esc(o)}</span>`).join('')}</span>
-          </a>`).join('')}
+      <div class="bento">
+        ${TEMAS.map((t, i) => tarjetaTema(t, i % 5 === 0)).join('')}
       </div>
     </div>
   </div>`;
@@ -1175,46 +1539,53 @@ function vistaTema(slug){
   return `
   ${migas([{texto:'Inicio', url:'#/'}, {texto:'Explorar investigación', url:'#/temas'}, {texto:t.nombre}])}
   <div class="contenedor">
-    <div class="ficha-cabecera">
-      <span class="tipo">Tema de investigación</span>
-      <h1>${esc(t.nombre)}</h1>
-      <p class="entradilla" style="margin-top:var(--e4)">${esc(t.resumen)}</p>
-      <div class="etiquetas" style="margin-top:var(--e4)">
-        ${t.disciplinas.map(d => `<span class="etiqueta">${esc(d)}</span>`).join('')}
-        ${t.ods.map(o => `<a class="etiqueta" href="${urlBusqueda({ods:o})}">${esc(o)}</a>`).join('')}
+    <div class="portada-ficha">
+      ${cubierta(slug)}
+      <div class="portada-ficha__contenido">
+        <span class="tipo">Tema de investigación</span>
+        <h1>${esc(t.nombre)}</h1>
+        <p class="entradilla">${esc(t.resumen)}</p>
       </div>
     </div>
-    <div class="cifras" style="margin-top:var(--e5)">
-      <a class="cifra" href="${urlBusqueda({tipo:'investigador', tema:slug})}"><b>${invs.length}</b><span>investigadores</span></a>
-      <a class="cifra" href="${urlBusqueda({tipo:'grupo', tema:slug})}"><b>${grs.length}</b><span>grupos y centros</span></a>
-      <a class="cifra" href="${urlBusqueda({tipo:'proyecto', tema:slug})}"><b>${prs.length}</b><span>proyectos</span></a>
-      <a class="cifra" href="${urlBusqueda({tipo:'publicacion', tema:slug})}"><b>${pubs.length}</b><span>publicaciones y datos</span></a>
+    <div class="rejilla rejilla--4" style="margin-top:var(--e5)">
+      <a class="tarjeta" href="${urlBusqueda({tipo:'investigador', tema:slug})}"><span class="tipo">Personas</span><strong class="mono" style="font-size:2.2rem; line-height:1">${invs.length}</strong><span class="meta">investigadores</span></a>
+      <a class="tarjeta" href="${urlBusqueda({tipo:'grupo', tema:slug})}"><span class="tipo">Unidades</span><strong class="mono" style="font-size:2.2rem; line-height:1">${grs.length}</strong><span class="meta">grupos y centros</span></a>
+      <a class="tarjeta" href="${urlBusqueda({tipo:'proyecto', tema:slug})}"><span class="tipo">Actividad</span><strong class="mono" style="font-size:2.2rem; line-height:1">${prs.length}</strong><span class="meta">proyectos</span></a>
+      <a class="tarjeta" href="${urlBusqueda({tipo:'publicacion', tema:slug})}"><span class="tipo">Producción</span><strong class="mono" style="font-size:2.2rem; line-height:1">${pubs.length}</strong><span class="meta">publicaciones y datos</span></a>
     </div>
     <div class="layout-ficha">
       <div>
         ${invs.length ? `<section class="bloque"><h2>Quién investiga este tema</h2><div class="rejilla rejilla--3">${invs.map(tarjetaPersona).join('')}</div></section>` : ''}
-        ${grs.length ? `<section class="bloque"><h2>Grupos y centros</h2><div class="rejilla rejilla--2">${grs.map(g => `
-          <a class="tarjeta" href="#/grupo/${g.slug}"><span class="tipo">${esc(g.tipo)}</span><h4>${esc(g.nombre)}</h4><span class="meta">${esc(g.resumen.slice(0,110))}…</span></a>`).join('')}</div></section>` : ''}
+        ${grs.length ? `<section class="bloque"><h2>Grupos y centros</h2><div class="rejilla rejilla--2">${grs.map(tarjetaGrupo).join('')}</div></section>` : ''}
         ${prs.length ? `<section class="bloque"><h2>Proyectos</h2><div class="rejilla rejilla--2">${prs.map(tarjetaProyecto).join('')}</div></section>` : ''}
         ${pubs.length ? `<section class="bloque"><h2>Resultados recientes</h2>${pubs.slice(0,6).map(lineaPublicacion).join('')}
-          <p style="margin-top:var(--e4)"><a href="${urlBusqueda({tipo:'publicacion', tema:slug, orden:'fecha'})}">Ver los ${pubs.length} resultados de este tema →</a></p></section>` : ''}
-        ${imps.length ? `<section class="bloque"><h2>Impacto</h2><div class="rejilla rejilla--2">${imps.map(h => `
-          <a class="tarjeta" href="#/impacto/${h.slug}"><span class="tipo">Impacto</span><h4>${esc(h.titulo)}</h4></a>`).join('')}</div></section>` : ''}
+          <p style="margin-top:var(--e4)"><a href="${urlBusqueda({tipo:'publicacion', tema:slug, orden:'fecha'})}">Ver los ${pubs.length} resultados de este tema ${icono('flecha','icono-s')}</a></p></section>` : ''}
+        ${imps.length ? `<section class="bloque"><h2>Impacto</h2><div class="rejilla" style="gap:var(--e5)">${imps.map(tarjetaImpacto).join('')}</div></section>` : ''}
       </div>
       <aside class="rail">
+        ${graficoAnios(pubs, 'Producción por año')}
         ${cajaColaborar('¿Trabajas en ' + t.nombre.toLowerCase() + '? Cuéntanos el problema y te ponemos en contacto con el equipo adecuado.', 'tema:' + slug)}
         ${bloqueRelaciones('Relacionado', [
           {texto:'Patentes y tecnologías', cuenta:pats.length, url:urlBusqueda({tipo:'patente', tema:slug})},
           {texto:'Capacidades y laboratorios', cuenta:caps.length, url:urlBusqueda({tipo:'capacidad', tema:slug})},
           {texto:'Historias de impacto', cuenta:imps.length, url:urlBusqueda({tipo:'impacto', tema:slug})}
         ])}
-        ${relacionados.length ? `<div class="caja"><h3>Temas relacionados</h3><div class="etiquetas">${relacionados.map(o => `<a class="etiqueta" href="#/tema/${o.slug}">${esc(o.nombre)}</a>`).join('')}</div></div>` : ''}
+        <div class="caja">
+          <h3>Disciplinas y ODS</h3>
+          <div class="etiquetas">
+            ${t.disciplinas.map(d => `<span class="etiqueta">${esc(d)}</span>`).join('')}
+            ${t.ods.map(o => `<a class="etiqueta" href="${urlBusqueda({ods:o})}">${esc(o)}</a>`).join('')}
+          </div>
+        </div>
+        ${relacionados.length ? `<div class="caja"><h3>Temas relacionados</h3><div class="etiquetas">${relacionados.map(o => `<a class="etiqueta etiqueta--tema" style="--h:${matiz(o.slug)}" href="#/tema/${o.slug}">${esc(o.nombre)}</a>`).join('')}</div></div>` : ''}
       </aside>
     </div>
   </div>`;
 }
 
-/* --- Perfil de investigador (RF-32 a RF-47) ------------- */
+/* =============================================================
+   10. Fichas de entidad
+   ============================================================= */
 function vistaInvestigador(slug){
   const i = M_INV[slug];
   if (!i) return vistaNoEncontrada();
@@ -1226,19 +1597,19 @@ function vistaInvestigador(slug){
   <div class="contenedor">
     <div class="ficha-cabecera">
       <div class="fila gap5" style="align-items:flex-start">
-        <span class="avatar avatar--grande" aria-hidden="true">${esc(iniciales(i.nombre))}</span>
-        <div style="flex:1 1 320px">
+        ${avatar(i, 'avatar--grande')}
+        <div style="flex:1 1 340px">
           <span class="tipo">Investigador · perfil de demostración</span>
-          <h1>${esc(i.nombre)}</h1>
+          <h1 style="margin-top:var(--e2)">${esc(i.nombre)}</h1>
           <p class="entradilla" style="margin-top:var(--e3); font-size:var(--t-base)">${esc(i.cargo)} · ${esc(i.unidad)}</p>
           <div class="etiquetas" style="margin-top:var(--e4)">
-            ${i.grupos.map(g => `<a class="etiqueta" href="#/grupo/${g}">${esc(M_GRUPO[g].sigla || M_GRUPO[g].nombre)}</a>`).join('')}
+            ${i.grupos.map(g => `<a class="etiqueta" href="#/grupo/${g}">${icono('grupo','icono-s')} ${esc(M_GRUPO[g].sigla || M_GRUPO[g].nombre)}</a>`).join('')}
             ${etiquetasTema(i.temas)}
           </div>
           <div class="fila gap3" style="margin-top:var(--e5)">
-            <a class="boton boton--primario" href="#/colaborar?desde=${encodeURIComponent('investigador:' + slug)}">Colaborar con ${esc(i.nombre.split(' ')[0])}</a>
-            <a class="boton" href="https://orcid.org/${esc(i.orcid)}" rel="noopener">Consultar perfil ORCID</a>
-            <button class="boton" type="button" data-exportar="${slug}">Exportar producción (BibTeX)</button>
+            <a class="boton boton--primario" href="#/colaborar?desde=${encodeURIComponent('investigador:' + slug)}">${icono('colaborar','icono-s')} Colaborar con ${esc(i.nombre.split(' ')[0])}</a>
+            <a class="boton" href="https://orcid.org/${esc(i.orcid)}" rel="noopener">${icono('identidad','icono-s')} Consultar perfil ORCID</a>
+            <button class="boton" type="button" data-exportar="${slug}">${icono('descarga','icono-s')} Exportar producción (BibTeX)</button>
           </div>
         </div>
       </div>
@@ -1260,10 +1631,7 @@ function vistaInvestigador(slug){
           ${pubs.map(lineaPublicacion).join('')}
         </section>` : ''}
         ${pats.length ? `<section class="bloque"><h2>Patentes y tecnologías</h2><div class="rejilla rejilla--2">${pats.map(p => `
-          <a class="tarjeta" href="#/patente/${p.slug}">${pastillaEstado(p.estado)}<h4>${esc(p.titulo)}</h4><span class="meta">${esc(p.industria)}</span></a>`).join('')}</div></section>` : ''}
-        ${colegas.length ? `<section class="bloque"><h2>Red de colaboración</h2>
-          <p class="meta" style="color:var(--texto-suave); margin-bottom:var(--e3)">Personas con quienes comparte proyectos o publicaciones en el portal.</p>
-          <div class="etiquetas">${colegas.map(c => `<a class="etiqueta" href="#/investigador/${c}">${esc(nombreInv(c))}</a>`).join('')}</div></section>` : ''}
+          <a class="tarjeta revelar" href="#/patente/${p.slug}"><span class="fila gap3">${marcaTipo('patente')}${pastillaEstado(p.estado)}</span><h4>${esc(p.titulo)}</h4><span class="meta">${esc(p.industria)}</span></a>`).join('')}</div></section>` : ''}
       </div>
       <aside class="rail">
         <div class="caja">
@@ -1276,11 +1644,13 @@ function vistaInvestigador(slug){
             <div><dt>Última revisión</dt><dd>Agosto 2026</dd></div>
           </dl>
         </div>
+        ${graficoAnios(pubs, 'Producción por año')}
+        ${colegas.length > 2 ? `<div class="caja"><h3>Red de colaboración</h3>${redColaboracion(slug, colegas)}
+          <div class="etiquetas">${colegas.map(c => `<a class="etiqueta" href="#/investigador/${c}">${esc(nombreInv(c))}</a>`).join('')}</div></div>` : ''}
         ${bloqueRelaciones('Producción y relaciones', [
           {texto:'Proyectos', cuenta:prs.length, url:urlBusqueda({tipo:'proyecto', q:i.nombre})},
           {texto:'Publicaciones y datos', cuenta:pubs.length, url:urlBusqueda({tipo:'publicacion', q:i.nombre})},
-          {texto:'Patentes', cuenta:pats.length, url:urlBusqueda({tipo:'patente', q:i.nombre})},
-          {texto:'Colaboradores', cuenta:colegas.length, url:'#/investigador/' + slug}
+          {texto:'Patentes', cuenta:pats.length, url:urlBusqueda({tipo:'patente', q:i.nombre})}
         ])}
         ${cajaColaborar('Propón un proyecto, una tesis o una consultoría técnica.', 'investigador:' + slug)}
       </aside>
@@ -1288,7 +1658,6 @@ function vistaInvestigador(slug){
   </div>`;
 }
 
-/* --- Grupo, centro o instituto (RF-48 a RF-58) ---------- */
 function vistaGrupo(slug){
   const g = M_GRUPO[slug];
   if (!g) return vistaNoEncontrada();
@@ -1298,30 +1667,37 @@ function vistaGrupo(slug){
   return `
   ${migas([{texto:'Inicio', url:'#/'}, {texto:'Grupos y centros', url:urlBusqueda({tipo:'grupo', orden:'alfabetico'})}, {texto:g.sigla || g.nombre}])}
   <div class="contenedor">
-    <div class="ficha-cabecera">
-      <span class="tipo">${esc(g.tipo)}</span>
-      <h1>${esc(g.nombre)}</h1>
-      <p class="entradilla" style="margin-top:var(--e4)">${esc(g.resumen)}</p>
-      <div class="etiquetas" style="margin-top:var(--e4)">${etiquetasTema(g.temas)}</div>
+    <div class="portada-ficha">
+      ${cubierta(g.slug, {h:matizDe(g.temas)})}
+      <div class="portada-ficha__contenido">
+        <span class="tipo">${esc(g.tipo)}${g.sigla ? ' · ' + esc(g.sigla) : ''}</span>
+        <h1>${esc(g.nombre)}</h1>
+        <p class="entradilla">${esc(g.resumen)}</p>
+      </div>
+    </div>
+    <div class="rejilla rejilla--4" style="margin-top:var(--e5)">
+      <div class="tarjeta"><span class="tipo">Equipo</span><strong class="mono" style="font-size:2.2rem; line-height:1">${g.miembros.length}</strong><span class="meta">investigadores</span></div>
+      <a class="tarjeta" href="${urlBusqueda({tipo:'proyecto', grupo:slug})}"><span class="tipo">Actividad</span><strong class="mono" style="font-size:2.2rem; line-height:1">${prs.length}</strong><span class="meta">proyectos</span></a>
+      <a class="tarjeta" href="${urlBusqueda({tipo:'publicacion', grupo:slug})}"><span class="tipo">Producción</span><strong class="mono" style="font-size:2.2rem; line-height:1">${pubs.length}</strong><span class="meta">resultados</span></a>
+      <a class="tarjeta" href="${urlBusqueda({tipo:'capacidad', grupo:slug})}"><span class="tipo">Capacidades</span><strong class="mono" style="font-size:2.2rem; line-height:1">${caps.length}</strong><span class="meta">laboratorios</span></a>
     </div>
     <div class="layout-ficha">
       <div>
         <section class="bloque">
           <h2>Líneas de investigación</h2>
-          <ul class="lista-limpia">${g.lineas.map(l => `<li><span class="vinieta">—</span><a href="${urlBusqueda({q:l})}">${esc(l)}</a></li>`).join('')}</ul>
+          <ul class="lista-limpia">${g.lineas.map((l, n) => `<li><span class="vinieta">${String(n+1).padStart(2,'0')}</span><a href="${urlBusqueda({q:l})}">${esc(l)}</a></li>`).join('')}</ul>
         </section>
         <section class="bloque">
           <h2>Equipo</h2>
           <div class="rejilla rejilla--3">${g.miembros.map(m => tarjetaPersona(M_INV[m])).join('')}</div>
-          <p class="meta" style="margin-top:var(--e3); color:var(--texto-suave)">Dirige: <a href="#/investigador/${g.director}">${esc(nombreInv(g.director))}</a></p>
+          <p class="meta" style="margin-top:var(--e4); color:var(--texto-suave)">Dirige: <a href="#/investigador/${g.director}">${esc(nombreInv(g.director))}</a></p>
         </section>
         ${prs.length ? `<section class="bloque"><h2>Proyectos</h2><div class="rejilla rejilla--2">${prs.map(tarjetaProyecto).join('')}</div></section>` : ''}
         ${pubs.length ? `<section class="bloque"><h2>Producción reciente</h2>${pubs.slice(0,6).map(lineaPublicacion).join('')}
-          <p style="margin-top:var(--e4)"><a href="${urlBusqueda({tipo:'publicacion', grupo:slug, orden:'fecha'})}">Ver los ${pubs.length} resultados del grupo →</a></p></section>` : ''}
+          <p style="margin-top:var(--e4)"><a href="${urlBusqueda({tipo:'publicacion', grupo:slug, orden:'fecha'})}">Ver los ${pubs.length} resultados del grupo ${icono('flecha','icono-s')}</a></p></section>` : ''}
         ${caps.length ? `<section class="bloque"><h2>Capacidades y equipamiento</h2><div class="rejilla rejilla--2">${caps.map(c => `
-          <a class="tarjeta" href="#/capacidad/${c.slug}"><span class="tipo">Capacidad</span><h4>${esc(c.nombre)}</h4><span class="meta">${esc(c.disponibilidad)}</span></a>`).join('')}</div></section>` : ''}
-        ${imps.length ? `<section class="bloque"><h2>Impacto</h2><div class="rejilla rejilla--2">${imps.map(h => `
-          <a class="tarjeta" href="#/impacto/${h.slug}"><span class="tipo">Impacto</span><h4>${esc(h.titulo)}</h4></a>`).join('')}</div></section>` : ''}
+          <a class="tarjeta revelar" href="#/capacidad/${c.slug}"><span class="fila gap3">${marcaTipo('capacidad')}<span class="tipo">Capacidad</span></span><h4>${esc(c.nombre)}</h4><span class="meta">${esc(c.disponibilidad)}</span>${enlaceFlecha('Consultar')}</a>`).join('')}</div></section>` : ''}
+        ${imps.length ? `<section class="bloque"><h2>Impacto</h2><div class="rejilla" style="gap:var(--e5)">${imps.map(tarjetaImpacto).join('')}</div></section>` : ''}
       </div>
       <aside class="rail">
         ${cajaColaborar('Plantea un reto técnico o un proyecto conjunto con este equipo.', 'grupo:' + slug)}
@@ -1329,36 +1705,35 @@ function vistaGrupo(slug){
           <h3>Ficha</h3>
           <dl class="datos">
             <div><dt>Tipo</dt><dd>${esc(g.tipo)}</dd></div>
-            ${g.sigla ? `<div><dt>Sigla</dt><dd>${esc(g.sigla)}</dd></div>` : ''}
             <div><dt>Contacto</dt><dd><a href="mailto:${esc(g.contacto)}">${esc(g.contacto)}</a></dd></div>
             <div><dt>Aliados</dt><dd>${g.aliados.map(esc).join(' · ') || 'Sin aliados declarados'}</dd></div>
           </dl>
         </div>
+        ${graficoAnios(pubs, 'Producción por año')}
         ${bloqueRelaciones('En el portal', [
-          {texto:'Proyectos', cuenta:prs.length, url:urlBusqueda({tipo:'proyecto', grupo:slug})},
-          {texto:'Publicaciones y datos', cuenta:pubs.length, url:urlBusqueda({tipo:'publicacion', grupo:slug})},
           {texto:'Patentes', cuenta:pats.length, url:urlBusqueda({tipo:'patente', grupo:slug})},
-          {texto:'Capacidades', cuenta:caps.length, url:urlBusqueda({tipo:'capacidad', grupo:slug})}
+          {texto:'Historias de impacto', cuenta:imps.length, url:urlBusqueda({tipo:'impacto', grupo:slug})}
         ])}
       </aside>
     </div>
   </div>`;
 }
 
-/* --- Proyecto (RF-59 a RF-72) --------------------------- */
 function vistaProyecto(slug){
   const p = M_PROY[slug];
   if (!p) return vistaNoEncontrada();
   const outputs = outputsDeProyecto(slug), pats = patentesDeProyecto(slug),
         historia = IMPACTO.find(h => h.proyecto === slug), g = M_GRUPO[p.grupo];
   return `
-  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Proyectos', url:urlBusqueda({tipo:'proyecto'})}, {texto:p.titulo.slice(0, 48) + '…'}])}
+  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Proyectos', url:urlBusqueda({tipo:'proyecto'})}, {texto:p.titulo.slice(0, 46) + '…'}])}
   <div class="contenedor">
-    <div class="ficha-cabecera">
-      <div class="fila gap3">${pastillaEstado(p.estado)}<span class="tipo">${p.inicio}–${p.fin}</span></div>
-      <h1>${esc(p.titulo)}</h1>
-      <p class="entradilla" style="margin-top:var(--e4)">${esc(p.resumen)}</p>
-      <div class="etiquetas" style="margin-top:var(--e4)">${etiquetasTema(p.temas)}${p.ods.map(o => `<a class="etiqueta" href="${urlBusqueda({ods:o})}">${esc(o)}</a>`).join('')}</div>
+    <div class="portada-ficha">
+      ${cubierta(p.slug, {h:matizDe(p.temas), cifra:p.inicio + '–' + p.fin})}
+      <div class="portada-ficha__contenido">
+        <div class="fila gap3">${pastillaEstado(p.estado)}<span class="tipo">${esc(g.sigla || g.nombre)}</span></div>
+        <h1>${esc(p.titulo)}</h1>
+        <p class="entradilla">${esc(p.resumen)}</p>
+      </div>
     </div>
     <div class="layout-ficha">
       <div>
@@ -1368,20 +1743,19 @@ function vistaProyecto(slug){
         </section>
         <section class="bloque">
           <h2>Objetivos</h2>
-          <ul class="lista-limpia">${p.objetivos.map((o, n) => `<li><span class="vinieta">${n+1}</span><span>${esc(o)}</span></li>`).join('')}</ul>
+          <ul class="lista-limpia">${p.objetivos.map((o, n) => `<li><span class="vinieta">${String(n+1).padStart(2,'0')}</span><span>${esc(o)}</span></li>`).join('')}</ul>
         </section>
         <section class="bloque">
           <h2>Equipo</h2>
           <div class="rejilla rejilla--3">${[p.pi].concat(p.equipo).map(m => tarjetaPersona(M_INV[m])).join('')}</div>
-          <p class="meta" style="margin-top:var(--e3); color:var(--texto-suave)">Investigador principal: <a href="#/investigador/${p.pi}">${esc(nombreInv(p.pi))}</a></p>
+          <p class="meta" style="margin-top:var(--e4); color:var(--texto-suave)">Investigador principal: <a href="#/investigador/${p.pi}">${esc(nombreInv(p.pi))}</a></p>
         </section>
         ${outputs.length || pats.length ? `<section class="bloque">
           <h2>Resultados del proyecto</h2>
           ${outputs.map(lineaPublicacion).join('')}
-          ${pats.map(x => `<div class="linea-publicacion"><a href="#/patente/${x.slug}"><strong>${esc(x.titulo)}</strong></a><div class="meta">Patente · ${esc(x.estado)} · ${x.anio}</div></div>`).join('')}
+          ${pats.map(x => `<div class="linea-publicacion"><span class="anio mono">${x.anio}</span><span><a href="#/patente/${x.slug}"><strong>${esc(x.titulo)}</strong></a><span class="meta" style="display:block">Patente · ${esc(x.estado)}</span></span></div>`).join('')}
         </section>` : ''}
-        ${historia ? `<section class="bloque"><h2>Impacto</h2>
-          <a class="tarjeta" href="#/impacto/${historia.slug}"><span class="tipo">Historia de impacto</span><h4>${esc(historia.titulo)}</h4><span class="meta">${esc(historia.resultado.slice(0,140))}…</span></a></section>` : ''}
+        ${historia ? `<section class="bloque"><h2>Impacto</h2>${tarjetaImpacto(historia)}</section>` : ''}
       </div>
       <aside class="rail">
         <div class="caja">
@@ -1393,6 +1767,7 @@ function vistaProyecto(slug){
             <div><dt>Financiamiento</dt><dd>${esc(p.financiador)}</dd></div>
             <div><dt>Fondo o convocatoria</dt><dd>${esc(p.fondo)}</dd></div>
             <div><dt>Socios</dt><dd>${p.socios.map(esc).join(' · ') || 'Sin socios externos'}</dd></div>
+            <div><dt>ODS</dt><dd>${p.ods.map(esc).join(' · ')}</dd></div>
           </dl>
         </div>
         ${bloqueRelaciones('Relacionado', [
@@ -1406,7 +1781,7 @@ function vistaProyecto(slug){
   </div>`;
 }
 
-/* --- Publicación (RF-73 a RF-85) ------------------------ */
+/* --- Publicación ---------------------------------------- */
 function citaAPA(p){
   const autores = p.autores.map(a => {
     const partes = nombreInv(a).split(' ');
@@ -1427,15 +1802,19 @@ function vistaPublicacion(slug){
   const proyecto = M_PROY[p.proyecto], g = M_GRUPO[p.grupo];
   const relacionadas = PUBLICACIONES.filter(o => o.slug !== slug && o.temas.some(t => p.temas.includes(t))).slice(0, 4);
   return `
-  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Resultados', url:urlBusqueda({tipo:'publicacion', orden:'fecha'})}, {texto:p.titulo.slice(0, 48) + '…'}])}
+  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Resultados', url:urlBusqueda({tipo:'publicacion', orden:'fecha'})}, {texto:p.titulo.slice(0, 44) + '…'}])}
   <div class="contenedor">
     <div class="ficha-cabecera">
-      <div class="fila gap3"><span class="tipo">${esc(p.tipo)}</span>${p.oa ? '<span class="etiqueta">Acceso abierto</span>' : '<span class="etiqueta">Acceso restringido</span>'}</div>
+      <div class="fila gap3">${marcaTipo('publicacion')}<span class="tipo">${esc(p.tipo)} · ${p.anio}</span>${p.oa ? '<span class="etiqueta">Acceso abierto</span>' : '<span class="etiqueta">Acceso restringido</span>'}</div>
       <h1>${esc(p.titulo)}</h1>
       <p class="entradilla" style="margin-top:var(--e4); font-size:var(--t-base)">
         ${p.autores.map(a => `<a href="#/investigador/${a}">${esc(nombreInv(a))}</a>`).concat(p.externos.map(esc)).join(', ')}
       </p>
-      <p class="meta" style="margin-top:var(--e2); color:var(--texto-suave)">${esc(p.revista)} · ${p.anio}</p>
+      <p class="meta" style="margin-top:var(--e2); color:var(--texto-suave)">${esc(p.revista)}</p>
+      <div class="fila gap3" style="margin-top:var(--e5)">
+        <a class="boton boton--azul" href="https://doi.org/${esc(p.doi)}" rel="noopener">${icono('externo','icono-s')} Ver publicación en DOI</a>
+        <button class="boton" type="button" id="copiar-cita">${icono('cita','icono-s')} Copiar cita</button>
+      </div>
     </div>
     <div class="layout-ficha">
       <div>
@@ -1448,7 +1827,6 @@ function vistaPublicacion(slug){
           <h2>Citar este resultado</h2>
           <div class="fila gap2" style="margin-bottom:var(--e3)" role="tablist" aria-label="Formato de cita">
             ${['APA','BibTeX','RIS'].map((f, n) => `<button class="boton boton--pequeno" type="button" role="tab" data-cita="${f}" aria-selected="${n === 0}">${f}</button>`).join('')}
-            <button class="boton boton--pequeno" type="button" id="copiar-cita">Copiar cita</button>
           </div>
           <pre class="cita" id="caja-cita">${esc(citaAPA(p))}</pre>
         </section>
@@ -1458,12 +1836,12 @@ function vistaPublicacion(slug){
         <div class="caja">
           <h3>Metadatos</h3>
           <dl class="datos">
-            <div><dt>DOI</dt><dd><a href="https://doi.org/${esc(p.doi)}" rel="noopener">Ver publicación en DOI</a></dd></div>
+            <div><dt>DOI</dt><dd><a href="https://doi.org/${esc(p.doi)}" rel="noopener">${esc(p.doi)}</a></dd></div>
             <div><dt>Tipo de resultado</dt><dd>${esc(p.tipo)}</dd></div>
             <div><dt>Año</dt><dd>${p.anio}</dd></div>
             <div><dt>Acceso</dt><dd>${p.oa ? 'Abierto' : 'Restringido'}</dd></div>
-            ${proyecto ? `<div><dt>Proyecto</dt><dd><a href="#/proyecto/${proyecto.slug}">${esc(proyecto.titulo)}</a></dd></div>` : ''}
-            ${proyecto ? `<div><dt>Financiamiento</dt><dd>${esc(proyecto.financiador)}</dd></div>` : ''}
+            ${proyecto ? `<div><dt>Proyecto</dt><dd><a href="#/proyecto/${proyecto.slug}">${esc(proyecto.titulo)}</a></dd></div>
+            <div><dt>Financiamiento</dt><dd>${esc(proyecto.financiador)}</dd></div>` : ''}
             <div><dt>Grupo</dt><dd><a href="#/grupo/${g.slug}">${esc(g.nombre)}</a></dd></div>
           </dl>
         </div>
@@ -1473,24 +1851,27 @@ function vistaPublicacion(slug){
   </div>`;
 }
 
-/* --- Patente y transferencia (RF-86 a RF-94) ------------ */
+/* --- Patente -------------------------------------------- */
 function vistaPatente(slug){
   const p = M_PAT[slug];
   if (!p) return vistaNoEncontrada();
   const proyecto = M_PROY[p.proyecto];
   return `
-  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Patentes y tecnologías', url:urlBusqueda({tipo:'patente'})}, {texto:p.titulo.slice(0, 44) + '…'}])}
+  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Patentes y tecnologías', url:urlBusqueda({tipo:'patente'})}, {texto:p.titulo.slice(0, 42) + '…'}])}
   <div class="contenedor">
-    <div class="ficha-cabecera">
-      <div class="fila gap3">${pastillaEstado(p.estado)}<span class="tipo">${esc(p.industria)}</span></div>
-      <h1>${esc(p.titulo)}</h1>
-      <p class="entradilla" style="margin-top:var(--e4)">${esc(p.resumen)}</p>
+    <div class="portada-ficha">
+      ${cubierta(p.slug, {h:matizDe(p.temas), variante:4})}
+      <div class="portada-ficha__contenido">
+        <div class="fila gap3">${pastillaEstado(p.estado)}<span class="tipo">${esc(p.industria)}</span></div>
+        <h1>${esc(p.titulo)}</h1>
+        <p class="entradilla">${esc(p.resumen)}</p>
+      </div>
     </div>
     <div class="layout-ficha">
       <div>
         <section class="bloque">
           <h2>Aplicaciones potenciales</h2>
-          <ul class="lista-limpia">${p.aplicaciones.map(a => `<li><span class="vinieta">—</span><span>${esc(a)}</span></li>`).join('')}</ul>
+          <ul class="lista-limpia">${p.aplicaciones.map(a => `<li><span class="vinieta">${icono('flecha','icono-s')}</span><span>${esc(a)}</span></li>`).join('')}</ul>
         </section>
         <section class="bloque">
           <h2>Inventores</h2>
@@ -1514,26 +1895,28 @@ function vistaPatente(slug){
   </div>`;
 }
 
-/* --- Capacidades y laboratorios ------------------------- */
+/* --- Capacidad ------------------------------------------ */
 function vistaCapacidad(slug){
   const c = M_CAP[slug];
   if (!c) return vistaNoEncontrada();
   return `
   ${migas([{texto:'Inicio', url:'#/'}, {texto:'Capacidades', url:urlBusqueda({tipo:'capacidad'})}, {texto:c.nombre}])}
   <div class="contenedor">
-    <div class="ficha-cabecera">
-      <span class="tipo">Capacidad · ${esc(c.disponibilidad)}</span>
-      <h1>${esc(c.nombre)}</h1>
-      <p class="entradilla" style="margin-top:var(--e4)">${esc(c.resumen)}</p>
-      <div class="etiquetas" style="margin-top:var(--e4)">${etiquetasTema(c.temas)}</div>
+    <div class="portada-ficha">
+      ${cubierta(c.slug, {h:matizDe(c.temas), variante:5})}
+      <div class="portada-ficha__contenido">
+        <span class="tipo">Capacidad · ${esc(c.disponibilidad)}</span>
+        <h1>${esc(c.nombre)}</h1>
+        <p class="entradilla">${esc(c.resumen)}</p>
+      </div>
     </div>
     <div class="layout-ficha">
       <div>
         <section class="bloque"><h2>Equipamiento</h2>
-          <ul class="lista-limpia">${c.equipamiento.map(x => `<li><span class="vinieta">—</span><span>${esc(x)}</span></li>`).join('')}</ul></section>
+          <ul class="lista-limpia">${c.equipamiento.map(x => `<li><span class="vinieta">${icono('capacidad','icono-s')}</span><span>${esc(x)}</span></li>`).join('')}</ul></section>
         <section class="bloque"><h2>Para qué se usa</h2>
-          <ul class="lista-limpia">${c.aplicaciones.map(x => `<li><span class="vinieta">—</span><span>${esc(x)}</span></li>`).join('')}</ul></section>
-        <section class="bloque"><h2>Equipo responsable</h2>${tarjetaPersona(M_INV[c.responsable])}</section>
+          <ul class="lista-limpia">${c.aplicaciones.map(x => `<li><span class="vinieta">${icono('flecha','icono-s')}</span><span>${esc(x)}</span></li>`).join('')}</ul></section>
+        <section class="bloque"><h2>Equipo responsable</h2><div class="rejilla rejilla--3">${tarjetaPersona(M_INV[c.responsable])}</div></section>
       </div>
       <aside class="rail">
         <div class="caja">
@@ -1555,18 +1938,13 @@ function vistaImpactoLista(){
   return `
   ${migas([{texto:'Inicio', url:'#/'}, {texto:'Impacto'}])}
   <div class="contenedor">
-    <div style="padding-top:var(--e4); max-width:64ch">
-      <h1>Investigación que genera impacto</h1>
+    <div style="padding-top:var(--e4); max-width:62ch">
+      <span class="tipo">Impacto</span>
+      <h1 style="margin-top:var(--e2)">Investigación que cambia algo fuera</h1>
       <p class="entradilla" style="margin-top:var(--e4)">No es una lista de publicaciones: son historias con desafío, evidencia y resultado, enlazadas a quienes las hicieron.</p>
     </div>
-    <div class="seccion rejilla rejilla--2">
-      ${IMPACTO.map(h => `
-        <a class="tarjeta" href="#/impacto/${h.slug}">
-          <span class="tipo">Impacto · ${esc(M_GRUPO[h.grupo].sigla || M_GRUPO[h.grupo].nombre)}</span>
-          <h3>${esc(h.titulo)}</h3>
-          <span class="meta">${esc(h.desafio.slice(0, 150))}…</span>
-          <span class="etiquetas" style="margin-top:var(--e3)">${h.evidencias.slice(0,2).map(e => `<span class="etiqueta">${esc(e.cifra)} ${esc(e.texto)}</span>`).join('')}</span>
-        </a>`).join('')}
+    <div class="seccion rejilla" style="gap:var(--e5)">
+      ${IMPACTO.map(tarjetaImpacto).join('')}
     </div>
   </div>`;
 }
@@ -1576,28 +1954,29 @@ function vistaImpacto(slug){
   if (!h) return vistaNoEncontrada();
   const p = M_PROY[h.proyecto];
   return `
-  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Impacto', url:'#/impacto'}, {texto:h.titulo.slice(0, 44) + '…'}])}
+  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Impacto', url:'#/impacto'}, {texto:h.titulo.slice(0, 42) + '…'}])}
   <div class="contenedor">
-    <div class="ficha-cabecera">
-      <span class="tipo">Historia de impacto</span>
-      <h1>${esc(h.titulo)}</h1>
-      <div class="etiquetas" style="margin-top:var(--e4)">${etiquetasTema(h.temas)}</div>
+    <div class="portada-ficha">
+      ${cubierta(h.slug, {h:matizDe(h.temas)})}
+      <div class="portada-ficha__contenido">
+        <span class="tipo">Historia de impacto</span>
+        <h1>${esc(h.titulo)}</h1>
+      </div>
+    </div>
+    <div class="evidencias" style="margin-top:var(--e5)">
+      ${h.evidencias.map(e => `<div class="evidencia revelar"><b>${esc(e.cifra)}</b><span>${esc(e.texto)}</span></div>`).join('')}
     </div>
     <div class="layout-ficha">
       <div>
         <section class="bloque"><h2>El desafío</h2><p class="prosa">${esc(h.desafio)}</p></section>
         <section class="bloque"><h2>Qué hizo UCSP</h2><p class="prosa">${esc(h.investigacion)}</p></section>
         <section class="bloque"><h2>Resultado</h2><p class="prosa">${esc(h.resultado)}</p></section>
-        <section class="bloque">
-          <h2>Evidencia</h2>
-          <div class="evidencias">${h.evidencias.map(e => `<div class="evidencia"><b>${esc(e.cifra)}</b><span>${esc(e.texto)}</span></div>`).join('')}</div>
-        </section>
       </div>
       <aside class="rail">
         <div class="caja">
           <h3>Detrás de esta historia</h3>
           <div class="relaciones">
-            ${p ? `<a href="#/proyecto/${p.slug}">${esc(p.titulo.slice(0, 46))}…<span class="cuenta">Proyecto</span></a>` : ''}
+            ${p ? `<a href="#/proyecto/${p.slug}">${esc(p.titulo.slice(0, 44))}…<span class="cuenta">Proyecto</span></a>` : ''}
             <a href="#/grupo/${h.grupo}">${esc(M_GRUPO[h.grupo].nombre)}<span class="cuenta">Grupo</span></a>
             ${h.investigadores.map(i => `<a href="#/investigador/${i}">${esc(nombreInv(i))}<span class="cuenta">Persona</span></a>`).join('')}
           </div>
@@ -1608,7 +1987,7 @@ function vistaImpacto(slug){
   </div>`;
 }
 
-/* --- Observatorio de convocatorias ---------------------- */
+/* --- Convocatorias -------------------------------------- */
 function vistaConvocatorias(params){
   const f = {estado:params.estado || '', dirigido:params.dirigido || '', fuente:params.fuente || '', tipo:params.tipoConv || ''};
   const cumple = c => (!f.estado || c.estado === f.estado) && (!f.dirigido || c.dirigido === f.dirigido) && (!f.fuente || c.fuente === f.fuente) && (!f.tipo || c.tipo === f.tipo);
@@ -1616,28 +1995,30 @@ function vistaConvocatorias(params){
   const archivo = CONVOCATORIAS.filter(c => c.estado === 'Cerrada').filter(cumple);
   const opciones = (clave, campo) => unico(CONVOCATORIAS.map(c => c[campo])).map(v =>
     `<option value="${esc(v)}"${f[clave] === v ? ' selected' : ''}>${esc(v)}</option>`).join('');
-  const tarjetaConv = c => `
-    <article class="convocatoria">
+  const dias = iso => Math.round((new Date(iso) - new Date('2026-08-27')) / 86400000);
+  const tarjetaConv = c => {
+    const d = dias(c.cierre);
+    return `<article class="convocatoria revelar">
       <div>
         <div class="fila gap3">${pastillaEstado(c.estado)}<span class="tipo">${esc(c.tipo)}</span></div>
-        <h3 style="margin-top:var(--e2)">${esc(c.titulo)}</h3>
+        <h3 style="margin-top:var(--e3)">${esc(c.titulo)}</h3>
         <p style="color:var(--texto-suave); font-size:var(--t-sm); margin-top:var(--e2)">${esc(c.resumen)}</p>
         <div class="datos-conv">
-          <span><strong>Cierre:</strong> ${fecha(c.cierre)}</span>
-          <span><strong>Dirigido a:</strong> ${esc(c.dirigido)}</span>
-          <span><strong>Área:</strong> ${esc(c.area)}</span>
-          <span><strong>Fuente:</strong> ${esc(c.fuente)}</span>
+          <span>${icono('reloj','icono-s')} Cierre ${fecha(c.cierre)}${d > 0 && d < 60 ? ` · <span class="cuenta-atras">quedan ${d} días</span>` : ''}</span>
+          <span>${icono('investigador','icono-s')} ${esc(c.dirigido)}</span>
+          <span>${icono('tema','icono-s')} ${esc(c.area)}</span>
+          <span>${icono('edificio','icono-s')} ${esc(c.fuente)}</span>
         </div>
       </div>
-      <div class="fila gap2">
-        <a class="boton ${c.estado === 'Cerrada' ? '' : 'boton--primario'}" href="#/colaborar?desde=${encodeURIComponent('convocatoria:' + c.slug)}">${c.estado === 'Cerrada' ? 'Ver resultados' : 'Ver convocatoria'}</a>
-      </div>
+      <a class="boton ${c.estado === 'Cerrada' ? '' : 'boton--primario'}" href="#/colaborar?desde=${encodeURIComponent('convocatoria:' + c.slug)}">${c.estado === 'Cerrada' ? 'Ver resultados' : 'Ver convocatoria'}</a>
     </article>`;
+  };
   return `
   ${migas([{texto:'Inicio', url:'#/'}, {texto:'Convocatorias'}])}
   <div class="contenedor">
-    <div style="padding-top:var(--e4); max-width:64ch">
-      <h1>Observatorio de convocatorias</h1>
+    <div style="padding-top:var(--e4); max-width:62ch">
+      <span class="tipo">Observatorio</span>
+      <h1 style="margin-top:var(--e2)">Convocatorias y fondos</h1>
       <p class="entradilla" style="margin-top:var(--e4)">Oportunidades vigentes de financiamiento, movilidad y tesis, con estado y fecha de cierre visibles. Las cerradas pasan al archivo.</p>
     </div>
     <div class="seccion" style="padding-top:var(--e5)">
@@ -1652,23 +2033,23 @@ function vistaConvocatorias(params){
           <select id="fc-tipo" name="tipoConv"><option value="">Todos</option>${opciones('tipo','tipo')}</select></span>
         <button class="boton" type="button" id="limpiar-conv">Limpiar</button>
       </form>
-      <p class="conteo" aria-live="polite" style="margin-top:var(--e4); color:var(--texto-suave)"><strong class="mono">${vigentes.length}</strong> convocatorias vigentes · <span class="mono">${archivo.length}</span> en archivo</p>
+      <p class="conteo" aria-live="polite" style="margin-top:var(--e5); color:var(--texto-suave)"><strong class="mono">${vigentes.length}</strong> convocatorias vigentes · <span class="mono">${archivo.length}</span> en archivo</p>
       <div class="apilado gap3" style="margin-top:var(--e4)">
         ${vigentes.length ? vigentes.map(tarjetaConv).join('') : '<div class="sin-resultados"><h3>Ninguna convocatoria vigente con estos filtros</h3><button class="boton" type="button" id="limpiar-conv-2">Quitar filtros</button></div>'}
       </div>
-      ${archivo.length ? `<h2 style="margin-top:var(--e7); margin-bottom:var(--e4)">Archivo</h2>
+      ${archivo.length ? `<h2 style="margin-top:var(--e8); margin-bottom:var(--e4)">Archivo</h2>
         <div class="apilado gap3">${archivo.map(tarjetaConv).join('')}</div>` : ''}
     </div>
   </div>`;
 }
 
-/* --- Colaborar (RF-95 a RF-105) ------------------------- */
+/* --- Colaborar ------------------------------------------ */
 const PERFILES = [
-  {clave:'empresa', titulo:'Soy empresa', desc:'Quiero resolver un reto técnico, acceder a capacidades o contratar investigación.', responsable:'Oficina de Proyectos y Transferencia (OPTI)', sla:'Respuesta en 3 días hábiles', intenciones:['Resolver un reto técnico','Contratar un ensayo o servicio de laboratorio','Licenciar una tecnología','Proyecto conjunto con fondos públicos']},
-  {clave:'investigador', titulo:'Soy investigador', desc:'Quiero proponer una colaboración o coautoría con un equipo de la UCSP.', responsable:'Dirección de Investigación', sla:'Respuesta en 5 días hábiles', intenciones:['Colaboración en un proyecto','Coautoría o publicación conjunta','Estancia o visita de investigación','Postular juntos a un fondo']},
-  {clave:'estudiante', titulo:'Soy estudiante', desc:'Quiero participar como tesista o asistente de investigación.', responsable:'Coordinación de semilleros', sla:'Respuesta en 7 días hábiles', intenciones:['Hacer mi tesis en un grupo','Ser asistente de investigación','Participar en un semillero']},
-  {clave:'institucion', titulo:'Represento una institución', desc:'Quiero desarrollar un proyecto conjunto o un convenio.', responsable:'Dirección de Investigación', sla:'Respuesta en 5 días hábiles', intenciones:['Convenio marco','Proyecto conjunto','Uso de capacidades y laboratorios','Formación o asistencia técnica']},
-  {clave:'medio', titulo:'Soy medio de comunicación', desc:'Necesito contactar a un experto o pedir datos para una nota.', responsable:'Comunicación institucional', sla:'Respuesta en 24 horas', intenciones:['Entrevista con un experto','Datos o cifras de investigación','Cobertura de un resultado']}
+  {clave:'empresa', icono:'edificio', titulo:'Soy empresa', desc:'Quiero resolver un reto técnico, acceder a capacidades o contratar investigación.', responsable:'Oficina de Proyectos y Transferencia (OPTI)', sla:'Respuesta en 3 días hábiles', intenciones:['Resolver un reto técnico','Contratar un ensayo o servicio de laboratorio','Licenciar una tecnología','Proyecto conjunto con fondos públicos']},
+  {clave:'investigador', icono:'investigador', titulo:'Soy investigador', desc:'Quiero proponer una colaboración o coautoría con un equipo de la UCSP.', responsable:'Dirección de Investigación', sla:'Respuesta en 5 días hábiles', intenciones:['Colaboración en un proyecto','Coautoría o publicación conjunta','Estancia o visita de investigación','Postular juntos a un fondo']},
+  {clave:'estudiante', icono:'publicacion', titulo:'Soy estudiante', desc:'Quiero participar como tesista o asistente de investigación.', responsable:'Coordinación de semilleros', sla:'Respuesta en 7 días hábiles', intenciones:['Hacer mi tesis en un grupo','Ser asistente de investigación','Participar en un semillero']},
+  {clave:'institucion', icono:'grupo', titulo:'Represento una institución', desc:'Quiero desarrollar un proyecto conjunto o un convenio.', responsable:'Dirección de Investigación', sla:'Respuesta en 5 días hábiles', intenciones:['Convenio marco','Proyecto conjunto','Uso de capacidades y laboratorios','Formación o asistencia técnica']},
+  {clave:'medio', icono:'cita', titulo:'Soy medio de comunicación', desc:'Necesito contactar a un experto o pedir datos para una nota.', responsable:'Comunicación institucional', sla:'Respuesta en 24 horas', intenciones:['Entrevista con un experto','Datos o cifras de investigación','Cobertura de un resultado']}
 ];
 
 function vistaColaborar(params){
@@ -1684,14 +2065,16 @@ function vistaColaborar(params){
   return `
   ${migas([{texto:'Inicio', url:'#/'}, {texto:'Colaborar'}])}
   <div class="contenedor">
-    <div style="padding-top:var(--e4); max-width:64ch">
-      <h1>¿Cómo quieres trabajar con UCSP?</h1>
+    <div style="padding-top:var(--e4); max-width:62ch">
+      <span class="tipo">Colaborar</span>
+      <h1 style="margin-top:var(--e2)">¿Cómo quieres trabajar con UCSP?</h1>
       <p class="entradilla" style="margin-top:var(--e4)">Elige tu perfil: el formulario, el equipo responsable y el plazo de respuesta cambian según quién escribe.</p>
     </div>
-    ${nombreDesde ? `<p class="aviso" style="margin-top:var(--e5); max-width:64ch">Vienes desde <strong>${esc(nombreDesde)}</strong>. Lo adjuntamos a tu solicitud para que llegue al equipo correcto.</p>` : ''}
+    ${nombreDesde ? `<p class="aviso" style="margin-top:var(--e5); max-width:62ch">${icono('flecha','icono-s')} Vienes desde <strong>${esc(nombreDesde)}</strong>. Lo adjuntamos a tu solicitud para que llegue al equipo correcto.</p>` : ''}
     <div class="seccion" style="padding-top:var(--e5)">
       <div class="perfiles" id="perfiles">
         ${PERFILES.map(x => `<button class="perfil" type="button" data-perfil="${x.clave}" aria-pressed="${x.clave === perfilActivo}">
+          ${marcaTipo(x.icono === 'edificio' ? 'grupo' : x.icono)}
           <strong>${esc(x.titulo)}</strong><span>${esc(x.desc)}</span></button>`).join('')}
       </div>
       ${p ? `
@@ -1711,12 +2094,12 @@ function vistaColaborar(params){
           <span class="ayuda">Se rellena solo cuando llegas desde una ficha del portal.</span>
         </div>
         <div class="dos-columnas">
-          <div class="campo"><label for="nombre">Nombre y apellido</label><input id="nombre" required /></div>
-          <div class="campo"><label for="organizacion">Organización</label><input id="organizacion" /></div>
+          <div class="campo"><label for="nombre">Nombre y apellido</label><input id="nombre" required autocomplete="name" /></div>
+          <div class="campo"><label for="organizacion">Organización</label><input id="organizacion" autocomplete="organization" /></div>
         </div>
         <div class="dos-columnas">
-          <div class="campo"><label for="correo">Correo</label><input id="correo" type="email" required /></div>
-          <div class="campo"><label for="telefono">Teléfono (opcional)</label><input id="telefono" type="tel" /></div>
+          <div class="campo"><label for="correo">Correo</label><input id="correo" type="email" required autocomplete="email" /></div>
+          <div class="campo"><label for="telefono">Teléfono (opcional)</label><input id="telefono" type="tel" autocomplete="tel" /></div>
         </div>
         <div class="campo">
           <label for="mensaje">Describe el problema o la propuesta</label>
@@ -1728,12 +2111,12 @@ function vistaColaborar(params){
           <span class="ayuda" style="font-size:var(--t-xs); color:var(--texto-suave)">Prototipo: no se envía nada ni se guardan datos.</span>
         </div>
         <div id="respuesta-colaborar" role="status"></div>
-      </form>` : `<p class="aviso" style="margin-top:var(--e6); max-width:64ch">Elige un perfil para ver el formulario que le corresponde.</p>`}
+      </form>` : `<p class="aviso" style="margin-top:var(--e6); max-width:62ch">Elige un perfil para ver el formulario que le corresponde.</p>`}
     </div>
   </div>`;
 }
 
-/* --- Capa de IA (RF-106 a RF-115) ----------------------- */
+/* --- Capa de IA ----------------------------------------- */
 function responder(pregunta){
   const todos = buscar(pregunta, {});
   const res = todos.slice(0, 12);
@@ -1756,89 +2139,90 @@ function vistaPreguntar(params){
   const r = pregunta ? responder(pregunta) : null;
   const resumenCuentas = r ? Object.keys(r.cuentas).map(t => r.cuentas[t] + ' ' + (r.cuentas[t] === 1 ? NOMBRE_TIPO[t].toLowerCase() : PLURAL_TIPO[t].toLowerCase())).join(', ') : '';
   return `
-  ${migas([{texto:'Inicio', url:'#/'}, {texto:'Preguntar'}])}
-  <div class="contenedor">
-    <div style="padding-top:var(--e4); max-width:64ch">
-      <span class="tipo">Capa de IA sobre datos verificados</span>
-      <h1 style="margin-top:var(--e2)">Pregunta a la investigación UCSP</h1>
-      <p class="entradilla" style="margin-top:var(--e4)">Responde solo con entidades que existen en el portal y enlaza cada fuente. Si no hay respaldo, no responde.</p>
-    </div>
-    <div class="seccion" style="padding-top:var(--e5)">
-      <div class="ia">
+  <section class="banda banda--oscura">
+    ${migas([{texto:'Inicio', url:'#/'}, {texto:'Preguntar'}])}
+    <div class="contenedor" style="padding-bottom:var(--e8)">
+      <div style="padding-top:var(--e4); max-width:62ch">
+        <span class="tipo" style="color:#9FC4EE">Capa de IA sobre datos verificados</span>
+        <h1 style="margin-top:var(--e2); color:#fff">Pregunta a la investigación UCSP</h1>
+        <p class="entradilla" style="margin-top:var(--e4)">Responde solo con entidades que existen en el portal y enlaza cada fuente. Si no hay respaldo, no responde.</p>
+      </div>
+      <div class="ia" style="margin-top:var(--e6)">
         <form id="form-ia">
           <label class="solo-lectores" for="q-ia">Escribe tu pregunta</label>
-          <span class="campo-busqueda" style="background:var(--bg)">
-            <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 4.5 16.8L21 21l-1.2-4.5A9 9 0 0 0 12 3Z"></path></svg>
+          <span class="campo-busqueda">
+            ${icono('ia')}
             <input id="q-ia" type="search" value="${esc(pregunta)}" placeholder="¿Quién investiga inteligencia artificial aplicada a minería?" />
             <button class="boton boton--azul" type="submit">Preguntar</button>
           </span>
         </form>
         <div class="ia-sugeridas">
-          ${['¿Quién investiga inteligencia artificial aplicada a minería?','¿Qué capacidades tiene UCSP en materiales?','¿Quién trabaja en salud mental escolar?','¿Qué se investiga sobre el sillar?'].map(x => `<a class="boton boton--pequeno" href="#/preguntar?p=${encodeURIComponent(x)}">${esc(x)}</a>`).join('')}
+          ${['¿Quién investiga inteligencia artificial aplicada a minería?','¿Qué capacidades tiene UCSP en materiales?','¿Quién trabaja en salud mental escolar?','¿Qué se investiga sobre el sillar?'].map(x => `<a class="boton boton--claro boton--pequeno" href="#/preguntar?p=${encodeURIComponent(x)}">${esc(x)}</a>`).join('')}
         </div>
         ${r ? `
         <div class="ia-respuesta">
-          <p class="mono" style="font-size:var(--t-sm); color:var(--texto-suave)">Encontré ${esc(resumenCuentas)}.</p>
-          <p>${esc(r.texto)}</p>
+          <p class="mono" style="font-size:var(--t-sm); color:#9FC4EE">Encontré ${esc(resumenCuentas)}.</p>
+          <p style="font-size:var(--t-lg); line-height:1.7">${esc(r.texto)}</p>
           ${r.fuentes.length ? `<div class="ia-fuentes">
-            <span class="tipo">Fuentes en el portal</span>
-            ${r.fuentes.map(f => `<a href="${f.url}">${esc(NOMBRE_TIPO[f.tipo])}: ${esc(f.titulo)}</a>`).join('')}
+            <span class="tipo" style="color:#9FC4EE">Fuentes en el portal</span>
+            ${r.fuentes.map(f => `<a href="${f.url}" style="color:#CFE1F7">${icono(ICONO_TIPO[f.tipo],'icono-s')} ${esc(NOMBRE_TIPO[f.tipo])}: ${esc(f.titulo)}</a>`).join('')}
           </div>` : ''}
-          <div class="voto">
+          <div class="voto" style="color:#9FC4EE">
             <span>¿Te sirvió esta respuesta?</span>
-            <button class="boton boton--pequeno" type="button" data-voto="si">Sí</button>
-            <button class="boton boton--pequeno" type="button" data-voto="no">No</button>
+            <button class="boton boton--claro boton--pequeno" type="button" data-voto="si">Sí</button>
+            <button class="boton boton--claro boton--pequeno" type="button" data-voto="no">No</button>
             <span id="gracias-voto" role="status"></span>
           </div>
         </div>` : ''}
-        <p style="font-size:var(--t-xs); color:var(--texto-suave)">Simulación del prototipo: la respuesta se construye únicamente con las entidades cargadas en el portal, sin modelo generativo detrás.</p>
+        <p style="font-size:var(--t-xs); color:#8AA5C6">Simulación del prototipo: la respuesta se construye únicamente con las entidades cargadas en el portal, sin modelo generativo detrás.</p>
       </div>
     </div>
-  </div>`;
+  </section>`;
 }
 
-/* --- Capa de gestión y gobierno ------------------------- */
+/* --- Gestión y gobierno --------------------------------- */
 function vistaGobierno(){
   return `
   ${migas([{texto:'Inicio', url:'#/'}, {texto:'Gestión y gobierno'}])}
   <div class="contenedor">
-    <div style="padding-top:var(--e4); max-width:64ch">
+    <div style="padding-top:var(--e4); max-width:62ch">
       <span class="tipo">Capa secundaria</span>
       <h1 style="margin-top:var(--e2)">Gestión y gobierno de la investigación</h1>
       <p class="entradilla" style="margin-top:var(--e4)">La normativa, las políticas y la estructura administrativa siguen existiendo, pero dejan de ocupar el escaparate: el frente del portal es el descubrimiento.</p>
     </div>
     <div class="seccion rejilla rejilla--2">
       ${[
-        ['Dirección de Investigación','Órgano que orienta, promueve y supervisa la actividad de investigación de la universidad.'],
-        ['Oficina de Proyectos y Transferencia (OPTI)','Acompaña la formulación, postulación y gestión de proyectos, y la relación con empresas.'],
-        ['Políticas y reglamentos','Reglamento de investigación, líneas institucionales y resoluciones directorales vigentes.'],
-        ['Ética de la investigación','Comité de ética, procedimientos de evaluación y formatos de consentimiento informado.'],
-        ['Propiedad intelectual','Titularidad, protección de resultados y condiciones de licenciamiento.'],
-        ['Indicadores y memorias','Memorias anuales de investigación e indicadores institucionales.']
-      ].map(([t, d]) => `<article class="tarjeta"><h3>${esc(t)}</h3><p class="meta">${esc(d)}</p></article>`).join('')}
+        ['edificio','Dirección de Investigación','Órgano que orienta, promueve y supervisa la actividad de investigación de la universidad.'],
+        ['proyecto','Oficina de Proyectos y Transferencia (OPTI)','Acompaña la formulación, postulación y gestión de proyectos, y la relación con empresas.'],
+        ['publicacion','Políticas y reglamentos','Reglamento de investigación, líneas institucionales y resoluciones directorales vigentes.'],
+        ['colaborar','Ética de la investigación','Comité de ética, procedimientos de evaluación y formatos de consentimiento informado.'],
+        ['patente','Propiedad intelectual','Titularidad, protección de resultados y condiciones de licenciamiento.'],
+        ['grafico','Indicadores y memorias','Memorias anuales de investigación e indicadores institucionales.']
+      ].map(([ic, t, d]) => `<article class="tarjeta revelar"><span class="fila gap3">${marcaTipo(ICONO_TIPO[ic] ? ic : 'tema')}</span><h3>${esc(t)}</h3><p class="meta">${esc(d)}</p></article>`).join('')}
     </div>
-    <p class="aviso" style="margin-top:var(--e6); max-width:64ch">En el prototipo esta capa está esbozada: sirve para mostrar dónde vive lo institucional una vez que el portal pone delante temas, personas y resultados.</p>
+    <p class="aviso" style="margin-top:var(--e6); max-width:62ch">En el prototipo esta capa está esbozada: sirve para mostrar dónde vive lo institucional una vez que el portal pone delante temas, personas y resultados.</p>
   </div>`;
 }
 
 function vistaNoEncontrada(){
-  return `<div class="contenedor" style="padding-top:var(--e7)">
-    <h1>No encontramos esa página</h1>
+  return `<div class="contenedor" style="padding-top:var(--e8)">
+    <span class="tipo">Error 404</span>
+    <h1 style="margin-top:var(--e2)">No encontramos esa página</h1>
     <p class="entradilla" style="margin-top:var(--e4)">El enlace puede estar mal escrito o la entidad no existe en el prototipo.</p>
     <div class="fila gap3" style="margin-top:var(--e5)"><a class="boton boton--azul" href="#/">Volver al inicio</a><a class="boton" href="#/temas">Explorar por temas</a></div>
   </div>`;
 }
 
 /* =============================================================
-   7. Panel de cobertura de requerimientos
+   11. Panel de cobertura de requerimientos
    ============================================================= */
 const COBERTURA = [
   {bloque:'Buscador y descubrimiento', rango:'RF-01 a RF-22', hechos:'RF-01 a RF-15 · RF-17 a RF-22', nota:'Buscador global, autocompletado, sinónimos, corrección, pestañas por entidad, facetas con conteo, orden, URL compartible y estado sin resultados.', fuera:'RF-16 (faceta de fuente de financiamiento)'},
-  {bloque:'Exploración por temas', rango:'RF-23 a RF-31', hechos:'RF-23 a RF-31', nota:'Catálogo de doce temas, página propia por tema con relaciones automáticas y volumen de actividad.', fuera:''},
-  {bloque:'Perfil del investigador', rango:'RF-32 a RF-47', hechos:'RF-32 a RF-46', nota:'Perfil con expertise, ORCID, producción, red de colaboración, disponibilidad y CTA contextual.', fuera:'RF-47 (perfil bilingüe)'},
+  {bloque:'Exploración por temas', rango:'RF-23 a RF-31', hechos:'RF-23 a RF-31', nota:'Catálogo de doce temas con portada e identidad propia, página por tema con relaciones automáticas y volumen de actividad.', fuera:''},
+  {bloque:'Perfil del investigador', rango:'RF-32 a RF-47', hechos:'RF-32 a RF-46', nota:'Perfil con expertise, ORCID, producción por año, red de colaboración, disponibilidad y CTA contextual.', fuera:'RF-47 (perfil bilingüe)'},
   {bloque:'Grupos, centros e institutos', rango:'RF-48 a RF-58', hechos:'RF-48 a RF-58', nota:'Ficha con líneas, equipo enlazado, proyectos, producción, capacidades, aliados y contacto.', fuera:''},
   {bloque:'Proyectos', rango:'RF-59 a RF-72', hechos:'RF-59 a RF-72', nota:'Landing por proyecto con estado, periodo, problema, objetivos, equipo, financiamiento, socios y resultados.', fuera:''},
-  {bloque:'Publicaciones y resultados', rango:'RF-73 a RF-85', hechos:'RF-73 a RF-85', nota:'Página HTML por resultado, autores enlazados, abstract, DOI descriptivo, proyecto, financiamiento y exportación de cita.', fuera:''},
+  {bloque:'Publicaciones y resultados', rango:'RF-73 a RF-85', hechos:'RF-73 a RF-85', nota:'Página por resultado, autores enlazados, abstract, DOI descriptivo, proyecto, financiamiento y exportación de cita.', fuera:''},
   {bloque:'Patentes y transferencia', rango:'RF-86 a RF-94', hechos:'RF-86 · RF-88 a RF-94', nota:'Catálogo, estado, inventores, proyecto de origen, resumen no técnico y CTA de consulta.', fuera:'RF-87 (faceta por industria)'},
   {bloque:'Colaboración', rango:'RF-95 a RF-105', hechos:'RF-95 a RF-102', nota:'Formulario condicionado por perfil e intención, prellenado desde la ficha de origen, responsable interno y plazo de respuesta visibles.', fuera:'RF-103 a RF-105 (tracking, CRM y analítica)'},
   {bloque:'Capa de IA', rango:'RF-106 a RF-115', hechos:'RF-106 a RF-115', nota:'Pregunta en lenguaje natural respondida solo con entidades del portal, con fuentes obligatorias, preguntas sugeridas y feedback. Simulada, sin modelo generativo.', fuera:''},
@@ -1847,22 +2231,22 @@ const COBERTURA = [
 
 function panelRF(){
   return `
-    <button class="boton boton--pequeno cerrar" type="button" id="cerrar-rf">Cerrar</button>
+    <button class="boton boton--pequeno cerrar" type="button" id="cerrar-rf">${icono('cerrar','icono-s')} Cerrar</button>
     <span class="tipo">Cobertura del prototipo</span>
     <h2 id="titulo-rf" style="margin-top:var(--e2)">Qué requerimientos están construidos</h2>
-    <p style="color:var(--texto-suave); font-size:var(--t-sm); margin-top:var(--e3)">109 de los 134 requerimientos funcionales del documento están representados en este prototipo. Los 25 restantes son backoffice, integraciones y analítica, que no se resuelven en el front.</p>
+    <p style="color:var(--texto-suave); font-size:var(--t-sm); margin-top:var(--e3)">109 de los 134 requerimientos funcionales del documento están representados. Los 25 restantes son backoffice, integraciones y analítica, que no se resuelven en el front.</p>
     ${COBERTURA.map(c => `
       <div class="rf-grupo">
         <h3>${esc(c.bloque)} · ${esc(c.rango)}</h3>
         <ul class="rf-lista">
           <li><code>${esc(c.hechos)}</code><span>${esc(c.nota)}</span></li>
-          ${c.fuera ? `<li><code>Fuera</code><span style="color:var(--texto-suave)">${esc(c.fuera)}</span></li>` : ''}
+          ${c.fuera ? `<li><code class="fuera">Fuera</code><span style="color:var(--texto-suave)">${esc(c.fuera)}</span></li>` : ''}
         </ul>
       </div>`).join('')}`;
 }
 
 /* =============================================================
-   8. Interacciones dependientes de la vista
+   12. Interacciones
    ============================================================= */
 function aviso(texto){
   let caja = $('#aviso-flotante');
@@ -1870,16 +2254,32 @@ function aviso(texto){
     caja = document.createElement('div');
     caja.id = 'aviso-flotante';
     caja.setAttribute('role', 'status');
-    caja.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);bottom:24px;background:var(--acento-fuerte);color:#fff;padding:.6rem 1.1rem;border-radius:999px;font-size:.85rem;z-index:80;box-shadow:0 8px 24px rgba(10,42,84,.3)';
+    caja.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);bottom:28px;background:var(--oscuro);color:#fff;padding:.65rem 1.2rem;border-radius:999px;font-size:.85rem;z-index:140;box-shadow:var(--sombra-3);border:1px solid rgba(255,255,255,.16)';
     document.body.appendChild(caja);
   }
   caja.textContent = texto;
   clearTimeout(aviso.t);
-  aviso.t = setTimeout(() => caja.remove(), 2600);
+  aviso.t = setTimeout(() => caja.remove(), 2800);
 }
 
+let limpiarHero = null;
 function conectar(ruta){
   const {vista, id, params} = ruta;
+
+  if (limpiarHero){ limpiarHero(); limpiarHero = null; }
+  const lienzo = document.getElementById('malla-hero');
+  if (lienzo) limpiarHero = mallaHero(lienzo);
+
+  // Aparición escalonada de las rejillas al entrar en pantalla.
+  const observador = new IntersectionObserver((entradas, obs) => {
+    entradas.forEach((e, i) => {
+      if (!e.isIntersecting) return;
+      e.target.style.transitionDelay = Math.min(i * 55, 320) + 'ms';
+      e.target.classList.add('visible');
+      obs.unobserve(e.target);
+    });
+  }, {rootMargin:'0px 0px -8% 0px', threshold:.06});
+  document.querySelectorAll('.revelar').forEach(el => observador.observe(el));
 
   const formHero = $('#form-hero');
   if (formHero) formHero.addEventListener('submit', ev => { ev.preventDefault(); irA('/buscar', {q: $('#q-hero').value.trim()}); });
@@ -1971,7 +2371,7 @@ function conectar(ruta){
 }
 
 /* =============================================================
-   9. Arranque
+   13. Arranque
    ============================================================= */
 function pintar(){
   const ruta = leerRuta();
@@ -1995,8 +2395,7 @@ function pintar(){
     case 'gobierno': html = vistaGobierno(); break;
     default: html = vistaNoEncontrada();
   }
-  const principal = document.getElementById('principal');
-  principal.innerHTML = `<div class="vista">${html}</div>`;
+  document.getElementById('principal').innerHTML = html;
   pintarNav(vista);
   pintarBuscadorGlobal(vista === 'buscar' ? (params.q || '') : '');
   conectar(ruta);

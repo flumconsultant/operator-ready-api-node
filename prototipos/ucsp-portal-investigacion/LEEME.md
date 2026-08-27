@@ -54,9 +54,31 @@ conjunto de datos vive al principio del `<script>`; el índice de búsqueda, los
 sinónimos, la corrección ortográfica y las facetas se construyen a partir de él,
 así que cambiar los datos cambia todo el portal.
 
-Sistema visual: azul institucional `#0A2A54`, acento cálido de sillar `#A9502A`,
-neutros con sesgo frío, Newsreader para títulos e IBM Plex Sans/Mono para
-interfaz y datos. Modo claro y oscuro, teclado y foco visibles, `mobile-first`.
+## Sistema visual
+
+Dirección de arte trabajada con la skill de UX del repositorio: patrón
+*marketplace/directory* (la búsqueda es la acción principal, las categorías son
+visuales) sobre una retícula editorial.
+
+- **Color**: azul institucional profundo `#0E2C52`, interactivo `#1A5399`, acento
+  cálido de sillar `#A5651F`, neutros con sesgo frío. Modo claro y oscuro
+  diseñados por separado.
+- **Tipografía**: EB Garamond para titulares, IBM Plex Sans para interfaz e IBM
+  Plex Mono para cifras, identificadores y etiquetas de tipo.
+- **Portadas generadas**: no hay banco de fotos. Cada tema tiene un matiz propio
+  y una portada dibujada en SVG a partir de su nombre —curvas de nivel, red de
+  nodos, ondas, trama de puntos, celosía de sillar o arcos—. El mismo tema dibuja
+  siempre la misma portada, y ese color lo acompaña en tarjetas, etiquetas,
+  avatares y miniaturas de resultados.
+- **Hero**: malla de nodos y aristas en canvas —las entidades y sus relaciones—
+  que se detiene al salir de pantalla y no se anima con `prefers-reduced-motion`.
+- **Datos como imagen**: producción por año en barras con valor etiquetado, red
+  de colaboración en SVG, cifras de impacto en grande.
+- **Movimiento**: aparición escalonada de las rejillas al entrar en pantalla,
+  elevación de 2-3 px al pasar el cursor, 180 ms. Todo se desactiva con
+  `prefers-reduced-motion`.
+- **Accesibilidad**: foco visible, navegación por teclado, contraste AA en ambos
+  modos, iconos SVG (nunca emoji) y sin scroll horizontal a 390 px.
 
 ## Qué falta para que esto sea el portal
 
