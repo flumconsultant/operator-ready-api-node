@@ -58,25 +58,33 @@ así que cambiar los datos cambia todo el portal.
 
 Dirección de arte trabajada con la skill de UX del repositorio: patrón
 *marketplace/directory* (la búsqueda es la acción principal, las categorías son
-visuales) sobre una retícula editorial.
+visuales) sobre una retícula editorial, con el acabado de un producto de IA.
 
-- **Color**: azul institucional profundo `#0E2C52`, interactivo `#1A5399`, acento
-  cálido de sillar `#A5651F`, neutros con sesgo frío. Modo claro y oscuro
-  diseñados por separado.
-- **Tipografía**: EB Garamond para titulares, IBM Plex Sans para interfaz e IBM
-  Plex Mono para cifras, identificadores y etiquetas de tipo.
+- **Aurora y cristal**: un fondo fijo de manchas de luz en violeta, índigo y cian
+  sobre el que flotan superficies translúcidas con `backdrop-filter` y un reflejo
+  de un píxel en el borde superior. Es el lenguaje glassmorphism que la skill
+  recomienda para SaaS y paneles.
+- **Color**: violeta `#6D28D9` para enlaces y foco, cian profundo `#155E75` como
+  segundo acento, y degradado violeta→índigo→cian en rellenos y anillos. El
+  degradado de los botones termina en `#0E7490` en lugar del cian vivo: con el
+  cian brillante el texto blanco se quedaba en 3.7:1.
+- **Tipografía**: Sora para titulares (técnica, tracking cerrado), IBM Plex Sans
+  para interfaz e IBM Plex Mono para cifras, identificadores y etiquetas.
 - **Portadas generadas**: no hay banco de fotos. Cada tema tiene un matiz propio
   y una portada dibujada en SVG a partir de su nombre —curvas de nivel, red de
-  nodos, ondas, trama de puntos, celosía de sillar o arcos—. El mismo tema dibuja
-  siempre la misma portada, y ese color lo acompaña en tarjetas, etiquetas,
-  avatares y miniaturas de resultados.
-- **Hero**: malla de nodos y aristas en canvas —las entidades y sus relaciones—
-  que se detiene al salir de pantalla y no se anima con `prefers-reduced-motion`.
-- **Datos como imagen**: producción por año en barras con valor etiquetado, red
-  de colaboración en SVG, cifras de impacto en grande.
+  nodos, ondas, trama de puntos, celosía o arcos—, con un halo violeta que la ata
+  al resto del sistema. El mismo tema dibuja siempre la misma portada, y su color
+  lo acompaña en tarjetas, etiquetas, avatares y miniaturas de resultados.
+- **Hero**: malla de nodos y aristas en canvas, con resplandor, que representa las
+  entidades y sus relaciones; se detiene al salir de pantalla y no se anima con
+  `prefers-reduced-motion`. El buscador es una barra de prompt con anillo en
+  degradado.
+- **Datos como imagen**: producción por año en barras con degradado y valor
+  etiquetado, red de colaboración en SVG, cifras de impacto en grande.
 - **Movimiento**: aparición escalonada de las rejillas al entrar en pantalla,
-  elevación de 2-3 px al pasar el cursor, 180 ms. Todo se desactiva con
+  elevación y resplandor al pasar el cursor, 180 ms. Todo se desactiva con
   `prefers-reduced-motion`.
+
 ## Accesibilidad y calidad de interacción
 
 Auditado contra el checklist de la skill de UX y verificado en Chromium, en modo
