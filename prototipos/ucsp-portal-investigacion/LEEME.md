@@ -56,56 +56,39 @@ así que cambiar los datos cambia todo el portal.
 
 ## Sistema visual
 
-Dirección de arte trabajada con la skill de UX del repositorio: patrón
-*marketplace/directory* (la búsqueda es la acción principal, las categorías son
-visuales) sobre una retícula editorial, con el acabado de un producto de IA.
+El prototipo aplica el **design system entregado en el handoff**
+(`ucsp-investigacion-design-system`), no una dirección propia:
 
-- **Aurora y cristal**: un fondo fijo de manchas de luz en violeta, índigo y cian
-  sobre el que flotan superficies translúcidas con `backdrop-filter` y un reflejo
-  de un píxel en el borde superior. Es el lenguaje glassmorphism que la skill
-  recomienda para SaaS y paneles.
-- **Color**: violeta `#6D28D9` para enlaces y foco, cian profundo `#155E75` como
-  segundo acento, y degradado violeta→índigo→cian en rellenos y anillos. El
-  degradado de los botones termina en `#0E7490` en lugar del cian vivo: con el
-  cian brillante el texto blanco se quedaba en 3.7:1.
-- **Tipografía**: Sora para titulares (técnica, tracking cerrado), IBM Plex Sans
-  para interfaz e IBM Plex Mono para cifras, identificadores y etiquetas.
-- **Portadas generadas**: no hay banco de fotos. Cada tema tiene un matiz propio
-  y una portada dibujada en SVG a partir de su nombre —curvas de nivel, red de
-  nodos, ondas, trama de puntos, celosía o arcos—, con un halo violeta que la ata
-  al resto del sistema. El mismo tema dibuja siempre la misma portada, y su color
-  lo acompaña en tarjetas, etiquetas, avatares y miniaturas de resultados.
-- **Hero**: malla de nodos y aristas en canvas, con resplandor, que representa las
-  entidades y sus relaciones; se detiene al salir de pantalla y no se anima con
-  `prefers-reduced-motion`. El buscador es una barra de prompt con anillo en
-  degradado.
-- **Datos como imagen**: producción por año en barras con degradado y valor
-  etiquetado, red de colaboración en SVG, cifras de impacto en grande.
-- **Movimiento**: aparición escalonada de las rejillas al entrar en pantalla,
-  elevación y resplandor al pasar el cursor, 180 ms. Todo se desactiva con
-  `prefers-reduced-motion`.
+- **Color**: rampa navy con `#283E84` —el único valor cromático verificado del
+  sitio, tomado de su `theme-color`— y rampa dorada de acento. Alias semánticos
+  del sistema: `text-strong`, `text-body`, `surface-*`, `action-*`.
+- **Tipografía**: Source Serif 4 en titulares, Barlow en interfaz, IBM Plex Mono
+  en cifras e identificadores. Sentence case en títulos; versalitas reservadas a
+  etiquetas de interfaz, botones y eyebrows, como pide el sistema.
+- **Componentes**: cabecera navy con el logotipo oficial, `SectionHeading`
+  (eyebrow dorado + título + filete de 56×3), `StatBlock` con filete lateral y
+  cifra en serif, `Tag` en pastilla, botones en versalitas con radio de 4 px,
+  fichas con borde `n-200`, radio 8 px y sombras `xs`/`md`.
+- **Fotografía**: las imágenes del handoff se usan donde el diseño las pone —el
+  hero y la banda de cifras— incrustadas en el archivo como data URI.
+- **Portadas de tema**: cada tema conserva su matiz, pero teñido de navy para que
+  toda la familia se lea como una sola marca. Se dibujan en SVG a partir del
+  nombre del tema; no hay banco de fotos por tema.
 
-## Accesibilidad y calidad de interacción
+### Desviaciones del sistema, y por qué
 
-Auditado contra el checklist de la skill de UX y verificado en Chromium, en modo
-claro y oscuro:
+Tres pares del sistema no llegan a 4.5:1 en texto pequeño. Están corregidos y
+anotados en el CSS:
 
-- **Contraste AA medido**, no estimado: los estados «cierra pronto», «cerrada» y
-  «finalizado» fallaban a 12 px; el acento cálido pasó a `#95591A` y el neutro a
-  `#556781` para que texto y botones superen 4.5:1 en ambos temas.
-- **Jerarquía de encabezados** sin saltos: un solo `h1` por vista y encabezados de
-  apoyo para lectores de pantalla donde la retícula no tenía uno visible.
-- **Teclado**: el buscador global se recorre con flechas, Inicio/Fin y Enter
-  (`aria-activedescendant`); al cambiar de vista el foco entra en el contenido;
-  `scroll-padding-top` evita que la cabecera fija tape el elemento enfocado.
-- **Formulario**: campos obligatorios marcados, validación al salir del campo
-  (nunca al teclear), error junto al campo con `aria-invalid` y resumen enlazado
-  al inicio que recibe el foco tras un envío fallido.
-- **Objetivos táctiles**: 44 px con puntero grueso, 16 px en los campos en móvil
-  para que iOS no haga zoom, y enlaces de pie y migas con área ampliada.
-- **Iconos SVG** de una sola familia (nunca emoji), decorativos ocultos al lector
-  de pantalla; gráficos con `role="img"` y descripción; sin scroll horizontal a
-  390 px.
+| Del sistema | Medido | En el prototipo |
+|---|---|---|
+| `gold-600` como texto sobre blanco (eyebrows, categorías) | 3.27:1 | `gold-700` (4.94:1) |
+| Botón dorado con texto blanco sobre `gold-600` | 3.27:1 | `gold-700` (4.94:1); el botón de acento usa navy sobre `gold-500` (6.89:1) |
+| `Tag` de acento: `gold-700` sobre `gold-100` | 4.32:1 | `gold-800`, añadido a la rampa |
+
+El sistema tampoco define modo oscuro. El del prototipo se deriva de sus propias
+rampas —navy-900 de fondo, navy-100 de texto, gold-400 de acento— y se mide
+aparte.
 
 ## Qué falta para que esto sea el portal
 
