@@ -1,0 +1,255 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-08-28",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "ai-native",
+  "formato": "executive-brief",
+  "es": {
+    "slug": "por-donde-empieza-un-comite-de-direccion-con-ia",
+    "titulo": "Por dónde empieza un consejo con la IA",
+    "entradilla": "El primer movimiento de un consejo que decide tomarse la IA en serio suele ser nombrar un comité. Es también el movimiento que menos resuelve: reubica la pregunta, no la contesta.",
+    "descripcion": "Nombrar un comité de IA no es el punto de partida: hay que decidir antes quién responde por el resultado y cuándo se cierra un piloto.",
+    "linkedin": {
+      "texto": "Casi todo consejo que decide tomarse la inteligencia artificial en serio hace lo mismo primero: nombra un comité.\n\nEs el movimiento que menos resuelve. Un comité sin mandato escrito no decide nada, solo reubica la pregunta: quién responde por el resultado, cuándo un piloto pasa a operación o se cierra, bajo qué criterio se mata una iniciativa. Sin esas tres respuestas, el comité se convierte en una sala de espera con actas.\n\nEn este análisis de BECOME desarrollamos qué tiene que decidir un consejo antes de convocar la primera reunión.",
+      "hashtags": ["IA", "Consejo", "Estrategia"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "El primer movimiento de un consejo que decide tomarse la IA en serio suele ser nombrar un comité. Es también el movimiento que menos resuelve: reubica la pregunta, no la contesta."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "He estado en la primera reunión donde una empresa decide «ponerse seria» con la inteligencia artificial, y el patrón se repite casi sin variación. Alguien propone crear un comité, todos asienten, y en tres semanas hay una convocatoria mensual, un dueño de la agenda y una diapositiva con el logo de la iniciativa. Parece un comienzo. No lo es. Es una forma cómoda de posponer las cuatro decisiones que sí lo son."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Formar un comité no cuesta nada políticamente: nadie se opone a que exista un espacio para hablar de IA. Lo que sí cuesta, y por eso se evita, es decidir quién responde por el resultado en la cuenta de resultados, qué pasa con un piloto cuando lleva seis meses vivo, y bajo qué criterio se mata una iniciativa antes de que se vuelva imposible de cerrar. Un comité sin esas tres respuestas escritas no es un punto de partida. Es una sala de espera con actas."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Por dónde empieza un comité de dirección con inteligencia artificial?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La respuesta que circula hoy, calcada en decenas de propuestas de proveedores pensadas para empresas pequeñas, es una receta de tres pasos: forma un comité, define principios, elige dos pilotos. Sirve para una empresa que ordena su primer experimento. No sirve para un consejo que ya tiene diez iniciativas corriendo y necesita saber, de aquí a dos trimestres, cuáles van a operación y cuáles se cierran. La receta resuelve el arranque y calla justo donde empieza lo difícil."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El comité se reúne cada mes y revisa el mismo conjunto de diapositivas, casi siempre los mismos dos pilotos «avanzando».",
+          "Nadie en la sala puede decir, sin abrir una hoja de cálculo, cuánto ha costado la iniciativa hasta hoy.",
+          "Los pilotos no tienen fecha de decisión: se revisan indefinidamente hasta que alguien deja de preguntar por ellos.",
+          "El comité recomienda y el consejo pleno nunca vota en contra; en la práctica, ratifica.",
+          "Cuando se pregunta quién pierde el bono si el piloto no llega a producción, la sala se queda en silencio."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema detrás",
+        "texto": "Un comité que solo recomienda no decide nada, y todos en la sala lo saben."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El comité de IA se parece, en la mayoría de consejos, al comité de innovación de hace diez años: un espacio de visibilidad sin autoridad de gasto ni de cierre. Recomienda, pero no firma. Revisa, pero no puede matar una iniciativa sin subirla al consejo pleno, y subir algo al consejo pleno solo para matarlo cuesta tanto capital político que casi nunca ocurre. El resultado es previsible: las iniciativas no mueren, se sedimentan. Y un consejo con quince iniciativas sedimentadas no tiene una cartera de IA. Tiene un cementerio que todavía paga nómina."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La causa no es que el comité esté mal compuesto. Es que se le pidió resolver una pregunta de gobierno corporativo (quién decide, con qué autoridad, con qué consecuencia) con una herramienta de coordinación. Un comité coordina bien. Decidir es otra competencia, y esa competencia solo la tiene quien puede perder algo si decide mal: presupuesto, bono, credibilidad frente al consejo."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un comité que solo recomienda no gobierna la IA. Le da a la empresa la sensación de estar gobernándola.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "¿Qué tiene que decidir un consejo antes de nombrar un comité?"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Mandato",
+            "definicion": "Qué puede decidir el comité sin subir al consejo pleno, y qué no. Si la respuesta es «nada, todo se eleva», no hay comité: hay una reunión de estado."
+          },
+          {
+            "termino": "Dueño del resultado",
+            "definicion": "La persona, no el comité, que responde por el número de cada iniciativa en la cuenta de resultados. Un cuerpo colegiado nunca pierde un bono. Una persona con nombre, sí."
+          },
+          {
+            "termino": "Prueba de los seis meses",
+            "definicion": "La fecha en la que cada piloto tiene que hacer una de dos cosas: entrar en operación con presupuesto propio, o cerrarse. Sin esa fecha escrita, un piloto vive indefinidamente en modo demo."
+          },
+          {
+            "termino": "Criterio de cierre",
+            "definicion": "Las señales que bastan para matar una iniciativa antes de que se convierta en un coste hundido que nadie quiere firmar. Si el único criterio es «cuando ya no funcione ni maquillado», no hay criterio."
+          },
+          {
+            "termino": "Cadencia de rendición",
+            "definicion": "Cada cuánto informa el comité al consejo pleno, y con qué evidencia distinta de las mismas diapositivas del mes pasado. Sin esa cadencia, el comité rinde cuentas a sí mismo."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguna de las cinco exige entender un modelo. Exigen la misma disciplina que un consejo ya aplica a una adquisición o a un plan de reducción de costes: nombrar a quien responde, poner fecha a la decisión, y aceptar que parte de lo que se apruebe hoy se va a cerrar mañana sin que eso sea un fracaso. Cuando esas cinco respuestas existen, formar el comité es un trámite de un día. Cuando no existen, el comité sustituye a haberlas tomado, y dura años."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Antes de convocar la primera reunión del comité, pon nombre a quien responde por el resultado de la primera iniciativa que ya está corriendo. Si nadie en el consejo puede nombrarla, no tienes un comité pendiente de formar: tienes una decisión de gobierno pendiente de tomar, y formar el comité solo la va a aplazar otro trimestre."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Por dónde debe empezar un consejo con la inteligencia artificial?",
+            "respuesta": "No por nombrar un comité. Empieza por decidir quién responde por el resultado de cada iniciativa en la cuenta de resultados, con qué fecha un piloto tiene que pasar a operación o cerrarse, y bajo qué criterio se mata algo antes de que se vuelva imposible de cerrar. El comité se forma después, para ejecutar esas tres decisiones, no para tomarlas."
+          },
+          {
+            "pregunta": "¿Qué diferencia hay entre un comité de IA que decide y uno que solo recomienda?",
+            "respuesta": "Un comité que decide tiene mandato escrito para cerrar o aprobar iniciativas hasta un umbral de presupuesto, sin subir cada caso al consejo pleno. Uno que solo recomienda eleva toda decisión relevante hacia arriba, y elevar una decisión solo para matar algo cuesta tanto capital político que casi nunca se hace. El segundo tipo parece prudente y en la práctica no cierra nada."
+          },
+          {
+            "pregunta": "¿Quién debe presidir el comité de inteligencia artificial de una empresa?",
+            "respuesta": "Alguien con autoridad sobre el presupuesto operativo, no solo sobre la tecnología. Un comité presidido desde tecnología puede evaluar la viabilidad técnica de un caso, pero no puede matarlo si compite con el presupuesto de otra área, y esa es exactamente la decisión que un consejo necesita que alguien tome con autoridad de negocio."
+          },
+          {
+            "pregunta": "¿Qué pasa si una empresa ya tiene un comité de IA que no ha decidido nada en meses?",
+            "respuesta": "Antes de disolverlo o reforzarlo, se revisa el mandato: si nunca tuvo autoridad escrita para cerrar una iniciativa sin subirla al consejo pleno, el comité no ha fallado, ha hecho exactamente lo que se le pidió. El arreglo no es cambiar a las personas: es escribir el mandato que nunca existió."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Diseñemos el mandato de tu comité de IA",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "where-should-a-board-start-with-ai",
+    "titulo": "Where a board should start with AI",
+    "entradilla": "The first move for almost any board that decides to take AI seriously is naming a committee. It is also the move that resolves the least: it relocates the question instead of answering it.",
+    "descripcion": "Naming an AI committee isn't the starting point: a board must first decide who owns the result and when a pilot gets shut down.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "The first move for almost any board that decides to take AI seriously is naming a committee. It is also the move that resolves the least: it relocates the question instead of answering it."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "I have sat in the first meeting where a company decides to get serious about artificial intelligence, and the pattern barely varies. Someone proposes a committee, everyone nods, and within three weeks there is a monthly calendar invite, an agenda owner and a deck carrying the initiative's own logo. It looks like a start. It isn't. It is a comfortable way to postpone the four decisions that actually are."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Naming a committee costs nothing politically. Nobody objects to a room where AI gets discussed. What does cost something, and what gets avoided because of that, is deciding who answers for the result on the P&L, what happens to a pilot once it has been alive for six months, and under what criteria an initiative gets killed before it becomes impossible to close. A committee without those three answers in writing is not a starting point. It is a waiting room with minutes."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "Where should a board actually start with AI?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The answer circulating today, copied across dozens of vendor proposals sized for smaller companies, is a three-step recipe: form a committee, write principles, pick two pilots. It works for a company running its first experiment. It does not work for a board that already has ten initiatives in flight and needs to know, two quarters from now, which ones go live and which ones get shut down. The recipe solves the launch and goes quiet exactly where the hard part starts."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The committee meets monthly and reviews the same slides, almost always the same two pilots described as progressing.",
+          "Nobody in the room can say, without opening a spreadsheet, how much the initiative has cost so far.",
+          "Pilots carry no decision date; they get reviewed indefinitely until someone stops asking about them.",
+          "The committee recommends and the full board never votes against it. In practice, it ratifies.",
+          "Ask who loses their bonus if the pilot never reaches production, and the room goes quiet."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "A committee that only recommends decides nothing, and everyone in the room knows it."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "In most boardrooms, the AI committee looks like the innovation committee from a decade ago: a space for visibility with no authority to spend or to close. It recommends, but it does not sign off. It reviews, but it cannot kill an initiative without escalating to the full board, and escalating something to the full board purely to kill it burns enough political capital that it almost never happens. The result is predictable: initiatives do not die, they accumulate. And a board with fifteen initiatives sitting in accumulation does not have an AI portfolio. It has a graveyard that still makes payroll."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The cause is not that the committee is badly staffed. It is that it was asked to answer a corporate governance question (who decides, with what authority, with what consequence) using a coordination tool. A committee coordinates well. Deciding is a different competency, and only the person who stands to lose something for deciding wrong has it: budget, bonus, credibility in front of the board."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A committee that only recommends does not govern AI. It gives the company the feeling of governing it.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "What does a board need to decide before naming a committee?"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Mandate",
+            "definicion": "What the committee can decide without escalating to the full board, and what it cannot. If the answer is 'nothing, everything gets escalated,' there is no committee. There is a status meeting."
+          },
+          {
+            "termino": "Result owner",
+            "definicion": "The person, not the committee, who answers for each initiative's number on the P&L. A collegiate body never loses a bonus. A named person does."
+          },
+          {
+            "termino": "The six-month test",
+            "definicion": "The date by which every pilot has to do one of two things: move into operation with its own budget, or shut down. Without that date in writing, a pilot lives indefinitely in demo mode."
+          },
+          {
+            "termino": "Kill criteria",
+            "definicion": "The signals that are enough to kill an initiative before it turns into a sunk cost nobody wants to be the one to close. If the only kill criterion is 'once it clearly no longer works, even dressed up,' there is no criterion."
+          },
+          {
+            "termino": "Reporting cadence",
+            "definicion": "How often the committee reports to the full board, and with what evidence beyond last month's same slides. Without that cadence, the committee answers only to itself."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of the five require understanding a model. They require the same discipline a board already applies to an acquisition or a cost-cutting plan: name who answers for it, put a date on the decision, and accept that part of what gets approved today will close tomorrow without that being a failure. When those five answers exist, forming the committee is a one-day formality. When they do not, the committee substitutes for having made them, and it lasts for years."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Before calling the committee's first meeting, name who answers for the result of the one initiative already running. If nobody on the board can name that person, you do not have a committee left to form. You have a governance decision left to make, and forming the committee will only postpone it another quarter."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Where should a board start with artificial intelligence?",
+            "respuesta": "Not by naming a committee. Start by deciding who answers for each initiative's result on the P&L, by what date a pilot has to move into operation or shut down, and under what criteria an initiative gets killed before it becomes impossible to close. The committee gets formed afterward, to execute those three decisions, not to make them."
+          },
+          {
+            "pregunta": "What is the difference between an AI committee that decides and one that only recommends?",
+            "respuesta": "A deciding committee has a written mandate to approve or close initiatives up to a budget threshold, without escalating every case to the full board. One that only recommends pushes every meaningful call upward, and escalating a call purely to kill something burns enough political capital that it almost never happens. The second type looks prudent and, in practice, closes nothing."
+          },
+          {
+            "pregunta": "Who should chair a company's AI committee?",
+            "respuesta": "Someone with authority over the operating budget, not only over the technology. A committee chaired from technology can assess a case's technical feasibility, but it cannot kill it when the case competes with another department's budget, and that is exactly the call a board needs someone with business authority to make."
+          },
+          {
+            "pregunta": "What if a company already has an AI committee that has not decided anything in months?",
+            "respuesta": "Before disbanding or reinforcing it, check the mandate. If it never had written authority to close an initiative without escalating to the full board, the committee has not failed. It has done exactly what it was asked to do. The fix is not changing the people. It is writing the mandate that never existed."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's design your AI committee's mandate",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
