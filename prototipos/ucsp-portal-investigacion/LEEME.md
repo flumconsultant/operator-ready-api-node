@@ -77,8 +77,27 @@ visuales) sobre una retícula editorial.
 - **Movimiento**: aparición escalonada de las rejillas al entrar en pantalla,
   elevación de 2-3 px al pasar el cursor, 180 ms. Todo se desactiva con
   `prefers-reduced-motion`.
-- **Accesibilidad**: foco visible, navegación por teclado, contraste AA en ambos
-  modos, iconos SVG (nunca emoji) y sin scroll horizontal a 390 px.
+## Accesibilidad y calidad de interacción
+
+Auditado contra el checklist de la skill de UX y verificado en Chromium, en modo
+claro y oscuro:
+
+- **Contraste AA medido**, no estimado: los estados «cierra pronto», «cerrada» y
+  «finalizado» fallaban a 12 px; el acento cálido pasó a `#95591A` y el neutro a
+  `#556781` para que texto y botones superen 4.5:1 en ambos temas.
+- **Jerarquía de encabezados** sin saltos: un solo `h1` por vista y encabezados de
+  apoyo para lectores de pantalla donde la retícula no tenía uno visible.
+- **Teclado**: el buscador global se recorre con flechas, Inicio/Fin y Enter
+  (`aria-activedescendant`); al cambiar de vista el foco entra en el contenido;
+  `scroll-padding-top` evita que la cabecera fija tape el elemento enfocado.
+- **Formulario**: campos obligatorios marcados, validación al salir del campo
+  (nunca al teclear), error junto al campo con `aria-invalid` y resumen enlazado
+  al inicio que recibe el foco tras un envío fallido.
+- **Objetivos táctiles**: 44 px con puntero grueso, 16 px en los campos en móvil
+  para que iOS no haga zoom, y enlaces de pie y migas con área ampliada.
+- **Iconos SVG** de una sola familia (nunca emoji), decorativos ocultos al lector
+  de pantalla; gráficos con `role="img"` y descripción; sin scroll horizontal a
+  390 px.
 
 ## Qué falta para que esto sea el portal
 
