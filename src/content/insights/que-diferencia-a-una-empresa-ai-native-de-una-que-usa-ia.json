@@ -1,0 +1,247 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-08-29",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "ai-native",
+  "formato": "perspective",
+  "es": {
+    "slug": "que-diferencia-a-una-empresa-ai-native-de-una-que-usa-ia",
+    "titulo": "Qué hace AI-native a una empresa, no al producto",
+    "entradilla": "Casi todas las empresas que conozco tienen IA en el producto. Muy pocas han cambiado algo de cómo deciden. Esa distancia es la que importa, y nadie la mide mirando el producto.",
+    "descripcion": "AI-native no se mide quitando los modelos del producto. Se mide en el organigrama, el presupuesto y quién responde cuando el sistema decide mal.",
+    "linkedin": {
+      "texto": "El test más citado para saber si una empresa es AI-native consiste en quitarle los modelos y ver si el producto sigue funcionando.\n\nUn banco lo pasa sin problema: quita cada modelo de su aplicación y sigue prestando dinero mañana mismo. El test dice que no es AI-native. Y puede llevar tres años decidiendo el riesgo de crédito con un sistema que antes decidía un comité entero.\n\nEn el nuevo análisis de BECOME explicamos qué hay que mirar en el organigrama y el presupuesto para responder la pregunta de verdad.",
+      "hashtags": ["IA", "Estrategia", "Transformacion"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Casi todas las empresas que conozco tienen IA en el producto. Muy pocas han cambiado algo de cómo deciden. Esa distancia es la que separa ser AI-native de simplemente usar IA, y nadie la mide mirando el producto."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El test que más circula es fácil de aplicar y todavía más fácil de repetir en una charla: quita los modelos del producto y mira si sigue funcionando. Si deja de funcionar, la empresa es AI-native. Si funciona igual, no lo es. Suena riguroso. Es un test de producto, y la mayoría de las empresas que me contratan no tienen un problema de producto."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Un banco puede quitar cada modelo de su aplicación y seguir prestando dinero mañana mismo. El test le da un no rotundo. Y ese banco puede llevar tres años decidiendo el riesgo de crédito con un sistema que antes decidía un comité, con menos personas en la sala y un criterio distinto para cada excepción. El test falla porque mide el producto, y la pregunta era sobre la empresa."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Qué diferencia a una empresa AI-native de una empresa que usa IA?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Nada que se vea abriendo la aplicación. Dos empresas pueden tener el mismo modelo corriendo detrás del mismo tipo de producto y estar en polos opuestos, porque lo que cambia no es la tecnología. Es quién perdió autoridad de decisión cuando el modelo entró, y si esa pérdida quedó escrita en algún sitio o se quedó flotando."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El modelo genera una recomendación y una persona la reescribe siempre, incluso cuando acierta.",
+          "El presupuesto del sistema sigue en el área de tecnología, nunca en la del negocio que lo usa.",
+          "Nadie perdió alcance de decisión en el organigrama desde que el sistema entró en marcha.",
+          "El caso se cuenta en la memoria de innovación, no en el resultado del área que lo opera.",
+          "Cuando el sistema decide mal, la respuesta es que se está ajustando, no un nombre."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema detrás",
+        "texto": "AI-native no es una foto del producto. Es una foto de quién manda."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "En una empresa AI-native alguien perdió autoridad. No trabajo: autoridad. La potestad de decidir algo que antes se decidía por criterio propio y ahora decide un sistema, con esa persona respondiendo por el resultado agregado en vez de por cada caso suelto. Eso incomoda, y por eso casi nunca se hace de verdad: comprar el modelo es fácil. Reescribir quién manda sobre qué, no."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "He visto comités aprobar presupuestos de IA considerables sin tocar una sola línea del organigrama, y al año siguiente preguntarse por qué nada se movió en la cuenta de resultados. La respuesta estaba en el acta que nunca se escribió: la que dice qué puesto deja de decidir solo, y qué partida deja de ser de proyecto para pasar a ser de operación. Sin esas dos líneas, la empresa compró capacidad y siguió operando exactamente igual, solo que un poco más rápido en algunos tramos."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Puedes comprar cien modelos y seguir siendo la misma empresa que eras. Lo que te hace AI-native es lo primero que dejas de decidir tú.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Cuatro preguntas que sí distinguen, y el test del producto no"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Autoridad",
+            "definicion": "Qué puesto perdió alcance de decisión desde que entró el sistema, y quién lo aprobó por escrito. Si la respuesta es ninguno, el resto de la conversación es ruido de producto."
+          },
+          {
+            "termino": "Presupuesto",
+            "definicion": "Si la partida que paga el sistema sigue en el fondo de innovación o ya entró en el presupuesto operativo del área que lo usa. Mientras siga en innovación, la empresa sigue en modo piloto, aunque lleve años en marcha."
+          },
+          {
+            "termino": "Responsable",
+            "definicion": "Si hay una persona que responde por el resultado agregado del sistema delante de su propio comité, y no solo por que el sistema funcione técnicamente. Sin ese nombre, nadie asumió la parte incómoda de la transición."
+          },
+          {
+            "termino": "Ritmo",
+            "definicion": "Si bajó el tiempo que tarda la empresa en resolver un caso concreto en algún proceso con nombre propio. Si nadie puede señalar el proceso, el sistema está sumando capacidad, no cambiando el modelo de operación."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguna de las cuatro se contesta abriendo el producto. Se contestan mirando el organigrama, el presupuesto y el acta del último comité, que es justo donde nadie mira cuando evalúa si su empresa es AI-native de verdad o solo compró IA con buen criterio de compra."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Coge el sistema de IA que más presupuesto se llevó este año y responde las cuatro preguntas por escrito, en una página. Si tres de las cuatro no tienen respuesta, no tienes una empresa AI-native. Tienes una empresa que compró IA y todavía no ha decidido qué va a dejar de decidir ella."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Qué diferencia a una empresa AI-native de una empresa que usa IA?",
+            "respuesta": "No la cantidad de modelos que corren dentro del producto, sino si esa tecnología movió autoridad de decisión de una persona a un sistema, con un responsable nombrado y un presupuesto operativo detrás. Una empresa puede tener IA en todas partes y seguir decidiendo exactamente igual que antes; eso es usar IA, no ser AI-native."
+          },
+          {
+            "pregunta": "¿Sirve el test de quitar la IA del producto para saber si una empresa es AI-native?",
+            "respuesta": "Sirve para el producto, no para la empresa. Un banco o una aseguradora pueden quitar cada modelo de su aplicación y seguir funcionando mañana mismo, y aun así llevar años decidiendo procesos enteros con sistemas que antes resolvía un comité. El test mide si el producto necesita el modelo, no si la empresa cambió cómo opera."
+          },
+          {
+            "pregunta": "¿Qué tiene que cambiar en una empresa para que se pueda llamar AI-native?",
+            "respuesta": "Al menos tres cosas verificables: algún puesto perdió alcance de decisión de forma documentada, el gasto del sistema salió del fondo de innovación y entró en presupuesto operativo, y existe una persona que responde por el resultado agregado ante su propio comité. Sin esas tres, lo que hay es una capacidad nueva dentro de una estructura vieja."
+          },
+          {
+            "pregunta": "¿Puede una empresa ser AI-native sin tener IA visible en su producto?",
+            "respuesta": "Sí, y es más frecuente de lo que parece. Una empresa puede rediseñar cómo decide precios, riesgo o inventario con sistemas que el cliente nunca ve, y ser mucho más AI-native que un competidor con un asistente conversacional vistoso en la fachada que no cambió ni una decisión interna."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Hablemos de tu transición a AI-native",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "what-makes-a-company-ai-native",
+    "titulo": "What makes a company AI-native, not its product",
+    "entradilla": "Almost every company I meet has AI somewhere in the product. Very few have changed how they decide anything. That gap is the one that matters, and you cannot see it by looking at the product.",
+    "descripcion": "AI-native isn't measured by pulling models out of a product. It shows up in the org chart, the budget line, and who answers when the system decides wrong.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Almost every company I meet has AI somewhere in the product. Very few have changed how they decide anything. That gap is the one that matters, and you cannot see it by looking at the product."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The test everyone repeats is easy to apply and even easier to say out loud in a meeting: pull the models out of the product and see if it still works. If it breaks, the company is AI-native. If it works the same, it isn't. It sounds rigorous. It's a product test, and most of the companies that hire me don't have a product problem."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A bank can pull every model out of its app and keep lending money tomorrow morning. The test gives it a flat no. And that same bank can have spent three years deciding credit risk with a system that used to sit in front of a whole committee, with fewer people in the room and a different judgement call on every exception. The test fails because it measures the product, and the question was about the company."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "What makes a company AI-native rather than a company using AI?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Nothing you can see by opening the app. Two companies can run the same model behind the same kind of product and sit at opposite ends of this question, because what changes isn't the technology. It's who lost decision authority the day the model went live, and whether that loss ever got written down or just drifted."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The model produces a recommendation and a person overwrites it every time, even when it was right.",
+          "The budget for the system still sits inside the technology function, never inside the business that runs on it.",
+          "Nobody's scope in the org chart has changed since the system went live.",
+          "The story gets told in the innovation report, not in the result of the team running it.",
+          "When the system gets it wrong, the answer is that it's being tuned, not a name."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "AI-native isn't a snapshot of the product. It's a snapshot of who's in charge."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "In an AI-native company, somebody lost authority. Not work: authority. The power to decide something they used to decide by their own judgement, now decided by a system, with that same person answering for the aggregate result instead of every single case. That's uncomfortable, which is exactly why it rarely happens for real. Buying the model is the easy part. Rewriting who's in charge of what is not."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "I have watched committees approve sizeable AI budgets without touching a single line of the org chart, and then ask a year later why nothing moved on the P&L. The answer was in the memo nobody wrote: which role stops deciding on its own, and which budget line stops being a project and starts being an operating cost. Without those two lines, the company bought capacity and kept running exactly as before, just a little faster in a few spots."
+      },
+      {
+        "tipo": "cita",
+        "texto": "You can buy a hundred models and still be the same company you were. What makes you AI-native is the first thing you stop deciding yourself.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "Four questions that actually tell the difference, and the product test does not"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Authority",
+            "definicion": "Which role lost decision scope once the system went live, and who signed off on that in writing. If the answer is none, the rest of the conversation is product noise."
+          },
+          {
+            "termino": "Budget",
+            "definicion": "Whether the line paying for the system still sits in the innovation fund or has moved into the operating budget of the team that runs on it. While it stays in innovation, the company is still in pilot mode, however many years it's been live."
+          },
+          {
+            "termino": "Owner",
+            "definicion": "Whether a named person answers for the system's aggregate result in front of their own committee, not just for the system running as designed. Without that name, nobody has taken on the uncomfortable half of the change."
+          },
+          {
+            "termino": "Pace",
+            "definicion": "Whether the time it takes the company to resolve a specific case dropped, in a process you can name. If nobody can name the process, the system is adding capacity, not changing the operating model."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of the four gets answered by opening the product. They get answered by looking at the org chart, the budget and the minutes of the last committee meeting, which is exactly where nobody looks when deciding whether their company is genuinely AI-native or just bought AI with good procurement judgement."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take the AI system that got the biggest budget this year and answer the four questions in writing, on one page. If three of the four have no answer, you don't have an AI-native company. You have a company that bought AI and hasn't yet decided what it will stop deciding for itself."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "What makes a company AI-native rather than a company using AI?",
+            "respuesta": "Not how many models run inside the product, but whether that technology moved decision authority from a person to a system, with a named owner and an operating budget behind it. A company can have AI everywhere and still decide everything exactly as before; that's using AI, not being AI-native."
+          },
+          {
+            "pregunta": "Does removing AI from a product tell you if a company is AI-native?",
+            "respuesta": "It tells you about the product, not the company. A bank or an insurer can pull every model out of their app and keep functioning tomorrow, while having spent years deciding entire processes with systems that used to sit in front of a committee. The test measures whether the product needs the model, not whether the company changed how it operates."
+          },
+          {
+            "pregunta": "What actually has to change for a company to call itself AI-native?",
+            "respuesta": "At least three verifiable things: some role lost documented decision scope, the spend on the system moved out of the innovation fund and into an operating budget, and a named person answers for the aggregate result in front of their own committee. Without those three, what exists is new capacity sitting inside an old structure."
+          },
+          {
+            "pregunta": "Can a company be AI-native without visible AI in its product?",
+            "respuesta": "Yes, and it happens more often than people assume. A company can redesign how it decides pricing, risk or inventory using systems the customer never sees, and be far more AI-native than a competitor with a flashy chat assistant on the front end that never changed a single internal decision."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's talk about your AI-native transition",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
