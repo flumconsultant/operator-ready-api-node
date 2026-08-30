@@ -26,10 +26,10 @@ abandonar a la primera algo que solo necesitaba más cuerpo.
 
 | Artículo | Publicado | Pregunta objetivo | Últ. medición | Estado | Notas |
 |---|---|---|---|---|---|
-| `quien-responde-cuando-responde-un-agente` | 2026-08-20 | ¿Quién responde cuando un agente de IA toma una decisión equivocada? | — | `nuevo` | Terreno blando: solo prensa jurídica de nicho, sin consultora fuerte |
-| `por-que-tus-pilotos-de-ia-no-llegan-a-produccion` | 2026-08-20 | ¿Por qué mis pilotos de IA no llegan a producción? | — | `nuevo` | Máxima intención de compra. Sin consultora global en español |
-| `como-se-redisena-un-proceso-para-que-lo-ejecute-una-ia` | 2026-08-21 | ¿Cómo se rediseña un proceso para que lo ejecute en parte una IA? | — | `nuevo` | SERP más blanda del barrido, sin consultora global compitiendo |
-| `por-que-tu-equipo-no-usa-la-ia-que-le-diste` | 2026-08-22 | ¿Cómo consigo que mi equipo use de verdad las herramientas de IA? | — | `nuevo` | Campo competitivo más débil del barrido, nadie toca el conflicto de incentivos |
+| `quien-responde-cuando-responde-un-agente` | 2026-08-20 | ¿Quién responde cuando un agente de IA toma una decisión equivocada? | 2026-08-30 | `nuevo` | Primera medición (10 días): no aparece. Cambió el elenco de nicho — salieron agentesautonomosia.com y Entrepreneur, entraron psiquiatrialegal.org, ciec.edu.co y nordflux.de — pero sigue sin consultora fuerte y sin BECOME |
+| `por-que-tus-pilotos-de-ia-no-llegan-a-produccion` | 2026-08-20 | ¿Por qué mis pilotos de IA no llegan a producción? | 2026-08-30 | `nuevo` | Primera medición (10 días): no aparece. Irontec y Concentrix se mantienen arriba; se suman blogs de nicho (cloudappi.net, ivanlopezdev.es) que no estaban la semana pasada |
+| `como-se-redisena-un-proceso-para-que-lo-ejecute-una-ia` | 2026-08-21 | ¿Cómo se rediseña un proceso para que lo ejecute en parte una IA? | 2026-08-30 | `nuevo` | Primera medición (9 días): no aparece. SERP casi completamente distinta a la de hace una semana — salieron Asana y Datadec, entraron Entel Empresas, alloxentric.com y agilenext.mx —, terreno todavía sin ganador asentado |
+| `por-que-tu-equipo-no-usa-la-ia-que-le-diste` | 2026-08-22 | ¿Cómo consigo que mi equipo use de verdad las herramientas de IA? | 2026-08-30 | `nuevo` | Primera medición (8 días): no aparece. onext.es, el competidor con framing más cercano al nuestro la semana pasada, ya no aparece; en su lugar dos newsletters de nicho con enfoque similar (evitar métricas de vanidad) |
 | `que-puede-hacer-un-agente-sin-supervision` | 2026-08-23 | ¿Cómo se decide qué puede hacer un agente sin supervisión humana? | — | `nuevo` | Recomendación #1 del informe 2026-08-23. Vecino de «quién responde cuando responde un agente»: aquel da el dueño del resultado, este da el corte (importe, reversibilidad, alcance) para trazar el perímetro antes del incidente |
 | `como-medir-el-retorno-real-de-la-ia` | 2026-08-24 | ¿Cómo se mide el retorno real de una iniciativa de IA? | — | `nuevo` | Recomendación #2 del informe 2026-08-23. La pregunta más abierta del barrido en español: sin Big Four ni HBR compitiendo, y ningún actor da un método de atribución replicable (línea base, ventana, destino del tiempo liberado) |
 | `que-controles-necesita-una-empresa-antes-de-escalar-la-ia` | 2026-08-25 | ¿Qué controles necesita una empresa antes de escalar la IA? | — | `nuevo` | Recomendación #3 del informe 2026-08-23. Fragmentado, sin actor dominante ni marcos citados por nombre; nadie dice quién firma cuando el control dice que no y el negocio insiste |
@@ -44,6 +44,25 @@ Esta sección la reescribe el observatorio cada semana, y es la que cierra el
 bucle: quien redacta la lee y ajusta lo que escribe. Mientras no haya
 mediciones suficientes, dice que no las hay en vez de inventar un patrón.
 
-**Todavía no hay datos.** Los dos primeros artículos se publicaron el 2026-08-20
-y la primera medición útil será el domingo siguiente. Cualquier conclusión antes
-de eso sería ruido con forma de tabla.
+**Primera medición real esta semana, y la conclusión más honesta es que
+todavía no hay señal positiva de ningún tipo.** Los cuatro artículos que ya
+superan los siete días —dos de value-adoption, uno de agentic-work, uno de
+operating-model, los cuatro en formato perspective o field-note— no aparecen
+en ningún resultado de búsqueda para su pregunta objetivo. No hay diferencia
+visible entre pilares ni entre formatos: los cuatro están igual de
+invisibles.
+
+Lo único que sí cambió es el elenco de cada SERP. En tres de los cuatro casos
+—quién responde cuando responde un agente, rediseño de proceso, por qué el
+equipo no usa la IA— salieron esta semana actores que dominaban hace siete
+días (agentesautonomosia.com, Asana y Datadec, onext.es) y entraron otros
+nuevos. Eso sugiere que estas búsquedas siguen volátiles y sin un ganador
+asentado, que es una lectura distinta —y menos mala— que "no se mueve nada".
+
+Con solo cuatro artículos medidos y ninguna aparición todavía, no hay base
+para decir qué formato funciona mejor, si el español se mueve antes que el
+inglés, o si las preguntas frecuentes largas ayudan: sería un patrón
+inventado sobre cuatro puntos sin ninguna variación real entre ellos. La
+primera comparación útil llega cuando alguno de los cuatro empiece a
+aparecer, o cuando el resto de los artículos publicados cruce también los
+siete días, en las próximas semanas.
