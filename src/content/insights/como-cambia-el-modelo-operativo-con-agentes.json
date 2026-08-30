@@ -1,0 +1,255 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-08-30",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "operating-model",
+  "formato": "framework",
+  "es": {
+    "slug": "como-cambia-el-modelo-operativo-con-agentes",
+    "titulo": "Cómo cambia el modelo operativo con agentes",
+    "entradilla": "Rediseñaron el organigrama. Rediseñaron el proceso de facturación tarea por tarea. Y siguen convocando el mismo comité de excepciones los martes a las diez, aunque el agente que vigila esa cola ya resolvió trescientas decisiones desde el lunes.",
+    "descripcion": "El modelo operativo no cambia en el organigrama ni en un proceso: cambia en la cadencia de decisión, y esa nadie la ha rediseñado todavía.",
+    "linkedin": {
+      "texto": "El comité de excepciones se reúne los martes desde siempre. Ahora hay un agente que resuelve trescientas decisiones antes del jueves, y el comité sigue esperando a su día fijo para mirar lo que se acumuló mientras tanto.\n\nRediseñar el organigrama y rediseñar un proceso no toca esto. Falta el tercer nivel: la cadencia de decisión, quién convoca por umbral y quién sigue convocando por calendario.\n\nEn este análisis de BECOME planteamos qué cambia cuando el ritmo operativo, y no la estructura, es lo que frena a los agentes.",
+      "hashtags": ["IA", "Operaciones", "Gobernanza"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Rediseñaron el organigrama. Rediseñaron el proceso de facturación tarea por tarea. Y siguen convocando el mismo comité de excepciones los martes a las diez, aunque el agente que vigila esa cola ya resolvió trescientas decisiones desde el lunes."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Lo he visto en clientes que hicieron bien las dos tareas anteriores. Fusionaron cajas del organigrama que de verdad tenían que fusionarse. Se sentaron con el proceso de reclamos y decidieron, tarea por tarea, qué delega el agente y qué necesita una firma humana. Los dos ejercicios estaban completos y los dos, por separado, tenían sentido. Y sin embargo el jueves siguiente el comité de excepciones seguía reuniéndose el mismo día de siempre, con la misma agenda de siempre, revisando lo que se acumuló desde la semana pasada como si el agente también trabajara en semanas."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Porque nadie tocó el tercer nivel. No es el organigrama, que dice quién manda. No es el proceso, que dice qué tarea hace quién. Es el ritmo: cada cuánto se revisa una decisión, quién la ve, y si el criterio para convocar una reunión es un umbral o es un calendario. Ese ritmo se diseñó para personas que trabajan en jornadas de ocho horas y deciden en lotes. Un agente no tiene jornada. Produce decisiones a la velocidad que le llega el trabajo, y esa velocidad no coincide con ningún comité que exista hoy en la empresa."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Cómo cambia el modelo operativo cuando los agentes hacen parte del trabajo?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La pregunta la hace quien ya pasó por el organigrama y por el proceso y sigue viendo que algo no cierra. El síntoma no es que falte gobierno: sobra. Hay comité de excepciones, hay revisión semanal, hay reporte mensual al directorio. Lo que falta es que ese aparato hable el idioma de velocidad del agente en vez del idioma de velocidad del calendario corporativo."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El comité de excepciones se reúne un día fijo, y una decisión que necesitaba resolverse en una hora espera hasta ese día aunque el coste de esperar sea alto.",
+          "El reporte mensual al directorio resume en un gráfico trescientas decisiones que nadie miró una por una, y el gráfico dice que todo va bien porque ningún agregado muestra el caso raro que sí importaba.",
+          "Dos áreas comparten el mismo agente en un proceso que las cruza, y cada una tiene su propio calendario de revisión: la decisión espera al comité más lento de las dos, no al más rápido.",
+          "El mismo tipo de excepción llega por tercera semana consecutiva a la misma reunión, y en vez de convertirse en regla escrita, se vuelve a discutir desde cero cada vez porque nadie lleva memoria entre una sesión y la siguiente.",
+          "La persona responsable de revisar al agente sigue usando la reunión semanal como su único punto de control, así que un problema que empezó el martes se descubre el jueves de la semana siguiente."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema de fondo",
+        "texto": "El modelo operativo no cambia en una caja ni en un proceso. Cambia en el calendario."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El calendario corporativo (semanal, mensual, trimestral) no es una convención inocente. Es una decisión de diseño tomada para gente que necesita tiempo para pensar, coordinarse y viajar a una sala. Nada de eso aplica a un agente. Así que cuando una empresa mete agentes en un proceso y dentro de un organigrama nuevo, pero deja el calendario de gobierno intacto, está pidiendo que un sistema que decide en segundos rinda cuentas con la cadencia de un sistema que decidía en semanas. La brecha entre esas dos velocidades es donde se esconden los problemas que nadie ve hasta que ya costaron caro."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y hay una parte incómoda, otra vez. Cambiar la cadencia de un comité significa que alguien deja de tener ese momento fijo en la agenda para hacerse notar, para preguntar, para frenar algo con una objeción bien timada un martes. El calendario también es poder: quien controla cuándo se reúne el comité controla, en la práctica, cuánto tarda cualquier decisión en llegar a revisión. Rediseñar el ritmo le quita ese control a alguien concreto, y por eso el organigrama se rediseña antes que el calendario: mover una caja no le quita el micrófono a nadie en una reunión que sigue existiendo igual."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un comité que se reúne los martes porque siempre se reunió los martes no está gobernando al agente. Está esperando a que el agente se ajuste a la agenda de otro.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "¿Qué hay que rediseñar en el ritmo operativo?"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Cadencia de decisión",
+            "definicion": "Qué se resuelve al instante, contra un umbral escrito, y qué espera al próximo foro programado. La línea la traza el coste del error y la reversibilidad, no la conveniencia de la agenda."
+          },
+          {
+            "termino": "Foro de excepción",
+            "definicion": "Una reunión que se convoca cuando el umbral la dispara, con quien tiene que estar y nadie más, no en la próxima fecha disponible del calendario compartido."
+          },
+          {
+            "termino": "Muestreo de revisión",
+            "definicion": "Qué porcentaje de las decisiones del agente se revisa después de tomadas, y con qué criterio se elige cuáles: sesgado hacia lo caro y lo irreversible, nunca al azar ni por orden de llegada."
+          },
+          {
+            "termino": "Memoria entre sesiones",
+            "definicion": "Dónde queda escrito que una excepción ya se resolvió tres veces igual, para que la cuarta vez sea una regla nueva y no una reunión repetida desde cero."
+          },
+          {
+            "termino": "Ritmo entre áreas",
+            "definicion": "Qué calendario manda cuando un mismo agente cruza dos áreas con cadencias de revisión distintas: se decide antes de que ocurra la primera excepción, no en medio de ella."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguno de los cinco se resuelve moviendo una reunión de martes a lunes. Se resuelve escribiendo, para cada tipo de decisión que toca el agente, el umbral que la separa entre resolverse ahora o esperar a un foro, y ese ejercicio obliga a decidir con números (qué importe, qué porcentaje de error tolerable, qué plazo) en vez de con la comodidad de «lo vemos el martes»."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Coge el comité que hoy revisa al agente con más volumen y pregúntale, con la agenda delante, cuántas de las decisiones que trató la semana pasada realmente necesitaban esperar hasta ese día. Si la respuesta es que la mayoría podía resolverse antes con una regla escrita, el comité no está gobernando: está guardando cola."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cómo cambia el modelo operativo cuando los agentes hacen parte del trabajo?",
+            "respuesta": "Cambia en la cadencia de decisión, no en el organigrama ni en un proceso aislado. Hay que escribir qué se resuelve al instante contra un umbral de coste y reversibilidad, y qué espera a un foro programado; qué comités se convocan por excepción y no por calendario; y qué porcentaje de las decisiones del agente se revisa después, con qué criterio de selección. Sin esa cadencia rediseñada, el gobierno sigue existiendo, pero llega tarde a todo lo que importa."
+          },
+          {
+            "pregunta": "¿Qué diferencia hay entre rediseñar un proceso y rediseñar el modelo operativo?",
+            "respuesta": "Rediseñar un proceso decide, tarea por tarea, qué puede ejecutar un agente solo dentro de ese proceso concreto. Rediseñar el modelo operativo es el nivel de arriba: la cadencia de foros, revisiones y escaladas que coordina las decisiones de varios procesos y varios agentes a la vez. Un proceso bien rediseñado puede seguir esperando semanas por un comité que nunca cambió su calendario."
+          },
+          {
+            "pregunta": "¿Cómo se decide qué decisión espera a un comité y cuál se resuelve sola?",
+            "respuesta": "Con un umbral escrito antes de que ocurra la primera excepción: un importe, un nivel de reversibilidad y un plazo máximo de espera aceptable. Por debajo del umbral, el agente actúa y la decisión entra a un muestreo posterior. Por encima, se convoca a quien tiene autoridad real sobre esa excepción, aunque no sea el día del comité programado."
+          },
+          {
+            "pregunta": "¿Cómo se revisa el trabajo de un agente sin revisar cada decisión una por una?",
+            "respuesta": "Con un muestreo que no es aleatorio: se sesga hacia las decisiones más caras o menos reversibles, porque ahí es donde un error pesa. Revisar el cien por ciento no es viable al volumen que produce un agente, y revisar al azar deja pasar justamente los casos que más importaba mirar. El criterio de selección hay que escribirlo, igual que el umbral de escalada."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Rediseñemos tu ritmo operativo",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-the-operating-model-changes-with-agents",
+    "titulo": "How the Operating Model Changes With Agents",
+    "entradilla": "They redrew the org chart. They redesigned the billing process task by task. And they still convene the same exception committee every Tuesday at ten, even though the agent watching that queue already closed three hundred decisions since Monday.",
+    "descripcion": "The operating model does not change in the org chart or a single process. It changes in the decision cadence, and nobody has redesigned that yet.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "They redrew the org chart. They redesigned the billing process task by task. And they still convene the same exception committee every Tuesday at ten, even though the agent watching that queue already closed three hundred decisions since Monday."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "I have seen this with clients who did the first two exercises well. They merged boxes on the chart that genuinely needed merging. They sat down with the claims process and decided, task by task, what the agent runs alone and what needs a human signature. Both exercises were thorough, and both, on their own terms, made sense. And yet the following Thursday the exception committee still met on the same day, with the same standing agenda, working through whatever piled up since last week as if the agent also worked in weeks."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Because nobody touched the third layer. It is not the org chart, which says who is in charge. It is not the process, which says who runs which task. It is the rhythm: how often a decision gets looked at, who looks at it, and whether calling a meeting is triggered by a threshold or by a date on the calendar. That rhythm was built for people who work eight-hour days and decide in batches. An agent has no workday. It produces decisions at the pace work arrives, and that pace matches none of the standing meetings a company already runs."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "How does the operating model change when agents do part of the work?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "This question comes from someone who already handled the org chart and the process and still sees something not adding up. The symptom is not a lack of governance. There is plenty of it: an exception committee, a weekly review, a monthly board report. What is missing is that machinery speaking the agent's pace instead of the corporate calendar's pace."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The exception committee meets on a fixed day, and a decision that needed resolving within the hour waits for that day even when the cost of waiting is high.",
+          "The monthly board report compresses three hundred decisions into one chart nobody reviewed one by one, and the chart says everything is fine because no aggregate shows the one edge case that actually mattered.",
+          "Two departments share the same agent in a process that crosses both, each running its own review calendar, so the decision waits for whichever one meets less often, not whichever one could move fastest.",
+          "The same type of exception shows up for the third week running in the same meeting, and instead of turning into a written rule, it gets argued from scratch again because nobody carries memory from one session to the next.",
+          "The person accountable for reviewing the agent still treats the weekly meeting as their only checkpoint, so a problem that started Tuesday surfaces the following Thursday."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "The operating model does not change in a box or a process. It changes on the calendar."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The corporate calendar (weekly, monthly, quarterly) is not an innocent convention. It is a design decision made for people who need time to think, coordinate and travel to a room. None of that applies to an agent. So when a company drops agents into a process and a new org chart but leaves the governance calendar untouched, it is asking a system that decides in seconds to answer to the rhythm of a system that used to decide in weeks. The gap between those two speeds is exactly where the problems nobody sees hide, until they already cost something."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "And there is an uncomfortable part again. Changing a committee's rhythm means somebody loses that fixed slot on the agenda where they got to show up, ask a question, stall something with a well-timed objection every Tuesday. The calendar is power too: whoever controls when the committee meets controls, in practice, how long any decision takes to reach review. Redesigning the rhythm takes that control away from someone specific, which is exactly why the org chart gets redesigned before the calendar does. Moving a box does not take the microphone away from anyone in a meeting that keeps existing exactly as it did."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A committee that meets on Tuesdays because it has always met on Tuesdays is not governing the agent. It is waiting for the agent to fit somebody else's agenda.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "What has to be redesigned in the operating rhythm?"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Decision cadence",
+            "definicion": "What gets resolved instantly against a written threshold, and what waits for the next scheduled forum. The line is drawn by cost of error and reversibility, not by how convenient the agenda is."
+          },
+          {
+            "termino": "Exception forum",
+            "definicion": "A meeting convened when the threshold triggers it, with only the people it actually needs, not the next open slot on a shared calendar."
+          },
+          {
+            "termino": "Review sampling",
+            "definicion": "What share of the agent's decisions gets reviewed after the fact, and by what criterion they get picked: weighted toward the costly and the irreversible, never random and never first come, first served."
+          },
+          {
+            "termino": "Memory across sessions",
+            "definicion": "Where it gets written down that an exception has already been resolved the same way three times, so the fourth time becomes a new rule instead of the same meeting run again from zero."
+          },
+          {
+            "termino": "Cross-department rhythm",
+            "definicion": "Which calendar rules when one agent crosses two departments with different review cadences, decided before the first exception happens, not in the middle of it."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of the five gets solved by moving a meeting from Tuesday to Monday. It gets solved by writing down, for every type of decision the agent touches, the threshold that separates resolving it now from waiting for a forum, and that exercise forces a real number (what amount, what tolerable error rate, what maximum wait) instead of the comfort of we will look at it Tuesday."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take the committee that currently reviews the agent with the highest volume and ask, agenda in hand, how many of last week's decisions actually needed to wait for that day. If most of them could have been resolved earlier by a written rule, the committee is not governing. It is holding a queue."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How does the operating model change when agents do part of the work?",
+            "respuesta": "It changes in the decision cadence, not the org chart or a single process. Companies need to write down what gets resolved instantly against a cost-and-reversibility threshold and what waits for a scheduled forum, which committees get convened by exception instead of by calendar, and what share of the agent's decisions gets reviewed afterward and by what criterion. Without that redesigned cadence, governance still exists, it just arrives late to everything that matters."
+          },
+          {
+            "pregunta": "What is the difference between redesigning a process and redesigning the operating model?",
+            "respuesta": "Redesigning a process decides, task by task, what an agent can run alone inside that one process. Redesigning the operating model is the layer above it: the cadence of forums, reviews and escalations that coordinates decisions across several processes and several agents at once. A well-redesigned process can still sit waiting for weeks on a committee that never changed its calendar."
+          },
+          {
+            "pregunta": "How do you decide which decision waits for a committee and which resolves on its own?",
+            "respuesta": "With a threshold written down before the first exception happens: an amount, a level of reversibility, and a maximum acceptable wait. Below the threshold, the agent acts and the decision enters a later sample review. Above it, whoever has real authority over that exception gets convened, even if it is not the committee's scheduled day."
+          },
+          {
+            "pregunta": "How do you review an agent's work without reviewing every decision one by one?",
+            "respuesta": "With sampling that is not random: it weights toward the most expensive and least reversible decisions, because that is where a mistake actually costs something. Reviewing all of them is not realistic at the volume an agent produces, and reviewing at random lets exactly the cases that mattered most slip through. The selection criterion has to be written down, the same as the escalation threshold."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's redesign your operating rhythm",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
