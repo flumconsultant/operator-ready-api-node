@@ -1,0 +1,255 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-08-31",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "ai-native",
+  "formato": "perspective",
+  "es": {
+    "slug": "donde-muere-una-estrategia-de-ia-bien-hecha",
+    "titulo": "Dónde muere una estrategia de IA bien hecha",
+    "entradilla": "La estrategia se aprobó por unanimidad. Tenía una matriz de valor y viabilidad, un portafolio de iniciativas priorizadas y un capítulo entero de gobierno de datos. A los seis meses no quedaba rastro de ella en ningún documento vivo, y nadie en el comité sabía explicar por qué.",
+    "descripcion": "Una estrategia de IA no muere en la ejecución. Muere en el traspaso, cuando nadie traduce la prioridad del comité a un nombre, un trimestre y una métrica.",
+    "linkedin": {
+      "texto": "Una estrategia de IA se aprueba en el idioma del comité: valor, viabilidad, riesgo agregado.\n\nLa operación funciona en otro idioma, el de una cola concreta y una persona con un indicador que depende de un número. Nadie asigna el trabajo de traducir uno al otro, así que la iniciativa de mayor valor espera mientras arranca la de menor fricción política, que casi nunca es la misma.\n\nEn este análisis de BECOME planteamos qué hay que traducir, iniciativa por iniciativa, antes de que el comité fije la fecha de lanzamiento.",
+      "hashtags": ["IA", "Estrategia", "Operaciones"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "La estrategia se aprobó por unanimidad. Tenía una matriz de valor y viabilidad, un portafolio de iniciativas priorizadas y un capítulo entero de gobierno de datos. A los seis meses no quedaba rastro de ella en ningún documento vivo, y nadie en el comité sabía explicar por qué."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Lo he visto pasar más de una vez, con equipos serios y matrices bien construidas. El síntoma no es que la estrategia estuviera mal pensada. Es que estaba pensada para un comité, no para una operación, y esas dos audiencias no leen el mismo documento aunque sea el mismo papel."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El comité premia la coherencia: una matriz de valor y viabilidad que ordena veinte iniciativas en cuatro cuadrantes, un principio de iterar antes de escalar, un capítulo de gobierno que cubre riesgo y cumplimiento. Todo correcto, todo defendible delante de auditoría. Y ninguna de esas tres cosas dice qué hace, el lunes siguiente, la gerente que ya tiene otras dos iniciativas de transformación corriendo sobre su misma cola de trabajo."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Cómo se construye una estrategia de IA que sobreviva el contacto con la operación?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La pregunta la hace quien ya vio una estrategia bien aprobada quedarse parada sin que nadie la matara formalmente. No es un problema de calidad del documento. El documento suele estar bien. El problema está en el paso entre el comité que la aprueba y la persona que tiene que ejecutar la primera iniciativa, un paso que nadie asignó a nadie: traducir la prioridad abstracta a una decisión concreta, con nombre y con fecha."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "La iniciativa de mayor valor de la matriz nunca es la primera en arrancar, porque la primera siempre es la de menor fricción política, y esa casi nunca es la de mayor valor.",
+          "Nadie en la estrategia revisó el trimestre real del área que tiene que absorber el cambio, así que la iniciativa compite por el tiempo de la misma gerente que otras dos ya en curso.",
+          "El indicador que mide a esa gerente hoy va a empeorar durante las primeras semanas del cambio, y ese dato no aparece en ninguna diapositiva del comité.",
+          "El sistema que la iniciativa necesita tocar tiene un dueño técnico distinto del dueño de negocio, y nadie coordinó los dos calendarios antes de fijar la fecha de lanzamiento.",
+          "El plan de la estrategia tiene hitos de proyecto (diseño, construcción, prueba) y ningún hito que se mida con una señal real de la operación, como el tiempo de cola o la tasa de error."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema de fondo",
+        "texto": "La estrategia no muere en la ejecución. Muere en el traspaso."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El comité habla en el idioma de la cartera: valor, viabilidad, riesgo agregado, secuencia. La operación habla en el idioma de una cola concreta, un sistema concreto y una persona concreta con un bono que depende de un número concreto. Son dos idiomas legítimos y ninguno es el problema por sí solo. El problema es que nadie tiene el trabajo de traducir uno al otro, así que la traducción no ocurre, y la estrategia se queda correcta en abstracto mientras la operación sigue exactamente igual."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y hay una parte que casi nadie pregunta en el comité, porque hacerlo retrasaría la aprobación. Antes de fijar la secuencia habría que preguntar el calendario real de cada gerente que va a absorber una iniciativa, y qué indicador suyo se va a ver afectado mientras el cambio madura. Esa pregunta no es técnica. Es incómoda, porque la respuesta casi siempre es que no hay espacio, y admitirlo en el comité obliga a decidir qué otra cosa se detiene. Es más fácil aprobar la matriz y dejar que la operación se las arregle sola."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Una estrategia que nadie tradujo a un nombre y un trimestre no está lista para ejecutarse. Está lista para presentarse.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "¿Qué hay que traducir antes de ejecutar cada iniciativa?"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Dueño real",
+            "definicion": "La persona concreta que va a absorber el cambio en su cola de trabajo, no el área ni la función. Si el nombre no está escrito antes de aprobar la iniciativa, la estrategia todavía no tiene dueño: tiene intención."
+          },
+          {
+            "termino": "Colisión de indicador",
+            "definicion": "Qué métrica de esa persona empeora mientras el cambio madura, y durante cuánto tiempo. Sin esa cifra escrita, la resistencia que aparezca en la operación se va a interpretar como falta de compromiso y no como lo que es."
+          },
+          {
+            "termino": "Calendario real",
+            "definicion": "Cuántas otras iniciativas ya ocupan el tiempo de ese dueño este trimestre, y si esta entra en la cola o desplaza a otra. Sin esa comprobación, dos iniciativas de la misma cartera compiten por el mismo martes de la misma persona."
+          },
+          {
+            "termino": "Sistema y dueño técnico",
+            "definicion": "Qué sistema concreto hay que tocar, y quién autoriza el cambio sobre él, con qué plazo de respuesta habitual. Una iniciativa que depende de un sistema con dueño lento hereda ese plazo, lo sepa o no el comité."
+          },
+          {
+            "termino": "Señal de corte",
+            "definicion": "Qué indicador de la operación, no del proyecto, dice si la iniciativa está funcionando: tiempo de cola, tasa de error, volumen resuelto. Un hito de proyecto cumplido no dice nada sobre si algo cambió para quien opera."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Las cinco preguntas caben en una página, y ninguna la contesta bien un equipo de estrategia sentado solo en una sala. Piden hablar con la gerente antes de fijar la fecha, no después. Eso cambia el orden habitual de trabajo, y por eso casi nunca se hace: es más cómodo terminar la matriz primero y preguntar por la operación cuando ya hay una fecha de lanzamiento comunicada."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Coge la iniciativa que tu estrategia marca como la de mayor valor y busca, por escrito, el nombre de la persona que va a absorber el cambio y el trimestre en el que lo va a hacer. Si esas dos respuestas no existen todavía, no tienes una iniciativa lista para ejecutar. Tienes una casilla bien puesta en una matriz."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cómo se construye una estrategia de IA que sobreviva el contacto con la operación?",
+            "respuesta": "Traduciendo cada iniciativa antes de aprobarla: quién es el dueño real que absorbe el cambio en su cola de trabajo, qué indicador suyo empeora mientras el cambio madura, y qué otras iniciativas ya ocupan su trimestre. Una estrategia que solo prioriza por valor y viabilidad, sin esa traducción, describe una cartera correcta que nadie puede ejecutar en el orden en que está escrita."
+          },
+          {
+            "pregunta": "¿Por qué una estrategia de IA bien priorizada deja de ejecutarse igual?",
+            "respuesta": "Porque prioriza en el idioma del comité (valor, viabilidad, riesgo) y la operación funciona en otro idioma: una cola concreta, un sistema concreto y una persona con un indicador que depende de un número. Nadie asigna el trabajo de traducir uno al otro, así que la iniciativa de mayor valor espera mientras arranca la de menor fricción política, que casi nunca coincide con ella."
+          },
+          {
+            "pregunta": "¿Quién debe decidir el orden en que se ejecutan las iniciativas de una estrategia de IA?",
+            "respuesta": "La matriz de valor y viabilidad da un orden de papel, pero el orden real lo determina el calendario de la persona que va a absorber cada iniciativa. Si dos iniciativas de alto valor caen sobre el mismo dueño en el mismo trimestre, una de las dos espera, y esa decisión hay que tomarla antes de comunicar fechas, no descubrirla después."
+          },
+          {
+            "pregunta": "¿Qué hace que una iniciativa de IA fracase aunque el análisis previo estuviera bien hecho?",
+            "respuesta": "Que el análisis midiera valor y viabilidad de la iniciativa, y nadie midiera la capacidad real de quien tiene que ejecutarla: si ya tiene otras iniciativas en curso, si su indicador actual va a empeorar de forma temporal, y si el sistema que hay que tocar responde en el plazo que el plan asume. El análisis puede ser correcto y la iniciativa fracasar igual, porque midió la idea y no a quien la iba a ejecutar."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Tradúzcamos tu estrategia a operación",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "where-a-well-built-ai-strategy-dies",
+    "titulo": "Where a well-built AI strategy dies",
+    "entradilla": "The strategy got approved without a single dissenting vote. It had a value-and-feasibility matrix, a prioritised portfolio of initiatives and a full chapter on data governance. Six months later there was no trace of it in any document still in use, and nobody on the board could say why.",
+    "descripcion": "An AI strategy doesn't die in execution. It dies in the handoff, when nobody translates the board's priority into a name, a quarter and a metric.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "The strategy got approved without a single dissenting vote. It had a value-and-feasibility matrix, a prioritised portfolio of initiatives and a full chapter on data governance. Six months later there was no trace of it in any document still in use, and nobody on the board could say why."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "I have watched this happen more than once, with serious teams and well-built matrices. The strategy was not badly thought through. It was built for a boardroom, not for an operation, and those two audiences do not read the same document even when it is the same page."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A board rewards coherence: a value-and-feasibility matrix that sorts twenty initiatives into four quadrants, a principle of iterating before scaling, a governance chapter covering risk and compliance. All correct, all defensible in front of an audit committee. None of it says what the manager who already has two other transformation initiatives running against her own queue does on Monday morning."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "How do you build an AI strategy that survives contact with operations?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "This question comes from someone who has already watched a properly approved strategy stall without anyone formally killing it. It is rarely a quality problem with the document. The document is usually fine. The problem sits in the step between the board approving it and the person who has to run the first initiative, a step nobody was ever assigned: translating an abstract priority into a concrete decision, with a name and a date attached."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The highest-value initiative on the matrix is never the one that starts first, because the first one is always the one with the least political friction, and that is almost never the same one.",
+          "Nobody in the strategy work checked the actual quarter of the team that has to absorb the change, so the initiative competes for the same manager's time as two others already underway.",
+          "The metric that manager is measured on today gets worse for the first few weeks of the change, and that fact never makes it onto a board slide.",
+          "The system the initiative needs to touch has a technical owner who is not the business owner, and nobody lined up the two calendars before setting the launch date.",
+          "The strategy's plan carries project milestones (design, build, test) and not a single milestone measured against a real operational signal, like queue time or error rate."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "The strategy doesn't die in execution. It dies in the handoff."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The board speaks the language of the portfolio: value, feasibility, aggregate risk, sequencing. The operation speaks the language of one specific queue, one specific system and one specific person whose bonus depends on one specific number. Both languages are legitimate, and neither one is the problem on its own. The problem is that nobody owns translating one into the other, so the translation never happens, and the strategy stays correct in the abstract while the operation carries on exactly as it was."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "And there is a part almost nobody raises in the boardroom, because raising it would slow the approval down. Before fixing the sequence, somebody should ask each manager's real calendar for the quarter, and which of their own metrics is going to take a hit while the change beds in. That question is not a technical one. It is uncomfortable, because the answer is almost always that there is no room, and saying so out loud forces the room to decide what else stops. It is easier to approve the matrix and let the operation sort itself out."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A strategy nobody has translated into a name and a quarter is not ready to run. It is ready to be presented.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "What has to be translated before each initiative runs?"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Real owner",
+            "definicion": "The specific person who is going to absorb the change into their own queue, not the department or the function. If that name is not written down before the initiative is approved, the strategy does not have an owner yet. It has an intention."
+          },
+          {
+            "termino": "Metric collision",
+            "definicion": "Which of that person's metrics gets worse while the change beds in, and for how long. Without that number written down, whatever pushback shows up in the operation gets read as a lack of buy-in instead of what it actually is."
+          },
+          {
+            "termino": "Real calendar",
+            "definicion": "How many other initiatives already occupy that owner's time this quarter, and whether this one joins the queue or bumps another one out. Without that check, two initiatives from the same portfolio end up competing for the same person's same Tuesday."
+          },
+          {
+            "termino": "System and technical owner",
+            "definicion": "Which specific system the initiative has to touch, who signs off on changes to it, and their usual turnaround time. An initiative that depends on a slow system owner inherits that turnaround whether the board knew it or not."
+          },
+          {
+            "termino": "Cutoff signal",
+            "definicion": "Which operational signal, not project signal, tells you the initiative is working: queue time, error rate, volume cleared. A completed project milestone says nothing about whether anything changed for the person running the operation."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "All five questions fit on one page, and none of them gets answered well by a strategy team sitting alone in a room. They require talking to the manager before the launch date gets fixed, not after. That reorders the usual sequence of work, which is exactly why it rarely happens: it is more comfortable to finish the matrix first and ask about the operation once a launch date has already been communicated."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take the initiative your strategy marks as the highest value and find, in writing, the name of the person who is going to absorb the change and the quarter in which they will do it. If those two answers do not exist yet, you do not have an initiative ready to run. You have a well-placed box on a matrix."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How do you build an AI strategy that survives contact with operations?",
+            "respuesta": "By translating each initiative before it gets approved: who the real owner is that absorbs the change into their own queue, which of their metrics gets worse while the change beds in, and what else already occupies their quarter. A strategy that only prioritises by value and feasibility, without that translation, describes a correct portfolio that nobody can run in the order it was written."
+          },
+          {
+            "pregunta": "Why does a well-prioritised AI strategy stop executing the way it was designed?",
+            "respuesta": "Because it prioritises in the board's language (value, feasibility, risk) while the operation runs in a different one: one specific queue, one specific system and one person whose metric depends on one number. Nobody is assigned to translate one into the other, so the highest-value initiative waits while the one with the least political friction starts instead, and those are almost never the same initiative."
+          },
+          {
+            "pregunta": "Who should decide the order in which an AI strategy's initiatives get executed?",
+            "respuesta": "The value-and-feasibility matrix gives an order on paper, but the real order gets set by the calendar of whoever has to absorb each initiative. If two high-value initiatives land on the same owner in the same quarter, one of them waits, and that call has to be made before launch dates get communicated, not discovered afterwards."
+          },
+          {
+            "pregunta": "Why does an AI initiative fail even when the upfront analysis was solid?",
+            "respuesta": "Because the analysis measured the initiative's value and feasibility, and nobody measured the real capacity of the person who had to run it: whether they already had other initiatives underway, whether their current metric was about to take a temporary hit, and whether the system involved responds within the timeframe the plan assumes. The analysis can be correct and the initiative can still fail, because it measured the idea and not the person who was going to execute it."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's translate your strategy into operations",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
