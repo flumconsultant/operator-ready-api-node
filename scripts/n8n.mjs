@@ -113,12 +113,26 @@ async function pedirTodo(ruta, parametros = {}) {
    Se recorta aquí para que no ocurra. */
 const ACEPTADAS = ['name', 'nodes', 'connections', 'settings', 'staticData'];
 
+/* Y dentro de settings hay que volver a recortar: la interfaz guarda ahí claves
+   que su propia API rechaza (binaryMode, availableInMCP), y el error que
+   devuelve —"settings must NOT have additional properties"— tampoco dice cuál
+   sobra. Se dejan pasar solo las que el esquema público admite. */
+const SETTINGS_ACEPTADOS = [
+  'executionOrder', 'timezone', 'errorWorkflow', 'executionTimeout',
+  'saveExecutionProgress', 'saveManualExecutions',
+  'saveDataErrorExecution', 'saveDataSuccessExecution',
+];
+
 function paraEnviar(flujo) {
   const limpio = {};
   for (const clave of ACEPTADAS) {
     if (flujo[clave] !== undefined) limpio[clave] = flujo[clave];
   }
-  limpio.settings ??= { executionOrder: 'v1' };
+  const settings = {};
+  for (const clave of SETTINGS_ACEPTADOS) {
+    if (flujo.settings?.[clave] !== undefined) settings[clave] = flujo.settings[clave];
+  }
+  limpio.settings = { executionOrder: 'v1', ...settings };
   return limpio;
 }
 

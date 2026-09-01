@@ -1,0 +1,1388 @@
+{
+  "updatedAt": "2026-09-01T02:26:28.312Z",
+  "createdAt": "2026-09-01T02:26:04.261Z",
+  "id": "RwH6PrJnjHYOf9fz",
+  "name": "Flujo 1 · Atención al Cliente por WhatsApp — StetikGO",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {
+          "messageStatusUpdates": [
+            "all"
+          ]
+        }
+      },
+      "id": "c4b9cddc-8a10-4f8e-8260-dc44ba4ce35d",
+      "name": "P01 · Recibir mensaje de WhatsApp",
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1056,
+        96
+      ],
+      "webhookId": "c7acc0b9-5325-4cea-a461-4fbfa6281b07"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "telefono",
+              "value": "={{ $json.messages?.[0]?.from ?? '' }}",
+              "type": "string"
+            },
+            {
+              "id": "a2",
+              "name": "mensaje_texto",
+              "value": "={{ $json.messages?.[0]?.text?.body ?? '' }}",
+              "type": "string"
+            },
+            {
+              "id": "a3",
+              "name": "nombre_contacto",
+              "value": "={{ $json.contacts?.[0]?.profile?.name ?? 'Cliente' }}",
+              "type": "string"
+            },
+            {
+              "id": "a4",
+              "name": "estado_cliente",
+              "value": "Cliente identificado",
+              "type": "string"
+            },
+            {
+              "id": "a5",
+              "name": "contexto_cliente",
+              "value": "[pendiente: sistema/ubicación del listado de clientes y nodo de integración correspondiente]",
+              "type": "string"
+            },
+            {
+              "id": "a6",
+              "name": "es_prueba",
+              "value": "={{ $json.es_prueba === true ? 'si' : 'no' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "da9bd1ba-c5a5-4810-a554-8fc1cb93d4b4",
+      "name": "P02 · Recuperar contexto del cliente",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -576,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "inputText": "=Mensaje: {{ $json.mensaje_texto }}\nContexto del cliente: {{ $json.contexto_cliente }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "consulta",
+              "description": "Consulta sobre servicios, precios, duración u horarios."
+            },
+            {
+              "category": "reserva",
+              "description": "Intención de compra o de reservar un servicio."
+            },
+            {
+              "category": "queja",
+              "description": "Reclamo, molestia, postventa o insatisfacción."
+            }
+          ]
+        },
+        "options": {
+          "fallback": "other"
+        }
+      },
+      "id": "4a0596af-7811-49df-88cd-ef9a9eed16ab",
+      "name": "P03 · Interpretar la intención",
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        144
+      ]
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-lite",
+        "options": {}
+      },
+      "id": "b9ee94ec-97ae-4396-bb1d-6c0a59f3524f",
+      "name": "Modelo LLM · Intención",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        416
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "cztoZbbD539lrqEm",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "i1",
+              "name": "intencion",
+              "value": "consulta",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "acaa52ed-844a-4aa4-8fcd-8b06fe7e9c0f",
+      "name": "Intención = consulta",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "cf7ba073-ccd6-49d6-a055-a6a3ada65d53",
+      "name": "Intención interpretada",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        256,
+        144
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "i2",
+              "name": "intencion",
+              "value": "reserva",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "68229eb6-6a60-4bf0-a373-f9efc56b8f6b",
+      "name": "Intención = reserva",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        0,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "i3",
+              "name": "intencion",
+              "value": "queja",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "f0c29b4b-d770-4ef0-90df-dfeb2c7215fd",
+      "name": "Intención = queja",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        0,
+        384
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "i4",
+              "name": "intencion",
+              "value": "otra",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "3ceb54c7-8010-4752-98c8-7049e2b6ce74",
+      "name": "Intención = otra",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        0,
+        576
+      ]
+    },
+    {
+      "parameters": {
+        "inputText": "={{ $json.mensaje_texto }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "molestia",
+              "description": "El cliente expresa enojo, molestia o insatisfacción."
+            },
+            {
+              "category": "sin_molestia",
+              "description": "El cliente NO expresa molestia; tono neutral o positivo."
+            }
+          ]
+        },
+        "options": {
+          "fallback": "other"
+        }
+      },
+      "id": "88bb3ef3-852d-45e8-91d9-b5c9383bc1cc",
+      "name": "P03b · ¿Existe molestia?",
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [
+        448,
+        144
+      ]
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-lite",
+        "options": {}
+      },
+      "id": "85af3062-b920-4d52-b377-8ce35c6f4728",
+      "name": "Modelo LLM · Molestia",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        384,
+        368
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "cztoZbbD539lrqEm",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "m1",
+              "name": "molestia",
+              "value": "true",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "fec855a3-a660-4bab-bd90-65233db1edb2",
+      "name": "Molestia = true",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        800,
+        32
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "1bd9ed23-e187-4380-a17c-d4995d81f85b",
+      "name": "Intención y sentimiento",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "m2",
+              "name": "molestia",
+              "value": "false",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "95e95999-c354-4f78-9aad-7fefb9398c64",
+      "name": "Molestia = false",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        800,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "m3",
+              "name": "molestia",
+              "value": "false",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "db6ec747-219f-4e6c-b929-9acb13129b2e",
+      "name": "Molestia = false (fallback)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        800,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Eres el asistente de atención al cliente de StetikGO. Responde SOLO con la información entregada.\n\nMensaje del cliente: {{ $('P02 · Recuperar contexto del cliente').first().json.mensaje_texto }}\nContexto del cliente: {{ $('P02 · Recuperar contexto del cliente').first().json.contexto_cliente }}\nServicio (catálogo 2026): {{ $('P04b · Buscar el servicio del mensaje').first().json.servicio }}\nDuración (catálogo 2026): {{ $('P04b · Buscar el servicio del mensaje').first().json.duracion }}\nPrecio (catálogo 2026): {{ $('P04b · Buscar el servicio del mensaje').first().json.precio }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "Usa el tono de marca StetikGO: cercano, profesional y claro. Máximo 4 líneas. PROHIBIDO inventar servicios, precios, duraciones o cualquier dato que no esté en las entradas. Si falta información, indica que un asesor lo confirmará. Nunca ofrezcas descuentos ni diagnósticos."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "id": "1e2dd925-ac3d-43f9-b53f-05d54083935b",
+      "name": "P05 · Redactar la respuesta",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        1920,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "id": "37e29f15-7664-4242-930f-5da68929c9f2",
+      "name": "Modelo LLM · Redacción",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        1920,
+        512
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "gtyOmS5Jc7CP0skJ",
+          "name": "PoC_Alese"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "v1",
+              "leftValue": "={{ $json.text }}",
+              "rightValue": "={{ $('P04b · Buscar el servicio del mensaje').first().json.servicio }}",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "v2",
+              "leftValue": "={{ $json.text }}",
+              "rightValue": "={{ $('P04b · Buscar el servicio del mensaje').first().json.precio }}",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "67517631-587b-4c92-9230-2706ae321a08",
+      "name": "P06 · Validar contra el catálogo",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2144,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "or",
+          "conditions": [
+            {
+              "id": "h1",
+              "leftValue": "={{ $('Intención y sentimiento').first().json.intencion }}",
+              "rightValue": "queja",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "h2",
+              "leftValue": "={{ $('Intención y sentimiento').first().json.molestia }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "h3",
+              "leftValue": "={{ $('P04b · Buscar el servicio del mensaje').first().json.servicio }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0f231e00-fca2-4535-8373-a6ad42e2b9b4",
+      "name": "P07 · ¿Necesita a un humano?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2368,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "r1",
+              "name": "resumen_caso",
+              "value": "=Cliente: {{ $('Intención y sentimiento').first().json.nombre_contacto }} ({{ $('Intención y sentimiento').first().json.telefono }})\nContexto: {{ $('Intención y sentimiento').first().json.contexto_cliente }}\nMensaje: {{ $('Intención y sentimiento').first().json.mensaje_texto }}\nIntención: {{ $('Intención y sentimiento').first().json.intencion }}\nServicio consultado: {{ $('P04b · Buscar el servicio del mensaje').first().json.servicio }}\nRazón de escalamiento: molestia/queja, servicio fuera de catálogo o respuesta no validada.",
+              "type": "string"
+            },
+            {
+              "id": "r2",
+              "name": "horario_recepcion",
+              "value": "Lunes a sábado 9:00–20:00 (America/Lima)",
+              "type": "string"
+            },
+            {
+              "id": "r3",
+              "name": "estado_caso",
+              "value": "Caso asignado",
+              "type": "string"
+            },
+            {
+              "id": "r4",
+              "name": "canal_asignacion",
+              "value": "[pendiente: canal o sistema mediante el cual se asignará el caso a Recepción]",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "a65a30f9-3f94-4adf-a668-9cc18cbe20bd",
+      "name": "P08 · Resumen para Recepción",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        2592,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "resume": "webhook",
+        "httpMethod": "POST",
+        "options": {}
+      },
+      "id": "3dee4584-2476-4580-874e-e1bd56790248",
+      "name": "P08 · Freno humano (Recepción)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3040,
+        176
+      ],
+      "webhookId": "6e3c1744-5bfe-4483-9a90-662dcbe07874"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "l1",
+              "name": "log_intencion",
+              "value": "={{ $('Intención y sentimiento').first().json.intencion }}",
+              "type": "string"
+            },
+            {
+              "id": "l2",
+              "name": "log_servicio",
+              "value": "={{ $('P04b · Buscar el servicio del mensaje').first().json.servicio }}",
+              "type": "string"
+            },
+            {
+              "id": "l3",
+              "name": "log_tiempo",
+              "value": "={{ $now.setZone(\"America/Lima\").toISO() }}",
+              "type": "string"
+            },
+            {
+              "id": "l4",
+              "name": "log_destino",
+              "value": "[pendiente: sistema donde se registrarán las interacciones]",
+              "type": "string"
+            },
+            {
+              "id": "l5",
+              "name": "log_estructura",
+              "value": "[pendiente: estructura/campos del registro además de intención, servicio y tiempo]",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "ec0fb7f8-707e-4130-a994-edac9f9fb330",
+      "name": "P11 · Registrar la interacción",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        3488,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "",
+        "recipientPhoneNumber": "={{ $('P02 · Recuperar contexto del cliente').first().json.telefono }}",
+        "textBody": "={{ $json.text }}",
+        "additionalFields": {}
+      },
+      "id": "e0e320a3-2880-4e7d-811d-38dc13869ed9",
+      "name": "P09 · Enviar la respuesta",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        2816,
+        304
+      ],
+      "webhookId": "6773c752-b74f-4905-903b-03181ae0bc19"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "re1",
+              "leftValue": "={{ $('Intención y sentimiento').first().json.intencion }}",
+              "rightValue": "reserva",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1377189a-5b8e-4ddf-8eb7-320f8287cd78",
+      "name": "P10 · ¿El cliente quiere reservar?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3040,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "",
+          "cachedResultName": "[pendiente: workflowId del Flujo 2]"
+        },
+        "options": {}
+      },
+      "id": "bcd85477-5c06-46e2-8f10-5aa06f2d67e0",
+      "name": "P10 · Pasar a Flujo 2 (reserva) [desactivado: el Flujo 2 aún no existe]",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        3264,
+        400
+      ],
+      "disabled": true
+    },
+    {
+      "id": "p00-trigger",
+      "name": "P00 · Probar con datos de ejemplo",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1056,
+        288
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "p00-datos",
+      "name": "P00 · Mensaje de prueba",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -832,
+        288
+      ],
+      "parameters": {
+        "jsCode": "/* Cambia estas tres líneas para probar otros caminos del flujo.\n\n   · \"¿cuánto cuesta la limpieza facial profunda?\"  -> consulta, responde precio\n   · \"quiero reservar depilación láser axilas\"      -> reserva, salta al Flujo 2\n   · \"llevo tres días esperando, es una vergüenza\"  -> queja + molestia, escala\n   · \"¿hacen trasplante capilar?\"                   -> fuera de catálogo, escala */\n\nconst MENSAJE  = '¿Cuánto cuesta la limpieza facial profunda y cuánto dura?';\nconst TELEFONO = '51987654321';\nconst NOMBRE   = 'Cliente de prueba';\n\n/* Se imita la forma exacta con la que el disparador de WhatsApp entrega los\n   datos, para que P02 lea lo mismo venga de donde venga. */\nreturn [{\n  json: {\n    es_prueba: true,\n    contacts: [{ profile: { name: NOMBRE }, wa_id: TELEFONO }],\n    messages: [{\n      from: TELEFONO,\n      id: 'wamid.PRUEBA',\n      timestamp: String(Math.floor(Date.now() / 1000)),\n      type: 'text',\n      text: { body: MENSAJE },\n    }],\n  },\n  pairedItem: { item: 0 },\n}];"
+      }
+    },
+    {
+      "id": "p04-if",
+      "name": "P04 · ¿Modo prueba?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1248,
+        288
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "pr1",
+              "leftValue": "={{ $('P02 · Recuperar contexto del cliente').first().json.es_prueba }}",
+              "rightValue": "si",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "p04-prueba",
+      "name": "P04a · Catálogo de prueba",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1472,
+        176
+      ],
+      "parameters": {
+        "jsCode": "/* Cuatro servicios inventados con la misma forma que tendrá la hoja real:\n   una fila por servicio, con nombre, duración y precio. Sirven para recorrer\n   el flujo entero sin tocar Google Sheets. Cuando exista el catálogo 2026 de\n   verdad, esta rama se queda igual: solo se usa en modo prueba. */\n\nreturn [\n  { servicio: 'Limpieza facial profunda',   duracion: '60 min', precio: 'S/ 120' },\n  { servicio: 'Depilación láser axilas',    duracion: '20 min', precio: 'S/ 90'  },\n  { servicio: 'Masaje descontracturante',   duracion: '50 min', precio: 'S/ 110' },\n  { servicio: 'Peeling químico',            duracion: '45 min', precio: 'S/ 180' },\n].map((fila) => ({ json: fila, pairedItem: { item: 0 } }));"
+      }
+    },
+    {
+      "id": "p04-sheets",
+      "name": "P04a · Leer catálogo 2026",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1472,
+        400
+      ],
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "mode": "url",
+          "value": "",
+          "cachedResultName": "PENDIENTE: pega aquí la URL del Google Sheet del catálogo 2026"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gid=0",
+          "cachedResultName": "Hoja 1"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MbVZU1NmU2CvAAhz",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "id": "p04-buscar",
+      "name": "P04b · Buscar el servicio del mensaje",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1696,
+        288
+      ],
+      "parameters": {
+        "jsCode": "/* Busca cuál de los servicios del catálogo aparece en el mensaje.\n\n   Antes esto lo hacía Google Sheets filtrando por el mensaje completo, que no\n   coincide nunca. Aquí se compara al revés y con tolerancia: sin tildes, sin\n   mayúsculas, y si el nombre completo no aparece, basta con que aparezcan sus\n   palabras significativas (\"depilación láser\" encuentra \"Depilación láser\n   axilas\").\n\n   Emite SIEMPRE un ítem. Cuando no encuentra nada devuelve los campos vacíos y\n   encontrado:false, que es lo que P07 mira para escalar a un humano. Ese era el\n   fallo que mataba el flujo: sin ítem, los cinco nodos siguientes reventaban. */\n\nconst contexto = $('P02 · Recuperar contexto del cliente').first().json;\n\nconst normalizar = (t) => String(t ?? '')\n  .toLowerCase()\n  .normalize('NFD')\n  .replace(/[\\u0300-\\u036f]/g, '')\n  .replace(/\\s+/g, ' ')\n  .trim();\n\nconst mensaje = normalizar(contexto.mensaje_texto);\n\n/* La hoja real puede llamar a sus columnas como quiera; se aceptan los nombres\n   más probables y se comparan sin tildes ni mayúsculas. */\nconst columna = (fila, candidatos) => {\n  const claves = Object.keys(fila);\n  for (const candidato of candidatos) {\n    const clave = claves.find((k) => normalizar(k) === normalizar(candidato));\n    if (clave && String(fila[clave] ?? '').trim() !== '') return String(fila[clave]).trim();\n  }\n  return '';\n};\n\nconst filas = $input.all().map((i) => i.json);\n\nlet encontrada = null;\nlet mejorPuntaje = 0;\n\nfor (const fila of filas) {\n  const nombre = columna(fila, ['servicio', 'nombre', 'nombre del servicio', 'tratamiento']);\n  if (!nombre) continue;\n\n  const nombreNorm = normalizar(nombre);\n  let puntaje = 0;\n\n  if (mensaje.includes(nombreNorm)) {\n    puntaje = 100;\n  } else {\n    /* Palabras de 4 letras o más: \"de\", \"la\", \"con\" no distinguen nada. */\n    const palabras = nombreNorm.split(' ').filter((p) => p.length >= 4);\n    const aciertos = palabras.filter((p) => mensaje.includes(p)).length;\n    if (palabras.length && aciertos === palabras.length) puntaje = 80;\n    else if (aciertos >= 2) puntaje = 50 + aciertos;\n  }\n\n  if (puntaje > mejorPuntaje) {\n    mejorPuntaje = puntaje;\n    encontrada = { fila, nombre };\n  }\n}\n\nconst salida = {\n  ...contexto,\n  servicio: encontrada ? encontrada.nombre : '',\n  duracion: encontrada ? columna(encontrada.fila, ['duracion', 'duración', 'tiempo']) : '',\n  precio: encontrada ? columna(encontrada.fila, ['precio', 'costo', 'tarifa', 'valor']) : '',\n  encontrado: Boolean(encontrada),\n  catalogo_filas: filas.length,\n};\n\nreturn [{ json: salida, pairedItem: { item: 0 } }];"
+      }
+    },
+    {
+      "id": "p08-if",
+      "name": "P08b · ¿Esperar a Recepción?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2816,
+        96
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "pr2",
+              "leftValue": "={{ $('P02 · Recuperar contexto del cliente').first().json.es_prueba }}",
+              "rightValue": "si",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "p09-if",
+      "name": "P09 · ¿Modo prueba?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2592,
+        400
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "pr3",
+              "leftValue": "={{ $('P02 · Recuperar contexto del cliente').first().json.es_prueba }}",
+              "rightValue": "si",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "p09-sim",
+      "name": "P09t · Respuesta simulada (no se envía)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        2816,
+        496
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "s1",
+              "name": "canal",
+              "value": "simulado · modo prueba",
+              "type": "string"
+            },
+            {
+              "id": "s2",
+              "name": "destinatario",
+              "value": "={{ $('P02 · Recuperar contexto del cliente').first().json.telefono }}",
+              "type": "string"
+            },
+            {
+              "id": "s3",
+              "name": "mensaje_enviado",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "P01 · Recibir mensaje de WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "P02 · Recuperar contexto del cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P00 · Probar con datos de ejemplo": {
+      "main": [
+        [
+          {
+            "node": "P00 · Mensaje de prueba",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P00 · Mensaje de prueba": {
+      "main": [
+        [
+          {
+            "node": "P02 · Recuperar contexto del cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P02 · Recuperar contexto del cliente": {
+      "main": [
+        [
+          {
+            "node": "P03 · Interpretar la intención",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P03 · Interpretar la intención": {
+      "main": [
+        [
+          {
+            "node": "Intención = consulta",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Intención = reserva",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Intención = queja",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Intención = otra",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Modelo LLM · Intención": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "P03 · Interpretar la intención",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Intención = consulta": {
+      "main": [
+        [
+          {
+            "node": "Intención interpretada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Intención = reserva": {
+      "main": [
+        [
+          {
+            "node": "Intención interpretada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Intención = queja": {
+      "main": [
+        [
+          {
+            "node": "Intención interpretada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Intención = otra": {
+      "main": [
+        [
+          {
+            "node": "Intención interpretada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Intención interpretada": {
+      "main": [
+        [
+          {
+            "node": "P03b · ¿Existe molestia?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P03b · ¿Existe molestia?": {
+      "main": [
+        [
+          {
+            "node": "Molestia = true",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Molestia = false",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Molestia = false (fallback)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Modelo LLM · Molestia": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "P03b · ¿Existe molestia?",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Molestia = true": {
+      "main": [
+        [
+          {
+            "node": "Intención y sentimiento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Molestia = false": {
+      "main": [
+        [
+          {
+            "node": "Intención y sentimiento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Molestia = false (fallback)": {
+      "main": [
+        [
+          {
+            "node": "Intención y sentimiento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Intención y sentimiento": {
+      "main": [
+        [
+          {
+            "node": "P04 · ¿Modo prueba?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P04 · ¿Modo prueba?": {
+      "main": [
+        [
+          {
+            "node": "P04a · Catálogo de prueba",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "P04a · Leer catálogo 2026",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P04a · Catálogo de prueba": {
+      "main": [
+        [
+          {
+            "node": "P04b · Buscar el servicio del mensaje",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P04a · Leer catálogo 2026": {
+      "main": [
+        [
+          {
+            "node": "P04b · Buscar el servicio del mensaje",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P04b · Buscar el servicio del mensaje": {
+      "main": [
+        [
+          {
+            "node": "P05 · Redactar la respuesta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P05 · Redactar la respuesta": {
+      "main": [
+        [
+          {
+            "node": "P06 · Validar contra el catálogo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Modelo LLM · Redacción": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "P05 · Redactar la respuesta",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P06 · Validar contra el catálogo": {
+      "main": [
+        [
+          {
+            "node": "P07 · ¿Necesita a un humano?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "P08 · Resumen para Recepción",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P07 · ¿Necesita a un humano?": {
+      "main": [
+        [
+          {
+            "node": "P08 · Resumen para Recepción",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "P09 · ¿Modo prueba?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P08 · Resumen para Recepción": {
+      "main": [
+        [
+          {
+            "node": "P08b · ¿Esperar a Recepción?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P08b · ¿Esperar a Recepción?": {
+      "main": [
+        [
+          {
+            "node": "P11 · Registrar la interacción",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "P08 · Freno humano (Recepción)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P08 · Freno humano (Recepción)": {
+      "main": [
+        [
+          {
+            "node": "P11 · Registrar la interacción",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P09 · ¿Modo prueba?": {
+      "main": [
+        [
+          {
+            "node": "P09t · Respuesta simulada (no se envía)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "P09 · Enviar la respuesta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P09t · Respuesta simulada (no se envía)": {
+      "main": [
+        [
+          {
+            "node": "P10 · ¿El cliente quiere reservar?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P09 · Enviar la respuesta": {
+      "main": [
+        [
+          {
+            "node": "P10 · ¿El cliente quiere reservar?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P10 · ¿El cliente quiere reservar?": {
+      "main": [
+        [
+          {
+            "node": "P10 · Pasar a Flujo 2 (reserva) [desactivado: el Flujo 2 aún no existe]",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "P11 · Registrar la interacción",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P10 · Pasar a Flujo 2 (reserva) [desactivado: el Flujo 2 aún no existe]": {
+      "main": [
+        [
+          {
+            "node": "P11 · Registrar la interacción",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": null,
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "0f75b243-dac0-45b6-baae-e85cc3b17515",
+  "activeVersionId": null,
+  "versionCounter": 4,
+  "triggerCount": 0,
+  "sourceWorkflowId": null,
+  "shared": [
+    {
+      "updatedAt": "2026-09-01T02:26:04.266Z",
+      "createdAt": "2026-09-01T02:26:04.266Z",
+      "role": "workflow:owner",
+      "workflowId": "RwH6PrJnjHYOf9fz",
+      "projectId": "V9ZyLUroQrqbd7f4",
+      "project": {
+        "updatedAt": "2025-05-21T22:33:53.189Z",
+        "createdAt": "2025-05-21T22:31:42.905Z",
+        "id": "V9ZyLUroQrqbd7f4",
+        "name": "Carlos Andres Ramirez Matos <carlosandres.matos@agenciaflum.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "customTelemetryTags": [],
+        "creatorId": "f94cd52b-293e-4a7f-a698-00e5dbdd1c40"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": null
+}
