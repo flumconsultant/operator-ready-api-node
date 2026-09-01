@@ -24,13 +24,13 @@ perfiles, y los textos de cada pantalla —incluido lo que se le dice a la IA qu
 interpreta—. Se escribe encima, se pulsa Guardar, y el siguiente formulario ya
 sale con los cambios. No hace falta abrir la hoja ni entrar a n8n.
 
-La clave está en la hoja, pestaña , fila ; cambiándola
+La clave está en la hoja, pestaña `Textos`, fila `clave_editor`; cambiándola
 ahí cambia la de la pantalla. Es una cerradura sencilla para una pantalla
 interna, no un sistema de usuarios: quien tenga la URL con la clave entra. Se
 comprueba también al guardar, para que nadie pueda escribir llamando al
 endpoint a mano.
 
-La genera  y vive en el flujo
+La genera `scripts/n8n-editor-trammy.mjs` y vive en el flujo
 «TRAMMY · Editor de configuración».
 
 ### Y por debajo, la misma hoja
