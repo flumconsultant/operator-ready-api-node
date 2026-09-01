@@ -302,6 +302,64 @@ async function sondearApi() {
   }
 }
 
+
+/* ---- La sonda que sí decide -----------------------------------------------
+ *
+ * La anterior pregunta a /v2/me, y tiene un defecto que hay que decir: ese
+ * endpoint pide un alcance de perfil que este token no lleva, así que su 401
+ * puede significar «el token no vale» o «el token no puede hacer ESTA llamada».
+ * Son dos cosas distintas y ahí no se separan. Otra medición cerca de la
+ * pregunta en vez de la pregunta.
+ *
+ * Esta va al mismo endpoint del post, con las mismas cabeceras, y con un cuerpo
+ * vacío a propósito. Un cuerpo vacío no puede publicar nada: le faltan el
+ * autor, el texto y la visibilidad, que son obligatorios. Así que solo hay dos
+ * finales posibles y cada uno contesta lo que falta saber:
+ *
+ *   · 401 → LinkedIn rechaza el token ANTES de mirar el contenido. El problema
+ *     es la autenticación: el token o la aplicación.
+ *   · 400 o 422 → LinkedIn aceptó el token y luego se quejó del contenido, que
+ *     es exactamente lo que tiene que pasar. El token sirve, y el 401 del post
+ *     de verdad viene de otra cosa: el permiso sobre esa página concreta.
+ *
+ * Publicar es imposible por construcción. */
+async function sondearPublicacion() {
+  if (!TOKEN) return;
+  try {
+    const r = await fetch(API, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+        'Content-Type': 'application/json',
+        'X-Restli-Protocol-Version': '2.0.0',
+        'LinkedIn-Version': VERSION,
+      },
+      body: '{}',
+    });
+    const cuerpo = await r.text().catch(() => '');
+    console.log(`\nSonda al endpoint de publicación (cuerpo vacío, no puede publicar) → HTTP ${r.status}`);
+    if (r.status === 401) {
+      console.log('  LinkedIn rechaza el token antes de mirar el contenido.');
+      console.log('  El problema es la autenticación, no la página ni el post.');
+      console.log('  Lo que queda por revisar, por orden: que la aplicación de LinkedIn');
+      console.log('  esté verificada por la empresa, y que el token se generara desde esa');
+      console.log('  misma aplicación y no desde otra.');
+    } else if (r.status === 400 || r.status === 422) {
+      console.log('  LinkedIn ACEPTÓ el token y se quejó del contenido, que es lo correcto.');
+      console.log('  El token sirve para publicar. El 401 del post de verdad viene de otra');
+      console.log('  cosa: el permiso sobre esa página. Comprueba que quien autorizó el');
+      console.log('  token sea administrador de la página y que LINKEDIN_ORG_ID sea la suya.');
+    } else if (r.status === 403) {
+      console.log('  El token se acepta pero falta permiso. Apunta a la relación entre');
+      console.log('  quien autorizó y la página de empresa.');
+    } else {
+      console.log(`  Respuesta inesperada: ${cuerpo.slice(0, 250)}`);
+    }
+  } catch (e) {
+    console.log(`\nNo se pudo sondear la publicación: ${e.message}`);
+  }
+}
+
 /* ---- Qué artículo toca --------------------------------------------------- */
 const publicados = existsSync(REGISTRO) ? JSON.parse(readFileSync(REGISTRO, 'utf8')) : { anunciados: [] };
 
@@ -435,6 +493,7 @@ if (ENSAYO) {
   console.log(`  ${cuerpo.content.article.description}`);
   console.log(`  ${cuerpo.content.article.source}`);
   await sondearApi();
+await sondearPublicacion();
 console.log(`\nSaldría en ${firma.donde}${firma.urn ? ` (${firma.urn})` : ''} · versión de la API: ${VERSION}`);
   process.exit(0);
 }
@@ -461,6 +520,7 @@ if (!r.ok) {
   if (r.status === 401) {
     console.error('::error::El permiso pasó la comprobación previa y aun así LinkedIn rechaza el post. La sonda de abajo dice dónde está el problema.');
     await sondearApi();
+    await sondearPublicacion();
   }
   process.exit(1);
 }
