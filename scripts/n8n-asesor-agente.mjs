@@ -48,6 +48,10 @@ const CRED_GMAIL = { gmailOAuth2: { id: 'DuQwdVWwqHRmtxQo', name: 'pr.flum@gmail
 
 /* La agenda vive en el calendario que ya usan los otros flujos. Cuando StetikGO
    tenga su propio calendario, esta línea es lo único que cambia. */
+/* El sub-flujo que decide si un hueco está libre. Vive aparte porque una
+   herramienta de agente solo puede apuntar a otro flujo. */
+const SUBFLUJO_HUECO = 'P0r8KsuNaCFcEJUQ';
+
 const CALENDARIO = { __rl: true, mode: 'list', value: 'pr.flum@gmail.com', cachedResultName: 'pr.flum@gmail.com' };
 
 const hoja = (nombre) => ({ __rl: true, mode: 'name', value: nombre });
@@ -88,14 +92,36 @@ const SISTEMA = [
   'Pídelas en el orden natural de la conversación, de una en una o dos, nunca como un formulario.',
   'Si el cliente ya dijo alguna, no la vuelvas a pedir.',
   '',
-  'Cuando las tengas las cuatro, en este orden exacto:',
-  '1. Usa «Ver disponibilidad» con el rango de la cita para comprobar que está libre.',
-  '2. Si hay algo ocupado, NO agendes: ofrece dos horas alternativas de ese mismo día o del siguiente.',
-  '3. Si está libre, usa «Agendar cita». La duración la marca el catálogo: la hora de fin es el inicio más esa duración.',
-  '4. Usa «Confirmar por correo» para enviarle la confirmación al correo que te dio.',
-  '5. Recién entonces confírmaselo en el chat: servicio, día, hora, precio y a qué correo se lo mandaste.',
+  /* El orden importa y costó dos pasadas acertarlo. Comprobando al final, el
+     bot le decía «te agendo el viernes a las 16:30», pedía nombre y correo, y
+     solo entonces descubría que esa hora estaba ocupada: cliente con datos ya
+     entregados y una hora que hay que retirarle. Comprobar en cuanto hay día y
+     hora convierte eso en una frase antes de que nadie se ilusione. */
+  'EN CUANTO el cliente te diga un día y una hora, y ANTES de pedirle nada más:',
+  '1. Usa «Comprobar si un hueco está libre» con la fecha y las horas de inicio y fin.',
+  '2. Si responde que no está libre, dilo en ese mismo momento y ofrécele las alternativas que te devuelve,',
+  '   tal como vienen. No las cambies ni inventes otras: ya están comprobadas.',
+  '3. Si está libre, dile que esa hora está disponible y recién entonces pídele el nombre y el correo.',
+  '',
+  'Con las cuatro cosas y el correo confirmado:',
+  /* Probándolo, tras un «sí, correcto» del cliente el agente contestaba «listo,
+     tu cita está confirmada» sin haber llamado a la herramienta. La red de
+     seguridad lo cazaba, pero al cliente le tocaba repetirlo todo. El paso
+     tiene que estar dicho como una orden, no como el punto cuatro de una
+     lista. */
+  '4. En cuanto el cliente confirme el correo, tu siguiente acción es llamar a «Agendar cita». No escribas',
+  '   la respuesta antes: primero la herramienta, después hablas. Si no la has llamado, la cita NO existe.',
+  '   La duración la marca el catálogo: la hora de fin es el inicio más esa duración.',
+  '5. Recién entonces confírmaselo en el chat: servicio, día, hora y precio.',
+  '   Dile también que Recepción le enviará la confirmación a su correo. No digas que ya se la enviaste tú.',
   '',
   'Nunca digas que agendaste algo si la herramienta no se ejecutó. Nunca inventes un número de cita.',
+  /* Probándolo dijo «el viernes a las 16:30 tenemos disponibilidad» y solo
+     después miró la agenda, donde esa hora estaba ocupada. Tuvo que
+     desdecirse al turno siguiente. Prometer un hueco sin haberlo mirado es la
+     forma más rápida de quedar mal con un cliente. */
+  'Nunca digas que una hora está libre o disponible antes de haberla comprobado con la herramienta.',
+  'Si el cliente propone un día y una hora, primero consulta y después contesta.',
   'Antes de agendar, repítele al cliente el correo tal como lo escribió y pídele que confirme. Un correo mal copiado es una cita que nadie recibe.',
   '',
   'REGLAS QUE NO SE ROMPEN',
@@ -302,7 +328,17 @@ return [{
   },
   {
     id: 'ver-agenda',
-    name: 'Ver disponibilidad',
+    name: 'Ver disponibilidad en el calendario [desactivado: credencial caducada]',
+    /* Las tres credenciales de Google Calendar y Gmail de la instancia
+       responden "needs to be reconnected": el permiso OAuth caducó y solo se
+       renueva desde el navegador de su dueño. Comprobado leyendo la API con
+       cada una; la de Sheets es la única viva.
+
+       Se quedan aquí, cableadas y completas, porque el día que se reconecten
+       basta con reactivarlas. Mientras tanto una herramienta que falla siempre
+       es peor que ninguna: el agente la llamaría, se encontraría un error y
+       derivaría la conversación en cada intento de agendar. */
+    disabled: true,
     type: 'n8n-nodes-base.googleCalendarTool',
     typeVersion: 1.3,
     position: [1136, 540],
@@ -326,7 +362,8 @@ return [{
   },
   {
     id: 'agendar',
-    name: 'Agendar cita',
+    name: 'Agendar en el calendario [desactivado: credencial caducada]',
+    disabled: true,
     type: 'n8n-nodes-base.googleCalendarTool',
     typeVersion: 1.3,
     position: [1280, 540],
@@ -355,7 +392,8 @@ return [{
   },
   {
     id: 'correo',
-    name: 'Confirmar por correo',
+    name: 'Confirmar por correo [desactivado: credencial caducada]',
+    disabled: true,
     type: 'n8n-nodes-base.gmailTool',
     typeVersion: 2.1,
     position: [1424, 540],
@@ -374,11 +412,107 @@ return [{
     credentials: CRED_GMAIL,
   },
   {
+    id: 'ver-citas',
+    name: 'Comprobar si un hueco está libre',
+    type: '@n8n/n8n-nodes-langchain.toolWorkflow',
+    typeVersion: 2.2,
+    position: [1136, 700],
+    /* Antes esta herramienta devolvía las citas del día en crudo y dejaba que
+       el agente decidiera si se solapaban. Con una cita de 16:00 a 17:00
+       reservada, a un cliente que pidió las 16:30 le contestó «está
+       disponible». Otras veces lo acertaba, y esa inconsistencia es justo el
+       problema: no se promete un hueco con un método que funciona casi
+       siempre. Ahora la comparación la hace un sub-flujo en código y el agente
+       solo lee la respuesta. */
+    parameters: {
+      description: [
+        'Comprueba si un hueco concreto está libre. Úsala EN CUANTO el cliente diga un día y una hora,',
+        'antes de pedirle nada más y antes de decirle si puede o no.',
+        'dia = fecha en formato yyyy-MM-dd, copiada del calendario que tienes arriba.',
+        'hora_inicio y hora_fin en formato HH:mm de 24 horas; la de fin es la de inicio más la duración del servicio.',
+        'Devuelve libre (true o false), las horas ya ocupadas y dos alternativas cercanas que sí están libres.',
+        'Si devuelve libre false, ofrécele esas alternativas tal cual: ya están calculadas y son correctas.',
+      ].join(' '),
+      workflowId: { __rl: true, mode: 'list', value: SUBFLUJO_HUECO, cachedResultName: 'Flujo 1b · Comprobar hueco' },
+      workflowInputs: {
+        mappingMode: 'defineBelow',
+        value: {
+          dia: delModelo('dia', 'Día de la cita en formato yyyy-MM-dd, copiado del calendario'),
+          hora_inicio: delModelo('hora_inicio', 'Hora de inicio en formato HH:mm de 24 horas'),
+          hora_fin: delModelo('hora_fin', 'Hora de fin en formato HH:mm: el inicio más la duración del servicio'),
+        },
+        matchingColumns: [],
+        schema: ['dia', 'hora_inicio', 'hora_fin'].map((id) => ({
+          id, displayName: id, required: false, defaultMatch: false, display: true, canBeUsedToMatch: true, type: 'string',
+        })),
+        attemptToConvertTypes: false,
+        convertFieldsToString: true,
+      },
+    },
+  },
+  {
+    id: 'reservar',
+    name: 'Agendar cita',
+    type: 'n8n-nodes-base.googleSheetsTool',
+    typeVersion: 4.7,
+    position: [1280, 700],
+    parameters: {
+      descriptionType: 'manual',
+      toolDescription: [
+        'Reserva la cita. Úsala solo después de comprobar con «Ver citas de un día» que la hora está libre',
+        'y de que el cliente te haya confirmado su correo.',
+        'La hora de fin es la de inicio más la duración que marca el catálogo para ese servicio.',
+      ].join(' '),
+      operation: 'append',
+      documentId: documento,
+      sheetName: hoja('Citas'),
+      columns: {
+        mappingMode: 'defineBelow',
+        value: {
+          creado: '={{ $now.setZone("America/Lima").toISO() }}',
+          dia: delModelo('dia', 'Día de la cita en formato yyyy-MM-dd, copiado del calendario'),
+          hora_inicio: delModelo('hora_inicio', 'Hora de inicio en formato HH:mm, 24 horas'),
+          hora_fin: delModelo('hora_fin', 'Hora de fin en formato HH:mm: el inicio más la duración del servicio'),
+          servicio: delModelo('servicio', 'Nombre del servicio tal como aparece en el catálogo'),
+          duracion: delModelo('duracion', 'Duración según el catálogo'),
+          precio: delModelo('precio', 'Precio según el catálogo'),
+          cliente: delModelo('cliente', 'Nombre del cliente'),
+          correo: delModelo('correo', 'Correo del cliente, copiado exactamente como lo escribió'),
+          estado: 'reservada',
+          sesion: '={{ $json.sesion }}',
+        },
+        schema: ['creado', 'dia', 'hora_inicio', 'hora_fin', 'servicio', 'duracion', 'precio', 'cliente', 'correo', 'estado', 'sesion'].map((id) => ({
+          id, type: 'string', display: true, required: false, displayName: id, defaultMatch: false, canBeUsedToMatch: true,
+        })),
+        matchingColumns: [],
+      },
+      options: {},
+    },
+    credentials: CRED_SHEETS,
+  },
+  {
+    id: 'citas-sesion',
+    name: 'Citas de esta sesión',
+    type: 'n8n-nodes-base.googleSheets',
+    typeVersion: 4.7,
+    position: [896, 300],
+    /* Si la sesión no tiene ninguna cita, Sheets no devuelve ítem y el nodo
+       siguiente no llegaría a ejecutarse. */
+    alwaysOutputData: true,
+    parameters: {
+      documentId: documento,
+      sheetName: hoja('Citas'),
+      filtersUI: { values: [{ lookupColumn: 'sesion', lookupValue: "={{ $('Preparar contexto').first().json.sesion }}" }] },
+      options: {},
+    },
+    credentials: CRED_SHEETS,
+  },
+  {
     id: 'guardia',
     name: 'Comprobar precios',
     type: 'n8n-nodes-base.code',
     typeVersion: 2,
-    position: [896, 300],
+    position: [1040, 300],
     parameters: {
       jsCode: `/* La última línea de defensa, y la única que no depende de un modelo.
 
@@ -392,7 +526,43 @@ return [{
 
 const contexto = $('Preparar contexto').first().json;
 const validos = new Set(contexto.precios_validos || []);
-const respuesta = String($json.output ?? '');
+/* La respuesta ya no llega en $json: entre medias se consultó la hoja. */
+const respuesta = String($('Asesor StetikGO').first().json.output ?? '');
+
+/* Una cita que el cliente cree tener y no existe es peor que no haber
+   agendado nunca: se presenta un viernes a las cuatro y no hay nadie
+   esperándolo.
+
+   Pasó de verdad. El sub-flujo que comprueba huecos estaba inactivo, la
+   herramienta devolvió un error, y a partir de ahí el agente dejó de llamar
+   herramientas y siguió como si nada: «Listo, Ana, te agendo la limpieza
+   facial express para el viernes a las 16:30». No se había reservado nada.
+
+   El primer intento de detectarlo preguntaba si la herramienta se había
+   ejecutado. No sirve: los nodos-herramienta viven fuera del flujo principal y
+   no se pueden consultar desde aquí, así que bloqueaba también las citas que
+   sí se habían guardado. Lo que se comprueba ahora es el efecto: que exista de
+   verdad una fila recién escrita para esta conversación. */
+const citas = $input.all().map((i) => i.json).filter((c) => c && c.sesion);
+const haceDosMinutos = Date.now() - 2 * 60 * 1000;
+const reservoDeVerdad = citas.some((c) => {
+  const t = Date.parse(c.creado);
+  return Number.isFinite(t) && t >= haceDosMinutos;
+});
+
+const suenaAConfirmacion = /(agendad|reservad|confirmad|te agendo|te la agendo|tu cita)/i.test(respuesta);
+
+if (suenaAConfirmacion && !reservoDeVerdad) {
+  return [{
+    json: {
+      output: 'Perdona, no he podido dejar la cita registrada. No quiero darte por confirmada una hora que no lo está: escríbeme de nuevo el día y la hora que te vienen bien y lo intento otra vez.',
+      cita_no_registrada: true,
+      respuesta_descartada: respuesta,
+      sesion: contexto.sesion,
+    },
+    pairedItem: { item: 0 },
+  }];
+}
 
 const citados = [];
 for (const m of respuesta.matchAll(/S\\/\\s*([\\d.,]+)|(\\d[\\d.,]*)\\s*soles?/gi)) {
@@ -424,14 +594,17 @@ const conexiones = {
   Chat: { main: [M('Catálogo 2026')] },
   'Catálogo 2026': { main: [M('Preparar contexto')] },
   'Preparar contexto': { main: [M('Asesor StetikGO')] },
-  'Asesor StetikGO': { main: [M('Comprobar precios')] },
+  'Asesor StetikGO': { main: [M('Citas de esta sesión')] },
+  'Citas de esta sesión': { main: [M('Comprobar precios')] },
   'Modelo · Haiku 4.5': { ai_languageModel: [[{ node: 'Asesor StetikGO', type: 'ai_languageModel', index: 0 }]] },
   'Memoria de la conversación': { ai_memory: [[{ node: 'Asesor StetikGO', type: 'ai_memory', index: 0 }]] },
   'Derivar a un asesor': { ai_tool: [[{ node: 'Asesor StetikGO', type: 'ai_tool', index: 0 }]] },
   'Consultar respuesta del asesor': { ai_tool: [[{ node: 'Asesor StetikGO', type: 'ai_tool', index: 0 }]] },
-  'Ver disponibilidad': { ai_tool: [[{ node: 'Asesor StetikGO', type: 'ai_tool', index: 0 }]] },
+  'Ver disponibilidad en el calendario [desactivado: credencial caducada]': { ai_tool: [[{ node: 'Asesor StetikGO', type: 'ai_tool', index: 0 }]] },
+  'Agendar en el calendario [desactivado: credencial caducada]': { ai_tool: [[{ node: 'Asesor StetikGO', type: 'ai_tool', index: 0 }]] },
+  'Confirmar por correo [desactivado: credencial caducada]': { ai_tool: [[{ node: 'Asesor StetikGO', type: 'ai_tool', index: 0 }]] },
+  'Comprobar si un hueco está libre': { ai_tool: [[{ node: 'Asesor StetikGO', type: 'ai_tool', index: 0 }]] },
   'Agendar cita': { ai_tool: [[{ node: 'Asesor StetikGO', type: 'ai_tool', index: 0 }]] },
-  'Confirmar por correo': { ai_tool: [[{ node: 'Asesor StetikGO', type: 'ai_tool', index: 0 }]] },
 };
 
 /* Un nodo Code viaja como texto dentro de una plantilla de este guion, y un
@@ -444,6 +617,17 @@ for (const n of nodos.filter((x) => x.type === 'n8n-nodes-base.code')) {
     new Function('$input', '$now', '$json', '$', n.parameters.jsCode);
   } catch (error) {
     console.error(`El nodo «${n.name}» no compila: ${error.message}`);
+    process.exit(1);
+  }
+
+  /* Compilar no basta. Dentro de una plantilla, \b es un retroceso y \s es una
+     s suelta: el código compila perfectamente y la expresión regular deja de
+     buscar lo que decía buscar. Pasó con la red que impide confirmar una cita
+     inexistente, y solo se vio porque la probé aparte. Un carácter de control
+     dentro del código de un nodo no es nunca intencionado. */
+  const control = [...n.parameters.jsCode].find((c) => c.charCodeAt(0) < 32 && !'\n\t'.includes(c));
+  if (control) {
+    console.error(`El nodo «${n.name}» tiene un carácter de control (código ${control.charCodeAt(0)}): revisa los escapes.`);
     process.exit(1);
   }
 }

@@ -1,0 +1,110 @@
+{
+  "name": "Flujo 1b · Comprobar hueco",
+  "nodes": [
+    {
+      "id": "entrada",
+      "name": "Lo llama el asesor",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        300
+      ],
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "dia"
+            },
+            {
+              "name": "hora_inicio"
+            },
+            {
+              "name": "hora_fin"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "leer",
+      "name": "Citas de ese día",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        224,
+        300
+      ],
+      "alwaysOutputData": true,
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "18_DVDoAOecq08zBDrZPVSm_wEtsr-uN5ijDbIATlsXs",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18_DVDoAOecq08zBDrZPVSm_wEtsr-uN5ijDbIATlsXs/edit",
+          "cachedResultName": "StetikGO · Catálogo 2026"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "Citas"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "dia",
+              "lookupValue": "={{ $json.dia }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MbVZU1NmU2CvAAhz",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "id": "comprobar",
+      "name": "Comprobar solape",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        300
+      ],
+      "parameters": {
+        "jsCode": "const peticion = $('Lo llama el asesor').first().json;\nconst dia = String(peticion.dia ?? '').trim();\n\n/* \"16:30\" -> 990. Comparar minutos es comparar números, y dos intervalos\n   se solapan si cada uno empieza antes de que acabe el otro. */\nconst minutos = (t) => {\n  const m = String(t ?? '').match(/(\\d{1,2})\\D(\\d{2})/);\n  return m ? Number(m[1]) * 60 + Number(m[2]) : null;\n};\nconst reloj = (m) => String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0');\n\nconst inicio = minutos(peticion.hora_inicio);\nconst fin = minutos(peticion.hora_fin);\n\nconst ABRE = 9 * 60;\nconst CIERRA = 20 * 60;\n\nif (inicio === null || fin === null || fin <= inicio) {\n  return [{ json: { libre: false, motivo: 'La hora recibida no es válida.', ocupadas: [], alternativas: [] } }];\n}\nif (inicio < ABRE || fin > CIERRA) {\n  return [{ json: { libre: false, motivo: 'Fuera del horario de atención, que es de 9:00 a 20:00.', ocupadas: [], alternativas: [] } }];\n}\n\nconst citas = $input.all()\n  .map((i) => i.json)\n  .filter((c) => c && String(c.dia).trim() === dia && minutos(c.hora_inicio) !== null)\n  .map((c) => ({ desde: minutos(c.hora_inicio), hasta: minutos(c.hora_fin), servicio: c.servicio }))\n  .sort((a, b) => a.desde - b.desde);\n\nconst choca = (a1, a2) => citas.some((c) => a1 < c.hasta && c.desde < a2);\n\nif (!choca(inicio, fin)) {\n  return [{ json: { libre: true, motivo: \"El hueco está libre.\", ocupadas: [], alternativas: [] } }];\n}\n\n/* Cuando está ocupado, el agente necesita qué ofrecer. Y ofrecer las 9:00\n   a quien pidió las 16:30 es no haberlo escuchado: se buscan los huecos\n   más cercanos a la hora que pidió, alejándose en pasos de media hora\n   hacia los dos lados a la vez. */\nconst dura = fin - inicio;\nconst alternativas = [];\nfor (let paso = 30; paso <= 11 * 60 && alternativas.length < 2; paso += 30) {\n  for (const t of [inicio - paso, inicio + paso]) {\n    if (alternativas.length >= 2) break;\n    if (t < ABRE || t + dura > CIERRA) continue;\n    if (!choca(t, t + dura)) alternativas.push(reloj(t));\n  }\n}\nalternativas.sort();\n\nreturn [{\n  json: {\n    libre: false,\n    motivo: 'Esa hora se solapa con una cita ya reservada.',\n    ocupadas: citas.map((c) => reloj(c.desde) + \" a \" + reloj(c.hasta) + \" (\" + (c.servicio || \"reservada\") + \")\"),\n    alternativas,\n  },\n}];"
+      }
+    }
+  ],
+  "connections": {
+    "Lo llama el asesor": {
+      "main": [
+        [
+          {
+            "node": "Citas de ese día",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Citas de ese día": {
+      "main": [
+        [
+          {
+            "node": "Comprobar solape",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
