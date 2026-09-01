@@ -2,31 +2,52 @@
   "updatedAt": "2026-09-01T02:26:28.312Z",
   "createdAt": "2026-09-01T02:26:04.261Z",
   "id": "RwH6PrJnjHYOf9fz",
-  "name": "Flujo 1 · Atención al Cliente por Chat — StetikGO",
+  "name": "Flujo 1 · Atención al Cliente por WhatsApp — StetikGO",
   "description": null,
   "active": false,
   "isArchived": false,
   "nodes": [
     {
       "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {
+          "messageStatusUpdates": [
+            "all"
+          ]
+        }
+      },
+      "id": "c4b9cddc-8a10-4f8e-8260-dc44ba4ce35d",
+      "name": "P01 · Recibir mensaje de WhatsApp",
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        -800,
+        144
+      ],
+      "webhookId": "c7acc0b9-5325-4cea-a461-4fbfa6281b07"
+    },
+    {
+      "parameters": {
         "assignments": {
           "assignments": [
             {
               "id": "a1",
-              "name": "mensaje_texto",
-              "value": "={{ $json.chatInput ?? '' }}",
+              "name": "telefono",
+              "value": "={{ $json.messages[0].from }}",
               "type": "string"
             },
             {
               "id": "a2",
-              "name": "sesion_chat",
-              "value": "={{ $json.sessionId ?? '' }}",
+              "name": "mensaje_texto",
+              "value": "={{ $json.messages[0].text.body }}",
               "type": "string"
             },
             {
               "id": "a3",
               "name": "nombre_contacto",
-              "value": "Visitante del chat",
+              "value": "={{ $json.contacts[0].profile.name }}",
               "type": "string"
             },
             {
@@ -38,13 +59,13 @@
             {
               "id": "a5",
               "name": "contexto_cliente",
-              "value": "Sin historial: el cliente todavía no está identificado en ningún sistema.",
+              "value": "[pendiente: sistema/ubicación del listado de clientes y nodo de integración correspondiente]",
               "type": "string"
             },
             {
               "id": "a6",
-              "name": "nota_contexto_pendiente",
-              "value": "[pendiente: sistema/ubicación del listado de clientes y nodo de integración correspondiente]",
+              "name": "nota_validacion_p01",
+              "value": "[pendiente: tratamiento de mensajes con número inválido, texto ilegible o contenido no claro]",
               "type": "string"
             }
           ]
@@ -57,8 +78,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        -768,
-        192
+        -576,
+        144
       ]
     },
     {
@@ -91,35 +112,26 @@
       "position": [
         -352,
         144
-      ],
-      "retryOnFail": true,
-      "maxTries": 3,
-      "waitBetweenTries": 2000
+      ]
     },
     {
       "parameters": {
         "model": {
           "__rl": true,
           "mode": "list",
-          "value": "claude-haiku-4-5-20251001",
-          "cachedResultName": "Claude Haiku 4.5"
+          "value": "gpt-5-mini"
         },
+        "builtInTools": {},
         "options": {}
       },
       "id": "b9ee94ec-97ae-4396-bb1d-6c0a59f3524f",
-      "name": "Modelo LLM · Intención",
-      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "name": "Modelo LLM · Intención [pendiente]",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
         -400,
         416
-      ],
-      "credentials": {
-        "anthropicApi": {
-          "id": "3Uqa61GjBjzOduFo",
-          "name": "LLM BCP"
-        }
-      }
+      ]
     },
     {
       "parameters": {
@@ -254,35 +266,26 @@
       "position": [
         448,
         144
-      ],
-      "retryOnFail": true,
-      "maxTries": 3,
-      "waitBetweenTries": 2000
+      ]
     },
     {
       "parameters": {
         "model": {
           "__rl": true,
           "mode": "list",
-          "value": "claude-haiku-4-5-20251001",
-          "cachedResultName": "Claude Haiku 4.5"
+          "value": "gpt-5-mini"
         },
+        "builtInTools": {},
         "options": {}
       },
       "id": "85af3062-b920-4d52-b377-8ce35c6f4728",
-      "name": "Modelo LLM · Molestia",
-      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "name": "Modelo LLM · Molestia [pendiente]",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
         384,
         368
-      ],
-      "credentials": {
-        "anthropicApi": {
-          "id": "3Uqa61GjBjzOduFo",
-          "name": "LLM BCP"
-        }
-      }
+      ]
     },
     {
       "parameters": {
@@ -369,12 +372,45 @@
     },
     {
       "parameters": {
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "",
+          "cachedResultName": "[pendiente: ID o URL del Google Sheet del catálogo 2026]"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "[pendiente: nombre de la hoja del catálogo]"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "<__PLACEHOLDER_VALUE__[pendiente: columna código/nombre de servicio]__>",
+              "lookupValue": "={{ $json.mensaje_texto }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a232a1c3-4690-4b33-82ca-8dd6838cf4c7",
+      "name": "P04 · Consultar catálogo 2026",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1248,
+        288
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
         "promptType": "define",
-        "text": "=Eres el asistente de atención al cliente de StetikGO. Responde SOLO con la información entregada.\n\nMensaje del cliente: {{ $('P02 · Recuperar contexto del cliente').first().json.mensaje_texto }}\nContexto del cliente: {{ $('P02 · Recuperar contexto del cliente').first().json.contexto_cliente }}\nServicio (catálogo 2026): {{ $('P04b · Buscar el servicio del mensaje').first().json.encontrado ? $('P04b · Buscar el servicio del mensaje').first().json.servicio : 'ninguno identificado en el mensaje' }}\nDuración (catálogo 2026): {{ $('P04b · Buscar el servicio del mensaje').first().json.duracion || 'no aplica' }}\nPrecio (catálogo 2026): {{ $('P04b · Buscar el servicio del mensaje').first().json.precio || 'no aplica' }}",
+        "text": "=Eres el asistente de atención al cliente de StetikGO. Responde SOLO con la información entregada.\n\nMensaje del cliente: {{ $('P02 · Recuperar contexto del cliente').item.json.mensaje_texto }}\nContexto del cliente: {{ $('P02 · Recuperar contexto del cliente').item.json.contexto_cliente }}\nServicio (catálogo 2026): {{ $('P04 · Consultar catálogo 2026').item.json.servicio }}\nDuración (catálogo 2026): {{ $('P04 · Consultar catálogo 2026').item.json.duracion }}\nPrecio (catálogo 2026): {{ $('P04 · Consultar catálogo 2026').item.json.precio }}",
         "messages": {
           "messageValues": [
             {
-              "message": "Usa el tono de marca StetikGO: cercano, profesional y claro. Máximo 4 líneas. PROHIBIDO inventar servicios, precios, duraciones o cualquier dato que no esté en las entradas. Si no hay servicio identificado, saluda y pregunta en qué puedes ayudar o qué tratamiento le interesa. Nunca enumeres los campos que faltan, ni menciones sistemas, integraciones, catálogos ni nada escrito entre corchetes: son notas internas y el cliente no debe verlas. Si falta información, di simplemente que un asesor lo confirmará. Nunca ofrezcas descuentos ni diagnósticos."
+              "message": "Usa el tono de marca StetikGO: cercano, profesional y claro. Máximo 4 líneas. PROHIBIDO inventar servicios, precios, duraciones o cualquier dato que no esté en las entradas. Si falta información, indica que un asesor lo confirmará. Nunca ofrezcas descuentos ni diagnósticos."
             }
           ]
         },
@@ -385,12 +421,9 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.9,
       "position": [
-        1696,
+        1472,
         288
-      ],
-      "retryOnFail": true,
-      "maxTries": 3,
-      "waitBetweenTries": 2000
+      ]
     },
     {
       "parameters": {
@@ -403,19 +436,13 @@
         "options": {}
       },
       "id": "37e29f15-7664-4242-930f-5da68929c9f2",
-      "name": "Modelo LLM · Redacción",
+      "name": "Modelo LLM · Redacción [pendiente]",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        1696,
+        1552,
         512
-      ],
-      "credentials": {
-        "openAiApi": {
-          "id": "gtyOmS5Jc7CP0skJ",
-          "name": "PoC_Alese"
-        }
-      }
+      ]
     },
     {
       "parameters": {
@@ -430,11 +457,20 @@
           "conditions": [
             {
               "id": "v1",
-              "leftValue": "={{ $json.validada }}",
-              "rightValue": "si",
+              "leftValue": "={{ $json.text }}",
+              "rightValue": "={{ $('P04 · Consultar catálogo 2026').item.json.servicio }}",
               "operator": {
                 "type": "string",
-                "operation": "equals"
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "v2",
+              "leftValue": "={{ $json.text }}",
+              "rightValue": "={{ $('P04 · Consultar catálogo 2026').item.json.precio }}",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
               }
             }
           ]
@@ -446,7 +482,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2144,
+        1824,
         288
       ]
     },
@@ -463,7 +499,7 @@
           "conditions": [
             {
               "id": "h1",
-              "leftValue": "={{ $('Intención y sentimiento').first().json.intencion }}",
+              "leftValue": "={{ $('Intención y sentimiento').item.json.intencion }}",
               "rightValue": "queja",
               "operator": {
                 "type": "string",
@@ -472,7 +508,7 @@
             },
             {
               "id": "h2",
-              "leftValue": "={{ $('Intención y sentimiento').first().json.molestia }}",
+              "leftValue": "={{ $('Intención y sentimiento').item.json.molestia }}",
               "rightValue": "true",
               "operator": {
                 "type": "string",
@@ -481,11 +517,12 @@
             },
             {
               "id": "h3",
-              "leftValue": "={{ ['consulta', 'reserva'].includes($('Intención y sentimiento').first().json.intencion) && !$('P04b · Buscar el servicio del mensaje').first().json.encontrado ? 'si' : 'no' }}",
-              "rightValue": "si",
+              "leftValue": "={{ $('P04 · Consultar catálogo 2026').item.json.servicio }}",
+              "rightValue": "",
               "operator": {
                 "type": "string",
-                "operation": "equals"
+                "operation": "empty",
+                "singleValue": true
               }
             }
           ]
@@ -497,7 +534,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2368,
+        2048,
         176
       ]
     },
@@ -508,7 +545,7 @@
             {
               "id": "r1",
               "name": "resumen_caso",
-              "value": "=Cliente: {{ $('Intención y sentimiento').first().json.nombre_contacto }} ({{ $('Intención y sentimiento').first().json.sesion_chat }})\nContexto: {{ $('Intención y sentimiento').first().json.contexto_cliente }}\nMensaje: {{ $('Intención y sentimiento').first().json.mensaje_texto }}\nIntención: {{ $('Intención y sentimiento').first().json.intencion }}\nServicio consultado: {{ $('P04b · Buscar el servicio del mensaje').first().json.servicio }}\nRazón de escalamiento: molestia/queja, servicio fuera de catálogo o respuesta no validada.",
+              "value": "=Cliente: {{ $('Intención y sentimiento').item.json.nombre_contacto }} ({{ $('Intención y sentimiento').item.json.telefono }})\nContexto: {{ $('Intención y sentimiento').item.json.contexto_cliente }}\nMensaje: {{ $('Intención y sentimiento').item.json.mensaje_texto }}\nIntención: {{ $('Intención y sentimiento').item.json.intencion }}\nServicio consultado: {{ $('P04 · Consultar catálogo 2026').item.json.servicio }}\nRazón de escalamiento: molestia/queja, servicio fuera de catálogo o respuesta no validada.",
               "type": "string"
             },
             {
@@ -539,8 +576,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        2592,
-        96
+        2272,
+        128
       ]
     },
     {
@@ -554,11 +591,10 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        2816,
-        96
+        2496,
+        128
       ],
-      "webhookId": "6e3c1744-5bfe-4483-9a90-662dcbe07874",
-      "disabled": true
+      "webhookId": "6e3c1744-5bfe-4483-9a90-662dcbe07874"
     },
     {
       "parameters": {
@@ -567,13 +603,13 @@
             {
               "id": "l1",
               "name": "log_intencion",
-              "value": "={{ $('Intención y sentimiento').first().json.intencion }}",
+              "value": "={{ $('Intención y sentimiento').item.json.intencion }}",
               "type": "string"
             },
             {
               "id": "l2",
               "name": "log_servicio",
-              "value": "={{ $('P04b · Buscar el servicio del mensaje').first().json.servicio }}",
+              "value": "={{ $('P04 · Consultar catálogo 2026').item.json.servicio }}",
               "type": "string"
             },
             {
@@ -593,18 +629,6 @@
               "name": "log_estructura",
               "value": "[pendiente: estructura/campos del registro además de intención, servicio y tiempo]",
               "type": "string"
-            },
-            {
-              "id": "l6",
-              "name": "log_sesion",
-              "value": "={{ $('P02 · Recuperar contexto del cliente').first().json.sesion_chat }}",
-              "type": "string"
-            },
-            {
-              "id": "l7",
-              "name": "output",
-              "value": "={{ $json.text }}",
-              "type": "string"
             }
           ]
         },
@@ -616,9 +640,27 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        3264,
-        288
+        2944,
+        240
       ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "<__PLACEHOLDER_VALUE__[pendiente: Phone Number ID de WhatsApp Business]__>",
+        "recipientPhoneNumber": "={{ $('P02 · Recuperar contexto del cliente').item.json.telefono }}",
+        "textBody": "={{ $json.text }}",
+        "additionalFields": {}
+      },
+      "id": "e0e320a3-2880-4e7d-811d-38dc13869ed9",
+      "name": "P09 · Enviar la respuesta",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        2272,
+        320
+      ],
+      "webhookId": "6773c752-b74f-4905-903b-03181ae0bc19"
     },
     {
       "parameters": {
@@ -633,7 +675,7 @@
           "conditions": [
             {
               "id": "re1",
-              "leftValue": "={{ $('Intención y sentimiento').first().json.intencion }}",
+              "leftValue": "={{ $('Intención y sentimiento').item.json.intencion }}",
               "rightValue": "reserva",
               "operator": {
                 "type": "string",
@@ -649,8 +691,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2816,
-        400
+        2496,
+        320
       ]
     },
     {
@@ -664,127 +706,17 @@
         "options": {}
       },
       "id": "bcd85477-5c06-46e2-8f10-5aa06f2d67e0",
-      "name": "P10 · Pasar a Flujo 2 (reserva) [desactivado: el Flujo 2 aún no existe]",
+      "name": "P10 · Pasar a Flujo 2 (reserva)",
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        3040,
-        400
-      ],
-      "disabled": true
-    },
-    {
-      "id": "p01-chat",
-      "name": "P01 · Chat",
-      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
-      "typeVersion": 1.4,
-      "position": [
-        -1056,
-        192
-      ],
-      "webhookId": "stetikgo-chat",
-      "parameters": {
-        "public": true,
-        "mode": "hostedChat",
-        "options": {
-          "responseMode": "lastNode",
-          "title": "StetikGO",
-          "subtitle": "Atención al cliente",
-          "initialMessages": "Hola 👋 Soy el asistente de StetikGO.\n¿En qué te puedo ayudar?",
-          "inputPlaceholder": "Escribe tu consulta…"
-        }
-      }
-    },
-    {
-      "id": "p04-sheets",
-      "name": "P04 · Leer catálogo 2026",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
-      "position": [
-        1248,
-        288
-      ],
-      "parameters": {
-        "documentId": {
-          "__rl": true,
-          "mode": "list",
-          "value": "18_DVDoAOecq08zBDrZPVSm_wEtsr-uN5ijDbIATlsXs",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/18_DVDoAOecq08zBDrZPVSm_wEtsr-uN5ijDbIATlsXs/edit",
-          "cachedResultName": "StetikGO · Catálogo 2026"
-        },
-        "sheetName": {
-          "__rl": true,
-          "mode": "name",
-          "value": "Catálogo 2026"
-        },
-        "options": {}
-      },
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "MbVZU1NmU2CvAAhz",
-          "name": "Google Sheets account"
-        }
-      }
-    },
-    {
-      "id": "p04-buscar",
-      "name": "P04b · Buscar el servicio del mensaje",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1472,
-        288
-      ],
-      "parameters": {
-        "jsCode": "/* Busca cuál de los servicios del catálogo aparece en el mensaje.\n\n   Antes esto lo hacía Google Sheets filtrando por el mensaje completo, que no\n   coincide nunca. Aquí se compara al revés y con tolerancia: sin tildes, sin\n   mayúsculas, y si el nombre completo no aparece, basta con que aparezcan sus\n   palabras significativas (\"depilacion laser\" encuentra \"Depilación láser\n   axilas\").\n\n   Emite SIEMPRE un ítem. Cuando no encuentra nada devuelve los campos vacíos y\n   encontrado:false, que es lo que P07 mira para escalar a un humano. Ese era el\n   fallo que mataba el flujo: sin ítem, los cinco nodos siguientes reventaban. */\n\nconst contexto = $('P02 · Recuperar contexto del cliente').first().json;\n\nconst normalizar = (t) => String(t ?? '')\n  .toLowerCase()\n  .normalize('NFD')\n  .replace(/[\\u0300-\\u036f]/g, '')\n  .replace(/\\s+/g, ' ')\n  .trim();\n\nconst mensaje = normalizar(contexto.mensaje_texto);\n\n/* La hoja puede llamar a sus columnas como quiera; se aceptan los nombres más\n   probables y se comparan sin tildes ni mayúsculas. */\nconst columna = (fila, candidatos) => {\n  const claves = Object.keys(fila);\n  for (const candidato of candidatos) {\n    const clave = claves.find((k) => normalizar(k) === normalizar(candidato));\n    if (clave && String(fila[clave] ?? '').trim() !== '') return String(fila[clave]).trim();\n  }\n  return '';\n};\n\nconst filas = $input.all().map((i) => i.json);\n\nlet encontrada = null;\nlet mejorPuntaje = 0;\n\nfor (const fila of filas) {\n  /* Una fila marcada como no activa no se ofrece, aunque siga en la hoja. */\n  const activo = columna(fila, ['activo', 'disponible', 'vigente']);\n  if (activo && ['no', 'false', '0'].includes(normalizar(activo))) continue;\n\n  const nombre = columna(fila, ['servicio', 'nombre', 'nombre del servicio', 'tratamiento']);\n  if (!nombre) continue;\n\n  const nombreNorm = normalizar(nombre);\n  let puntaje = 0;\n\n  if (mensaje.includes(nombreNorm)) {\n    /* El nombre más largo gana: \"limpieza facial profunda\" debe pesar más que\n       \"limpieza facial express\" cuando el mensaje trae el nombre completo. */\n    puntaje = 100 + nombreNorm.length;\n  } else {\n    /* Palabras de 4 letras o más: \"de\", \"la\", \"con\" no distinguen nada. */\n    const palabras = nombreNorm.split(' ').filter((p) => p.length >= 4);\n    const aciertos = palabras.filter((p) => mensaje.includes(p)).length;\n    if (palabras.length && aciertos === palabras.length) puntaje = 80 + aciertos;\n    else if (aciertos >= 2) puntaje = 50 + aciertos;\n  }\n\n  if (puntaje > mejorPuntaje) {\n    mejorPuntaje = puntaje;\n    encontrada = { fila, nombre };\n  }\n}\n\nreturn [{\n  json: {\n    ...contexto,\n    servicio: encontrada ? encontrada.nombre : '',\n    duracion: encontrada ? columna(encontrada.fila, ['duracion', 'duración', 'tiempo']) : '',\n    precio: encontrada ? columna(encontrada.fila, ['precio', 'costo', 'tarifa', 'valor']) : '',\n    encontrado: Boolean(encontrada),\n    catalogo_filas: filas.length,\n  },\n  pairedItem: { item: 0 },\n}];"
-      }
-    },
-    {
-      "id": "p06-comprobar",
-      "name": "P06a · Comprobar que la respuesta se ciñe al catálogo",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1920,
-        288
-      ],
-      "parameters": {
-        "jsCode": "const catalogo = $('P04b · Buscar el servicio del mensaje').first().json;\nconst texto = String($json.text ?? '');\n\nconst normalizar = (t) => String(t ?? '')\n  .toLowerCase()\n  .normalize('NFD')\n  .replace(/[\\u0300-\\u036f]/g, '')\n  .replace(/\\s+/g, ' ')\n  .trim();\n\nconst textoNorm = normalizar(texto);\n\nlet validada = true;\nlet motivo = '';\n\nif (!catalogo.encontrado) {\n  /* No había servicio contra el que contrastar. No es una respuesta inválida:\n     es un caso que P07 va a derivar por su cuenta si corresponde. */\n  motivo = 'sin servicio en el catálogo que contrastar';\n} else {\n  /* El precio, por sus dígitos: \"S/ 250\" y \"250 soles\" son el mismo número, y\n     un precio inventado no coincide de casualidad. */\n  const digitos = String(catalogo.precio ?? '').replace(/\\D/g, '');\n  const precioCitado = digitos.length > 0 && textoNorm.replace(/\\D/g, '').includes(digitos);\n\n  /* El servicio, por sus palabras significativas: así \"depilacion laser de\n     piernas completas\" sigue siendo \"Depilación láser piernas completas\". */\n  const palabras = normalizar(catalogo.servicio).split(' ').filter((p) => p.length >= 4);\n  const servicioCitado = palabras.length > 0 && palabras.every((p) => textoNorm.includes(p));\n\n  validada = precioCitado && servicioCitado;\n  if (!precioCitado) motivo = 'la respuesta no cita el precio del catálogo';\n  else if (!servicioCitado) motivo = 'la respuesta no habla del servicio que se encontró';\n}\n\nreturn [{ json: { ...$json, validada: validada ? 'si' : 'no', motivo_validacion: motivo }, pairedItem: { item: 0 } }];"
-      }
-    },
-    {
-      "id": "p08-aviso",
-      "name": "P08c · Aviso al cliente",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.5,
-      "position": [
-        3040,
-        96
-      ],
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "e1",
-              "name": "text",
-              "value": "Gracias por escribir a StetikGO. Voy a derivar tu caso a una persona del equipo de Recepción para que lo revise con calma y te responda dentro del horario de atención: lunes a sábado de 9:00 a 20:00.",
-              "type": "string"
-            },
-            {
-              "id": "e2",
-              "name": "derivado_a_humano",
-              "value": "true",
-              "type": "string"
-            }
-          ]
-        },
-        "includeOtherFields": true,
-        "options": {}
-      }
+        2720,
+        320
+      ]
     }
   ],
   "connections": {
-    "P01 · Chat": {
+    "P01 · Recibir mensaje de WhatsApp": {
       "main": [
         [
           {
@@ -838,7 +770,7 @@
         ]
       ]
     },
-    "Modelo LLM · Intención": {
+    "Modelo LLM · Intención [pendiente]": {
       "ai_languageModel": [
         [
           {
@@ -854,6 +786,17 @@
         [
           {
             "node": "Intención interpretada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Intención interpretada": {
+      "main": [
+        [
+          {
+            "node": "P03b · ¿Existe molestia?",
             "type": "main",
             "index": 0
           }
@@ -893,17 +836,6 @@
         ]
       ]
     },
-    "Intención interpretada": {
-      "main": [
-        [
-          {
-            "node": "P03b · ¿Existe molestia?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "P03b · ¿Existe molestia?": {
       "main": [
         [
@@ -929,7 +861,7 @@
         ]
       ]
     },
-    "Modelo LLM · Molestia": {
+    "Modelo LLM · Molestia [pendiente]": {
       "ai_languageModel": [
         [
           {
@@ -945,6 +877,17 @@
         [
           {
             "node": "Intención y sentimiento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Intención y sentimiento": {
+      "main": [
+        [
+          {
+            "node": "P04 · Consultar catálogo 2026",
             "type": "main",
             "index": 0
           }
@@ -973,29 +916,7 @@
         ]
       ]
     },
-    "Intención y sentimiento": {
-      "main": [
-        [
-          {
-            "node": "P04 · Leer catálogo 2026",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "P04 · Leer catálogo 2026": {
-      "main": [
-        [
-          {
-            "node": "P04b · Buscar el servicio del mensaje",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "P04b · Buscar el servicio del mensaje": {
+    "P04 · Consultar catálogo 2026": {
       "main": [
         [
           {
@@ -1010,17 +931,6 @@
       "main": [
         [
           {
-            "node": "P06a · Comprobar que la respuesta se ciñe al catálogo",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "P06a · Comprobar que la respuesta se ciñe al catálogo": {
-      "main": [
-        [
-          {
             "node": "P06 · Validar contra el catálogo",
             "type": "main",
             "index": 0
@@ -1028,7 +938,7 @@
         ]
       ]
     },
-    "Modelo LLM · Redacción": {
+    "Modelo LLM · Redacción [pendiente]": {
       "ai_languageModel": [
         [
           {
@@ -1068,7 +978,7 @@
         ],
         [
           {
-            "node": "P10 · ¿El cliente quiere reservar?",
+            "node": "P09 · Enviar la respuesta",
             "type": "main",
             "index": 0
           }
@@ -1090,18 +1000,18 @@
       "main": [
         [
           {
-            "node": "P08c · Aviso al cliente",
+            "node": "P11 · Registrar la interacción",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "P08c · Aviso al cliente": {
+    "P09 · Enviar la respuesta": {
       "main": [
         [
           {
-            "node": "P11 · Registrar la interacción",
+            "node": "P10 · ¿El cliente quiere reservar?",
             "type": "main",
             "index": 0
           }
@@ -1112,7 +1022,7 @@
       "main": [
         [
           {
-            "node": "P10 · Pasar a Flujo 2 (reserva) [desactivado: el Flujo 2 aún no existe]",
+            "node": "P10 · Pasar a Flujo 2 (reserva)",
             "type": "main",
             "index": 0
           }
@@ -1126,7 +1036,7 @@
         ]
       ]
     },
-    "P10 · Pasar a Flujo 2 (reserva) [desactivado: el Flujo 2 aún no existe]": {
+    "P10 · Pasar a Flujo 2 (reserva)": {
       "main": [
         [
           {
