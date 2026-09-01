@@ -1,0 +1,1315 @@
+{
+  "updatedAt": "2026-09-01T21:56:08.923Z",
+  "createdAt": "2026-09-01T21:56:08.923Z",
+  "id": "kBbKnGEnIIwqX5dW",
+  "name": "Flujo 1 · Diagnóstico TRAMMY",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "pendiente-endpoint-metodo-payload-auth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "b8cd8cdd-6ab2-4dee-aa64-81b2fd871bc7",
+      "name": "Webhook Credenciales",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1472,
+        656
+      ],
+      "webhookId": "a6aab01e-0705-4e7f-a805-6748f03a2b2e"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "usuario-completo",
+              "leftValue": "={{ $json.body.usuario }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            },
+            {
+              "id": "password-completo",
+              "leftValue": "={{ $json.body.password }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8e8a450a-847a-40f5-b532-cdbc46f2aff6",
+      "name": "IF Credenciales Válidas",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1248,
+        656
+      ]
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "[pendiente: texto pregunta 1]",
+              "fieldName": "pregunta_1",
+              "placeholder": "[pendiente: tipo/opciones pregunta 1]",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "[pendiente: texto pregunta 2]",
+              "fieldName": "pregunta_2",
+              "placeholder": "[pendiente: tipo/opciones pregunta 2]",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "[pendiente: texto pregunta 3]",
+              "fieldName": "pregunta_3",
+              "placeholder": "[pendiente: tipo/opciones pregunta 3]",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "[pendiente: texto pregunta 4]",
+              "fieldName": "pregunta_4",
+              "placeholder": "[pendiente: tipo/opciones pregunta 4]",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "[pendiente: texto pregunta 5]",
+              "fieldName": "pregunta_5",
+              "placeholder": "[pendiente: tipo/opciones pregunta 5]",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "[pendiente: texto pregunta 6]",
+              "fieldName": "pregunta_6",
+              "placeholder": "[pendiente: tipo/opciones pregunta 6]",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "[pendiente: texto pregunta 7]",
+              "fieldName": "pregunta_7",
+              "placeholder": "[pendiente: tipo/opciones pregunta 7]",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "[pendiente: texto pregunta 8]",
+              "fieldName": "pregunta_8",
+              "placeholder": "[pendiente: tipo/opciones pregunta 8]",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "[pendiente: texto pregunta 9]",
+              "fieldName": "pregunta_9",
+              "placeholder": "[pendiente: tipo/opciones pregunta 9]",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "[pendiente: texto pregunta 10]",
+              "fieldName": "pregunta_10",
+              "placeholder": "[pendiente: tipo/opciones pregunta 10]",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "[pendiente: texto pregunta 11]",
+              "fieldName": "pregunta_11",
+              "placeholder": "[pendiente: tipo/opciones pregunta 11]",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "[pendiente: texto pregunta 12]",
+              "fieldName": "pregunta_12",
+              "placeholder": "[pendiente: tipo/opciones pregunta 12]",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "[pendiente: texto pregunta 13]",
+              "fieldName": "pregunta_13",
+              "placeholder": "[pendiente: tipo/opciones pregunta 13]",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "[pendiente: texto pregunta 14]",
+              "fieldName": "pregunta_14",
+              "placeholder": "[pendiente: tipo/opciones pregunta 14]",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "[pendiente: texto pregunta 15]",
+              "fieldName": "pregunta_15",
+              "placeholder": "[pendiente: tipo/opciones pregunta 15]",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "[pendiente: texto pregunta 16]",
+              "fieldName": "pregunta_16",
+              "placeholder": "[pendiente: tipo/opciones pregunta 16]",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "[pendiente: texto pregunta 17]",
+              "fieldName": "pregunta_17",
+              "placeholder": "[pendiente: tipo/opciones pregunta 17]",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "formTitle": "Diagnóstico inicial TRAMMY",
+          "formDescription": "[pendiente: descripción del formulario de diagnóstico]"
+        }
+      },
+      "id": "fc9c1afb-4ad8-4b7b-ae6e-1de5f6af36e8",
+      "name": "Formulario",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -1024,
+        560
+      ],
+      "webhookId": "54845e06-f542-468c-a343-9a7f6e85f53f"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "p1",
+              "leftValue": "={{ $json.pregunta_1 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            },
+            {
+              "id": "p2",
+              "leftValue": "={{ $json.pregunta_2 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            },
+            {
+              "id": "p3",
+              "leftValue": "={{ $json.pregunta_3 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            },
+            {
+              "id": "p4",
+              "leftValue": "={{ $json.pregunta_4 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            },
+            {
+              "id": "p5",
+              "leftValue": "={{ $json.pregunta_5 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            },
+            {
+              "id": "p6",
+              "leftValue": "={{ $json.pregunta_6 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            },
+            {
+              "id": "p7",
+              "leftValue": "={{ $json.pregunta_7 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            },
+            {
+              "id": "p8",
+              "leftValue": "={{ $json.pregunta_8 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            },
+            {
+              "id": "p9",
+              "leftValue": "={{ $json.pregunta_9 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            },
+            {
+              "id": "p10",
+              "leftValue": "={{ $json.pregunta_10 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            },
+            {
+              "id": "p11",
+              "leftValue": "={{ $json.pregunta_11 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            },
+            {
+              "id": "p12",
+              "leftValue": "={{ $json.pregunta_12 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            },
+            {
+              "id": "p13",
+              "leftValue": "={{ $json.pregunta_13 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            },
+            {
+              "id": "p14",
+              "leftValue": "={{ $json.pregunta_14 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            },
+            {
+              "id": "p15",
+              "leftValue": "={{ $json.pregunta_15 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            },
+            {
+              "id": "p16",
+              "leftValue": "={{ $json.pregunta_16 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            },
+            {
+              "id": "p17",
+              "leftValue": "={{ $json.pregunta_17 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b2c7de23-21f0-4743-ba44-781ff6936cf9",
+      "name": "IF 17 Respuestas Completas",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -800,
+        560
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "c8b8a86b-e4e7-4154-87b4-5739951118d0",
+      "name": "HTTP · Enviar Respuestas al Backend",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -576,
+        384
+      ],
+      "retryOnFail": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// [pendiente: fórmula exacta, dimensiones, ponderaciones y campos usados en el cálculo]\n// No se fabrican valores faltantes: si no hay una puntuación válida, queda pendiente.\nconst j = $input.first().json || {};\nlet raw = j.trama_index;\nif (raw === undefined) raw = j.score;\nconst trama_index = (typeof raw === \"number\" && !Number.isNaN(raw)) ? raw : null;\nconst calculo_pendiente = trama_index === null;\nreturn [{ json: Object.assign({}, j, {\n  trama_index: trama_index,\n  calculo_pendiente: calculo_pendiente,\n  nota_calculo: \"[pendiente: fórmula, dimensiones y ponderaciones del TRAMA Index]\"\n}) }];"
+      },
+      "id": "4006ea83-42ec-4d8b-8bf5-c8c45bf6ee25",
+      "name": "Code TRAMA Index",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -352,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "s-min",
+                    "leftValue": "={{ $json.trama_index }}",
+                    "rightValue": 0,
+                    "operator": {
+                      "type": "number",
+                      "operation": "gte"
+                    }
+                  },
+                  {
+                    "id": "s-max",
+                    "leftValue": "={{ $json.trama_index }}",
+                    "rightValue": 39,
+                    "operator": {
+                      "type": "number",
+                      "operation": "lte"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "Supervivencia (0-39)"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "t-min",
+                    "leftValue": "={{ $json.trama_index }}",
+                    "rightValue": 40,
+                    "operator": {
+                      "type": "number",
+                      "operation": "gte"
+                    }
+                  },
+                  {
+                    "id": "t-max",
+                    "leftValue": "={{ $json.trama_index }}",
+                    "rightValue": 59,
+                    "operator": {
+                      "type": "number",
+                      "operation": "lte"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "En tránsito (40-59)"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "c-min",
+                    "leftValue": "={{ $json.trama_index }}",
+                    "rightValue": 60,
+                    "operator": {
+                      "type": "number",
+                      "operation": "gte"
+                    }
+                  },
+                  {
+                    "id": "c-max",
+                    "leftValue": "={{ $json.trama_index }}",
+                    "rightValue": 79,
+                    "operator": {
+                      "type": "number",
+                      "operation": "lte"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "En consolidación (60-79)"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "e-min",
+                    "leftValue": "={{ $json.trama_index }}",
+                    "rightValue": 80,
+                    "operator": {
+                      "type": "number",
+                      "operation": "gte"
+                    }
+                  },
+                  {
+                    "id": "e-max",
+                    "leftValue": "={{ $json.trama_index }}",
+                    "rightValue": 100,
+                    "operator": {
+                      "type": "number",
+                      "operation": "lte"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "En expansión (80-100)"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "Score inválido"
+        }
+      },
+      "id": "6227486d-c92a-4855-9d2a-d1b0230dd9e9",
+      "name": "Switch Perfil de Madurez",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -128,
+        144
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "perfil-1",
+              "name": "perfil",
+              "value": "Supervivencia",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "303786ec-a128-435b-9e3e-e0cdea30d274",
+      "name": "Perfil · Supervivencia",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        96,
+        -96
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "pi-index",
+              "name": "trama_index",
+              "value": "={{ $(\"Code TRAMA Index\").item.json.trama_index }}",
+              "type": "number"
+            },
+            {
+              "id": "pi-perfil",
+              "name": "perfil",
+              "value": "={{ $json.perfil }}",
+              "type": "string"
+            },
+            {
+              "id": "pi-resp",
+              "name": "respuestas",
+              "value": "={{ $(\"Formulario\").item.json }}",
+              "type": "object"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "45b5a577-2d15-4f43-8aef-950ef7655111",
+      "name": "Preparar Interpretación",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        320,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "perfil-2",
+              "name": "perfil",
+              "value": "En tránsito",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "55b37ae8-be63-463a-b9e5-77ab9ec6f76a",
+      "name": "Perfil · En tránsito",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        96,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "perfil-3",
+              "name": "perfil",
+              "value": "En consolidación",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "2eeb0c2f-c45e-4001-bfa3-60d4d44232fd",
+      "name": "Perfil · En consolidación",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        96,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "perfil-4",
+              "name": "perfil",
+              "value": "En expansión",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "988dcca5-0eb7-46ea-ae55-b03f248ef554",
+      "name": "Perfil · En expansión",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        96,
+        576
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "ae8c75f6-1054-4039-9085-3826baa6175c",
+      "name": "Error Validación · Score inválido (sin perfil)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        96,
+        768
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "cba0485d-b7c1-4abc-a7e9-b16ec68f0779",
+      "name": "Error Backend · Sin calcular diagnóstico",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        384
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "d2f39a00-1b46-4c23-8fc3-2b1efb2d43ea",
+      "name": "Formulario Incompleto · Completar respuestas",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -576,
+        576
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"error\": \"Credenciales incompletas o inválidas\", \"detalle\": \"[pendiente: criterio o servicio exacto de validación de credenciales]\" } }}",
+        "options": {
+          "responseCode": 401
+        }
+      },
+      "id": "fe7f6d64-63ef-424f-b6ce-f7dd2468d1d7",
+      "name": "Respond · Credenciales Inválidas",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        -1024,
+        752
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "<__PLACEHOLDER_VALUE__[pendiente: tabla de Supabase]__>",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "[pendiente: columna trama_index]",
+              "fieldValue": "={{ $(\"Preparar Interpretación\").item.json.trama_index }}"
+            },
+            {
+              "fieldId": "[pendiente: columna perfil]",
+              "fieldValue": "={{ $(\"Preparar Interpretación\").item.json.perfil }}"
+            },
+            {
+              "fieldId": "[pendiente: columna respuestas]",
+              "fieldValue": "={{ JSON.stringify($(\"Preparar Interpretación\").item.json.respuestas) }}"
+            }
+          ]
+        }
+      },
+      "id": "27a7b6e1-919d-474c-af15-707522768473",
+      "name": "Supabase · Guardar Diagnóstico",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        544,
+        176
+      ],
+      "retryOnFail": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "",
+          "cachedResultName": "[pendiente: modelo Claude a utilizar]"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Interpreta el diagnóstico TRAMMY únicamente con los datos disponibles y coherentes. TRAMA Index: {{ $(\"Preparar Interpretación\").item.json.trama_index }}. Perfil asignado: {{ $(\"Preparar Interpretación\").item.json.perfil }}. Respuestas: {{ JSON.stringify($(\"Preparar Interpretación\").item.json.respuestas) }}. Devuelve recomendaciones para este usuario. Prohibido completar por inferencia datos no proporcionados. [pendiente: prompt exacto e instrucciones de metodología determinísticas y cognitivas]"
+            }
+          ]
+        },
+        "options": {
+          "system": "[pendiente: instrucciones de metodología determinísticas y cognitivas para la interpretación]"
+        }
+      },
+      "id": "81c92708-9b07-4ff6-8081-f32c495ce2ce",
+      "name": "Anthropic · Claude API",
+      "type": "@n8n/n8n-nodes-langchain.anthropic",
+      "typeVersion": 1,
+      "position": [
+        768,
+        176
+      ],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// [pendiente: fórmula o criterio exacto para calcular el porcentaje de coherencia (objetivo > 90%)]\n// Interpretación provisional y marcada como pendiente: se considera coherente solo si la\n// respuesta NO está malformada (tiene texto). El umbral real > 90% queda pendiente de fórmula.\nconst items = $input.all();\nconst out = [];\nfor (const it of items) {\n  const j = it.json || {};\n  let texto = \"\";\n  if (Array.isArray(j.content) && j.content[0] && j.content[0].text) {\n    texto = j.content[0].text;\n  } else if (typeof j.text === \"string\") {\n    texto = j.text;\n  }\n  const malformado = texto === \"\";\n  const intento = $runIndex; // 0 = primer intento; 1 y 2 = reinterpretaciones automáticas\n  const es_coherente = !malformado; // [pendiente] hasta definir la fórmula real de coherencia\n  out.push({ json: {\n    recomendaciones: texto,\n    malformado: malformado,\n    intento: intento,\n    coherencia_pct: null,\n    es_coherente: es_coherente,\n    pendiente_coherencia: \"[pendiente: fórmula o criterio exacto para calcular el porcentaje de coherencia]\"\n  } });\n}\nreturn out;"
+      },
+      "id": "93273281-0b2b-4f40-a3a4-f3f2bafdd91d",
+      "name": "Evaluar Coherencia",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1216,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "coherente",
+              "leftValue": "={{ $json.es_coherente }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e434435e-2070-413b-bb6e-1506044ec528",
+      "name": "IF Coherencia",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1440,
+        96
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "97d4bff9-fe95-44bd-9c59-b7f98410026e",
+      "name": "HTTP · Mostrar Resultado (React)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        2112,
+        96
+      ],
+      "retryOnFail": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "fromEmail": "<__PLACEHOLDER_VALUE__[pendiente: remitente del email]__>",
+        "toEmail": "<__PLACEHOLDER_VALUE__[pendiente: campo que contiene el email del usuario]__>",
+        "subject": "[pendiente: asunto del email]",
+        "html": "[pendiente: plantilla/cuerpo del email con el informe final]",
+        "options": {}
+      },
+      "id": "65485ad8-53f7-48de-b3e2-97de6b836c0c",
+      "name": "Send Email · Informe Final",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        2336,
+        96
+      ],
+      "webhookId": "bd8bf2f5-6797-4f60-81c4-d0e26b59aa5b",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {},
+      "id": "45e9d1c5-8678-4cb7-8a7d-507c0914dfdb",
+      "name": "Error Render/Entrega · Resultado no mostrado",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2336,
+        288
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "0b80381e-337a-41f3-acdb-c9b77b5e5eae",
+      "name": "Error Envío / Usuario no agenda sesión [pendiente]",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2560,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "intentos-restantes",
+              "leftValue": "={{ $json.intento }}",
+              "rightValue": 2,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "45a4ff7b-b798-4ffd-a56f-41be8e88f34d",
+      "name": "IF Quedan Intentos",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1664,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "reint-1",
+              "name": "reinterpretacion",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "id": "reint-2",
+              "name": "intento_previo",
+              "value": "={{ $json.intento }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "472332b2-6613-4862-a2e4-aa4ea3c2d9b1",
+      "name": "Incrementar Contador Reinterpretación",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1888,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "mf-1",
+              "name": "content",
+              "value": "={{ [] }}",
+              "type": "array"
+            },
+            {
+              "id": "mf-2",
+              "name": "anthropic_error",
+              "value": true,
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3244180f-ecef-4ced-9ac0-9b2b11d05b88",
+      "name": "Anthropic Error · Marcar Malformado",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        992,
+        272
+      ]
+    },
+    {
+      "parameters": {
+        "resume": "webhook",
+        "httpMethod": "POST",
+        "options": {}
+      },
+      "id": "f26e3472-a898-499b-984d-528c56c4d6cc",
+      "name": "Wait · Revisión Humana (HITL)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1888,
+        432
+      ],
+      "webhookId": "9b388e45-229e-499f-bae9-adf1b3bdc41c"
+    },
+    {
+      "parameters": {},
+      "id": "25dd9e54-f8a5-4823-b3f2-bf1ee8ad9946",
+      "name": "Error Persistencia · Supabase",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        768,
+        368
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook Credenciales": {
+      "main": [
+        [
+          {
+            "node": "IF Credenciales Válidas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Credenciales Válidas": {
+      "main": [
+        [
+          {
+            "node": "Formulario",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond · Credenciales Inválidas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formulario": {
+      "main": [
+        [
+          {
+            "node": "IF 17 Respuestas Completas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF 17 Respuestas Completas": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Formulario Incompleto · Completar respuestas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code TRAMA Index": {
+      "main": [
+        [
+          {
+            "node": "Switch Perfil de Madurez",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch Perfil de Madurez": {
+      "main": [
+        [
+          {
+            "node": "Perfil · Supervivencia",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Perfil · En tránsito",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Perfil · En consolidación",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Perfil · En expansión",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Validación · Score inválido (sin perfil)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Perfil · Supervivencia": {
+      "main": [
+        [
+          {
+            "node": "Preparar Interpretación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Interpretación": {
+      "main": [
+        [
+          {
+            "node": "Supabase · Guardar Diagnóstico",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Perfil · En tránsito": {
+      "main": [
+        [
+          {
+            "node": "Preparar Interpretación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Perfil · En consolidación": {
+      "main": [
+        [
+          {
+            "node": "Preparar Interpretación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Perfil · En expansión": {
+      "main": [
+        [
+          {
+            "node": "Preparar Interpretación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase · Guardar Diagnóstico": {
+      "main": [
+        [
+          {
+            "node": "Anthropic · Claude API",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Persistencia · Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic · Claude API": {
+      "main": [
+        [
+          {
+            "node": "Evaluar Coherencia",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Anthropic Error · Marcar Malformado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evaluar Coherencia": {
+      "main": [
+        [
+          {
+            "node": "IF Coherencia",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Coherencia": {
+      "main": [
+        [],
+        [
+          {
+            "node": "IF Quedan Intentos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email · Informe Final": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Error Envío / Usuario no agenda sesión [pendiente]",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Quedan Intentos": {
+      "main": [
+        [
+          {
+            "node": "Incrementar Contador Reinterpretación",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait · Revisión Humana (HITL)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Incrementar Contador Reinterpretación": {
+      "main": [
+        [
+          {
+            "node": "Anthropic · Claude API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Error · Marcar Malformado": {
+      "main": [
+        [
+          {
+            "node": "Evaluar Coherencia",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": null,
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "3bd9a6fe-6829-4009-ab69-440295f43d36",
+  "activeVersionId": null,
+  "versionCounter": 1,
+  "triggerCount": 0,
+  "sourceWorkflowId": null,
+  "shared": [
+    {
+      "updatedAt": "2026-09-01T21:56:08.926Z",
+      "createdAt": "2026-09-01T21:56:08.926Z",
+      "role": "workflow:owner",
+      "workflowId": "kBbKnGEnIIwqX5dW",
+      "projectId": "V9ZyLUroQrqbd7f4",
+      "project": {
+        "updatedAt": "2025-05-21T22:33:53.189Z",
+        "createdAt": "2025-05-21T22:31:42.905Z",
+        "id": "V9ZyLUroQrqbd7f4",
+        "name": "Carlos Andres Ramirez Matos <carlosandres.matos@agenciaflum.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "customTelemetryTags": [],
+        "creatorId": "f94cd52b-293e-4a7f-a698-00e5dbdd1c40"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": null
+}
