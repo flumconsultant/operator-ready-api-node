@@ -308,10 +308,9 @@ async function sondearApi() {
       console.log('  api.linkedin.com no acepta este token para ninguna llamada, aunque la introspección lo dé por válido.');
       console.log('  Eso apunta a la aplicación, no a la página: revisa que la app de LinkedIn esté verificada por la empresa y que el token se generara desde ESA app.');
     } else if (r.status === 403) {
-      console.log('  El token SÍ se acepta. Lo que falta es permiso para algo concreto,');
-      console.log('  así que el 401 al publicar no viene del token: viene de la relación');
-      console.log('  entre quien autorizó y la página. Comprueba que esa persona sea');
-      console.log('  administradora de la página de BECOME y que LINKEDIN_ORG_ID sea la suya.');
+      console.log('  El token SÍ se acepta: 403 es «no tienes permiso para ESTA llamada»,');
+      console.log('  y es lo esperado, porque leer el perfil pide un alcance que este token');
+      console.log('  no lleva ni necesita. Lo que importa es que no sea 401.');
     } else if (r.ok) {
       console.log('  El token funciona contra la API. El problema está en el cuerpo del post o en LINKEDIN_ORG_ID.');
     } else {
@@ -372,10 +371,10 @@ async function sondearPublicacion() {
       console.log('  Después: que la aplicación esté verificada por la empresa y que el');
       console.log('  token se generara desde esa misma aplicación.');
     } else if (r.status === 400 || r.status === 422) {
-      console.log('  LinkedIn ACEPTÓ el token y se quejó del contenido, que es lo correcto.');
-      console.log('  El token sirve para publicar. El 401 del post de verdad viene de otra');
-      console.log('  cosa: el permiso sobre esa página. Comprueba que quien autorizó el');
-      console.log('  token sea administrador de la página y que LINKEDIN_ORG_ID sea la suya.');
+      console.log('  LinkedIn ACEPTÓ el token y se quejó del contenido, que es lo correcto:');
+      console.log('  un cuerpo vacío no es publicable. La autenticación funciona.');
+      console.log('  Si aun así el post real fallara, el problema estaría en el destinatario');
+      console.log('  —el rol sobre la página o LINKEDIN_ORG_ID— y no en el token.');
     } else if (r.status === 403) {
       console.log('  El token se acepta pero falta permiso. Apunta a la relación entre');
       console.log('  quien autorizó y la página de empresa.');
