@@ -23,9 +23,14 @@
  *
  * ---- El talón de Aquiles, escrito aquí para que no sorprenda ----
  *
- * El permiso de LinkedIn caduca a los 60 días. Renovarlo solo está reservado a
- * los socios aprobados de su programa de marketing; para todos los demás hay
- * que volver a autorizar la aplicación a mano. Es la parte frágil de este
+ * El permiso de LinkedIn caduca. Cuánto dura depende del acceso: con la
+ * Community Management API aprobada son 365 días, y sin ella 60. Lo dice la
+ * propia API, y por eso este script pregunta en vez de dar por buena una cifra
+ * escrita: la de BECOME respondió 365 el día que se comprobó, cuando el código
+ * llevaba meses diciendo 60.
+ *
+ * Renovarlo solo está reservado a los socios aprobados de su programa de
+ * marketing; para todos los demás hay que volver a autorizar a mano. Es la parte frágil de este
  * mecanismo y no se puede arreglar con código.
  *
  * Lo que sí se puede es que no pille a nadie por sorpresa: antes de publicar,
@@ -294,7 +299,7 @@ if (!r.ok) {
     console.error('::error::Un 403 casi siempre es un permiso que no cubre a quien firma: publicar en la PÁGINA de empresa necesita w_organization_social (Community Management API) y publicar en un PERFIL necesita w_member_social (Share on LinkedIn). Comprueba que el permiso y el autor son del mismo tipo.');
   }
   if (r.status === 401) {
-    console.error('::error::Eso casi siempre significa que el permiso de 60 días caducó. Hay que volver a autorizar la aplicación siguiendo docs/linkedin.md.');
+    console.error('::error::Eso casi siempre significa que el permiso caducó. Hay que volver a autorizar la aplicación siguiendo docs/linkedin.md.');
   }
   process.exit(1);
 }

@@ -22,7 +22,7 @@
 | `LINKEDIN_CLIENT_SECRET` | linkedin | al-rotarla | docs/linkedin.md |
 | `LINKEDIN_MEMBER_ID` | linkedin | nunca | docs/linkedin.md |
 | `LINKEDIN_ORG_ID` | linkedin | nunca | docs/linkedin.md |
-| `LINKEDIN_TOKEN` | linkedin | 60d | docs/linkedin.md |
+| `LINKEDIN_TOKEN` | linkedin | 365d | docs/linkedin.md |
 | `MAIL_PASSWORD` | correo | al-rotarla | Panel de correo de Hostinger |
 | `MAIL_USER` | correo | nunca | Panel de correo de Hostinger |
 | `PANEL_TOKEN` | panel | al-rotarla | Token de GitHub con permiso de escritura solo sobre este repositorio |

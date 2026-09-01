@@ -10,7 +10,7 @@
   "credenciales": [
     {
       "clave": "LINKEDIN_TOKEN",
-      "caduca": "60d",
+      "caduca": "365d",
       "avisar": "14d",
       "renueva": "docs/linkedin.md"
     },

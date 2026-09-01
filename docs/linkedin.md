@@ -162,16 +162,27 @@ no hay que volver a tocarlo.
 
 ---
 
-## Lo que hay que hacer cada dos meses
+## Lo que hay que hacer una vez al año
 
-**El permiso caduca a los 60 días.** LinkedIn solo permite renovarlo
-automáticamente a los socios aprobados de su programa de marketing; para el
-resto hay que volver a autorizar la aplicación a mano.
+**El permiso caduca, y cuánto dura depende del acceso que tenga la aplicación.**
 
-Es la parte frágil de todo esto y no tiene arreglo por código. Lo que sí hay es
-aviso: catorce días antes, cada ejecución escribe una advertencia en el resumen
-del workflow. Cuando la veas, repite el paso `LINKEDIN_TOKEN` del apartado 4 y
-actualiza ese secreto. Nada más.
+Con la Community Management API aprobada, LinkedIn da tokens de **365 días**.
+Sin ella son 60. Se comprobó el 1 de septiembre de 2026, contra el permiso real
+de BECOME, y la respuesta fue 365. Esto estuvo escrito como «60 días» hasta ese
+día, por lo que dice la documentación del acceso por defecto; la aprobación lo
+cambia y conviene no fiarse de la cifra escrita sino de la que responde la API.
+
+Lo que no cambia es que **no se renueva solo**: LinkedIn reserva la renovación
+automática a los socios aprobados de su programa de marketing. Para el resto hay
+que volver a autorizar la aplicación a mano, una vez al año.
+
+No tiene arreglo por código. Lo que sí hay es aviso: catorce días antes, cada
+ejecución escribe una advertencia en el resumen del workflow. Cuando la veas,
+repite el paso `LINKEDIN_TOKEN` del apartado 4 y actualiza ese secreto. Nada
+más: los otros tres valores no caducan.
+
+Y el ensayo dice en todo momento cuánto queda, así que la cifra se puede
+consultar cuando se quiera sin publicar nada.
 
 Si se pasa la fecha, el post falla con un `401` y el workflow se pone en rojo,
 así que el correo de GitHub llega igual. El artículo no se pierde: sigue
