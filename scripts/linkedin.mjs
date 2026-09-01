@@ -167,6 +167,40 @@ async function avisarSiCaduca() {
       return 'invalido';
     }
 
+    /* ---- Vivo no es lo mismo que sirve ----
+     *
+     * El 1 de septiembre la introspección dijo «activo, 365 días» y el post se
+     * rechazó con un 401 tres segundos después. No es una contradicción: un
+     * token puede estar perfectamente vivo y no servir para publicar.
+     *
+     * La respuesta trae los dos campos que lo explican y que no se estaban
+     * mirando. `auth_type` distingue un permiso de miembro (3L, el que permite
+     * actuar en nombre de alguien) de uno de aplicación (2L, que no puede
+     * publicar en ningún muro). Y `scope` dice qué alcances lleva de verdad,
+     * que no siempre es lo que se marcó en la pantalla.
+     *
+     * Sin esto el diagnóstico era adivinar entre tres hipótesis. Con esto lo
+     * dice LinkedIn. */
+    const alcances = String(d.scope || '').split(/[,\s]+/).filter(Boolean);
+    console.log(
+      `Permiso de tipo «${d.auth_type || 'sin declarar'}» con alcances: ${alcances.join(', ') || 'ninguno declarado'}`,
+    );
+
+    if (d.auth_type && d.auth_type !== '3L') {
+      console.log('::error::Ese permiso es de aplicación (2-legged), no de miembro. Sirve para leer datos de la propia aplicación y no puede publicar en ningún muro, ni de persona ni de página.');
+      console.log('::error::Hay que generarlo con «Member authorization (3-legged)» en el generador de tokens de LinkedIn.');
+      return 'invalido';
+    }
+
+    /* Publicar como página pide un alcance distinto que publicar como persona,
+       y el que hace falta depende de quién firma. */
+    const necesario = ORG ? 'w_organization_social' : 'w_member_social';
+    if (alcances.length && !alcances.includes(necesario)) {
+      console.log(`::error::Al permiso le falta «${necesario}», que es el que deja publicar ${ORG ? 'en la página de empresa' : 'en el perfil'}. Lo que lleva: ${alcances.join(', ')}.`);
+      console.log('::error::Hay que volver a generar el token marcando ese alcance. Marcarlo en la pantalla no basta si al generar no quedó incluido.');
+      return 'invalido';
+    }
+
     if (!d.expires_at) {
       console.log('El permiso es válido. LinkedIn no dice cuándo caduca.');
       return 'valido';
