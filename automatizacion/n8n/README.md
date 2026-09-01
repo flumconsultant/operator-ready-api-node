@@ -20,11 +20,20 @@ pantalla final. `kBbKnGEnIIwqX5dW`.
 ejecución**. Se edita, se vuelve a rellenar el formulario, y ya está: no hay
 que publicar nada.
 
-| Pestaña | Qué contiene | Efecto |
-|---|---|---|
-| `Preguntas` | `id`, `pregunta`, `tipo`, `opciones`, `obligatoria`, `activa` | Las preguntas de la página 2. Añadir una fila añade una pregunta; poner `activa` en `no` la quita. `opciones` va separado por barras: `1\|2\|3\|4\|5`. `tipo` admite `dropdown`, `number` y `text` |
-| `Perfiles` | `perfil`, `min`, `max`, `descripcion` | Los tramos del índice. Un perfil nuevo es una fila nueva; cambiar un rango es cambiar dos celdas |
-| `Textos` | `clave`, `valor` | Los títulos y mensajes de las cuatro pantallas, y `prompt_sistema`, que es el prompt de la interpretación |
+| Pestaña | Qué contiene |
+|---|---|
+| `Instrucciones` | Qué es cada pestaña y qué poner en cada columna, en castellano. Es lo primero que debería leer quien no haya tocado esto antes |
+| `Preguntas` | Una fila por pregunta: `id`, `pregunta`, `tipo`, `escala`, `obligatoria`, `activa`. Añadir una fila añade una pregunta; poner `activa` en `no` la retira sin borrarla. Las celdas de `tipo`, `escala`, `obligatoria` y `activa` tienen **desplegable**: no hay que acordarse de nada |
+| `Escalas` | Las opciones de respuesta: `escala`, `orden`, `etiqueta`, `valor`. La **etiqueta** es lo que lee quien responde («Nunca», «Casi siempre»); el **valor** es lo que puntúa. Vienen tres hechas —`frecuencia`, `acuerdo`, `si_no`—, y una nueva es escribir sus filas con un nombre nuevo: aparece sola en el desplegable de `Preguntas` |
+| `Perfiles` | `perfil`, `min`, `max`, `descripcion`. Un perfil nuevo es una fila nueva; cambiar un tramo son dos celdas |
+| `Textos` | `clave`, `valor`. Los títulos y mensajes de las cuatro pantallas, y `prompt_sistema`, que es lo que se le dice a la IA |
+
+Una pregunta con `tipo` = `escala` sale como desplegable con las etiquetas de su
+escala. Con `texto`, como respuesta libre. Con `numero`, como número.
+
+La puntuación se calcula con los `valor` de la escala de **cada** pregunta,
+normalizando una por una: una escala de 1 a 5 y otra de 0 a 1 pesan igual, y
+añadir una escala nueva no obliga a reajustar nada.
 
 Comprobado en vivo: renombrando un perfil y acotando su rango de 60-79 a 61-78,
 la siguiente ejecución clasificó con el nombre nuevo y mandó el 79 al error de
@@ -40,7 +49,8 @@ validación, nombrando el motivo. Sin volver a publicar el flujo.
   maqueta. El criterio real está pendiente.
 - **El cálculo del índice** (`Code TRAMA Index`): la fórmula TRAMA sigue
   pendiente. Mientras no exista el backend, el nodo calcula uno **provisional**
-  —la media de las respuestas llevada a 0-100— y lo marca como tal; esa marca
+  —la media normalizada de las respuestas según la escala de cada pregunta— y lo
+  marca como tal; esa marca
   llega al prompt y a la pantalla. `CALCULO_PROVISIONAL = false` en ese nodo lo
   desactiva y devuelve el comportamiento diseñado: sin índice válido, error de
   validación.
