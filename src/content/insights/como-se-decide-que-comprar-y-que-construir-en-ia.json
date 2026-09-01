@@ -1,0 +1,265 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-09-01",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "value-adoption",
+  "formato": "framework",
+  "es": {
+    "slug": "como-se-decide-que-comprar-y-que-construir-en-ia",
+    "titulo": "¿Comprar o construir tu IA? Así se decide",
+    "entradilla": "Casi ningún comité de compras de IA pregunta lo que importa. Pregunta el precio. Debería preguntar cuánto dura la ventaja que está firmando.",
+    "descripcion": "Comprar es rápido, pero encierra. Construir da ventaja, pero exige sostenerla. La decisión no está en el precio: está en cuánto dura la ventaja.",
+    "linkedin": {
+      "texto": "Comprar la IA de otro es alquilar su ventaja. Construirla es apostar a que sabrás sostenerla.\n\nLa mayoría de comités de compra deciden por precio, que es la pregunta más fácil de responder y la que menos importa. Hay una tercera opción, construir con un socio, que casi nunca llega a la lista corta porque nadie en la sala tiene interés en proponerla.\n\nEn el análisis completo de BECOME desarrollamos qué preguntar antes de firmar cualquier propuesta.",
+      "hashtags": ["IA", "Estrategia", "Decisiones"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Un director de tecnología me contó hace poco que había comparado tres propuestas para automatizar la revisión de contratos en su área legal. Los tres precios se parecían bastante. Ninguna de las tres explicaba qué se quedaba la empresa el día que quisiera cambiarse de proveedor. Firmó con la que mejor habló en la demo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ese patrón se repite en casi cualquier comité que decide entre comprar y construir IA: el eje que decide es el precio, y el precio es la pregunta más fácil de responder y la menos importante. Dice qué es más barato firmar este trimestre. No dice qué va a pasar con esa ventaja dentro de tres años, cuando la misma plataforma se la venden también a tu competidor directo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y hay una tercera opción que casi nunca llega a la lista corta. Construir con un socio, compartiendo el desarrollo y el riesgo en vez de comprarlo ya hecho o levantarlo solo, aparece poco porque ningún proveedor tiene un incentivo para proponerla: el que vende software quiere que compres, y la consultora que factura horas de construcción quiere que construyas. Nadie en la sala vende la tercera opción, así que la tercera opción no se discute."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Cómo se decide qué comprar y qué construir en inteligencia artificial?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Se decide mal cuando el criterio se escribe después de ver las propuestas y no antes, y se decide mal casi siempre. El comité mira tres ofertas, compara precio y plazo de implementación, y elige. La pregunta de fondo, si esa capacidad es algo que la empresa necesita controlar para seguir compitiendo dentro de tres años, no aparece en ninguna fila de la tabla comparativa."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El comparativo de propuestas tiene columnas de precio y de plazo, y ninguna dice qué se queda la empresa cuando termine el contrato.",
+          "El área de negocio dueña del proceso no está en la sala donde se firma la decisión, solo tecnología y compras.",
+          "Nadie ha calculado qué pasa si el proveedor sube el precio el año que viene, cambia de dueño, o deja de existir.",
+          "La opción de construir con un socio ni siquiera llegó a la lista corta: se compararon dos ofertas de todo hecho.",
+          "Se construye por defecto lo que en realidad es una capacidad estándar que cualquiera compra igual, y se compra por defecto lo que en realidad diferencia a la empresa.",
+          "El criterio con el que se decide se escribe para justificar la propuesta que ya gustaba, no antes de leer ninguna."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema detrás",
+        "texto": "Se decide por precio un eje que nunca fue de precio."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El precio compara lo comparable: dos números en la misma moneda, fáciles de poner uno al lado del otro en una diapositiva. Por eso gana la discusión, aunque no sea la pregunta que en realidad hay que responder. La pregunta real tiene cuatro partes y ninguna sale en una propuesta comercial: si esa capacidad es parte de cómo compite la empresa o es una capacidad estándar, cuánto dura la ventaja antes de que el mercado la alcance, de qué dato depende el valor, y quién la sostiene el día después de encenderla."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Comprar es rápido y traslada el riesgo técnico a otro. También traslada la ventaja: si la compras en una plataforma que le vende lo mismo a tu competencia, no estás comprando ventaja, estás comprando paridad con retraso de implementación. Construir da control y, si el dato es propio, ventaja real. También exige un equipo que la sostenga después del lanzamiento, y ese equipo no aparece solo porque el modelo ya funcione en la demostración."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Comprar la IA de otro es alquilar su ventaja. Construir la tuya es apostar a que sabrás sostenerla. Las dos son decisiones legítimas. Firmar sin saber cuál de las dos estás tomando, no lo es.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "¿Qué mirar antes de firmar cualquier propuesta?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El orden importa: las cinco preguntas siguientes se responden antes de pedir ninguna propuesta a nadie, no después de compararlas. Pedidas después, cada proveedor las contesta a su favor."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Núcleo",
+            "definicion": "Si la capacidad es parte de cómo la empresa compite, o es una capacidad estándar que cualquier competidor puede comprar igual. Lo primero se construye o se levanta con un socio. Lo segundo se compra, y cuanto antes, mejor."
+          },
+          {
+            "termino": "Vida media",
+            "definicion": "Cuánto tiempo tarda esa ventaja en volverse estándar del mercado. Si la respuesta se mide en meses, construirla no paga el tiempo que se tarda en levantarla."
+          },
+          {
+            "termino": "Dato propio",
+            "definicion": "Si el valor sale de un dato que solo tiene la empresa, o de un modelo genérico con un prompt bien escrito. Sin dato propio no hay ventaja que defender, se compre o se construya."
+          },
+          {
+            "termino": "Capacidad de sostenerlo",
+            "definicion": "Si existe, o se va a contratar, el equipo que reentrena, vigila y corrige el sistema el día después del lanzamiento. Construir sin esa capacidad fabrica el próximo piloto parado."
+          },
+          {
+            "termino": "Cláusula de salida",
+            "definicion": "Qué se queda la empresa si la relación con el proveedor o el socio termina: el modelo, el dato, el código, o solo el recuerdo de haberlo usado. Se negocia antes de firmar, nunca después."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La tercera opción, construir con un socio, gana casi siempre que el núcleo es diferenciador y la empresa no tiene hoy el equipo para sostenerlo sola. Reparte el riesgo de construcción y, si el contrato está bien escrito, transfiere capacidad real al equipo interno con el tiempo, en vez de dejarlo dependiendo para siempre de quien lo construyó. El motivo por el que casi nunca se propone no es que funcione peor. Es que nadie en la sala la vende."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Coge la próxima decisión de comprar o construir que tengas sobre la mesa y responde las cinco preguntas antes de mirar ninguna propuesta. Si el área de negocio dueña del proceso no puede responder al menos tres, la decisión todavía no está lista para ir a comité, sin importar cuántas propuestas ya tengas encima de la mesa."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cómo se decide si conviene comprar o construir una solución de IA?",
+            "respuesta": "Mirando si la capacidad es parte de cómo compite la empresa o es una capacidad estándar que cualquier competidor compra igual, y cuánto tiempo tarda esa ventaja en volverse el estándar del mercado. Si la ventaja dura poco y el dato detrás es genérico, comprar suele ganar. Si el dato es propio y la capacidad es parte de cómo se compite, construir o co-construir con un socio suele pagar el esfuerzo."
+          },
+          {
+            "pregunta": "¿Cuándo conviene un socio en vez de comprar o construir en solitario?",
+            "respuesta": "Cuando la capacidad es diferenciadora pero la empresa todavía no tiene el equipo para sostenerla sola. Un socio reparte el riesgo de construcción y, si el contrato está bien escrito, transfiere capacidad al equipo interno con el tiempo. Es la opción que menos se propone, porque ningún proveedor tiene incentivo para sugerirla."
+          },
+          {
+            "pregunta": "¿Qué riesgo tiene comprar una plataforma de IA a un proveedor?",
+            "respuesta": "El principal es quedar atado a un formato de datos y a un proceso que solo funciona dentro de esa plataforma, sin haber negociado antes qué se queda la empresa si la relación termina. El segundo es comprar paridad, no ventaja: si el mismo proveedor le vende la misma plataforma a tu competidor, no estás comprando algo que te distinga."
+          },
+          {
+            "pregunta": "¿Qué riesgo tiene construir una IA propia?",
+            "respuesta": "El coste que casi nadie presupuesta no es el de construirla, es el de sostenerla: reentrenar el modelo, vigilar que no se degrade y corregirlo cuando falle, mes tras mes. Construir sin ese equipo asignado desde el principio no produce una ventaja, produce un sistema que funciona en la demostración y se cae en producción sin que nadie lo note durante semanas."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Decidamos si compras o construyes",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-to-decide-whether-to-buy-or-build-ai",
+    "titulo": "Build, Buy, or Partner: How to Decide",
+    "entradilla": "Almost no AI buying committee asks the right question. It asks the price. It should ask how long the edge it's signing for will last.",
+    "descripcion": "Buying is fast but it locks you in. Building holds an edge, but only if you can sustain it. The real question was never about price.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "A CTO told me recently he had compared three proposals to automate contract review for his legal team. The three price tags were close enough not to matter. None of the three proposals said what the company would keep if it ever wanted to switch vendors. He signed with the one that gave the best demo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That pattern repeats in almost every committee that decides between buying and building AI: the axis that decides is price, and price is the easiest question to answer and the least important one. It tells you what is cheapest to sign this quarter. It says nothing about what happens to that edge in three years, once the same platform gets sold to your closest competitor too."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "There is a third option that almost never makes the shortlist. Building with a partner, sharing the development and the risk instead of buying it finished or building it alone, rarely comes up because nobody in the room has an incentive to propose it. The vendor selling software wants you to buy. The firm billing by the hour wants you to build. Nobody sells the third option, so nobody raises it."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "How do you decide what to buy and what to build in AI?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "It gets decided badly whenever the criterion is written after the proposals arrive instead of before, which is most of the time. The committee looks at three offers, compares price and time to launch, and picks. The question underneath, whether this capability is something the company needs to control to keep competing three years out, never shows up as a row on the comparison sheet."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The comparison sheet has columns for price and timeline, and none for what the company keeps once the contract ends.",
+          "The business function that owns the process isn't in the room where the decision gets signed, only technology and procurement are.",
+          "Nobody has modelled what happens if the vendor raises the price next year, changes ownership, or shuts down.",
+          "Building with a partner never made the shortlist; only two finished-product offers got compared.",
+          "The company defaults to building what is actually a standard capability anyone can buy, and to buying what is actually its differentiator.",
+          "The criterion used to decide gets written to justify the proposal people already liked, not before reading any of them."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "Price decides an axis that was never about price."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Price compares what's comparable: two numbers in the same currency, easy to put side by side on a slide. That's why it wins the argument, even when it isn't the question that actually needs answering. The real question has four parts, and none of them show up in a commercial proposal: whether the capability is part of how the company competes or a standard one anyone can match, how long the edge lasts before the market catches up, what data the value actually depends on, and who sustains the system the day after it launches."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Buying is fast and it moves the technical risk onto someone else. It also moves the edge. Buy it on a platform that sells the same thing to your competitor, and you haven't bought an edge, you've bought parity with a head start. Building gives control and, if the data is proprietary, a real edge. It also demands a team to sustain it after launch, and that team doesn't appear on its own just because the model worked in the demo."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Buying someone else's AI is renting their edge. Building your own is a bet that you'll know how to sustain it. Both are legitimate calls. Signing without knowing which one you made is not.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "What to check before signing anything."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Order matters here. The five questions below get answered before asking anyone for a proposal, not after comparing them. Asked afterwards, every vendor answers them in their own favour."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Core",
+            "definicion": "Whether the capability is part of how the company competes, or a standard one any competitor can match. The first gets built, or co-built with a partner. The second gets bought, the sooner the better."
+          },
+          {
+            "termino": "Half-life",
+            "definicion": "How long the edge lasts before it becomes the market standard. If the answer is measured in months, building it never pays back the time it took to stand up."
+          },
+          {
+            "termino": "Proprietary data",
+            "definicion": "Whether the value comes from data only the company holds, or from a generic model wrapped in a well-written prompt. Without proprietary data there's no edge to defend, bought or built."
+          },
+          {
+            "termino": "Capacity to sustain it",
+            "definicion": "Whether the team that retrains, monitors and fixes the system the day after launch already exists, or is being hired. Building without that capacity manufactures next year's stalled pilot."
+          },
+          {
+            "termino": "Exit clause",
+            "definicion": "What the company keeps if the relationship with the vendor or the partner ends: the model, the data, the code, or just the memory of having used it. Negotiated before signing, never after."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The third option, building with a partner, tends to win whenever the capability is a true differentiator and the company doesn't yet have the team to sustain it alone. It splits the build risk, and if the contract is written properly, it transfers real capability to the internal team over time instead of leaving it permanently dependent on whoever built it. The reason it rarely gets proposed isn't that it performs worse. It's that nobody in the room sells it."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take the next buy-or-build decision sitting on your desk and answer the five questions before looking at a single proposal. If the business function that owns the process can't answer at least three of them, the decision isn't ready for committee yet, no matter how many proposals are already on the table."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How do you decide whether to buy or build an AI solution?",
+            "respuesta": "Check whether the capability is part of how the company competes or a standard one any competitor can buy just as easily, and how long that edge lasts before it becomes the market standard. If the edge is short-lived and the underlying data is generic, buying usually wins. If the data is proprietary and the capability is part of how you compete, building it, or co-building it with a partner, usually pays for the effort."
+          },
+          {
+            "pregunta": "When does it make sense to partner instead of buying or building alone?",
+            "respuesta": "When the capability is a real differentiator but the company doesn't yet have the team to sustain it on its own. A partner splits the build risk and, if the contract is written properly, transfers capability to the internal team over time. It's the option raised least often, because no vendor has an incentive to suggest it."
+          },
+          {
+            "pregunta": "What's the risk of buying an AI platform from a vendor?",
+            "respuesta": "The main one is getting tied to a data format and a process that only works inside that platform, without having negotiated what the company keeps if the relationship ends. The second is buying parity instead of an edge: if the same vendor sells the same platform to your competitor, you haven't bought anything that sets you apart."
+          },
+          {
+            "pregunta": "What's the risk of building AI in-house?",
+            "respuesta": "The cost almost nobody budgets for isn't the build, it's sustaining it afterwards: retraining the model, watching for it to drift, and fixing it when it breaks, month after month. Building without that team assigned from day one doesn't produce an edge, it produces a system that works in the demo and quietly fails in production for weeks before anyone notices."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's work out your build-or-buy call",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
