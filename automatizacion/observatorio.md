@@ -96,11 +96,22 @@ pregunta estaba escrita en un archivo, y ese archivo se llena a mano.
 
 Lo que sí es evidencia, de más fuerte a más débil:
 
-1. **Search Console.** Si existe `automatizacion/consultas-gsc.csv`, ejecuta
-   `node scripts/demanda-gsc.mjs`. Son las búsquedas reales con las que la gente
-   llega a meetbecome.com: no hay dato mejor, porque no es una estimación de
-   nadie, son consultas que ocurrieron. Su límite es que solo ve aquello para lo
-   que el sitio ya aparece; para lo que no posiciona, es ciega.
+1. **Los exports de demanda.** Ejecuta siempre `node scripts/demanda.mjs`. Lee
+   lo que haya en `automatizacion/`: Search Console (búsquedas que ocurrieron de
+   verdad), Bing Webmaster y Keyword Planner (volumen mensual). Los tres están
+   explicados en `docs/demanda.md`.
+
+   Dos cosas que hay que tener delante al leerlo. Search Console solo ve aquello
+   para lo que el sitio ya aparece; para lo que no posiciona, es ciega. Y el
+   volumen **miente por abajo** en este nicho: una pregunta de directivo en
+   español sale como 0 o 10 en cualquier herramienta porque todas redondean a
+   cero lo que está bajo su umbral, y ahí abajo vive el cliente entero. Un cero
+   es ausencia de dato, no prueba de que nadie lo busque. El script las lista
+   aparte por eso; no descartes una pregunta por salir ahí.
+
+   Si el script dice que no hay exports, o que el volumen no da señal, esa es la
+   respuesta y se escribe en el informe. Entonces la evidencia buena es la
+   siguiente de esta lista, no un número inventado.
 2. **Las sugerencias y las «búsquedas relacionadas»** del propio buscador, y el
    bloque «Otras preguntas de los usuarios» / «People also ask». Salen de lo que
    la gente escribe de verdad. Anota la variante literal que veas, con sus
