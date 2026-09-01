@@ -26,9 +26,23 @@
  *   node scripts/demanda-gsc.mjs
  */
 
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 
-const CSV = 'automatizacion/consultas-gsc.csv';
+/* El nombre exacto no importa mientras sea un CSV de consultas dentro de
+   `automatizacion/`. Se buscó así porque el primer archivo que llegó se subió
+   como `consultas-gsc.csv.csv` —Windows añade la extensión que ya estaba— y el
+   script dijo «no hay demanda medida» teniendo el archivo delante. Un guardián
+   que no encuentra el dato por un punto de más es un guardián que miente. */
+const CARPETA = 'automatizacion';
+const buscarCsv = () => {
+  if (!existsSync(CARPETA)) return null;
+  const candidatos = readdirSync(CARPETA).filter(
+    (f) => /consultas/i.test(f) && /\.csv(\.csv)?$/i.test(f),
+  );
+  return candidatos.length ? `${CARPETA}/${candidatos[0]}` : null;
+};
+
+const CSV = buscarCsv() || 'automatizacion/consultas-gsc.csv';
 
 /* Una consulta con muchas impresiones y mala posición es alguien que preguntó,
    nos vio de refilón y no entró. Es el hueco más barato que existe: la demanda
@@ -36,7 +50,7 @@ const CSV = 'automatizacion/consultas-gsc.csv';
 const IMPRESIONES_MINIMAS = 10;
 const POSICION_FLOJA = 10;
 
-if (!existsSync(CSV)) {
+if (!buscarCsv()) {
   /* Esto no es un fallo, pero tampoco es un «todo bien». La diferencia entre
      «miré y no hay demanda» y «no pude mirar» es la que hace que un diagnóstico
      valga algo, y callarla es cómo se acaba tomando decisiones sobre nada. */
