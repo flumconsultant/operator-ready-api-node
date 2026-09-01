@@ -510,6 +510,38 @@
       ]
     },
     {
+      "id": "nota-config",
+      "name": "Cómo se configura",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -900,
+        -220
+      ],
+      "parameters": {
+        "color": 4,
+        "width": 660,
+        "height": 320,
+        "content": "## Para cambiar las preguntas, entra aquí\n\n### [→ Abrir el panel de configuración](https://n8n.srv836595.hstgr.cloud/webhook/trammy-editor?clave=trammy-c15tyg9g)\n\nDesde ese panel se cambian **las preguntas**, las **opciones de respuesta**,\nlos **perfiles**, los **textos de cada pantalla** y las **instrucciones que\nrecibe la IA** que interpreta el diagnóstico.\n\nSe guarda ahí y la siguiente persona que rellene el formulario ya lo usa:\nno hay que volver a publicar este flujo ni tocar ningún nodo.\n\n**El formulario:** https://n8n.srv836595.hstgr.cloud/form/trammy-diagnostico\n\nLa clave del panel está en la hoja de configuración, pestaña Textos, fila\nclave_editor. Cambiándola ahí cambia la del panel."
+      }
+    },
+    {
+      "id": "nota-apagados",
+      "name": "Por qué hay nodos apagados",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1880,
+        660
+      ],
+      "parameters": {
+        "color": 3,
+        "width": 480,
+        "height": 260,
+        "content": "## Nodos apagados a propósito\n\nEl backend, Supabase, el render de React y el envío por correo todavía no\nexisten; el freno de revisión humana bloquearía cualquier prueba.\n\nn8n **atraviesa un nodo apagado dejando pasar los datos**, así que el flujo\ncorre entero igualmente. Cada uno lleva el motivo escrito en su nombre:\ncuando exista lo que le falta, se enciende y ya está."
+      }
+    },
+    {
       "id": "form-trigger",
       "name": "Form Trigger · Credenciales",
       "type": "n8n-nodes-base.formTrigger",

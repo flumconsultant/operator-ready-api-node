@@ -278,7 +278,36 @@ const guardar = {
   },
 };
 
+const notaEditor = {
+  id: 'nota-editor',
+  name: 'Qué es esto',
+  type: 'n8n-nodes-base.stickyNote',
+  typeVersion: 1,
+  position: [-420, 60],
+  parameters: {
+    color: 4,
+    width: 380,
+    height: 340,
+    content: [
+      '## El panel de configuración',
+      '',
+      '### [→ Abrirlo](https://n8n.srv836595.hstgr.cloud/webhook/trammy-editor?clave=trammy-c15tyg9g)',
+      '',
+      'Este flujo no forma parte del diagnóstico: **sirve la pantalla** desde la',
+      'que se cambian las preguntas y todo lo demás.',
+      '',
+      'Arriba, el camino que **pinta** la pantalla leyendo la hoja de',
+      'configuración. Abajo, el que **escribe** en ella al pulsar Guardar.',
+      '',
+      'La clave se comprueba en los dos: sin ella la pantalla no enseña nada, y el',
+      'guardado se rechaza aunque alguien llame al endpoint a mano. Vive en la',
+      'hoja, pestaña Textos, fila clave_editor.',
+    ].join('\n'),
+  },
+};
+
 const nodos = [
+  notaEditor,
   {
     id: 'wh-get',
     name: 'Abrir el editor',

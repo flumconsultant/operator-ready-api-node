@@ -814,7 +814,68 @@ flujo.nodes = flujo.nodes.filter((n) => ![
   'Perfil · En expansión',
 ].includes(n.name));
 
+/* ------------------------------------------------------------------ */
+/* 0. Las notas del lienzo.                                            */
+/* ------------------------------------------------------------------ */
+
+/* Quien abra este flujo en n8n no tiene por qué saberse de memoria una URL con
+   una clave dentro. La nota se ve nada más entrar y el enlace se abre desde el
+   propio lienzo. */
+const notaConfigurar = {
+  id: 'nota-config',
+  name: 'Cómo se configura',
+  type: 'n8n-nodes-base.stickyNote',
+  typeVersion: 1,
+  position: [-900, -220],
+  parameters: {
+    color: 4,
+    width: 660,
+    height: 320,
+    content: [
+      '## Para cambiar las preguntas, entra aquí',
+      '',
+      '### [→ Abrir el panel de configuración](https://n8n.srv836595.hstgr.cloud/webhook/trammy-editor?clave=trammy-c15tyg9g)',
+      '',
+      'Desde ese panel se cambian **las preguntas**, las **opciones de respuesta**,',
+      'los **perfiles**, los **textos de cada pantalla** y las **instrucciones que',
+      'recibe la IA** que interpreta el diagnóstico.',
+      '',
+      'Se guarda ahí y la siguiente persona que rellene el formulario ya lo usa:',
+      'no hay que volver a publicar este flujo ni tocar ningún nodo.',
+      '',
+      '**El formulario:** https://n8n.srv836595.hstgr.cloud/form/trammy-diagnostico',
+      '',
+      'La clave del panel está en la hoja de configuración, pestaña Textos, fila',
+      'clave_editor. Cambiándola ahí cambia la del panel.',
+    ].join('\n'),
+  },
+};
+
+const notaApagados = {
+  id: 'nota-apagados',
+  name: 'Por qué hay nodos apagados',
+  type: 'n8n-nodes-base.stickyNote',
+  typeVersion: 1,
+  position: [1880, 660],
+  parameters: {
+    color: 3,
+    width: 480,
+    height: 260,
+    content: [
+      '## Nodos apagados a propósito',
+      '',
+      'El backend, Supabase, el render de React y el envío por correo todavía no',
+      'existen; el freno de revisión humana bloquearía cualquier prueba.',
+      '',
+      'n8n **atraviesa un nodo apagado dejando pasar los datos**, así que el flujo',
+      'corre entero igualmente. Cada uno lleva el motivo escrito en su nombre:',
+      'cuando exista lo que le falta, se enciende y ya está.',
+    ].join('\n'),
+  },
+};
+
 flujo.nodes.push(
+  notaConfigurar, notaApagados,
   disparadorFormulario, disparadorPrueba, datosPrueba, entregado,
   leerConfig, prepararConfig, desvioEntrada,
   asignarPerfil, perfilAsignado,
@@ -900,8 +961,10 @@ const alcanzados = new Set(
   Object.values(flujo.connections).flatMap((t) => Object.values(t).flatMap((s) => (s || []).flatMap((l) => (l || []).map((d) => d.node)))),
 );
 const disparadores = ['Form Trigger · Credenciales', 'Probar con datos de ejemplo'];
-const huerfanos = [...nombres].filter((n) => !alcanzados.has(n) && !disparadores.includes(n));
-const sinSalida = [...nombres].filter((n) => !flujo.connections[n]);
+/* Una nota del lienzo no se conecta a nada: no es un nodo huérfano. */
+const notas = flujo.nodes.filter((n) => n.type === 'n8n-nodes-base.stickyNote').map((n) => n.name);
+const huerfanos = [...nombres].filter((n) => !alcanzados.has(n) && !disparadores.includes(n) && !notas.includes(n));
+const sinSalida = [...nombres].filter((n) => !flujo.connections[n] && !notas.includes(n));
 const huecos = [];
 for (const [de, t] of Object.entries(flujo.connections)) {
   (t.main || []).forEach((s, i) => { if (!s || !s.length) huecos.push(`${de} salida[${i}]`); });

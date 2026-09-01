@@ -2,6 +2,22 @@
   "name": "TRAMMY · Editor de configuración",
   "nodes": [
     {
+      "id": "nota-editor",
+      "name": "Qué es esto",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -420,
+        60
+      ],
+      "parameters": {
+        "color": 4,
+        "width": 380,
+        "height": 340,
+        "content": "## El panel de configuración\n\n### [→ Abrirlo](https://n8n.srv836595.hstgr.cloud/webhook/trammy-editor?clave=trammy-c15tyg9g)\n\nEste flujo no forma parte del diagnóstico: **sirve la pantalla** desde la\nque se cambian las preguntas y todo lo demás.\n\nArriba, el camino que **pinta** la pantalla leyendo la hoja de\nconfiguración. Abajo, el que **escribe** en ella al pulsar Guardar.\n\nLa clave se comprueba en los dos: sin ella la pantalla no enseña nada, y el\nguardado se rechaza aunque alguien llame al endpoint a mano. Vive en la\nhoja, pestaña Textos, fila clave_editor."
+      }
+    },
+    {
       "id": "wh-get",
       "name": "Abrir el editor",
       "type": "n8n-nodes-base.webhook",
