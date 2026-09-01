@@ -12,3 +12,8 @@ contenido/revision/*.zip
 
 # Las capturas del recorrido del panel: se regeneran al ejecutarlo.
 capturas-panel/
+
+# Copias de seguridad de los flujos de n8n: scripts/n8n.mjs guarda la versión
+# anterior antes de cada actualización o borrado. Son volcados de la instancia,
+# no fuente; se regeneran solas y ensucian el historial.
+automatizacion/n8n/copias/

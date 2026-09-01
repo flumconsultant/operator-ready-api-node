@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node scripts/n8n.mjs:*)"
+    ]
+  }
+}
