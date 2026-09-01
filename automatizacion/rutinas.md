@@ -38,9 +38,10 @@ para ti y contiene el encargo completo.
 Cuando tengas el informe escrito en `automatizacion/informes/`:
 
 1. `git status` — comprueba que solo has tocado archivos dentro de
-   `automatizacion/informes/`. Si hay algo más, deshazlo: este trabajo mide, no
+   `automatizacion/`: el informe nuevo, `seguimiento.md` y, si hubo que rellenar
+   la cola, `preguntas.md`. Si hay algo más, deshazlo: este trabajo mide, no
    cambia el sitio.
-2. git add automatizacion/informes/
+2. git add automatizacion/
    git -c user.name='Observatorio BECOME' -c user.email='hello@meetbecome.com' commit -m "Observatorio: informe del <fecha de hoy AAAA-MM-DD>"
    git push origin HEAD:main
 3. Si el push a main se rechaza, publica en la rama alternativa, que también
@@ -48,10 +49,15 @@ Cuando tengas el informe escrito en `automatizacion/informes/`:
    la respuesta si tienes que usarla.
 4. Si el push falla por red, reintenta cuatro veces esperando 2s, 4s, 8s y 16s.
 
-Deja la cola con al menos siete huecos, uno por día de la semana que viene.
+Deja la cola con al menos siete huecos, uno por día de la semana que viene. Si
+`preguntas.md` no da para tantos, `observatorio.md` te dice qué hacer: rellenarla
+tú hasta quince y decir en el informe qué añadiste. No entregues un informe con
+la cola corta sin haberla rellenado; eso es lo que dejó el 1 de septiembre sin
+artículo.
 
 No abras pull requests. No toques páginas, componentes ni artículos. Termina en
-dos líneas: cuántos huecos hay en la cola y cuál es el primero.
+dos líneas: cuántas preguntas quedan sin cubrir según `node scripts/qa-cola.mjs`
+y cuál es el primer hueco.
 ```
 
 ---
@@ -103,7 +109,10 @@ configuración. No repitas un tema ya cubierto en `src/content/insights/`. Si ho
 no hay ningún hueco que merezca un artículo, no publiques relleno:
 `automatizacion/redaccion.md` dice qué hacer en ese caso.
 
-Termina en dos líneas: qué publicaste y en qué dirección quedó.
+Termina en dos líneas: qué publicaste y en qué dirección quedó. Y si hoy no
+había hueco y no publicaste, dilo con esas palabras: es un resultado válido, pero
+tiene que quedar dicho. Una ejecución en verde que no produce nada y no explica
+por qué es indistinguible de una que se rompió.
 ```
 
 ---
@@ -120,3 +129,16 @@ Lo que sí lo dice, sin abrir nada:
 - El observatorio funcionó si hay un archivo nuevo en `automatizacion/informes/`
 - El redactor funcionó si hay un archivo nuevo en `src/content/insights/` y el
   artículo se ve en meetbecome.com/es/insights
+
+Y hay un tercer caso, el que costó el 1 de septiembre de 2026: **el redactor
+puede hacer su trabajo bien y no publicar nada**, porque no quedaba ninguna
+pregunta sin cubrir. Se ve así, sin abrir la ejecución:
+
+```
+node scripts/qa-cola.mjs
+```
+
+Dice cuántas preguntas de `preguntas.md` siguen sin artículo. Si son menos de
+siete, el redactor se va a quedar sin nada delante dentro de esa semana. El
+centinela lo comprueba solo cada día y se pone en rojo por debajo de tres, así
+que no hace falta acordarse: hace falta hacerle caso cuando avise.

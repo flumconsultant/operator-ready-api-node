@@ -53,6 +53,40 @@ resultó más duro de lo que parecía. Quien redacta la usa para mejorar ese
 artículo en vez de escribir uno nuevo, y eso es lo que hace que el contenido
 mejore con el tiempo en vez de solo acumularse.
 
+## Antes de entregar: cuánta cola queda
+
+Este paso es la razón por la que el 1 de septiembre de 2026 no hubo artículo.
+
+El informe del 30 de agosto detectó que solo quedaban dos preguntas sin cubrir y
+lo dijo bien: en el último párrafo de la sección «Recomendación». El redactor
+consumió esas dos el 30 y el 31, el 1 de septiembre se encontró la cola vacía,
+no publicó —que es lo correcto— y nadie se enteró hasta que alguien preguntó por
+qué no había artículo. El aviso existía. No llegaba a ninguna parte.
+
+Así que ahora se mide y se pone donde se ve:
+
+```
+node scripts/qa-cola.mjs
+```
+
+Cuenta las preguntas de `preguntas.md` que todavía no tienen artículo. **El
+número va en la primera línea del «Resumen» del informe**, siempre, aunque sea
+holgado. Un dato que solo aparece cuando va mal es un dato que nadie aprende a
+buscar.
+
+Si quedan **menos de siete** —menos de una semana de publicación—, además:
+
+1. Añade preguntas nuevas a `preguntas.md`, en su pilar, hasta dejar al menos
+   quince. Valen las mismas tres reglas que están escritas en la cabecera de ese
+   archivo, y se aplican igual aunque las escribas tú.
+2. Lístalas en el informe bajo **«Preguntas añadidas»**, con una línea por
+   pregunta diciendo por qué merece estar. Quien las lea tiene que poder borrar
+   las que no le convenzan sin tener que adivinar de dónde salieron.
+
+Sigue siendo cierto que la lista es de una persona y que la edita ella. Lo que
+cambia es que el sistema ya no se para a esperarla en silencio: rellena hasta el
+mínimo, lo dice, y la persona corrige cuando quiera.
+
 ## Qué hay que entregar
 
 Un único archivo nuevo en `automatizacion/informes/` llamado `AAAA-MM-DD.md`
@@ -64,7 +98,9 @@ Estructura exacta:
 # Observatorio · AAAA-MM-DD
 
 ## Resumen
-Tres frases como mucho. Qué ha cambiado respecto al informe anterior, si lo hay.
+Primera línea, siempre: «Cola: N preguntas sin cubrir», el número que da
+`node scripts/qa-cola.mjs`. Después, tres frases como mucho: qué ha cambiado
+respecto al informe anterior, si lo hay.
 
 ## Dónde aparecemos
 Tabla: pregunta | ¿aparece BECOME? | página nuestra | quién domina la respuesta
@@ -82,6 +118,10 @@ toda la semana. Para cada uno:
 ## Qué hay que revisar
 Los artículos que llevan cuatro semanas planos, con una hipótesis por artículo de
 por qué. Si no hay ninguno, dilo en una línea.
+
+## Preguntas añadidas
+Solo si hubo que rellenar la cola. Una línea por pregunta nueva con el motivo.
+Si no hizo falta añadir ninguna, esta sección no va.
 
 ## Recomendación
 El orden en que hay que escribirlos, de hoy en adelante. Una línea por hueco.

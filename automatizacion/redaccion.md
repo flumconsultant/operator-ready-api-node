@@ -36,6 +36,11 @@ queda publicado bajo el nombre de una persona real. Escribe en consecuencia.
    objetivo tal cual, estado `nuevo`. Sin esa fila el artículo nace fuera del
    sistema de medición y nadie volverá a mirarlo nunca.
 
+   Si la pregunta está en `preguntas.md` en los dos idiomas, **pon las dos en la
+   misma celda separadas por ` / `**. El artículo sale en español y en inglés,
+   así que responde las dos; anotar solo una deja la otra contada como pendiente
+   para siempre y la cola parece más llena de lo que está.
+
 ## Cuando toca revisar en vez de escribir
 
 Un día de revisión no produce un artículo nuevo, y está bien: produce uno que

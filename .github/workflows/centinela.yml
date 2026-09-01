@@ -129,6 +129,21 @@ jobs:
           git commit -m 'Anunciado por correo desde el centinela [skip ci]'
           git push origin HEAD:main
 
+      # ---- Y la cola de temas, que se vacía sin hacer ruido ----
+      #
+      # El 1 de septiembre no hubo artículo. Nada falló: las 19 preguntas de
+      # `preguntas.md` estaban las 19 cubiertas y el redactor hizo lo correcto,
+      # que es no publicar relleno. El observatorio lo había avisado el domingo
+      # anterior, en el último párrafo de su informe.
+      #
+      # Un aviso dentro de un archivo que nadie abre ese día no es un aviso.
+      # Este paso lo saca aquí, todos los días, y lo pone en rojo cuando ya no
+      # queda margen para reponer antes del siguiente domingo.
+      - name: ¿Le quedan temas al redactor?
+        id: cola
+        continue-on-error: true
+        run: node scripts/qa-cola.mjs --vigilar
+
       - name: ¿Está publicado lo que dice el repositorio?
         id: primera
         continue-on-error: true
@@ -178,6 +193,12 @@ jobs:
         if: steps.correo.outcome == 'failure'
         run: |
           echo "::error::Hay artículos publicados sin anunciar por correo, o un envío falló. Revisa el paso «¿Salió el correo de los artículos publicados?»."
+          exit 1
+
+      - name: Fallar si el redactor se queda sin temas
+        if: steps.cola.outcome == 'failure'
+        run: |
+          echo "::error::Quedan menos de tres preguntas sin cubrir en automatizacion/preguntas.md. El redactor se va a quedar sin nada que escribir. Añade preguntas nuevas, o lanza el observatorio a mano para que las reponga."
           exit 1
 
       - name: Fallar si algún endpoint no responde como debe
