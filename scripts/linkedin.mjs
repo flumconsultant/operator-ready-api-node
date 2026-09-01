@@ -249,6 +249,59 @@ async function avisarSiCaduca() {
   }
 }
 
+
+/* ---- La sonda: 401 y 403 no significan lo mismo -------------------------
+ *
+ * El 1 de septiembre se descartaron por medición tres explicaciones del 401 al
+ * publicar: el permiso caducado, el token de aplicación en vez de miembro, y un
+ * espacio pegado al valor del secreto. El ensayo confirma que el token es de
+ * tipo 3L, lleva w_organization_social y le quedan 365 días. Y el post se
+ * sigue rechazando.
+ *
+ * A partir de ahí seguir proponiendo causas es adivinar en voz alta. Esto
+ * pregunta en vez de suponer: una llamada de solo lectura al mismo host y con
+ * las mismas cabeceras que el post, para leer el código que devuelve.
+ *
+ *   · 401 aquí también → api.linkedin.com no acepta este token para nada. El
+ *     problema no es publicar ni la página: es el token contra esta API.
+ *   · 403 → el token SÍ se acepta, y lo que falla es el permiso concreto. Es
+ *     buena noticia y estrecha el problema a la relación entre quien autorizó
+ *     y la página de empresa.
+ *   · 200 → el token funciona de sobra y el problema está en el cuerpo del
+ *     post o en el identificador de la organización.
+ *
+ * No publica nada y no puede romper nada. */
+async function sondearApi() {
+  if (!TOKEN) return;
+  const donde = 'https://api.linkedin.com/v2/me';
+  try {
+    const r = await fetch(donde, {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+        'X-Restli-Protocol-Version': '2.0.0',
+        'LinkedIn-Version': VERSION,
+      },
+    });
+    const cuerpo = await r.text().catch(() => '');
+    console.log(`\nSonda a ${donde} → HTTP ${r.status}`);
+    if (r.status === 401) {
+      console.log('  api.linkedin.com no acepta este token para ninguna llamada, aunque la introspección lo dé por válido.');
+      console.log('  Eso apunta a la aplicación, no a la página: revisa que la app de LinkedIn esté verificada por la empresa y que el token se generara desde ESA app.');
+    } else if (r.status === 403) {
+      console.log('  El token SÍ se acepta. Lo que falta es permiso para algo concreto,');
+      console.log('  así que el 401 al publicar no viene del token: viene de la relación');
+      console.log('  entre quien autorizó y la página. Comprueba que esa persona sea');
+      console.log('  administradora de la página de BECOME y que LINKEDIN_ORG_ID sea la suya.');
+    } else if (r.ok) {
+      console.log('  El token funciona contra la API. El problema está en el cuerpo del post o en LINKEDIN_ORG_ID.');
+    } else {
+      console.log(`  Respuesta inesperada: ${cuerpo.slice(0, 200)}`);
+    }
+  } catch (e) {
+    console.log(`\nNo se pudo sondear la API: ${e.message}`);
+  }
+}
+
 /* ---- Qué artículo toca --------------------------------------------------- */
 const publicados = existsSync(REGISTRO) ? JSON.parse(readFileSync(REGISTRO, 'utf8')) : { anunciados: [] };
 
@@ -381,7 +434,8 @@ if (ENSAYO) {
   console.log(`  ${cuerpo.content.article.title}`);
   console.log(`  ${cuerpo.content.article.description}`);
   console.log(`  ${cuerpo.content.article.source}`);
-  console.log(`\nSaldría en ${firma.donde}${firma.urn ? ` (${firma.urn})` : ''} · versión de la API: ${VERSION}`);
+  await sondearApi();
+console.log(`\nSaldría en ${firma.donde}${firma.urn ? ` (${firma.urn})` : ''} · versión de la API: ${VERSION}`);
   process.exit(0);
 }
 
@@ -405,7 +459,8 @@ if (!r.ok) {
     console.error('::error::Un 403 casi siempre es un permiso que no cubre a quien firma: publicar en la PÁGINA de empresa necesita w_organization_social (Community Management API) y publicar en un PERFIL necesita w_member_social (Share on LinkedIn). Comprueba que el permiso y el autor son del mismo tipo.');
   }
   if (r.status === 401) {
-    console.error('::error::Eso casi siempre significa que el permiso caducó. Hay que volver a autorizar la aplicación siguiendo docs/linkedin.md.');
+    console.error('::error::El permiso pasó la comprobación previa y aun así LinkedIn rechaza el post. La sonda de abajo dice dónde está el problema.');
+    await sondearApi();
   }
   process.exit(1);
 }
