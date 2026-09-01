@@ -125,30 +125,64 @@ async function quienPublica() {
 async function avisarSiCaduca() {
   const id = process.env.LINKEDIN_CLIENT_ID;
   const secreto = process.env.LINKEDIN_CLIENT_SECRET;
-  if (!id || !secreto) return;   // Sin ellos no se puede preguntar; no es un fallo.
+  if (!id || !secreto) {
+    console.log('Sin LINKEDIN_CLIENT_ID y LINKEDIN_CLIENT_SECRET no se puede comprobar el permiso antes de publicar.');
+    return 'desconocido';   // No es un fallo, pero tampoco es un visto bueno.
+  }
   /* Y sin token no hay nada que preguntar. Pasa en un ensayo local, donde
      ninguno de los tres está puesto. */
-  if (!TOKEN) { console.log('Sin LINKEDIN_TOKEN no se puede comprobar la caducidad del permiso.'); return; }
+  if (!TOKEN) {
+    console.log('Sin LINKEDIN_TOKEN no se puede comprobar la caducidad del permiso.');
+    return 'desconocido';
+  }
   try {
     const r = await fetch(INTROSPECCION, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({ client_id: id, client_secret: secreto, token: TOKEN }),
     });
-    if (!r.ok) return;
-    const d = await r.json();
-    if (d.status && d.status !== 'active') {
-      console.log(`::warning::El permiso de LinkedIn figura como «${d.status}».`);
-      return;
+
+    /* Aquí ponía `if (!r.ok) return;` y esa línea costó el anuncio del 1 de
+       septiembre. Cuando LinkedIn contesta que el token no vale, contesta con
+       un error, no con un 200. Así que la comprobación que existía para avisar
+       de que el permiso ya no sirve se callaba justo en el único caso en que
+       tenía algo que decir, la ejecución seguía adelante e intentaba publicar,
+       y el fallo aparecía dos pasos después con un 401 sin contexto.
+
+       Un guardián ciego a lo que vino a vigilar es peor que no tenerlo: ocupa
+       el sitio del que sí habría avisado. */
+    if (!r.ok) {
+      const cuerpo = await r.text().catch(() => '');
+      console.log(
+        `::error::LinkedIn no reconoce el permiso (HTTP ${r.status}). ${cuerpo.slice(0, 300)}`,
+      );
+      return 'invalido';
     }
-    if (!d.expires_at) return;
+
+    const d = await r.json();
+    /* La introspección responde `active: false` para un token revocado o
+       caducado, y algunas respuestas traen `status` en vez de `active`. */
+    if (d.active === false || (d.status && d.status !== 'active')) {
+      console.log(`::error::El permiso de LinkedIn figura como «${d.status || 'inactivo'}».`);
+      return 'invalido';
+    }
+
+    if (!d.expires_at) {
+      console.log('El permiso es válido. LinkedIn no dice cuándo caduca.');
+      return 'valido';
+    }
     const dias = Math.round((d.expires_at * 1000 - Date.now()) / 86400000);
     console.log(`El permiso de LinkedIn caduca en ${dias} días.`);
     if (dias <= 14) {
       console.log(`::warning::El permiso de LinkedIn caduca en ${dias} días. Hay que volver a autorizar la aplicación: LinkedIn no deja renovarlo solo salvo a los socios de su programa de marketing. Instrucciones en docs/linkedin.md.`);
     }
+    return 'valido';
   } catch (e) {
-    console.log(`No se pudo consultar la caducidad del permiso: ${e.message}`);
+    /* Esto es distinto de «el token no vale»: es «no pude preguntar». Se dice
+       con otras palabras a propósito, porque confundirlas lleva a revocar un
+       permiso que estaba bien por culpa de un corte de red. */
+    console.log(`::warning::No se pudo consultar el permiso: ${e.message}. No es lo mismo que un permiso inválido; se sigue adelante.`);
+    return 'desconocido';
   }
 }
 
@@ -200,7 +234,16 @@ if (!Number.isFinite(edad) || edad > DIAS_GRACIA) {
  * puestos, el ensayo salió en verde, y no se sabía si el token servía. Un
  * ensayo que no comprueba lo único que se puede comprobar es un ensayo que
  * tranquiliza sin informar. */
-await avisarSiCaduca();
+const permiso = await avisarSiCaduca();
+
+/* Si ya sabemos que el permiso no sirve, no se intenta publicar. Antes se
+   intentaba igual y el 401 llegaba dos pasos más allá, sin decir la causa. */
+if (permiso === 'invalido') {
+  console.error('::error::No se intenta publicar con un permiso que LinkedIn ya ha rechazado.');
+  console.error('::error::Hay que volver a autorizar la aplicación y actualizar LINKEDIN_TOKEN. El paso a paso está en docs/linkedin.md.');
+  console.error('::error::Si acabas de rotar LINKEDIN_CLIENT_SECRET, esa es la causa más probable: el token se emitió con el secreto anterior.');
+  process.exit(1);
+}
 
 /* ---- El texto del post ---------------------------------------------------
  *
