@@ -339,6 +339,10 @@ async function sondearPublicacion() {
     const cuerpo = await r.text().catch(() => '');
     console.log(`\nSonda al endpoint de publicación (cuerpo vacío, no puede publicar) → HTTP ${r.status}`);
     if (r.status === 401) {
+      /* El cuerpo trae el serviceErrorCode, que es lo que distingue un token
+         malformado de una aplicación sin acceso a esta API. Imprimir solo el
+         código HTTP y quedarse tan ancho es tirar la mitad de la respuesta. */
+      console.log(`  LinkedIn dice: ${cuerpo.slice(0, 400)}`);
       console.log('  LinkedIn rechaza el token antes de mirar el contenido.');
       console.log('  El problema es la autenticación, no la página ni el post.');
       console.log('  Lo que queda por revisar, por orden: que la aplicación de LinkedIn');
