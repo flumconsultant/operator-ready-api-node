@@ -26,12 +26,12 @@ abandonar a la primera algo que solo necesitaba más cuerpo.
 
 | Artículo | Publicado | Pregunta objetivo | Últ. medición | Estado | Notas |
 |---|---|---|---|---|---|
-| `quien-responde-cuando-responde-un-agente` | 2026-08-20 | ¿Quién responde cuando un agente de IA toma una decisión equivocada? / Who is accountable when an AI agent makes a wrong decision? | 2026-08-30 | `nuevo` | Primera medición (10 días): no aparece. Cambió el elenco de nicho — salieron agentesautonomosia.com y Entrepreneur, entraron psiquiatrialegal.org, ciec.edu.co y nordflux.de — pero sigue sin consultora fuerte y sin BECOME |
-| `por-que-tus-pilotos-de-ia-no-llegan-a-produccion` | 2026-08-20 | ¿Por qué mis pilotos de IA no llegan a producción? / Why do most AI pilots never scale? | 2026-08-30 | `nuevo` | Primera medición (10 días): no aparece. Irontec y Concentrix se mantienen arriba; se suman blogs de nicho (cloudappi.net, ivanlopezdev.es) que no estaban la semana pasada |
-| `como-se-redisena-un-proceso-para-que-lo-ejecute-una-ia` | 2026-08-21 | ¿Cómo se rediseña un proceso para que lo ejecute en parte una IA? | 2026-08-30 | `nuevo` | Primera medición (9 días): no aparece. SERP casi completamente distinta a la de hace una semana — salieron Asana y Datadec, entraron Entel Empresas, alloxentric.com y agilenext.mx —, terreno todavía sin ganador asentado |
-| `por-que-tu-equipo-no-usa-la-ia-que-le-diste` | 2026-08-22 | ¿Cómo consigo que mi equipo use de verdad las herramientas de IA? | 2026-08-30 | `nuevo` | Primera medición (8 días): no aparece. onext.es, el competidor con framing más cercano al nuestro la semana pasada, ya no aparece; en su lugar dos newsletters de nicho con enfoque similar (evitar métricas de vanidad) |
-| `que-puede-hacer-un-agente-sin-supervision` | 2026-08-23 | ¿Cómo se decide qué puede hacer un agente sin supervisión humana? / How do you define the scope of an autonomous AI agent at work? | — | `nuevo` | Recomendación #1 del informe 2026-08-23. Vecino de «quién responde cuando responde un agente»: aquel da el dueño del resultado, este da el corte (importe, reversibilidad, alcance) para trazar el perímetro antes del incidente |
-| `como-medir-el-retorno-real-de-la-ia` | 2026-08-24 | ¿Cómo se mide el retorno real de una iniciativa de IA? / How do you measure the actual value of an AI initiative? | — | `nuevo` | Recomendación #2 del informe 2026-08-23. La pregunta más abierta del barrido en español: sin Big Four ni HBR compitiendo, y ningún actor da un método de atribución replicable (línea base, ventana, destino del tiempo liberado) |
+| `quien-responde-cuando-responde-un-agente` | 2026-08-20 | ¿Quién responde cuando un agente de IA toma una decisión equivocada? / Who is accountable when an AI agent makes a wrong decision? | 2026-09-01 | `nuevo` | Segunda medición (12 días): sigue sin aparecer. Salió ciec.edu.co, entraron cointelegraph.es, dig.es, enbuscadelfuego.com y sapiensdataai.com; psiquiatrialegal.org y nordflux.de resisten. En inglés domina contenido corporativo/legal (Salesforce, ISHIR, el bufete Brownstein), sin consultora de estrategia |
+| `por-que-tus-pilotos-de-ia-no-llegan-a-produccion` | 2026-08-20 | ¿Por qué mis pilotos de IA no llegan a producción? / Why do most AI pilots never scale? | 2026-09-01 | `nuevo` | Segunda medición (12 días): sigue sin aparecer. Irontec y Concentrix se mantienen firmes en español dos semanas seguidas — el único par de líderes estables de todo el barrido —; en nicho se suman ecosistemastartup.com y daisytek.com.mx |
+| `como-se-redisena-un-proceso-para-que-lo-ejecute-una-ia` | 2026-08-21 | ¿Cómo se rediseña un proceso para que lo ejecute en parte una IA? | 2026-09-01 | `nuevo` | Segunda medición (11 días): sigue sin aparecer. Salió alloxentric.com, entraron founderz.com, wowcx.com, bpsolutions.com.ar, delegia.es y networkautomationlabs.com; solo Entel Empresas y agilenext.mx persisten de hace una semana. Terreno sigue sin ganador asentado |
+| `por-que-tu-equipo-no-usa-la-ia-que-le-diste` | 2026-08-22 | ¿Cómo consigo que mi equipo use de verdad las herramientas de IA? | 2026-09-01 | `nuevo` | Segunda medición (10 días): sigue sin aparecer. onext.es, el competidor con framing más cercano al nuestro, que había desaparecido la semana pasada, volvió a aparecer esta semana — vale la pena vigilar si se consolida |
+| `que-puede-hacer-un-agente-sin-supervision` | 2026-08-23 | ¿Cómo se decide qué puede hacer un agente sin supervisión humana? / How do you define the scope of an autonomous AI agent at work? | 2026-09-01 | `nuevo` | Primera medición (9 días): no aparece. En español solo KPMG es consultora de peso, rodeada de nicho; en inglés domina infraestructura/nube (AWS, NVIDIA, Snowflake, JetBrains, Creatio), no consultoría estratégica |
+| `como-medir-el-retorno-real-de-la-ia` | 2026-08-24 | ¿Cómo se mide el retorno real de una iniciativa de IA? / How do you measure the actual value of an AI initiative? | 2026-09-01 | `nuevo` | Primera medición (8 días): no aparece. En español ninguna consultora grande, solo boutiques de nicho (getdarwin.ai, 100x.mx, blackholdconsulting.com); en inglés dominan vendors de analítica/BI (ThoughtSpot, CIO.com, Snowflake) |
 | `que-controles-necesita-una-empresa-antes-de-escalar-la-ia` | 2026-08-25 | ¿Qué controles necesita una empresa antes de escalar la IA? / What governance does a company need before scaling AI? | — | `nuevo` | Recomendación #3 del informe 2026-08-23. Fragmentado, sin actor dominante ni marcos citados por nombre; nadie dice quién firma cuando el control dice que no y el negocio insiste |
 | `que-cambia-la-estructura-de-una-empresa-con-ia` | 2026-08-26 | ¿Qué cambia en la estructura de una empresa cuando adopta IA de verdad? | — | `nuevo` | Recomendación #4 del informe 2026-08-23. Consenso vacío («el control pasa de TI al negocio»); la especificidad de organigrama —qué cajas se fusionan, span de control mixto, presupuesto de plantilla a consumo variable— estaba libre |
 | `como-se-gobierna-la-ia-sin-frenar-al-negocio` | 2026-08-27 | ¿Cómo se gobierna la IA sin frenar al negocio? | — | `nuevo` | Recomendación #5 del informe 2026-08-23. El «clasifica por riesgo» se enuncia en todas partes y no se opera en ninguna; faltaba la taxonomía con ejemplos y el plazo de decisión del propio comité |
@@ -46,25 +46,33 @@ Esta sección la reescribe el observatorio cada semana, y es la que cierra el
 bucle: quien redacta la lee y ajusta lo que escribe. Mientras no haya
 mediciones suficientes, dice que no las hay en vez de inventar un patrón.
 
-**Primera medición real esta semana, y la conclusión más honesta es que
-todavía no hay señal positiva de ningún tipo.** Los cuatro artículos que ya
-superan los siete días —dos de value-adoption, uno de agentic-work, uno de
-operating-model, los cuatro en formato perspective o field-note— no aparecen
-en ningún resultado de búsqueda para su pregunta objetivo. No hay diferencia
-visible entre pilares ni entre formatos: los cuatro están igual de
-invisibles.
+**Segunda semana de mediciones, y la conclusión sigue siendo que no hay
+ninguna señal positiva.** Ya son seis los artículos que superan los siete
+días —tres de value-adoption, dos de agentic-work, uno de operating-model,
+en formatos framework, perspective y field-note— y ninguno aparece en
+ningún resultado de búsqueda para su pregunta objetivo, en español ni en
+inglés. No hay diferencia visible entre pilares ni entre formatos: los seis
+están igual de invisibles.
 
-Lo único que sí cambió es el elenco de cada SERP. En tres de los cuatro casos
-—quién responde cuando responde un agente, rediseño de proceso, por qué el
-equipo no usa la IA— salieron esta semana actores que dominaban hace siete
-días (agentesautonomosia.com, Asana y Datadec, onext.es) y entraron otros
-nuevos. Eso sugiere que estas búsquedas siguen volátiles y sin un ganador
-asentado, que es una lectura distinta —y menos mala— que "no se mueve nada".
+Dos cosas sí cambiaron respecto a la semana pasada, y valen más que "sigue
+sin aparecer":
 
-Con solo cuatro artículos medidos y ninguna aparición todavía, no hay base
-para decir qué formato funciona mejor, si el español se mueve antes que el
+- **«Por qué mis pilotos no llegan a producción» tiene, por primera vez,
+  un par de líderes estables:** Irontec y Concentrix dominan el tramo en
+  español dos semanas seguidas sin que nadie los desplace. Es la única
+  pregunta del barrido con un ganador asentado; el resto sigue con el
+  elenco de nicho rotando casi por completo semana a semana (salieron y
+  entraron actores distintos en «quién responde», «rediseño de proceso» y
+  «por qué el equipo no usa la IA»), señal de terreno todavía abierto.
+- **onext.es, el competidor con framing más parecido al nuestro, volvió**
+  a aparecer en «por qué el equipo no usa la IA» tras haber desaparecido la
+  semana pasada. Si se consolida ahí, es el primer caso de un competidor
+  directo afianzándose en vez de solo rotar.
+
+Con seis artículos medidos y cero apariciones, todavía no hay base para
+decir qué formato funciona mejor, si el español se mueve antes que el
 inglés, o si las preguntas frecuentes largas ayudan: sería un patrón
-inventado sobre cuatro puntos sin ninguna variación real entre ellos. La
-primera comparación útil llega cuando alguno de los cuatro empiece a
-aparecer, o cuando el resto de los artículos publicados cruce también los
-siete días, en las próximas semanas.
+inventado sobre seis puntos sin ninguna variación real entre ellos más allá
+de la estabilidad del competidor en un solo caso. La primera comparación
+útil sigue esperando a que alguno empiece a aparecer, o a que el resto de
+los artículos publicados cruce también los siete días.
