@@ -9,23 +9,6 @@
   "nodes": [
     {
       "parameters": {
-        "httpMethod": "POST",
-        "path": "trammy-diagnostico",
-        "responseMode": "responseNode",
-        "options": {}
-      },
-      "id": "b8cd8cdd-6ab2-4dee-aa64-81b2fd871bc7",
-      "name": "Webhook Credenciales",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2.1,
-      "position": [
-        -1472,
-        656
-      ],
-      "webhookId": "a6aab01e-0705-4e7f-a805-6748f03a2b2e"
-    },
-    {
-      "parameters": {
         "conditions": {
           "options": {
             "caseSensitive": true,
@@ -37,7 +20,7 @@
           "conditions": [
             {
               "id": "usuario-completo",
-              "leftValue": "={{ $json.body.usuario }}",
+              "leftValue": "={{ $json.usuario }}",
               "rightValue": "",
               "operator": {
                 "type": "string",
@@ -46,7 +29,7 @@
             },
             {
               "id": "password-completo",
-              "leftValue": "={{ $json.body.password }}",
+              "leftValue": "={{ $json.password }}",
               "rightValue": "",
               "operator": {
                 "type": "string",
@@ -71,105 +54,428 @@
         "formFields": {
           "values": [
             {
-              "fieldLabel": "[pendiente: texto pregunta 1]",
+              "fieldLabel": "Pregunta 1 — pendiente de redacción",
               "fieldName": "pregunta_1",
-              "placeholder": "[pendiente: tipo/opciones pregunta 1]",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "1"
+                  },
+                  {
+                    "option": "2"
+                  },
+                  {
+                    "option": "3"
+                  },
+                  {
+                    "option": "4"
+                  },
+                  {
+                    "option": "5"
+                  }
+                ]
+              },
               "requiredField": true
             },
             {
-              "fieldLabel": "[pendiente: texto pregunta 2]",
+              "fieldLabel": "Pregunta 2 — pendiente de redacción",
               "fieldName": "pregunta_2",
-              "placeholder": "[pendiente: tipo/opciones pregunta 2]",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "1"
+                  },
+                  {
+                    "option": "2"
+                  },
+                  {
+                    "option": "3"
+                  },
+                  {
+                    "option": "4"
+                  },
+                  {
+                    "option": "5"
+                  }
+                ]
+              },
               "requiredField": true
             },
             {
-              "fieldLabel": "[pendiente: texto pregunta 3]",
+              "fieldLabel": "Pregunta 3 — pendiente de redacción",
               "fieldName": "pregunta_3",
-              "placeholder": "[pendiente: tipo/opciones pregunta 3]",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "1"
+                  },
+                  {
+                    "option": "2"
+                  },
+                  {
+                    "option": "3"
+                  },
+                  {
+                    "option": "4"
+                  },
+                  {
+                    "option": "5"
+                  }
+                ]
+              },
               "requiredField": true
             },
             {
-              "fieldLabel": "[pendiente: texto pregunta 4]",
+              "fieldLabel": "Pregunta 4 — pendiente de redacción",
               "fieldName": "pregunta_4",
-              "placeholder": "[pendiente: tipo/opciones pregunta 4]",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "1"
+                  },
+                  {
+                    "option": "2"
+                  },
+                  {
+                    "option": "3"
+                  },
+                  {
+                    "option": "4"
+                  },
+                  {
+                    "option": "5"
+                  }
+                ]
+              },
               "requiredField": true
             },
             {
-              "fieldLabel": "[pendiente: texto pregunta 5]",
+              "fieldLabel": "Pregunta 5 — pendiente de redacción",
               "fieldName": "pregunta_5",
-              "placeholder": "[pendiente: tipo/opciones pregunta 5]",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "1"
+                  },
+                  {
+                    "option": "2"
+                  },
+                  {
+                    "option": "3"
+                  },
+                  {
+                    "option": "4"
+                  },
+                  {
+                    "option": "5"
+                  }
+                ]
+              },
               "requiredField": true
             },
             {
-              "fieldLabel": "[pendiente: texto pregunta 6]",
+              "fieldLabel": "Pregunta 6 — pendiente de redacción",
               "fieldName": "pregunta_6",
-              "placeholder": "[pendiente: tipo/opciones pregunta 6]",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "1"
+                  },
+                  {
+                    "option": "2"
+                  },
+                  {
+                    "option": "3"
+                  },
+                  {
+                    "option": "4"
+                  },
+                  {
+                    "option": "5"
+                  }
+                ]
+              },
               "requiredField": true
             },
             {
-              "fieldLabel": "[pendiente: texto pregunta 7]",
+              "fieldLabel": "Pregunta 7 — pendiente de redacción",
               "fieldName": "pregunta_7",
-              "placeholder": "[pendiente: tipo/opciones pregunta 7]",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "1"
+                  },
+                  {
+                    "option": "2"
+                  },
+                  {
+                    "option": "3"
+                  },
+                  {
+                    "option": "4"
+                  },
+                  {
+                    "option": "5"
+                  }
+                ]
+              },
               "requiredField": true
             },
             {
-              "fieldLabel": "[pendiente: texto pregunta 8]",
+              "fieldLabel": "Pregunta 8 — pendiente de redacción",
               "fieldName": "pregunta_8",
-              "placeholder": "[pendiente: tipo/opciones pregunta 8]",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "1"
+                  },
+                  {
+                    "option": "2"
+                  },
+                  {
+                    "option": "3"
+                  },
+                  {
+                    "option": "4"
+                  },
+                  {
+                    "option": "5"
+                  }
+                ]
+              },
               "requiredField": true
             },
             {
-              "fieldLabel": "[pendiente: texto pregunta 9]",
+              "fieldLabel": "Pregunta 9 — pendiente de redacción",
               "fieldName": "pregunta_9",
-              "placeholder": "[pendiente: tipo/opciones pregunta 9]",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "1"
+                  },
+                  {
+                    "option": "2"
+                  },
+                  {
+                    "option": "3"
+                  },
+                  {
+                    "option": "4"
+                  },
+                  {
+                    "option": "5"
+                  }
+                ]
+              },
               "requiredField": true
             },
             {
-              "fieldLabel": "[pendiente: texto pregunta 10]",
+              "fieldLabel": "Pregunta 10 — pendiente de redacción",
               "fieldName": "pregunta_10",
-              "placeholder": "[pendiente: tipo/opciones pregunta 10]",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "1"
+                  },
+                  {
+                    "option": "2"
+                  },
+                  {
+                    "option": "3"
+                  },
+                  {
+                    "option": "4"
+                  },
+                  {
+                    "option": "5"
+                  }
+                ]
+              },
               "requiredField": true
             },
             {
-              "fieldLabel": "[pendiente: texto pregunta 11]",
+              "fieldLabel": "Pregunta 11 — pendiente de redacción",
               "fieldName": "pregunta_11",
-              "placeholder": "[pendiente: tipo/opciones pregunta 11]",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "1"
+                  },
+                  {
+                    "option": "2"
+                  },
+                  {
+                    "option": "3"
+                  },
+                  {
+                    "option": "4"
+                  },
+                  {
+                    "option": "5"
+                  }
+                ]
+              },
               "requiredField": true
             },
             {
-              "fieldLabel": "[pendiente: texto pregunta 12]",
+              "fieldLabel": "Pregunta 12 — pendiente de redacción",
               "fieldName": "pregunta_12",
-              "placeholder": "[pendiente: tipo/opciones pregunta 12]",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "1"
+                  },
+                  {
+                    "option": "2"
+                  },
+                  {
+                    "option": "3"
+                  },
+                  {
+                    "option": "4"
+                  },
+                  {
+                    "option": "5"
+                  }
+                ]
+              },
               "requiredField": true
             },
             {
-              "fieldLabel": "[pendiente: texto pregunta 13]",
+              "fieldLabel": "Pregunta 13 — pendiente de redacción",
               "fieldName": "pregunta_13",
-              "placeholder": "[pendiente: tipo/opciones pregunta 13]",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "1"
+                  },
+                  {
+                    "option": "2"
+                  },
+                  {
+                    "option": "3"
+                  },
+                  {
+                    "option": "4"
+                  },
+                  {
+                    "option": "5"
+                  }
+                ]
+              },
               "requiredField": true
             },
             {
-              "fieldLabel": "[pendiente: texto pregunta 14]",
+              "fieldLabel": "Pregunta 14 — pendiente de redacción",
               "fieldName": "pregunta_14",
-              "placeholder": "[pendiente: tipo/opciones pregunta 14]",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "1"
+                  },
+                  {
+                    "option": "2"
+                  },
+                  {
+                    "option": "3"
+                  },
+                  {
+                    "option": "4"
+                  },
+                  {
+                    "option": "5"
+                  }
+                ]
+              },
               "requiredField": true
             },
             {
-              "fieldLabel": "[pendiente: texto pregunta 15]",
+              "fieldLabel": "Pregunta 15 — pendiente de redacción",
               "fieldName": "pregunta_15",
-              "placeholder": "[pendiente: tipo/opciones pregunta 15]",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "1"
+                  },
+                  {
+                    "option": "2"
+                  },
+                  {
+                    "option": "3"
+                  },
+                  {
+                    "option": "4"
+                  },
+                  {
+                    "option": "5"
+                  }
+                ]
+              },
               "requiredField": true
             },
             {
-              "fieldLabel": "[pendiente: texto pregunta 16]",
+              "fieldLabel": "Pregunta 16 — pendiente de redacción",
               "fieldName": "pregunta_16",
-              "placeholder": "[pendiente: tipo/opciones pregunta 16]",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "1"
+                  },
+                  {
+                    "option": "2"
+                  },
+                  {
+                    "option": "3"
+                  },
+                  {
+                    "option": "4"
+                  },
+                  {
+                    "option": "5"
+                  }
+                ]
+              },
               "requiredField": true
             },
             {
-              "fieldLabel": "[pendiente: texto pregunta 17]",
+              "fieldLabel": "Pregunta 17 — pendiente de redacción",
               "fieldName": "pregunta_17",
-              "placeholder": "[pendiente: tipo/opciones pregunta 17]",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "1"
+                  },
+                  {
+                    "option": "2"
+                  },
+                  {
+                    "option": "3"
+                  },
+                  {
+                    "option": "4"
+                  },
+                  {
+                    "option": "5"
+                  }
+                ]
+              },
               "requiredField": true
             }
           ]
@@ -389,7 +695,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// [pendiente: fórmula exacta, dimensiones, ponderaciones y campos usados en el cálculo]\n// No se fabrican valores faltantes: si no hay una puntuación válida, queda pendiente.\nconst j = $input.first().json || {};\nlet raw = j.trama_index;\nif (raw === undefined) raw = j.score;\nconst trama_index = (typeof raw === \"number\" && !Number.isNaN(raw)) ? raw : null;\nconst calculo_pendiente = trama_index === null;\nreturn [{ json: Object.assign({}, j, {\n  trama_index: trama_index,\n  calculo_pendiente: calculo_pendiente,\n  nota_calculo: \"[pendiente: fórmula, dimensiones y ponderaciones del TRAMA Index]\"\n}) }];"
+        "jsCode": "/* Ponlo en false cuando el backend entregue el TRAMA Index real: el flujo\n   volverá a mandar al error de validación cualquier diagnóstico sin índice. */\nconst CALCULO_PROVISIONAL = true;\n\nconst j = $input.first().json || {};\n\n/* Lo que venga del backend (o de los datos de prueba) manda siempre. */\nlet indice = typeof j.trama_index === \"number\" ? j.trama_index\n  : (typeof j.score === \"number\" ? j.score : null);\nif (indice !== null && !Number.isFinite(indice)) indice = null;\n\nlet provisional = false;\n\nif (indice === null && CALCULO_PROVISIONAL) {\n  const notas = Object.keys(j)\n    .filter((k) => /^pregunta_\\d+$/.test(k))\n    .map((k) => Number(j[k]))\n    .filter((n) => Number.isFinite(n));\n\n  if (notas.length) {\n    const media = notas.reduce((a, b) => a + b, 0) / notas.length;\n    indice = Math.round(((media - 1) / 4) * 100);\n    provisional = true;\n  }\n}\n\nreturn [{\n  json: {\n    ...j,\n    trama_index: indice,\n    trama_index_provisional: provisional,\n    calculo_pendiente: indice === null,\n    nota_calculo: provisional\n      ? \"PROVISIONAL: media de las respuestas en escala 0-100. No es la formula TRAMA. [pendiente: formula, dimensiones y ponderaciones reales]\"\n      : \"[pendiente: formula, dimensiones y ponderaciones del TRAMA Index]\",\n  },\n  pairedItem: { item: 0 },\n}];"
       },
       "id": "4006ea83-42ec-4d8b-8bf5-c8c45bf6ee25",
       "name": "Code TRAMA Index",
@@ -629,6 +935,12 @@
               "type": "string"
             },
             {
+              "id": "pi-prov",
+              "name": "trama_index_provisional",
+              "value": "={{ $(\"Code TRAMA Index\").first().json.trama_index_provisional }}",
+              "type": "boolean"
+            },
+            {
               "id": "pi-resp",
               "name": "respuestas",
               "value": "={{ Object.fromEntries(Object.entries($json).filter(([clave]) => clave.startsWith(\"pregunta_\"))) }}",
@@ -755,23 +1067,6 @@
     },
     {
       "parameters": {
-        "respondWith": "json",
-        "responseBody": "={{ { \"error\": \"Credenciales incompletas o inválidas\", \"detalle\": \"[pendiente: criterio o servicio exacto de validación de credenciales]\" } }}",
-        "options": {
-          "responseCode": 401
-        }
-      },
-      "id": "fe7f6d64-63ef-424f-b6ce-f7dd2468d1d7",
-      "name": "Respond · Credenciales Inválidas",
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.5,
-      "position": [
-        -1024,
-        752
-      ]
-    },
-    {
-      "parameters": {
         "tableId": "",
         "fieldsUi": {
           "fieldValues": [
@@ -813,7 +1108,7 @@
         "messages": {
           "values": [
             {
-              "content": "=Interpreta el diagnóstico TRAMMY únicamente con los datos disponibles y coherentes. TRAMA Index: {{ $(\"Preparar Interpretación\").item.json.trama_index }}. Perfil asignado: {{ $(\"Preparar Interpretación\").item.json.perfil }}. Respuestas: {{ JSON.stringify($(\"Preparar Interpretación\").item.json.respuestas) }}. Devuelve recomendaciones para este usuario. Prohibido completar por inferencia datos no proporcionados. [pendiente: prompt exacto e instrucciones de metodología determinísticas y cognitivas]"
+              "content": "=Interpreta el diagnóstico TRAMMY únicamente con los datos disponibles y coherentes. TRAMA Index: {{ $(\"Preparar Interpretación\").item.json.trama_index }}. Perfil asignado: {{ $(\"Preparar Interpretación\").item.json.perfil }}. Respuestas: {{ JSON.stringify($(\"Preparar Interpretación\").item.json.respuestas) }}. Devuelve recomendaciones para este usuario. Prohibido completar por inferencia datos no proporcionados. [pendiente: prompt exacto e instrucciones de metodología determinísticas y cognitivas] {{ $('Preparar Interpretación').first().json.trama_index_provisional ? 'AVISO: el TRAMA Index es provisional (media de las respuestas), no el calculado por la metodología. Dilo explícitamente en tu respuesta.' : '' }}"
             }
           ]
         },
@@ -839,7 +1134,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// [pendiente: fórmula o criterio exacto para calcular el porcentaje de coherencia (objetivo > 90%)]\n// Interpretación provisional y marcada como pendiente: se considera coherente solo si la\n// respuesta NO está malformada (tiene texto). El umbral real > 90% queda pendiente de fórmula.\nconst items = $input.all();\nconst out = [];\nfor (const it of items) {\n  const j = it.json || {};\n  let texto = \"\";\n  if (Array.isArray(j.content) && j.content[0] && j.content[0].text) {\n    texto = j.content[0].text;\n  } else if (typeof j.text === \"string\") {\n    texto = j.text;\n  }\n  const malformado = texto === \"\";\n  const intento = $runIndex; // 0 = primer intento; 1 y 2 = reinterpretaciones automáticas\n  const es_coherente = !malformado; // [pendiente] hasta definir la fórmula real de coherencia\n  out.push({ json: {\n    recomendaciones: texto,\n    malformado: malformado,\n    intento: intento,\n    coherencia_pct: null,\n    es_coherente: es_coherente,\n    pendiente_coherencia: \"[pendiente: fórmula o criterio exacto para calcular el porcentaje de coherencia]\"\n  } });\n}\nreturn out;"
+        "jsCode": "// [pendiente: fórmula o criterio exacto para calcular el porcentaje de coherencia (objetivo > 90%)]\n// Interpretación provisional y marcada como pendiente: se considera coherente solo si la\n// respuesta NO está malformada (tiene texto). El umbral real > 90% queda pendiente de fórmula.\nconst items = $input.all();\nconst out = [];\nfor (const it of items) {\n  const j = it.json || {};\n  let texto = \"\";\n  if (Array.isArray(j.content) && j.content[0] && j.content[0].text) {\n    texto = j.content[0].text;\n  } else if (typeof j.text === \"string\") {\n    texto = j.text;\n  }\n  const malformado = texto === \"\";\n  const intento = $runIndex; // 0 = primer intento; 1 y 2 = reinterpretaciones automáticas\n  const es_coherente = !malformado; // [pendiente] hasta definir la fórmula real de coherencia\n  out.push({ json: {\n    es_prueba: j.es_prueba === true || $('Preparar Interpretación').first().json.es_prueba === true,\n    recomendaciones: texto,\n    malformado: malformado,\n    intento: intento,\n    coherencia_pct: null,\n    es_coherente: es_coherente,\n    pendiente_coherencia: \"[pendiente: fórmula o criterio exacto para calcular el porcentaje de coherencia]\"\n  } });\n}\nreturn out;"
       },
       "id": "93273281-0b2b-4f40-a3a4-f3f2bafdd91d",
       "name": "Evaluar Coherencia",
@@ -1067,6 +1362,38 @@
       ]
     },
     {
+      "id": "form-trigger",
+      "name": "Form Trigger · Credenciales",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        -560,
+        300
+      ],
+      "webhookId": "trammy-diagnostico",
+      "parameters": {
+        "path": "trammy-diagnostico",
+        "formTitle": "Diagnóstico TRAMMY",
+        "formDescription": "Accede con tus credenciales para empezar el diagnóstico.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Usuario",
+              "fieldName": "usuario",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Contraseña",
+              "fieldName": "password",
+              "fieldType": "password",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
       "id": "p00-trigger",
       "name": "Probar con datos de ejemplo",
       "type": "n8n-nodes-base.manualTrigger",
@@ -1100,10 +1427,191 @@
         300
       ],
       "parameters": {}
+    },
+    {
+      "id": "msj-cred",
+      "name": "Mensaje · Credenciales inválidas",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -336,
+        540
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "msj-cred-t",
+              "name": "pantalla_titulo",
+              "value": "No pudimos validarte",
+              "type": "string"
+            },
+            {
+              "id": "msj-cred-m",
+              "name": "pantalla_mensaje",
+              "value": "Revisa tu usuario y tu contraseña e inténtalo de nuevo.",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      }
+    },
+    {
+      "id": "msj-incompleto",
+      "name": "Mensaje · Faltan respuestas",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        560,
+        620
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "msj-incompleto-t",
+              "name": "pantalla_titulo",
+              "value": "Faltan respuestas",
+              "type": "string"
+            },
+            {
+              "id": "msj-incompleto-m",
+              "name": "pantalla_mensaje",
+              "value": "El diagnóstico necesita las diecisiete respuestas. Vuelve atrás y complétalas.",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      }
+    },
+    {
+      "id": "msj-error",
+      "name": "Mensaje · No se pudo completar",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        2400,
+        720
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "msj-error-t",
+              "name": "pantalla_titulo",
+              "value": "No pudimos completar tu diagnóstico",
+              "type": "string"
+            },
+            {
+              "id": "msj-error-m",
+              "name": "pantalla_mensaje",
+              "value": "Ha ocurrido un problema al procesar tus respuestas. Nuestro equipo lo está revisando; inténtalo de nuevo más tarde.",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      }
+    },
+    {
+      "id": "msj-ok",
+      "name": "Mensaje · Diagnóstico listo",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        2400,
+        300
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "msj-ok-t",
+              "name": "pantalla_titulo",
+              "value": "Tu diagnóstico TRAMMY está listo",
+              "type": "string"
+            },
+            {
+              "id": "msj-ok-m",
+              "name": "pantalla_mensaje",
+              "value": "=Perfil: {{ $('Preparar Interpretación').first().json.perfil }} · TRAMA Index: {{ $('Preparar Interpretación').first().json.trama_index }}{{ $('Preparar Interpretación').first().json.trama_index_provisional ? ' (PROVISIONAL — pendiente de la fórmula real)' : '' }}\n\n{{ $('Evaluar Coherencia').first().json.recomendaciones }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      }
+    },
+    {
+      "id": "if-pantalla",
+      "name": "¿Vino del formulario?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2624,
+        460
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "del-formulario",
+              "leftValue": "={{ $json.es_prueba ? 'no' : 'si' }}",
+              "rightValue": "si",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "form-final",
+      "name": "Form · Página final",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        2848,
+        380
+      ],
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "text",
+        "completionTitle": "={{ $json.pantalla_titulo }}",
+        "completionMessage": "={{ $json.pantalla_mensaje }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "fin-prueba",
+      "name": "Fin de la prueba",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2848,
+        560
+      ],
+      "parameters": {}
     }
   ],
   "connections": {
-    "Webhook Credenciales": {
+    "Form Trigger · Credenciales": {
       "main": [
         [
           {
@@ -1125,7 +1633,7 @@
         ],
         [
           {
-            "node": "Respond · Credenciales Inválidas",
+            "node": "Mensaje · Credenciales inválidas",
             "type": "main",
             "index": 0
           }
@@ -1452,6 +1960,145 @@
         [
           {
             "node": "Error Envío / Usuario no agenda sesión [pendiente]",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Diagnóstico entregado": {
+      "main": [
+        [
+          {
+            "node": "Mensaje · Diagnóstico listo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Envío / Usuario no agenda sesión [pendiente]": {
+      "main": [
+        [
+          {
+            "node": "Mensaje · Diagnóstico listo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formulario Incompleto · Completar respuestas": {
+      "main": [
+        [
+          {
+            "node": "Mensaje · Faltan respuestas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Validación · Score inválido (sin perfil)": {
+      "main": [
+        [
+          {
+            "node": "Mensaje · No se pudo completar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Backend · Sin calcular diagnóstico": {
+      "main": [
+        [
+          {
+            "node": "Mensaje · No se pudo completar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Persistencia · Supabase": {
+      "main": [
+        [
+          {
+            "node": "Mensaje · No se pudo completar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Render/Entrega · Resultado no mostrado": {
+      "main": [
+        [
+          {
+            "node": "Mensaje · No se pudo completar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensaje · Credenciales inválidas": {
+      "main": [
+        [
+          {
+            "node": "¿Vino del formulario?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensaje · Faltan respuestas": {
+      "main": [
+        [
+          {
+            "node": "¿Vino del formulario?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensaje · No se pudo completar": {
+      "main": [
+        [
+          {
+            "node": "¿Vino del formulario?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensaje · Diagnóstico listo": {
+      "main": [
+        [
+          {
+            "node": "¿Vino del formulario?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Vino del formulario?": {
+      "main": [
+        [
+          {
+            "node": "Form · Página final",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fin de la prueba",
             "type": "main",
             "index": 0
           }

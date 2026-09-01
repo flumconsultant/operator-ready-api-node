@@ -73,7 +73,143 @@ const pedir = (nombre) => {
 };
 
 /* ------------------------------------------------------------------ */
-/* 1. La puerta de prueba.                                             */
+/* 1. El formulario: dos páginas y cuatro finales.                     */
+/* ------------------------------------------------------------------ */
+
+const ESCALA = [1, 2, 3, 4, 5].map((n) => ({ option: String(n) }));
+
+/* Las diecisiete preguntas siguen sin redactar en el diseño y no las invento:
+   hacerlo daría la falsa impresión de que el instrumento ya está definido. Lo
+   que sí se puede es dejar el formulario rellenable, y para eso basta con una
+   etiqueta legible y una escala del 1 al 5, que es lo que espera el resto del
+   flujo. La etiqueta dice en voz alta que el texto está pendiente. */
+const preguntas = Array.from({ length: 17 }, (_, i) => ({
+  fieldLabel: `Pregunta ${i + 1} — pendiente de redacción`,
+  fieldName: `pregunta_${i + 1}`,
+  fieldType: 'dropdown',
+  fieldOptions: { values: ESCALA },
+  requiredField: true,
+}));
+
+const disparadorFormulario = {
+  id: 'form-trigger',
+  name: 'Form Trigger · Credenciales',
+  type: 'n8n-nodes-base.formTrigger',
+  typeVersion: 2.6,
+  position: [-560, 300],
+  webhookId: 'trammy-diagnostico',
+  parameters: {
+    path: 'trammy-diagnostico',
+    formTitle: 'Diagnóstico TRAMMY',
+    formDescription: 'Accede con tus credenciales para empezar el diagnóstico.',
+    formFields: {
+      values: [
+        { fieldLabel: 'Usuario', fieldName: 'usuario', requiredField: true },
+        { fieldLabel: 'Contraseña', fieldName: 'password', fieldType: 'password', requiredField: true },
+      ],
+    },
+    options: {},
+  },
+};
+
+/* Una sola página de cierre, y cada final le entrega su texto.
+
+   El primer intento fueron cuatro nodos de cierre, uno por final. Se cayó al
+   probar la ruta de datos de ejemplo: un nodo Form falla con «Form Trigger node
+   must be set before this node» cuando la ejecución no vino de un formulario, y
+   marcarlo como tolerante a errores no lo evita —el fallo ocurre antes de que
+   eso cuente—. La ejecución entera salía en rojo aunque todo lo demás hubiera
+   ido bien.
+
+   Consolidar arregla las dos cosas a la vez. Cada final se convierte en un Set
+   que lleva su título y su mensaje, todos desembocan en un único IF, y ese IF
+   decide: si la ejecución vino del formulario, se pinta la página; si vino del
+   disparador manual, termina en un nodo mudo. Un solo sitio que dibuja la
+   pantalla final, y ningún andamio repetido cuatro veces. */
+
+const mensaje = (id, nombre, posicion, titulo, texto) => ({
+  id,
+  name: nombre,
+  type: 'n8n-nodes-base.set',
+  typeVersion: 3.5,
+  position: posicion,
+  parameters: {
+    assignments: {
+      assignments: [
+        { id: `${id}-t`, name: 'pantalla_titulo', value: titulo, type: 'string' },
+        { id: `${id}-m`, name: 'pantalla_mensaje', value: texto, type: 'string' },
+      ],
+    },
+    includeOtherFields: true,
+    options: {},
+  },
+});
+
+const mensajeCredenciales = mensaje('msj-cred', 'Mensaje · Credenciales inválidas', [-336, 540],
+  'No pudimos validarte',
+  'Revisa tu usuario y tu contraseña e inténtalo de nuevo.');
+
+const mensajeIncompleto = mensaje('msj-incompleto', 'Mensaje · Faltan respuestas', [560, 620],
+  'Faltan respuestas',
+  'El diagnóstico necesita las diecisiete respuestas. Vuelve atrás y complétalas.');
+
+const mensajeError = mensaje('msj-error', 'Mensaje · No se pudo completar', [2400, 720],
+  'No pudimos completar tu diagnóstico',
+  'Ha ocurrido un problema al procesar tus respuestas. Nuestro equipo lo está revisando; inténtalo de nuevo más tarde.');
+
+const mensajeDiagnostico = mensaje('msj-ok', 'Mensaje · Diagnóstico listo', [2400, 300],
+  'Tu diagnóstico TRAMMY está listo',
+  "=Perfil: {{ $('Preparar Interpretación').first().json.perfil }} · TRAMA Index: {{ $('Preparar Interpretación').first().json.trama_index }}{{ $('Preparar Interpretación').first().json.trama_index_provisional ? ' (PROVISIONAL — pendiente de la fórmula real)' : '' }}\n\n{{ $('Evaluar Coherencia').first().json.recomendaciones }}");
+
+/* El desvío. En una ejecución con datos de ejemplo no hay formulario al que
+   responder, así que se termina en un nodo mudo en vez de en una página. */
+const desvioPantalla = {
+  id: 'if-pantalla',
+  name: '¿Vino del formulario?',
+  type: 'n8n-nodes-base.if',
+  typeVersion: 2.2,
+  position: [2624, 460],
+  parameters: {
+    conditions: {
+      options: { caseSensitive: false, leftValue: '', typeValidation: 'loose', version: 2 },
+      combinator: 'and',
+      conditions: [{
+        id: 'del-formulario',
+        leftValue: "={{ $json.es_prueba ? 'no' : 'si' }}",
+        rightValue: 'si',
+        operator: { type: 'string', operation: 'equals' },
+      }],
+    },
+    options: {},
+  },
+};
+
+const paginaFinal = {
+  id: 'form-final',
+  name: 'Form · Página final',
+  type: 'n8n-nodes-base.form',
+  typeVersion: 2.5,
+  position: [2848, 380],
+  parameters: {
+    operation: 'completion',
+    respondWith: 'text',
+    completionTitle: '={{ $json.pantalla_titulo }}',
+    completionMessage: '={{ $json.pantalla_mensaje }}',
+    options: {},
+  },
+};
+
+const finPrueba = {
+  id: 'fin-prueba',
+  name: 'Fin de la prueba',
+  type: 'n8n-nodes-base.noOp',
+  typeVersion: 1,
+  position: [2848, 560],
+  parameters: {},
+};
+
+/* ------------------------------------------------------------------ */
+/* 2. La puerta de prueba.                                             */
 /* ------------------------------------------------------------------ */
 
 const disparadorPrueba = {
@@ -133,7 +269,7 @@ return [{
 };
 
 /* ------------------------------------------------------------------ */
-/* 2. Los dos nodos HTTP que estaban literalmente vacíos.              */
+/* 3. Los dos nodos HTTP que estaban literalmente vacíos.              */
 /* ------------------------------------------------------------------ */
 
 /* Un httpRequest con parámetros {} no tiene ni URL ni método: no es que
@@ -174,7 +310,7 @@ mostrar.parameters = {
 };
 
 /* ------------------------------------------------------------------ */
-/* 3. Los sistemas que aún no existen: desactivados, no borrados.      */
+/* 4. Los sistemas que aún no existen: desactivados, no borrados.      */
 /* ------------------------------------------------------------------ */
 
 const supabase = pedir('Supabase · Guardar Diagnóstico');
@@ -203,7 +339,79 @@ espera.name = 'Wait · Revisión Humana (HITL) [desactivado: bloquea la prueba]'
 espera.disabled = true;
 
 /* ------------------------------------------------------------------ */
-/* 4. Anthropic sí puede funcionar: se conecta de verdad.              */
+/* 4b. Un índice provisional para poder probar el formulario.          */
+/* ------------------------------------------------------------------ */
+
+/* El índice lo calcula el backend, que todavía no existe. Por el formulario
+   real, entonces, no llega ninguno y toda ejecución acaba en el error de
+   validación: correcto, y también inservible para probar nada. Comprobado
+   contra el servidor: rellenando el formulario entero, la ejecución terminó en
+   «Error Validación · Score inválido».
+
+   Así que el nodo calcula uno provisional cuando no le llega ninguno: la media
+   de las diecisiete respuestas llevada a una escala de 0 a 100. NO es la
+   metodología TRAMA, es una regla de tres para que el Switch tenga algo que
+   clasificar. Por eso viaja marcado, y la marca aparece en el prompt de la
+   interpretación y en la pantalla final, donde alguien podría creerse el
+   número.
+
+   Lo que venga del backend manda siempre sobre esto. Y poniendo
+   CALCULO_PROVISIONAL en false, el nodo vuelve a comportarse como se diseñó. */
+const codigoIndice = pedir('Code TRAMA Index');
+codigoIndice.parameters.jsCode = [
+  '/* Ponlo en false cuando el backend entregue el TRAMA Index real: el flujo',
+  '   volverá a mandar al error de validación cualquier diagnóstico sin índice. */',
+  'const CALCULO_PROVISIONAL = true;',
+  '',
+  'const j = $input.first().json || {};',
+  '',
+  '/* Lo que venga del backend (o de los datos de prueba) manda siempre. */',
+  'let indice = typeof j.trama_index === "number" ? j.trama_index',
+  '  : (typeof j.score === "number" ? j.score : null);',
+  'if (indice !== null && !Number.isFinite(indice)) indice = null;',
+  '',
+  'let provisional = false;',
+  '',
+  'if (indice === null && CALCULO_PROVISIONAL) {',
+  '  const notas = Object.keys(j)',
+  '    .filter((k) => /^pregunta_\\d+$/.test(k))',
+  '    .map((k) => Number(j[k]))',
+  '    .filter((n) => Number.isFinite(n));',
+  '',
+  '  if (notas.length) {',
+  '    const media = notas.reduce((a, b) => a + b, 0) / notas.length;',
+  '    indice = Math.round(((media - 1) / 4) * 100);',
+  '    provisional = true;',
+  '  }',
+  '}',
+  '',
+  'return [{',
+  '  json: {',
+  '    ...j,',
+  '    trama_index: indice,',
+  '    trama_index_provisional: provisional,',
+  '    calculo_pendiente: indice === null,',
+  '    nota_calculo: provisional',
+  '      ? "PROVISIONAL: media de las respuestas en escala 0-100. No es la formula TRAMA. [pendiente: formula, dimensiones y ponderaciones reales]"',
+  '      : "[pendiente: formula, dimensiones y ponderaciones del TRAMA Index]",',
+  '  },',
+  '  pairedItem: { item: 0 },',
+  '}];',
+].join('\n');
+
+const AVISO_PROVISIONAL = "{{ $('Preparar Interpretación').first().json.trama_index_provisional ? 'AVISO: el TRAMA Index es provisional (media de las respuestas), no el calculado por la metodología. Dilo explícitamente en tu respuesta.' : '' }}";
+
+/* «Evaluar Coherencia» construye un objeto nuevo y tira el resto del ítem, así
+   que la marca de ejecución de prueba se perdía justo antes de llegar al IF que
+   la necesita. Se arrastra explícitamente. */
+const coherencia = pedir('Evaluar Coherencia');
+coherencia.parameters.jsCode = coherencia.parameters.jsCode.replace(
+  'out.push({ json: {',
+  'out.push({ json: {\n    es_prueba: j.es_prueba === true || $(\'Preparar Interpretación\').first().json.es_prueba === true,',
+);
+
+/* ------------------------------------------------------------------ */
+/* 5. Anthropic sí puede funcionar: se conecta de verdad.              */
 /* ------------------------------------------------------------------ */
 
 const anthropic = pedir('Anthropic · Claude API');
@@ -214,6 +422,7 @@ anthropic.parameters.modelId = {
   value: 'claude-haiku-4-5-20251001',
   cachedResultName: 'Claude Haiku 4.5',
 };
+anthropic.parameters.messages.values[0].content += ` ${AVISO_PROVISIONAL}`;
 anthropic.parameters.options.system = [
   'Eres el motor de interpretación del diagnóstico TRAMMY.',
   'Interpreta únicamente con los datos que recibes. No completes por inferencia nada que no esté.',
@@ -223,7 +432,7 @@ anthropic.parameters.options.system = [
 ].join(' ');
 
 /* ------------------------------------------------------------------ */
-/* 5. Dependencias de nodos que en la prueba no se ejecutan.           */
+/* 6. Dependencias de nodos que en la prueba no se ejecutan.           */
 /* ------------------------------------------------------------------ */
 
 /* «Preparar Interpretación» leía las respuestas con $("Formulario").item.json.
@@ -235,6 +444,7 @@ const preparar = pedir('Preparar Interpretación');
 preparar.parameters.assignments.assignments = [
   { id: 'pi-index', name: 'trama_index', value: '={{ $("Code TRAMA Index").first().json.trama_index }}', type: 'number' },
   { id: 'pi-perfil', name: 'perfil', value: '={{ $json.perfil }}', type: 'string' },
+  { id: 'pi-prov', name: 'trama_index_provisional', value: '={{ $("Code TRAMA Index").first().json.trama_index_provisional }}', type: 'boolean' },
   {
     id: 'pi-resp',
     name: 'respuestas',
@@ -244,7 +454,7 @@ preparar.parameters.assignments.assignments = [
 ];
 
 /* ------------------------------------------------------------------ */
-/* 6. El bug que solo se ve ejecutando: null se convertía en cero.     */
+/* 7. El bug que solo se ve ejecutando: null se convertía en cero.     */
 /* ------------------------------------------------------------------ */
 
 /* «Code TRAMA Index» deja el índice en null cuando no hay una puntuación
@@ -275,14 +485,20 @@ switchPerfil.parameters.rules.values = switchPerfil.parameters.rules.values.map(
 }));
 
 /* ------------------------------------------------------------------ */
-/* 7. Un webhook con una ruta de verdad.                               */
+/* 8. El formulario de diecisiete preguntas, ya rellenable.          */
 /* ------------------------------------------------------------------ */
 
-const webhook = pedir('Webhook Credenciales');
-webhook.parameters.path = 'trammy-diagnostico';
+const formulario = pedir('Formulario');
+formulario.parameters.formFields.values = preguntas;
+
+/* El IF leía $json.body.usuario, que era lo correcto para un webhook. Un Form
+   Trigger entrega los campos en la raíz, con el fieldName que se les dio. */
+const ifCredenciales = pedir('IF Credenciales Válidas');
+ifCredenciales.parameters.conditions.conditions[0].leftValue = '={{ $json.usuario }}';
+ifCredenciales.parameters.conditions.conditions[1].leftValue = '={{ $json.password }}';
 
 /* ------------------------------------------------------------------ */
-/* 7. Un final explícito.                                              */
+/* 9. Un final explícito.                                              */
 /* ------------------------------------------------------------------ */
 
 const entregado = {
@@ -294,17 +510,25 @@ const entregado = {
   parameters: {},
 };
 
-flujo.nodes.push(disparadorPrueba, datosPrueba, entregado);
+/* Fuera el webhook y su respuesta: en un flujo de formulario no tienen a quién
+   responder. */
+flujo.nodes = flujo.nodes.filter((n) => !['Webhook Credenciales', 'Respond · Credenciales Inválidas'].includes(n.name));
+
+flujo.nodes.push(
+  disparadorFormulario, disparadorPrueba, datosPrueba, entregado,
+  mensajeCredenciales, mensajeIncompleto, mensajeError, mensajeDiagnostico,
+  desvioPantalla, paginaFinal, finPrueba,
+);
 
 /* ------------------------------------------------------------------ */
-/* 9. El cableado, con los tres cortes reparados.                      */
+/* 10. El cableado, con los tres cortes reparados.                      */
 /* ------------------------------------------------------------------ */
 
 const M = (n) => [{ node: n, type: 'main', index: 0 }];
 
 flujo.connections = {
-  'Webhook Credenciales': { main: [M('IF Credenciales Válidas')] },
-  'IF Credenciales Válidas': { main: [M('Formulario'), M('Respond · Credenciales Inválidas')] },
+  'Form Trigger · Credenciales': { main: [M('IF Credenciales Válidas')] },
+  'IF Credenciales Válidas': { main: [M('Formulario'), M('Mensaje · Credenciales inválidas')] },
   Formulario: { main: [M('IF 17 Respuestas Completas')] },
 
   'Probar con datos de ejemplo': { main: [M('Datos de prueba · 17 respuestas')] },
@@ -350,6 +574,25 @@ flujo.connections = {
 
   [mostrar.name]: { main: [M(correo.name), M('Error Render/Entrega · Resultado no mostrado')] },
   [correo.name]: { main: [M('Diagnóstico entregado'), M('Error Envío / Usuario no agenda sesión [pendiente]')] },
+  'Diagnóstico entregado': { main: [M('Mensaje · Diagnóstico listo')] },
+  /* Si falla el envío del correo, el diagnóstico ya existe y es válido: se le
+     enseña igual en pantalla en vez de darle una pantalla de error por algo que
+     no le afecta. */
+  'Error Envío / Usuario no agenda sesión [pendiente]': { main: [M('Mensaje · Diagnóstico listo')] },
+
+  'Formulario Incompleto · Completar respuestas': { main: [M('Mensaje · Faltan respuestas')] },
+  'Error Validación · Score inválido (sin perfil)': { main: [M('Mensaje · No se pudo completar')] },
+  'Error Backend · Sin calcular diagnóstico': { main: [M('Mensaje · No se pudo completar')] },
+  'Error Persistencia · Supabase': { main: [M('Mensaje · No se pudo completar')] },
+  'Error Render/Entrega · Resultado no mostrado': { main: [M('Mensaje · No se pudo completar')] },
+
+  /* Los cuatro finales pasan por el mismo sitio: un IF que decide si hay una
+     página que pintar o si esto fue una prueba. */
+  'Mensaje · Credenciales inválidas': { main: [M('¿Vino del formulario?')] },
+  'Mensaje · Faltan respuestas': { main: [M('¿Vino del formulario?')] },
+  'Mensaje · No se pudo completar': { main: [M('¿Vino del formulario?')] },
+  'Mensaje · Diagnóstico listo': { main: [M('¿Vino del formulario?')] },
+  '¿Vino del formulario?': { main: [M('Form · Página final'), M('Fin de la prueba')] },
 };
 
 /* ------------------------------------------------------------------ */
@@ -367,7 +610,7 @@ for (const [de, tipos] of Object.entries(flujo.connections)) {
 const alcanzados = new Set(
   Object.values(flujo.connections).flatMap((t) => Object.values(t).flatMap((s) => (s || []).flatMap((l) => (l || []).map((d) => d.node)))),
 );
-const disparadores = ['Webhook Credenciales', 'Probar con datos de ejemplo'];
+const disparadores = ['Form Trigger · Credenciales', 'Probar con datos de ejemplo'];
 const huerfanos = [...nombres].filter((n) => !alcanzados.has(n) && !disparadores.includes(n));
 const sinSalida = [...nombres].filter((n) => !flujo.connections[n]);
 const huecos = [];
