@@ -14,6 +14,30 @@ pantalla final. `kBbKnGEnIIwqX5dW`.
 
 **Formulario:** https://n8n.srv836595.hstgr.cloud/form/trammy-diagnostico
 
+### Dónde se cambian las preguntas y todo lo demás
+
+**Pantalla de configuración:**
+https://n8n.srv836595.hstgr.cloud/webhook/trammy-editor?clave=trammy-c15tyg9g
+
+Una tabla con las preguntas, otra con las opciones de respuesta, otra con los
+perfiles, y los textos de cada pantalla —incluido lo que se le dice a la IA que
+interpreta—. Se escribe encima, se pulsa Guardar, y el siguiente formulario ya
+sale con los cambios. No hace falta abrir la hoja ni entrar a n8n.
+
+La clave está en la hoja, pestaña , fila ; cambiándola
+ahí cambia la de la pantalla. Es una cerradura sencilla para una pantalla
+interna, no un sistema de usuarios: quien tenga la URL con la clave entra. Se
+comprueba también al guardar, para que nadie pueda escribir llamando al
+endpoint a mano.
+
+La genera  y vive en el flujo
+«TRAMMY · Editor de configuración».
+
+### Y por debajo, la misma hoja
+
+Quien prefiera la hoja de cálculo puede seguir usándola: la pantalla y la hoja
+son lo mismo, y el flujo lee de ahí en **cada ejecución**.
+
 ### Lo que se edita en una hoja, sin abrir n8n
 
 [TRAMMY · Configuración del diagnóstico][config] — el flujo la lee en **cada
