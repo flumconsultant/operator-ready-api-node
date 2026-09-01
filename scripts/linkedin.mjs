@@ -236,6 +236,26 @@ async function avisarSiCaduca() {
     }
     const dias = Math.round((d.expires_at * 1000 - Date.now()) / 86400000);
     console.log(`El permiso de LinkedIn caduca en ${dias} días.`);
+
+    /* ---- 365 días es la firma de un refresh token ----
+     *
+     * Un access token de LinkedIn dura 60 días. El que dura 365 es el refresh
+     * token, que sirve para pedir uno nuevo y NO sirve para llamar a la API.
+     *
+     * La introspección acepta los dos y responde lo mismo para ambos: activo,
+     * 3L, con los alcances. Así que un refresh token pasa todas las
+     * comprobaciones previas y luego se estrella con un 401 al publicar, que es
+     * exactamente lo que pasó el 1 de septiembre tres veces seguidas.
+     *
+     * En el generador de LinkedIn los dos valores salen juntos, uno debajo del
+     * otro. Copiar el segundo cuesta un segundo y encontrarlo costó una tarde.
+     *
+     * No corta la ejecución porque es una señal, no una certeza: si algún día
+     * LinkedIn emite access tokens más largos, este aviso sobraría y no debe
+     * impedir publicar. Pero se dice antes, y fuerte. */
+    if (dias > 200) {
+      console.log(`::warning::Ojo: ${dias} días es la duración de un REFRESH token, no de un access token, que dura 60. Los dos salen juntos en la pantalla del generador y la comprobación previa no los distingue, pero solo el access token puede publicar. Si el post falla con 401, esto es lo primero que hay que mirar.`);
+    }
     if (dias <= 14) {
       console.log(`::warning::El permiso de LinkedIn caduca en ${dias} días. Hay que volver a autorizar la aplicación: LinkedIn no deja renovarlo solo salvo a los socios de su programa de marketing. Instrucciones en docs/linkedin.md.`);
     }
@@ -345,9 +365,12 @@ async function sondearPublicacion() {
       console.log(`  LinkedIn dice: ${cuerpo.slice(0, 400)}`);
       console.log('  LinkedIn rechaza el token antes de mirar el contenido.');
       console.log('  El problema es la autenticación, no la página ni el post.');
-      console.log('  Lo que queda por revisar, por orden: que la aplicación de LinkedIn');
-      console.log('  esté verificada por la empresa, y que el token se generara desde esa');
-      console.log('  misma aplicación y no desde otra.');
+      console.log('  Lo primero que hay que mirar, y con diferencia: que LINKEDIN_TOKEN');
+      console.log('  sea el ACCESS token y no el REFRESH token. En la pantalla del');
+      console.log('  generador salen los dos juntos; el refresh dura 365 días, pasa la');
+      console.log('  comprobación previa y no puede publicar. El access dura 60.');
+      console.log('  Después: que la aplicación esté verificada por la empresa y que el');
+      console.log('  token se generara desde esa misma aplicación.');
     } else if (r.status === 400 || r.status === 422) {
       console.log('  LinkedIn ACEPTÓ el token y se quejó del contenido, que es lo correcto.');
       console.log('  El token sirve para publicar. El 401 del post de verdad viene de otra');
