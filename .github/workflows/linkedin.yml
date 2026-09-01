@@ -18,6 +18,11 @@ on:
     types: [completed]
   # Y a mano, para la primera prueba y para rescatar un día suelto.
   workflow_dispatch:
+    inputs:
+      ensayo:
+        description: 'Ensayo: enseña el post exacto que saldría y no publica nada. Déjalo marcado la primera vez.'
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -49,9 +54,24 @@ jobs:
           LINKEDIN_TOKEN: ${{ secrets.LINKEDIN_TOKEN }}
           LINKEDIN_ORG_ID: ${{ secrets.LINKEDIN_ORG_ID }}
           LINKEDIN_MEMBER_ID: ${{ secrets.LINKEDIN_MEMBER_ID }}
+          ENSAYO: ${{ github.event.inputs.ensayo }}
           LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
           LINKEDIN_CLIENT_SECRET: ${{ secrets.LINKEDIN_CLIENT_SECRET }}
-        run: node scripts/linkedin.mjs
+        run: |
+          # El ensayo hace todo el recorrido y se detiene antes de llamar a
+          # LinkedIn. Existe porque un post en la página real de la empresa no
+          # se puede recoger: borrarlo no deshace que alguien lo viera, y la
+          # tarjeta del enlace que LinkedIn compone la primera vez se queda
+          # guardada aunque el post desaparezca.
+          #
+          # Por defecto está marcado. Quien lance esto a mano la primera vez ve
+          # el texto y decide; equivocarse hacia el lado que no publica es el
+          # único error barato de los dos.
+          if [ "${ENSAYO:-false}" = "true" ]; then
+            node scripts/linkedin.mjs --ensayo
+          else
+            node scripts/linkedin.mjs
+          fi
 
       # El registro de lo ya anunciado tiene que sobrevivir al trabajo, o cada
       # despliegue volvería a publicar el mismo post.

@@ -79,6 +79,16 @@ empresa escribe en su sitio web, uno al día, sin acceder a datos de terceros.*
 sin credenciales, cada despliegue lo ejecuta, dice «no hay nada que publicar» y
 termina en verde. No se rompe nada esperando.
 
+## 3 bis. El token se genera DESPUÉS de la aprobación
+
+El error que se comete aquí, y cuesta un día encontrarlo: un token generado
+antes de que LinkedIn aprobara la Community Management API **no lleva el permiso
+`w_organization_social`**, por mucho que la aprobación llegue después. El token
+guarda los alcances que había concedidos el día que se creó.
+
+Si ya tenías uno, tíralo y genera otro. El síntoma de no hacerlo es un `403` al
+publicar, con el mensaje de que falta el permiso.
+
 ## 4. Conseguir los valores
 
 ### `LINKEDIN_CLIENT_ID` y `LINKEDIN_CLIENT_SECRET`
@@ -141,9 +151,14 @@ la última línea diciendo **en nombre de quién** saldría. Un
 post de prueba en una página real no se puede deshacer sin que alguien lo haya
 visto; por eso existe este modo.
 
-Cuando el ensayo enseñe lo que esperas, lanza el workflow **Anunciar en
-LinkedIn** a mano desde la pestaña *Actions*. A partir de ahí va solo, después
-de cada despliegue con éxito.
+Desde el navegador se hace igual y sin instalar nada: pestaña **Actions** →
+**Anunciar en LinkedIn** → *Run workflow*, con la casilla **Ensayo** marcada,
+que es como viene por defecto. El registro del trabajo enseña el post exacto,
+carácter a carácter, y no publica nada.
+
+Cuando el ensayo enseñe lo que esperas, repite lo mismo **desmarcando Ensayo**.
+Ese sí publica. A partir de ahí va solo, después de cada despliegue con éxito, y
+no hay que volver a tocarlo.
 
 ---
 
