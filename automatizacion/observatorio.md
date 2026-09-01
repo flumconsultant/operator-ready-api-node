@@ -74,14 +74,65 @@ número va en la primera línea del «Resumen» del informe**, siempre, aunque s
 holgado. Un dato que solo aparece cuando va mal es un dato que nadie aprende a
 buscar.
 
-Si quedan **menos de siete** —menos de una semana de publicación—, además:
+### Antes de añadir nada: las preguntas marcadas `[sin verificar]`
 
-1. Añade preguntas nuevas a `preguntas.md`, en su pilar, hasta dejar al menos
-   quince. Valen las mismas tres reglas que están escritas en la cabecera de ese
-   archivo, y se aplican igual aunque las escribas tú.
-2. Lístalas en el informe bajo **«Preguntas añadidas»**, con una línea por
-   pregunta diciendo por qué merece estar. Quien las lea tiene que poder borrar
-   las que no le convenzan sin tener que adivinar de dónde salieron.
+Son propuestas que entraron sin comprobar que alguien las busque. Revísalas
+**todas**, una por una, y decide:
+
+- Hay evidencia de que se busca → **quítale la marca** y anota en el informe qué
+  evidencia encontraste, con la fuente. Ya es una pregunta del sistema.
+- No hay evidencia → **bórrala del archivo** y di por qué en el informe. No la
+  dejes ahí por si acaso: una pregunta que nadie hace es un artículo que nadie
+  lee, y se come un día de publicación que sí valía.
+
+No decidas por si te suena razonable. Todas suenan razonables; ese es justamente
+el problema que tienen.
+
+### Cómo se mide que una pregunta se busca
+
+Esto es lo que este encargo llevaba sin hacer: medías **quién responde** una
+pregunta, nunca **si alguien la hace**. Dabas la demanda por supuesta porque la
+pregunta estaba escrita en un archivo, y ese archivo se llena a mano.
+
+Lo que sí es evidencia, de más fuerte a más débil:
+
+1. **Search Console.** Si existe `automatizacion/consultas-gsc.csv`, ejecuta
+   `node scripts/demanda-gsc.mjs`. Son las búsquedas reales con las que la gente
+   llega a meetbecome.com: no hay dato mejor, porque no es una estimación de
+   nadie, son consultas que ocurrieron. Su límite es que solo ve aquello para lo
+   que el sitio ya aparece; para lo que no posiciona, es ciega.
+2. **Las sugerencias y las «búsquedas relacionadas»** del propio buscador, y el
+   bloque «Otras preguntas de los usuarios» / «People also ask». Salen de lo que
+   la gente escribe de verdad. Anota la variante literal que veas, con sus
+   palabras, no la tuya.
+3. **Cómo se formula la pregunta donde la gente pregunta**: foros, Reddit,
+   LinkedIn, comunidades del sector. Sirve sobre todo para la redacción exacta:
+   una pregunta bien planteada con las palabras equivocadas no la encuentra
+   nadie.
+
+Lo que **no** es evidencia: que la pregunta encaje con lo que vende BECOME, que
+sea interesante, que un informe de consultora diga que el tema está de moda, o
+que a ti te parezca que un directivo la haría. Eso es una hipótesis, y una
+hipótesis entra marcada `[sin verificar]` o no entra.
+
+Si no consigues evidencia de una pregunta, **dilo**. Que una búsqueda no
+devuelva señal es un resultado, y vale. Inventar la señal envenena todo lo que
+venga después.
+
+### Y entonces, si quedan menos de siete
+
+Menos de una semana de publicación. Rellena hasta quince:
+
+1. **Empieza por la demanda, no por el tema.** Mira primero lo que ya se busca
+   —el paso de arriba— y de ahí saca las preguntas. El orden importa: si eliges
+   el tema primero y buscas la demanda después, siempre la encuentras, porque ya
+   sabes qué querías encontrar.
+2. Cada pregunta nueva entra con su evidencia anotada. Si no tienes evidencia
+   pero la propuesta te parece buena, entra marcada `[sin verificar]` y en el
+   informe dices que es una hipótesis. Las dos cosas valen; confundirlas no.
+3. Lístalas en el informe bajo **«Preguntas añadidas»**: la pregunta, si va
+   verificada o no, y la evidencia concreta. Quien las lea tiene que poder borrar
+   las que no le convenzan sin adivinar de dónde salieron.
 
 Sigue siendo cierto que la lista es de una persona y que la edita ella. Lo que
 cambia es que el sistema ya no se para a esperarla en silencio: rellena hasta el
@@ -134,8 +185,11 @@ Los artículos que llevan cuatro semanas planos, con una hipótesis por artícul
 por qué. Si no hay ninguno, dilo en una línea.
 
 ## Preguntas añadidas
-Solo si hubo que rellenar la cola. Una línea por pregunta nueva con el motivo.
-Si no hizo falta añadir ninguna, esta sección no va.
+Solo si hubo que rellenar la cola o revisar propuestas. Tres bloques, y los que
+estén vacíos se dicen en una línea en vez de omitirse:
+- **Verificadas**: las que dejaron de estar `[sin verificar]`, con la evidencia.
+- **Nuevas**: las que añadiste, con su evidencia o marcadas como hipótesis.
+- **Borradas**: las que quitaste por no encontrar demanda, con el porqué.
 
 ## Recomendación
 El orden en que hay que escribirlos, de hoy en adelante. Una línea por hueco.

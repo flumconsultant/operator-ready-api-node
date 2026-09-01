@@ -67,7 +67,18 @@ function leerPreguntas() {
       continue;
     }
     const punto = linea.match(/^-\s+(.+)$/);
-    if (punto) preguntas.push({ pilar, texto: punto[1].trim() });
+    if (!punto) continue;
+    /* `[sin verificar]` marca una pregunta que encaja con lo que hacemos pero
+       de la que nadie ha comprobado que la busque alguien. Cuenta para que el
+       redactor no se quede sin nada delante, y se cuenta aparte para que no se
+       confunda con demanda medida. */
+    const crudo = punto[1].trim();
+    const sinVerificar = crudo.startsWith('[sin verificar]');
+    preguntas.push({
+      pilar,
+      texto: crudo.replace(/^\[sin verificar\]\s*/, ''),
+      sinVerificar,
+    });
   }
   return preguntas;
 }
@@ -118,6 +129,9 @@ console.log(`Preguntas en ${PREGUNTAS}: ${preguntas.length}`);
 console.log(`Artículos con fila en ${SEGUIMIENTO}: ${filas.length}`);
 console.log(`Preguntas pendientes: ${pendientes.length}\n`);
 
+const medidas = pendientes.filter((p) => !p.sinVerificar);
+const propuestas = pendientes.filter((p) => p.sinVerificar);
+
 if (pendientes.length) {
   let pilar = '';
   for (const p of pendientes) {
@@ -125,10 +139,13 @@ if (pendientes.length) {
       pilar = p.pilar;
       console.log(`  ${pilar}`);
     }
-    console.log(`    · ${p.texto}`);
+    console.log(`    · ${p.texto}${p.sinVerificar ? '  [sin verificar]' : ''}`);
   }
   console.log('');
 }
+
+console.log(`  De ellas, con demanda comprobada: ${medidas.length}`);
+console.log(`  Propuestas sin verificar: ${propuestas.length}\n`);
 
 if (huerfanas.length) {
   console.log('Filas de seguimiento cuya pregunta no está en preguntas.md');
@@ -138,6 +155,19 @@ if (huerfanas.length) {
 }
 
 const dias = pendientes.length;
+/* Una cola llena solo de propuestas sin verificar no es una cola llena: es una
+   lista de intuiciones. Aguanta los días, sí, pero nadie ha comprobado que
+   ninguna de esas preguntas la busque una persona. Se dice, y se dice aunque
+   todo lo demás esté en verde. */
+if (propuestas.length && medidas.length < ROJO) {
+  console.log(
+    `::warning::De las ${dias} preguntas pendientes, ${propuestas.length} están ` +
+      `sin verificar y solo ${medidas.length} tienen demanda comprobada. El ` +
+      `observatorio tiene que revisarlas el domingo: quitarles la marca a las ` +
+      `que se busquen de verdad y borrar las que no.`,
+  );
+}
+
 if (dias >= AVISO) {
   console.log(`La cola aguanta ${dias} días de publicación. Nada que hacer.`);
   process.exit(0);
