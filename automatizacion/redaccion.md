@@ -28,11 +28,31 @@ queda publicado bajo el nombre de una persona real. Escribe en consecuencia.
 4. Si no hay nada que revisar, toma el hueco de la sección «Recomendación».
 5. Comprueba en `src/content/insights/` que no esté ya cubierto. Si lo está,
    coge el siguiente hueco de la lista.
-6. Lee dos o tres artículos ya publicados en `src/content/insights/` **antes de
+6. **Si se acaba la lista y todos están cubiertos, no te pares ahí.** Ejecuta:
+
+   ```
+   node scripts/qa-cola.mjs
+   ```
+
+   Te dice qué preguntas de `automatizacion/preguntas.md` siguen sin artículo,
+   agrupadas por pilar. Toma la primera y escríbela: el pilar es el de su
+   sección, y el formato lo eliges tú con el criterio de siempre. Dilo en la
+   respuesta —«el informe estaba agotado, tomé la pregunta X de la cola»— para
+   que se sepa que el informe de esta semana se quedó corto.
+
+   Esto existe porque el 1 de septiembre de 2026 pasó justo eso. El informe del
+   domingo anterior recomendaba dos huecos, se escribieron el 30 y el 31, y el 1
+   el redactor se quedó mirando una lista agotada y no publicó. Tenía razón en no
+   inventarse un tema; le faltaba el sitio donde mirar después. Este es ese sitio.
+
+   Solo si `qa-cola.mjs` también sale a cero no hay nada que escribir hoy. Ese es
+   el único caso en el que un día en blanco es correcto, y aun así hay que decirlo
+   con esas palabras en la respuesta.
+7. Lee dos o tres artículos ya publicados en `src/content/insights/` **antes de
    escribir una palabra**. La voz de BECOME está ahí, no en este documento.
-7. Escribe el artículo en español y en inglés y guárdalo como un JSON nuevo en
+8. Escribe el artículo en español y en inglés y guárdalo como un JSON nuevo en
    `src/content/insights/<slug-en-español>.json`.
-8. Añade su fila a `automatizacion/seguimiento.md`: archivo, fecha, la pregunta
+9. Añade su fila a `automatizacion/seguimiento.md`: archivo, fecha, la pregunta
    objetivo tal cual, estado `nuevo`. Sin esa fila el artículo nace fuera del
    sistema de medición y nadie volverá a mirarlo nunca.
 
