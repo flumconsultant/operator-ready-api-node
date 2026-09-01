@@ -54,7 +54,36 @@ const VERSION = process.env.LINKEDIN_VERSION || '202601';
 const { readFileSync, writeFileSync, readdirSync, existsSync } = await import('node:fs');
 const { join } = await import('node:path');
 
-const TOKEN = process.env.LINKEDIN_TOKEN;
+/* ---- Los secretos, recortados, y por qué eso no es una manía ----
+ *
+ * El 1 de septiembre la introspección decía «3L, w_organization_social, 365
+ * días» y el post se rechazaba con 401 tres segundos después, con el mismo
+ * token. Las dos cosas pueden ser ciertas a la vez si el valor guardado lleva
+ * un espacio o un salto de línea al final:
+ *
+ *   · La introspección lo manda como campo de un formulario, y ahí un espacio
+ *     de más se limpia por el camino. Responde que el permiso es válido, y lo es.
+ *   · El post lo manda en la cabecera «Authorization: Bearer …», donde ese
+ *     mismo espacio forma parte del valor. LinkedIn recibe un token que no
+ *     existe y contesta lo único que puede contestar: no es válido.
+ *
+ * Copiar un token de 400 caracteres de una pantalla y pegarlo en un formulario
+ * arrastra un espacio con una facilidad que no se corresponde con lo difícil
+ * que es luego encontrarlo. Se recorta, y se dice cuando pasa: fallar por esto
+ * en silencio cuesta una tarde, y ya la costó. */
+function secreto(nombre) {
+  const bruto = process.env[nombre];
+  if (!bruto) return bruto;
+  const limpio = bruto.trim();
+  if (limpio !== bruto) {
+    console.log(
+      `::warning::${nombre} traía espacios o saltos de línea alrededor (${bruto.length} caracteres, ${limpio.length} sin ellos). Se han quitado para esta ejecución, pero conviene volver a guardar el secreto limpio en GitHub.`,
+    );
+  }
+  return limpio;
+}
+
+const TOKEN = secreto('LINKEDIN_TOKEN');
 
 /* ---- Quién firma el post -------------------------------------------------
  *
@@ -74,8 +103,8 @@ const TOKEN = process.env.LINKEDIN_TOKEN;
  *
  * Si están los dos, manda la página: es una decisión de marca, y quien puso
  * el identificador de la organización lo puso a propósito. */
-const ORG = process.env.LINKEDIN_ORG_ID;
-const MIEMBRO = process.env.LINKEDIN_MEMBER_ID;
+const ORG = secreto('LINKEDIN_ORG_ID');
+const MIEMBRO = secreto('LINKEDIN_MEMBER_ID');
 
 /* Un ensayo: hace todo el recorrido —elegir el artículo, componer el texto,
    decidir si toca o no— y se detiene justo antes de publicar. Existe porque la
@@ -123,9 +152,9 @@ async function quienPublica() {
  * secreto es una fecha que alguien tiene que acordarse de actualizar cada vez
  * que renueva, y el día que se olvide el aviso mentirá justo cuando importa. */
 async function avisarSiCaduca() {
-  const id = process.env.LINKEDIN_CLIENT_ID;
-  const secreto = process.env.LINKEDIN_CLIENT_SECRET;
-  if (!id || !secreto) {
+  const id = secreto('LINKEDIN_CLIENT_ID');
+  const clave = secreto('LINKEDIN_CLIENT_SECRET');
+  if (!id || !clave) {
     console.log('Sin LINKEDIN_CLIENT_ID y LINKEDIN_CLIENT_SECRET no se puede comprobar el permiso antes de publicar.');
     return 'desconocido';   // No es un fallo, pero tampoco es un visto bueno.
   }
@@ -139,7 +168,7 @@ async function avisarSiCaduca() {
     const r = await fetch(INTROSPECCION, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({ client_id: id, client_secret: secreto, token: TOKEN }),
+      body: new URLSearchParams({ client_id: id, client_secret: clave, token: TOKEN }),
     });
 
     /* Aquí ponía `if (!r.ok) return;` y esa línea costó el anuncio del 1 de
