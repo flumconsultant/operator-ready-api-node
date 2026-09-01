@@ -121,6 +121,9 @@ async function avisarSiCaduca() {
   const id = process.env.LINKEDIN_CLIENT_ID;
   const secreto = process.env.LINKEDIN_CLIENT_SECRET;
   if (!id || !secreto) return;   // Sin ellos no se puede preguntar; no es un fallo.
+  /* Y sin token no hay nada que preguntar. Pasa en un ensayo local, donde
+     ninguno de los tres está puesto. */
+  if (!TOKEN) { console.log('Sin LINKEDIN_TOKEN no se puede comprobar la caducidad del permiso.'); return; }
   try {
     const r = await fetch(INTROSPECCION, {
       method: 'POST',
@@ -180,7 +183,19 @@ if (!Number.isFinite(edad) || edad > DIAS_GRACIA) {
   process.exit(0);
 }
 
-if (!ENSAYO) await avisarSiCaduca();
+/* También en el ensayo, y esto estaba mal.
+ *
+ * La comprobación de caducidad pregunta a LinkedIn por el permiso y no publica
+ * nada, así que no había motivo para saltársela en el modo que existe
+ * precisamente para hacerlo todo menos publicar. Y sí había un motivo fuerte
+ * para ejecutarla: es la ÚNICA forma de saber que el token funciona de verdad
+ * sin dejar un post en la página de la empresa.
+ *
+ * Se descubrió el día del primer ensayo real: los cuatro secretos estaban
+ * puestos, el ensayo salió en verde, y no se sabía si el token servía. Un
+ * ensayo que no comprueba lo único que se puede comprobar es un ensayo que
+ * tranquiliza sin informar. */
+await avisarSiCaduca();
 
 /* ---- El texto del post ---------------------------------------------------
  *
