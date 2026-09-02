@@ -126,7 +126,12 @@ const pintar = {
       'for (const e of escalas) { const n = limpia(e.escala); if (n && nombresEscala.indexOf(n) === -1) nombresEscala.push(n); }',
       '',
       'p.push("<h1>Configuración del diagnóstico TRAMMY</h1>");',
-      'p.push("<p class=sub>Cambia lo que necesites y pulsa Guardar. El formulario usa esto en la siguiente respuesta: no hay que publicar nada.</p>");',
+      'p.push("<p class=sub>Cambia lo que necesites y pulsa Guardar.</p>");',
+      /* Mientras el panel no pueda publicar el flujo por su cuenta, decirlo aquí
+         es lo honesto: guardar deja la configuración escrita, pero el formulario
+         sigue usando la última publicada. Prometer lo contrario sería peor que
+         no decir nada. */
+      'p.push("<div class=aviso>Guardar deja los cambios escritos en la configuración. Para que el <b>formulario</b> los use hace falta publicarlos: avisa a quien lleve el flujo, o ejecuta <code>npm run trammy:publicar</code>.</div>");',
       '',
       '/* --- preguntas --- */',
       'p.push("<h2>Preguntas</h2><p class=sub>El orden de la tabla es el orden en que se ven. Desmarca <b>Activa</b> para retirar una sin borrarla.</p>");',
@@ -204,7 +209,7 @@ const pintar = {
       'p.push("document.getElementById(\'masPregunta\').onclick=function(){var n=document.querySelectorAll(\'#tPreguntas tbody tr\').length+1;var id=\'pregunta_\'+Date.now().toString().slice(-6);var op=" + JSON.stringify(nombresEscala) + ".map(function(e){return \'<option>\'+e+\'</option>\'}).join(\'\');nuevaFila(\'tPreguntas\',\'<td><span class=id>\'+id+\'</span><input type=hidden data-c=id value=\\"\'+id+\'\\"></td><td><input data-c=pregunta value=\\"\\"></td><td><select data-c=tipo><option>escala</option><option>texto</option><option>numero</option></select></td><td><select data-c=escala>\'+op+\'</select></td><td style=text-align:center><input type=checkbox data-c=obligatoria checked></td><td style=text-align:center><input type=checkbox data-c=activa checked></td>\');};");',
       'p.push("document.getElementById(\'masEscala\').onclick=function(){nuevaFila(\'tEscalas\',\'<td><input data-c=escala value=\\"\\"></td><td><input class=mini data-c=orden value=\\"\\"></td><td><input data-c=etiqueta value=\\"\\"></td><td><input class=mini data-c=valor value=\\"\\"></td>\');};");',
       'p.push("document.getElementById(\'masPerfil\').onclick=function(){nuevaFila(\'tPerfiles\',\'<td><input data-c=perfil value=\\"\\"></td><td><input class=mini data-c=min value=\\"\\"></td><td><input class=mini data-c=max value=\\"\\"></td><td><input data-c=descripcion value=\\"\\"></td>\');};");',
-      'p.push("document.getElementById(\'guardar\').onclick=function(){var e=document.getElementById(\'estado\');e.textContent=\'Guardando…\';fetch(\'/webhook/trammy-editor-guardar\',{method:\'POST\',headers:{\'content-type\':\'application/json\'},body:JSON.stringify({clave:CLAVE,preguntas:filas(\'tPreguntas\'),escalas:filas(\'tEscalas\'),perfiles:filas(\'tPerfiles\'),textos:textos()})}).then(function(r){return r.json()}).then(function(d){e.textContent=d.ok?\'Guardado. El formulario ya usa estos cambios.\':(\'No se pudo guardar: \'+(d.error||\'\'));}).catch(function(){e.textContent=\'No se pudo guardar: fallo de red.\';});};");',
+      'p.push("document.getElementById(\'guardar\').onclick=function(){var e=document.getElementById(\'estado\');e.textContent=\'Guardando…\';fetch(\'/webhook/trammy-editor-guardar\',{method:\'POST\',headers:{\'content-type\':\'application/json\'},body:JSON.stringify({clave:CLAVE,preguntas:filas(\'tPreguntas\'),escalas:filas(\'tEscalas\'),perfiles:filas(\'tPerfiles\'),textos:textos()})}).then(function(r){return r.json()}).then(function(d){e.textContent=d.ok?\'Guardado. Falta publicarlo para que el formulario lo use.\':(\'No se pudo guardar: \'+(d.error||\'\'));}).catch(function(){e.textContent=\'No se pudo guardar: fallo de red.\';});};");',
       'p.push("<\\/script></body></html>");',
       '',
       'return [{ json: { html: p.join("") } }];',

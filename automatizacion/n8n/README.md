@@ -21,8 +21,11 @@ https://n8n.srv836595.hstgr.cloud/webhook/trammy-editor?clave=trammy-c15tyg9g
 
 Una tabla con las preguntas, otra con las opciones de respuesta, otra con los
 perfiles, y los textos de cada pantalla —incluido lo que se le dice a la IA que
-interpreta—. Se escribe encima, se pulsa Guardar, y el siguiente formulario ya
-sale con los cambios. No hace falta abrir la hoja ni entrar a n8n.
+interpreta—. No hace falta abrir la hoja ni entrar a n8n.
+
+Guardar deja los cambios escritos; `npm run trammy:publicar` los mete dentro
+del flujo y lo republica, que es lo que hace que el formulario los use. Ese
+paso extra no es capricho: está explicado abajo, en las trampas.
 
 La clave está en la hoja, pestaña `Textos`, fila `clave_editor`; cambiándola
 ahí cambia la de la pantalla. Es una cerradura sencilla para una pantalla
@@ -96,19 +99,27 @@ datos, así que el flujo corre entero. Cada uno lleva el motivo en el nombre.
 - **`httpRequest` typeVersion 4.5 no existe en esta instancia.** Al publicar
   contesta `Cannot read properties of undefined (reading 'execute')`, sin decir
   qué nodo. La versión buena es la 4.2.
-- **Una credencial de Google usada antes de una página de formulario cuelga la
-  página, de forma intermitente.** Este es el hallazgo que más costó y el que
-  más conviene recordar. Un GET a la URL de espera del formulario a veces
-  tarda 0,2 s y a veces no devuelve un byte en más de veinte segundos. Acotado
-  con formularios mínimos de dos páginas, cinco intentos cada uno:
+- **Hacer cualquier llamada de red antes de una página de formulario la cuelga.**
+  Este es el hallazgo que más costó. La página 2 se sirve en una segunda
+  petición, contra `/form-waiting/<ejecución>`; si esa ejecución hizo antes una
+  llamada de red, la página no devuelve un byte en más de veinte segundos y
+  quien la rellena ve un spinner eterno.
+
+  Se acotó reduciendo el flujo real a siete nodos:
 
   | Qué hay antes de la página 2 | Resultado |
   |---|---|
-  | Nada | 5 de 5 en ~0,2 s |
-  | Un HTTP Request **sin** credencial | 5 de 5 en ~0,2 s |
-  | Un HTTP Request **con** credencial de Google | 1 ok, 2 colgados, 1 ok |
-  | El nodo de Google Sheets | siempre colgado |
-  | La credencial movida a un **sub-flujo** | 1 de 5 |
+  | Una llamada HTTP a otro flujo de n8n | 0 de 5 |
+  | La misma configuración escrita dentro de un nodo Code | 5 de 5 |
+
+  Antes de dar con esto probé y descarté media docena de hipótesis, todas ellas
+  5 de 5 en formularios mínimos: el nodo de Google Sheets, llevar credencial,
+  el número de campos, definir el formulario por JSON, tener dos disparadores, y
+  mover la credencial a un sub-flujo. Ninguna era la causa; lo que falla es
+  hacer red antes de pintar.
+
+  Por eso el diagnóstico lleva la configuración **incrustada** en el nodo
+  `Config · Incrustada`, y por eso existe `npm run trammy:publicar`.
 
   Lo que dispara el cuelgue es resolver la credencial mientras se pinta la
   página de espera, y da igual en qué flujo viva. Mientras la configuración se

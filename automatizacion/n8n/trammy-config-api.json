@@ -1,0 +1,126 @@
+{
+  "name": "TRAMMY · API de configuración",
+  "nodes": [
+    {
+      "id": "nota",
+      "name": "Por qué existe este flujo",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -420,
+        80
+      ],
+      "parameters": {
+        "color": 3,
+        "width": 400,
+        "height": 300,
+        "content": "## La credencial vive aquí, no en el formulario\n\nEn esta instancia, usar una credencial de Google en una ejecución que\nluego pinta una página de formulario **cuelga esa página**, a veces sí y\na veces no. Medido: con credencial, 1 de 4 intentos responde; sin\ncredencial, 5 de 5 en 0,2 s.\n\nPor eso el diagnóstico no lee la hoja: **llama a este webhook por HTTP\nnormal, sin credencial ninguna**. La credencial se queda de este lado,\ndonde no hay ningún formulario que pintar.\n\nMover la lectura a un sub-flujo no sirve: su ejecución forma parte del\nmismo árbol y el cuelgue vuelve."
+      }
+    },
+    {
+      "id": "wh",
+      "name": "Pedir la configuración",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        300
+      ],
+      "webhookId": "trammy-config",
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "trammy-config",
+        "responseMode": "responseNode",
+        "options": {}
+      }
+    },
+    {
+      "id": "leer",
+      "name": "Leer la hoja",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        232,
+        300
+      ],
+      "parameters": {
+        "url": "https://sheets.googleapis.com/v4/spreadsheets/1OwVs_MVP8IbZSXcjKhUScHyVEXDTx1RIYeJuWucrRgk/values:batchGet?ranges=Preguntas!A1:F500&ranges=Perfiles!A1:D100&ranges=Textos!A1:B200&ranges=Escalas!A1:D500",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSheetsOAuth2Api",
+        "options": {}
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MbVZU1NmU2CvAAhz",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "id": "armar",
+      "name": "Armar la respuesta",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        464,
+        300
+      ],
+      "parameters": {
+        "jsCode": "const TOKEN = \"cfg-dqqfr9wlgu\";\nconst pedido = ($('Pedir la configuración').first().json.query || {}).token;\nif (pedido !== TOKEN) {\n  return [{ json: { ok: false, error: \"token invalido\" } }];\n}\n\nconst limpia = (t) => String(t ?? '').trim();\nconst esNo = (t) => ['no', 'false', '0'].includes(limpia(t).toLowerCase());\nconst bloques = $json.valueRanges || [];\nconst aObjetos = (bloque) => {\n  const filas = (bloque && bloque.values) || [];\n  const cabecera = (filas[0] || []).map(limpia);\n  return filas.slice(1)\n    .filter((f) => (f || []).some((c) => limpia(c) !== \"\"))\n    .map((f) => Object.fromEntries(cabecera.map((c, i) => [c, f[i] === undefined ? \"\" : f[i]])));\n};\n\n/* --- escalas: etiqueta es lo que se lee, valor es lo que puntúa --- */\nconst escalas = {};\nfor (const f of aObjetos(bloques[3])) {\n  const nombre = limpia(f.escala);\n  const etiqueta = limpia(f.etiqueta);\n  if (!nombre || !etiqueta) continue;\n  const valor = Number(f.valor);\n  (escalas[nombre] = escalas[nombre] || []).push({\n    orden: Number(f.orden) || 0,\n    etiqueta,\n    valor: Number.isFinite(valor) ? valor : null,\n  });\n}\nfor (const n of Object.keys(escalas)) escalas[n].sort((a, b) => a.orden - b.orden);\n\n/* --- preguntas --- */\nconst preguntas = aObjetos(bloques[0])\n  .filter((f) => !esNo(f.activa) && limpia(f.id))\n  .map((f) => {\n    const tipo = (limpia(f.tipo) || \"escala\").toLowerCase();\n    const opciones = escalas[limpia(f.escala)] || [];\n    return {\n      id: limpia(f.id),\n      texto: limpia(f.pregunta) || limpia(f.id),\n      tipo,\n      escala: limpia(f.escala),\n      valores: Object.fromEntries(opciones.map((o) => [o.etiqueta, o.valor])),\n      obligatoria: !esNo(f.obligatoria),\n    };\n  });\n\n/* Los campos con la forma exacta que el nodo Form espera cuando se le\n   definen desde JSON. Se arman aquí para que el flujo del diagnóstico no\n   tenga que saber nada de escalas: recibe la lista y la pinta. */\nconst campos = aObjetos(bloques[0])\n  .filter((f) => !esNo(f.activa) && limpia(f.id))\n  .map((f) => {\n    const tipo = (limpia(f.tipo) || \"escala\").toLowerCase();\n    const opciones = escalas[limpia(f.escala)] || [];\n    const campo = {\n      fieldLabel: limpia(f.pregunta) || limpia(f.id),\n      fieldName: limpia(f.id),\n      requiredField: !esNo(f.obligatoria),\n    };\n    if (tipo === \"escala\" && opciones.length) {\n      campo.fieldType = \"dropdown\";\n      campo.fieldOptions = { values: opciones.map((o) => ({ option: o.etiqueta })) };\n    } else if (tipo === \"numero\") {\n      campo.fieldType = \"number\";\n    } else {\n      campo.fieldType = \"text\";\n    }\n    return campo;\n  });\n\n/* --- perfiles --- */\nconst perfiles = aObjetos(bloques[1])\n  .map((f) => ({\n    perfil: limpia(f.perfil),\n    min: Number(f.min),\n    max: Number(f.max),\n    descripcion: limpia(f.descripcion),\n  }))\n  .filter((p) => p.perfil && Number.isFinite(p.min) && Number.isFinite(p.max))\n  .sort((a, b) => a.min - b.min);\n\n/* --- textos, menos la clave del panel: el diagnóstico no la necesita y\n   lo que no se entrega no se puede filtrar --- */\nconst textos = {};\nfor (const f of aObjetos(bloques[2])) {\n  const clave = limpia(f.clave);\n  if (clave && clave !== \"clave_editor\") textos[clave] = String(f.valor ?? \"\");\n}\n\nreturn [{ json: { ok: true, preguntas, campos, perfiles, textos, preguntas_json: JSON.stringify(campos) } }];"
+      }
+    },
+    {
+      "id": "resp",
+      "name": "Devolver",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        696,
+        300
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Pedir la configuración": {
+      "main": [
+        [
+          {
+            "node": "Leer la hoja",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer la hoja": {
+      "main": [
+        [
+          {
+            "node": "Armar la respuesta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Armar la respuesta": {
+      "main": [
+        [
+          {
+            "node": "Devolver",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

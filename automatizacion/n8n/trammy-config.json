@@ -1,0 +1,709 @@
+{
+  "ok": true,
+  "preguntas": [
+    {
+      "id": "pregunta_1",
+      "texto": "¿Cada cuánto revisas los números de tu negocio?",
+      "tipo": "escala",
+      "escala": "frecuencia",
+      "valores": {
+        "Nunca": 1,
+        "Casi nunca": 2,
+        "A veces": 3,
+        "Casi siempre": 4,
+        "Siempre": 5
+      },
+      "obligatoria": true
+    },
+    {
+      "id": "pregunta_2",
+      "texto": "[pendiente: redactar la pregunta 2]",
+      "tipo": "escala",
+      "escala": "frecuencia",
+      "valores": {
+        "Nunca": 1,
+        "Casi nunca": 2,
+        "A veces": 3,
+        "Casi siempre": 4,
+        "Siempre": 5
+      },
+      "obligatoria": true
+    },
+    {
+      "id": "pregunta_3",
+      "texto": "[pendiente: redactar la pregunta 3]",
+      "tipo": "escala",
+      "escala": "frecuencia",
+      "valores": {
+        "Nunca": 1,
+        "Casi nunca": 2,
+        "A veces": 3,
+        "Casi siempre": 4,
+        "Siempre": 5
+      },
+      "obligatoria": true
+    },
+    {
+      "id": "pregunta_4",
+      "texto": "[pendiente: redactar la pregunta 4]",
+      "tipo": "escala",
+      "escala": "frecuencia",
+      "valores": {
+        "Nunca": 1,
+        "Casi nunca": 2,
+        "A veces": 3,
+        "Casi siempre": 4,
+        "Siempre": 5
+      },
+      "obligatoria": true
+    },
+    {
+      "id": "pregunta_5",
+      "texto": "[pendiente: redactar la pregunta 5]",
+      "tipo": "escala",
+      "escala": "frecuencia",
+      "valores": {
+        "Nunca": 1,
+        "Casi nunca": 2,
+        "A veces": 3,
+        "Casi siempre": 4,
+        "Siempre": 5
+      },
+      "obligatoria": true
+    },
+    {
+      "id": "pregunta_6",
+      "texto": "[pendiente: redactar la pregunta 6]",
+      "tipo": "escala",
+      "escala": "frecuencia",
+      "valores": {
+        "Nunca": 1,
+        "Casi nunca": 2,
+        "A veces": 3,
+        "Casi siempre": 4,
+        "Siempre": 5
+      },
+      "obligatoria": true
+    },
+    {
+      "id": "pregunta_7",
+      "texto": "[pendiente: redactar la pregunta 7]",
+      "tipo": "escala",
+      "escala": "frecuencia",
+      "valores": {
+        "Nunca": 1,
+        "Casi nunca": 2,
+        "A veces": 3,
+        "Casi siempre": 4,
+        "Siempre": 5
+      },
+      "obligatoria": true
+    },
+    {
+      "id": "pregunta_8",
+      "texto": "[pendiente: redactar la pregunta 8]",
+      "tipo": "escala",
+      "escala": "frecuencia",
+      "valores": {
+        "Nunca": 1,
+        "Casi nunca": 2,
+        "A veces": 3,
+        "Casi siempre": 4,
+        "Siempre": 5
+      },
+      "obligatoria": true
+    },
+    {
+      "id": "pregunta_9",
+      "texto": "[pendiente: redactar la pregunta 9]",
+      "tipo": "escala",
+      "escala": "frecuencia",
+      "valores": {
+        "Nunca": 1,
+        "Casi nunca": 2,
+        "A veces": 3,
+        "Casi siempre": 4,
+        "Siempre": 5
+      },
+      "obligatoria": true
+    },
+    {
+      "id": "pregunta_10",
+      "texto": "[pendiente: redactar la pregunta 10]",
+      "tipo": "escala",
+      "escala": "frecuencia",
+      "valores": {
+        "Nunca": 1,
+        "Casi nunca": 2,
+        "A veces": 3,
+        "Casi siempre": 4,
+        "Siempre": 5
+      },
+      "obligatoria": true
+    },
+    {
+      "id": "pregunta_11",
+      "texto": "[pendiente: redactar la pregunta 11]",
+      "tipo": "escala",
+      "escala": "frecuencia",
+      "valores": {
+        "Nunca": 1,
+        "Casi nunca": 2,
+        "A veces": 3,
+        "Casi siempre": 4,
+        "Siempre": 5
+      },
+      "obligatoria": true
+    },
+    {
+      "id": "pregunta_12",
+      "texto": "[pendiente: redactar la pregunta 12]",
+      "tipo": "escala",
+      "escala": "frecuencia",
+      "valores": {
+        "Nunca": 1,
+        "Casi nunca": 2,
+        "A veces": 3,
+        "Casi siempre": 4,
+        "Siempre": 5
+      },
+      "obligatoria": true
+    },
+    {
+      "id": "pregunta_13",
+      "texto": "[pendiente: redactar la pregunta 13]",
+      "tipo": "escala",
+      "escala": "frecuencia",
+      "valores": {
+        "Nunca": 1,
+        "Casi nunca": 2,
+        "A veces": 3,
+        "Casi siempre": 4,
+        "Siempre": 5
+      },
+      "obligatoria": true
+    },
+    {
+      "id": "pregunta_14",
+      "texto": "[pendiente: redactar la pregunta 14]",
+      "tipo": "escala",
+      "escala": "frecuencia",
+      "valores": {
+        "Nunca": 1,
+        "Casi nunca": 2,
+        "A veces": 3,
+        "Casi siempre": 4,
+        "Siempre": 5
+      },
+      "obligatoria": true
+    },
+    {
+      "id": "pregunta_15",
+      "texto": "[pendiente: redactar la pregunta 15]",
+      "tipo": "escala",
+      "escala": "frecuencia",
+      "valores": {
+        "Nunca": 1,
+        "Casi nunca": 2,
+        "A veces": 3,
+        "Casi siempre": 4,
+        "Siempre": 5
+      },
+      "obligatoria": true
+    },
+    {
+      "id": "pregunta_16",
+      "texto": "[pendiente: redactar la pregunta 16]",
+      "tipo": "escala",
+      "escala": "frecuencia",
+      "valores": {
+        "Nunca": 1,
+        "Casi nunca": 2,
+        "A veces": 3,
+        "Casi siempre": 4,
+        "Siempre": 5
+      },
+      "obligatoria": true
+    },
+    {
+      "id": "pregunta_17",
+      "texto": "[pendiente: redactar la pregunta 17]",
+      "tipo": "escala",
+      "escala": "frecuencia",
+      "valores": {
+        "Nunca": 1,
+        "Casi nunca": 2,
+        "A veces": 3,
+        "Casi siempre": 4,
+        "Siempre": 5
+      },
+      "obligatoria": true
+    }
+  ],
+  "campos": [
+    {
+      "fieldLabel": "¿Cada cuánto revisas los números de tu negocio?",
+      "fieldName": "pregunta_1",
+      "requiredField": true,
+      "fieldType": "dropdown",
+      "fieldOptions": {
+        "values": [
+          {
+            "option": "Nunca"
+          },
+          {
+            "option": "Casi nunca"
+          },
+          {
+            "option": "A veces"
+          },
+          {
+            "option": "Casi siempre"
+          },
+          {
+            "option": "Siempre"
+          }
+        ]
+      }
+    },
+    {
+      "fieldLabel": "[pendiente: redactar la pregunta 2]",
+      "fieldName": "pregunta_2",
+      "requiredField": true,
+      "fieldType": "dropdown",
+      "fieldOptions": {
+        "values": [
+          {
+            "option": "Nunca"
+          },
+          {
+            "option": "Casi nunca"
+          },
+          {
+            "option": "A veces"
+          },
+          {
+            "option": "Casi siempre"
+          },
+          {
+            "option": "Siempre"
+          }
+        ]
+      }
+    },
+    {
+      "fieldLabel": "[pendiente: redactar la pregunta 3]",
+      "fieldName": "pregunta_3",
+      "requiredField": true,
+      "fieldType": "dropdown",
+      "fieldOptions": {
+        "values": [
+          {
+            "option": "Nunca"
+          },
+          {
+            "option": "Casi nunca"
+          },
+          {
+            "option": "A veces"
+          },
+          {
+            "option": "Casi siempre"
+          },
+          {
+            "option": "Siempre"
+          }
+        ]
+      }
+    },
+    {
+      "fieldLabel": "[pendiente: redactar la pregunta 4]",
+      "fieldName": "pregunta_4",
+      "requiredField": true,
+      "fieldType": "dropdown",
+      "fieldOptions": {
+        "values": [
+          {
+            "option": "Nunca"
+          },
+          {
+            "option": "Casi nunca"
+          },
+          {
+            "option": "A veces"
+          },
+          {
+            "option": "Casi siempre"
+          },
+          {
+            "option": "Siempre"
+          }
+        ]
+      }
+    },
+    {
+      "fieldLabel": "[pendiente: redactar la pregunta 5]",
+      "fieldName": "pregunta_5",
+      "requiredField": true,
+      "fieldType": "dropdown",
+      "fieldOptions": {
+        "values": [
+          {
+            "option": "Nunca"
+          },
+          {
+            "option": "Casi nunca"
+          },
+          {
+            "option": "A veces"
+          },
+          {
+            "option": "Casi siempre"
+          },
+          {
+            "option": "Siempre"
+          }
+        ]
+      }
+    },
+    {
+      "fieldLabel": "[pendiente: redactar la pregunta 6]",
+      "fieldName": "pregunta_6",
+      "requiredField": true,
+      "fieldType": "dropdown",
+      "fieldOptions": {
+        "values": [
+          {
+            "option": "Nunca"
+          },
+          {
+            "option": "Casi nunca"
+          },
+          {
+            "option": "A veces"
+          },
+          {
+            "option": "Casi siempre"
+          },
+          {
+            "option": "Siempre"
+          }
+        ]
+      }
+    },
+    {
+      "fieldLabel": "[pendiente: redactar la pregunta 7]",
+      "fieldName": "pregunta_7",
+      "requiredField": true,
+      "fieldType": "dropdown",
+      "fieldOptions": {
+        "values": [
+          {
+            "option": "Nunca"
+          },
+          {
+            "option": "Casi nunca"
+          },
+          {
+            "option": "A veces"
+          },
+          {
+            "option": "Casi siempre"
+          },
+          {
+            "option": "Siempre"
+          }
+        ]
+      }
+    },
+    {
+      "fieldLabel": "[pendiente: redactar la pregunta 8]",
+      "fieldName": "pregunta_8",
+      "requiredField": true,
+      "fieldType": "dropdown",
+      "fieldOptions": {
+        "values": [
+          {
+            "option": "Nunca"
+          },
+          {
+            "option": "Casi nunca"
+          },
+          {
+            "option": "A veces"
+          },
+          {
+            "option": "Casi siempre"
+          },
+          {
+            "option": "Siempre"
+          }
+        ]
+      }
+    },
+    {
+      "fieldLabel": "[pendiente: redactar la pregunta 9]",
+      "fieldName": "pregunta_9",
+      "requiredField": true,
+      "fieldType": "dropdown",
+      "fieldOptions": {
+        "values": [
+          {
+            "option": "Nunca"
+          },
+          {
+            "option": "Casi nunca"
+          },
+          {
+            "option": "A veces"
+          },
+          {
+            "option": "Casi siempre"
+          },
+          {
+            "option": "Siempre"
+          }
+        ]
+      }
+    },
+    {
+      "fieldLabel": "[pendiente: redactar la pregunta 10]",
+      "fieldName": "pregunta_10",
+      "requiredField": true,
+      "fieldType": "dropdown",
+      "fieldOptions": {
+        "values": [
+          {
+            "option": "Nunca"
+          },
+          {
+            "option": "Casi nunca"
+          },
+          {
+            "option": "A veces"
+          },
+          {
+            "option": "Casi siempre"
+          },
+          {
+            "option": "Siempre"
+          }
+        ]
+      }
+    },
+    {
+      "fieldLabel": "[pendiente: redactar la pregunta 11]",
+      "fieldName": "pregunta_11",
+      "requiredField": true,
+      "fieldType": "dropdown",
+      "fieldOptions": {
+        "values": [
+          {
+            "option": "Nunca"
+          },
+          {
+            "option": "Casi nunca"
+          },
+          {
+            "option": "A veces"
+          },
+          {
+            "option": "Casi siempre"
+          },
+          {
+            "option": "Siempre"
+          }
+        ]
+      }
+    },
+    {
+      "fieldLabel": "[pendiente: redactar la pregunta 12]",
+      "fieldName": "pregunta_12",
+      "requiredField": true,
+      "fieldType": "dropdown",
+      "fieldOptions": {
+        "values": [
+          {
+            "option": "Nunca"
+          },
+          {
+            "option": "Casi nunca"
+          },
+          {
+            "option": "A veces"
+          },
+          {
+            "option": "Casi siempre"
+          },
+          {
+            "option": "Siempre"
+          }
+        ]
+      }
+    },
+    {
+      "fieldLabel": "[pendiente: redactar la pregunta 13]",
+      "fieldName": "pregunta_13",
+      "requiredField": true,
+      "fieldType": "dropdown",
+      "fieldOptions": {
+        "values": [
+          {
+            "option": "Nunca"
+          },
+          {
+            "option": "Casi nunca"
+          },
+          {
+            "option": "A veces"
+          },
+          {
+            "option": "Casi siempre"
+          },
+          {
+            "option": "Siempre"
+          }
+        ]
+      }
+    },
+    {
+      "fieldLabel": "[pendiente: redactar la pregunta 14]",
+      "fieldName": "pregunta_14",
+      "requiredField": true,
+      "fieldType": "dropdown",
+      "fieldOptions": {
+        "values": [
+          {
+            "option": "Nunca"
+          },
+          {
+            "option": "Casi nunca"
+          },
+          {
+            "option": "A veces"
+          },
+          {
+            "option": "Casi siempre"
+          },
+          {
+            "option": "Siempre"
+          }
+        ]
+      }
+    },
+    {
+      "fieldLabel": "[pendiente: redactar la pregunta 15]",
+      "fieldName": "pregunta_15",
+      "requiredField": true,
+      "fieldType": "dropdown",
+      "fieldOptions": {
+        "values": [
+          {
+            "option": "Nunca"
+          },
+          {
+            "option": "Casi nunca"
+          },
+          {
+            "option": "A veces"
+          },
+          {
+            "option": "Casi siempre"
+          },
+          {
+            "option": "Siempre"
+          }
+        ]
+      }
+    },
+    {
+      "fieldLabel": "[pendiente: redactar la pregunta 16]",
+      "fieldName": "pregunta_16",
+      "requiredField": true,
+      "fieldType": "dropdown",
+      "fieldOptions": {
+        "values": [
+          {
+            "option": "Nunca"
+          },
+          {
+            "option": "Casi nunca"
+          },
+          {
+            "option": "A veces"
+          },
+          {
+            "option": "Casi siempre"
+          },
+          {
+            "option": "Siempre"
+          }
+        ]
+      }
+    },
+    {
+      "fieldLabel": "[pendiente: redactar la pregunta 17]",
+      "fieldName": "pregunta_17",
+      "requiredField": true,
+      "fieldType": "dropdown",
+      "fieldOptions": {
+        "values": [
+          {
+            "option": "Nunca"
+          },
+          {
+            "option": "Casi nunca"
+          },
+          {
+            "option": "A veces"
+          },
+          {
+            "option": "Casi siempre"
+          },
+          {
+            "option": "Siempre"
+          }
+        ]
+      }
+    }
+  ],
+  "perfiles": [
+    {
+      "perfil": "Supervivencia",
+      "min": 0,
+      "max": 39,
+      "descripcion": "[pendiente: descripción del perfil]"
+    },
+    {
+      "perfil": "En tránsito",
+      "min": 40,
+      "max": 59,
+      "descripcion": "[pendiente: descripción del perfil]"
+    },
+    {
+      "perfil": "En consolidación",
+      "min": 60,
+      "max": 79,
+      "descripcion": "[pendiente: descripción del perfil]"
+    },
+    {
+      "perfil": "En expansión",
+      "min": 80,
+      "max": 100,
+      "descripcion": "[pendiente: descripción del perfil]"
+    }
+  ],
+  "textos": {
+    "form_titulo_pagina2": "Diagnóstico TRAMMY",
+    "form_descripcion_pagina2": "Responde las 17 preguntas. No hay respuestas correctas ni incorrectas.",
+    "pantalla_credenciales_titulo": "No pudimos validarte",
+    "pantalla_credenciales_mensaje": "Revisa tu usuario y tu contraseña e inténtalo de nuevo.",
+    "pantalla_incompleto_titulo": "Faltan respuestas",
+    "pantalla_incompleto_mensaje": "El diagnóstico necesita todas las respuestas. Vuelve atrás y complétalas.",
+    "pantalla_error_titulo": "No pudimos completar tu diagnóstico",
+    "pantalla_error_mensaje": "Ha ocurrido un problema al procesar tus respuestas. Nuestro equipo lo está revisando; inténtalo de nuevo más tarde.",
+    "pantalla_ok_titulo": "Tu diagnóstico TRAMMY está listo",
+    "prompt_sistema": "Eres el motor de interpretación del diagnóstico TRAMMY. Interpreta únicamente con los datos que recibes. No completes por inferencia nada que no esté. Si un dato falta, dilo explícitamente en vez de suponerlo. Responde en español, en menos de 250 palabras, con tres recomendaciones concretas y accionables. [pendiente: metodología determinística y cognitiva propia de TRAMMY]"
+  },
+  "preguntas_json": "[{\"fieldLabel\":\"¿Cada cuánto revisas los números de tu negocio?\",\"fieldName\":\"pregunta_1\",\"requiredField\":true,\"fieldType\":\"dropdown\",\"fieldOptions\":{\"values\":[{\"option\":\"Nunca\"},{\"option\":\"Casi nunca\"},{\"option\":\"A veces\"},{\"option\":\"Casi siempre\"},{\"option\":\"Siempre\"}]}},{\"fieldLabel\":\"[pendiente: redactar la pregunta 2]\",\"fieldName\":\"pregunta_2\",\"requiredField\":true,\"fieldType\":\"dropdown\",\"fieldOptions\":{\"values\":[{\"option\":\"Nunca\"},{\"option\":\"Casi nunca\"},{\"option\":\"A veces\"},{\"option\":\"Casi siempre\"},{\"option\":\"Siempre\"}]}},{\"fieldLabel\":\"[pendiente: redactar la pregunta 3]\",\"fieldName\":\"pregunta_3\",\"requiredField\":true,\"fieldType\":\"dropdown\",\"fieldOptions\":{\"values\":[{\"option\":\"Nunca\"},{\"option\":\"Casi nunca\"},{\"option\":\"A veces\"},{\"option\":\"Casi siempre\"},{\"option\":\"Siempre\"}]}},{\"fieldLabel\":\"[pendiente: redactar la pregunta 4]\",\"fieldName\":\"pregunta_4\",\"requiredField\":true,\"fieldType\":\"dropdown\",\"fieldOptions\":{\"values\":[{\"option\":\"Nunca\"},{\"option\":\"Casi nunca\"},{\"option\":\"A veces\"},{\"option\":\"Casi siempre\"},{\"option\":\"Siempre\"}]}},{\"fieldLabel\":\"[pendiente: redactar la pregunta 5]\",\"fieldName\":\"pregunta_5\",\"requiredField\":true,\"fieldType\":\"dropdown\",\"fieldOptions\":{\"values\":[{\"option\":\"Nunca\"},{\"option\":\"Casi nunca\"},{\"option\":\"A veces\"},{\"option\":\"Casi siempre\"},{\"option\":\"Siempre\"}]}},{\"fieldLabel\":\"[pendiente: redactar la pregunta 6]\",\"fieldName\":\"pregunta_6\",\"requiredField\":true,\"fieldType\":\"dropdown\",\"fieldOptions\":{\"values\":[{\"option\":\"Nunca\"},{\"option\":\"Casi nunca\"},{\"option\":\"A veces\"},{\"option\":\"Casi siempre\"},{\"option\":\"Siempre\"}]}},{\"fieldLabel\":\"[pendiente: redactar la pregunta 7]\",\"fieldName\":\"pregunta_7\",\"requiredField\":true,\"fieldType\":\"dropdown\",\"fieldOptions\":{\"values\":[{\"option\":\"Nunca\"},{\"option\":\"Casi nunca\"},{\"option\":\"A veces\"},{\"option\":\"Casi siempre\"},{\"option\":\"Siempre\"}]}},{\"fieldLabel\":\"[pendiente: redactar la pregunta 8]\",\"fieldName\":\"pregunta_8\",\"requiredField\":true,\"fieldType\":\"dropdown\",\"fieldOptions\":{\"values\":[{\"option\":\"Nunca\"},{\"option\":\"Casi nunca\"},{\"option\":\"A veces\"},{\"option\":\"Casi siempre\"},{\"option\":\"Siempre\"}]}},{\"fieldLabel\":\"[pendiente: redactar la pregunta 9]\",\"fieldName\":\"pregunta_9\",\"requiredField\":true,\"fieldType\":\"dropdown\",\"fieldOptions\":{\"values\":[{\"option\":\"Nunca\"},{\"option\":\"Casi nunca\"},{\"option\":\"A veces\"},{\"option\":\"Casi siempre\"},{\"option\":\"Siempre\"}]}},{\"fieldLabel\":\"[pendiente: redactar la pregunta 10]\",\"fieldName\":\"pregunta_10\",\"requiredField\":true,\"fieldType\":\"dropdown\",\"fieldOptions\":{\"values\":[{\"option\":\"Nunca\"},{\"option\":\"Casi nunca\"},{\"option\":\"A veces\"},{\"option\":\"Casi siempre\"},{\"option\":\"Siempre\"}]}},{\"fieldLabel\":\"[pendiente: redactar la pregunta 11]\",\"fieldName\":\"pregunta_11\",\"requiredField\":true,\"fieldType\":\"dropdown\",\"fieldOptions\":{\"values\":[{\"option\":\"Nunca\"},{\"option\":\"Casi nunca\"},{\"option\":\"A veces\"},{\"option\":\"Casi siempre\"},{\"option\":\"Siempre\"}]}},{\"fieldLabel\":\"[pendiente: redactar la pregunta 12]\",\"fieldName\":\"pregunta_12\",\"requiredField\":true,\"fieldType\":\"dropdown\",\"fieldOptions\":{\"values\":[{\"option\":\"Nunca\"},{\"option\":\"Casi nunca\"},{\"option\":\"A veces\"},{\"option\":\"Casi siempre\"},{\"option\":\"Siempre\"}]}},{\"fieldLabel\":\"[pendiente: redactar la pregunta 13]\",\"fieldName\":\"pregunta_13\",\"requiredField\":true,\"fieldType\":\"dropdown\",\"fieldOptions\":{\"values\":[{\"option\":\"Nunca\"},{\"option\":\"Casi nunca\"},{\"option\":\"A veces\"},{\"option\":\"Casi siempre\"},{\"option\":\"Siempre\"}]}},{\"fieldLabel\":\"[pendiente: redactar la pregunta 14]\",\"fieldName\":\"pregunta_14\",\"requiredField\":true,\"fieldType\":\"dropdown\",\"fieldOptions\":{\"values\":[{\"option\":\"Nunca\"},{\"option\":\"Casi nunca\"},{\"option\":\"A veces\"},{\"option\":\"Casi siempre\"},{\"option\":\"Siempre\"}]}},{\"fieldLabel\":\"[pendiente: redactar la pregunta 15]\",\"fieldName\":\"pregunta_15\",\"requiredField\":true,\"fieldType\":\"dropdown\",\"fieldOptions\":{\"values\":[{\"option\":\"Nunca\"},{\"option\":\"Casi nunca\"},{\"option\":\"A veces\"},{\"option\":\"Casi siempre\"},{\"option\":\"Siempre\"}]}},{\"fieldLabel\":\"[pendiente: redactar la pregunta 16]\",\"fieldName\":\"pregunta_16\",\"requiredField\":true,\"fieldType\":\"dropdown\",\"fieldOptions\":{\"values\":[{\"option\":\"Nunca\"},{\"option\":\"Casi nunca\"},{\"option\":\"A veces\"},{\"option\":\"Casi siempre\"},{\"option\":\"Siempre\"}]}},{\"fieldLabel\":\"[pendiente: redactar la pregunta 17]\",\"fieldName\":\"pregunta_17\",\"requiredField\":true,\"fieldType\":\"dropdown\",\"fieldOptions\":{\"values\":[{\"option\":\"Nunca\"},{\"option\":\"Casi nunca\"},{\"option\":\"A veces\"},{\"option\":\"Casi siempre\"},{\"option\":\"Siempre\"}]}}]"
+}

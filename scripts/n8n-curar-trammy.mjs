@@ -77,33 +77,44 @@ const CONFIG_URL = `https://docs.google.com/spreadsheets/d/${CONFIG_ID}/edit`;
 const documentoConfig = { __rl: true, mode: 'list', value: CONFIG_ID, cachedResultUrl: CONFIG_URL, cachedResultName: 'TRAMMY · Configuración' };
 const pestana = (nombre) => ({ __rl: true, mode: 'name', value: nombre });
 
-/* Se lee por HTTP y no con el nodo de Google Sheets, y esto costó encontrarlo.
+/* La configuración va INCRUSTADA en el flujo, y esto costó mucho llegar a
+   entenderlo.
 
-   Con un nodo de Google Sheets en el camino previo a una página de formulario,
-   la página de espera NO SE PINTA: un GET a su URL se queda colgado
-   indefinidamente y quien rellena el formulario vería un spinner eterno. Se
-   acotó por bisección contra el servidor: sin la cadena de configuración la
-   página tarda 0,37 s; con un solo nodo de Sheets delante, más de 20 s sin
-   devolver un byte; y con un Code que devuelve los mismos diecisiete ítems,
-   0,43 s. No es el volumen de datos ni el executeOnce: es ese nodo.
+   Una página de formulario de n8n se sirve en una segunda petición, contra
+   /form-waiting/<ejecución>. Si la ejecución que la tiene que pintar hizo antes
+   una llamada de red, esa página se cuelga: no devuelve un byte en veinte
+   segundos y quien rellena el formulario ve un spinner eterno. Medido, con el
+   flujo real reducido a siete nodos:
 
-   La misma lectura con un HTTP Request contra la API de Sheets, con la misma
-   credencial, tarda 0,38 s y la página sale con las preguntas de la hoja
-   dentro. De paso, batchGet trae las tres pestañas en una sola llamada. */
-const rango = (hoja, hasta) => `ranges=${encodeURIComponent(hoja)}!A1:${hasta}`;
+     con una llamada HTTP a otro flujo de n8n ..... 0 de 5
+     con esa llamada sustituida por la config
+     escrita dentro de un nodo Code ............... 5 de 5
+
+   Antes de dar con esto probé y descarté media docena de hipótesis: no es el
+   nodo de Google Sheets, ni la credencial, ni el número de campos, ni definir
+   el formulario por JSON, ni tener dos disparadores; con formularios mínimos
+   todo eso pasaba cinco de cinco. Lo que falla es hacer red antes de pintar.
+
+   Así que aquí no hay red. La configuración se escribe dentro del nodo, y el
+   panel la vuelve a escribir cada vez que alguien guarda: publica el flujo con
+   la configuración nueva dentro. La hoja sigue siendo el sitio donde vive, y
+   este nodo es su copia compilada. */
+const CONFIG_COMPILADA = process.argv[4] || 'automatizacion/n8n/trammy-config.json';
+const configuracion = JSON.parse(readFileSync(CONFIG_COMPILADA, 'utf8'));
+
 const leerConfig = {
   id: 'cfg-leer',
-  name: 'Config · Leer la hoja',
-  type: 'n8n-nodes-base.httpRequest',
-  typeVersion: 4.2,
+  name: 'Config · Incrustada',
+  type: 'n8n-nodes-base.code',
+  typeVersion: 2,
   position: [-224, 300],
   parameters: {
-    url: `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG_ID}/values:batchGet?${rango('Preguntas', 'F500')}&${rango('Perfiles', 'D100')}&${rango('Textos', 'B200')}&${rango('Escalas', 'D500')}`,
-    authentication: 'predefinedCredentialType',
-    nodeCredentialType: 'googleSheetsOAuth2Api',
-    options: {},
+    jsCode: [
+      '/* Esta configuración la reescribe el panel al guardar. No se edita a mano:',
+      '   lo que se escriba aquí se pierde en el siguiente guardado del panel. */',
+      `return [{ json: ${JSON.stringify(configuracion)} }];`,
+    ].join('\n'),
   },
-  credentials: CRED_SHEETS,
 };
 
 const flujo = JSON.parse(readFileSync(ORIGEN, 'utf8'));
@@ -254,93 +265,17 @@ const prepararConfig = {
   position: [336, 300],
   parameters: {
     jsCode: [
-      "const normaliza = (t) => String(t ?? '').trim();",
-      "const esNo = (t) => ['no', 'false', '0'].includes(normaliza(t).toLowerCase());",
+      '/* La API ya devuelve todo con la forma que hace falta: preguntas con su',
+      '   tabla de etiqueta a valor, los campos del formulario listos para pintar,',
+      '   los perfiles y los textos. Aquí solo queda decidir por dónde entró la',
+      '   ejecución y, si es una prueba, fabricar las respuestas. */',
+      'const api = $json || {};',
       '',
-      '/* batchGet devuelve un bloque por pestaña, en el orden en que se pidieron,',
-      '   y cada uno como matriz de filas con la cabecera primero. Se convierte a',
-      '   objetos para no depender del orden de las columnas: quien edite la hoja',
-      '   puede moverlas. */',
-      "const bloques = $('Config · Leer la hoja').first().json.valueRanges || [];",
-      'const aObjetos = (bloque) => {',
-      '  const filas = (bloque && bloque.values) || [];',
-      '  const cabecera = (filas[0] || []).map((c) => normaliza(c));',
-      '  return filas.slice(1).map((f) => Object.fromEntries(cabecera.map((c, i) => [c, f[i]])));',
-      '};',
-      '',
-      '/* --- escalas ---',
-      '   Una escala es una lista de opciones con dos caras: la etiqueta, que es lo',
-      '   que lee quien responde («Nunca», «Siempre»), y el valor, que es lo que',
-      '   puntúa. Antes esto era una columna con «1|2|3|4|5» dentro y no había',
-      '   dónde escribir qué significaba cada número. */',
-      'const escalas = {};',
-      "for (const f of aObjetos(bloques[3])) {",
-      '  const nombre = normaliza(f.escala);',
-      '  const etiqueta = normaliza(f.etiqueta);',
-      '  if (!nombre || !etiqueta) continue;',
-      '  const valor = Number(f.valor);',
-      '  (escalas[nombre] = escalas[nombre] || []).push({',
-      '    orden: Number(f.orden) || 0,',
-      '    etiqueta,',
-      '    valor: Number.isFinite(valor) ? valor : null,',
-      '  });',
+      'if (api.ok !== true) {',
+      '  throw new Error("La API de configuración no respondió bien: " + (api.error || "sin detalle"));',
       '}',
-      'for (const nombre of Object.keys(escalas)) escalas[nombre].sort((a, b) => a.orden - b.orden);',
       '',
-      '/* --- preguntas --- */',
-      'const preguntas = aObjetos(bloques[0])',
-      '  .filter((f) => !esNo(f.activa) && normaliza(f.id))',
-      '  .map((f) => {',
-      '    const tipo = (normaliza(f.tipo) || "escala").toLowerCase();',
-      '    const nombreEscala = normaliza(f.escala);',
-      '    const opciones = escalas[nombreEscala] || [];',
-      '    return {',
-      '      id: normaliza(f.id),',
-      '      texto: normaliza(f.pregunta) || normaliza(f.id),',
-      '      tipo,',
-      '      escala: nombreEscala,',
-      '      opciones,',
-      '      /* Con esto se traduce después la etiqueta elegida a su puntuación. */',
-      '      valores: Object.fromEntries(opciones.map((o) => [o.etiqueta, o.valor])),',
-      '      obligatoria: !esNo(f.obligatoria),',
-      '    };',
-      '  });',
-      '',
-      '/* La forma que el nodo Form espera cuando se le definen los campos desde',
-      '   JSON. Se le dan las etiquetas, nunca los números: quien responde ve',
-      '   «Casi siempre», no un 4. Una pregunta de escala cuya escala no exista o',
-      '   esté vacía no se puede pintar como desplegable, así que cae a texto',
-      '   libre en vez de romper el formulario. */',
-      'const camposFormulario = preguntas.map((p) => {',
-      '  const campo = { fieldLabel: p.texto, fieldName: p.id, requiredField: p.obligatoria };',
-      '  if (p.tipo === "escala" && p.opciones.length) {',
-      '    campo.fieldType = "dropdown";',
-      '    campo.fieldOptions = { values: p.opciones.map((o) => ({ option: o.etiqueta })) };',
-      '  } else if (p.tipo === "numero") {',
-      '    campo.fieldType = "number";',
-      '  } else {',
-      '    campo.fieldType = "text";',
-      '  }',
-      '  return campo;',
-      '});',
-      '',
-      '/* --- perfiles --- */',
-      'const perfiles = aObjetos(bloques[1])',
-      '  .map((f) => ({',
-      '    perfil: normaliza(f.perfil),',
-      '    min: Number(f.min),',
-      '    max: Number(f.max),',
-      '    descripcion: normaliza(f.descripcion),',
-      '  }))',
-      '  .filter((p) => p.perfil && Number.isFinite(p.min) && Number.isFinite(p.max))',
-      '  .sort((a, b) => a.min - b.min);',
-      '',
-      '/* --- textos --- */',
-      'const textos = {};',
-      'for (const f of aObjetos(bloques[2])) {',
-      '  const clave = normaliza(f.clave);',
-      "  if (clave) textos[clave] = String(f.valor ?? '');",
-      '}',
+      'const preguntas = api.preguntas || [];',
       '',
       '/* Referenciar un nodo que no se ejecutó lanza una excepción, y eso mismo',
       '   sirve de respuesta: si «Datos de prueba» existe, esto es una prueba. */',
@@ -354,14 +289,14 @@ const prepararConfig = {
       '}',
       '',
       '/* En una prueba las respuestas se fabrican aquí, que es el único sitio que',
-      '   sabe qué preguntas hay y con qué escala. Se eligen etiquetas reales de',
-      '   cada escala, no números, para que la prueba recorra exactamente lo mismo',
-      '   que recorre una persona. */',
+      '   sabe qué preguntas hay y con qué escala. Se eligen etiquetas reales, no',
+      '   números, para recorrer exactamente lo mismo que recorre una persona. */',
       'if (esPrueba) {',
       '  const patron = [3, 2, 4, 1, 3, 2, 2, 3, 1, 4, 2, 3, 2, 1, 3, 2, 3];',
       '  preguntas.forEach((p, i) => {',
-      '    const posicion = patron[i % patron.length] % Math.max(p.opciones.length, 1);',
-      '    entrada[p.id] = p.opciones.length ? p.opciones[posicion].etiqueta : "respuesta de prueba";',
+      '    const etiquetas = Object.keys(p.valores || {});',
+      '    const posicion = patron[i % patron.length] % Math.max(etiquetas.length, 1);',
+      '    entrada[p.id] = etiquetas.length ? etiquetas[posicion] : "respuesta de prueba";',
       '  });',
       '  if (entrada.omitir_una && preguntas.length) entrada[preguntas[0].id] = "";',
       '}',
@@ -370,18 +305,10 @@ const prepararConfig = {
       '  json: {',
       '    ...entrada,',
       '    es_prueba: esPrueba,',
-      '    /* Las opciones completas hicieron falta para armar el formulario y para',
-      '       fabricar las respuestas de prueba, pero de aquí en adelante no las usa',
-      '       nadie: cada pregunta conserva su tabla etiqueta -> valor, que es lo que',
-      '       necesita la puntuación. Se recortan al salir porque este ítem viaja',
-      '       entero hasta la página del formulario.',
-      '',
-      '       Quitarlas antes de tiempo costó una ejecución en rojo: «camposFormulario»',
-      '       las lee, y sin ellas fallaba con «Cannot read properties of undefined». */',
-      '    preguntas: preguntas.map((p) => ({ ...p, opciones: undefined })),',
-      '    perfiles,',
-      '    textos,',
-      '    preguntas_json: JSON.stringify(camposFormulario),',
+      '    preguntas,',
+      '    perfiles: api.perfiles || [],',
+      '    textos: api.textos || {},',
+      '    preguntas_json: api.preguntas_json,',
       '  },',
       '  pairedItem: { item: 0 },',
       '}];',
@@ -900,11 +827,11 @@ flujo.connections = {
   /* Las dos puertas entran por el mismo sitio: primero se lee la configuración
      y solo después se separan los caminos. Así la prueba usa exactamente la
      misma configuración que el formulario. */
-  'Form Trigger · Credenciales': { main: [M('Config · Leer la hoja')] },
+  'Form Trigger · Credenciales': { main: [M('Config · Incrustada')] },
   'Probar con datos de ejemplo': { main: [M('Datos de prueba')] },
-  'Datos de prueba': { main: [M('Config · Leer la hoja')] },
+  'Datos de prueba': { main: [M('Config · Incrustada')] },
 
-  'Config · Leer la hoja': { main: [M('Preparar configuración')] },
+  'Config · Incrustada': { main: [M('Preparar configuración')] },
   'Preparar configuración': { main: [M('¿Entró por el formulario?')] },
   '¿Entró por el formulario?': { main: [M('IF Credenciales Válidas'), M('IF · ¿Respuestas completas?')] },
 
