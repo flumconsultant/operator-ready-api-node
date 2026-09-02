@@ -1,0 +1,263 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-09-02",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "responsible-scale",
+  "formato": "framework",
+  "es": {
+    "slug": "como-se-audita-una-decision-que-tomo-un-modelo-de-ia",
+    "titulo": "Cómo auditar la decisión de un modelo de IA",
+    "entradilla": "Un auditor pidió el porqué de una decisión que tomó un modelo de IA que la empresa había comprado, no construido. La respuesta que recibió fue un porcentaje de confianza. Un porcentaje no es una razón: es la medida de qué tan seguro estaba el modelo de poder equivocarse igual.",
+    "descripcion": "Auditar una decisión de IA exige el registro de cada caso, la versión del modelo y quién pudo corregirla, la compres o la construyas.",
+    "linkedin": {
+      "texto": "Un proveedor de IA te puede dar un porcentaje de confianza. No te puede dar una razón.\n\nCuando compras una IA en vez de construirla, la trazabilidad de cada decisión no es tuya: es del contrato que firmaste. Y casi ningún contrato de compra de IA menciona la palabra auditoría, hasta que llega un regulador o una reclamación y alguien pregunta por qué el sistema decidió lo que decidió.\n\nEn este análisis de BECOME desarrollamos qué tiene que estar negociado antes de firmar, no después del incidente.",
+      "hashtags": ["IA", "Auditoria", "Riesgo"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Un auditor pidió el porqué de una decisión que tomó un modelo de IA que la empresa había comprado, no construido. La respuesta que recibió fue un porcentaje de confianza. Un porcentaje no es una razón: es la medida de qué tan seguro estaba el modelo de poder equivocarse igual."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Casi todo lo que se ha escrito sobre auditar decisiones de IA está pensado para quien construyó el modelo. Explica cómo leer la importancia de cada variable, cómo redactar una ficha técnica del modelo, cómo guardar el registro de entrenamiento. Es información real y útil, y sirve para una minoría de empresas: las que tienen un equipo propio operando un modelo propio. La mayoría no está ahí. Compra una plataforma con una interfaz encima y un contrato debajo, y el modelo que decide vive en la infraestructura de otro."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ese hueco no es un detalle técnico. Es la diferencia entre poder responder a un auditor y no poder. Cuando el modelo es tuyo, puedes bajar hasta el dato, la versión y el criterio. Cuando lo compraste, lo único que tienes es lo que el proveedor decidió entregarte en el contrato, y casi ningún contrato de compra de IA que he revisado menciona la palabra auditoría."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Cómo se audita una decisión que tomó un modelo de IA?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La respuesta que circula hoy viene del lado de quien construye modelos: explicabilidad técnica, importancia de variables, fichas de modelo. Ninguna de esas herramientas fue pensada para responder lo que pregunta un auditor, un regulador o un abogado, que no quiere saber cómo piensa el modelo en general. Quiere reconstruir una decisión concreta, tomada un día concreto, sobre una persona o un caso concreto, y saber si alguien pudo haberla revisado antes de que produjera efecto."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El panel del proveedor muestra la precisión general del modelo, no el motivo de un caso individual.",
+          "El registro de cada decisión vive dentro de la plataforma del proveedor, con una retención de semanas, no de años.",
+          "Nadie en la empresa puede decir qué versión del modelo tomó la decisión de hace seis meses, porque el proveedor lo actualiza sin avisar.",
+          "El contrato de compra obliga al proveedor a entregar el resultado, nunca el razonamiento detrás de un caso puntual.",
+          "Cuando llega una reclamación o una auditoría, la única respuesta disponible es que el sistema lo decidió así, y esa frase no convence a ningún regulador."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema detrás",
+        "texto": "La trazabilidad que pide un auditor no es la que ofrece un proveedor de IA."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Un proveedor de IA se mide a sí mismo en conjunto: precisión del modelo, tasa de error, tiempo de respuesta. Son números que prueban que el sistema funciona como un todo, y no dicen nada sobre un caso puntual. Un auditor no pregunta si el modelo acierta casi siempre. Pregunta por qué acertó o falló en este caso, con esta persona, en esta fecha, y si alguien tuvo la oportunidad de corregirlo antes de que el efecto fuera irreversible."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y aquí está la parte que ninguna demo de proveedor menciona: cuando compras la IA en vez de construirla, la trazabilidad no es tuya. Es del contrato que firmaste, y si ese contrato no la exige por escrito, no existe. No hay ingeniero interno que la reconstruya después, porque los datos del caso ni siquiera están en tu infraestructura. Están en la del proveedor, y el proveedor decide cuánto guarda y durante cuánto tiempo."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Auditar una decisión de IA no es explicar cómo piensa el modelo en general. Es poder reconstruir, caso por caso, qué información tuvo, qué decidió y quién pudo haberla corregido.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "¿Qué tiene que existir para poder auditar una decisión de IA, la compres o la construyas?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Las cinco piezas siguientes se negocian antes de firmar con un proveedor, no después de un incidente. Pedidas después, ningún proveedor las entrega gratis, y alguna, la versión exacta del modelo que decidió un caso pasado, ya no se puede reconstruir si no se guardó desde el primer día."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Registro de caso",
+            "definicion": "El dato exacto que entró, la decisión exacta que salió y la marca de tiempo, para cada caso individual. No la métrica agregada del modelo: el expediente de esa decisión en concreto."
+          },
+          {
+            "termino": "Versión",
+            "definicion": "Qué versión exacta del modelo tomó esa decisión. Un proveedor que actualiza el modelo sin versionarlo hace imposible reproducir, seis meses después, qué razonamiento produjo un resultado concreto."
+          },
+          {
+            "termino": "Punto de intervención",
+            "definicion": "El momento del proceso en el que una persona pudo revisar o revertir la decisión antes de que produjera efecto, y si en ese caso lo hizo o dejó pasar el resultado del modelo sin mirarlo."
+          },
+          {
+            "termino": "Cláusula de exportación",
+            "definicion": "La obligación contractual, firmada antes de comprar, de entregar el registro de cualquier caso cuando la empresa lo pida, no solo cuando el proveedor decida compartirlo o cuando el contrato termine."
+          },
+          {
+            "termino": "Dueño interno",
+            "definicion": "Una persona con nombre, no un equipo genérico de tecnología, responsable de poder reconstruir cualquier decisión pasada cuando la pida un auditor, un regulador o un cliente que reclama."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguna de las cinco exige construir el modelo en casa. Exige negociarlas antes de firmar, con el mismo rigor con el que se negocia una cláusula de nivel de servicio o una de propiedad del dato. La empresa que compra IA sin esas cinco no está ahorrando el coste de construir. Está aplazando el coste de no poder explicar, el día que alguien pregunte, por qué el sistema decidió lo que decidió."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Coge la última decisión importante que tomó una IA comprada a un proveedor, un rechazo de crédito, un descarte de candidato, una alerta de fraude, y pide el registro completo de ese caso puntual. Si lo único que existe es un porcentaje de confianza, no hay trazabilidad. Hay una caja negra con el logo de otra empresa."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cómo se audita una decisión que tomó un modelo de IA?",
+            "respuesta": "Reconstruyendo el caso concreto, no explicando el modelo en general: qué dato entró, qué versión del modelo lo procesó, qué salió y si una persona tuvo la oportunidad de revisar o revertir el resultado antes de que produjera efecto. Sin esas cuatro piezas guardadas desde el momento en que ocurrió el caso, la auditoría no se puede hacer después, por bien documentado que esté el modelo en general."
+          },
+          {
+            "pregunta": "¿Se puede auditar una decisión de un modelo de IA que la empresa compró y no construyó?",
+            "respuesta": "Solo si el contrato con el proveedor lo obligó por escrito antes de firmarlo. La trazabilidad de un modelo comprado depende de lo que el proveedor decida guardar y entregar, y la mayoría de contratos de compra de IA no mencionan la palabra auditoría. Negociar esa cláusula después de un incidente ya es tarde: los datos del caso que hace falta reconstruir puede que el proveedor nunca los haya guardado."
+          },
+          {
+            "pregunta": "¿Qué diferencia hay entre explicabilidad técnica y trazabilidad de una decisión?",
+            "respuesta": "La explicabilidad técnica dice cómo funciona el modelo en general: qué variables pesan más, con qué precisión acierta en conjunto. La trazabilidad de una decisión reconstruye un caso puntual: qué información tuvo el sistema ese día concreto, qué decidió y quién pudo haberlo corregido. Un modelo puede tener una ficha técnica impecable y ningún caso individual reconstruible, y eso es justo lo que un auditor detecta primero."
+          },
+          {
+            "pregunta": "¿Quién debería poder reconstruir una decisión de IA cuando lo pide un auditor?",
+            "respuesta": "Una persona con nombre y responsabilidad asignada, no un equipo genérico de tecnología ni el propio proveedor sin supervisión. Si nadie en la empresa puede decir, sin llamar al proveedor y esperar días, qué pasó en un caso concreto, la empresa no tiene trazabilidad interna: depende por completo de la buena voluntad de otro para responder ante un regulador."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Diseñemos tu trazabilidad de decisiones",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "auditing-an-ai-model-decision",
+    "titulo": "How to Audit a Decision an AI Model Made",
+    "entradilla": "An auditor asked why an AI model, bought from a vendor, made a particular call. What came back was a confidence score. A percentage is not a reason. It is a measure of how sure the model was that it could be wrong just the same.",
+    "descripcion": "Auditing an AI decision needs the record of that case, the model version, and who could have overridden it, bought or built.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "An auditor asked why an AI model, bought from a vendor, made a particular call. What came back was a confidence score. A percentage is not a reason. It is a measure of how sure the model was that it could be wrong just the same."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Almost everything written about auditing AI decisions is written for whoever built the model. It explains how to read feature importance, how to produce a model card, how to keep a training log. That is real, useful information, and it serves a minority of companies: the ones running a model their own team built. Most companies are not there. They buy a platform with an interface on top and a contract underneath, and the model making the call lives on someone else's infrastructure."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That gap is not a technical footnote. It is the difference between being able to answer an auditor and not. When the model is yours, you can trace the data, the version, the criterion. When you bought it, you have exactly what the vendor agreed to hand over in the contract, and almost no AI purchase contract I have reviewed mentions the word audit."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "How do you audit a decision made by an AI model?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The answer circulating today comes from the side of whoever builds models: technical explainability, feature importance, model cards. None of those tools were built to answer what an auditor, a regulator or a lawyer actually asks, because none of them wants to know how the model thinks in general. They want to reconstruct one specific decision, made on one specific day, about one specific person or case, and know whether anyone had the chance to review it before it took effect."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The vendor's dashboard shows the model's overall accuracy, not the reason behind a single case.",
+          "The record of each decision lives inside the vendor's platform, kept for weeks, not years.",
+          "Nobody at the company can say which model version made a call six months ago, because the vendor updates the model without notice.",
+          "The purchase contract obligates the vendor to hand over the result, never the reasoning behind one particular case.",
+          "When a complaint or an audit lands, the only answer on hand is that the system decided that way, and that line does not satisfy a regulator."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "The trail an auditor asks for is not the one an AI vendor offers."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A vendor measures itself in aggregate: overall accuracy, error rate, response time. Those numbers prove the system works as a whole, and they say nothing about one specific case. An auditor does not ask whether the model gets it right almost every time. They ask why it got this one right or wrong, for this person, on this date, and whether anyone had a chance to correct it before the effect became irreversible."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "And here is the part no vendor demo mentions: buy the AI instead of building it, and the trail is not yours. It belongs to the contract you signed, and if that contract did not require it in writing, it does not exist. No internal engineer can reconstruct it later, because the case data was never on your infrastructure to begin with. It sits on the vendor's, and the vendor decides how much it keeps and for how long."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Auditing an AI decision is not explaining how the model thinks in general. It is being able to reconstruct, case by case, what information it had, what it decided and who could have corrected it.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "What has to exist to audit an AI decision, bought or built?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The five pieces below get negotiated before signing with a vendor, not after an incident. Asked for afterward, no vendor hands them over for free, and one of them, the exact model version that made a past decision, cannot be reconstructed at all if nobody kept it from day one."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Case record",
+            "definicion": "The exact input, the exact output and the timestamp, for each individual case. Not the model's aggregate metric: the file for that one decision."
+          },
+          {
+            "termino": "Version",
+            "definicion": "Which exact model version made that decision. A vendor that updates the model without versioning it makes it impossible to reproduce, six months later, what reasoning produced a given result."
+          },
+          {
+            "termino": "Intervention point",
+            "definicion": "The moment in the process where a person could review or reverse the decision before it took effect, and whether they did or let the model's output pass through unchecked."
+          },
+          {
+            "termino": "Export clause",
+            "definicion": "The contractual obligation, signed before purchase, to hand over the record of any case whenever the company asks, not only when the vendor chooses to share it or when the contract ends."
+          },
+          {
+            "termino": "Internal owner",
+            "definicion": "A named person, not a generic technology team, responsible for being able to reconstruct any past decision when an auditor, a regulator or an aggrieved customer asks for it."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of the five requires building the model in house. It requires negotiating them before signing, with the same rigor applied to a service-level clause or a data ownership clause. A company that buys AI without these five is not saving the cost of building. It is deferring the cost of not being able to explain, the day someone asks, why the system decided what it decided."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take the last important decision a purchased AI system made, a credit rejection, a candidate screened out, a fraud alert, and ask for the complete record of that one case. If all that exists is a confidence score, there is no trail. There is a black box wearing someone else's logo."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How do you audit a decision made by an AI model?",
+            "respuesta": "By reconstructing the specific case, not by explaining the model in general: what data went in, which model version processed it, what came out, and whether a person had the chance to review or reverse the result before it took effect. Without those four pieces saved from the moment the case happened, the audit cannot be done afterward, no matter how well documented the model is in general."
+          },
+          {
+            "pregunta": "Can you audit a decision made by an AI model the company bought rather than built?",
+            "respuesta": "Only if the vendor contract required it in writing before it was signed. The trail behind a purchased model depends entirely on what the vendor chooses to keep and hand over, and most AI purchase contracts never mention the word audit. Negotiating that clause after an incident is already too late, because the case data that needs reconstructing may never have been kept in the first place."
+          },
+          {
+            "pregunta": "What is the difference between technical explainability and decision traceability?",
+            "respuesta": "Technical explainability describes how the model works in general: which variables carry the most weight, how accurate it is overall. Decision traceability reconstructs one specific case: what information the system had on a given day, what it decided and who could have corrected it. A model can have a flawless technical writeup and no individual case that can be reconstructed, and that is exactly what an auditor checks first."
+          },
+          {
+            "pregunta": "Who should be able to reconstruct an AI decision when an auditor asks?",
+            "respuesta": "A named person with assigned responsibility, not a generic technology team and not the vendor left unsupervised. If nobody at the company can say what happened in a specific case without calling the vendor and waiting days for an answer, the company has no internal trail. It depends entirely on someone else's goodwill to answer to a regulator."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's design your decision trail",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
