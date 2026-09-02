@@ -1,0 +1,1908 @@
+{
+ "name": "Flujo 1 · Validación y registro de facturas — PRUEBA (datos dummy)",
+ "nodes": [
+  {
+   "parameters": {},
+   "type": "n8n-nodes-base.manualTrigger",
+   "typeVersion": 1,
+   "position": [
+    -5076,
+    592
+   ],
+   "id": "093f5e78-3647-4677-98f1-5e85db5e772d",
+   "name": "▶ Ejecutar prueba"
+  },
+  {
+   "parameters": {
+    "jsCode": "// ============================================================\n// D00 · Caso de prueba (dummy)\n// ============================================================\n//\n// Sustituye al Gmail Trigger (P01).\n//\n// Emite UN solo item con la misma forma que produce el\n// Gmail Trigger con \"Download Attachments\" activado:\n//\n//   json.id                     -> gmailMessageId\n//   json.threadId               -> threadId\n//   json.payload.headers[]      -> From / Subject\n//   binary.attachment_0         -> adjunto descargado\n//\n// P02 se encarga de normalizar binary.attachment_0 -> binary.data\n//\n// IMPORTANTE:\n// El flujo original está escrito para UNA factura por\n// ejecución (varios nodos usan .first()), por eso este nodo\n// emite un único item.\n//\n// ------------------------------------------------------------\n// >>> CAMBIA ESTE NÚMERO PARA PROBAR CADA ESCENARIO <<<\n// ------------------------------------------------------------\n\nconst CASO = 1;\n\n// ============================================================\n// POLÍTICA DE VIÁTICOS SIMULADA\n// (refleja la hoja \"PoliticaViaticos\" que consulta el agente)\n// ============================================================\n//\n//   BREAKFAST          25   permitido\n//   LUNCH              50   permitido\n//   DINNER             55   permitido\n//   MOBILITY           40   permitido\n//   AIRFARE           900   permitido\n//   LODGING           200   permitido (por noche)\n//   ALLOWED_BEVERAGES  15   permitido\n//   MINOR_PURCHASE    120   permitido\n//   (bebidas alcohólicas: NO permitido)\n//\n// ============================================================\n\nconst COLABORADOR_OK = {\n  email: 'carlos.ramirez@flum.pe',\n  nombre: 'Carlos Andrés Ramírez',\n  activo: 'SI',\n  centroCosto: 'CC-COMERCIAL-001',\n  row_number: 4,\n};\n\n// ------------------------------------------------------------\n// Textos de comprobante (lo que devolvería el extractor de PDF)\n// ------------------------------------------------------------\n\nfunction facturaAlmuerzo(numero, subtotal, igv, total) {\n  return [\n    'RESTAURANTE EL MIRADOR S.A.C.',\n    'Av. Larco 1234 - Miraflores - Lima',\n    'RUC: 20512345678',\n    '',\n    'FACTURA ELECTRONICA',\n    numero,\n    '',\n    'Fecha de Emision: 14/08/2026',\n    'Hora de atencion: 13:12',\n    '',\n    'SEÑOR(ES): CONSULTORA FLUM S.A.C.',\n    'RUC ADQUIRIENTE: 20601234567',\n    '',\n    'DESCRIPCION                            CANT   IMPORTE',\n    'SERVICIO DE ALIMENTACION - ALMUERZO      1     ' + subtotal.toFixed(2),\n    'MENU EJECUTIVO + BEBIDA NO ALCOHOLICA',\n    '',\n    'Sub Total Ventas: S/ ' + subtotal.toFixed(2),\n    'IGV: S/ ' + igv.toFixed(2),\n    'Importe Total: S/ ' + total.toFixed(2),\n  ].join('\\n');\n}\n\nconst TEXTO_HOSPEDAJE = [\n  'HOTEL COSTA DEL SOL S.A.',\n  'Av. Ejercito 1010 - Cusco',\n  'RUC: 20334455667',\n  '',\n  'FACTURA ELECTRONICA',\n  'F002-0000318',\n  '',\n  'Fecha de Emision: 13/08/2026',\n  '',\n  'SEÑOR(ES): CONSULTORA FLUM S.A.C.',\n  'RUC ADQUIRIENTE: 20601234567',\n  '',\n  'DESCRIPCION',\n  'ALOJAMIENTO 03 NOCHES - HABITACION SIMPLE',\n  'DEL 10/08/2026 AL 13/08/2026',\n  'CHECK-IN: 10/08/2026',\n  'CHECK-OUT: 13/08/2026',\n  '',\n  'Sub Total Ventas: S/ 457.63',\n  'IGV: S/ 82.37',\n  'Importe Total: S/ 540.00',\n].join('\\n');\n\nconst TEXTO_ALCOHOL = [\n  'BAR RESTOBAR LA ESQUINA E.I.R.L.',\n  'Calle Berlin 456 - Miraflores - Lima',\n  'RUC: 20778899001',\n  '',\n  'FACTURA ELECTRONICA',\n  'F003-0000097',\n  '',\n  'Fecha de Emision: 16/08/2026',\n  'Hora de atencion: 22:40',\n  '',\n  'SEÑOR(ES): CONSULTORA FLUM S.A.C.',\n  'RUC ADQUIRIENTE: 20601234567',\n  '',\n  'DESCRIPCION                       CANT   IMPORTE',\n  'CERVEZA ARTESANAL 473ML             4      96.00',\n  'PISCO SOUR                          2      54.00',\n  'PIQUEO FRIO                         1      35.42',\n  '',\n  'Sub Total Ventas: S/ 156.78',\n  'IGV: S/ 28.22',\n  'Importe Total: S/ 185.00',\n].join('\\n');\n\nconst TEXTO_ILEGIBLE = [\n  'COMPROBANTE',\n  'documento escaneado sin datos legibles',\n  'total: ---',\n].join('\\n');\n\nconst TEXTO_MOVILIDAD = [\n  'TRANSPORTES ANDINOS S.A.C.',\n  'Av. Javier Prado 2200 - San Isidro - Lima',\n  'RUC: 20445566778',\n  '',\n  'FACTURA ELECTRONICA',\n  'F004-0001120',\n  '',\n  'Fecha de Emision: 18/08/2026',\n  '',\n  'SEÑOR(ES): CONSULTORA FLUM S.A.C.',\n  '',\n  'DESCRIPCION                CANT   IMPORTE',\n  'SERVICIO DE TAXI / TRASLADO  1      29.66',\n  '',\n  'Sub Total Ventas: S/ 29.66',\n  'IGV: S/ 5.34',\n  'Importe Total: S/ 35.00',\n].join('\\n');\n\n// ------------------------------------------------------------\n// Respuestas simuladas del agente clasificador (P16.2)\n// ------------------------------------------------------------\n\nfunction agente(categoria, label, confianza, limite, extra) {\n  return Object.assign(\n    {\n      expenseCategory: categoria,\n      expenseCategoryLabel: label,\n      expenseConfidence: confianza,\n      expenseEvidence: [],\n      containsPotentiallyRestrictedItems: false,\n      restrictedItems: [],\n      classificationReason: 'Clasificación simulada para pruebas.',\n      toolUsed: true,\n      policyFound: true,\n      policyAllowed: true,\n      policyLimit: limite,\n      policyRequiresReview: false,\n      taxReviewRequired: false,\n      policyVersion: 'PRUEBA-2026.08',\n      requiresHumanReview: false,\n    },\n    extra || {}\n  );\n}\n\n// ============================================================\n// CATÁLOGO DE CASOS\n// ============================================================\n\nconst CASOS = {\n  // ---------- 1. Camino feliz: aprobación automática ----------\n  1: {\n    nombre: '01 · Almuerzo dentro del límite → ALLOW (aprobación automática)',\n    recorridoEsperado:\n      'P02→P03(PDF)→P04.1→P05→P06→P08(true)→P09(true)→P10(no)→P12.2→P13(no)→' +\n      'P16.2→P18(ALLOW)→P20→P22(ALLOW)→P23.1→P24→P25→P27',\n    fileName: 'Factura_Almuerzo_Lima.pdf',\n    ext: 'pdf',\n    mimeType: 'application/pdf',\n    subject: 'Rendición almuerzo visita cliente Lima',\n    from: 'Carlos Ramírez <carlos.ramirez@flum.pe>',\n    rawText: facturaAlmuerzo('F001-0004521', 32.2, 5.8, 38.0),\n    colaborador: COLABORADOR_OK,\n    hashYaRegistrado: false,\n    facturaDuplicada: false,\n    agente: agente('LUNCH', 'Almuerzo', 0.94, 50, {\n      expenseEvidence: ['SERVICIO DE ALIMENTACION - ALMUERZO', 'Hora de atencion 13:12'],\n    }),\n    aprobacionHumana: null,\n  },\n\n  // ---------- 2. Excede el límite y el humano aprueba ----------\n  2: {\n    nombre: '02 · Almuerzo excede el límite → REVIEW → humano APRUEBA',\n    recorridoEsperado: '... P18(REVIEW)→P22(REVIEW)→P23.2(HITL)→P23.2.2(true)→P23.1→P25→P27',\n    fileName: 'Factura_Almuerzo_Ejecutivo.pdf',\n    ext: 'pdf',\n    mimeType: 'application/pdf',\n    subject: 'Rendición almuerzo con cliente',\n    from: 'Carlos Ramírez <carlos.ramirez@flum.pe>',\n    rawText: facturaAlmuerzo('F001-0004599', 80.51, 14.49, 95.0),\n    colaborador: COLABORADOR_OK,\n    hashYaRegistrado: false,\n    facturaDuplicada: false,\n    agente: agente('LUNCH', 'Almuerzo', 0.91, 50),\n    aprobacionHumana: true,\n  },\n\n  // ---------- 3. Excede el límite y el humano rechaza ----------\n  3: {\n    nombre: '03 · Almuerzo excede el límite → REVIEW → humano RECHAZA',\n    recorridoEsperado: '... P22(REVIEW)→P23.2(HITL)→P23.2.2(false)→P23.3→P09.12→P28→P30',\n    fileName: 'Factura_Almuerzo_Ejecutivo.pdf',\n    ext: 'pdf',\n    mimeType: 'application/pdf',\n    subject: 'Rendición almuerzo con cliente',\n    from: 'Carlos Ramírez <carlos.ramirez@flum.pe>',\n    rawText: facturaAlmuerzo('F001-0004600', 80.51, 14.49, 95.0),\n    colaborador: COLABORADOR_OK,\n    hashYaRegistrado: false,\n    facturaDuplicada: false,\n    agente: agente('LUNCH', 'Almuerzo', 0.91, 50),\n    aprobacionHumana: false,\n  },\n\n  // ---------- 4. Hospedaje: límite POR NOCHE ----------\n  4: {\n    nombre: '04 · Hospedaje 3 noches (S/540 = S/180/noche, límite 200) → ALLOW',\n    recorridoEsperado: 'Ejercita el cálculo de noches de P18 (TEXT_AND_DATES)',\n    fileName: 'Factura_Hotel_Cusco.pdf',\n    ext: 'pdf',\n    mimeType: 'application/pdf',\n    subject: 'Rendición hospedaje Cusco',\n    from: 'Carlos Ramírez <carlos.ramirez@flum.pe>',\n    rawText: TEXTO_HOSPEDAJE,\n    colaborador: COLABORADOR_OK,\n    hashYaRegistrado: false,\n    facturaDuplicada: false,\n    agente: agente('LODGING', 'Hospedaje', 0.96, 200, {\n      expenseEvidence: ['ALOJAMIENTO 03 NOCHES', 'CHECK-IN 10/08/2026'],\n    }),\n    aprobacionHumana: null,\n  },\n\n  // ---------- 5. Categoría no permitida por política ----------\n  5: {\n    nombre: '05 · Consumo con alcohol → política NO permite → REJECT',\n    recorridoEsperado: '... P18(REJECT)→P22(REJECT)→P23.3→P09.12→P28→P30',\n    fileName: 'Factura_Cena_Bar.pdf',\n    ext: 'pdf',\n    mimeType: 'application/pdf',\n    subject: 'Rendición cena equipo',\n    from: 'Carlos Ramírez <carlos.ramirez@flum.pe>',\n    rawText: TEXTO_ALCOHOL,\n    colaborador: COLABORADOR_OK,\n    hashYaRegistrado: false,\n    facturaDuplicada: false,\n    agente: agente('DINNER', 'Cena', 0.88, 55, {\n      containsPotentiallyRestrictedItems: true,\n      restrictedItems: ['CERVEZA ARTESANAL 473ML', 'PISCO SOUR'],\n      policyAllowed: false,\n      classificationReason: 'El comprobante incluye bebidas alcohólicas.',\n    }),\n    aprobacionHumana: null,\n  },\n\n  // ---------- 6. Comprobante ilegible / inválido ----------\n  6: {\n    nombre: '06 · Comprobante sin RUC ni total → factura inválida',\n    recorridoEsperado: 'P05→P08.2→P09(false)→P09.2→Cerrar incidencia (INVALID_INVOICE)',\n    fileName: 'escaneo_borroso.pdf',\n    ext: 'pdf',\n    mimeType: 'application/pdf',\n    subject: 'Rendición',\n    from: 'Carlos Ramírez <carlos.ramirez@flum.pe>',\n    rawText: TEXTO_ILEGIBLE,\n    colaborador: COLABORADOR_OK,\n    hashYaRegistrado: false,\n    facturaDuplicada: false,\n    agente: agente('UNCERTAIN', 'No determinado', 0.2, null),\n    aprobacionHumana: null,\n  },\n\n  // ---------- 7. Remitente no registrado ----------\n  7: {\n    nombre: '07 · Remitente que no está en Colaboradores',\n    recorridoEsperado: 'P06(sin fila)→P07→P08(false)→P08.1→Cerrar incidencia (INVALID_COLLABORATOR)',\n    fileName: 'Factura_Almuerzo_Lima.pdf',\n    ext: 'pdf',\n    mimeType: 'application/pdf',\n    subject: 'Rendición almuerzo',\n    from: 'Desconocido <externo.random@gmail.com>',\n    rawText: facturaAlmuerzo('F001-0004777', 32.2, 5.8, 38.0),\n    colaborador: null,\n    hashYaRegistrado: false,\n    facturaDuplicada: false,\n    agente: agente('LUNCH', 'Almuerzo', 0.94, 50),\n    aprobacionHumana: null,\n  },\n\n  // ---------- 8. Archivo idéntico ya procesado ----------\n  8: {\n    nombre: '08 · Hash del archivo ya registrado → duplicado exacto',\n    recorridoEsperado: 'P09.1→P10(existe)→P11(true)→P12.1→Cerrar incidencia (DUPLICATE_FILE)',\n    fileName: 'Factura_Almuerzo_Lima.pdf',\n    ext: 'pdf',\n    mimeType: 'application/pdf',\n    subject: 'Re: Rendición almuerzo visita cliente Lima',\n    from: 'Carlos Ramírez <carlos.ramirez@flum.pe>',\n    rawText: facturaAlmuerzo('F001-0004521', 32.2, 5.8, 38.0),\n    colaborador: COLABORADOR_OK,\n    hashYaRegistrado: true,\n    facturaDuplicada: false,\n    agente: agente('LUNCH', 'Almuerzo', 0.94, 50),\n    aprobacionHumana: null,\n  },\n\n  // ---------- 9. Mismo comprobante, archivo distinto ----------\n  9: {\n    nombre: '09 · Mismo RUC + número ya registrado en la hoja → factura duplicada',\n    recorridoEsperado: 'P13(hit)→P14→P15(true)→P16.1→Cerrar incidencia (DUPLICATE_INVOICE)',\n    fileName: 'Factura_Almuerzo_reenviada.pdf',\n    ext: 'pdf',\n    mimeType: 'application/pdf',\n    subject: 'Reenvío rendición almuerzo',\n    from: 'Carlos Ramírez <carlos.ramirez@flum.pe>',\n    rawText: facturaAlmuerzo('F001-0004521', 32.2, 5.8, 38.0),\n    colaborador: COLABORADOR_OK,\n    hashYaRegistrado: false,\n    facturaDuplicada: true,\n    agente: agente('LUNCH', 'Almuerzo', 0.94, 50),\n    aprobacionHumana: null,\n  },\n\n  // ---------- 10. Foto del comprobante, Vision responde bien ----------\n  10: {\n    nombre: '10 · Imagen (JPG) leída por Vision → ALLOW',\n    recorridoEsperado: 'P03(IMAGE)→P04.3→P04.3.1→P04.3.2(true)→P05→...→P22(ALLOW)',\n    fileName: 'Factura_Movilidad.jpg',\n    ext: 'jpg',\n    mimeType: 'image/jpeg',\n    subject: 'Rendición movilidad',\n    from: 'Carlos Ramírez <carlos.ramirez@flum.pe>',\n    rawText: TEXTO_MOVILIDAD,\n    colaborador: COLABORADOR_OK,\n    hashYaRegistrado: false,\n    facturaDuplicada: false,\n    vision: {\n      documentType: 'invoice',\n      isFinancialDocument: true,\n      supplierName: 'TRANSPORTES ANDINOS S.A.C.',\n      supplierTaxId: '20445566778',\n      documentNumber: 'F004-0001120',\n      issueDate: '2026-08-18',\n      currency: 'PEN',\n      subtotal: 29.66,\n      tax: 5.34,\n      total: 35.0,\n      rawText: TEXTO_MOVILIDAD,\n      confidence: 0.93,\n    },\n    agente: agente('MOBILITY', 'Movilidad', 0.95, 40, {\n      expenseEvidence: ['SERVICIO DE TAXI / TRASLADO'],\n    }),\n    aprobacionHumana: null,\n  },\n\n  // ---------- 11. Vision flojo → fallback a Gemini ----------\n  11: {\n    nombre: '11 · Imagen con Vision de baja confianza → fallback Gemini → ALLOW',\n    recorridoEsperado: 'P04.3.2(false)→P04.3.3(Gemini)→P04.3.5(true)→P05→...',\n    fileName: 'Factura_Movilidad_borrosa.jpg',\n    ext: 'jpg',\n    mimeType: 'image/jpeg',\n    subject: 'Rendición movilidad',\n    from: 'Carlos Ramírez <carlos.ramirez@flum.pe>',\n    rawText: TEXTO_MOVILIDAD,\n    colaborador: COLABORADOR_OK,\n    hashYaRegistrado: false,\n    facturaDuplicada: false,\n    vision: {\n      documentType: 'other',\n      isFinancialDocument: false,\n      supplierName: null,\n      supplierTaxId: null,\n      documentNumber: null,\n      issueDate: null,\n      currency: null,\n      subtotal: null,\n      tax: null,\n      total: null,\n      rawText: 'imagen poco legible',\n      confidence: 0.31,\n    },\n    gemini: {\n      documentType: 'invoice',\n      isFinancialDocument: true,\n      supplierName: 'TRANSPORTES ANDINOS S.A.C.',\n      supplierTaxId: '20445566778',\n      documentNumber: 'F004-0001121',\n      issueDate: '2026-08-18',\n      currency: 'PEN',\n      subtotal: 29.66,\n      tax: 5.34,\n      total: 35.0,\n      rawText: TEXTO_MOVILIDAD,\n      confidence: 0.87,\n    },\n    agente: agente('MOBILITY', 'Movilidad', 0.95, 40),\n    aprobacionHumana: null,\n  },\n\n  // ---------- 12. XML (rama que en producción está muerta) ----------\n  12: {\n    nombre: '12 · Comprobante XML → ALLOW  ⚠️ en producción esta rama NO está conectada',\n    recorridoEsperado: 'P03(XML)→P04.2→P05→... (en el flujo real P04.2 no tiene salida)',\n    fileName: '20512345678-01-F001-0004900.xml',\n    ext: 'xml',\n    mimeType: 'application/xml',\n    subject: 'Rendición desayuno',\n    from: 'Carlos Ramírez <carlos.ramirez@flum.pe>',\n    rawText: 'Comprobante electrónico UBL 2.1 - DESAYUNO CONTINENTAL',\n    datosXml: {\n      supplierName: 'CAFETERIA LA MAÑANA S.A.C.',\n      supplierTaxId: '20512345678',\n      documentNumber: 'F001-0004900',\n      issueDate: '2026-08-19',\n      currency: 'PEN',\n      subtotal: 15.25,\n      tax: 2.75,\n      total: 18.0,\n    },\n    colaborador: COLABORADOR_OK,\n    hashYaRegistrado: false,\n    facturaDuplicada: false,\n    agente: agente('BREAKFAST', 'Desayuno', 0.92, 25, {\n      expenseEvidence: ['DESAYUNO CONTINENTAL'],\n    }),\n    aprobacionHumana: null,\n  },\n};\n\n// ============================================================\n// EMISIÓN DEL ITEM\n// ============================================================\n\nconst caso = CASOS[CASO];\n\nif (!caso) {\n  throw new Error(\n    'CASO ' + CASO + ' no existe. Usa un número del 1 al ' + Object.keys(CASOS).length + '.'\n  );\n}\n\nconst contenidoArchivo =\n  'ARCHIVO DE PRUEBA · ' +\n  caso.fileName +\n  '\\n' +\n  '(el contenido real no se lee: los extractores están simulados,\\n' +\n  ' pero este binario sí alimenta el hash de P09.1)\\n\\n' +\n  String(caso.rawText || '');\n\nconst emailRemitente = caso.from;\n\nreturn [\n  {\n    json: {\n      id: 'msg-prueba-' + String(CASO).padStart(2, '0'),\n      threadId: 'thread-prueba-' + String(CASO).padStart(2, '0'),\n      labelIds: ['INBOX', 'UNREAD'],\n      payload: {\n        headers: [\n          { name: 'From', value: emailRemitente },\n          { name: 'To', value: 'rendiciones@flum.pe' },\n          { name: 'Subject', value: caso.subject },\n        ],\n      },\n\n      // Los nodos simulados leen este objeto con:\n      //   $('D00 · Caso de prueba (dummy)').first().json._caso\n      _caso: caso,\n      _casoNumero: CASO,\n      _casoNombre: caso.nombre,\n    },\n\n    binary: {\n      attachment_0: {\n        data: Buffer.from(contenidoArchivo, 'utf8').toString('base64'),\n        mimeType: caso.mimeType,\n        fileName: caso.fileName,\n        fileExtension: caso.ext,\n      },\n    },\n  },\n];\n"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -4856,
+    592
+   ],
+   "id": "b3962da9-7b6d-4f8b-a13f-ebd75d9dc029",
+   "name": "D00 · Caso de prueba (dummy)",
+   "notes": "Cambia la constante CASO (1..12) para elegir el escenario",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
+    "jsCode": "const items = $input.all();\nconst output = [];\n\n/**\n * Convierte cualquier valor a string limpio.\n */\nfunction toText(value) {\n  if (value === null || value === undefined) {\n    return '';\n  }\n\n  if (typeof value === 'string') {\n    return value.trim();\n  }\n\n  if (typeof value === 'number' || typeof value === 'boolean') {\n    return String(value).trim();\n  }\n\n  return '';\n}\n\n\n/**\n * Busca una cabecera de email dentro de distintas\n * estructuras posibles devueltas por Gmail/n8n.\n *\n * Ejemplo:\n * getHeaderValue(json, 'From')\n */\nfunction getHeaderValue(json, headerName) {\n  const target = String(headerName).toLowerCase();\n\n  const possibleArrays = [\n    json?.payload?.headers,\n    json?.message?.payload?.headers,\n    json?.data?.payload?.headers,\n    json?.headers,\n  ];\n\n  // Headers como array:\n  // [\n  //   { name: \"From\", value: \"Juan <juan@email.com>\" }\n  // ]\n  for (const headers of possibleArrays) {\n    if (!Array.isArray(headers)) {\n      continue;\n    }\n\n    const found = headers.find(\n      (header) =>\n        String(header?.name || '').toLowerCase() === target\n    );\n\n    if (found?.value) {\n      return found.value;\n    }\n  }\n\n  // Headers como objeto:\n  // {\n  //   from: \"...\",\n  //   subject: \"...\"\n  // }\n  const possibleObjects = [\n    json?.headers,\n    json?.payload?.headers,\n  ];\n\n  for (const headers of possibleObjects) {\n    if (\n      !headers ||\n      typeof headers !== 'object' ||\n      Array.isArray(headers)\n    ) {\n      continue;\n    }\n\n    const key = Object.keys(headers).find(\n      (k) => String(k).toLowerCase() === target\n    );\n\n    if (key) {\n      return headers[key];\n    }\n  }\n\n  return '';\n}\n\n\n/**\n * Extrae una dirección email de múltiples formatos.\n *\n * Soporta:\n * \"Juan Perez <juan@empresa.com>\"\n * \"juan@empresa.com\"\n * { email: \"juan@empresa.com\" }\n * { address: \"juan@empresa.com\" }\n * arrays\n */\nfunction extractEmail(value) {\n  if (!value) {\n    return '';\n  }\n\n  if (typeof value === 'string') {\n    const match = value.match(\n      /[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}/i\n    );\n\n    return match\n      ? match[0].trim().toLowerCase()\n      : '';\n  }\n\n  if (Array.isArray(value)) {\n    for (const element of value) {\n      const email = extractEmail(element);\n\n      if (email) {\n        return email;\n      }\n    }\n\n    return '';\n  }\n\n  if (typeof value === 'object') {\n    const candidates = [\n      value.email,\n      value.address,\n      value.value,\n      value.text,\n      value.from,\n      value.sender,\n    ];\n\n    for (const candidate of candidates) {\n      const email = extractEmail(candidate);\n\n      if (email) {\n        return email;\n      }\n    }\n  }\n\n  return '';\n}\n\n\n/**\n * Determina el remitente usando diferentes\n * estructuras posibles del Gmail Trigger.\n */\nfunction getSenderEmail(json) {\n  const candidates = [\n    json?.senderEmail,\n    json?.from,\n    json?.From,\n    json?.sender,\n    json?.Sender,\n    json?.replyTo,\n    json?.reply_to,\n    json?.message?.from,\n    json?.data?.from,\n\n    getHeaderValue(json, 'From'),\n    getHeaderValue(json, 'Reply-To'),\n    getHeaderValue(json, 'Sender'),\n  ];\n\n  for (const candidate of candidates) {\n    const email = extractEmail(candidate);\n\n    if (email) {\n      return email;\n    }\n  }\n\n  return '';\n}\n\n\n/**\n * Obtiene el asunto del correo.\n */\nfunction getSubject(json) {\n  const candidates = [\n    json?.subject,\n    json?.Subject,\n    json?.message?.subject,\n    json?.data?.subject,\n    getHeaderValue(json, 'Subject'),\n  ];\n\n  for (const candidate of candidates) {\n    const text = toText(candidate);\n\n    if (text) {\n      return text;\n    }\n  }\n\n  return '';\n}\n\n\n/**\n * Obtiene el ID del mensaje Gmail.\n */\nfunction getMessageId(json) {\n  return (\n    toText(json?.id) ||\n    toText(json?.messageId) ||\n    toText(json?.message_id) ||\n    toText(json?.message?.id) ||\n    ''\n  );\n}\n\n\n/**\n * Obtiene threadId de Gmail.\n */\nfunction getThreadId(json) {\n  return (\n    toText(json?.threadId) ||\n    toText(json?.thread_id) ||\n    toText(json?.message?.threadId) ||\n    ''\n  );\n}\n\n\n/**\n * Obtiene extensión limpia.\n */\nfunction getFileExtension(file) {\n  const explicitExtension = toText(\n    file?.fileExtension\n  )\n    .replace(/^\\./, '')\n    .toLowerCase();\n\n  if (explicitExtension) {\n    return explicitExtension;\n  }\n\n  const fileName = toText(file?.fileName);\n\n  if (!fileName.includes('.')) {\n    return '';\n  }\n\n  return fileName\n    .split('.')\n    .pop()\n    .replace(/^\\./, '')\n    .toLowerCase();\n}\n\n\n/**\n * Clasifica el archivo.\n */\nfunction detectFileType(file) {\n  const extension = getFileExtension(file);\n\n  const mimeType = toText(\n    file?.mimeType\n  ).toLowerCase();\n\n  // PDF\n  if (\n    extension === 'pdf' ||\n    mimeType === 'application/pdf'\n  ) {\n    return {\n      fileType: 'PDF',\n      extension,\n      mimeType,\n      supported: true,\n    };\n  }\n\n  // XML\n  if (\n    extension === 'xml' ||\n    mimeType === 'application/xml' ||\n    mimeType === 'text/xml' ||\n    mimeType.includes('xml')\n  ) {\n    return {\n      fileType: 'XML',\n      extension,\n      mimeType,\n      supported: true,\n    };\n  }\n\n  // Imágenes admitidas\n  const imageExtensions = [\n    'jpg',\n    'jpeg',\n    'png',\n    'webp',\n    'tif',\n    'tiff',\n  ];\n\n  if (\n    imageExtensions.includes(extension) ||\n    mimeType.startsWith('image/')\n  ) {\n    return {\n      fileType: 'IMAGE',\n      extension,\n      mimeType,\n      supported: true,\n    };\n  }\n\n  // Otros\n  return {\n    fileType: 'UNSUPPORTED',\n    extension,\n    mimeType,\n    supported: false,\n  };\n}\n\n\n/**\n * Detecta si probablemente se trata de una imagen\n * inline pequeña de firma/logo.\n *\n * Por ahora NO la descartamos automáticamente.\n * Solo dejamos el flag para usarlo después.\n */\nfunction detectPossibleInlineImage(file) {\n  const mimeType = toText(\n    file?.mimeType\n  ).toLowerCase();\n\n  const fileName = toText(\n    file?.fileName\n  ).toLowerCase();\n\n  if (!mimeType.startsWith('image/')) {\n    return false;\n  }\n\n  const suspiciousNames = [\n    'logo',\n    'signature',\n    'firma',\n    'icon',\n    'image00',\n    'image01',\n  ];\n\n  return suspiciousNames.some(\n    (name) => fileName.includes(name)\n  );\n}\n\n\n/**\n * Procesamiento principal\n */\nfor (const item of items) {\n  const json = item.json || {};\n  const binaries = item.binary || {};\n\n  const senderEmail = getSenderEmail(json);\n  const subject = getSubject(json);\n\n  const gmailMessageId = getMessageId(json);\n  const threadId = getThreadId(json);\n\n  const binaryKeys = Object.keys(binaries);\n\n  /**\n   * Caso defensivo:\n   * correo sin adjuntos.\n   */\n  if (binaryKeys.length === 0) {\n    output.push({\n      json: {\n        gmailMessageId,\n        threadId,\n\n        senderEmail,\n        subject,\n\n        fileName: null,\n        fileExtension: null,\n        mimeType: null,\n\n        fileType: 'NO_ATTACHMENT',\n        supported: false,\n\n        sourceBinaryKey: null,\n        binaryProperty: null,\n\n        possibleInlineImage: false,\n\n        processingStatus: 'NO_ATTACHMENT',\n\n        errorReason:\n          'El correo no contiene archivos binarios descargados',\n\n        processedAt:\n          new Date().toISOString(),\n      },\n    });\n\n    continue;\n  }\n\n  /**\n   * Creamos un item independiente por adjunto.\n   */\n  for (const binaryKey of binaryKeys) {\n    const file = binaries[binaryKey];\n\n    if (!file) {\n      continue;\n    }\n\n    const {\n      fileType,\n      extension,\n      mimeType,\n      supported,\n    } = detectFileType(file);\n\n    const possibleInlineImage =\n      detectPossibleInlineImage(file);\n\n    output.push({\n      json: {\n        // Gmail\n        gmailMessageId,\n        threadId,\n        senderEmail,\n        subject,\n\n        // Archivo\n        fileName:\n          toText(file?.fileName) || null,\n\n        fileExtension:\n          extension || null,\n\n        mimeType:\n          mimeType || null,\n\n        fileType,\n        supported,\n\n        // Trazabilidad del binario\n        sourceBinaryKey: binaryKey,\n\n        // A partir de aquí todos los nodos\n        // utilizarán siempre binary.data\n        binaryProperty: 'data',\n\n        possibleInlineImage,\n\n        processingStatus:\n          supported\n            ? 'READY'\n            : 'UNSUPPORTED',\n\n        processedAt:\n          new Date().toISOString(),\n      },\n\n      /**\n       * Normalizamos:\n       *\n       * attachment_0\n       * attachment_1\n       * ...\n       *\n       * a:\n       *\n       * binary.data\n       */\n      binary: {\n        data: file,\n      },\n    });\n  }\n}\n\nreturn output;"
+   },
+   "id": "befe5d84-2be3-42bc-b446-d59a92d7bb3e",
+   "name": "Detectar tipo de archivo (P02)",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -4448,
+    592
+   ]
+  },
+  {
+   "parameters": {
+    "rules": {
+     "values": [
+      {
+       "conditions": {
+        "options": {
+         "caseSensitive": false,
+         "leftValue": "",
+         "typeValidation": "strict",
+         "version": 3
+        },
+        "conditions": [
+         {
+          "leftValue": "={{ $json.fileType }}",
+          "rightValue": "PDF",
+          "operator": {
+           "type": "string",
+           "operation": "equals"
+          },
+          "id": "a9c54e0e-81c7-4878-97dd-a8ba2e5a89e3"
+         }
+        ],
+        "combinator": "and"
+       },
+       "renameOutput": true,
+       "outputKey": "PDF"
+      },
+      {
+       "conditions": {
+        "options": {
+         "caseSensitive": false,
+         "leftValue": "",
+         "typeValidation": "strict",
+         "version": 3
+        },
+        "conditions": [
+         {
+          "leftValue": "={{ $json.fileType }}",
+          "rightValue": "XML",
+          "operator": {
+           "type": "string",
+           "operation": "equals"
+          },
+          "id": "a0ff635e-443f-41b0-812b-486501a255ad"
+         }
+        ],
+        "combinator": "and"
+       },
+       "renameOutput": true,
+       "outputKey": "XML"
+      },
+      {
+       "conditions": {
+        "options": {
+         "caseSensitive": false,
+         "leftValue": "",
+         "typeValidation": "strict",
+         "version": 3
+        },
+        "conditions": [
+         {
+          "id": "597914f8-b680-471c-aca4-4002c27edb9f",
+          "leftValue": "={{ $json.fileType }}",
+          "rightValue": "IMAGE",
+          "operator": {
+           "type": "string",
+           "operation": "equals",
+           "name": "filter.operator.equals"
+          }
+         }
+        ],
+        "combinator": "and"
+       },
+       "renameOutput": true,
+       "outputKey": "IMAGE"
+      }
+     ]
+    },
+    "options": {
+     "fallbackOutput": "extra",
+     "ignoreCase": true,
+     "renameFallbackOutput": "Otros",
+     "allMatchingOutputs": false
+    }
+   },
+   "id": "e5e249e2-41e6-4c79-bd03-b0db345c12f5",
+   "name": "Enrutar por tipo de archivo (P03)",
+   "type": "n8n-nodes-base.switch",
+   "typeVersion": 3.4,
+   "position": [
+    -4224,
+    560
+   ]
+  },
+  {
+   "parameters": {
+    "conditions": {
+     "options": {
+      "caseSensitive": true,
+      "leftValue": "",
+      "typeValidation": "strict",
+      "version": 3
+     },
+     "conditions": [
+      {
+       "id": "779bded4-a8d0-4678-9215-2539b9787458",
+       "leftValue": "={{ $json.recipientEmailValid }}",
+       "rightValue": "",
+       "operator": {
+        "type": "boolean",
+        "operation": "true",
+        "singleValue": true
+       }
+      }
+     ],
+     "combinator": "and"
+    },
+    "options": {}
+   },
+   "type": "n8n-nodes-base.if",
+   "typeVersion": 2.3,
+   "position": [
+    2576,
+    752
+   ],
+   "id": "01af133f-2bcd-4918-86f4-c072ed46cf1f",
+   "name": "¿Email rechazo válido? (P09.12)"
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// 🧪 SIMULA: Extract from File (PDF)\n// El nodo real devuelve { text: '<texto del PDF>' }.\nconst caso = $('D00 · Caso de prueba (dummy)').first().json._caso ?? {};\n\nreturn {\n  json: { ...$json, text: String(caso.rawText ?? '') },\n  binary: $input.item.binary,\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -3936,
+    400
+   ],
+   "id": "77057ea9-e82c-4fca-b098-971c817c7fe2",
+   "name": "Extraer texto PDF (P04.1)",
+   "notes": "SIMULADO · devuelve el texto del caso en vez de leer el PDF real",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// 🧪 SIMULA: Extract from File (XML) + mapeo UBL 2.1\n//\n// ⚠️ En el flujo de producción este nodo NO tiene salida:\n//    cualquier factura XML se pierde en silencio.\n//    Aquí lo conectamos a P05 para poder probar la rama.\nconst caso = $('D00 · Caso de prueba (dummy)').first().json._caso ?? {};\n\nconst src = $('Enrutar por tipo de archivo (P03)').item;\nconst d = caso.datosXml ?? {};\n\nreturn {\n  json: {\n    ...src.json,\n    sourceType: 'XML',\n    extractionProvider: 'xml',\n    documentType: 'invoice',\n    isFinancialDocument: true,\n    supplierName: d.supplierName ?? null,\n    supplierTaxId: d.supplierTaxId ?? null,\n    documentNumber: d.documentNumber ?? null,\n    issueDate: d.issueDate ?? null,\n    currency: d.currency ?? null,\n    subtotal: d.subtotal ?? null,\n    tax: d.tax ?? null,\n    total: d.total ?? null,\n    rawText: String(caso.rawText ?? ''),\n    confidence: 0.99,\n  },\n  binary: src.binary,\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -3968,
+    576
+   ],
+   "id": "c10a58d6-080f-4ad8-a53a-4c33d51d0d16",
+   "name": "Extraer datos XML (P04.2)",
+   "notes": "SIMULADO · además, aquí SÍ está conectado a P05 (en producción esta rama muere)",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// 🧪 SIMULA: OpenAI · Analyze image\nconst caso = $('D00 · Caso de prueba (dummy)').first().json._caso ?? {};\n\nif (!caso.vision) {\n  throw new Error('El caso ' + ($('D00 · Caso de prueba (dummy)').first().json._casoNumero) + ' no define datos de Vision. Usa el caso 10 u 11.');\n}\n\nreturn { json: { content: JSON.stringify(caso.vision) }, binary: $input.item.binary };"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -4016,
+    816
+   ],
+   "id": "5b0bc865-5b3a-45aa-858b-e568e50919aa",
+   "name": "Analyze image (P04.3)",
+   "notes": "SIMULADO · respuesta de OpenAI Vision tomada del caso",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// ============================================================\n// P04.1 PDF - RESTAURAR CONTEXTO DEL CORREO\n// ============================================================\n\nconst extracted = $json ?? {};\n\n// Recuperamos el item original que salió de P03\nconst sourceItem =\n  $('Enrutar por tipo de archivo (P03)').item;\n\nconst source =\n  sourceItem.json ?? {};\n\n// El Extract From PDF normalmente devuelve el texto\n// en \"text\". Dejamos alternativas por seguridad.\nconst extractedText =\n  extracted.text ??\n  extracted.rawText ??\n  extracted.content ??\n  '';\n\n\nreturn {\n  json: {\n    // Recuperamos Gmail + archivo + fileType\n    ...source,\n\n    // Dejamos claro que viene de PDF\n    sourceType: 'PDF',\n    extractionProvider: 'pdf',\n\n    // Texto extraído\n    rawText: extractedText,\n  },\n\n  // Conservamos el PDF\n  binary:\n    sourceItem.binary,\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -3616,
+    400
+   ],
+   "id": "f3947276-8476-4962-9be2-f4212138974e",
+   "name": "Preparar PDF extraído (P04.1 .1)"
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// ============================================================\n// P04.2 PDF - EXTRAER CAMPOS DESDE TEXTO DE PDF\n// ============================================================\n//\n// V1:\n// Parser determinista para facturas PDF digitales.\n// No usa Vision.\n// No usa IA.\n//\n// Conserva:\n// - metadata Gmail\n// - archivo binario\n// - rawText\n//\n// Produce los mismos campos que la rama IMAGE.\n// ============================================================\n\nconst item = $input.item;\nconst j = item.json ?? {};\n\nconst rawText =\n  String(\n    j.rawText ??\n    j.text ??\n    j.content ??\n    ''\n  ).trim();\n\n\n// ============================================================\n// VALIDACIÓN\n// ============================================================\n\nif (!rawText) {\n  return {\n    json: {\n      ...j,\n\n      sourceType: 'PDF',\n      extractionProvider: 'pdf-text',\n\n      documentType: 'invoice',\n      isFinancialDocument: false,\n\n      supplierName: null,\n      supplierTaxId: null,\n      documentNumber: null,\n      issueDate: null,\n      currency: null,\n\n      subtotal: null,\n      tax: null,\n      total: null,\n\n      rawText,\n\n      confidence: 0,\n\n      pdfExtractionOk: false,\n      pdfExtractionError: 'PDF_WITHOUT_EXTRACTABLE_TEXT',\n    },\n\n    binary: item.binary,\n  };\n}\n\n\n// ============================================================\n// HELPERS\n// ============================================================\n\nfunction firstMatch(text, patterns) {\n\n  for (const regex of patterns) {\n\n    const match =\n      text.match(regex);\n\n    if (\n      match &&\n      match[1] !== undefined\n    ) {\n      return String(match[1]).trim();\n    }\n  }\n\n  return null;\n}\n\n\nfunction amount(value) {\n\n  if (\n    value === null ||\n    value === undefined ||\n    value === ''\n  ) {\n    return null;\n  }\n\n  let text =\n    String(value)\n      .trim()\n      .replace(/\\s/g, '')\n      .replace(/[^\\d,.\\-]/g, '');\n\n  if (!text) {\n    return null;\n  }\n\n  const comma =\n    text.lastIndexOf(',');\n\n  const dot =\n    text.lastIndexOf('.');\n\n  // 1.234,56\n  if (comma > dot) {\n\n    text =\n      text\n        .replace(/\\./g, '')\n        .replace(',', '.');\n  }\n\n  // 1,234.56\n  else if (\n    dot > comma &&\n    comma !== -1\n  ) {\n\n    text =\n      text.replace(/,/g, '');\n  }\n\n  // 17,70\n  else if (\n    comma !== -1 &&\n    dot === -1\n  ) {\n\n    text =\n      text.replace(',', '.');\n  }\n\n  const number =\n    Number(text);\n\n  return Number.isFinite(number)\n    ? number\n    : null;\n}\n\n\nfunction isoDate(value) {\n\n  if (!value) {\n    return null;\n  }\n\n  const text =\n    String(value).trim();\n\n  // DD/MM/YYYY\n  let match =\n    text.match(\n      /^(\\d{1,2})\\/(\\d{1,2})\\/(\\d{4})$/\n    );\n\n  if (match) {\n\n    const day =\n      match[1].padStart(2, '0');\n\n    const month =\n      match[2].padStart(2, '0');\n\n    return `${match[3]}-${month}-${day}`;\n  }\n\n  // YYYY-MM-DD\n  match =\n    text.match(\n      /^(\\d{4})-(\\d{2})-(\\d{2})$/\n    );\n\n  if (match) {\n    return text;\n  }\n\n  return null;\n}\n\n\n// ============================================================\n// 1. RUC DEL EMISOR\n// ============================================================\n//\n// Tomamos la PRIMERA aparición de RUC.\n// Normalmente corresponde al proveedor/emisor.\n// ============================================================\n\nconst supplierTaxId =\n  firstMatch(\n    rawText,\n    [\n      /R\\.?\\s*U\\.?\\s*C\\.?\\s*(?:N[°º.]*)?\\s*[:\\-]?\\s*(\\d{11})/i,\n      /\\bRUC\\s*[:\\-]?\\s*(\\d{11})/i,\n    ]\n  );\n\n\n// ============================================================\n// 2. NÚMERO DE COMPROBANTE\n// ============================================================\n//\n// Ejemplos:\n// F001-31663\n// E001-2842\n// B001-123456\n// ============================================================\n\nconst documentNumberRaw =\n  firstMatch(\n    rawText,\n    [\n      /(?:FACTURA|BOLETA)[\\s\\S]{0,150}?\\b([FBE]\\d{3}\\s*-\\s*\\d{1,12})\\b/i,\n      /\\b([FBE]\\d{3}\\s*-\\s*\\d{1,12})\\b/i,\n    ]\n  );\n\nconst documentNumber =\n  documentNumberRaw\n    ? documentNumberRaw\n        .toUpperCase()\n        .replace(/\\s+/g, '')\n    : null;\n\n\n// ============================================================\n// 3. FECHA DE EMISIÓN\n// ============================================================\n\nconst issueDateRaw =\n  firstMatch(\n    rawText,\n    [\n      /Fecha\\s+(?:de\\s+)?Emisi[oó]n\\s*[:\\-]?\\s*(\\d{1,2}\\/\\d{1,2}\\/\\d{4})/i,\n      /Fecha\\s+(?:de\\s+)?Emisi[oó]n\\s*[:\\-]?\\s*(\\d{4}-\\d{2}-\\d{2})/i,\n    ]\n  );\n\nconst issueDate =\n  isoDate(issueDateRaw);\n\n\n// ============================================================\n// 4. MONEDA\n// ============================================================\n\nlet currency = null;\n\nif (\n  /\\bSOLES?\\b/i.test(rawText) ||\n  /\\bPEN\\b/i.test(rawText) ||\n  /S\\/\\s*\\d/i.test(rawText)\n) {\n\n  currency = 'PEN';\n}\n\nelse if (\n  /\\bD[ÓO]LARES?\\b/i.test(rawText) ||\n  /\\bUSD\\b/i.test(rawText) ||\n  /\\$\\s*\\d/i.test(rawText)\n) {\n\n  currency = 'USD';\n}\n\n\n// ============================================================\n// 5. SUBTOTAL\n// ============================================================\n\nconst subtotal =\n  amount(\n    firstMatch(\n      rawText,\n      [\n        /Sub\\s*Total\\s*(?:Ventas?)?\\s*[:\\-]?\\s*(?:S\\/\\.?|USD|\\$)?\\s*([\\d.,]+)/i,\n        /Valor\\s+Venta\\s*[:\\-]?\\s*(?:S\\/\\.?|USD|\\$)?\\s*([\\d.,]+)/i,\n        /Subtotal\\s*[:\\-]?\\s*(?:S\\/\\.?|USD|\\$)?\\s*([\\d.,]+)/i,\n      ]\n    )\n  );\n\n\n// ============================================================\n// 6. IGV / IMPUESTO\n// ============================================================\n\nconst tax =\n  amount(\n    firstMatch(\n      rawText,\n      [\n        /\\bIGV\\s*[:\\-]?\\s*(?:S\\/\\.?|USD|\\$)?\\s*([\\d.,]+)/i,\n        /\\bIVA\\s*[:\\-]?\\s*(?:S\\/\\.?|USD|\\$)?\\s*([\\d.,]+)/i,\n        /\\bImpuesto\\s*[:\\-]?\\s*(?:S\\/\\.?|USD|\\$)?\\s*([\\d.,]+)/i,\n      ]\n    )\n  );\n\n\n// ============================================================\n// 7. TOTAL\n// ============================================================\n\nconst total =\n  amount(\n    firstMatch(\n      rawText,\n      [\n        /Importe\\s+Total\\s*[:\\-]?\\s*(?:S\\/\\.?|USD|\\$)?\\s*([\\d.,]+)/i,\n        /Total\\s+(?:a\\s+Pagar|Venta)\\s*[:\\-]?\\s*(?:S\\/\\.?|USD|\\$)?\\s*([\\d.,]+)/i,\n        /\\bTOTAL\\s*[:\\-]?\\s*(?:S\\/\\.?|USD|\\$)?\\s*([\\d.,]+)/i,\n      ]\n    )\n  );\n\n\n// ============================================================\n// 8. NOMBRE DEL PROVEEDOR\n// ============================================================\n//\n// Buscamos una razón social cerca del inicio del documento,\n// antes de los datos del cliente.\n// ============================================================\n\nconst header =\n  rawText.slice(\n    0,\n    Math.min(\n      rawText.length,\n      1800\n    )\n  );\n\nconst lines =\n  header\n    .split(/\\r?\\n/)\n    .map(line => line.trim())\n    .filter(Boolean);\n\n\nconst corporateRegex =\n  /\\b(S\\.?A\\.?C\\.?|S\\.?A\\.?|E\\.?I\\.?R\\.?L\\.?|S\\.?R\\.?L\\.?|SAC|EIRL|SRL)\\b/i;\n\nlet supplierName = null;\n\nfor (const line of lines) {\n\n  if (\n    corporateRegex.test(line) &&\n    !/SEÑOR|CLIENTE|ADQUIRIENTE/i.test(line)\n  ) {\n\n    supplierName = line;\n    break;\n  }\n}\n\n\n// ============================================================\n// 9. TIPO DE DOCUMENTO\n// ============================================================\n\nlet documentType = 'invoice';\n\nif (/BOLETA/i.test(rawText)) {\n  documentType = 'receipt';\n}\n\nelse if (/TICKET/i.test(rawText)) {\n  documentType = 'ticket';\n}\n\n\n// ============================================================\n// 10. CONFIANZA HEURÍSTICA\n// ============================================================\n\nconst importantFields = [\n  supplierTaxId,\n  documentNumber,\n  issueDate,\n  subtotal,\n  tax,\n  total,\n];\n\nconst foundFields =\n  importantFields.filter(\n    value =>\n      value !== null &&\n      value !== undefined &&\n      value !== ''\n  ).length;\n\nconst confidence =\n  Number(\n    (\n      foundFields /\n      importantFields.length\n    ).toFixed(2)\n  );\n\n\n// ============================================================\n// 11. VALIDACIÓN DE EXTRACCIÓN\n// ============================================================\n\nconst pdfExtractionOk =\n  Boolean(\n    supplierTaxId &&\n    documentNumber &&\n    issueDate &&\n    total !== null &&\n    total > 0\n  );\n\n\n// ============================================================\n// SALIDA\n// ============================================================\n\nreturn {\n  json: {\n\n    // Mantener Gmail + archivo + metadata\n    ...j,\n\n    sourceType: 'PDF',\n    extractionProvider: 'pdf-text-parser',\n\n    documentType,\n    isFinancialDocument:\n      pdfExtractionOk,\n\n    supplierName,\n    supplierTaxId,\n    documentNumber,\n    issueDate,\n    currency,\n\n    subtotal,\n    tax,\n    total,\n\n    rawText,\n\n    confidence,\n\n    pdfExtractionOk,\n\n    pdfExtractedAt:\n      new Date().toISOString(),\n  },\n\n  binary:\n    item.binary,\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -3392,
+    400
+   ],
+   "id": "0c7a9186-c247-4c4a-b15a-889588407daf",
+   "name": "Extraer campos PDF (P04.1.2 )"
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// ============================================================\n// P04.1 - Parsear OpenAI Vision\n// ============================================================\n\nconst aiResponse = $json;\n\n// Recuperamos el item original proveniente de P03.\n// Así conservamos metadata + binary.data.\nconst sourceItem = $('Enrutar por tipo de archivo (P03)').item;\n\n\n// ============================================================\n// CONFIGURACIÓN\n// ============================================================\n\nconst CONFIDENCE_THRESHOLD = 0.70;\n\n\n// ============================================================\n// HELPERS\n// ============================================================\n\nfunction cleanJsonString(value) {\n  return String(value)\n    .replace(/^```json\\s*/i, '')\n    .replace(/^```\\s*/i, '')\n    .replace(/```$/i, '')\n    .trim();\n}\n\n\nfunction looksLikeInvoicePayload(obj) {\n  if (\n    !obj ||\n    typeof obj !== 'object' ||\n    Array.isArray(obj)\n  ) {\n    return false;\n  }\n\n  return (\n    'documentType' in obj ||\n    'isFinancialDocument' in obj ||\n    'supplierName' in obj ||\n    'supplierTaxId' in obj ||\n    'documentNumber' in obj ||\n    'total' in obj\n  );\n}\n\n\n/**\n * Busca recursivamente un JSON válido dentro de la\n * respuesta de OpenAI/n8n.\n *\n * Funciona si:\n * - viene como objeto\n * - viene en content[].text\n * - viene como output_text\n * - viene como string JSON\n */\nfunction findStructuredPayload(value) {\n  if (value === null || value === undefined) {\n    return null;\n  }\n\n  // Ya es objeto estructurado\n  if (\n    typeof value === 'object' &&\n    !Array.isArray(value) &&\n    looksLikeInvoicePayload(value)\n  ) {\n    return value;\n  }\n\n  // String potencialmente JSON\n  if (typeof value === 'string') {\n    const cleaned = cleanJsonString(value);\n\n    if (\n      cleaned.startsWith('{') &&\n      cleaned.endsWith('}')\n    ) {\n      try {\n        const parsed = JSON.parse(cleaned);\n\n        if (looksLikeInvoicePayload(parsed)) {\n          return parsed;\n        }\n      } catch {\n        // Continuamos buscando\n      }\n    }\n\n    return null;\n  }\n\n  // Array\n  if (Array.isArray(value)) {\n    for (const child of value) {\n      const found = findStructuredPayload(child);\n\n      if (found) {\n        return found;\n      }\n    }\n\n    return null;\n  }\n\n  // Objeto genérico\n  if (typeof value === 'object') {\n\n    // Caso OpenAI típico:\n    // {\n    //   type: \"output_text\",\n    //   text: \"{...}\"\n    // }\n    if (\n      value.type === 'output_text' &&\n      typeof value.text === 'string'\n    ) {\n      const found = findStructuredPayload(value.text);\n\n      if (found) {\n        return found;\n      }\n    }\n\n    // Buscar recursivamente\n    for (const child of Object.values(value)) {\n      const found = findStructuredPayload(child);\n\n      if (found) {\n        return found;\n      }\n    }\n  }\n\n  return null;\n}\n\n\n/**\n * Número nullable.\n */\nfunction toNullableNumber(value) {\n  if (\n    value === null ||\n    value === undefined ||\n    value === ''\n  ) {\n    return null;\n  }\n\n  if (typeof value === 'number') {\n    return Number.isFinite(value)\n      ? value\n      : null;\n  }\n\n  let text = String(value)\n    .trim()\n    .replace(/\\s/g, '')\n    .replace(/[^\\d,.\\-]/g, '');\n\n  if (!text) {\n    return null;\n  }\n\n  const comma = text.lastIndexOf(',');\n  const dot = text.lastIndexOf('.');\n\n  // 1.234,56\n  if (comma > dot) {\n    text = text\n      .replace(/\\./g, '')\n      .replace(',', '.');\n  }\n\n  // 1,234.56\n  else if (\n    dot > comma &&\n    comma !== -1\n  ) {\n    text = text.replace(/,/g, '');\n  }\n\n  // 18,50\n  else if (\n    comma !== -1 &&\n    dot === -1\n  ) {\n    text = text.replace(',', '.');\n  }\n\n  const number = Number(text);\n\n  return Number.isFinite(number)\n    ? number\n    : null;\n}\n\n\n/**\n * Normaliza confidence.\n *\n * Acepta:\n * 0.9\n * \"0.9\"\n * 90  -> 0.90\n */\nfunction normalizeConfidence(value) {\n  let confidence = Number(value ?? 0);\n\n  if (!Number.isFinite(confidence)) {\n    return 0;\n  }\n\n  // Si el modelo accidentalmente devuelve 90 en vez de 0.90\n  if (\n    confidence > 1 &&\n    confidence <= 100\n  ) {\n    confidence = confidence / 100;\n  }\n\n  return Math.min(\n    1,\n    Math.max(0, confidence)\n  );\n}\n\n\n// ============================================================\n// EXTRAER JSON DE OPENAI\n// ============================================================\n\nconst parsed = findStructuredPayload(aiResponse);\n\n\n// ============================================================\n// ERROR DE PARSEO\n// ============================================================\n\nif (!parsed) {\n  return {\n    json: {\n      ...sourceItem.json,\n\n      visionProvider: 'openai',\n      fallbackUsed: false,\n\n      visionOk: false,\n\n      visionError:\n        'No se pudo localizar o interpretar el JSON devuelto por OpenAI',\n\n      confidence: 0,\n      confidenceThreshold: CONFIDENCE_THRESHOLD,\n      meetsConfidenceThreshold: false,\n\n      visionParsedAt:\n        new Date().toISOString(),\n    },\n\n    binary: sourceItem.binary,\n  };\n}\n\n\n// ============================================================\n// NORMALIZAR DATOS OPENAI\n// ============================================================\n\nconst confidence =\n  normalizeConfidence(parsed.confidence);\n\nconst subtotal =\n  toNullableNumber(parsed.subtotal);\n\nconst tax =\n  toNullableNumber(parsed.tax);\n\nconst total =\n  toNullableNumber(parsed.total);\n\n\n// ============================================================\n// SALIDA\n// ============================================================\n\nreturn {\n  json: {\n    // Conservamos metadata de Gmail/P02\n    ...sourceItem.json,\n\n    // Auditoría IA\n    visionProvider: 'openai',\n    fallbackUsed: false,\n    visionOk: true,\n\n    // Documento\n    documentType:\n      parsed.documentType ?? 'other',\n\n    isFinancialDocument:\n      parsed.isFinancialDocument === true,\n\n    // Proveedor\n    supplierName:\n      parsed.supplierName ?? null,\n\n    supplierTaxId:\n      parsed.supplierTaxId ?? null,\n\n    // Documento\n    documentNumber:\n      parsed.documentNumber ?? null,\n\n    issueDate:\n      parsed.issueDate ?? null,\n\n    currency:\n      parsed.currency ?? null,\n\n    // Importes\n    subtotal,\n    tax,\n    total,\n\n    // OCR / texto\n    rawText:\n      parsed.rawText ?? null,\n\n    // Confianza\n    confidence,\n\n    confidenceThreshold:\n      CONFIDENCE_THRESHOLD,\n\n    meetsConfidenceThreshold:\n      confidence >= CONFIDENCE_THRESHOLD,\n\n    visionParsedAt:\n      new Date().toISOString(),\n  },\n\n  // MUY IMPORTANTE:\n  // conservar imagen para Gemini fallback\n  binary: sourceItem.binary,\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -3824,
+    816
+   ],
+   "id": "7a498663-a79b-428e-a62c-3ad35be98692",
+   "name": "Parsear Vision (P04.3.1)"
+  },
+  {
+   "parameters": {
+    "conditions": {
+     "options": {
+      "caseSensitive": true,
+      "leftValue": "",
+      "typeValidation": "strict",
+      "version": 3
+     },
+     "conditions": [
+      {
+       "id": "5730909e-e3d7-4439-b8b1-f0cb67dd5cf0",
+       "leftValue": "={{ $json.visionOk }}",
+       "rightValue": "",
+       "operator": {
+        "type": "boolean",
+        "operation": "true",
+        "singleValue": true
+       }
+      },
+      {
+       "id": "4a5f8cf5-e9b3-4a19-b39f-3bb6b2c78b53",
+       "leftValue": "={{ $json.isFinancialDocument }}",
+       "rightValue": false,
+       "operator": {
+        "type": "boolean",
+        "operation": "true",
+        "singleValue": true
+       }
+      },
+      {
+       "id": "7b7ac2f1-1d59-4885-84cf-dd0544bb7f50",
+       "leftValue": "={{ $json.total }}",
+       "rightValue": 0,
+       "operator": {
+        "type": "number",
+        "operation": "gt"
+       }
+      },
+      {
+       "id": "a1946928-17b4-46e6-bccc-5cbedaf0e3e3",
+       "leftValue": "={{ $json.meetsConfidenceThreshold }}",
+       "rightValue": 0.7,
+       "operator": {
+        "type": "boolean",
+        "operation": "true",
+        "singleValue": true
+       }
+      }
+     ],
+     "combinator": "and"
+    },
+    "options": {}
+   },
+   "type": "n8n-nodes-base.if",
+   "typeVersion": 2.3,
+   "position": [
+    -3520,
+    816
+   ],
+   "id": "f4857ee7-a0df-41e4-ba42-33a940a654df",
+   "name": "¿Extracción Vision válida?(P04.3.2)"
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// 🧪 SIMULA: Google Gemini · Analyze image (fallback)\nconst caso = $('D00 · Caso de prueba (dummy)').first().json._caso ?? {};\n\nif (!caso.gemini) {\n  throw new Error('El caso no define datos de Gemini. Usa el caso 11.');\n}\n\nreturn { json: { content: JSON.stringify(caso.gemini) }, binary: $input.item.binary };"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -3328,
+    896
+   ],
+   "id": "c5ba4cb2-aa82-4676-b13b-934680c0baf2",
+   "name": "Gemini Vision fallback(P04.3.3)",
+   "notes": "SIMULADO · respuesta de Gemini tomada del caso",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// ============================================================\n// P04.3 - Parsear Gemini Vision fallback\n// ============================================================\n\nconst geminiResponse = $json;\n\n// Recuperamos el resultado previo de OpenAI.\n// Así conservamos:\n// - datos originales\n// - resultado fallido/baja confianza OpenAI\n// - binary.data\nconst sourceItem = $('Parsear Vision (P04.3.1)').item;\n\n\n// ============================================================\n// CONFIGURACIÓN\n// ============================================================\n\nconst CONFIDENCE_THRESHOLD = 0.70;\n\n\n// ============================================================\n// HELPERS\n// ============================================================\n\nfunction cleanJsonString(value) {\n  return String(value)\n    .replace(/^```json\\s*/i, '')\n    .replace(/^```\\s*/i, '')\n    .replace(/```$/i, '')\n    .trim();\n}\n\n\nfunction looksLikeInvoicePayload(obj) {\n  if (\n    !obj ||\n    typeof obj !== 'object' ||\n    Array.isArray(obj)\n  ) {\n    return false;\n  }\n\n  return (\n    'documentType' in obj ||\n    'isFinancialDocument' in obj ||\n    'supplierName' in obj ||\n    'supplierTaxId' in obj ||\n    'documentNumber' in obj ||\n    'total' in obj\n  );\n}\n\n\n/**\n * Busca el JSON de Gemini sin depender de una\n * ruta exacta.\n *\n * Soporta:\n * - objetos\n * - strings JSON\n * - content\n * - text\n * - parts[]\n * - candidates[]\n * - respuestas simplificadas por n8n\n */\nfunction findStructuredPayload(value) {\n  if (value === null || value === undefined) {\n    return null;\n  }\n\n  // Ya está parseado\n  if (\n    typeof value === 'object' &&\n    !Array.isArray(value) &&\n    looksLikeInvoicePayload(value)\n  ) {\n    return value;\n  }\n\n  // String JSON\n  if (typeof value === 'string') {\n    const cleaned = cleanJsonString(value);\n\n    if (\n      cleaned.startsWith('{') &&\n      cleaned.endsWith('}')\n    ) {\n      try {\n        const parsed = JSON.parse(cleaned);\n\n        if (looksLikeInvoicePayload(parsed)) {\n          return parsed;\n        }\n      } catch {\n        // continuar\n      }\n    }\n\n    return null;\n  }\n\n  // Arrays\n  if (Array.isArray(value)) {\n    for (const child of value) {\n      const found = findStructuredPayload(child);\n\n      if (found) {\n        return found;\n      }\n    }\n\n    return null;\n  }\n\n  // Objetos genéricos\n  if (typeof value === 'object') {\n    for (const child of Object.values(value)) {\n      const found = findStructuredPayload(child);\n\n      if (found) {\n        return found;\n      }\n    }\n  }\n\n  return null;\n}\n\n\nfunction toNullableNumber(value) {\n  if (\n    value === null ||\n    value === undefined ||\n    value === ''\n  ) {\n    return null;\n  }\n\n  if (typeof value === 'number') {\n    return Number.isFinite(value)\n      ? value\n      : null;\n  }\n\n  let text = String(value)\n    .trim()\n    .replace(/\\s/g, '')\n    .replace(/[^\\d,.\\-]/g, '');\n\n  if (!text) {\n    return null;\n  }\n\n  const comma = text.lastIndexOf(',');\n  const dot = text.lastIndexOf('.');\n\n  // 1.234,56\n  if (comma > dot) {\n    text = text\n      .replace(/\\./g, '')\n      .replace(',', '.');\n  }\n\n  // 1,234.56\n  else if (\n    dot > comma &&\n    comma !== -1\n  ) {\n    text = text.replace(/,/g, '');\n  }\n\n  // 18,50\n  else if (\n    comma !== -1 &&\n    dot === -1\n  ) {\n    text = text.replace(',', '.');\n  }\n\n  const number = Number(text);\n\n  return Number.isFinite(number)\n    ? number\n    : null;\n}\n\n\n/**\n * Acepta confidence en 0-1 o 0-100.\n */\nfunction normalizeConfidence(value) {\n  let confidence = Number(value ?? 0);\n\n  if (!Number.isFinite(confidence)) {\n    return 0;\n  }\n\n  if (\n    confidence > 1 &&\n    confidence <= 100\n  ) {\n    confidence = confidence / 100;\n  }\n\n  return Math.min(\n    1,\n    Math.max(0, confidence)\n  );\n}\n\n\n// ============================================================\n// GUARDAR RESULTADO ANTERIOR DE OPENAI PARA AUDITORÍA\n// ============================================================\n\nconst openaiVisionOk =\n  sourceItem.json.visionOk === true;\n\nconst openaiConfidence =\n  normalizeConfidence(\n    sourceItem.json.confidence\n  );\n\nconst openaiVisionError =\n  sourceItem.json.visionError ?? null;\n\n\n// ============================================================\n// EXTRAER RESPUESTA GEMINI\n// ============================================================\n\nconst parsed =\n  findStructuredPayload(geminiResponse);\n\n\n// ============================================================\n// GEMINI NO PUDO PARSEARSE\n// ============================================================\n\nif (!parsed) {\n  return {\n    json: {\n      ...sourceItem.json,\n\n      // Guardamos qué pasó con OpenAI\n      openaiVisionOk,\n      openaiConfidence,\n      openaiVisionError,\n\n      // Resultado Gemini\n      visionProvider: 'gemini',\n      fallbackUsed: true,\n\n      visionOk: false,\n\n      visionError:\n        'No se pudo localizar o interpretar el JSON devuelto por Gemini',\n\n      confidence: 0,\n\n      confidenceThreshold:\n        CONFIDENCE_THRESHOLD,\n\n      meetsConfidenceThreshold:\n        false,\n\n      visionParsedAt:\n        new Date().toISOString(),\n    },\n\n    binary: sourceItem.binary,\n  };\n}\n\n\n// ============================================================\n// NORMALIZAR GEMINI\n// ============================================================\n\nconst confidence =\n  normalizeConfidence(parsed.confidence);\n\nconst subtotal =\n  toNullableNumber(parsed.subtotal);\n\nconst tax =\n  toNullableNumber(parsed.tax);\n\nconst total =\n  toNullableNumber(parsed.total);\n\n\n// ============================================================\n// SALIDA GEMINI\n// ============================================================\n\nreturn {\n  json: {\n    // Metadata original\n    gmailMessageId:\n      sourceItem.json.gmailMessageId ?? null,\n\n    threadId:\n      sourceItem.json.threadId ?? null,\n\n    senderEmail:\n      sourceItem.json.senderEmail ?? null,\n\n    subject:\n      sourceItem.json.subject ?? null,\n\n    fileName:\n      sourceItem.json.fileName ?? null,\n\n    fileExtension:\n      sourceItem.json.fileExtension ?? null,\n\n    mimeType:\n      sourceItem.json.mimeType ?? null,\n\n    fileType:\n      sourceItem.json.fileType ?? 'IMAGE',\n\n    supported:\n      sourceItem.json.supported ?? true,\n\n    sourceBinaryKey:\n      sourceItem.json.sourceBinaryKey ?? null,\n\n    binaryProperty:\n      sourceItem.json.binaryProperty ?? 'data',\n\n    // --------------------------------------------------------\n    // Auditoría del intento OpenAI\n    // --------------------------------------------------------\n\n    openaiVisionOk,\n    openaiConfidence,\n    openaiVisionError,\n\n    // --------------------------------------------------------\n    // Gemini = resultado definitivo de Vision\n    // --------------------------------------------------------\n\n    visionProvider: 'gemini',\n    fallbackUsed: true,\n    visionOk: true,\n\n    documentType:\n      parsed.documentType ?? 'other',\n\n    isFinancialDocument:\n      parsed.isFinancialDocument === true,\n\n    supplierName:\n      parsed.supplierName ?? null,\n\n    supplierTaxId:\n      parsed.supplierTaxId ?? null,\n\n    documentNumber:\n      parsed.documentNumber ?? null,\n\n    issueDate:\n      parsed.issueDate ?? null,\n\n    currency:\n      parsed.currency ?? null,\n\n    subtotal,\n    tax,\n    total,\n\n    rawText:\n      parsed.rawText ?? null,\n\n    // --------------------------------------------------------\n    // Confianza Gemini\n    // --------------------------------------------------------\n\n    confidence,\n\n    confidenceThreshold:\n      CONFIDENCE_THRESHOLD,\n\n    meetsConfidenceThreshold:\n      confidence >= CONFIDENCE_THRESHOLD,\n\n    visionParsedAt:\n      new Date().toISOString(),\n  },\n\n  // Conservamos documento original\n  binary: sourceItem.binary,\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -3152,
+    896
+   ],
+   "id": "60bbcbbb-542c-4698-83bc-7647f898224e",
+   "name": "Parsear Gemini (P04.3.4)"
+  },
+  {
+   "parameters": {
+    "conditions": {
+     "options": {
+      "caseSensitive": true,
+      "leftValue": "",
+      "typeValidation": "strict",
+      "version": 3
+     },
+     "conditions": [
+      {
+       "id": "a50a09aa-4429-41ff-8dd0-c8f1e0b02590",
+       "leftValue": "={{ $json.visionOk }}",
+       "rightValue": "",
+       "operator": {
+        "type": "boolean",
+        "operation": "true",
+        "singleValue": true
+       }
+      },
+      {
+       "id": "234ee58d-f262-480e-beca-e8ba76068f44",
+       "leftValue": "={{ $json.isFinancialDocument }}",
+       "rightValue": "",
+       "operator": {
+        "type": "boolean",
+        "operation": "true",
+        "singleValue": true
+       }
+      },
+      {
+       "id": "a6938baf-05d6-43f9-8c8a-9ad59c69a30d",
+       "leftValue": "={{ $json.total }}",
+       "rightValue": 0,
+       "operator": {
+        "type": "number",
+        "operation": "gt"
+       }
+      },
+      {
+       "id": "91a9d3a1-f259-4cbc-a147-f17666c52c67",
+       "leftValue": "={{ $json.meetsConfidenceThreshold }}",
+       "rightValue": 0.7,
+       "operator": {
+        "type": "boolean",
+        "operation": "true",
+        "singleValue": true
+       }
+      }
+     ],
+     "combinator": "and"
+    },
+    "options": {}
+   },
+   "type": "n8n-nodes-base.if",
+   "typeVersion": 2.3,
+   "position": [
+    -2960,
+    896
+   ],
+   "id": "78154546-b4b4-4df6-8458-4da208103a3f",
+   "name": "¿Extracción Gemini válida? (P04.3.5)"
+  },
+  {
+   "parameters": {},
+   "type": "n8n-nodes-base.noOp",
+   "typeVersion": 1,
+   "position": [
+    -2784,
+    992
+   ],
+   "id": "c7d38ce0-87b8-48a8-ab8e-b0e6ab548d42",
+   "name": "Documento imagen no procesable (P04.3.6)"
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "const item = $input.item;\nconst j = item.json ?? {};\n\n// -----------------------------\n// Helpers\n// -----------------------------\n\nfunction firstValue(...values) {\n  for (const value of values) {\n    if (\n      value !== undefined &&\n      value !== null &&\n      value !== ''\n    ) {\n      return value;\n    }\n  }\n  return null;\n}\n\nfunction normalizeString(value) {\n  if (value === null || value === undefined) return null;\n\n  const result = String(value).trim();\n\n  return result === '' ? null : result;\n}\n\nfunction normalizeTaxId(value) {\n  const text = normalizeString(value);\n  if (!text) return null;\n\n  // Conservamos letras si existen,\n  // pero eliminamos espacios y símbolos innecesarios\n  return text\n    .replace(/\\s+/g, '')\n    .replace(/[^\\p{L}\\p{N}-]/gu, '')\n    .toUpperCase();\n}\n\nfunction normalizeDocumentNumber(value) {\n  const text = normalizeString(value);\n  if (!text) return null;\n\n  return text\n    .toUpperCase()\n    .replace(/\\s+/g, '')\n    .trim();\n}\n\nfunction parseAmount(value) {\n  if (value === null || value === undefined || value === '') {\n    return null;\n  }\n\n  if (typeof value === 'number') {\n    return Number.isFinite(value) ? value : null;\n  }\n\n  let text = String(value)\n    .trim()\n    .replace(/\\s/g, '')\n    .replace(/[^\\d,.\\-]/g, '');\n\n  if (!text) return null;\n\n  const lastComma = text.lastIndexOf(',');\n  const lastDot = text.lastIndexOf('.');\n\n  // Ejemplo: 1.234,56\n  if (lastComma > lastDot) {\n    text = text\n      .replace(/\\./g, '')\n      .replace(',', '.');\n  }\n\n  // Ejemplo: 1,234.56\n  else if (lastDot > lastComma && lastComma !== -1) {\n    text = text.replace(/,/g, '');\n  }\n\n  // Solo coma: 18,50\n  else if (lastComma !== -1 && lastDot === -1) {\n    text = text.replace(',', '.');\n  }\n\n  const number = Number(text);\n\n  return Number.isFinite(number) ? number : null;\n}\n\nfunction normalizeDate(value) {\n  const text = normalizeString(value);\n\n  if (!text) return null;\n\n  // YYYY-MM-DD\n  let match = text.match(/^(\\d{4})-(\\d{2})-(\\d{2})$/);\n\n  if (match) {\n    return `${match[1]}-${match[2]}-${match[3]}`;\n  }\n\n  // YYYY/MM/DD\n  match = text.match(/^(\\d{4})\\/(\\d{2})\\/(\\d{2})$/);\n\n  if (match) {\n    return `${match[1]}-${match[2]}-${match[3]}`;\n  }\n\n  // DD/MM/YYYY o DD-MM-YYYY\n  match = text.match(/^(\\d{1,2})[\\/\\-](\\d{1,2})[\\/\\-](\\d{4})$/);\n\n  if (match) {\n    const day = match[1].padStart(2, '0');\n    const month = match[2].padStart(2, '0');\n    const year = match[3];\n\n    return `${year}-${month}-${day}`;\n  }\n\n  // No inventamos conversiones ambiguas\n  return text;\n}\n\n\n// -----------------------------\n// Valores normalizados\n// -----------------------------\n\nconst supplierName = normalizeString(\n  firstValue(\n    j.supplierName,\n    j.supplier,\n    j.vendorName,\n    j.providerName,\n    j.razonSocial,\n    j.businessName\n  )\n);\n\nconst supplierTaxId = normalizeTaxId(\n  firstValue(\n    j.supplierTaxId,\n    j.taxId,\n    j.ruc,\n    j.nif,\n    j.vatId,\n    j.vendorTaxId\n  )\n);\n\nconst documentNumber = normalizeDocumentNumber(\n  firstValue(\n    j.documentNumber,\n    j.invoiceNumber,\n    j.invoiceNo,\n    j.numeroFactura,\n    j.numeroDocumento,\n    j.documentId\n  )\n);\n\nconst issueDate = normalizeDate(\n  firstValue(\n    j.issueDate,\n    j.invoiceDate,\n    j.fechaEmision,\n    j.date\n  )\n);\n\nconst currencyRaw = normalizeString(\n  firstValue(\n    j.currency,\n    j.currencyCode,\n    j.moneda\n  )\n);\n\nconst currency = currencyRaw\n  ? currencyRaw.toUpperCase()\n  : null;\n\nconst subtotal = parseAmount(\n  firstValue(\n    j.subtotal,\n    j.subTotal,\n    j.netAmount,\n    j.baseAmount\n  )\n);\n\nconst tax = parseAmount(\n  firstValue(\n    j.tax,\n    j.taxAmount,\n    j.iva,\n    j.igv,\n    j.vat\n  )\n);\n\nconst total = parseAmount(\n  firstValue(\n    j.total,\n    j.totalAmount,\n    j.grandTotal,\n    j.payableAmount\n  )\n);\n\n\n// -----------------------------\n// Procedencia\n// -----------------------------\n\nconst sourceType = String(\n  firstValue(\n    j.fileType,\n    j.sourceType,\n    'UNKNOWN'\n  )\n).toUpperCase();\n\nconst extractionProvider =\n  firstValue(\n    j.visionProvider,\n    j.extractionProvider,\n    sourceType === 'XML'\n      ? 'xml'\n      : sourceType === 'PDF'\n        ? 'pdf'\n        : null\n  );\n\n\n// -----------------------------\n// Validaciones técnicas básicas\n// -----------------------------\n\nlet totalsConsistent = null;\nlet totalsDifference = null;\n\nif (\n  subtotal !== null &&\n  tax !== null &&\n  total !== null\n) {\n  totalsDifference = Math.abs(\n    subtotal + tax - total\n  );\n\n  totalsConsistent =\n    totalsDifference <= 0.05;\n}\n\n\n// -----------------------------\n// Warnings\n// -----------------------------\n\nconst normalizationWarnings = [];\n\nif (!supplierName) {\n  normalizationWarnings.push('MISSING_SUPPLIER_NAME');\n}\n\nif (!supplierTaxId) {\n  normalizationWarnings.push('MISSING_SUPPLIER_TAX_ID');\n}\n\nif (!documentNumber) {\n  normalizationWarnings.push('MISSING_DOCUMENT_NUMBER');\n}\n\nif (!issueDate) {\n  normalizationWarnings.push('MISSING_ISSUE_DATE');\n}\n\nif (total === null) {\n  normalizationWarnings.push('MISSING_TOTAL');\n}\n\nif (total !== null && total <= 0) {\n  normalizationWarnings.push('INVALID_TOTAL');\n}\n\nif (totalsConsistent === false) {\n  normalizationWarnings.push('TOTALS_NOT_CONSISTENT');\n}\n\n\n// -----------------------------\n// Clave para búsqueda de duplicados\n// -----------------------------\n\nconst duplicateKey =\n  supplierTaxId && documentNumber\n    ? `${supplierTaxId}|${documentNumber}`\n    : null;\n\n\n// -----------------------------\n// Salida canónica\n// -----------------------------\n\nreturn {\n  json: {\n    // Metadata origen\n    gmailMessageId: j.gmailMessageId ?? null,\n    threadId: j.threadId ?? null,\n    senderEmail: j.senderEmail ?? null,\n    subject: j.subject ?? null,\n\n    fileName: j.fileName ?? null,\n    fileExtension: j.fileExtension ?? null,\n    mimeType: j.mimeType ?? null,\n\n    // Procedencia\n    sourceType,\n    extractionProvider,\n\n    // Datos factura normalizados\n    documentType:\n      normalizeString(j.documentType) ?? 'invoice',\n\n    supplierName,\n    supplierTaxId,\n    documentNumber,\n    issueDate,\n    currency,\n\n    subtotal,\n    tax,\n    total,\n\n    // Información adicional\n    rawText:\n      firstValue(\n        j.rawText,\n        j.text,\n        j.content\n      ),\n\n    confidence:\n      j.confidence !== undefined\n        ? Number(j.confidence)\n        : null,\n\n    // Validación técnica\n    totalsConsistent,\n    totalsDifference,\n\n    normalizationOk:\n      documentNumber !== null &&\n      total !== null &&\n      total > 0,\n\n    normalizationWarnings,\n\n    // P07 duplicados\n    duplicateKey,\n\n    normalizedAt:\n      new Date().toISOString()\n  },\n\n  // Conservamos el archivo\n  binary: item.binary\n};"
+   },
+   "id": "eb748cc6-b42e-46b3-a317-f2d28bf8c720",
+   "name": "Normalizar factura (P05)",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -2800,
+    592
+   ]
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// 🧪 SIMULA: Google Sheets · Colaboradores (lookup por email)\n//\n// El nodo real tiene alwaysOutputData = true: cuando no\n// encuentra fila devuelve un item vacío. Replicamos eso.\nconst caso = $('D00 · Caso de prueba (dummy)').first().json._caso ?? {};\n\nconst fila = caso.colaborador;\n\nreturn { json: fila ? { ...fila } : {} };"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -2576,
+    592
+   ],
+   "id": "bb0d359d-9c07-4009-848c-c3c90353b49d",
+   "name": "Buscar colaborador (P06)",
+   "notes": "SIMULADO · hoja Colaboradores. Devuelve {} si el caso no tiene colaborador",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// ============================================================\n// P05.1 - Preparar colaborador\n// Une la factura normalizada con la fila encontrada en Sheets\n// ============================================================\n\n// Factura original\nconst invoiceItem = $('Normalizar factura (P05)').item;\nconst invoice = invoiceItem.json ?? {};\n\n// Resultado de Google Sheets\nconst row = $json ?? {};\n\n\n// ------------------------------------------------------------\n// Helpers\n// ------------------------------------------------------------\n\nfunction normalizeText(value) {\n  if (\n    value === null ||\n    value === undefined ||\n    value === ''\n  ) {\n    return null;\n  }\n\n  const text = String(value).trim();\n\n  return text || null;\n}\n\n\nfunction normalizeEmail(value) {\n  const text = normalizeText(value);\n\n  return text\n    ? text.toLowerCase()\n    : null;\n}\n\n\nfunction normalizeActive(value) {\n  if (\n    value === true ||\n    value === 1\n  ) {\n    return true;\n  }\n\n  if (\n    value === false ||\n    value === 0 ||\n    value === null ||\n    value === undefined ||\n    value === ''\n  ) {\n    return false;\n  }\n\n  const normalized = String(value)\n    .trim()\n    .toUpperCase();\n\n  return [\n    'SI',\n    'SÍ',\n    'TRUE',\n    'YES',\n    'ACTIVO',\n    'ACTIVE',\n    '1'\n  ].includes(normalized);\n}\n\n\n// ------------------------------------------------------------\n// Email que buscamos\n// ------------------------------------------------------------\n\nconst searchedEmail =\n  normalizeEmail(invoice.senderEmail);\n\n\n// ------------------------------------------------------------\n// Datos obtenidos de Google Sheets\n// ------------------------------------------------------------\n\nconst collaboratorEmail =\n  normalizeEmail(row.email);\n\nconst collaboratorName =\n  normalizeText(row.nombre);\n\nconst collaboratorActive =\n  normalizeActive(row.activo);\n\nconst collaboratorCostCenter =\n  normalizeText(row.centroCosto);\n\n\n// ------------------------------------------------------------\n// Validaciones\n// ------------------------------------------------------------\n\nconst collaboratorFound =\n  collaboratorEmail !== null;\n\nconst collaboratorEmailMatches =\n  Boolean(\n    collaboratorFound &&\n    searchedEmail &&\n    collaboratorEmail === searchedEmail\n  );\n\n\nlet collaboratorStatus = 'NOT_FOUND';\n\nif (\n  collaboratorFound &&\n  collaboratorEmailMatches &&\n  collaboratorActive\n) {\n  collaboratorStatus = 'ACTIVE';\n}\n\nelse if (\n  collaboratorFound &&\n  collaboratorEmailMatches &&\n  !collaboratorActive\n) {\n  collaboratorStatus = 'INACTIVE';\n}\n\nelse if (\n  collaboratorFound &&\n  !collaboratorEmailMatches\n) {\n  collaboratorStatus = 'EMAIL_MISMATCH';\n}\n\n\n// ------------------------------------------------------------\n// Salida\n// ------------------------------------------------------------\n\nreturn {\n  json: {\n    // Factura completa\n    ...invoice,\n\n    // Datos del colaborador\n    collaboratorFound,\n    collaboratorActive,\n    collaboratorEmailMatches,\n    collaboratorStatus,\n\n    collaboratorEmail,\n    collaboratorName,\n    collaboratorCostCenter,\n\n    collaboratorRowNumber:\n      row.row_number ?? null,\n\n    searchedCollaboratorEmail:\n      searchedEmail,\n\n    collaboratorCheckedAt:\n      new Date().toISOString()\n  },\n\n  // Conservamos la factura original\n  binary: invoiceItem.binary\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -2352,
+    592
+   ],
+   "id": "6f23f64e-5dfd-4974-b45c-a516a2fd776f",
+   "name": "Preparar colaborador (P07)"
+  },
+  {
+   "parameters": {
+    "conditions": {
+     "options": {
+      "caseSensitive": true,
+      "leftValue": "",
+      "typeValidation": "strict",
+      "version": 3
+     },
+     "conditions": [
+      {
+       "leftValue": "={{ $json.collaboratorFound }}",
+       "rightValue": "Activo",
+       "operator": {
+        "type": "boolean",
+        "operation": "true",
+        "singleValue": true
+       },
+       "id": "ba75040b-dc94-4494-a48d-978602143981"
+      },
+      {
+       "id": "4eca3b78-a85a-464d-a689-5231e1c68859",
+       "leftValue": "={{ $json.collaboratorEmailMatches }}",
+       "rightValue": false,
+       "operator": {
+        "type": "boolean",
+        "operation": "true",
+        "singleValue": true
+       }
+      },
+      {
+       "id": "fff84683-dd33-41ac-9811-559928bbcd3d",
+       "leftValue": "={{ $json.collaboratorActive }}",
+       "rightValue": false,
+       "operator": {
+        "type": "boolean",
+        "operation": "true",
+        "singleValue": true
+       }
+      }
+     ],
+     "combinator": "and"
+    },
+    "options": {}
+   },
+   "id": "406af3ac-a8e7-4749-a8e3-17d0c5bcea65",
+   "name": "¿Colaborador activo? (P08)",
+   "type": "n8n-nodes-base.if",
+   "typeVersion": 2.3,
+   "position": [
+    -2176,
+    592
+   ]
+  },
+  {
+   "parameters": {},
+   "id": "64159c2b-1b4e-4853-8b7c-08217679fec4",
+   "name": "Colaborador no válido (P08.1)",
+   "type": "n8n-nodes-base.noOp",
+   "typeVersion": 1,
+   "position": [
+    -1936,
+    688
+   ]
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// ============================================================\n// P06.1 - Evaluar factura\n// Validación determinista previa a duplicados\n// ============================================================\n\nconst item = $input.item;\nconst j = item.json ?? {};\n\n\n// ============================================================\n// POLÍTICA DE VALIDACIÓN\n// ============================================================\n\nconst POLICY = {\n  requireSupplierTaxId: true,\n  requireDocumentNumber: true,\n  requireIssueDate: true,\n\n  // Inicialmente moneda faltante genera warning,\n  // no rechazo.\n  requireCurrency: false,\n\n  // Si tenemos subtotal/impuesto/total y no cuadran,\n  // rechazamos.\n  requireConsistentTotals: true,\n\n  // Permitimos máximo 1 día futuro por diferencias\n  // horarias/carga.\n  maxFutureDays: 1,\n\n  // Tolerancia para redondeos monetarios.\n  totalsTolerance: 0.05,\n};\n\n\n// ============================================================\n// HELPERS\n// ============================================================\n\nfunction normalizeText(value) {\n  if (\n    value === null ||\n    value === undefined ||\n    value === ''\n  ) {\n    return null;\n  }\n\n  const text = String(value).trim();\n\n  return text || null;\n}\n\n\nfunction toNumber(value) {\n  if (\n    value === null ||\n    value === undefined ||\n    value === ''\n  ) {\n    return null;\n  }\n\n  const num = Number(value);\n\n  return Number.isFinite(num)\n    ? num\n    : null;\n}\n\n\nfunction isValidISODate(value) {\n  const text = normalizeText(value);\n\n  if (!text) {\n    return false;\n  }\n\n  const match = text.match(\n    /^(\\d{4})-(\\d{2})-(\\d{2})$/\n  );\n\n  if (!match) {\n    return false;\n  }\n\n  const year = Number(match[1]);\n  const month = Number(match[2]);\n  const day = Number(match[3]);\n\n  const date = new Date(\n    Date.UTC(year, month - 1, day)\n  );\n\n  return (\n    date.getUTCFullYear() === year &&\n    date.getUTCMonth() === month - 1 &&\n    date.getUTCDate() === day\n  );\n}\n\n\nfunction isFutureDate(value, maxFutureDays = 0) {\n  if (!isValidISODate(value)) {\n    return false;\n  }\n\n  const invoiceDate = new Date(\n    `${value}T00:00:00Z`\n  );\n\n  const limit = new Date();\n\n  limit.setUTCDate(\n    limit.getUTCDate() + maxFutureDays\n  );\n\n  return invoiceDate.getTime() > limit.getTime();\n}\n\n\nfunction validTaxId(value) {\n  const text = normalizeText(value);\n\n  if (!text) {\n    return false;\n  }\n\n  // Validación genérica.\n  // Permite RUC/NIF/VAT nacionales o extranjeros.\n  const cleaned = text.replace(\n    /[^A-Za-z0-9]/g,\n    ''\n  );\n\n  return (\n    cleaned.length >= 8 &&\n    cleaned.length <= 20\n  );\n}\n\n\n// ============================================================\n// CAMPOS\n// ============================================================\n\nconst supplierName =\n  normalizeText(j.supplierName);\n\nconst supplierTaxId =\n  normalizeText(j.supplierTaxId);\n\nconst documentNumber =\n  normalizeText(j.documentNumber);\n\nconst issueDate =\n  normalizeText(j.issueDate);\n\nconst currency =\n  normalizeText(j.currency);\n\nconst subtotal =\n  toNumber(j.subtotal);\n\nconst tax =\n  toNumber(j.tax);\n\nconst total =\n  toNumber(j.total);\n\nconst duplicateKey =\n  normalizeText(j.duplicateKey);\n\n\n// ============================================================\n// ERRORES Y WARNINGS\n// ============================================================\n\nconst errors = [];\nconst warnings = [];\n\n\n// ------------------------------------------------------------\n// Normalización previa\n// ------------------------------------------------------------\n\nif (j.normalizationOk !== true) {\n  errors.push(\n    'NORMALIZATION_NOT_OK'\n  );\n}\n\n\n// ------------------------------------------------------------\n// Proveedor\n// ------------------------------------------------------------\n\nif (!supplierName) {\n  warnings.push(\n    'MISSING_SUPPLIER_NAME'\n  );\n}\n\n\nif (POLICY.requireSupplierTaxId) {\n\n  if (!supplierTaxId) {\n    errors.push(\n      'MISSING_SUPPLIER_TAX_ID'\n    );\n  }\n\n  else if (!validTaxId(supplierTaxId)) {\n    errors.push(\n      'INVALID_SUPPLIER_TAX_ID'\n    );\n  }\n}\n\n\n// ------------------------------------------------------------\n// Número documento\n// ------------------------------------------------------------\n\nif (POLICY.requireDocumentNumber) {\n\n  if (!documentNumber) {\n    errors.push(\n      'MISSING_DOCUMENT_NUMBER'\n    );\n  }\n\n  else if (documentNumber.length < 3) {\n    errors.push(\n      'INVALID_DOCUMENT_NUMBER'\n    );\n  }\n}\n\n\n// ------------------------------------------------------------\n// Fecha\n// ------------------------------------------------------------\n\nif (POLICY.requireIssueDate) {\n\n  if (!issueDate) {\n    errors.push(\n      'MISSING_ISSUE_DATE'\n    );\n  }\n\n  else if (!isValidISODate(issueDate)) {\n    errors.push(\n      'INVALID_ISSUE_DATE'\n    );\n  }\n\n  else if (\n    isFutureDate(\n      issueDate,\n      POLICY.maxFutureDays\n    )\n  ) {\n    errors.push(\n      'FUTURE_ISSUE_DATE'\n    );\n  }\n}\n\n\n// ------------------------------------------------------------\n// Moneda\n// ------------------------------------------------------------\n\nif (!currency) {\n\n  if (POLICY.requireCurrency) {\n    errors.push(\n      'MISSING_CURRENCY'\n    );\n  }\n\n  else {\n    warnings.push(\n      'MISSING_CURRENCY'\n    );\n  }\n}\n\n\n// ------------------------------------------------------------\n// Total\n// ------------------------------------------------------------\n\nif (total === null) {\n  errors.push(\n    'MISSING_TOTAL'\n  );\n}\n\nelse if (total <= 0) {\n  errors.push(\n    'INVALID_TOTAL'\n  );\n}\n\n\n// ============================================================\n// CONSISTENCIA ARITMÉTICA\n// ============================================================\n\nlet totalsConsistent = null;\nlet totalsDifference = null;\n\nif (\n  subtotal !== null &&\n  tax !== null &&\n  total !== null\n) {\n\n  totalsDifference =\n    Math.abs(\n      subtotal + tax - total\n    );\n\n  totalsConsistent =\n    totalsDifference <=\n    POLICY.totalsTolerance;\n\n\n  if (\n    POLICY.requireConsistentTotals &&\n    !totalsConsistent\n  ) {\n    errors.push(\n      'TOTALS_NOT_CONSISTENT'\n    );\n  }\n}\n\nelse {\n  // No rechazamos automáticamente si faltan\n  // subtotal/impuesto pero sí existe total.\n  warnings.push(\n    'TOTAL_COMPONENTS_INCOMPLETE'\n  );\n}\n\n\n// ============================================================\n// DUPLICATE KEY PARA P07\n// ============================================================\n\nif (!duplicateKey) {\n  errors.push(\n    'MISSING_DUPLICATE_KEY'\n  );\n}\n\n\n// ============================================================\n// ESTADO FINAL\n// ============================================================\n\nconst invoiceValid =\n  errors.length === 0;\n\nconst invoiceValidationStatus =\n  invoiceValid\n    ? 'VALID'\n    : 'INVALID';\n\n\n// ============================================================\n// SALIDA\n// ============================================================\n\nreturn {\n  json: {\n    ...j,\n\n    // P06\n    invoiceValid,\n    invoiceValidationStatus,\n\n    invoiceValidationErrors:\n      errors,\n\n    invoiceValidationWarnings:\n      warnings,\n\n    // Recalculamos para no depender\n    // únicamente del normalizador.\n    totalsConsistent,\n    totalsDifference,\n\n    invoiceValidatedAt:\n      new Date().toISOString()\n  },\n\n  // Conservamos archivo original\n  binary: item.binary\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -1936,
+    496
+   ],
+   "id": "caa25581-0730-4ea8-afbd-3071ef5cc49e",
+   "name": "Evaluar factura (P08.2)"
+  },
+  {
+   "parameters": {
+    "conditions": {
+     "options": {
+      "caseSensitive": true,
+      "leftValue": "",
+      "typeValidation": "strict",
+      "version": 3
+     },
+     "conditions": [
+      {
+       "leftValue": "={{ $json.invoiceValid }}",
+       "rightValue": "",
+       "operator": {
+        "type": "boolean",
+        "operation": "true",
+        "singleValue": true
+       },
+       "id": "cc5344ea-45e7-4e4d-998e-1d243fabefb1"
+      }
+     ],
+     "combinator": "and"
+    },
+    "options": {}
+   },
+   "id": "4b7e6ed8-c655-47b7-af53-789775906f17",
+   "name": "¿Factura válida? (P09)",
+   "type": "n8n-nodes-base.if",
+   "typeVersion": 2.3,
+   "position": [
+    -1744,
+    496
+   ]
+  },
+  {
+   "parameters": {
+    "binaryData": true,
+    "dataPropertyName": "fileHash"
+   },
+   "type": "n8n-nodes-base.crypto",
+   "typeVersion": 2,
+   "position": [
+    -1520,
+    384
+   ],
+   "id": "22f58091-cb40-425e-b914-4b6de21a1ea4",
+   "name": "Calcular huella archivo (P09.1)"
+  },
+  {
+   "parameters": {},
+   "id": "6f5b97f8-bae4-4c43-9c85-4b44b735944e",
+   "name": "Factura inválida(P09.2)",
+   "type": "n8n-nodes-base.noOp",
+   "typeVersion": 1,
+   "position": [
+    -1520,
+    688
+   ]
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// 🧪 SIMULA: Data table · Row exists (HistorialHashesFacturas)\n//\n// Semántica del nodo real:\n//   - si encuentra la fila -> devuelve el item de entrada tal cual\n//   - si NO la encuentra   -> no devuelve nada, y como el nodo tiene\n//                             alwaysOutputData = true, n8n inyecta {}\n// De ahí que P11 pregunte simplemente si fileHash viene o no.\nconst caso = $('D00 · Caso de prueba (dummy)').first().json._caso ?? {};\n\nif (caso.hashYaRegistrado === true) {\n  return { json: $json, binary: $input.item.binary };\n}\n\nreturn { json: {} };"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -1296,
+    384
+   ],
+   "id": "b28395d5-e379-4bc0-bfd5-fbdf09fed7bb",
+   "name": "¿Hash ya registrado? (P10)",
+   "notes": "SIMULADO · Data table rowExists (pasa el item si existe, {} si no)",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
+    "conditions": {
+     "options": {
+      "caseSensitive": true,
+      "leftValue": "",
+      "typeValidation": "strict",
+      "version": 3
+     },
+     "conditions": [
+      {
+       "id": "2cd69f94-a8a1-4c37-95ab-2758c15343c1",
+       "leftValue": "={{ ($json.fileHash) }}",
+       "rightValue": "",
+       "operator": {
+        "type": "string",
+        "operation": "notEmpty",
+        "singleValue": true
+       }
+      }
+     ],
+     "combinator": "and"
+    },
+    "options": {}
+   },
+   "type": "n8n-nodes-base.if",
+   "typeVersion": 2.3,
+   "position": [
+    -1072,
+    384
+   ],
+   "id": "22f4152a-728f-4680-ae56-3a92d40627d5",
+   "name": "¿Hash duplicado? (P11)"
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// 🧪 SIMULA: Gmail · enviar aviso de archivo duplicado\n//\n// ⚠️ En el flujo de producción este nodo no está conectado a nada.\n//    Aquí sí lo colgamos de la rama duplicada de P11.\nconst h = $('Calcular huella archivo (P09.1)').first().json;\n\nreturn {\n  json: {\n    ...h,\n    _correoSimulado: {\n      para: h.senderEmail ?? null,\n      asunto: 'Comprobante duplicado detectado - ' + (h.documentNumber || h.fileName || 'Documento'),\n    },\n  },\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    240,
+    0
+   ],
+   "id": "e22eabe8-3e80-43b5-94db-16d394c5f3ba",
+   "name": "Notificar archivo duplicado (P12.1)",
+   "notes": "SIMULADO · correo. En producción este nodo está HUÉRFANO (sin conexiones)",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// 🧪 SIMULA: Data table · insert (HistorialHashesFacturas)\nconst h = $('Calcular huella archivo (P09.1)').first().json;\n\nreturn {\n  json: {\n    _simulado: 'dataTable.insert',\n    fileHash: h.fileHash ?? null,\n    duplicateKey: h.duplicateKey ?? null,\n    senderEmail: h.senderEmail ?? null,\n    fileName: h.fileName ?? null,\n    processedAt: new Date().toISOString(),\n  },\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -848,
+    480
+   ],
+   "id": "cf8c757c-4b0c-4934-9113-7a2dab7c740c",
+   "name": "Registrar hash nuevo (P12.2)",
+   "notes": "SIMULADO · Data table insert",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// 🧪 SIMULA: Google Sheets · RegistroFacturas (lookup por duplicateKey)\nconst caso = $('D00 · Caso de prueba (dummy)').first().json._caso ?? {};\n\nif (caso.facturaDuplicada === true) {\n  const h = $('Calcular huella archivo (P09.1)').first().json;\n\n  return {\n    json: {\n      duplicateKey: h.duplicateKey ?? null,\n      documentNumber: h.documentNumber ?? null,\n      supplierTaxId: h.supplierTaxId ?? null,\n      row_number: 7,\n      _simulado: 'sheets.lookup(coincidencia)',\n    },\n  };\n}\n\nreturn { json: {} };"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -672,
+    384
+   ],
+   "id": "86c558f2-b97e-4b86-b8bc-8b4b587b6657",
+   "name": "Buscar duplicado (P13)",
+   "notes": "SIMULADO · hoja RegistroFacturas (lookup por duplicateKey)",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// ============================================================\n// P07.1 - PREPARAR RESULTADO DE DUPLICIDAD\n// ============================================================\n\nconst sourceItem =\n  $('Evaluar factura (P08.2)').first();\n\nif (!sourceItem) {\n  throw new Error(\n    'No se encontró el item de Evaluar factura (P06.1)'\n  );\n}\n\nconst invoice = sourceItem.json ?? {};\nconst sheetRow = $json ?? {};\n\n\n// ============================================================\n// HELPERS\n// ============================================================\n\nfunction normalizeKey(value) {\n  if (\n    value === null ||\n    value === undefined ||\n    value === ''\n  ) {\n    return null;\n  }\n\n  return String(value)\n    .trim()\n    .replace(/\\s+/g, '')\n    .toUpperCase();\n}\n\n\n// ============================================================\n// CLAVES\n// ============================================================\n\nconst searchedDuplicateKey =\n  normalizeKey(\n    invoice.duplicateKey\n  );\n\nconst foundDuplicateKey =\n  normalizeKey(\n    sheetRow.duplicateKey ??\n    sheetRow.DuplicateKey ??\n    sheetRow.duplicate_key\n  );\n\n\n// ============================================================\n// DUPLICIDAD\n// ============================================================\n\nconst duplicateFound =\n  Boolean(\n    searchedDuplicateKey &&\n    foundDuplicateKey &&\n    searchedDuplicateKey === foundDuplicateKey\n  );\n\n\n// ============================================================\n// SALIDA\n// ============================================================\n\nreturn {\n  json: {\n    ...invoice,\n\n    duplicateChecked: true,\n\n    duplicateFound,\n\n    duplicateStatus:\n      duplicateFound\n        ? 'DUPLICATE'\n        : 'UNIQUE',\n\n    searchedDuplicateKey,\n\n    matchedDuplicateKey:\n      duplicateFound\n        ? foundDuplicateKey\n        : null,\n\n    duplicateRowNumber:\n      duplicateFound\n        ? (\n            sheetRow.row_number ??\n            null\n          )\n        : null,\n\n    duplicateCheckedAt:\n      new Date().toISOString(),\n  },\n\n  binary:\n    sourceItem.binary,\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -496,
+    384
+   ],
+   "id": "5cdc1cf8-7510-414d-8ef7-e16a0a437e41",
+   "name": "Preparar duplicado (P14)"
+  },
+  {
+   "parameters": {
+    "conditions": {
+     "options": {
+      "caseSensitive": true,
+      "leftValue": "",
+      "typeValidation": "strict",
+      "version": 3
+     },
+     "conditions": [
+      {
+       "leftValue": "={{ $json.duplicateFound }}",
+       "rightValue": "",
+       "operator": {
+        "type": "boolean",
+        "operation": "true",
+        "singleValue": true
+       },
+       "id": "463e150d-b574-4325-8da7-627038cf3197"
+      }
+     ],
+     "combinator": "and"
+    },
+    "options": {}
+   },
+   "id": "d9724491-b1b2-4145-b30a-58c5c761b3f5",
+   "name": "¿Factura duplicada? (P15)",
+   "type": "n8n-nodes-base.if",
+   "typeVersion": 2.3,
+   "position": [
+    -288,
+    384
+   ]
+  },
+  {
+   "parameters": {},
+   "id": "2b627b24-65e1-4b6d-9c8b-bc24866c92e4",
+   "name": "Factura duplicada(P16.1)",
+   "type": "n8n-nodes-base.noOp",
+   "typeVersion": 1,
+   "position": [
+    64,
+    256
+   ]
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// 🧪 SIMULA: AI Agent (gpt-5-mini) + herramienta Google Sheets \"PoliticaViaticos\"\n//\n// El agente real devuelve { output: '<JSON como texto>' }.\n// Aquí devolvemos exactamente esa forma, con la respuesta\n// definida en el caso de prueba: determinista y sin coste.\nconst caso = $('D00 · Caso de prueba (dummy)').first().json._caso ?? {};\n\nif (!caso.agente) {\n  throw new Error('El caso no define una respuesta simulada del agente.');\n}\n\nreturn { json: { output: JSON.stringify(caso.agente) } };"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    48,
+    480
+   ],
+   "id": "edfeceb2-3ffa-460d-b1cd-6e12d48cd2f4",
+   "name": "Agente clasificador de gastos (P16.2)",
+   "notes": "SIMULADO · sustituye al AI Agent + OpenAI + herramienta de política",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// ============================================================\n// P07.3 - PARSEAR DECISIÓN DEL AI AGENT\n// Versión consolidada y mejorada\n// ============================================================\n//\n// Responsabilidades:\n//\n// 1. Recuperar la factura original.\n// 2. Parsear el JSON textual devuelto por AI Agent.\n// 3. Validar categoría.\n// 4. Normalizar confidence.\n// 5. Normalizar datos obtenidos desde la Tool.\n// 6. Detectar restricciones.\n// 7. Determinar si requiere revisión humana.\n// 8. Conservar binary.data.\n// ============================================================\n\n\n// ============================================================\n// 1. RECUPERAR FACTURA ORIGINAL\n// ============================================================\n//\n// IMPORTANTE:\n//\n// No usamos:\n//\n// $('¿Factura duplicada? (P15)').item\n//\n// porque AI Agent + Tools pueden romper el paired-item linking.\n//\n// Para este workflow actual procesamos una factura por ejecución,\n// por lo que recuperamos directamente el primer item estable antes\n// del IF de duplicados.\n// ============================================================\n\nconst sourceItem =\n  $('Preparar duplicado (P14)').first();\n\nif (!sourceItem) {\n  throw new Error(\n    'No se encontró información en el nodo \"Preparar duplicado (P07.1)\"'\n  );\n}\n\nconst source =\n  sourceItem.json ?? {};\n\n\n// ============================================================\n// 2. RESPUESTA DEL AI AGENT\n// ============================================================\n//\n// En tu versión de n8n comprobamos que AI Agent devuelve:\n// {\n//   output: \"{ ...JSON... }\"\n// }\n// ============================================================\n\nconst raw =\n  $json.output ??\n  $json.text ??\n  $json.response ??\n  '';\n\n\n// ============================================================\n// 3. CONFIGURACIÓN\n// ============================================================\n\nconst CONFIDENCE_THRESHOLD = 0.70;\n\n\n// Categorías que pueden consultar política\nconst ACTIONABLE_CATEGORIES = new Set([\n  'BREAKFAST',\n  'LUNCH',\n  'DINNER',\n  'MOBILITY',\n  'AIRFARE',\n  'LODGING',\n  'ALLOWED_BEVERAGES',\n  'MINOR_PURCHASE',\n]);\n\n\n// Todas las categorías admitidas\nconst ALL_CATEGORIES = new Set([\n  ...ACTIONABLE_CATEGORIES,\n  'OTHER',\n  'UNCERTAIN',\n]);\n\n\n// Labels controlados por n8n.\n// No dependemos del texto escrito por la IA.\nconst CATEGORY_LABELS = {\n  BREAKFAST: 'Desayuno',\n  LUNCH: 'Almuerzo',\n  DINNER: 'Cena',\n  MOBILITY: 'Movilidad',\n  AIRFARE: 'Pasaje aéreo',\n  LODGING: 'Hospedaje',\n  ALLOWED_BEVERAGES: 'Bebidas permitidas',\n  MINOR_PURCHASE: 'Compra menor',\n  OTHER: 'Otro',\n  UNCERTAIN: 'No determinado',\n};\n\n\n// ============================================================\n// 4. HELPERS\n// ============================================================\n\n\n/**\n * Limpia respuestas tipo:\n *\n * ```json\n * { ... }\n * ```\n */\nfunction cleanJsonString(value) {\n\n  return String(value ?? '')\n    .replace(/^```json\\s*/i, '')\n    .replace(/^```\\s*/i, '')\n    .replace(/```$/i, '')\n    .trim();\n}\n\n\n/**\n * Intenta interpretar la respuesta del Agent.\n *\n * Soporta:\n * - JSON puro\n * - ```json ... ```\n * - texto accidental alrededor del JSON\n */\nfunction parseAgentJson(value) {\n\n  const cleaned =\n    cleanJsonString(value);\n\n  if (!cleaned) {\n    return null;\n  }\n\n\n  // ----------------------------\n  // Intento 1: JSON puro\n  // ----------------------------\n\n  try {\n\n    const parsed =\n      JSON.parse(cleaned);\n\n    if (\n      parsed &&\n      typeof parsed === 'object' &&\n      !Array.isArray(parsed)\n    ) {\n      return parsed;\n    }\n\n  } catch {\n    // Continuar al segundo intento\n  }\n\n\n  // ----------------------------\n  // Intento 2:\n  // extraer primer { ... último }\n  // ----------------------------\n\n  const start =\n    cleaned.indexOf('{');\n\n  const end =\n    cleaned.lastIndexOf('}');\n\n\n  if (\n    start !== -1 &&\n    end !== -1 &&\n    end > start\n  ) {\n\n    const candidate =\n      cleaned.slice(\n        start,\n        end + 1\n      );\n\n    try {\n\n      const parsed =\n        JSON.parse(candidate);\n\n      if (\n        parsed &&\n        typeof parsed === 'object' &&\n        !Array.isArray(parsed)\n      ) {\n        return parsed;\n      }\n\n    } catch {\n      return null;\n    }\n  }\n\n  return null;\n}\n\n\n/**\n * Convierte confidence a escala 0-1.\n *\n * Soporta:\n *\n * 0.95\n * \"0.95\"\n * 95 → 0.95\n */\nfunction normalizeConfidence(value) {\n\n  let number =\n    Number(value ?? 0);\n\n  if (!Number.isFinite(number)) {\n    return 0;\n  }\n\n\n  // Por si el modelo devuelve 95\n  // en vez de 0.95\n  if (\n    number > 1 &&\n    number <= 100\n  ) {\n    number =\n      number / 100;\n  }\n\n\n  // Clamp 0-1\n  return Math.min(\n    1,\n    Math.max(\n      0,\n      number\n    )\n  );\n}\n\n\n/**\n * Convierte valores tipo:\n *\n * SI\n * NO\n * TRUE\n * FALSE\n * 1\n * 0\n *\n * a boolean/null.\n */\nfunction normalizeBoolean(value) {\n\n  if (value === true) {\n    return true;\n  }\n\n  if (value === false) {\n    return false;\n  }\n\n\n  if (\n    value === null ||\n    value === undefined ||\n    value === ''\n  ) {\n    return null;\n  }\n\n\n  const normalized =\n    String(value)\n      .trim()\n      .toUpperCase();\n\n\n  if (\n    [\n      'SI',\n      'SÍ',\n      'YES',\n      'TRUE',\n      '1'\n    ].includes(normalized)\n  ) {\n    return true;\n  }\n\n\n  if (\n    [\n      'NO',\n      'FALSE',\n      '0'\n    ].includes(normalized)\n  ) {\n    return false;\n  }\n\n\n  return null;\n}\n\n\n/**\n * Normaliza políticas que pueden contener:\n *\n * SI\n * NO\n * DEPENDE\n *\n * Retorna:\n *\n * YES\n * NO\n * CONDITIONAL\n * UNKNOWN\n */\nfunction normalizeReviewStatus(value) {\n\n  if (value === true) {\n    return 'YES';\n  }\n\n  if (value === false) {\n    return 'NO';\n  }\n\n\n  if (\n    value === null ||\n    value === undefined ||\n    value === ''\n  ) {\n    return 'UNKNOWN';\n  }\n\n\n  const normalized =\n    String(value)\n      .trim()\n      .toUpperCase();\n\n\n  if (\n    [\n      'SI',\n      'SÍ',\n      'YES',\n      'TRUE',\n      '1'\n    ].includes(normalized)\n  ) {\n    return 'YES';\n  }\n\n\n  if (\n    [\n      'NO',\n      'FALSE',\n      '0'\n    ].includes(normalized)\n  ) {\n    return 'NO';\n  }\n\n\n  if (\n    [\n      'DEPENDE',\n      'CONDITIONAL',\n      'CONDICIONAL',\n      'REVIEW'\n    ].includes(normalized)\n  ) {\n    return 'CONDITIONAL';\n  }\n\n\n  return 'UNKNOWN';\n}\n\n\n/**\n * Convierte un importe a Number/null.\n *\n * Soporta:\n *\n * 40\n * \"40\"\n * \"40.00\"\n * \"40,00\"\n * \"S/ 40.00\"\n */\nfunction nullableNumber(value) {\n\n  if (\n    value === null ||\n    value === undefined ||\n    value === ''\n  ) {\n    return null;\n  }\n\n\n  if (typeof value === 'number') {\n\n    return Number.isFinite(value)\n      ? value\n      : null;\n  }\n\n\n  let text =\n    String(value)\n      .trim()\n      .replace(/\\s/g, '')\n      .replace(/[^\\d,.\\-]/g, '');\n\n\n  if (!text) {\n    return null;\n  }\n\n\n  const lastComma =\n    text.lastIndexOf(',');\n\n  const lastDot =\n    text.lastIndexOf('.');\n\n\n  // 1.234,56\n  if (\n    lastComma > lastDot\n  ) {\n\n    text =\n      text\n        .replace(/\\./g, '')\n        .replace(',', '.');\n  }\n\n  // 1,234.56\n  else if (\n    lastDot > lastComma &&\n    lastComma !== -1\n  ) {\n\n    text =\n      text.replace(/,/g, '');\n  }\n\n  // 40,50\n  else if (\n    lastComma !== -1 &&\n    lastDot === -1\n  ) {\n\n    text =\n      text.replace(',', '.');\n  }\n\n\n  const number =\n    Number(text);\n\n\n  return Number.isFinite(number)\n    ? number\n    : null;\n}\n\n\n/**\n * Normaliza arrays de strings.\n */\nfunction normalizeArray(value) {\n\n  if (!Array.isArray(value)) {\n    return [];\n  }\n\n\n  return value\n    .map(\n      item =>\n        String(item ?? '').trim()\n    )\n    .filter(Boolean);\n}\n\n\n/**\n * Normaliza texto nullable.\n */\nfunction normalizeText(value) {\n\n  if (\n    value === null ||\n    value === undefined\n  ) {\n    return null;\n  }\n\n\n  const text =\n    String(value).trim();\n\n\n  return text || null;\n}\n\n\n// ============================================================\n// 5. PARSEAR RESPUESTA\n// ============================================================\n\nconst parsed =\n  parseAgentJson(raw);\n\n\n// ============================================================\n// 6. ERROR DE PARSEO\n// ============================================================\n\nif (!parsed) {\n\n  return {\n\n    json: {\n\n      // Conservamos todos los datos anteriores\n      ...source,\n\n\n      // --------------------------\n      // Estado Agent\n      // --------------------------\n\n      agentResponseParsed: false,\n\n      agentDecisionOk: false,\n\n      policyContextReady: false,\n\n\n      // --------------------------\n      // Clasificación segura\n      // --------------------------\n\n      expenseCategory:\n        'UNCERTAIN',\n\n      expenseCategoryLabel:\n        'No determinado',\n\n      expenseConfidence:\n        0,\n\n      expenseConfidenceThreshold:\n        CONFIDENCE_THRESHOLD,\n\n      expenseMeetsConfidenceThreshold:\n        false,\n\n      expenseEvidence: [],\n\n      classificationReason:\n        'No se pudo interpretar la respuesta del AI Agent.',\n\n\n      // --------------------------\n      // Restricciones\n      // --------------------------\n\n      containsPotentiallyRestrictedItems:\n        false,\n\n      restrictedItems: [],\n\n\n      // --------------------------\n      // Tool / Política\n      // --------------------------\n\n      toolUsed:\n        false,\n\n      policyFound:\n        false,\n\n      policyAllowed:\n        null,\n\n      policyLimit:\n        null,\n\n      policyRequiresReviewStatus:\n        'UNKNOWN',\n\n      taxReviewStatus:\n        'UNKNOWN',\n\n      policyVersion:\n        null,\n\n\n      // --------------------------\n      // Revisión\n      // --------------------------\n\n      classificationValid:\n        false,\n\n      requiresHumanReview:\n        true,\n\n\n      // --------------------------\n      // Auditoría\n      // --------------------------\n\n      agentParseError:\n        'INVALID_AGENT_JSON',\n\n      agentRawOutput:\n        raw,\n\n      agentParsedAt:\n        new Date().toISOString(),\n    },\n\n\n    // Conservamos archivo original\n    binary:\n      sourceItem.binary,\n  };\n}\n\n\n// ============================================================\n// 7. NORMALIZAR CATEGORÍA\n// ============================================================\n\nlet expenseCategory =\n  String(\n    parsed.expenseCategory ??\n    'UNCERTAIN'\n  )\n    .trim()\n    .toUpperCase();\n\n\nif (\n  !ALL_CATEGORIES.has(\n    expenseCategory\n  )\n) {\n\n  expenseCategory =\n    'UNCERTAIN';\n}\n\n\nconst expenseCategoryLabel =\n  CATEGORY_LABELS[\n    expenseCategory\n  ] ??\n  'No determinado';\n\n\n// ============================================================\n// 8. NORMALIZAR CONFIANZA\n// ============================================================\n\nconst expenseConfidence =\n  normalizeConfidence(\n    parsed.expenseConfidence\n  );\n\n\nconst expenseMeetsConfidenceThreshold =\n  expenseConfidence >=\n  CONFIDENCE_THRESHOLD;\n\n\n// ============================================================\n// 9. EVIDENCIA\n// ============================================================\n\nconst expenseEvidence =\n  normalizeArray(\n    parsed.expenseEvidence\n  );\n\n\nconst classificationReason =\n  normalizeText(\n    parsed.classificationReason\n  );\n\n\n// ============================================================\n// 10. RESTRICCIONES\n// ============================================================\n\nconst restrictedItems =\n  normalizeArray(\n    parsed.restrictedItems\n  );\n\n\nconst containsPotentiallyRestrictedItems =\n  (\n    normalizeBoolean(\n      parsed.containsPotentiallyRestrictedItems\n    ) === true\n  ) ||\n  restrictedItems.length > 0;\n\n\n// ============================================================\n// 11. TOOL\n// ============================================================\n\nconst toolUsed =\n  normalizeBoolean(\n    parsed.toolUsed\n  ) === true;\n\n\nconst policyFound =\n  normalizeBoolean(\n    parsed.policyFound\n  ) === true;\n\n\n// ============================================================\n// 12. POLÍTICA\n// ============================================================\n\nconst policyAllowed =\n  normalizeBoolean(\n    parsed.policyAllowed\n  );\n\n\nconst policyLimit =\n  nullableNumber(\n    parsed.policyLimit\n  );\n\n\nconst policyRequiresReviewStatus =\n  normalizeReviewStatus(\n    parsed.policyRequiresReview\n  );\n\n\nconst taxReviewStatus =\n  normalizeReviewStatus(\n    parsed.taxReviewRequired\n  );\n\n\nconst policyVersion =\n  normalizeText(\n    parsed.policyVersion\n  );\n\n\n// ============================================================\n// 13. VALIDACIÓN DE CATEGORÍA\n// ============================================================\n\nconst actionableCategory =\n  ACTIONABLE_CATEGORIES.has(\n    expenseCategory\n  );\n\n\nconst classificationValid =\n  actionableCategory &&\n  expenseMeetsConfidenceThreshold &&\n  !containsPotentiallyRestrictedItems;\n\n\n// ============================================================\n// 14. VALIDAR CONTEXTO DE POLÍTICA\n// ============================================================\n//\n// Para una categoría válida esperamos:\n//\n// Tool utilizada\n// +\n// política encontrada\n// +\n// valor policyAllowed interpretable\n//\n// policyLimit puede ser null si una política futura\n// no utiliza límite económico.\n// ============================================================\n\nconst policyContextReady =\n  actionableCategory &&\n  toolUsed &&\n  policyFound &&\n  policyAllowed !== null;\n\n\n// ============================================================\n// 15. REVISIÓN HUMANA\n// ============================================================\n\nconst modelRequestedReview =\n  normalizeBoolean(\n    parsed.requiresHumanReview\n  ) === true;\n\n\nlet requiresHumanReview =\n  false;\n\n\n// El modelo pidió revisión\nif (modelRequestedReview) {\n\n  requiresHumanReview =\n    true;\n}\n\n\n// Categoría fuera de política\nif (\n  expenseCategory === 'OTHER' ||\n  expenseCategory === 'UNCERTAIN'\n) {\n\n  requiresHumanReview =\n    true;\n}\n\n\n// Confianza insuficiente\nif (\n  !expenseMeetsConfidenceThreshold\n) {\n\n  requiresHumanReview =\n    true;\n}\n\n\n// Producto restringido\nif (\n  containsPotentiallyRestrictedItems\n) {\n\n  requiresHumanReview =\n    true;\n}\n\n\n// Categoría válida pero no usó Tool\nif (\n  actionableCategory &&\n  !toolUsed\n) {\n\n  requiresHumanReview =\n    true;\n}\n\n\n// No encontró política\nif (\n  actionableCategory &&\n  !policyFound\n) {\n\n  requiresHumanReview =\n    true;\n}\n\n\n// Política ausente/incompleta\nif (\n  actionableCategory &&\n  policyFound &&\n  policyAllowed === null\n) {\n\n  requiresHumanReview =\n    true;\n}\n\n\n// Política dice NO\nif (\n  policyAllowed === false\n) {\n\n  requiresHumanReview =\n    true;\n}\n\n\n// Política exige revisión\nif (\n  policyRequiresReviewStatus === 'YES' ||\n  policyRequiresReviewStatus === 'CONDITIONAL'\n) {\n\n  requiresHumanReview =\n    true;\n}\n\n\n// Revisión tributaria\nif (\n  taxReviewStatus === 'YES' ||\n  taxReviewStatus === 'CONDITIONAL'\n) {\n\n  requiresHumanReview =\n    true;\n}\n\n\n// ============================================================\n// 16. ESTADO GENERAL DEL AGENTE\n// ============================================================\n//\n// Esto NO significa todavía \"factura aprobada\".\n//\n// Solo significa:\n//\n// clasificación válida\n// +\n// Tool correcta\n// +\n// política encontrada\n// +\n// política permite el rubro\n// +\n// no requiere revisión previa.\n//\n// La comparación:\n// total <= policyLimit\n//\n// se realizará en P07.4.\n// ============================================================\n\nconst agentDecisionOk =\n  classificationValid &&\n  policyContextReady &&\n  policyAllowed === true &&\n  !requiresHumanReview;\n\n\n// ============================================================\n// 17. SALIDA FINAL\n// ============================================================\n\nreturn {\n\n  json: {\n\n    // ========================================================\n    // DATOS PREVIOS\n    // ========================================================\n\n    ...source,\n\n\n    // ========================================================\n    // AI AGENT\n    // ========================================================\n\n    agentResponseParsed:\n      true,\n\n    agentDecisionOk,\n\n    policyContextReady,\n\n\n    // ========================================================\n    // CLASIFICACIÓN\n    // ========================================================\n\n    expenseCategory,\n\n    expenseCategoryLabel,\n\n    expenseConfidence,\n\n    expenseConfidenceThreshold:\n      CONFIDENCE_THRESHOLD,\n\n    expenseMeetsConfidenceThreshold,\n\n    expenseEvidence,\n\n    classificationReason,\n\n    classificationValid,\n\n\n    // ========================================================\n    // RESTRICCIONES\n    // ========================================================\n\n    containsPotentiallyRestrictedItems,\n\n    restrictedItems,\n\n\n    // ========================================================\n    // TOOL\n    // ========================================================\n\n    toolUsed,\n\n    policyFound,\n\n\n    // ========================================================\n    // POLÍTICA\n    // ========================================================\n\n    policyAllowed,\n\n    policyLimit,\n\n    policyRequiresReviewStatus,\n\n    taxReviewStatus,\n\n    policyVersion,\n\n\n    // ========================================================\n    // REVISIÓN\n    // ========================================================\n\n    requiresHumanReview,\n\n\n    // ========================================================\n    // AUDITORÍA\n    // ========================================================\n\n    agentParsedAt:\n      new Date().toISOString(),\n  },\n\n\n  // ========================================================\n  // CONSERVAMOS PDF / XML / IMAGEN ORIGINAL\n  // ========================================================\n\n  binary:\n    sourceItem.binary,\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    368,
+    480
+   ],
+   "id": "5802f3a9-d646-4879-b49c-7155c0eb7630",
+   "name": "Parsear decisión del agente (P17)"
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// ============================================================\n// P07.4 - EVALUAR POLÍTICA DE VIÁTICOS\n// Versión 1.1 - Lógica determinista + hospedaje por noche\n// ============================================================\n//\n// La IA ya hizo:\n// - clasificación del gasto\n// - consulta de política mediante Tool\n//\n// Este nodo hace únicamente lógica determinista.\n//\n// REGLA GENERAL:\n// monto total <= límite de política\n//\n// REGLA ESPECIAL LODGING:\n// total alojamiento / noches = monto por noche\n// monto por noche <= límite de política\n//\n// Resultado:\n// ALLOW  -> cumple política\n// REVIEW -> requiere revisión humana\n// REJECT -> categoría no permitida por política\n// ============================================================\n\n\nconst item = $input.item;\nconst j = item.json ?? {};\n\n\n// ============================================================\n// CONFIGURACIÓN\n// ============================================================\n\nconst REQUIRE_POLICY_LIMIT = true;\n\n// Tolerancia monetaria.\nconst MONEY_TOLERANCE = 0.01;\n\n// Máximo defensivo de noches que aceptamos automáticamente.\nconst MAX_LODGING_NIGHTS = 365;\n\n\n// ============================================================\n// HELPERS GENERALES\n// ============================================================\n\nfunction toNumber(value) {\n\n  if (\n    value === null ||\n    value === undefined ||\n    value === ''\n  ) {\n    return null;\n  }\n\n  if (typeof value === 'number') {\n\n    return Number.isFinite(value)\n      ? value\n      : null;\n  }\n\n  let text =\n    String(value)\n      .trim()\n      .replace(/\\s/g, '')\n      .replace(/[^\\d,.\\-]/g, '');\n\n  if (!text) {\n    return null;\n  }\n\n  const lastComma =\n    text.lastIndexOf(',');\n\n  const lastDot =\n    text.lastIndexOf('.');\n\n  // 1.234,56\n  if (lastComma > lastDot) {\n\n    text =\n      text\n        .replace(/\\./g, '')\n        .replace(',', '.');\n  }\n\n  // 1,234.56\n  else if (\n    lastDot > lastComma &&\n    lastComma !== -1\n  ) {\n\n    text =\n      text.replace(/,/g, '');\n  }\n\n  // 40,50\n  else if (\n    lastComma !== -1 &&\n    lastDot === -1\n  ) {\n\n    text =\n      text.replace(',', '.');\n  }\n\n  const number =\n    Number(text);\n\n  return Number.isFinite(number)\n    ? number\n    : null;\n}\n\n\nfunction normalizeStatus(value) {\n\n  if (\n    value === null ||\n    value === undefined ||\n    value === ''\n  ) {\n    return 'UNKNOWN';\n  }\n\n  return String(value)\n    .trim()\n    .toUpperCase();\n}\n\n\nfunction roundMoney(value) {\n\n  if (\n    value === null ||\n    value === undefined ||\n    !Number.isFinite(value)\n  ) {\n    return null;\n  }\n\n  return Number(\n    value.toFixed(2)\n  );\n}\n\n\n// ============================================================\n// HELPERS DE FECHA\n// ============================================================\n//\n// Devuelve:\n// {\n//   iso: \"2025-03-17\",\n//   timestamp: ...\n// }\n//\n// Admite:\n// DD/MM/YYYY\n// DD-MM-YYYY\n// YYYY-MM-DD\n// ============================================================\n\nfunction parseDate(value) {\n\n  if (!value) {\n    return null;\n  }\n\n  const text =\n    String(value)\n      .trim();\n\n  let year;\n  let month;\n  let day;\n\n  // DD/MM/YYYY\n  // DD-MM-YYYY\n  // DD.MM.YYYY\n  let match =\n    text.match(\n      /^(\\d{1,2})[\\/.\\-](\\d{1,2})[\\/.\\-](\\d{2,4})$/\n    );\n\n  if (match) {\n\n    day =\n      Number(match[1]);\n\n    month =\n      Number(match[2]);\n\n    year =\n      Number(match[3]);\n\n    if (year < 100) {\n      year += 2000;\n    }\n  }\n\n  else {\n\n    // YYYY-MM-DD\n    // YYYY/MM/DD\n    match =\n      text.match(\n        /^(\\d{4})[\\/.\\-](\\d{1,2})[\\/.\\-](\\d{1,2})$/\n      );\n\n    if (!match) {\n      return null;\n    }\n\n    year =\n      Number(match[1]);\n\n    month =\n      Number(match[2]);\n\n    day =\n      Number(match[3]);\n  }\n\n  if (\n    !Number.isInteger(year) ||\n    !Number.isInteger(month) ||\n    !Number.isInteger(day)\n  ) {\n    return null;\n  }\n\n  const date =\n    new Date(\n      Date.UTC(\n        year,\n        month - 1,\n        day\n      )\n    );\n\n  // Evita fechas imposibles:\n  // 31/02/2025, etc.\n  if (\n    date.getUTCFullYear() !== year ||\n    date.getUTCMonth() !== month - 1 ||\n    date.getUTCDate() !== day\n  ) {\n    return null;\n  }\n\n  const iso =\n    [\n      String(year).padStart(4, '0'),\n      String(month).padStart(2, '0'),\n      String(day).padStart(2, '0'),\n    ].join('-');\n\n  return {\n    iso,\n    timestamp:\n      date.getTime(),\n  };\n}\n\n\n// ============================================================\n// EXTRAER FECHA DE INGRESO / CHECK-IN\n// ============================================================\n\nfunction extractCheckIn(text) {\n\n  const patterns = [\n\n    /(?:FECHA\\s+(?:DE\\s+)?)?INGRESO\\s*[:\\-]?\\s*(\\d{1,2}[\\/.\\-]\\d{1,2}[\\/.\\-]\\d{2,4}|\\d{4}[\\/.\\-]\\d{1,2}[\\/.\\-]\\d{1,2})/i,\n\n    /(?:FECHA\\s+(?:DE\\s+)?)?ENTRADA\\s*[:\\-]?\\s*(\\d{1,2}[\\/.\\-]\\d{1,2}[\\/.\\-]\\d{2,4}|\\d{4}[\\/.\\-]\\d{1,2}[\\/.\\-]\\d{1,2})/i,\n\n    /CHECK\\s*[- ]?\\s*IN\\s*[:\\-]?\\s*(\\d{1,2}[\\/.\\-]\\d{1,2}[\\/.\\-]\\d{2,4}|\\d{4}[\\/.\\-]\\d{1,2}[\\/.\\-]\\d{1,2})/i,\n  ];\n\n  for (const regex of patterns) {\n\n    const match =\n      text.match(regex);\n\n    if (match?.[1]) {\n\n      const parsed =\n        parseDate(match[1]);\n\n      if (parsed) {\n        return parsed;\n      }\n    }\n  }\n\n  return null;\n}\n\n\n// ============================================================\n// EXTRAER FECHA DE SALIDA / CHECK-OUT\n// ============================================================\n\nfunction extractCheckOut(text) {\n\n  const patterns = [\n\n    /(?:FECHA\\s+(?:DE\\s+)?)?SALIDA\\s*[:\\-]?\\s*(\\d{1,2}[\\/.\\-]\\d{1,2}[\\/.\\-]\\d{2,4}|\\d{4}[\\/.\\-]\\d{1,2}[\\/.\\-]\\d{1,2})/i,\n\n    /CHECK\\s*[- ]?\\s*OUT\\s*[:\\-]?\\s*(\\d{1,2}[\\/.\\-]\\d{1,2}[\\/.\\-]\\d{2,4}|\\d{4}[\\/.\\-]\\d{1,2}[\\/.\\-]\\d{1,2})/i,\n  ];\n\n  for (const regex of patterns) {\n\n    const match =\n      text.match(regex);\n\n    if (match?.[1]) {\n\n      const parsed =\n        parseDate(match[1]);\n\n      if (parsed) {\n        return parsed;\n      }\n    }\n  }\n\n  return null;\n}\n\n\n// ============================================================\n// RANGO TIPO:\n// \"DEL 17/03/2025 AL 21/03/2025\"\n// \"DESDE 17/03/2025 HASTA 21/03/2025\"\n// ============================================================\n\nfunction extractStayRange(text) {\n\n  const regex =\n    /(?:DEL|DESDE)\\s*(\\d{1,2}[\\/.\\-]\\d{1,2}[\\/.\\-]\\d{2,4}|\\d{4}[\\/.\\-]\\d{1,2}[\\/.\\-]\\d{1,2})\\s*(?:AL|HASTA)\\s*(\\d{1,2}[\\/.\\-]\\d{1,2}[\\/.\\-]\\d{2,4}|\\d{4}[\\/.\\-]\\d{1,2}[\\/.\\-]\\d{1,2})/i;\n\n  const match =\n    text.match(regex);\n\n  if (!match) {\n    return null;\n  }\n\n  const checkIn =\n    parseDate(match[1]);\n\n  const checkOut =\n    parseDate(match[2]);\n\n  if (\n    !checkIn ||\n    !checkOut\n  ) {\n    return null;\n  }\n\n  return {\n    checkIn,\n    checkOut,\n  };\n}\n\n\n// ============================================================\n// EXTRAER NÚMERO DE NOCHES EXPLÍCITO\n// ============================================================\n//\n// Ejemplos:\n//\n// \"ALOJAMIENTO 04 NOCHES\"\n// \"4 NOCHES\"\n// \"NOCHES: 4\"\n// \"4 DÍAS DE ALOJAMIENTO\"\n//\n// No interpretamos un número aislado como noches.\n// ============================================================\n\nfunction extractExplicitNights(text) {\n\n  const values = [];\n\n  const patterns = [\n\n    /\\b(?:ALOJAMIENTO|HOSPEDAJE|ESTAD[IÍ]A)[\\s\\S]{0,80}?(\\d{1,3})\\s*NOCHES?\\b/gi,\n\n    /\\b(\\d{1,3})\\s*NOCHES?\\b/gi,\n\n    /\\bNOCHES?\\s*[:\\-]?\\s*(\\d{1,3})\\b/gi,\n\n    /\\b(\\d{1,3})\\s*D[IÍ]AS?\\s+DE\\s+(?:ALOJAMIENTO|HOSPEDAJE|ESTAD[IÍ]A)\\b/gi,\n  ];\n\n  for (const regex of patterns) {\n\n    let match;\n\n    while (\n      (match = regex.exec(text)) !== null\n    ) {\n\n      const value =\n        Number(match[1]);\n\n      if (\n        Number.isInteger(value) &&\n        value > 0 &&\n        value <= MAX_LODGING_NIGHTS\n      ) {\n        values.push(value);\n      }\n    }\n  }\n\n  return [\n    ...new Set(values)\n  ];\n}\n\n\n// ============================================================\n// DATOS PRINCIPALES\n// ============================================================\n\nconst total =\n  toNumber(j.total);\n\nconst policyLimit =\n  toNumber(j.policyLimit);\n\nconst expenseCategory =\n  normalizeStatus(\n    j.expenseCategory\n  );\n\nconst isLodging =\n  expenseCategory === 'LODGING';\n\n\nconst policyAllowed =\n  j.policyAllowed === true;\n\nconst policyExplicitlyRejected =\n  j.policyAllowed === false;\n\nconst policyFound =\n  j.policyFound === true;\n\nconst toolUsed =\n  j.toolUsed === true;\n\nconst agentResponseParsed =\n  j.agentResponseParsed === true;\n\nconst classificationValid =\n  j.classificationValid === true;\n\nconst policyContextReady =\n  j.policyContextReady === true;\n\nconst expenseConfidence =\n  toNumber(j.expenseConfidence) ?? 0;\n\nconst meetsConfidence =\n  j.expenseMeetsConfidenceThreshold === true;\n\nconst restricted =\n  j.containsPotentiallyRestrictedItems === true;\n\nconst requiresHumanReviewFromAgent =\n  j.requiresHumanReview === true;\n\nconst policyReviewStatus =\n  normalizeStatus(\n    j.policyRequiresReviewStatus\n  );\n\nconst taxReviewStatus =\n  normalizeStatus(\n    j.taxReviewStatus\n  );\n\nconst rawText =\n  String(\n    j.rawText ??\n    ''\n  )\n    .replace(/\\u00A0/g, ' ')\n    .trim();\n\n\n// ============================================================\n// EVALUACIÓN ESPECIAL DE HOSPEDAJE\n// ============================================================\n\nlet lodgingCheckIn = null;\nlet lodgingCheckOut = null;\n\nlet lodgingExplicitNights = null;\nlet lodgingDateNights = null;\n\nlet lodgingNights = null;\nlet lodgingNightsSource = null;\n\nlet lodgingNightsConflict = false;\n\nlet lodgingAmountPerNight = null;\n\nlet lodgingEvaluationOk =\n  isLodging\n    ? false\n    : null;\n\n\n// ============================================================\n// SOLO SE EJECUTA PARA LODGING\n// ============================================================\n\nif (isLodging) {\n\n  // ----------------------------------------------------------\n  // 1. Buscar noches explícitas\n  // ----------------------------------------------------------\n\n  const explicitNights =\n    extractExplicitNights(\n      rawText\n    );\n\n  // Si encontramos exactamente una cantidad coherente.\n  if (explicitNights.length === 1) {\n\n    lodgingExplicitNights =\n      explicitNights[0];\n  }\n\n  // Si el propio texto contiene cantidades contradictorias.\n  else if (explicitNights.length > 1) {\n\n    lodgingNightsConflict =\n      true;\n  }\n\n\n  // ----------------------------------------------------------\n  // 2. Buscar check-in / check-out\n  // ----------------------------------------------------------\n\n  let checkIn =\n    extractCheckIn(\n      rawText\n    );\n\n  let checkOut =\n    extractCheckOut(\n      rawText\n    );\n\n\n  // ----------------------------------------------------------\n  // 3. Si no encontramos etiquetas, buscar rango\n  // ----------------------------------------------------------\n\n  if (\n    !checkIn ||\n    !checkOut\n  ) {\n\n    const range =\n      extractStayRange(\n        rawText\n      );\n\n    if (range) {\n\n      checkIn =\n        checkIn ??\n        range.checkIn;\n\n      checkOut =\n        checkOut ??\n        range.checkOut;\n    }\n  }\n\n\n  lodgingCheckIn =\n    checkIn?.iso ??\n    null;\n\n  lodgingCheckOut =\n    checkOut?.iso ??\n    null;\n\n\n  // ----------------------------------------------------------\n  // 4. Calcular noches por diferencia de fechas\n  // ----------------------------------------------------------\n\n  if (\n    checkIn &&\n    checkOut\n  ) {\n\n    const millisecondsPerDay =\n      24 * 60 * 60 * 1000;\n\n    const difference =\n      (\n        checkOut.timestamp -\n        checkIn.timestamp\n      ) /\n      millisecondsPerDay;\n\n    if (\n      Number.isInteger(difference) &&\n      difference > 0 &&\n      difference <= MAX_LODGING_NIGHTS\n    ) {\n\n      lodgingDateNights =\n        difference;\n    }\n  }\n\n\n  // ----------------------------------------------------------\n  // 5. Resolver cantidad definitiva de noches\n  // ----------------------------------------------------------\n\n  // Tenemos texto + fechas y coinciden.\n  if (\n    lodgingExplicitNights !== null &&\n    lodgingDateNights !== null\n  ) {\n\n    if (\n      lodgingExplicitNights ===\n      lodgingDateNights\n    ) {\n\n      lodgingNights =\n        lodgingExplicitNights;\n\n      lodgingNightsSource =\n        'TEXT_AND_DATES';\n    }\n\n    else {\n\n      // Ejemplo:\n      // texto dice 4 noches\n      // fechas dicen 3 noches\n      lodgingNightsConflict =\n        true;\n\n      lodgingNights =\n        null;\n\n      lodgingNightsSource =\n        'CONFLICT';\n    }\n  }\n\n  // Solo existe cantidad explícita.\n  else if (\n    lodgingExplicitNights !== null\n  ) {\n\n    lodgingNights =\n      lodgingExplicitNights;\n\n    lodgingNightsSource =\n      'TEXT';\n  }\n\n  // Solo tenemos fechas.\n  else if (\n    lodgingDateNights !== null\n  ) {\n\n    lodgingNights =\n      lodgingDateNights;\n\n    lodgingNightsSource =\n      'DATES';\n  }\n\n\n  // ----------------------------------------------------------\n  // 6. Calcular costo por noche\n  // ----------------------------------------------------------\n\n  if (\n    total !== null &&\n    total > 0 &&\n    lodgingNights !== null &&\n    lodgingNights > 0 &&\n    !lodgingNightsConflict\n  ) {\n\n    lodgingAmountPerNight =\n      roundMoney(\n        total /\n        lodgingNights\n      );\n\n    lodgingEvaluationOk =\n      lodgingAmountPerNight !== null;\n  }\n}\n\n\n// ============================================================\n// BASE DE COMPARACIÓN DE POLÍTICA\n// ============================================================\n//\n// Normal:\n// total\n//\n// Hospedaje:\n// total / noches\n// ============================================================\n\nlet policyComparisonBasis =\n  'TOTAL';\n\nlet policyComparisonAmount =\n  total;\n\n\nif (isLodging) {\n\n  policyComparisonBasis =\n    'PER_NIGHT';\n\n  policyComparisonAmount =\n    lodgingEvaluationOk\n      ? lodgingAmountPerNight\n      : null;\n}\n\n\n// ============================================================\n// CÁLCULO DE LÍMITE\n// ============================================================\n\nconst policyLimitConfigured =\n  policyLimit !== null &&\n  policyLimit >= 0;\n\n\nlet withinPolicyLimit = null;\nlet amountOverLimit = null;\nlet policyUsagePercent = null;\n\n\nif (\n  policyComparisonAmount !== null &&\n  policyLimitConfigured\n) {\n\n  withinPolicyLimit =\n    policyComparisonAmount <=\n    policyLimit + MONEY_TOLERANCE;\n\n\n  amountOverLimit =\n    policyComparisonAmount > policyLimit\n      ? roundMoney(\n          policyComparisonAmount -\n          policyLimit\n        )\n      : 0;\n\n\n  if (policyLimit > 0) {\n\n    policyUsagePercent =\n      Number(\n        (\n          (\n            policyComparisonAmount /\n            policyLimit\n          ) *\n          100\n        ).toFixed(2)\n      );\n  }\n}\n\n\n// ============================================================\n// RAZONES\n// ============================================================\n\nconst reviewReasons = [];\nconst rejectReasons = [];\nconst validationWarnings = [];\n\n\n// ============================================================\n// VALIDACIONES TÉCNICAS\n// ============================================================\n\nif (!agentResponseParsed) {\n\n  reviewReasons.push(\n    'AGENT_RESPONSE_NOT_PARSED'\n  );\n}\n\n\nif (!classificationValid) {\n\n  reviewReasons.push(\n    'INVALID_EXPENSE_CLASSIFICATION'\n  );\n}\n\n\nif (!meetsConfidence) {\n\n  reviewReasons.push(\n    'LOW_CLASSIFICATION_CONFIDENCE'\n  );\n}\n\n\nif (!toolUsed) {\n\n  reviewReasons.push(\n    'POLICY_TOOL_NOT_USED'\n  );\n}\n\n\nif (!policyFound) {\n\n  reviewReasons.push(\n    'POLICY_NOT_FOUND'\n  );\n}\n\n\nif (!policyContextReady) {\n\n  reviewReasons.push(\n    'POLICY_CONTEXT_NOT_READY'\n  );\n}\n\n\n// ============================================================\n// VALIDACIÓN DE TOTAL\n// ============================================================\n\nif (\n  total === null ||\n  total <= 0\n) {\n\n  reviewReasons.push(\n    'INVALID_TOTAL_FOR_POLICY'\n  );\n}\n\n\n// ============================================================\n// VALIDACIONES ESPECIALES DE HOSPEDAJE\n// ============================================================\n\nif (isLodging) {\n\n  if (lodgingNightsConflict) {\n\n    reviewReasons.push(\n      'LODGING_NIGHTS_CONFLICT'\n    );\n  }\n\n\n  if (\n    lodgingNights === null ||\n    lodgingNights <= 0\n  ) {\n\n    reviewReasons.push(\n      'LODGING_NIGHTS_NOT_DETERMINED'\n    );\n  }\n\n\n  if (\n    lodgingCheckIn &&\n    lodgingCheckOut &&\n    lodgingDateNights === null\n  ) {\n\n    reviewReasons.push(\n      'LODGING_INVALID_STAY_DATES'\n    );\n  }\n\n\n  if (\n    lodgingNights !== null &&\n    lodgingAmountPerNight === null\n  ) {\n\n    reviewReasons.push(\n      'LODGING_AMOUNT_PER_NIGHT_NOT_CALCULATED'\n    );\n  }\n\n\n  // Información útil para auditoría.\n  if (\n    lodgingNightsSource === 'TEXT'\n  ) {\n\n    validationWarnings.push(\n      'LODGING_NIGHTS_OBTAINED_FROM_TEXT'\n    );\n  }\n\n\n  if (\n    lodgingNightsSource === 'DATES'\n  ) {\n\n    validationWarnings.push(\n      'LODGING_NIGHTS_OBTAINED_FROM_DATES'\n    );\n  }\n\n\n  if (\n    lodgingNightsSource ===\n    'TEXT_AND_DATES'\n  ) {\n\n    validationWarnings.push(\n      'LODGING_NIGHTS_CONFIRMED_BY_TEXT_AND_DATES'\n    );\n  }\n}\n\n\n// ============================================================\n// POLÍTICA PERMITIDO / NO PERMITIDO\n// ============================================================\n\nif (policyExplicitlyRejected) {\n\n  rejectReasons.push(\n    'CATEGORY_NOT_ALLOWED_BY_POLICY'\n  );\n}\n\n\nif (\n  policyFound &&\n  j.policyAllowed === null\n) {\n\n  reviewReasons.push(\n    'POLICY_ALLOWED_VALUE_UNKNOWN'\n  );\n}\n\n\n// ============================================================\n// LÍMITE DE MONTO\n// ============================================================\n\nif (\n  REQUIRE_POLICY_LIMIT &&\n  !policyLimitConfigured\n) {\n\n  reviewReasons.push(\n    'POLICY_LIMIT_NOT_CONFIGURED'\n  );\n}\n\n\nif (\n  withinPolicyLimit === false\n) {\n\n  // Superar el límite genera revisión humana,\n  // no rechazo automático.\n  //\n  // Para LODGING:\n  // compara importe por noche.\n  //\n  // Para otras categorías:\n  // compara total.\n  reviewReasons.push(\n    'AMOUNT_EXCEEDS_POLICY_LIMIT'\n  );\n}\n\n\n// ============================================================\n// PRODUCTOS RESTRINGIDOS\n// ============================================================\n\nif (restricted) {\n\n  reviewReasons.push(\n    'POTENTIALLY_RESTRICTED_ITEMS'\n  );\n}\n\n\n// ============================================================\n// REVISIÓN DEFINIDA EN POLÍTICA\n// ============================================================\n\nif (\n  policyReviewStatus === 'YES' ||\n  policyReviewStatus === 'CONDITIONAL'\n) {\n\n  reviewReasons.push(\n    'POLICY_REQUIRES_REVIEW'\n  );\n}\n\n\n// ============================================================\n// REVISIÓN TRIBUTARIA\n// ============================================================\n\nif (\n  taxReviewStatus === 'YES' ||\n  taxReviewStatus === 'CONDITIONAL'\n) {\n\n  reviewReasons.push(\n    'TAX_REVIEW_REQUIRED'\n  );\n}\n\n\n// ============================================================\n// REVISIÓN PEDIDA POR EL AGENTE\n// ============================================================\n\nif (requiresHumanReviewFromAgent) {\n\n  reviewReasons.push(\n    'AGENT_REQUESTED_HUMAN_REVIEW'\n  );\n}\n\n\n// ============================================================\n// ELIMINAR RAZONES REPETIDAS\n// ============================================================\n\nconst uniqueReviewReasons =\n  [...new Set(reviewReasons)];\n\nconst uniqueRejectReasons =\n  [...new Set(rejectReasons)];\n\nconst uniqueValidationWarnings =\n  [...new Set(validationWarnings)];\n\n\n// ============================================================\n// DECISIÓN FINAL\n// ============================================================\n\nlet policyDecision =\n  'REVIEW';\n\n\n// REJECT tiene prioridad máxima.\nif (\n  uniqueRejectReasons.length > 0\n) {\n\n  policyDecision =\n    'REJECT';\n}\n\n\n// Si existen razones de revisión.\nelse if (\n  uniqueReviewReasons.length > 0\n) {\n\n  policyDecision =\n    'REVIEW';\n}\n\n\n// Todo correcto.\nelse {\n\n  policyDecision =\n    'ALLOW';\n}\n\n\n// ============================================================\n// FLAGS\n// ============================================================\n\nconst policyAutoApproved =\n  policyDecision === 'ALLOW';\n\nconst policyNeedsHumanApproval =\n  policyDecision === 'REVIEW';\n\nconst policyRejected =\n  policyDecision === 'REJECT';\n\n\n// ============================================================\n// ESTADO DE EVALUACIÓN\n// ============================================================\n//\n// Para hospedaje también necesitamos haber calculado\n// correctamente las noches.\n// ============================================================\n\nconst policyEvaluationOk =\n  agentResponseParsed &&\n  total !== null &&\n  policyFound &&\n  (\n    !isLodging ||\n    lodgingEvaluationOk === true\n  );\n\n\n// ============================================================\n// LABEL\n// ============================================================\n\nconst POLICY_DECISION_LABELS = {\n\n  ALLOW:\n    'Cumple política',\n\n  REVIEW:\n    'Requiere revisión humana',\n\n  REJECT:\n    'No permitido por política',\n};\n\n\nconst policyDecisionLabel =\n  POLICY_DECISION_LABELS[\n    policyDecision\n  ];\n\n\n// ============================================================\n// SALIDA\n// ============================================================\n\nreturn {\n\n  json: {\n\n    // --------------------------------------------------------\n    // Conservamos todo P01-P07.3\n    // --------------------------------------------------------\n\n    ...j,\n\n\n    // --------------------------------------------------------\n    // Base utilizada para comparar política\n    // --------------------------------------------------------\n\n    policyComparisonBasis,\n\n    policyComparisonAmount,\n\n\n    // --------------------------------------------------------\n    // Hospedaje\n    // --------------------------------------------------------\n\n    isLodging,\n\n    lodgingCheckIn,\n\n    lodgingCheckOut,\n\n    lodgingExplicitNights,\n\n    lodgingDateNights,\n\n    lodgingNights,\n\n    lodgingNightsSource,\n\n    lodgingNightsConflict,\n\n    lodgingAmountPerNight,\n\n    lodgingEvaluationOk,\n\n\n    // --------------------------------------------------------\n    // Resultado monetario\n    // --------------------------------------------------------\n\n    policyLimitConfigured,\n\n    withinPolicyLimit,\n\n    amountOverLimit,\n\n    policyUsagePercent,\n\n\n    // --------------------------------------------------------\n    // P07.4\n    // --------------------------------------------------------\n\n    policyEvaluationOk,\n\n    policyDecision,\n\n    policyDecisionLabel,\n\n\n    // --------------------------------------------------------\n    // Flags para IF / Switch\n    // --------------------------------------------------------\n\n    policyAutoApproved,\n\n    policyNeedsHumanApproval,\n\n    policyRejected,\n\n\n    // --------------------------------------------------------\n    // Explicabilidad\n    // --------------------------------------------------------\n\n    policyReviewReasons:\n      uniqueReviewReasons,\n\n    policyRejectReasons:\n      uniqueRejectReasons,\n\n    policyValidationWarnings:\n      uniqueValidationWarnings,\n\n\n    // --------------------------------------------------------\n    // Auditoría\n    // --------------------------------------------------------\n\n    policyEvaluatedAt:\n      new Date().toISOString(),\n  },\n\n\n  // Conservamos JPG / PDF / XML\n  binary:\n    item.binary,\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    592,
+    480
+   ],
+   "id": "b0d7af59-6626-48bd-8328-b9e06e56d413",
+   "name": "Evaluar política (P18)"
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// ============================================================\n// P08.1 - PREPARAR REGISTRO DE FACTURA\n// ============================================================\n\nconst item = $input.item;\nconst j = item.json ?? {};\n\n\n// ============================================================\n// HELPERS\n// ============================================================\n\nfunction text(value) {\n  if (\n    value === null ||\n    value === undefined\n  ) {\n    return '';\n  }\n\n  return String(value).trim();\n}\n\n\nfunction numberOrBlank(value) {\n  if (\n    value === null ||\n    value === undefined ||\n    value === ''\n  ) {\n    return '';\n  }\n\n  const number = Number(value);\n\n  return Number.isFinite(number)\n    ? number\n    : '';\n}\n\n\nfunction booleanText(value) {\n  if (value === true) {\n    return 'SI';\n  }\n\n  if (value === false) {\n    return 'NO';\n  }\n\n  return '';\n}\n\n\nfunction arrayText(value) {\n  if (!Array.isArray(value)) {\n    return '';\n  }\n\n  return value\n    .map(v => String(v ?? '').trim())\n    .filter(Boolean)\n    .join(' | ');\n}\n\n\n// ============================================================\n// STATUS GENERAL\n// ============================================================\n\nlet status = 'PENDING';\n\nif (j.policyDecision === 'ALLOW') {\n  status = 'AUTO_APPROVED';\n}\n\nelse if (j.policyDecision === 'REVIEW') {\n  status = 'PENDING_HUMAN_REVIEW';\n}\n\nelse if (j.policyDecision === 'REJECT') {\n  status = 'REJECTED';\n}\n\n\n// ============================================================\n// REGISTRO PLANO PARA GOOGLE SHEETS\n// ============================================================\n\nconst record = {\n\n  timestamp:\n    new Date().toISOString(),\n\n  // ----------------------------------------------------------\n  // Gmail / origen\n  // ----------------------------------------------------------\n\n  gmailMessageId:\n    text(j.gmailMessageId),\n\n  senderEmail:\n    text(\n      j.senderEmail ??\n      j['correo electrónico del remitente']\n    ),\n\n  fileName:\n    text(\n      j.fileName ??\n      j['Nombre del archivo']\n    ),\n\n\n  // ----------------------------------------------------------\n  // Colaborador\n  // ----------------------------------------------------------\n\n  collaboratorName:\n    text(j.collaboratorName),\n\n  collaboratorCostCenter:\n    text(j.collaboratorCostCenter),\n\n\n  // ----------------------------------------------------------\n  // Factura\n  // ----------------------------------------------------------\n\n  supplierName:\n    text(j.supplierName),\n\n  supplierTaxId:\n    text(j.supplierTaxId),\n\n  documentNumber:\n    text(j.documentNumber),\n\n  issueDate:\n    text(j.issueDate),\n\n  currency:\n    text(j.currency),\n\n  subtotal:\n    numberOrBlank(j.subtotal),\n\n  tax:\n    numberOrBlank(j.tax),\n\n  total:\n    numberOrBlank(j.total),\n\n  duplicateKey:\n    text(j.duplicateKey),\n\n\n  // ----------------------------------------------------------\n  // Clasificación IA\n  // ----------------------------------------------------------\n\n  expenseCategory:\n    text(j.expenseCategory),\n\n  expenseCategoryLabel:\n    text(j.expenseCategoryLabel),\n\n  expenseConfidence:\n    numberOrBlank(j.expenseConfidence),\n\n  expenseEvidence:\n    arrayText(j.expenseEvidence),\n\n  classificationReason:\n    text(j.classificationReason),\n\n\n  // ----------------------------------------------------------\n  // Tool / política\n  // ----------------------------------------------------------\n\n  toolUsed:\n    booleanText(j.toolUsed),\n\n  policyFound:\n    booleanText(j.policyFound),\n\n  policyAllowed:\n    booleanText(j.policyAllowed),\n\n  policyLimit:\n    numberOrBlank(j.policyLimit),\n\n  withinPolicyLimit:\n    booleanText(j.withinPolicyLimit),\n\n  amountOverLimit:\n    numberOrBlank(j.amountOverLimit),\n\n  policyUsagePercent:\n    numberOrBlank(j.policyUsagePercent),\n\n  policyVersion:\n    text(j.policyVersion),\n\n\n  // ----------------------------------------------------------\n  // Decisión\n  // ----------------------------------------------------------\n\n  policyDecision:\n    text(j.policyDecision),\n\n  policyDecisionLabel:\n    text(j.policyDecisionLabel),\n\n  policyReviewReasons:\n    arrayText(j.policyReviewReasons),\n\n  policyRejectReasons:\n    arrayText(j.policyRejectReasons),\n\n  requiresHumanReview:\n    booleanText(j.requiresHumanReview),\n\n  status,\n};\n\n\n// ============================================================\n// SALIDA\n// ============================================================\n\nreturn {\n  json: record,\n\n  // Conservamos archivo por si la siguiente rama lo necesita\n  binary: item.binary\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    816,
+    480
+   ],
+   "id": "06d9d241-01ff-4418-ae54-8d5b090beaa1",
+   "name": "Preparar registro (P19)"
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// 🧪 SIMULA: Google Sheets · append (RegistroFacturas)\nreturn {\n  json: { ...$json, row_number: 42, _simulado: 'sheets.append' },\n  binary: $input.item.binary,\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    1024,
+    480
+   ],
+   "id": "728ffd32-b495-4f58-a5b0-4055ff01ca06",
+   "name": "Registrar factura (P20)",
+   "notes": "SIMULADO · Google Sheets append en RegistroFacturas",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// ============================================================\n// P08.2 - RESTAURAR CONTEXTO DESPUÉS DEL REGISTRO\n// ============================================================\n//\n// Google Sheets puede devolver solamente la fila registrada.\n// Recuperamos la decisión completa desde P07.4.\n//\n// Para esta versión trabajamos con 1 factura por ejecución,\n// por eso usamos .first().\n// ============================================================\n\nconst policyItem =\n  $('Evaluar política (P18)').first();\n\nif (!policyItem) {\n  throw new Error(\n    'No se encontró información en \"Evaluar política (P07.4)\"'\n  );\n}\n\nconst policyData =\n  policyItem.json ?? {};\n\nconst registerResult =\n  $json ?? {};\n\n\n// ============================================================\n// SALIDA\n// ============================================================\n\nreturn {\n  json: {\n    // Toda la factura + colaborador + IA + política\n    ...policyData,\n\n    // Auditoría P08\n    invoiceRegistered: true,\n\n    registeredRowNumber:\n      registerResult.row_number ??\n      registerResult.rowNumber ??\n      null,\n\n    registeredAt:\n      new Date().toISOString(),\n  },\n\n  // Conservamos archivo original\n  binary:\n    policyItem.binary,\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    1232,
+    480
+   ],
+   "id": "af812b72-d128-4307-a60d-0991a33a08e3",
+   "name": "Restaurar contexto (P21)"
+  },
+  {
+   "parameters": {
+    "rules": {
+     "values": [
+      {
+       "conditions": {
+        "options": {
+         "caseSensitive": true,
+         "leftValue": "",
+         "typeValidation": "strict",
+         "version": 3
+        },
+        "conditions": [
+         {
+          "leftValue": "={{ $json.policyDecision }}",
+          "rightValue": "ALLOW",
+          "operator": {
+           "type": "string",
+           "operation": "equals"
+          },
+          "id": "d044da84-4d5a-44e3-8559-93d1b64dd9fe"
+         }
+        ],
+        "combinator": "and"
+       },
+       "renameOutput": true,
+       "outputKey": "ALLOW"
+      },
+      {
+       "conditions": {
+        "options": {
+         "caseSensitive": true,
+         "leftValue": "",
+         "typeValidation": "strict",
+         "version": 3
+        },
+        "conditions": [
+         {
+          "id": "8024f505-379b-446f-b0af-0e0c8e2570ba",
+          "leftValue": "={{ $json.policyDecision }}",
+          "rightValue": "REVIEW",
+          "operator": {
+           "type": "string",
+           "operation": "equals"
+          }
+         }
+        ],
+        "combinator": "and"
+       },
+       "renameOutput": true,
+       "outputKey": "REVIEW"
+      },
+      {
+       "conditions": {
+        "options": {
+         "caseSensitive": true,
+         "leftValue": "",
+         "typeValidation": "strict",
+         "version": 3
+        },
+        "conditions": [
+         {
+          "id": "aba11085-fce9-4d1c-9fec-2ecd9e28a56f",
+          "leftValue": "={{ $json.policyDecision }}",
+          "rightValue": "REJECT",
+          "operator": {
+           "type": "string",
+           "operation": "equals"
+          }
+         }
+        ],
+        "combinator": "and"
+       },
+       "renameOutput": true,
+       "outputKey": "REJECT"
+      }
+     ]
+    },
+    "options": {}
+   },
+   "type": "n8n-nodes-base.switch",
+   "typeVersion": 3.4,
+   "position": [
+    1424,
+    464
+   ],
+   "id": "b5fe63e7-d6f7-4f1d-a750-131a50875669",
+   "name": "Resultado política (P22)"
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// ============================================================\n// P09.9 - PREPARAR RESULTADO FINAL\n// ============================================================\n\nconst item = $input.item;\nconst j = item.json ?? {};\n\n\n// ============================================================\n// 1. DETERMINAR TIPO DE APROBACIÓN\n// ============================================================\n\nconst humanApproved =\n  j.humanApproved === true ||\n  j.humanApprovalStatus === 'APPROVED';\n\nconst autoApproved =\n  j.policyDecision === 'ALLOW' &&\n  !humanApproved;\n\n\n// ============================================================\n// 2. ESTADO FINAL\n// ============================================================\n\nlet finalStatus = 'PROCESSED';\nlet finalStatusLabel = 'Procesada';\nlet approvalType = 'NONE';\n\nif (autoApproved) {\n\n  finalStatus =\n    'AUTO_APPROVED';\n\n  finalStatusLabel =\n    'Aprobada automáticamente';\n\n  approvalType =\n    'AUTOMATIC';\n}\n\nif (humanApproved) {\n\n  finalStatus =\n    'HUMAN_APPROVED';\n\n  finalStatusLabel =\n    'Aprobada manualmente';\n\n  approvalType =\n    'HUMAN';\n}\n\n\n// ============================================================\n// 3. DESTINATARIO\n// ============================================================\n\nconst recipientEmail =\n  String(\n    j.senderEmail ||\n    j.collaboratorEmail ||\n    ''\n  )\n  .trim()\n  .toLowerCase();\n\n\n// ============================================================\n// 4. VALIDAR EMAIL\n// ============================================================\n\nconst recipientEmailValid =\n  /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/\n    .test(recipientEmail);\n\n\n// ============================================================\n// 5. ASUNTO\n// ============================================================\n\nconst documentNumber =\n  j.documentNumber ||\n  'SIN-NUMERO';\n\nconst finalEmailSubject =\n  `Rendición ${documentNumber} - ${finalStatusLabel}`;\n\n    \n// ============================================================\n// 6. SALIDA\n// ============================================================\n\nreturn {\n  json: {\n\n    ...j,\n\n    approvalType,\n\n    finalStatus,\n    finalStatusLabel,\n\n    recipientEmail,\n    recipientEmailValid,\n\n    finalEmailSubject,\n\n    finalApproved:\n      autoApproved ||\n      humanApproved,\n\n    finalProcessedAt:\n      new Date().toISOString(),\n  },\n\n  binary:\n    item.binary,\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    2464,
+    256
+   ],
+   "id": "13f6a95c-4277-4bc5-bc59-6e656f10e258",
+   "name": "Preparar resultado final (P23.1)"
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// ============================================================\n// P09.11 - PREPARAR RECHAZO FINAL\n// ============================================================\n//\n// Puede recibir:\n// A) REJECT directo de la política\n// B) REVIEW rechazado por una persona\n//\n// Genera un formato único para la notificación y registro.\n// ============================================================\n\nconst item = $input.item;\nconst j = item.json ?? {};\n\n\n// ============================================================\n// 1. IDENTIFICAR ORIGEN DEL RECHAZO\n// ============================================================\n\nconst humanRejected =\n  j.humanApproved === false ||\n  j.humanApprovalStatus === 'REJECTED';\n\nconst policyRejected =\n  j.policyDecision === 'REJECT';\n\n\n// ============================================================\n// 2. DETERMINAR TIPO Y MENSAJE\n// ============================================================\n\nlet rejectionType = 'POLICY';\nlet finalStatusLabel = 'No permitida por la política';\n\nif (humanRejected) {\n  rejectionType = 'HUMAN';\n  finalStatusLabel = 'Rechazada por el aprobador';\n} else if (policyRejected) {\n  rejectionType = 'POLICY';\n  finalStatusLabel = 'No permitida por la política';\n}\n\n\n// ============================================================\n// 3. DESTINATARIO\n// ============================================================\n\nconst recipientEmail =\n  String(\n    j.senderEmail ||\n    j.collaboratorEmail ||\n    ''\n  )\n    .trim()\n    .toLowerCase();\n\nconst recipientEmailValid =\n  /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/\n    .test(recipientEmail);\n\n\n// ============================================================\n// 4. MOTIVOS\n// ============================================================\n\nconst policyRejectReasons =\n  Array.isArray(j.policyRejectReasons)\n    ? j.policyRejectReasons\n    : [];\n\nconst policyReviewReasons =\n  Array.isArray(j.policyReviewReasons)\n    ? j.policyReviewReasons\n    : [];\n\n\n// ============================================================\n// 5. ESTADO FINAL\n// ============================================================\n\nconst finalStatus = 'REJECTED';\nconst finalApproved = false;\n\nconst finalEmailSubject =\n  `Rendición ${j.documentNumber || 'SIN-NUMERO'} - ${finalStatusLabel}`;\n\nconst finalProcessedAt =\n  new Date().toISOString();\n\n\n// ============================================================\n// 6. SALIDA\n// ============================================================\n\nreturn {\n  json: {\n    ...j,\n\n    finalApproved,\n    finalStatus,\n    finalStatusLabel,\n\n    rejectionType,\n\n    recipientEmail,\n    recipientEmailValid,\n\n    policyRejectReasons,\n    policyReviewReasons,\n\n    finalEmailSubject,\n    finalProcessedAt,\n  },\n\n  binary: item.binary,\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    2352,
+    752
+   ],
+   "id": "006165b4-baf3-4461-8ba3-a106718b770d",
+   "name": "Preparar rechazo final (P23.3)"
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// 🧪 SIMULA: Gmail · Send and Wait for Approval\n//\n// El nodo real devuelve:\n//   { datos: { aprobado: true|false, 'respondióEn': '...' } }\nconst caso = $('D00 · Caso de prueba (dummy)').first().json._caso ?? {};\n\nif (caso.aprobacionHumana !== true && caso.aprobacionHumana !== false) {\n  throw new Error(\n    'Este caso llegó a la rama de aprobación humana pero no define ' +\n    '\"aprobacionHumana\". Usa el caso 2 (aprueba) o el 3 (rechaza).'\n  );\n}\n\nreturn {\n  json: {\n    datos: {\n      aprobado: caso.aprobacionHumana === true,\n      'respondióEn': new Date().toISOString(),\n    },\n    _simulado: 'gmail.sendAndWait',\n  },\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    1776,
+    496
+   ],
+   "id": "07396f39-db85-4521-bae7-db909139e53b",
+   "name": "Aprobación humana viáticos (HITL)(P23.2)",
+   "notes": "SIMULADO · respuesta del aprobador según el caso (sin esperar a nadie)",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// ============================================================\n// P09.2 - NORMALIZAR APROBACIÓN HUMANA\n// ============================================================\n//\n// Objetivos:\n// 1. Interpretar la respuesta del Gmail HITL.\n// 2. Recuperar todos los datos originales de la factura.\n// 3. Conservar el archivo binario.\n// 4. Crear un booleano estable: humanApproved.\n//\n// V1:\n// Trabajamos con una factura por ejecución.\n// ============================================================\n\n\n// ============================================================\n// 1. RECUPERAR CONTEXTO ORIGINAL\n// ============================================================\n\nconst sourceItem =\n  $('Restaurar contexto (P21)').first();\n\nif (!sourceItem) {\n  throw new Error(\n    'No se encontró el contexto original en \"Restaurar contexto (P08.2)\"'\n  );\n}\n\nconst source =\n  sourceItem.json ?? {};\n\n\n// ============================================================\n// 2. RESPUESTA DEL NODO HITL\n// ============================================================\n\nconst response =\n  $json ?? {};\n\n\n// ============================================================\n// 3. EXTRAER VALOR DE APROBACIÓN\n// ============================================================\n//\n// Tu salida actual:\n//\n// {\n//   \"datos\": {\n//     \"aprobado\": true,\n//     \"respondióEn\": \"...\"\n//   }\n// }\n//\n// También dejamos compatibilidad con nombres ingleses,\n// por si una actualización de n8n cambia la estructura.\n// ============================================================\n\nconst rawApproved =\n  response.datos?.aprobado ??\n  response.data?.approved ??\n  response.aprobado ??\n  response.approved ??\n  null;\n\n\n// ============================================================\n// 4. NORMALIZAR BOOLEANO\n// ============================================================\n\nfunction normalizeBoolean(value) {\n\n  if (value === true) {\n    return true;\n  }\n\n  if (value === false) {\n    return false;\n  }\n\n  if (value === null || value === undefined) {\n    return null;\n  }\n\n  const normalized =\n    String(value)\n      .trim()\n      .toLowerCase();\n\n  if (\n    [\n      'true',\n      'verdadero',\n      'yes',\n      'si',\n      'sí',\n      'approved',\n      'approve',\n      'aprobado',\n      'aprobar'\n    ].includes(normalized)\n  ) {\n    return true;\n  }\n\n  if (\n    [\n      'false',\n      'falso',\n      'no',\n      'rejected',\n      'reject',\n      'disapproved',\n      'declined',\n      'rechazado',\n      'rechazar'\n    ].includes(normalized)\n  ) {\n    return false;\n  }\n\n  return null;\n}\n\n\nconst humanApproved =\n  normalizeBoolean(rawApproved);\n\n\n// ============================================================\n// 5. FECHA/HORA DE RESPUESTA\n// ============================================================\n\nconst humanApprovalRespondedAt =\n  response.datos?.['respondióEn'] ??\n  response.datos?.respondioEn ??\n  response.data?.respondedAt ??\n  response.respondedAt ??\n  new Date().toISOString();\n\n\n// ============================================================\n// 6. ESTADO NORMALIZADO\n// ============================================================\n\nconst humanApprovalResolved =\n  humanApproved !== null;\n\nlet humanApprovalStatus =\n  'UNKNOWN';\n\nif (humanApproved === true) {\n  humanApprovalStatus =\n    'APPROVED';\n}\n\nif (humanApproved === false) {\n  humanApprovalStatus =\n    'REJECTED';\n}\n\n\n// ============================================================\n// 7. RESULTADO FINAL\n// ============================================================\n\nreturn {\n  json: {\n\n    // Recuperamos todos los datos anteriores\n    ...source,\n\n    // Auditoría HITL\n    approvalType:\n      'HUMAN',\n\n    humanApprovalResolved,\n\n    humanApproved,\n\n    humanApprovalStatus,\n\n    humanApprovalRespondedAt,\n\n    // Guardamos la respuesta original para auditoría\n    humanApprovalRawResponse:\n      response,\n\n  },\n\n  // Recuperamos el comprobante original\n  binary:\n    sourceItem.binary,\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    2016,
+    496
+   ],
+   "id": "ab97ed4d-06b8-48b8-b30c-71dedc3dcf47",
+   "name": "Normalizar aprobación humana (P23.2.1)"
+  },
+  {
+   "parameters": {
+    "conditions": {
+     "options": {
+      "caseSensitive": true,
+      "leftValue": "",
+      "typeValidation": "strict",
+      "version": 3
+     },
+     "conditions": [
+      {
+       "leftValue": "={{ $json.humanApproved }}",
+       "rightValue": true,
+       "operator": {
+        "type": "boolean",
+        "operation": "true",
+        "singleValue": true
+       },
+       "id": "e5a74a1c-9fea-43dc-a09a-d39dc75ba845"
+      }
+     ],
+     "combinator": "and"
+    },
+    "options": {}
+   },
+   "id": "15efd635-ebca-44ff-99c3-311547f39f52",
+   "name": "¿Aprobado por humano? (HITL)(P23.2.2)",
+   "type": "n8n-nodes-base.if",
+   "typeVersion": 2.3,
+   "position": [
+    2208,
+    496
+   ]
+  },
+  {
+   "parameters": {
+    "conditions": {
+     "options": {
+      "caseSensitive": true,
+      "leftValue": "",
+      "typeValidation": "strict",
+      "version": 3
+     },
+     "conditions": [
+      {
+       "id": "c4c52e20-1955-483b-99c9-a77b8cd7eea9",
+       "leftValue": "={{ $json.recipientEmailValid }}",
+       "rightValue": false,
+       "operator": {
+        "type": "boolean",
+        "operation": "true",
+        "singleValue": true
+       }
+      }
+     ],
+     "combinator": "and"
+    },
+    "options": {}
+   },
+   "type": "n8n-nodes-base.if",
+   "typeVersion": 2.3,
+   "position": [
+    2688,
+    256
+   ],
+   "id": "1faa82cc-2060-4202-91d8-c2831c7749d7",
+   "name": "¿Email final válido? (P24)"
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// 🧪 SIMULA: Gmail · enviar resumen final al colaborador\nreturn {\n  json: {\n    ...$json,\n    _correoSimulado: {\n      para: $json.recipientEmail ?? null,\n      asunto: $json.finalEmailSubject ?? null,\n      estado: $json.finalStatusLabel ?? null,\n    },\n  },\n  binary: $input.item.binary,\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    3024,
+    160
+   ],
+   "id": "b74c0a42-c797-4d1f-bcc3-b5bef39f580c",
+   "name": "Consolidar / resumen final (P25)",
+   "notes": "SIMULADO · correo de rendición procesada",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// ============================================================\n// P10.0 - PREPARAR ACTUALIZACIÓN DE ESTADO APROBADO\n// ============================================================\n//\n// Recuperamos el estado final desde P09.9 y construimos\n// exactamente las columnas que Google Sheets debe actualizar.\n// ============================================================\n\nconst sourceItem =\n  $('Preparar resultado final (P23.1)').first();\n\nif (!sourceItem) {\n  throw new Error(\n    'No se encontró \"Preparar resultado final (P09.9)\"'\n  );\n}\n\nconst j =\n  sourceItem.json ?? {};\n\n\n// ============================================================\n// VALIDACIONES BÁSICAS\n// ============================================================\n\nif (!j.duplicateKey) {\n  throw new Error(\n    'No existe duplicateKey para actualizar RegistroFacturas'\n  );\n}\n\nif (!j.finalStatus) {\n  throw new Error(\n    'No existe finalStatus para actualizar RegistroFacturas'\n  );\n}\n\n\n// ============================================================\n// SALIDA\n// ============================================================\n//\n// IMPORTANTE:\n// Los nombres deben coincidir exactamente con las columnas\n// de Google Sheets.\n// ============================================================\n\nreturn {\n  json: {\n\n    duplicateKey:\n      j.duplicateKey,\n\n    status:\n      j.finalStatus,\n\n    finalStatus:\n      j.finalStatus,\n\n    finalStatusLabel:\n      j.finalStatusLabel ?? '',\n\n    finalApproved:\n      j.finalApproved ?? false,\n\n    approvalType:\n      j.approvalType ?? '',\n\n    humanApprovalStatus:\n      j.humanApprovalStatus ?? '',\n\n    humanApprovalRespondedAt:\n      j.humanApprovalRespondedAt ?? '',\n\n    finalProcessedAt:\n      j.finalProcessedAt ??\n      new Date().toISOString(),\n  }\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    3248,
+    160
+   ],
+   "id": "f53ca4b5-6d04-49d7-ab11-e96e6e8ab3c0",
+   "name": "Preparar actualización aprobado (P26)"
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// 🧪 SIMULA: Google Sheets · update (RegistroFacturas)\nreturn { json: { ...$json, _simulado: 'sheets.update', filaActualizada: 42 } };"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    3472,
+    160
+   ],
+   "id": "71057056-b892-4eb7-8277-3fbe6cedf498",
+   "name": "Actualizar estado aprobado (P27)",
+   "notes": "SIMULADO · Google Sheets update por duplicateKey",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// 🧪 SIMULA: Gmail · enviar aviso de rendición no aprobada\nreturn {\n  json: {\n    ...$json,\n    _correoSimulado: {\n      para: $json.recipientEmail ?? null,\n      asunto: $json.finalEmailSubject ?? null,\n      motivo: $json.rejectionType ?? null,\n    },\n  },\n  binary: $input.item.binary,\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    2800,
+    656
+   ],
+   "id": "5d8f006e-5e30-434c-bbe3-4facf0eb7c94",
+   "name": "Notificar rendición no aprobada (P28)",
+   "notes": "SIMULADO · correo de rendición no aprobada",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// ============================================================\n// P10.R0 - PREPARAR ACTUALIZACIÓN DE ESTADO RECHAZADO\n// ============================================================\n\nconst sourceItem =\n  $('Preparar rechazo final (P23.3)').first();\n\nif (!sourceItem) {\n  throw new Error(\n    'No se encontró \"Preparar rechazo final (P09.11)\"'\n  );\n}\n\nconst j =\n  sourceItem.json ?? {};\n\n\n// ============================================================\n// VALIDACIONES\n// ============================================================\n\nif (!j.duplicateKey) {\n  throw new Error(\n    'No existe duplicateKey para actualizar RegistroFacturas'\n  );\n}\n\nif (j.finalStatus !== 'REJECTED') {\n  throw new Error(\n    `Estado inesperado para rama de rechazo: ${j.finalStatus}`\n  );\n}\n\n\n// ============================================================\n// SALIDA PARA MAP AUTOMATICALLY\n// ============================================================\n\nreturn {\n  json: {\n\n    duplicateKey:\n      j.duplicateKey,\n\n    status:\n      'REJECTED',\n\n    finalStatus:\n      'REJECTED',\n\n    finalStatusLabel:\n      j.finalStatusLabel ?? 'No aprobada',\n\n    finalApproved:\n      false,\n\n    approvalType:\n      j.rejectionType === 'HUMAN'\n        ? 'HUMAN'\n        : 'POLICY',\n\n    rejectionType:\n      j.rejectionType ?? 'POLICY',\n\n    humanApprovalStatus:\n      j.humanApprovalStatus ?? '',\n\n    humanApprovalRespondedAt:\n      j.humanApprovalRespondedAt ?? '',\n\n    finalProcessedAt:\n      j.finalProcessedAt ??\n      new Date().toISOString(),\n  }\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    3024,
+    656
+   ],
+   "id": "7987aff2-40df-4ccf-8626-4cb33e6df5e1",
+   "name": "Preparar actualización rechazado (P.29)"
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// 🧪 SIMULA: Google Sheets · update (RegistroFacturas)\nreturn { json: { ...$json, _simulado: 'sheets.update', filaActualizada: 42 } };"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    3248,
+    656
+   ],
+   "id": "065f6540-07f9-4a28-9858-ae287df433b5",
+   "name": "Actualizar estado rechazado (P30)",
+   "notes": "SIMULADO · Google Sheets update por duplicateKey",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// 🧪 SIMULA: Execute Workflow → \"SUBFLOW - Cerrar incidencia factura\"\n//\n// ⚠️ Ese subflujo (id ix3aTQ9kotACGZa5) ya no existe en esta\n//    instancia de n8n: en producción los 5 nodos \"Cerrar incidencia\"\n//    fallan con \"workflow not found\".\nconst j = $json ?? {};\n\nreturn {\n  json: {\n    _simulado: 'executeWorkflow(SUBFLOW - Cerrar incidencia factura)',\n    incidentType: 'DUPLICATE_INVOICE',\n    actionRequired: 'NONE',\n    reason: \"El comprobante ya se encuentra registrado anteriormente en el sistema.\",\n    senderEmail: j.senderEmail ?? null,\n    gmailMessageId: j.gmailMessageId ?? null,\n    fileName: j.fileName ?? null,\n    supplierName: j.supplierName ?? null,\n    supplierTaxId: j.supplierTaxId ?? null,\n    documentNumber: j.documentNumber ?? null,\n    duplicateKey: j.duplicateKey ?? null,\n    cerradaEn: new Date().toISOString(),\n  },\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    288,
+    256
+   ],
+   "id": "20651346-b14d-48aa-9326-0156b896c563",
+   "name": "Cerrar incidencia - Factura duplicada",
+   "notes": "SIMULADO · el subflujo real (ix3aTQ9kotACGZa5) NO EXISTE en la instancia",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// 🧪 SIMULA: Execute Workflow → \"SUBFLOW - Cerrar incidencia factura\"\n//\n// ⚠️ Ese subflujo (id ix3aTQ9kotACGZa5) ya no existe en esta\n//    instancia de n8n: en producción los 5 nodos \"Cerrar incidencia\"\n//    fallan con \"workflow not found\".\nconst j = $json ?? {};\n\nreturn {\n  json: {\n    _simulado: 'executeWorkflow(SUBFLOW - Cerrar incidencia factura)',\n    incidentType: 'DUPLICATE_FILE',\n    actionRequired: 'NONE',\n    reason: \"El archivo recibido es id\\u00e9ntico a un comprobante enviado anteriormente.\",\n    senderEmail: j.senderEmail ?? null,\n    gmailMessageId: j.gmailMessageId ?? null,\n    fileName: j.fileName ?? null,\n    supplierName: j.supplierName ?? null,\n    supplierTaxId: j.supplierTaxId ?? null,\n    documentNumber: j.documentNumber ?? null,\n    duplicateKey: j.duplicateKey ?? null,\n    cerradaEn: new Date().toISOString(),\n  },\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -800,
+    192
+   ],
+   "id": "d5a2e77b-c24d-4b66-8c9d-b4e8e535b819",
+   "name": "Cerrar incidencia - Factura duplicada1",
+   "notes": "SIMULADO · el subflujo real (ix3aTQ9kotACGZa5) NO EXISTE en la instancia",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// 🧪 SIMULA: Execute Workflow → \"SUBFLOW - Cerrar incidencia factura\"\n//\n// ⚠️ Ese subflujo (id ix3aTQ9kotACGZa5) ya no existe en esta\n//    instancia de n8n: en producción los 5 nodos \"Cerrar incidencia\"\n//    fallan con \"workflow not found\".\nconst j = $json ?? {};\n\nreturn {\n  json: {\n    _simulado: 'executeWorkflow(SUBFLOW - Cerrar incidencia factura)',\n    incidentType: 'INVALID_INVOICE',\n    actionRequired: 'REPLACE_DOCUMENT',\n    reason: Array.isArray(j.invoiceValidationErrors) && j.invoiceValidationErrors.length ? j.invoiceValidationErrors.join(' | ') : \"El comprobante no super\\u00f3 las validaciones m\\u00ednimas requeridas.\",\n    senderEmail: j.senderEmail ?? null,\n    gmailMessageId: j.gmailMessageId ?? null,\n    fileName: j.fileName ?? null,\n    supplierName: j.supplierName ?? null,\n    supplierTaxId: j.supplierTaxId ?? null,\n    documentNumber: j.documentNumber ?? null,\n    duplicateKey: j.duplicateKey ?? null,\n    cerradaEn: new Date().toISOString(),\n  },\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -1312,
+    688
+   ],
+   "id": "a47417bc-a8b4-4d19-8a6b-0625a9b2347c",
+   "name": "Cerrar incidencia - Factura inválida",
+   "notes": "SIMULADO · el subflujo real (ix3aTQ9kotACGZa5) NO EXISTE en la instancia",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// 🧪 SIMULA: Execute Workflow → \"SUBFLOW - Cerrar incidencia factura\"\n//\n// ⚠️ Ese subflujo (id ix3aTQ9kotACGZa5) ya no existe en esta\n//    instancia de n8n: en producción los 5 nodos \"Cerrar incidencia\"\n//    fallan con \"workflow not found\".\nconst j = $json ?? {};\n\nreturn {\n  json: {\n    _simulado: 'executeWorkflow(SUBFLOW - Cerrar incidencia factura)',\n    incidentType: 'UNPROCESSABLE_DOCUMENT',\n    actionRequired: 'REPLACE_DOCUMENT',\n    reason: \"No fue posible extraer informaci\\u00f3n confiable del comprobante.\",\n    senderEmail: j.senderEmail ?? null,\n    gmailMessageId: j.gmailMessageId ?? null,\n    fileName: j.fileName ?? null,\n    supplierName: j.supplierName ?? null,\n    supplierTaxId: j.supplierTaxId ?? null,\n    documentNumber: j.documentNumber ?? null,\n    duplicateKey: j.duplicateKey ?? null,\n    cerradaEn: new Date().toISOString(),\n  },\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -2576,
+    992
+   ],
+   "id": "354ec565-1a75-4325-8f31-4b84b01bec4d",
+   "name": "Cerrar incidencia - Documento no procesable",
+   "notes": "SIMULADO · el subflujo real (ix3aTQ9kotACGZa5) NO EXISTE en la instancia",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "// 🧪 SIMULA: Execute Workflow → \"SUBFLOW - Cerrar incidencia factura\"\n//\n// ⚠️ Ese subflujo (id ix3aTQ9kotACGZa5) ya no existe en esta\n//    instancia de n8n: en producción los 5 nodos \"Cerrar incidencia\"\n//    fallan con \"workflow not found\".\nconst j = $json ?? {};\n\nreturn {\n  json: {\n    _simulado: 'executeWorkflow(SUBFLOW - Cerrar incidencia factura)',\n    incidentType: 'INVALID_COLLABORATOR',\n    actionRequired: 'CONTACT_ADMIN',\n    reason: \"No fue posible validar al remitente como colaborador autorizado.\",\n    senderEmail: j.senderEmail ?? null,\n    gmailMessageId: j.gmailMessageId ?? null,\n    fileName: j.fileName ?? null,\n    supplierName: j.supplierName ?? null,\n    supplierTaxId: j.supplierTaxId ?? null,\n    documentNumber: j.documentNumber ?? null,\n    duplicateKey: j.duplicateKey ?? null,\n    cerradaEn: new Date().toISOString(),\n  },\n};"
+   },
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    -1744,
+    688
+   ],
+   "id": "071b54d6-c213-4bc8-b32b-7402ae1c2cad",
+   "name": "Cerrar incidencia - Colaborador no válido",
+   "notes": "SIMULADO · el subflujo real (ix3aTQ9kotACGZa5) NO EXISTE en la instancia",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
+    "content": "## 🧪 Copia de PRUEBA con datos dummy\n\n**No toca Gmail, Google Sheets, OpenAI, Gemini ni ningún subflujo.**\nTodos los nodos externos están sustituidos por nodos *Code* que\ndevuelven exactamente la misma forma de datos que el nodo real.\n\n### Cómo probar\n1. Abre **D00 · Caso de prueba (dummy)**.\n2. Cambia `const CASO = 1;` por el número del escenario.\n3. **Execute workflow**.\n\n### Escenarios\n| # | Caso | Resultado esperado |\n|---|------|--------------------|\n| 1 | Almuerzo S/38, límite 50 | ALLOW · aprobación automática |\n| 2 | Almuerzo S/95, límite 50 | REVIEW → humano **aprueba** |\n| 3 | Almuerzo S/95, límite 50 | REVIEW → humano **rechaza** |\n| 4 | Hotel S/540 / 3 noches (S/180 por noche, límite 200) | ALLOW |\n| 5 | Consumo con alcohol | REJECT por política |\n| 6 | Escaneo sin RUC ni total | Factura inválida |\n| 7 | Remitente fuera de Colaboradores | Colaborador no válido |\n| 8 | Hash de archivo ya registrado | Duplicado exacto |\n| 9 | Mismo RUC + número ya en la hoja | Factura duplicada |\n| 10 | Foto JPG leída por Vision | ALLOW |\n| 11 | Foto ilegible → fallback Gemini | ALLOW |\n| 12 | Comprobante XML | ALLOW *(rama rota en producción)* |\n\nLos nodos con la etiqueta **SIMULADO** son los únicos cambiados.\nToda la lógica de negocio (P02–P30) es idéntica a la de producción.",
+    "height": 860,
+    "width": 620,
+    "color": 4
+   },
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    -5116,
+    -308
+   ],
+   "id": "cf344884-3eaa-49e9-b2e3-139d09f4f055",
+   "name": "Nota cff2aac3"
+  },
+  {
+   "parameters": {
+    "content": "## ⚠️ Fallos detectados en el flujo de producción\n\n1. **Ningún nodo tiene credenciales.** Los 59 nodos quedaron con\n   `credentials: {}` al duplicar el workflow. Gmail, Sheets, OpenAI\n   y Gemini fallan en el primer intento.\n2. **El subflujo de incidencias no existe.** `ix3aTQ9kotACGZa5`\n   (\"SUBFLOW - Cerrar incidencia factura\") devuelve 404: las 5 salidas\n   de error terminan en fallo.\n3. **La rama XML muere.** `Extraer datos XML (P04.2)` no tiene salida:\n   toda factura XML se pierde sin aviso y sin incidencia.\n4. **Nodos huérfanos.** `Notificar archivo duplicado (P12.1)` y\n   `Bloquear archivo repetido (P06.3)` no están conectados.\n5. **Salidas falsas sin destino.** `¿Email final válido? (P24)` y\n   `¿Email rechazo válido? (P09.12)`: si el correo del colaborador no\n   es válido, la ejecución muere sin actualizar la hoja.\n6. **Aprobador quemado en el nodo.** `ccastilloh31@icloud.com` está\n   escrito a mano en el HITL (P23.2).\n7. **Una factura por ejecución.** P14, P17, P21, P23.2.1, P26 y P29\n   usan `.first()`: con dos adjuntos en un correo se procesa el primero.",
+    "height": 860,
+    "width": 560,
+    "color": 3
+   },
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    -4416,
+    -308
+   ],
+   "id": "6be73286-4b43-46e8-a24f-1cecd3f05dbc",
+   "name": "Nota 838ba9cb"
+  }
+ ],
+ "connections": {
+  "Detectar tipo de archivo (P02)": {
+   "main": [
+    [
+     {
+      "node": "Enrutar por tipo de archivo (P03)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Enrutar por tipo de archivo (P03)": {
+   "main": [
+    [
+     {
+      "node": "Extraer texto PDF (P04.1)",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Extraer datos XML (P04.2)",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Analyze image (P04.3)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "¿Email rechazo válido? (P09.12)": {
+   "main": [
+    [
+     {
+      "node": "Notificar rendición no aprobada (P28)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Extraer texto PDF (P04.1)": {
+   "main": [
+    [
+     {
+      "node": "Preparar PDF extraído (P04.1 .1)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Analyze image (P04.3)": {
+   "main": [
+    [
+     {
+      "node": "Parsear Vision (P04.3.1)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Preparar PDF extraído (P04.1 .1)": {
+   "main": [
+    [
+     {
+      "node": "Extraer campos PDF (P04.1.2 )",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Extraer campos PDF (P04.1.2 )": {
+   "main": [
+    [
+     {
+      "node": "Normalizar factura (P05)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Parsear Vision (P04.3.1)": {
+   "main": [
+    [
+     {
+      "node": "¿Extracción Vision válida?(P04.3.2)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "¿Extracción Vision válida?(P04.3.2)": {
+   "main": [
+    [
+     {
+      "node": "Normalizar factura (P05)",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Gemini Vision fallback(P04.3.3)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Gemini Vision fallback(P04.3.3)": {
+   "main": [
+    [
+     {
+      "node": "Parsear Gemini (P04.3.4)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Parsear Gemini (P04.3.4)": {
+   "main": [
+    [
+     {
+      "node": "¿Extracción Gemini válida? (P04.3.5)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "¿Extracción Gemini válida? (P04.3.5)": {
+   "main": [
+    [
+     {
+      "node": "Normalizar factura (P05)",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Documento imagen no procesable (P04.3.6)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Normalizar factura (P05)": {
+   "main": [
+    [
+     {
+      "node": "Buscar colaborador (P06)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Buscar colaborador (P06)": {
+   "main": [
+    [
+     {
+      "node": "Preparar colaborador (P07)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Preparar colaborador (P07)": {
+   "main": [
+    [
+     {
+      "node": "¿Colaborador activo? (P08)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "¿Colaborador activo? (P08)": {
+   "main": [
+    [
+     {
+      "node": "Evaluar factura (P08.2)",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Colaborador no válido (P08.1)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Evaluar factura (P08.2)": {
+   "main": [
+    [
+     {
+      "node": "¿Factura válida? (P09)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "¿Factura válida? (P09)": {
+   "main": [
+    [
+     {
+      "node": "Calcular huella archivo (P09.1)",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Factura inválida(P09.2)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Calcular huella archivo (P09.1)": {
+   "main": [
+    [
+     {
+      "node": "¿Hash ya registrado? (P10)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "¿Hash ya registrado? (P10)": {
+   "main": [
+    [
+     {
+      "node": "¿Hash duplicado? (P11)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "¿Hash duplicado? (P11)": {
+   "main": [
+    [
+     {
+      "node": "Notificar archivo duplicado (P12.1)",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Registrar hash nuevo (P12.2)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Registrar hash nuevo (P12.2)": {
+   "main": [
+    [
+     {
+      "node": "Buscar duplicado (P13)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Buscar duplicado (P13)": {
+   "main": [
+    [
+     {
+      "node": "Preparar duplicado (P14)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Preparar duplicado (P14)": {
+   "main": [
+    [
+     {
+      "node": "¿Factura duplicada? (P15)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "¿Factura duplicada? (P15)": {
+   "main": [
+    [
+     {
+      "node": "Factura duplicada(P16.1)",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Agente clasificador de gastos (P16.2)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Agente clasificador de gastos (P16.2)": {
+   "main": [
+    [
+     {
+      "node": "Parsear decisión del agente (P17)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Parsear decisión del agente (P17)": {
+   "main": [
+    [
+     {
+      "node": "Evaluar política (P18)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Evaluar política (P18)": {
+   "main": [
+    [
+     {
+      "node": "Preparar registro (P19)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Preparar registro (P19)": {
+   "main": [
+    [
+     {
+      "node": "Registrar factura (P20)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Registrar factura (P20)": {
+   "main": [
+    [
+     {
+      "node": "Restaurar contexto (P21)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Restaurar contexto (P21)": {
+   "main": [
+    [
+     {
+      "node": "Resultado política (P22)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Resultado política (P22)": {
+   "main": [
+    [
+     {
+      "node": "Preparar resultado final (P23.1)",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Aprobación humana viáticos (HITL)(P23.2)",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Preparar rechazo final (P23.3)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Preparar resultado final (P23.1)": {
+   "main": [
+    [
+     {
+      "node": "¿Email final válido? (P24)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Preparar rechazo final (P23.3)": {
+   "main": [
+    [
+     {
+      "node": "¿Email rechazo válido? (P09.12)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Aprobación humana viáticos (HITL)(P23.2)": {
+   "main": [
+    [
+     {
+      "node": "Normalizar aprobación humana (P23.2.1)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Normalizar aprobación humana (P23.2.1)": {
+   "main": [
+    [
+     {
+      "node": "¿Aprobado por humano? (HITL)(P23.2.2)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "¿Aprobado por humano? (HITL)(P23.2.2)": {
+   "main": [
+    [
+     {
+      "node": "Preparar resultado final (P23.1)",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Preparar rechazo final (P23.3)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "¿Email final válido? (P24)": {
+   "main": [
+    [
+     {
+      "node": "Consolidar / resumen final (P25)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Consolidar / resumen final (P25)": {
+   "main": [
+    [
+     {
+      "node": "Preparar actualización aprobado (P26)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Preparar actualización aprobado (P26)": {
+   "main": [
+    [
+     {
+      "node": "Actualizar estado aprobado (P27)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Notificar rendición no aprobada (P28)": {
+   "main": [
+    [
+     {
+      "node": "Preparar actualización rechazado (P.29)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Preparar actualización rechazado (P.29)": {
+   "main": [
+    [
+     {
+      "node": "Actualizar estado rechazado (P30)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Factura duplicada(P16.1)": {
+   "main": [
+    [
+     {
+      "node": "Cerrar incidencia - Factura duplicada",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Factura inválida(P09.2)": {
+   "main": [
+    [
+     {
+      "node": "Cerrar incidencia - Factura inválida",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Documento imagen no procesable (P04.3.6)": {
+   "main": [
+    [
+     {
+      "node": "Cerrar incidencia - Documento no procesable",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Colaborador no válido (P08.1)": {
+   "main": [
+    [
+     {
+      "node": "Cerrar incidencia - Colaborador no válido",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "▶ Ejecutar prueba": {
+   "main": [
+    [
+     {
+      "node": "D00 · Caso de prueba (dummy)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "D00 · Caso de prueba (dummy)": {
+   "main": [
+    [
+     {
+      "node": "Detectar tipo de archivo (P02)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Extraer datos XML (P04.2)": {
+   "main": [
+    [
+     {
+      "node": "Normalizar factura (P05)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Notificar archivo duplicado (P12.1)": {
+   "main": [
+    [
+     {
+      "node": "Cerrar incidencia - Factura duplicada1",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ },
+ "settings": {
+  "executionOrder": "v1"
+ }
+}
