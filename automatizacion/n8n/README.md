@@ -86,46 +86,46 @@ deje la solicitud a medias.
 
 ---
 
-## Cómo se aplica
+## Estado: montado
 
-### 1. Crear la base en Airtable
+Ya está aplicado en la instancia. Workflow
+[`i0TvSLq8flPdSuor`](https://n8n.srv836595.hstgr.cloud/workflow/i0TvSLq8flPdSuor),
+34 nodos, inactivo y con el chat en privado.
 
-`airtable-base-solicitudes.json` tiene un hueco, `__WORKSPACE_ID__`. Sale de
-la URL de Airtable al abrir el workspace: `airtable.com/wsp.../...`. La API de
-Airtable no permite listar workspaces, así que ese dato hay que sacarlo a mano.
+Las tablas se crearon **dentro de la base `TEST` (`appeVb6gKbWoBp0nO`)**, no en
+una base nueva: la API de Airtable no deja listar workspaces y sin el
+`workspaceId` no se puede crear una base. `TEST` ya tenía `Logs` y `Knowledge`,
+que no se tocaron.
 
-```
-POST https://api.airtable.com/v0/meta/bases
-Authorization: Bearer <PAT de la credencial "Airtable Personal Access Token account">
-Content-Type: application/json
-  → cuerpo: airtable-base-solicitudes.json
-```
+| Qué | Id |
+|---|---|
+| Base | `appeVb6gKbWoBp0nO` (TEST) |
+| Tabla Solicitudes | `tblYP0dNvmgeAwruQ` |
+| Tabla Asistentes | `tblTLuUbN64nI0tPZ` |
 
-El PAT necesita los alcances `schema.bases:write` y `data.records:write`.
-La respuesta trae el `id` de la base y el de cada tabla.
+En `Asistentes` hay tres filas dummy: Mónica Paredes (disponible, carga 2),
+Iván Torres (disponible, carga 5) y Silvia Ccahuana (no disponible). El reparto
+por menor carga debe elegir siempre a Mónica.
 
-Después, los asistentes de prueba:
+Para moverlo a una base propia hace falta el `workspaceId`, que sale de la URL
+de Airtable al abrir el workspace: `airtable.com/wsp.../...`. Con ese dato,
+`airtable-base-solicitudes.json` crea la base entera de una llamada.
 
-```
-POST https://api.airtable.com/v0/<baseId>/<tablaAsistentes>
-  → cuerpo: airtable-asistentes-dummy.json
-```
+### Lo que la importación se había comido
 
-### 2. Rellenar los identificadores en el workflow
+Al importar el JSON, n8n descartó tres cosas que hubo que reponer a mano:
 
-`regulacion-asistencia-PRUEBA.json` trae tres marcadores:
+- `P01.2 Registrar solicitud` perdió el campo **base** de Airtable.
+- **OpenAI Chat Model se quedó sin credencial**, con lo que el clasificador no
+  habría podido ejecutarse.
+- Los ajustes de **zona horaria** (`America/Lima`), de los que dependen los
+  cuatro `$now` del flujo.
 
-```
-__BASE_ID__            → appXXXXXXXXXXXXXX
-__TBL_SOLICITUDES__    → tblXXXXXXXXXXXXXX
-__TBL_ASISTENTES__     → tblXXXXXXXXXXXXXX
-```
+Merece la pena repasar esos tres puntos en cualquier importación futura.
 
-Sustituirlos y ya se puede importar en n8n.
+### Cómo se prueba
 
-### 3. Probar
-
-Se abre el chat del workflow y se escribe un número:
+Botón **Chat** en el editor y un número del `1` al `6`:
 
 | Caso | Qué prueba | Dónde debe terminar |
 |---|---|---|
@@ -140,7 +140,10 @@ Los casos `1`, `2` y `5` dependen de la fecha: `1` sale «dentro de corte» solo
 si hoy es día 20 o antes. Todo el correo dummy va a
 `flum2.carlos.ramirez@gmail.com`, así que nada sale hacia terceros.
 
----
+Los casos `1`, `2` y los dos de confirmación de ERP **se quedan esperando** a
+que alguien pulse un botón en el chat. Eso no es un fallo: es el nodo de
+persona en el bucle haciendo su trabajo. La ejecución queda en «waiting» hasta
+que se responde.
 
 ## Lo que sigue pendiente
 
