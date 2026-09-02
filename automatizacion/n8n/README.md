@@ -96,11 +96,23 @@ datos, así que el flujo corre entero. Cada uno lleva el motivo en el nombre.
 - **`httpRequest` typeVersion 4.5 no existe en esta instancia.** Al publicar
   contesta `Cannot read properties of undefined (reading 'execute')`, sin decir
   qué nodo. La versión buena es la 4.2.
-- **Un nodo de Google Sheets antes de una página de formulario cuelga la
-  página.** Un GET a la URL de espera no devuelve nada en más de veinte
-  segundos y quien rellena el formulario ve un spinner eterno. La misma lectura
-  con un `HTTP Request` contra la API de Sheets tarda 0,38 s. Por eso la
-  configuración se lee así y no con el nodo de Sheets.
+- **Una credencial de Google usada antes de una página de formulario cuelga la
+  página, de forma intermitente.** Este es el hallazgo que más costó y el que
+  más conviene recordar. Un GET a la URL de espera del formulario a veces
+  tarda 0,2 s y a veces no devuelve un byte en más de veinte segundos. Acotado
+  con formularios mínimos de dos páginas, cinco intentos cada uno:
+
+  | Qué hay antes de la página 2 | Resultado |
+  |---|---|
+  | Nada | 5 de 5 en ~0,2 s |
+  | Un HTTP Request **sin** credencial | 5 de 5 en ~0,2 s |
+  | Un HTTP Request **con** credencial de Google | 1 ok, 2 colgados, 1 ok |
+  | El nodo de Google Sheets | siempre colgado |
+  | La credencial movida a un **sub-flujo** | 1 de 5 |
+
+  Lo que dispara el cuelgue es resolver la credencial mientras se pinta la
+  página de espera, y da igual en qué flujo viva. Mientras la configuración se
+  lea con credencial antes del formulario, el formulario será poco fiable.
 
 ---
 
