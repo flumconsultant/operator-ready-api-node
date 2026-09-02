@@ -1,0 +1,28 @@
+{
+  "records": [
+    {
+      "fields": {
+        "nombre": "Mónica Paredes Salazar",
+        "disponible": true,
+        "carga": 2,
+        "correo": "asistente1@ejemplo.test"
+      }
+    },
+    {
+      "fields": {
+        "nombre": "Iván Torres Bustamante",
+        "disponible": true,
+        "carga": 5,
+        "correo": "asistente2@ejemplo.test"
+      }
+    },
+    {
+      "fields": {
+        "nombre": "Silvia Ccahuana Flores",
+        "disponible": false,
+        "carga": 0,
+        "correo": "asistente3@ejemplo.test"
+      }
+    }
+  ]
+}

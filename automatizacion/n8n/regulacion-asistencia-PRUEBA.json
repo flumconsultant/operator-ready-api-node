@@ -1,0 +1,1714 @@
+{
+  "name": "Regulación de asistencia de docente — PRUEBA (datos dummy)",
+  "nodes": [
+    {
+      "parameters": {
+        "public": false,
+        "options": {
+          "responseMode": "responseNodes",
+          "title": "Regularización de asistencia — PRUEBA",
+          "subtitle": "Escribe 1..6 para lanzar un caso dummy",
+          "inputPlaceholder": "1 = dentro de corte · 2 = jefatura · 3 = incompleta · 4 = ambigua · 5 = sin asistente · 6 = rechazada"
+        }
+      },
+      "id": "00000001-0000-4000-8000-000000000001",
+      "name": "T Chat de pruebas",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -3600,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// SOLO PRUEBA. Convierte \"1\"..\"6\" en una fila igual a la que daría el\n// formulario de Google. Sustituir por el Google Sheets Trigger en producción.\nconst TZ = 'America/Lima';\nconst hoy = DateTime.now().setZone(TZ);\nconst correo = 'flum2.carlos.ramirez@gmail.com';   // todo el correo dummy va al propio buzón\nconst n = String($json.chatInput ?? '1').trim().charAt(0);\n\nconst casos = {\n  '1': { caso: '1 · completa, dentro de corte',\n         Docente: 'Ana Quispe Mamani', Motivo: 'Licencia médica',\n         Evidencia: 'Certificado médico del centro de salud, 2 días de descanso, folio 88231.',\n         'Fecha de la incidencia': hoy.toISODate() },\n  '2': { caso: '2 · completa, fuera de corte (va a jefatura)',\n         Docente: 'Luis Cárdenas Rojas', Motivo: 'Comisión de servicio',\n         Evidencia: 'Oficio 145-2026-DIR autorizando representación institucional.',\n         'Fecha de la incidencia': hoy.minus({ months: 1 }).toISODate() },\n  '3': { caso: '3 · incompleta (sin motivo)',\n         Docente: 'Rosa Huamán Ticona', Motivo: '',\n         Evidencia: '', 'Fecha de la incidencia': hoy.toISODate() },\n  '4': { caso: '4 · ambigua (debe ir a revisión humana)',\n         Docente: 'Pedro Salas Vega', Motivo: 'Asunto personal delicado',\n         Evidencia: 'Prefiero explicarlo en persona con la dirección.',\n         'Fecha de la incidencia': hoy.toISODate() },\n  '5': { caso: '5 · válida pero sin asistentes disponibles',\n         Docente: 'Carmen Loayza Pinto', Motivo: 'Capacitación institucional',\n         Evidencia: 'Constancia de asistencia al taller de evaluación formativa.',\n         'Fecha de la incidencia': hoy.toISODate(), forzar_sin_asistente: true },\n  '6': { caso: '6 · rechazada por validación',\n         Docente: 'Jorge Ríos Alarcón', Motivo: 'Licencia médica',\n         Evidencia: 'No tengo certificado, estuve de viaje familiar esos días.',\n         'Fecha de la incidencia': hoy.minus({ months: 8 }).toISODate() },\n};\n\nconst c = casos[n] || casos['1'];\nreturn [{ json: { ...c, 'Correo del solicitante': correo } }];"
+      },
+      "id": "00000002-0000-4000-8000-000000000002",
+      "name": "D00 Caso dummy",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3380,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "Docente\"] }}",
+              "leftValue": "={{ $json[\"Docente\"] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            },
+            {
+              "id": "\"Motivo\"] }}",
+              "leftValue": "={{ $json[\"Motivo\"] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            },
+            {
+              "id": "citante\"] }}",
+              "leftValue": "={{ $json[\"Correo del solicitante\"] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            },
+            {
+              "id": "idencia\"] }}",
+              "leftValue": "={{ $json[\"Fecha de la incidencia\"] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "00000003-0000-4000-8000-000000000003",
+      "name": "P01.1 ¿Campos obligatorios completos?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -3160,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Día de corte de planilla. Único sitio donde se define.\nconst TZ = 'America/Lima';\nconst DIA_CORTE = 20;\n\nreturn $input.all().map((it, i) => {\n  const d = it.json;\n  const hoy = DateTime.now().setZone(TZ);\n  const inc = DateTime.fromISO(String(d['Fecha de la incidencia']), { zone: TZ });\n\n  // Dentro de corte = la incidencia es del periodo de planilla en curso\n  // y hoy todavía no pasa el día de corte. No lo declara el solicitante.\n  const mismoPeriodo = inc.isValid && inc.hasSame(hoy, 'month') && inc.hasSame(hoy, 'year');\n  const dentro_de_corte = Boolean(mismoPeriodo && hoy.day <= DIA_CORTE);\n\n  // Código único por ejecución: no puede colisionar y arrastrar el update\n  // de otro docente, como pasaba con el Math.random() de 4 dígitos.\n  const codigo = `REG-${hoy.toFormat('yyyyLLdd')}-${$execution.id}-${String(i + 1).padStart(2, '0')}`;\n\n  return { json: {\n    ...d,\n    codigo_seguimiento: codigo,\n    docente: d['Docente'],\n    motivo: d['Motivo'],\n    evidencia: d['Evidencia'] ?? '',\n    correo_solicitante: d['Correo del solicitante'],\n    fecha_incidencia: inc.isValid ? inc.toISODate() : '',\n    dentro_de_corte,\n    estado: 'Registrada',\n    fecha_registro: hoy.toISO(),\n  }};\n});"
+      },
+      "id": "00000004-0000-4000-8000-000000000004",
+      "name": "P01.1.1 Preparar Registro",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2940,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "message": "=Solicitud incompleta, no se puede procesar automáticamente.\n\n• Docente: {{ $json[\"Docente\"] || \"(vacío)\" }}\n• Motivo: {{ $json[\"Motivo\"] || \"(vacío)\" }}\n• Correo: {{ $json[\"Correo del solicitante\"] || \"(vacío)\" }}\n• Fecha incidencia: {{ $json[\"Fecha de la incidencia\"] || \"(vacío)\" }}\n\nRevisar con el docente y volver a registrar.",
+        "options": {}
+      },
+      "id": "00000005-0000-4000-8000-000000000005",
+      "name": "P01.1.2 Chat · revisión por calidad de información",
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1.3,
+      "position": [
+        -2940,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "mode": "id",
+          "value": "__BASE_ID__"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "__TBL_SOLICITUDES__"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "codigo_seguimiento": "={{ $json.codigo_seguimiento }}",
+            "docente": "={{ $json.docente }}",
+            "motivo": "={{ $json.motivo }}",
+            "evidencia": "={{ $json.evidencia }}",
+            "correo_solicitante": "={{ $json.correo_solicitante }}",
+            "fecha_incidencia": "={{ $json.fecha_incidencia }}",
+            "dentro_de_corte": "={{ $json.dentro_de_corte }}",
+            "estado": "={{ $json.estado }}",
+            "fecha_registro": "={{ $json.fecha_registro }}"
+          },
+          "schema": [
+            {
+              "id": "codigo_seguimiento",
+              "displayName": "codigo_seguimiento",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "docente",
+              "displayName": "docente",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "motivo",
+              "displayName": "motivo",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "evidencia",
+              "displayName": "evidencia",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "correo_solicitante",
+              "displayName": "correo_solicitante",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "fecha_incidencia",
+              "displayName": "fecha_incidencia",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "dentro_de_corte",
+              "displayName": "dentro_de_corte",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "estado",
+              "displayName": "estado",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "fecha_registro",
+              "displayName": "fecha_registro",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "00000006-0000-4000-8000-000000000006",
+      "name": "P01.2 Registrar solicitud (Airtable)",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        -2720,
+        304
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "jXqkbzLQVFDD4c1D",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $(\"P01.1.1 Preparar Registro\").item.json.correo_solicitante }}",
+        "subject": "=Solicitud recibida — {{ $(\"P01.1.1 Preparar Registro\").item.json.codigo_seguimiento }}",
+        "emailType": "text",
+        "message": "=Hemos recibido su solicitud de regularización de asistencia.\n\nCódigo de seguimiento: {{ $(\"P01.1.1 Preparar Registro\").item.json.codigo_seguimiento }}\nFecha de la incidencia: {{ $(\"P01.1.1 Preparar Registro\").item.json.fecha_incidencia }}\n\nLe avisaremos cuando sea atendida.",
+        "options": {}
+      },
+      "id": "00000007-0000-4000-8000-000000000007",
+      "name": "P01.3 Gmail recepción",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -2500,
+        304
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "DuQwdVWwqHRmtxQo",
+          "name": "pr.flum@gmail.com"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Clasifica esta solicitud de regularización de asistencia docente.\nDocente: {{ $(\"P01.1.1 Preparar Registro\").item.json.docente }}\nMotivo: {{ $(\"P01.1.1 Preparar Registro\").item.json.motivo }}\nEvidencia: {{ $(\"P01.1.1 Preparar Registro\").item.json.evidencia || \"(sin evidencia)\" }}\nFecha de la incidencia: {{ $(\"P01.1.1 Preparar Registro\").item.json.fecha_incidencia }}\nFecha de hoy: {{ $now.toISODate() }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "Eres el analista que clasifica solicitudes de regularización de asistencia docente.\nDevuelves SIEMPRE el JSON del esquema y nada más.\n\nTIPOS ADMITIDOS (campo \"tipo\"):\nlicencia_medica · comision_servicio · capacitacion_institucional · duelo ·\nemergencia_familiar · error_de_marcacion · otro\n\nCLASIFICA COMO \"clasificada\" si se cumplen las tres:\n1. El motivo encaja en un tipo admitido distinto de \"otro\".\n2. La evidencia es coherente con ese motivo y lo sustenta (un certificado para\n   una licencia médica, un oficio para una comisión de servicio, una constancia\n   para una capacitación).\n3. La fecha de la incidencia no tiene más de 30 días.\n\nCLASIFICA COMO \"rechazada\" si se cumple alguna:\n1. El motivo exige evidencia documental y no hay evidencia, o la que hay\n   admite explícitamente que no existe el documento.\n2. La evidencia contradice el motivo declarado.\n3. La fecha de la incidencia tiene más de 30 días.\nEn \"motivo\" explica el rechazo en una frase, dirigida al docente, sin tecnicismos.\n\nCLASIFICA COMO \"revision_humana\" en cualquier otro caso: motivo que no encaja en\nningún tipo, evidencia ambigua o incompleta, situación excepcional o sensible, o\nduda razonable. Ante la duda SIEMPRE \"revision_humana\": no tomes decisiones\ncríticas por tu cuenta.\n\n[VALIDAR CON LA INSTITUCIÓN: estos criterios son una propuesta, no una norma\naprobada. Los tipos admitidos, el plazo de 30 días y qué evidencia exige cada\ntipo tienen que confirmarlos RR. HH. antes de activar el flujo.]"
+        }
+      },
+      "id": "00000008-0000-4000-8000-000000000008",
+      "name": "P02 Analizar y clasificar",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -2280,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini",
+          "cachedResultName": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "id": "00000009-0000-4000-8000-000000000009",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -2280,
+        528
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "sfgMowZ2RXq9e1Uc",
+          "name": "OpenAi account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\"type\": \"object\", \"properties\": {\"clasificacion\": {\"type\": \"string\", \"enum\": [\"clasificada\", \"rechazada\", \"revision_humana\"]}, \"tipo\": {\"type\": \"string\"}, \"motivo\": {\"type\": \"string\"}}, \"required\": [\"clasificacion\", \"tipo\", \"motivo\"]}"
+      },
+      "id": "0000000a-0000-4000-8000-00000000000a",
+      "name": "Parser de clasificación",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -2120,
+        528
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "ificacion }}",
+                    "leftValue": "={{ $json.output.clasificacion }}",
+                    "rightValue": "clasificada",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "clasificada"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "ificacion }}",
+                    "leftValue": "={{ $json.output.clasificacion }}",
+                    "rightValue": "rechazada",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "rechazada"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "revision_humana"
+        }
+      },
+      "id": "0000000b-0000-4000-8000-00000000000b",
+      "name": "P02.1 Resultado de clasificación",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -2060,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "mode": "id",
+          "value": "__BASE_ID__"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "__TBL_SOLICITUDES__"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "codigo_seguimiento"
+          ],
+          "value": {
+            "codigo_seguimiento": "={{ $(\"P01.1.1 Preparar Registro\").item.json.codigo_seguimiento }}",
+            "estado": "Solicitud clasificada",
+            "tipo": "={{ $json.output.tipo }}"
+          },
+          "schema": [
+            {
+              "id": "codigo_seguimiento",
+              "displayName": "codigo_seguimiento",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "estado",
+              "displayName": "estado",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "tipo",
+              "displayName": "tipo",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0000000c-0000-4000-8000-00000000000c",
+      "name": "P02.1.1 Marcar Solicitud clasificada",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        -1840,
+        128
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "jXqkbzLQVFDD4c1D",
+          "name": "Airtable Personal Access Token account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "mode": "id",
+          "value": "__BASE_ID__"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "__TBL_SOLICITUDES__"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "codigo_seguimiento"
+          ],
+          "value": {
+            "codigo_seguimiento": "={{ $(\"P01.1.1 Preparar Registro\").item.json.codigo_seguimiento }}",
+            "estado": "Rechazada",
+            "motivo_rechazo": "={{ $json.output.motivo }}",
+            "fecha_cierre": "={{ $now.toISO() }}"
+          },
+          "schema": [
+            {
+              "id": "codigo_seguimiento",
+              "displayName": "codigo_seguimiento",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "estado",
+              "displayName": "estado",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "motivo_rechazo",
+              "displayName": "motivo_rechazo",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "fecha_cierre",
+              "displayName": "fecha_cierre",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0000000d-0000-4000-8000-00000000000d",
+      "name": "P02.1.2 Marcar Rechazada (validación)",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        -1840,
+        304
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "jXqkbzLQVFDD4c1D",
+          "name": "Airtable Personal Access Token account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $(\"P01.1.1 Preparar Registro\").item.json.correo_solicitante }}",
+        "subject": "=Solicitud rechazada — {{ $(\"P01.1.1 Preparar Registro\").item.json.codigo_seguimiento }}",
+        "emailType": "text",
+        "message": "=Su solicitud {{ $(\"P01.1.1 Preparar Registro\").item.json.codigo_seguimiento }} no superó la validación de información.\n\nMotivo: {{ $(\"P02 Analizar y clasificar\").item.json.output.motivo }}\n\nPuede volver a presentarla subsanando lo indicado.",
+        "options": {}
+      },
+      "id": "0000000e-0000-4000-8000-00000000000e",
+      "name": "P02.1.3 Gmail rechazo",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -1620,
+        304
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "DuQwdVWwqHRmtxQo",
+          "name": "pr.flum@gmail.com"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "message": "=Solicitud que necesita criterio humano (el clasificador no se pronuncia).\n\n• Código: {{ $(\"P01.1.1 Preparar Registro\").item.json.codigo_seguimiento }}\n• Docente: {{ $(\"P01.1.1 Preparar Registro\").item.json.docente }}\n• Motivo: {{ $(\"P01.1.1 Preparar Registro\").item.json.motivo }}\n• Evidencia: {{ $(\"P01.1.1 Preparar Registro\").item.json.evidencia || \"(sin evidencia)\" }}\n• Lectura del modelo: {{ $json.output.motivo }}",
+        "options": {}
+      },
+      "id": "0000000f-0000-4000-8000-00000000000f",
+      "name": "P02.1.4 Chat · revisión de clasificación",
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1.3,
+      "position": [
+        -1840,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "mode": "id",
+          "value": "__BASE_ID__"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "__TBL_ASISTENTES__"
+        },
+        "returnAll": true,
+        "options": {
+          "filterByFormula": "{disponible} = TRUE()"
+        }
+      },
+      "id": "00000010-0000-4000-8000-000000000010",
+      "name": "P03 Obtener asistentes",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        -1620,
+        128
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "jXqkbzLQVFDD4c1D",
+          "name": "Airtable Personal Access Token account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "executeOnce": true,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Campos esperados en la tabla Asistentes: nombre, disponible (checkbox),\n// carga (número), correo. Si cambian, se cambia aquí y en el filtro de P03.\nconst reg = $('P01.1.1 Preparar Registro').first().json;\n\n// SOLO PRUEBA: el caso 5 fuerza el escenario \"no hay nadie libre\".\nconst forzado = $('D00 Caso dummy').first().json.forzar_sin_asistente === true;\n\nconst filas = forzado ? [] : $input.all().map(i => i.json).filter(a => a && a.nombre);\n\n// Cierra ante la duda: sólo cuenta quien está marcado disponible de forma\n// explícita. Antes, un campo ausente dejaba pasar a todo el mundo.\nconst disponibles = filas.filter(a => a.disponible === true || a.disponible === 'true' || a.disponible === 1);\n\nif (disponibles.length === 0) {\n  return [{ json: { codigo_seguimiento: reg.codigo_seguimiento, asistente_encontrado: false,\n                    asistentes_evaluados: filas.length } }];\n}\n\ndisponibles.sort((a, b) => (Number(a.carga) || 0) - (Number(b.carga) || 0));\nconst elegido = disponibles[0];\n\nreturn [{ json: {\n  codigo_seguimiento: reg.codigo_seguimiento,\n  asistente_encontrado: true,\n  asistente: elegido.nombre,\n  asistente_correo: elegido.correo || '',\n  asistente_carga: Number(elegido.carga) || 0,\n  asistentes_evaluados: filas.length,\n}}];"
+      },
+      "id": "00000011-0000-4000-8000-000000000011",
+      "name": "P03.1 Seleccionar asistente con menor carga",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1400,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "asistente",
+              "leftValue": "={{ $json.asistente_encontrado }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "00000012-0000-4000-8000-000000000012",
+      "name": "P03.2 ¿Hay asistente disponible?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -1180,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "mode": "id",
+          "value": "__BASE_ID__"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "__TBL_SOLICITUDES__"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "codigo_seguimiento"
+          ],
+          "value": {
+            "codigo_seguimiento": "={{ $json.codigo_seguimiento }}",
+            "responsable": "={{ $json.asistente }}",
+            "estado": "Asignada"
+          },
+          "schema": [
+            {
+              "id": "codigo_seguimiento",
+              "displayName": "codigo_seguimiento",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "responsable",
+              "displayName": "responsable",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "estado",
+              "displayName": "estado",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "00000013-0000-4000-8000-000000000013",
+      "name": "P03.2.1 Asignar responsable (Airtable)",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        -960,
+        32
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "jXqkbzLQVFDD4c1D",
+          "name": "Airtable Personal Access Token account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "message": "=No hay ningún asistente disponible para atender una solicitud ya clasificada.\n\n• Código: {{ $json.codigo_seguimiento }}\n• Docente: {{ $(\"P01.1.1 Preparar Registro\").item.json.docente }}\n• Asistentes evaluados: {{ $json.asistentes_evaluados }}\n\nLa solicitud queda clasificada sin responsable hasta que alguien la tome.",
+        "options": {}
+      },
+      "id": "00000014-0000-4000-8000-000000000014",
+      "name": "P03.2.2 Chat · sin asistente disponible",
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1.3,
+      "position": [
+        -960,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "message": "=Nueva solicitud asignada.\n\n• Código: {{ $(\"P03.1 Seleccionar asistente con menor carga\").item.json.codigo_seguimiento }}\n• Responsable: {{ $(\"P03.1 Seleccionar asistente con menor carga\").item.json.asistente }}\n• Docente: {{ $(\"P01.1.1 Preparar Registro\").item.json.docente }}\n• Motivo: {{ $(\"P01.1.1 Preparar Registro\").item.json.motivo }} ({{ $(\"P02 Analizar y clasificar\").item.json.output.tipo }})\n• Fecha incidencia: {{ $(\"P01.1.1 Preparar Registro\").item.json.fecha_incidencia }}\n• Dentro de corte: {{ $(\"P01.1.1 Preparar Registro\").item.json.dentro_de_corte ? \"sí\" : \"no\" }}",
+        "options": {}
+      },
+      "id": "00000015-0000-4000-8000-000000000015",
+      "name": "P04 Comunicar al asistente",
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1.3,
+      "position": [
+        -740,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "mode": "id",
+          "value": "__BASE_ID__"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "__TBL_SOLICITUDES__"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "codigo_seguimiento"
+          ],
+          "value": {
+            "codigo_seguimiento": "={{ $(\"P03.1 Seleccionar asistente con menor carga\").item.json.codigo_seguimiento }}",
+            "estado": "Notificada al asistente"
+          },
+          "schema": [
+            {
+              "id": "codigo_seguimiento",
+              "displayName": "codigo_seguimiento",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "estado",
+              "displayName": "estado",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "00000016-0000-4000-8000-000000000016",
+      "name": "P04.1 Marcar notificada (Airtable)",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        -520,
+        32
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "jXqkbzLQVFDD4c1D",
+          "name": "Airtable Personal Access Token account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "corte",
+                    "leftValue": "={{ $(\"P01.1.1 Preparar Registro\").item.json.dentro_de_corte }}",
+                    "rightValue": true,
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "dentro"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "fuera"
+        }
+      },
+      "id": "00000017-0000-4000-8000-000000000017",
+      "name": "P04.2 Corte de planilla",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -300,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "message": "=Regularización dentro de corte. Actualiza el ERP y confirma.\n\n• Código: {{ $(\"P01.1.1 Preparar Registro\").item.json.codigo_seguimiento }}\n• Docente: {{ $(\"P01.1.1 Preparar Registro\").item.json.docente }}\n• Tipo: {{ $(\"P02 Analizar y clasificar\").item.json.output.tipo }}\n• Fecha incidencia: {{ $(\"P01.1.1 Preparar Registro\").item.json.fecha_incidencia }}\n\nLa solicitud no se cierra hasta que confirmes aquí.",
+        "responseType": "approval",
+        "blockUserInput": true,
+        "approvalOptions": {
+          "values": {
+            "approvalType": "single",
+            "approveLabel": "Actualizado en el ERP",
+            "buttonApprovalStyle": "primary"
+          }
+        },
+        "options": {}
+      },
+      "id": "00000018-0000-4000-8000-000000000018",
+      "name": "P05 Confirmar actualización ERP",
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1.3,
+      "position": [
+        -60,
+        -96
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "mode": "id",
+          "value": "__BASE_ID__"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "__TBL_SOLICITUDES__"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "codigo_seguimiento"
+          ],
+          "value": {
+            "codigo_seguimiento": "={{ $(\"P03.1 Seleccionar asistente con menor carga\").item.json.codigo_seguimiento }}",
+            "estado": "Solicitud Atendida",
+            "fecha_cierre": "={{ $now.toISO() }}"
+          },
+          "schema": [
+            {
+              "id": "codigo_seguimiento",
+              "displayName": "codigo_seguimiento",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "estado",
+              "displayName": "estado",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "fecha_cierre",
+              "displayName": "fecha_cierre",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "00000019-0000-4000-8000-000000000019",
+      "name": "P05.1 Marcar Solicitud Atendida",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        160,
+        -96
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "jXqkbzLQVFDD4c1D",
+          "name": "Airtable Personal Access Token account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $(\"P01.1.1 Preparar Registro\").item.json.correo_solicitante }}",
+        "subject": "=Solicitud atendida — {{ $(\"P01.1.1 Preparar Registro\").item.json.codigo_seguimiento }}",
+        "emailType": "text",
+        "message": "=Su solicitud {{ $(\"P01.1.1 Preparar Registro\").item.json.codigo_seguimiento }} ha sido atendida y la regularización quedó registrada en el ERP dentro del corte de planilla.",
+        "options": {}
+      },
+      "id": "0000001a-0000-4000-8000-00000000001a",
+      "name": "P05.2 Gmail Solicitud atendida",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        380,
+        -96
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "DuQwdVWwqHRmtxQo",
+          "name": "pr.flum@gmail.com"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "mode": "id",
+          "value": "__BASE_ID__"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "__TBL_SOLICITUDES__"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "codigo_seguimiento"
+          ],
+          "value": {
+            "codigo_seguimiento": "={{ $(\"P03.1 Seleccionar asistente con menor carga\").item.json.codigo_seguimiento }}",
+            "estado": "Solicitud pendiente de aprobación"
+          },
+          "schema": [
+            {
+              "id": "codigo_seguimiento",
+              "displayName": "codigo_seguimiento",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "estado",
+              "displayName": "estado",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0000001b-0000-4000-8000-00000000001b",
+      "name": "P06 Pendiente de aprobación",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        -60,
+        176
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "jXqkbzLQVFDD4c1D",
+          "name": "Airtable Personal Access Token account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "message": "=Regularización FUERA del corte de planilla. Necesita aprobación de jefatura.\n\n• Código: {{ $(\"P01.1.1 Preparar Registro\").item.json.codigo_seguimiento }}\n• Docente: {{ $(\"P01.1.1 Preparar Registro\").item.json.docente }}\n• Motivo: {{ $(\"P01.1.1 Preparar Registro\").item.json.motivo }} ({{ $(\"P02 Analizar y clasificar\").item.json.output.tipo }})\n• Evidencia: {{ $(\"P01.1.1 Preparar Registro\").item.json.evidencia || \"(sin evidencia)\" }}\n• Fecha incidencia: {{ $(\"P01.1.1 Preparar Registro\").item.json.fecha_incidencia }}\n• Responsable: {{ $(\"P03.1 Seleccionar asistente con menor carga\").item.json.asistente }}",
+        "responseType": "approval",
+        "blockUserInput": true,
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double",
+            "approveLabel": "Aprobar",
+            "buttonApprovalStyle": "primary",
+            "disapproveLabel": "Rechazar",
+            "buttonDisapprovalStyle": "secondary"
+          }
+        },
+        "options": {}
+      },
+      "id": "0000001c-0000-4000-8000-00000000001c",
+      "name": "P06.1 Aprobación de jefatura",
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1.3,
+      "position": [
+        160,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ok",
+              "leftValue": "={{ $json.data.approved }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "0000001d-0000-4000-8000-00000000001d",
+      "name": "P06.2 Decisión jefatura (OK / No OK)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        380,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "message": "=Jefatura APROBÓ una regularización fuera de corte. Actualiza el ERP y confirma.\n\n• Código: {{ $(\"P01.1.1 Preparar Registro\").item.json.codigo_seguimiento }}\n• Docente: {{ $(\"P01.1.1 Preparar Registro\").item.json.docente }}\n• Fecha incidencia: {{ $(\"P01.1.1 Preparar Registro\").item.json.fecha_incidencia }}\n\nLa solicitud no se cierra hasta que confirmes aquí.",
+        "responseType": "approval",
+        "blockUserInput": true,
+        "approvalOptions": {
+          "values": {
+            "approvalType": "single",
+            "approveLabel": "Actualizado en el ERP",
+            "buttonApprovalStyle": "primary"
+          }
+        },
+        "options": {}
+      },
+      "id": "0000001e-0000-4000-8000-00000000001e",
+      "name": "P08 Confirmar actualización ERP",
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1.3,
+      "position": [
+        600,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "mode": "id",
+          "value": "__BASE_ID__"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "__TBL_SOLICITUDES__"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "codigo_seguimiento"
+          ],
+          "value": {
+            "codigo_seguimiento": "={{ $(\"P03.1 Seleccionar asistente con menor carga\").item.json.codigo_seguimiento }}",
+            "estado": "Solicitud Atendida",
+            "decision_jefatura": "Aprobada",
+            "fecha_cierre": "={{ $now.toISO() }}"
+          },
+          "schema": [
+            {
+              "id": "codigo_seguimiento",
+              "displayName": "codigo_seguimiento",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "estado",
+              "displayName": "estado",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "decision_jefatura",
+              "displayName": "decision_jefatura",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "fecha_cierre",
+              "displayName": "fecha_cierre",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0000001f-0000-4000-8000-00000000001f",
+      "name": "P08.1 Marcar Solicitud Atendida",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        820,
+        80
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "jXqkbzLQVFDD4c1D",
+          "name": "Airtable Personal Access Token account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $(\"P01.1.1 Preparar Registro\").item.json.correo_solicitante }}",
+        "subject": "=Solicitud atendida — {{ $(\"P01.1.1 Preparar Registro\").item.json.codigo_seguimiento }}",
+        "emailType": "text",
+        "message": "=Su solicitud {{ $(\"P01.1.1 Preparar Registro\").item.json.codigo_seguimiento }} fue aprobada por jefatura y la regularización quedó registrada en el ERP.",
+        "options": {}
+      },
+      "id": "00000020-0000-4000-8000-000000000020",
+      "name": "P08.2 Gmail Solicitud atendida",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        80
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "DuQwdVWwqHRmtxQo",
+          "name": "pr.flum@gmail.com"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "mode": "id",
+          "value": "__BASE_ID__"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "__TBL_SOLICITUDES__"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "codigo_seguimiento"
+          ],
+          "value": {
+            "codigo_seguimiento": "={{ $(\"P03.1 Seleccionar asistente con menor carga\").item.json.codigo_seguimiento }}",
+            "estado": "Rechazada",
+            "decision_jefatura": "Rechazada",
+            "motivo_rechazo": "Rechazada por jefatura (fuera del corte de planilla)",
+            "fecha_cierre": "={{ $now.toISO() }}"
+          },
+          "schema": [
+            {
+              "id": "codigo_seguimiento",
+              "displayName": "codigo_seguimiento",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "estado",
+              "displayName": "estado",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "decision_jefatura",
+              "displayName": "decision_jefatura",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "motivo_rechazo",
+              "displayName": "motivo_rechazo",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "fecha_cierre",
+              "displayName": "fecha_cierre",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "canBeUsedToMatch": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "00000021-0000-4000-8000-000000000021",
+      "name": "P07 Marcar Rechazada (jefatura)",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        600,
+        320
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "jXqkbzLQVFDD4c1D",
+          "name": "Airtable Personal Access Token account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $(\"P01.1.1 Preparar Registro\").item.json.correo_solicitante }}",
+        "subject": "=Solicitud no aprobada — {{ $(\"P01.1.1 Preparar Registro\").item.json.codigo_seguimiento }}",
+        "emailType": "text",
+        "message": "=Su solicitud {{ $(\"P01.1.1 Preparar Registro\").item.json.codigo_seguimiento }}, correspondiente al {{ $(\"P01.1.1 Preparar Registro\").item.json.fecha_incidencia }}, fue presentada fuera del corte de planilla y jefatura no la aprobó.\n\nSi considera que hay circunstancias que no se tuvieron en cuenta, comuníquese con jefatura indicando este código.",
+        "options": {}
+      },
+      "id": "00000022-0000-4000-8000-000000000022",
+      "name": "P07.1 Gmail Solicitud rechazada",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        820,
+        320
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "DuQwdVWwqHRmtxQo",
+          "name": "pr.flum@gmail.com"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    }
+  ],
+  "connections": {
+    "T Chat de pruebas": {
+      "main": [
+        [
+          {
+            "node": "D00 Caso dummy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "D00 Caso dummy": {
+      "main": [
+        [
+          {
+            "node": "P01.1 ¿Campos obligatorios completos?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P01.1 ¿Campos obligatorios completos?": {
+      "main": [
+        [
+          {
+            "node": "P01.1.1 Preparar Registro",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "P01.1.2 Chat · revisión por calidad de información",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P01.1.1 Preparar Registro": {
+      "main": [
+        [
+          {
+            "node": "P01.2 Registrar solicitud (Airtable)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P01.2 Registrar solicitud (Airtable)": {
+      "main": [
+        [
+          {
+            "node": "P01.3 Gmail recepción",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P01.3 Gmail recepción": {
+      "main": [
+        [
+          {
+            "node": "P02 Analizar y clasificar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P02 Analizar y clasificar": {
+      "main": [
+        [
+          {
+            "node": "P02.1 Resultado de clasificación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P02.1 Resultado de clasificación": {
+      "main": [
+        [
+          {
+            "node": "P02.1.1 Marcar Solicitud clasificada",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "P02.1.2 Marcar Rechazada (validación)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "P02.1.4 Chat · revisión de clasificación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P02.1.2 Marcar Rechazada (validación)": {
+      "main": [
+        [
+          {
+            "node": "P02.1.3 Gmail rechazo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P02.1.1 Marcar Solicitud clasificada": {
+      "main": [
+        [
+          {
+            "node": "P03 Obtener asistentes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P03 Obtener asistentes": {
+      "main": [
+        [
+          {
+            "node": "P03.1 Seleccionar asistente con menor carga",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P03.1 Seleccionar asistente con menor carga": {
+      "main": [
+        [
+          {
+            "node": "P03.2 ¿Hay asistente disponible?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P03.2 ¿Hay asistente disponible?": {
+      "main": [
+        [
+          {
+            "node": "P03.2.1 Asignar responsable (Airtable)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "P03.2.2 Chat · sin asistente disponible",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P03.2.1 Asignar responsable (Airtable)": {
+      "main": [
+        [
+          {
+            "node": "P04 Comunicar al asistente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P04 Comunicar al asistente": {
+      "main": [
+        [
+          {
+            "node": "P04.1 Marcar notificada (Airtable)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P04.1 Marcar notificada (Airtable)": {
+      "main": [
+        [
+          {
+            "node": "P04.2 Corte de planilla",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P04.2 Corte de planilla": {
+      "main": [
+        [
+          {
+            "node": "P05 Confirmar actualización ERP",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "P06 Pendiente de aprobación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P05 Confirmar actualización ERP": {
+      "main": [
+        [
+          {
+            "node": "P05.1 Marcar Solicitud Atendida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P05.1 Marcar Solicitud Atendida": {
+      "main": [
+        [
+          {
+            "node": "P05.2 Gmail Solicitud atendida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P06 Pendiente de aprobación": {
+      "main": [
+        [
+          {
+            "node": "P06.1 Aprobación de jefatura",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P06.1 Aprobación de jefatura": {
+      "main": [
+        [
+          {
+            "node": "P06.2 Decisión jefatura (OK / No OK)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P06.2 Decisión jefatura (OK / No OK)": {
+      "main": [
+        [
+          {
+            "node": "P08 Confirmar actualización ERP",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "P07 Marcar Rechazada (jefatura)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P08 Confirmar actualización ERP": {
+      "main": [
+        [
+          {
+            "node": "P08.1 Marcar Solicitud Atendida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P08.1 Marcar Solicitud Atendida": {
+      "main": [
+        [
+          {
+            "node": "P08.2 Gmail Solicitud atendida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "P07 Marcar Rechazada (jefatura)": {
+      "main": [
+        [
+          {
+            "node": "P07.1 Gmail Solicitud rechazada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "P02 Analizar y clasificar",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parser de clasificación": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "P02 Analizar y clasificar",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Lima",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": true,
+    "binaryMode": "separate"
+  }
+}

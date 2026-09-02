@@ -1,0 +1,113 @@
+{
+  "name": "Base de Solicitudes",
+  "workspaceId": "__WORKSPACE_ID__",
+  "tables": [
+    {
+      "name": "Solicitudes",
+      "description": "Una fila por solicitud de regularización de asistencia docente.",
+      "fields": [
+        {
+          "name": "codigo_seguimiento",
+          "type": "singleLineText",
+          "description": "Clave de la solicitud. Es el campo con el que hacen match todos los update del flujo."
+        },
+        {
+          "name": "docente",
+          "type": "singleLineText"
+        },
+        {
+          "name": "motivo",
+          "type": "multilineText"
+        },
+        {
+          "name": "evidencia",
+          "type": "multilineText",
+          "description": "Se guarda para poder auditar por qué se aprobó o rechazó."
+        },
+        {
+          "name": "correo_solicitante",
+          "type": "email"
+        },
+        {
+          "name": "fecha_incidencia",
+          "type": "date",
+          "options": {
+            "dateFormat": {
+              "name": "iso"
+            }
+          }
+        },
+        {
+          "name": "dentro_de_corte",
+          "type": "checkbox",
+          "options": {
+            "icon": "check",
+            "color": "greenBright"
+          },
+          "description": "Lo calcula P01.1.1 desde la fecha, no lo declara el solicitante."
+        },
+        {
+          "name": "estado",
+          "type": "singleLineText",
+          "description": "Registrada, Solicitud clasificada, Asignada, Notificada al asistente, Solicitud pendiente de aprobación, Solicitud Atendida, Rechazada."
+        },
+        {
+          "name": "tipo",
+          "type": "singleLineText"
+        },
+        {
+          "name": "responsable",
+          "type": "singleLineText"
+        },
+        {
+          "name": "decision_jefatura",
+          "type": "singleLineText"
+        },
+        {
+          "name": "motivo_rechazo",
+          "type": "multilineText"
+        },
+        {
+          "name": "fecha_registro",
+          "type": "singleLineText",
+          "description": "ISO 8601 en America/Lima. Texto a propósito: evita que Airtable reinterprete la zona."
+        },
+        {
+          "name": "fecha_cierre",
+          "type": "singleLineText"
+        }
+      ]
+    },
+    {
+      "name": "Asistentes",
+      "description": "Quién puede atender solicitudes y con cuánta carga.",
+      "fields": [
+        {
+          "name": "nombre",
+          "type": "singleLineText"
+        },
+        {
+          "name": "disponible",
+          "type": "checkbox",
+          "options": {
+            "icon": "check",
+            "color": "greenBright"
+          },
+          "description": "P03 filtra por este campo y P03.1 exige que sea true de forma explícita."
+        },
+        {
+          "name": "carga",
+          "type": "number",
+          "options": {
+            "precision": 0
+          },
+          "description": "Solicitudes abiertas. Se elige el menor."
+        },
+        {
+          "name": "correo",
+          "type": "email"
+        }
+      ]
+    }
+  ]
+}
