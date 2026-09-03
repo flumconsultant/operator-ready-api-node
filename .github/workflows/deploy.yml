@@ -427,8 +427,27 @@ jobs:
           # no se coma el presupuesto de los siguientes; entre uno y otro se
           # espera cada vez más, que es lo que hace falta cuando el servidor
           # está estrangulando conexiones por exceso.
+          # ---- Que un corte por tiempo deje pruebas ----
+          #
+          # El 3 de septiembre la subida falló tres veces seguidas, cada una a
+          # los 300 segundos clavados, y el log no traía ni una línea de lftp.
+          # Ni un archivo transferido, ni un error del servidor, ni un intento
+          # de reconexión: mudo. Con eso solo se puede saber que no funcionó, no
+          # por qué, y hubo que deducir la causa por la aritmética de los
+          # tiempos.
+          #
+          # El motivo es que lftp no escribe a una terminal, así que agrupa su
+          # salida en un buffer y la suelta al terminar. Cuando `timeout` lo
+          # mata, ese buffer se va con él. El diagnóstico existía y lo
+          # destruíamos nosotros al recogerlo.
+          #
+          # `stdbuf -oL -eL` lo obliga a escribir línea a línea, así que lo que
+          # alcanzó a decir sobrevive al corte. Y la salida se guarda además en
+          # un archivo para poder enseñarla cuando el intento falla, sin
+          # ensuciar el log cuando va bien.
           subir() {
-            timeout 300 lftp -c "
+            local registro="$RUNNER_TEMP/lftp-$1.log"
+            timeout 300 stdbuf -oL -eL lftp -c "
             set ftp:ssl-force true;
             set ftp:ssl-protect-data true;
             set ssl:verify-certificate $VERIFICAR;
@@ -496,11 +515,22 @@ jobs:
             #    cualquier cosa puesta a mano— borrarlo desde aquí sería
             #    destruir trabajo que este repositorio no conoce.
             mirror --reverse --parallel=2 --verbose --exclude-glob assets/* dist/ $DESTINO/;
-          "
+          " > "$registro" 2>&1
+            local salida=$?
+            if [ "$salida" -ne 0 ]; then
+              if [ "$salida" -eq 124 ]; then
+                echo "El intento $1 se cortó por tiempo a los 300s: lftp no terminó."
+                echo "Un servidor que rechaza contesta al instante; uno que no está, no contesta."
+              fi
+              echo "---- lo que alcanzó a decir lftp en el intento $1 ----"
+              tail -n 40 "$registro" || true
+              echo "---- fin ----"
+            fi
+            return "$salida"
           }
 
           for intento in 1 2 3; do
-            if subir; then
+            if subir "$intento"; then
               echo "Subida completada en el intento $intento."
               exit 0
             fi
