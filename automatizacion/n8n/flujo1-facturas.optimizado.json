@@ -410,13 +410,13 @@
     "assignments": {
      "assignments": [
       {
-       "id": "6f3595fa-91d5-4b4c-aaec-7b6a7107c1d6",
+       "id": "1c25df4f-effa-4dc5-a66c-d8e74230d172",
        "name": "dbOutcome",
        "value": "UNPROCESSABLE_DOCUMENT",
        "type": "string"
       },
       {
-       "id": "dfc3f6af-0051-4f4e-b19b-b31caa360ced",
+       "id": "d92b7440-3395-48b8-a010-e692c2ab596f",
        "name": "dbReason",
        "value": "No fue posible extraer información confiable del comprobante.",
        "type": "string"
@@ -432,7 +432,7 @@
     -2784,
     992
    ],
-   "id": "f90281a5-30d4-4a0e-bc0f-32099d43b309",
+   "id": "0f4ad69e-dc76-41c5-b484-045054a4d0cd",
    "name": "Documento imagen no procesable (P04.3.6)",
    "notes": "Marca el estado con el que la rendición entra a la base de datos",
    "notesInFlow": true
@@ -560,13 +560,13 @@
     "assignments": {
      "assignments": [
       {
-       "id": "52b59e1e-013a-4cd8-9047-338658b53423",
+       "id": "70126c67-d7d5-4622-bc7a-b66533ab1da6",
        "name": "dbOutcome",
        "value": "INVALID_COLLABORATOR",
        "type": "string"
       },
       {
-       "id": "78c21e00-f50d-4e60-8ffd-1e3dff48f02b",
+       "id": "2cff7300-07d8-4963-a08e-be1c187c9306",
        "name": "dbReason",
        "value": "No fue posible validar al remitente como colaborador autorizado.",
        "type": "string"
@@ -582,7 +582,7 @@
     -1936,
     688
    ],
-   "id": "617b0ef2-2228-49cc-b780-6da80f7ad155",
+   "id": "3fbf1e51-5e10-4509-bdf2-9e9b59dcac68",
    "name": "Colaborador no válido (P08.1)",
    "notes": "Marca el estado con el que la rendición entra a la base de datos",
    "notesInFlow": true
@@ -654,13 +654,13 @@
     "assignments": {
      "assignments": [
       {
-       "id": "e5128c41-de0d-4979-95a2-816fb1d25f46",
+       "id": "ba5f9860-d8cb-4e90-960c-a0c34596b197",
        "name": "dbOutcome",
        "value": "INVALID_INVOICE",
        "type": "string"
       },
       {
-       "id": "9728c2a7-a47c-48f3-965a-cdc06f6e582b",
+       "id": "ed5b3f0c-0524-4ec1-8bf1-143ea60fce32",
        "name": "dbReason",
        "value": "El comprobante no superó las validaciones mínimas requeridas.",
        "type": "string"
@@ -676,7 +676,7 @@
     -1520,
     688
    ],
-   "id": "c90c1fde-0420-4de2-90d8-c18e7bbf62c9",
+   "id": "687ebeb5-c10b-42c5-a60c-75e2354e8672",
    "name": "Factura inválida(P09.2)",
    "notes": "Marca el estado con el que la rendición entra a la base de datos",
    "notesInFlow": true
@@ -821,13 +821,13 @@
     "assignments": {
      "assignments": [
       {
-       "id": "8bb56088-8158-40aa-ac1c-88be35b83599",
+       "id": "3b969a2f-a069-4ea3-8300-2bac98807ffc",
        "name": "dbOutcome",
        "value": "DUPLICATE_INVOICE",
        "type": "string"
       },
       {
-       "id": "bca869f5-c4c5-49be-8a5b-1e746f010f33",
+       "id": "8c9c189e-5582-409c-bc9e-d71d13dfec41",
        "name": "dbReason",
        "value": "El comprobante ya se encuentra registrado anteriormente.",
        "type": "string"
@@ -843,7 +843,7 @@
     64,
     256
    ],
-   "id": "f5aa931f-4802-4165-9612-0ad9a434d85e",
+   "id": "9b4a3acc-32f8-400b-b4f5-0284300f0d55",
    "name": "Factura duplicada(P16.1)",
    "notes": "Marca el estado con el que la rendición entra a la base de datos",
    "notesInFlow": true
@@ -1153,16 +1153,45 @@
   },
   {
    "parameters": {
+    "inputDataFieldName": "data",
+    "name": "={{ $json.gmailMessageId }} - {{ $json.fileName }}",
+    "driveId": {
+     "__rl": true,
+     "value": "My Drive",
+     "mode": "list",
+     "cachedResultName": "My Drive"
+    },
+    "folderId": {
+     "__rl": true,
+     "value": "1is6o8AJwhu3BqFx-1vicwgZAzRPvHRfs",
+     "mode": "list",
+     "cachedResultName": "Rendiciones — Comprobantes"
+    },
+    "options": {}
+   },
+   "type": "n8n-nodes-base.googleDrive",
+   "typeVersion": 3,
+   "position": [
+    -4308,
+    332
+   ],
+   "id": "40e6abe8-c61c-4166-bc1f-ded5be90928b",
+   "name": "Archivar comprobante en Drive (P02.1)",
+   "notes": "Guarda el adjunto tal cual llegó · la fila de la BD enlaza aquí",
+   "notesInFlow": true
+  },
+  {
+   "parameters": {
     "assignments": {
      "assignments": [
       {
-       "id": "d1010a96-0cea-4901-9dd3-df46d68413c5",
+       "id": "af67709a-5754-4be1-aeda-7a44c16e06e1",
        "name": "dbOutcome",
        "value": "DUPLICATE_FILE",
        "type": "string"
       },
       {
-       "id": "3b0862e5-3d34-4894-9406-af1954dd1a7d",
+       "id": "e39156e0-bcc5-487c-ac23-9384a2ec96b6",
        "name": "dbReason",
        "value": "El archivo recibido es idéntico a uno enviado anteriormente.",
        "type": "string"
@@ -1178,7 +1207,7 @@
     -852,
     224
    ],
-   "id": "5868c1f3-b06b-45a0-8667-d232601b192c",
+   "id": "4231b4cc-834f-4d0d-b96e-96c03f09b107",
    "name": "Archivo duplicado (P11.1)",
    "notes": "Marca el estado con el que la rendición entra a la base de datos",
    "notesInFlow": true
@@ -1212,7 +1241,7 @@
     -1300,
     384
    ],
-   "id": "908b9074-be62-42be-9d9c-d92c4059e1b3",
+   "id": "b7d44823-329f-4fe5-ae58-3170610a1ee4",
    "name": "¿Hash ya registrado? (P10)",
    "alwaysOutputData": true,
    "notes": "Una sola base de datos: la huella se consulta en la misma hoja",
@@ -1246,6 +1275,8 @@
       "fileName": "={{ $json.fileName }}",
       "fileType": "={{ $json.sourceType }}",
       "fileHash": "={{ $('Calcular huella archivo (P09.1)').item.json.fileHash }}",
+      "archivoUrl": "={{ $('Archivar comprobante en Drive (P02.1)').first().json.webViewLink }}",
+      "archivoDriveId": "={{ $('Archivar comprobante en Drive (P02.1)').first().json.id }}",
       "proveedor": "={{ $json.supplierName }}",
       "ruc": "={{ $json.supplierTaxId }}",
       "documento": "={{ $json.documentNumber }}",
@@ -1371,6 +1402,26 @@
        "removed": false
       },
       {
+       "id": "archivoUrl",
+       "displayName": "archivoUrl",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "canBeUsedToMatch": true,
+       "removed": false
+      },
+      {
+       "id": "archivoDriveId",
+       "displayName": "archivoDriveId",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "canBeUsedToMatch": true,
+       "removed": false
+      },
+      {
        "id": "proveedor",
        "displayName": "proveedor",
        "required": false,
@@ -1472,7 +1523,7 @@
     -68,
     564
    ],
-   "id": "5e126d2f-a60d-4386-bb53-aebac2f71750",
+   "id": "5b93eb55-b5ac-4458-924f-190846fb19fd",
    "name": "Reservar en base de datos (P12.2)",
    "notes": "Fila EN_PROCESO: reserva la huella antes de la clasificación, como hacía el Data table",
    "notesInFlow": true
@@ -1480,7 +1531,7 @@
   {
    "parameters": {
     "mode": "runOnceForEachItem",
-    "jsCode": "// ============================================================\n// P31 · Preparar fila de base de datos\n// ============================================================\n//\n// Punto único de convergencia del flujo.\n//\n// Recibe items de las 7 salidas terminales (aprobada, rechazada,\n// factura inválida, colaborador no válido, documento no procesable,\n// archivo duplicado, comprobante duplicado) y produce UNA fila\n// plana con el estado final de la rendición.\n//\n// No decide nada: solo traduce el estado que ya trae el item.\n// ============================================================\n\nconst item = $input.item;\nconst j = item.json ?? {};\n\n// ------------------------------------------------------------\n// Helpers de formato para hoja de cálculo\n// ------------------------------------------------------------\n\nfunction txt(v) {\n  return v === null || v === undefined ? '' : String(v).trim();\n}\n\nfunction num(v) {\n  if (v === null || v === undefined || v === '') return '';\n  const n = Number(v);\n  return Number.isFinite(n) ? n : '';\n}\n\nfunction siNo(v) {\n  if (v === true) return 'SI';\n  if (v === false) return 'NO';\n  return '';\n}\n\nfunction lista(v) {\n  if (!Array.isArray(v)) return txt(v);\n  return v.map((x) => String(x ?? '').trim()).filter(Boolean).join(' | ');\n}\n\n// ------------------------------------------------------------\n// Catálogo de estados\n// ------------------------------------------------------------\n//\n// bloquea = true  -> la clave del comprobante se guarda y por tanto\n//                    un reenvío del mismo RUC + número se marcará\n//                    como duplicado (comportamiento actual del flujo).\n// bloquea = false -> el comprobante puede volver a enviarse corregido.\n// ------------------------------------------------------------\n\nconst ESTADOS = {\n  AUTO_APPROVED: {\n    etiqueta: 'Aprobada automáticamente',\n    resultado: 'APROBADA',\n    accion: 'NONE',\n    bloquea: true,\n  },\n  HUMAN_APPROVED: {\n    etiqueta: 'Aprobada por el aprobador',\n    resultado: 'APROBADA',\n    accion: 'NONE',\n    bloquea: true,\n  },\n  REJECTED: {\n    etiqueta: 'Rechazada',\n    resultado: 'RECHAZADA',\n    accion: 'NONE',\n    bloquea: true,\n  },\n  DUPLICATE_FILE: {\n    etiqueta: 'Archivo ya recibido antes',\n    resultado: 'NO_PROCESADA',\n    accion: 'NONE',\n    bloquea: false,\n  },\n  DUPLICATE_INVOICE: {\n    etiqueta: 'Comprobante ya registrado',\n    resultado: 'NO_PROCESADA',\n    accion: 'NONE',\n    bloquea: false,\n  },\n  INVALID_INVOICE: {\n    etiqueta: 'Comprobante inválido',\n    resultado: 'NO_PROCESADA',\n    accion: 'REPLACE_DOCUMENT',\n    bloquea: false,\n  },\n  INVALID_COLLABORATOR: {\n    etiqueta: 'Remitente no autorizado',\n    resultado: 'NO_PROCESADA',\n    accion: 'CONTACT_ADMIN',\n    bloquea: false,\n  },\n  UNPROCESSABLE_DOCUMENT: {\n    etiqueta: 'Documento no procesable',\n    resultado: 'NO_PROCESADA',\n    accion: 'REPLACE_DOCUMENT',\n    bloquea: false,\n  },\n};\n\n// ------------------------------------------------------------\n// 1. Estado\n// ------------------------------------------------------------\n//\n// Las ramas de error lo traen en dbOutcome (nodos Set).\n// Las ramas de resolución lo traen en finalStatus (P23.1 / P23.3).\n// ------------------------------------------------------------\n\nconst estado = txt(j.dbOutcome) || txt(j.finalStatus) || 'UNKNOWN';\n\nconst meta =\n  ESTADOS[estado] ?? {\n    etiqueta: 'Estado no determinado',\n    resultado: 'NO_PROCESADA',\n    accion: 'CONTACT_ADMIN',\n    bloquea: false,\n  };\n\n// ------------------------------------------------------------\n// 2. Motivo\n// ------------------------------------------------------------\n\nconst motivos = [];\n\nif (estado === 'REJECTED' && j.rejectionType === 'HUMAN') {\n  motivos.push('RECHAZADA_POR_EL_APROBADOR');\n}\n\nmotivos.push(...(Array.isArray(j.policyRejectReasons) ? j.policyRejectReasons : []));\nmotivos.push(...(Array.isArray(j.policyReviewReasons) ? j.policyReviewReasons : []));\n\nif (motivos.length === 0) {\n  motivos.push(...(Array.isArray(j.invoiceValidationErrors) ? j.invoiceValidationErrors : []));\n}\n\nif (motivos.length === 0 && txt(j.dbReason)) {\n  motivos.push(txt(j.dbReason));\n}\n\nconst motivo = lista([...new Set(motivos)]);\n\n// ------------------------------------------------------------\n// 3. Huella del archivo\n// ------------------------------------------------------------\n//\n// Preparar duplicado (P14) reconstruye el item desde Evaluar\n// factura (P08.2), que es anterior al cálculo del hash, así que\n// en las ramas largas fileHash ya no viene en $json. Lo pedimos\n// al nodo que lo calculó. En las ramas que fallan antes de P09.1\n// ese nodo no se ejecutó y la huella simplemente no existe.\n// ------------------------------------------------------------\n\nlet fileHash = txt(j.fileHash);\n\nif (!fileHash) {\n  try {\n    fileHash = txt($('Calcular huella archivo (P09.1)').first().json.fileHash);\n  } catch (error) {\n    fileHash = '';\n  }\n}\n\n// ------------------------------------------------------------\n// 4. Identificador de la fila\n// ------------------------------------------------------------\n//\n// La clave primaria es el correo recibido, no la factura:\n// un reenvío del mismo comprobante es una fila nueva marcada\n// como duplicada, no un pisotón sobre la fila original.\n// ------------------------------------------------------------\n\nconst id =\n  txt(j.gmailMessageId) ||\n  txt(j.duplicateKey) ||\n  'sin-id-' + new Date().toISOString();\n\n// ------------------------------------------------------------\n// 5. Fila\n// ------------------------------------------------------------\n\nconst fila = {\n  id,\n  procesadoEn: new Date().toISOString(),\n\n  estado,\n  estadoEtiqueta: txt(j.finalStatusLabel) || meta.etiqueta,\n  resultado: meta.resultado,\n  motivo,\n  accionRequerida: meta.accion,\n\n  senderEmail: txt(j.senderEmail),\n  colaborador: txt(j.collaboratorName),\n  centroCosto: txt(j.collaboratorCostCenter),\n  colaboradorEstado: txt(j.collaboratorStatus),\n\n  gmailMessageId: txt(j.gmailMessageId),\n  asunto: txt(j.subject),\n  fileName: txt(j.fileName),\n  fileType: txt(j.sourceType) || txt(j.fileType),\n  fileHash,\n\n  proveedor: txt(j.supplierName),\n  ruc: txt(j.supplierTaxId),\n  documento: txt(j.documentNumber),\n  fechaEmision: txt(j.issueDate),\n  moneda: txt(j.currency),\n  subtotal: num(j.subtotal),\n  igv: num(j.tax),\n  total: num(j.total),\n\n  categoria: txt(j.expenseCategory),\n  categoriaEtiqueta: txt(j.expenseCategoryLabel),\n  confianza: num(j.expenseConfidence),\n\n  politicaVersion: txt(j.policyVersion),\n  politicaLimite: num(j.policyLimit),\n  baseComparacion: txt(j.policyComparisonBasis),\n  montoComparado: num(j.policyComparisonAmount),\n  dentroLimite: siNo(j.withinPolicyLimit),\n  excedente: num(j.amountOverLimit),\n  usoPct: num(j.policyUsagePercent),\n\n  noches: num(j.lodgingNights),\n  montoPorNoche: num(j.lodgingAmountPerNight),\n\n  decisionPolitica: txt(j.policyDecision),\n  tipoAprobacion: txt(j.approvalType),\n  respondidoEn: txt(j.humanApprovalRespondedAt),\n\n  // Solo los estados que bloquean reenvíos guardan la clave del\n  // comprobante. Así una factura inválida puede corregirse y\n  // reenviarse sin que el flujo la trate como duplicada.\n  duplicateKey: meta.bloquea ? txt(j.duplicateKey) : '',\n};\n\n// ------------------------------------------------------------\n// 6. Salida\n// ------------------------------------------------------------\n//\n// Se conserva todo el contexto anterior para que los nodos que\n// vienen después de la base de datos (correos, cierre de\n// incidencia) sigan teniendo lo que necesitan.\n// ------------------------------------------------------------\n\nreturn {\n  json: {\n    ...j,\n    fila,\n    dbEstado: estado,\n    dbResultado: meta.resultado,\n    dbAccionRequerida: meta.accion,\n  },\n  binary: item.binary,\n};\n"
+    "jsCode": "// ============================================================\n// P31 · Preparar fila de base de datos\n// ============================================================\n//\n// Punto único de convergencia del flujo.\n//\n// Recibe items de las 7 salidas terminales (aprobada, rechazada,\n// factura inválida, colaborador no válido, documento no procesable,\n// archivo duplicado, comprobante duplicado) y produce UNA fila\n// plana con el estado final de la rendición.\n//\n// No decide nada: solo traduce el estado que ya trae el item.\n// ============================================================\n\nconst item = $input.item;\nconst j = item.json ?? {};\n\n// ------------------------------------------------------------\n// Helpers de formato para hoja de cálculo\n// ------------------------------------------------------------\n\nfunction txt(v) {\n  return v === null || v === undefined ? '' : String(v).trim();\n}\n\nfunction num(v) {\n  if (v === null || v === undefined || v === '') return '';\n  const n = Number(v);\n  return Number.isFinite(n) ? n : '';\n}\n\nfunction siNo(v) {\n  if (v === true) return 'SI';\n  if (v === false) return 'NO';\n  return '';\n}\n\nfunction lista(v) {\n  if (!Array.isArray(v)) return txt(v);\n  return v.map((x) => String(x ?? '').trim()).filter(Boolean).join(' | ');\n}\n\n// ------------------------------------------------------------\n// Catálogo de estados\n// ------------------------------------------------------------\n//\n// bloquea = true  -> la clave del comprobante se guarda y por tanto\n//                    un reenvío del mismo RUC + número se marcará\n//                    como duplicado (comportamiento actual del flujo).\n// bloquea = false -> el comprobante puede volver a enviarse corregido.\n// ------------------------------------------------------------\n\nconst ESTADOS = {\n  AUTO_APPROVED: {\n    etiqueta: 'Aprobada automáticamente',\n    resultado: 'APROBADA',\n    accion: 'NONE',\n    bloquea: true,\n  },\n  HUMAN_APPROVED: {\n    etiqueta: 'Aprobada por el aprobador',\n    resultado: 'APROBADA',\n    accion: 'NONE',\n    bloquea: true,\n  },\n  REJECTED: {\n    etiqueta: 'Rechazada',\n    resultado: 'RECHAZADA',\n    accion: 'NONE',\n    bloquea: true,\n  },\n  DUPLICATE_FILE: {\n    etiqueta: 'Archivo ya recibido antes',\n    resultado: 'NO_PROCESADA',\n    accion: 'NONE',\n    bloquea: false,\n  },\n  DUPLICATE_INVOICE: {\n    etiqueta: 'Comprobante ya registrado',\n    resultado: 'NO_PROCESADA',\n    accion: 'NONE',\n    bloquea: false,\n  },\n  INVALID_INVOICE: {\n    etiqueta: 'Comprobante inválido',\n    resultado: 'NO_PROCESADA',\n    accion: 'REPLACE_DOCUMENT',\n    bloquea: false,\n  },\n  INVALID_COLLABORATOR: {\n    etiqueta: 'Remitente no autorizado',\n    resultado: 'NO_PROCESADA',\n    accion: 'CONTACT_ADMIN',\n    bloquea: false,\n  },\n  UNPROCESSABLE_DOCUMENT: {\n    etiqueta: 'Documento no procesable',\n    resultado: 'NO_PROCESADA',\n    accion: 'REPLACE_DOCUMENT',\n    bloquea: false,\n  },\n};\n\n// ------------------------------------------------------------\n// 1. Estado\n// ------------------------------------------------------------\n//\n// Las ramas de error lo traen en dbOutcome (nodos Set).\n// Las ramas de resolución lo traen en finalStatus (P23.1 / P23.3).\n// ------------------------------------------------------------\n\nconst estado = txt(j.dbOutcome) || txt(j.finalStatus) || 'UNKNOWN';\n\nconst meta =\n  ESTADOS[estado] ?? {\n    etiqueta: 'Estado no determinado',\n    resultado: 'NO_PROCESADA',\n    accion: 'CONTACT_ADMIN',\n    bloquea: false,\n  };\n\n// ------------------------------------------------------------\n// 2. Motivo\n// ------------------------------------------------------------\n\nconst motivos = [];\n\nif (estado === 'REJECTED' && j.rejectionType === 'HUMAN') {\n  motivos.push('RECHAZADA_POR_EL_APROBADOR');\n}\n\nmotivos.push(...(Array.isArray(j.policyRejectReasons) ? j.policyRejectReasons : []));\nmotivos.push(...(Array.isArray(j.policyReviewReasons) ? j.policyReviewReasons : []));\n\nif (motivos.length === 0) {\n  motivos.push(...(Array.isArray(j.invoiceValidationErrors) ? j.invoiceValidationErrors : []));\n}\n\nif (motivos.length === 0 && txt(j.dbReason)) {\n  motivos.push(txt(j.dbReason));\n}\n\nconst motivo = lista([...new Set(motivos)]);\n\n// ------------------------------------------------------------\n// 3. Huella del archivo\n// ------------------------------------------------------------\n//\n// Preparar duplicado (P14) reconstruye el item desde Evaluar\n// factura (P08.2), que es anterior al cálculo del hash, así que\n// en las ramas largas fileHash ya no viene en $json. Lo pedimos\n// al nodo que lo calculó. En las ramas que fallan antes de P09.1\n// ese nodo no se ejecutó y la huella simplemente no existe.\n// ------------------------------------------------------------\n\nlet fileHash = txt(j.fileHash);\n\nif (!fileHash) {\n  try {\n    fileHash = txt($('Calcular huella archivo (P09.1)').first().json.fileHash);\n  } catch (error) {\n    fileHash = '';\n  }\n}\n\n// ------------------------------------------------------------\n// 4. Comprobante archivado en Drive\n// ------------------------------------------------------------\n//\n// El nodo de archivado cuelga en paralelo de P02, así que su\n// salida no llega por $json: se la pedimos directamente.\n// ------------------------------------------------------------\n\nlet archivoUrl = '';\nlet archivoDriveId = '';\n\ntry {\n  const archivo = $('Archivar comprobante en Drive (P02.1)').first().json ?? {};\n\n  archivoDriveId = txt(archivo.id);\n\n  archivoUrl =\n    txt(archivo.webViewLink) ||\n    (archivoDriveId\n      ? 'https://drive.google.com/file/d/' + archivoDriveId + '/view'\n      : '');\n} catch (error) {\n  archivoUrl = '';\n  archivoDriveId = '';\n}\n\n// ------------------------------------------------------------\n// 5. Identificador de la fila\n// ------------------------------------------------------------\n//\n// La clave primaria es el correo recibido, no la factura:\n// un reenvío del mismo comprobante es una fila nueva marcada\n// como duplicada, no un pisotón sobre la fila original.\n// ------------------------------------------------------------\n\nconst id =\n  txt(j.gmailMessageId) ||\n  txt(j.duplicateKey) ||\n  'sin-id-' + new Date().toISOString();\n\n// ------------------------------------------------------------\n// 6. Fila\n// ------------------------------------------------------------\n\nconst fila = {\n  id,\n  procesadoEn: new Date().toISOString(),\n\n  estado,\n  estadoEtiqueta: txt(j.finalStatusLabel) || meta.etiqueta,\n  resultado: meta.resultado,\n  motivo,\n  accionRequerida: meta.accion,\n\n  senderEmail: txt(j.senderEmail),\n  colaborador: txt(j.collaboratorName),\n  centroCosto: txt(j.collaboratorCostCenter),\n  colaboradorEstado: txt(j.collaboratorStatus),\n\n  gmailMessageId: txt(j.gmailMessageId),\n  asunto: txt(j.subject),\n  fileName: txt(j.fileName),\n  fileType: txt(j.sourceType) || txt(j.fileType),\n  fileHash,\n  archivoUrl,\n  archivoDriveId,\n\n  proveedor: txt(j.supplierName),\n  ruc: txt(j.supplierTaxId),\n  documento: txt(j.documentNumber),\n  fechaEmision: txt(j.issueDate),\n  moneda: txt(j.currency),\n  subtotal: num(j.subtotal),\n  igv: num(j.tax),\n  total: num(j.total),\n\n  categoria: txt(j.expenseCategory),\n  categoriaEtiqueta: txt(j.expenseCategoryLabel),\n  confianza: num(j.expenseConfidence),\n\n  politicaVersion: txt(j.policyVersion),\n  politicaLimite: num(j.policyLimit),\n  baseComparacion: txt(j.policyComparisonBasis),\n  montoComparado: num(j.policyComparisonAmount),\n  dentroLimite: siNo(j.withinPolicyLimit),\n  excedente: num(j.amountOverLimit),\n  usoPct: num(j.policyUsagePercent),\n\n  noches: num(j.lodgingNights),\n  montoPorNoche: num(j.lodgingAmountPerNight),\n\n  decisionPolitica: txt(j.policyDecision),\n  tipoAprobacion: txt(j.approvalType),\n  respondidoEn: txt(j.humanApprovalRespondedAt),\n\n  // Solo los estados que bloquean reenvíos guardan la clave del\n  // comprobante. Así una factura inválida puede corregirse y\n  // reenviarse sin que el flujo la trate como duplicada.\n  duplicateKey: meta.bloquea ? txt(j.duplicateKey) : '',\n};\n\n// ------------------------------------------------------------\n// 7. Salida\n// ------------------------------------------------------------\n//\n// Se conserva todo el contexto anterior para que los nodos que\n// vienen después de la base de datos (correos, cierre de\n// incidencia) sigan teniendo lo que necesitan.\n// ------------------------------------------------------------\n\nreturn {\n  json: {\n    ...j,\n    fila,\n    dbEstado: estado,\n    dbResultado: meta.resultado,\n    dbAccionRequerida: meta.accion,\n  },\n  binary: item.binary,\n};\n"
    },
    "type": "n8n-nodes-base.code",
    "typeVersion": 2,
@@ -1488,7 +1539,7 @@
     2724,
     416
    ],
-   "id": "816a32ac-279d-4865-914b-e5a2292c5e63",
+   "id": "45ea7793-653f-450c-ab30-cbff68e5ae6c",
    "name": "Preparar fila de base de datos (P31)",
    "notes": "Punto único de convergencia: traduce cualquier final a una fila de la tabla",
    "notesInFlow": true
@@ -1526,6 +1577,8 @@
       "fileName": "={{ $json.fila.fileName }}",
       "fileType": "={{ $json.fila.fileType }}",
       "fileHash": "={{ $json.fila.fileHash }}",
+      "archivoUrl": "={{ $json.fila.archivoUrl }}",
+      "archivoDriveId": "={{ $json.fila.archivoDriveId }}",
       "proveedor": "={{ $json.fila.proveedor }}",
       "ruc": "={{ $json.fila.ruc }}",
       "documento": "={{ $json.fila.documento }}",
@@ -1708,6 +1761,26 @@
       {
        "id": "fileHash",
        "displayName": "fileHash",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "canBeUsedToMatch": true,
+       "removed": false
+      },
+      {
+       "id": "archivoUrl",
+       "displayName": "archivoUrl",
+       "required": false,
+       "defaultMatch": false,
+       "display": true,
+       "type": "string",
+       "canBeUsedToMatch": true,
+       "removed": false
+      },
+      {
+       "id": "archivoDriveId",
+       "displayName": "archivoDriveId",
        "required": false,
        "defaultMatch": false,
        "display": true,
@@ -1967,7 +2040,7 @@
     2964,
     416
    ],
-   "id": "3dbdbc60-e7ad-4a33-b1e9-dc2dd20a8df4",
+   "id": "6a2577f8-2048-4210-89bb-1a8523d45735",
    "name": "Guardar en base de datos (P32)",
    "notes": "Única escritura del resultado final · upsert por id (gmailMessageId)",
    "notesInFlow": true
@@ -1986,7 +2059,7 @@
         },
         "conditions": [
          {
-          "id": "4b12785d-ac3d-4f38-96d3-3b77927d6434",
+          "id": "05046e46-cc29-4044-b433-efc953cccd49",
           "leftValue": "={{ $json.dbResultado }}",
           "rightValue": "APROBADA",
           "operator": {
@@ -2010,7 +2083,7 @@
         },
         "conditions": [
          {
-          "id": "078ddd5a-2216-46ac-b5f6-d760088337e6",
+          "id": "d32b3c76-4112-488a-9473-cf6e4a33c78e",
           "leftValue": "={{ $json.dbResultado }}",
           "rightValue": "RECHAZADA",
           "operator": {
@@ -2034,7 +2107,7 @@
         },
         "conditions": [
          {
-          "id": "f1b47351-a622-4c15-917e-4c2a6039b159",
+          "id": "b8d98cd9-d892-457a-b578-48cddbd95608",
           "leftValue": "={{ $json.dbResultado }}",
           "rightValue": "NO_PROCESADA",
           "operator": {
@@ -2060,7 +2133,7 @@
     3204,
     416
    ],
-   "id": "801446b4-2ecc-4704-98c0-f4d2746116b6",
+   "id": "6679546f-8c09-43ea-a8b2-a370a63d8a6c",
    "name": "Enrutar cierre (P33)",
    "notes": "Ya con la fila guardada: decide a quién se avisa",
    "notesInFlow": true
@@ -2192,7 +2265,7 @@
     3444,
     616
    ],
-   "id": "48bbcb86-b2d5-4083-92be-3782e69588f3",
+   "id": "94205c8e-2c55-40b4-97cf-ec95f8c01503",
    "name": "Cerrar incidencia (P34)",
    "notes": "Un solo nodo para los 5 tipos de incidencia",
    "notesInFlow": true
@@ -2281,7 +2354,7 @@
   },
   {
    "parameters": {
-    "content": "## 🗄️ La hoja `BD_Rendiciones` es la base de datos\n\nUna sola tabla, una fila por correo recibido, clave primaria `id` = `gmailMessageId`.\nTodas las salidas del flujo — las 3 que resuelven y las 5 que fallan — terminan\nescribiendo aquí. Antes solo quedaban registradas las aprobadas y las rechazadas.\n\n**P31** traduce cualquier final a una fila · **P32** la escribe con *upsert* por `id`.\n\n### Qué cambió\n| | Antes | Ahora |\n|---|---|---|\n| Escrituras por factura | 3 (Data table + append + update) | 2 (reserva + cierre) |\n| Almacenes | 2 (Data table + Sheets) | 1 (Sheets) |\n| Finales registrados | 2 de 8 | 8 de 8 |\n| Nodos | 57 | 50 |\n\n### Cabecera de la hoja (fila 1, en este orden)\n```\nid\tprocesadoEn\testado\testadoEtiqueta\tresultado\tmotivo\taccionRequerida\tsenderEmail\tcolaborador\tcentroCosto\tcolaboradorEstado\tgmailMessageId\tasunto\tfileName\tfileType\tfileHash\tproveedor\truc\tdocumento\tfechaEmision\tmoneda\tsubtotal\tigv\ttotal\tcategoria\tcategoriaEtiqueta\tconfianza\tpoliticaVersion\tpoliticaLimite\tbaseComparacion\tmontoComparado\tdentroLimite\texcedente\tusoPct\tnoches\tmontoPorNoche\tdecisionPolitica\ttipoAprobacion\trespondidoEn\tduplicateKey\n```\n\n`estado`: EN_PROCESO · AUTO_APPROVED · HUMAN_APPROVED · REJECTED ·\nDUPLICATE_FILE · DUPLICATE_INVOICE · INVALID_INVOICE ·\nINVALID_COLLABORATOR · UNPROCESSABLE_DOCUMENT\n\n`resultado`: APROBADA · RECHAZADA · NO_PROCESADA — es lo que enruta **P33**.\n\nSolo los estados que cierran una rendición (aprobada/rechazada) guardan\n`duplicateKey`. Así un comprobante inválido puede corregirse y reenviarse sin\nque el flujo lo trate como duplicado — igual que hoy.",
+    "content": "## 🗄️ La hoja `BD_Rendiciones` es la base de datos\n\nUna sola tabla, una fila por correo recibido, clave primaria `id` = `gmailMessageId`.\nTodas las salidas del flujo — las 3 que resuelven y las 5 que fallan — terminan\nescribiendo aquí. Antes solo quedaban registradas las aprobadas y las rechazadas.\n\n**P31** traduce cualquier final a una fila · **P32** la escribe con *upsert* por `id`.\n\n### Qué cambió\n| | Antes | Ahora |\n|---|---|---|\n| Escrituras por factura | 3 (Data table + append + update) | 2 (reserva + cierre) |\n| Almacenes | 2 (Data table + Sheets) | 1 (Sheets) |\n| Finales registrados | 2 de 8 | 8 de 8 |\n| Nodos | 57 | 50 |\n\n### Cabecera de la hoja (fila 1, en este orden)\n```\nid\tprocesadoEn\testado\testadoEtiqueta\tresultado\tmotivo\taccionRequerida\tsenderEmail\tcolaborador\tcentroCosto\tcolaboradorEstado\tgmailMessageId\tasunto\tfileName\tfileType\tfileHash\tarchivoUrl\tarchivoDriveId\tproveedor\truc\tdocumento\tfechaEmision\tmoneda\tsubtotal\tigv\ttotal\tcategoria\tcategoriaEtiqueta\tconfianza\tpoliticaVersion\tpoliticaLimite\tbaseComparacion\tmontoComparado\tdentroLimite\texcedente\tusoPct\tnoches\tmontoPorNoche\tdecisionPolitica\ttipoAprobacion\trespondidoEn\tduplicateKey\n```\n\n`estado`: EN_PROCESO · AUTO_APPROVED · HUMAN_APPROVED · REJECTED ·\nDUPLICATE_FILE · DUPLICATE_INVOICE · INVALID_INVOICE ·\nINVALID_COLLABORATOR · UNPROCESSABLE_DOCUMENT\n\n`resultado`: APROBADA · RECHAZADA · NO_PROCESADA — es lo que enruta **P33**.\n\nSolo los estados que cierran una rendición (aprobada/rechazada) guardan\n`duplicateKey`. Así un comprobante inválido puede corregirse y reenviarse sin\nque el flujo lo trate como duplicado — igual que hoy.",
     "height": 940,
     "width": 620,
     "color": 5
@@ -2292,8 +2365,8 @@
     -3048,
     -388
    ],
-   "id": "ffb50ed4-a55a-47fe-b4c8-0707ae0875e1",
-   "name": "Nota 3ca73bfc"
+   "id": "cd93102e-0ef7-4fa3-b7dc-18703f8de8f9",
+   "name": "Nota 6ffe0875"
   },
   {
    "parameters": {
@@ -2308,14 +2381,19 @@
     -2388,
     -388
    ],
-   "id": "24b4d593-2ae2-47a2-a47f-1299f7e07d1b",
-   "name": "Nota 6409dda7"
+   "id": "57423811-5c77-433b-af66-36e84c85df9d",
+   "name": "Nota 9b358c5d"
   }
  ],
  "connections": {
   "Detectar tipo de archivo (P02)": {
    "main": [
     [
+     {
+      "node": "Archivar comprobante en Drive (P02.1)",
+      "type": "main",
+      "index": 0
+     },
      {
       "node": "Enrutar por tipo de archivo (P03)",
       "type": "main",

@@ -10,9 +10,60 @@ y copia de prueba ejecutable sin credenciales.
 | `flujo1-facturas.original.json` | Export del workflow de producción tal como estaba el 2026-09-02 |
 | `flujo1-facturas.optimizado.json` | Versión rediseñada, lista para producción (solo faltan credenciales) |
 | `flujo1-facturas.prueba.json` | La misma versión con datos dummy, ejecutable sin credenciales |
-| `BD_Rendiciones.ejemplo.csv` | La tabla resultante de los 12 casos de prueba |
+| `BD_Rendiciones.xlsx` | La tabla resultante de los 12 casos, en Excel, con enlaces a los PDF |
+| `BD_Rendiciones.ejemplo.csv` | La misma tabla en CSV |
+| `comprobantes-prueba/` | Los 12 PDF de prueba (los mismos que están en Drive) |
 | `mocks/D00-caso-de-prueba.js` | Nodo Code con los 12 escenarios |
 | `mocks/P31-preparar-fila-bd.js` | Nodo que traduce cualquier final a una fila de la tabla |
+
+---
+
+## Rutas — dónde está todo
+
+### Lo que puedes abrir ahora
+
+| Qué | Dónde |
+|---|---|
+| **Carpeta con los 12 comprobantes en PDF** | https://drive.google.com/drive/folders/1is6o8AJwhu3BqFx-1vicwgZAzRPvHRfs |
+| **La base de datos (Google Sheet)** | https://docs.google.com/spreadsheets/d/15kXhMOMLa4LwSrQdWYPbMXzYEt0VSUkcIxA106ZAJ2w/edit |
+| **La misma tabla en Excel** | `automatizacion/n8n/BD_Rendiciones.xlsx` (en el repo) |
+| **Descargar la hoja como Excel** | https://docs.google.com/spreadsheets/d/15kXhMOMLa4LwSrQdWYPbMXzYEt0VSUkcIxA106ZAJ2w/export?format=xlsx |
+| **Flujo de prueba ejecutable** | https://n8n.srv836595.hstgr.cloud/workflow/IQFQjHC4QfbVhBau |
+| **Flujo original (roto)** | https://n8n.srv836595.hstgr.cloud/workflow/qmdiBzPWYJAN197e |
+
+La columna `archivoUrl` de la hoja es un hipervínculo: se abre el PDF del
+comprobante desde la fila. Funciona igual en el `.xlsx`.
+
+### Identificadores para configurar los nodos
+
+| Nodo | Parámetro | Valor |
+|---|---|---|
+| `Archivar comprobante en Drive (P02.1)` | carpeta destino | `1is6o8AJwhu3BqFx-1vicwgZAzRPvHRfs` |
+| `Guardar en base de datos (P32)` | documento | `15SJtCETq8MPhIaXnZ0ks3y54OrmX42RViqQXrqMBOZQ` (`RegistroFacturas`) |
+| `Guardar en base de datos (P32)` | pestaña | `BD_Rendiciones` |
+| `Guardar en base de datos (P32)` | columna clave | `id` |
+| `Reservar en base de datos (P12.2)` | igual que P32 | — |
+| `¿Hash ya registrado? (P10)` | busca en | `BD_Rendiciones` · columna `fileHash` |
+| `Buscar duplicado (P13)` | busca en | `BD_Rendiciones` · columna `duplicateKey` |
+| `Buscar colaborador (P06)` | documento | `1H7GrPpkj0Qe8KnEjzLsdw5Za1HS2mWwSBnxSUAgZYRQ` (`Colaboradores`) |
+| Herramienta de política del agente | documento | `1zqNjBinx06T5OwgPapj1HWGA-_Px5qDpKX5ZEFTjpgo` (`PoliticaViaticos`) |
+| `Cerrar incidencia (P34)` | subflujo | `ix3aTQ9kotACGZa5` — **no existe, hay que recrearlo** |
+
+> La carpeta de Drive y la hoja de arriba están en `flum2.carlos.ramirez@gmail.com`.
+> Si la credencial de Google que usa n8n es otra cuenta, comparte ambas con ella o
+> crea la carpeta y la pestaña en la cuenta de la credencial y cambia esos dos IDs.
+
+### Para imprimir en Excel
+
+Tres caminos, de menos a más automático:
+
+1. **Manual:** en la hoja, *Archivo → Descargar → Microsoft Excel (.xlsx)*.
+2. **Enlace directo** (siempre trae la última versión):
+   `https://docs.google.com/spreadsheets/d/15kXhMOMLa4LwSrQdWYPbMXzYEt0VSUkcIxA106ZAJ2w/export?format=xlsx`
+3. **Automático desde n8n:** un flujo aparte con *Schedule Trigger* →
+   *HTTP Request* (`GET` a esa URL de `export`, respuesta en formato *File*) →
+   *Google Drive · upload* o *Gmail · send*. Así llega el Excel al correo o a
+   Drive cada mañana sin tocar nada.
 
 ---
 
@@ -92,7 +143,7 @@ Hoja con el resultado de los 12 casos de prueba:
 ```
 id  procesadoEn  estado  estadoEtiqueta  resultado  motivo  accionRequerida
 senderEmail  colaborador  centroCosto  colaboradorEstado
-gmailMessageId  asunto  fileName  fileType  fileHash
+gmailMessageId  asunto  fileName  fileType  fileHash  archivoUrl  archivoDriveId
 proveedor  ruc  documento  fechaEmision  moneda  subtotal  igv  total
 categoria  categoriaEtiqueta  confianza
 politicaVersion  politicaLimite  baseComparacion  montoComparado
@@ -108,6 +159,20 @@ decisionPolitica  tipoAprobacion  respondidoEn  duplicateKey
 
 `resultado` los agrupa en `APROBADA` / `RECHAZADA` / `NO_PROCESADA`, y es lo que
 usa `Enrutar cierre (P33)` para decidir a quién se avisa.
+
+### El comprobante queda archivado
+
+`Archivar comprobante en Drive (P02.1)` cuelga en paralelo de `P02` y sube el
+adjunto tal como llegó, con el nombre `<gmailMessageId> - <fileName>`. La fila
+guarda `archivoUrl` y `archivoDriveId`, así que desde la tabla se abre el PDF.
+
+Se archiva **todo** adjunto que entre, incluidos los que después se descartan:
+un escaneo ilegible o un remitente no autorizado también dejan su copia, que es
+justo lo que se quiere poder mirar.
+
+Va en paralelo y antes de `P03` a propósito: n8n v1 ejecuta las ramas de arriba
+abajo, y si el archivado quedara debajo se ejecutaría *después* de `P31` y la
+fila saldría sin enlace.
 
 ### Dos reglas que conviene conocer
 
@@ -126,7 +191,7 @@ usa `Enrutar cierre (P33)` para decidir a quién se avisa.
 | Escrituras por factura | 3 (Data table + append + update) | 2 (reserva + cierre) |
 | Almacenes | 2 (Data table + Google Sheets) | 1 (Google Sheets) |
 | Finales que quedan registrados | 2 de 8 | 8 de 8 |
-| Nodos | 59 | 53 |
+| Nodos | 59 | 54 |
 
 **Fuera** (7 nodos): `Preparar registro (P19)`, `Registrar factura (P20)`,
 `Restaurar contexto (P21)`, `Preparar actualización aprobado (P26)`,
@@ -264,7 +329,9 @@ Partiendo de `flujo1-facturas.optimizado.json` (que ya trae resueltos §4.3,
 §4.4, §4.5 y la consolidación en una sola tabla):
 
 1. **Crear la pestaña `BD_Rendiciones`** en el documento `RegistroFacturas` con
-   la cabecera de §2. Sin ella, los nodos de Sheets no tienen dónde escribir.
+   la cabecera de §2, y comprobar que la credencial de Google de n8n ve la
+   carpeta de Drive de las *Rutas*. Sin la pestaña, los nodos de Sheets no
+   tienen dónde escribir; sin la carpeta, el archivado falla.
 2. **Asignar credenciales** a todos los nodos (§4.1).
 3. **Recrear el subflujo** `SUBFLOW - Cerrar incidencia factura`, o apuntar
    `Cerrar incidencia (P34)` a uno existente (§4.2).

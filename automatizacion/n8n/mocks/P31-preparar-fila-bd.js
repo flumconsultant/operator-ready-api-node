@@ -164,7 +164,33 @@ if (!fileHash) {
 }
 
 // ------------------------------------------------------------
-// 4. Identificador de la fila
+// 4. Comprobante archivado en Drive
+// ------------------------------------------------------------
+//
+// El nodo de archivado cuelga en paralelo de P02, así que su
+// salida no llega por $json: se la pedimos directamente.
+// ------------------------------------------------------------
+
+let archivoUrl = '';
+let archivoDriveId = '';
+
+try {
+  const archivo = $('Archivar comprobante en Drive (P02.1)').first().json ?? {};
+
+  archivoDriveId = txt(archivo.id);
+
+  archivoUrl =
+    txt(archivo.webViewLink) ||
+    (archivoDriveId
+      ? 'https://drive.google.com/file/d/' + archivoDriveId + '/view'
+      : '');
+} catch (error) {
+  archivoUrl = '';
+  archivoDriveId = '';
+}
+
+// ------------------------------------------------------------
+// 5. Identificador de la fila
 // ------------------------------------------------------------
 //
 // La clave primaria es el correo recibido, no la factura:
@@ -178,7 +204,7 @@ const id =
   'sin-id-' + new Date().toISOString();
 
 // ------------------------------------------------------------
-// 5. Fila
+// 6. Fila
 // ------------------------------------------------------------
 
 const fila = {
@@ -201,6 +227,8 @@ const fila = {
   fileName: txt(j.fileName),
   fileType: txt(j.sourceType) || txt(j.fileType),
   fileHash,
+  archivoUrl,
+  archivoDriveId,
 
   proveedor: txt(j.supplierName),
   ruc: txt(j.supplierTaxId),
@@ -237,7 +265,7 @@ const fila = {
 };
 
 // ------------------------------------------------------------
-// 6. Salida
+// 7. Salida
 // ------------------------------------------------------------
 //
 // Se conserva todo el contexto anterior para que los nodos que
