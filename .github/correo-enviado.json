@@ -3,6 +3,7 @@
   "enviados": [
     "como-cambia-el-modelo-operativo-con-agentes.json",
     "como-medir-el-retorno-real-de-la-ia.json",
+    "como-se-audita-una-decision-que-tomo-un-modelo-de-ia.json",
     "como-se-decide-que-comprar-y-que-construir-en-ia.json",
     "como-se-gobierna-la-ia-sin-frenar-al-negocio.json",
     "como-se-redisena-un-proceso-para-que-lo-ejecute-una-ia.json",
@@ -13,6 +14,7 @@
     "que-cambia-la-estructura-de-una-empresa-con-ia.json",
     "que-controles-necesita-una-empresa-antes-de-escalar-la-ia.json",
     "que-diferencia-a-una-empresa-ai-native-de-una-que-usa-ia.json",
+    "que-hacer-con-el-tiempo-que-libera-la-ia.json",
     "que-puede-hacer-un-agente-sin-supervision.json",
     "quien-responde-cuando-responde-un-agente.json"
   ]
