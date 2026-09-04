@@ -66,9 +66,26 @@ const mPaso = paso.match(/^ {8}timeout-minutes: (\d+)$/m);
 if (!mPaso) fallos.push('El paso «Subir a public_html» no declara timeout-minutes.');
 const pasoMin = mPaso ? Number(mPaso[1]) : null;
 
-/* Cada intento lleva su propio `timeout N lftp`. */
-const mIntento = paso.match(/timeout (\d+) lftp/);
-if (!mIntento) fallos.push('No se encontró el «timeout N lftp» de cada intento.');
+/* Cada intento lleva su propio `timeout N … lftp`.
+ *
+ * Entre el `timeout` y el `lftp` puede haber envoltorios. El 3 de septiembre se
+ * metió `stdbuf -oL -eL` para que la salida de lftp sobreviviera al corte por
+ * tiempo, y esta expresión —que pedía las dos palabras pegadas— dejó de
+ * encontrar nada. El guardián hizo lo correcto: sin poder comprobar los plazos
+ * se negó a desplegar, en rojo y en veinte segundos. Pero el artículo del 4 de
+ * septiembre se quedó sin publicar por una comprobación que se rompió con un
+ * cambio que no tenía nada que ver con los plazos.
+ *
+ * Ahora se admite cualquier cosa entre medias mientras no haya comillas ni
+ * saltos de línea, que es lo que separa un envoltorio de otro comando. */
+const mIntento = paso.match(/timeout (\d+) [^"'\n]*?\blftp\b/);
+if (!mIntento) {
+  fallos.push(
+    'No se encontró el «timeout N … lftp» de cada intento. Si se cambió cómo se ' +
+      'invoca lftp en el paso de subida, hay que actualizar esta expresión: la ' +
+      'comprobación no puede quedarse muda cuando cambia lo que vigila.',
+  );
+}
 const intentoS = mIntento ? Number(mIntento[1]) : null;
 
 /* Cuántos intentos programa el bucle. */
