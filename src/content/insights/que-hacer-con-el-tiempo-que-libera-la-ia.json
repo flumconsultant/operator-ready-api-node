@@ -10,8 +10,12 @@
     "entradilla": "Un director de operaciones me contó que, tras automatizar los reportes semanales, su equipo de análisis se quedó con medio día libre a la semana. Le pregunté qué habían hecho con ese medio día. Se quedó callado. Nadie lo había decidido: se llenó solo, de otra cosa.",
     "descripcion": "El tiempo que libera la IA no se ahorra: se llena solo si nadie decide qué hacer con él. Un marco para decidirlo antes de que pase.",
     "linkedin": {
-      "texto": "Un director de operaciones automatizó los reportes de su equipo. Ganaron medio día libre a la semana. Le pregunté qué habían hecho con ese tiempo y se quedó callado.\n\nNadie lo había decidido. Se llenó solo, con reuniones que antes no cabían y con el mismo trabajo de siempre hecho más despacio. Casi toda iniciativa de IA se mide por las horas que ahorra, casi ninguna por lo que pasa con ellas después.\n\nEn este análisis de BECOME desarrollamos el marco para decidirlo antes de que el tiempo se llene solo.",
-      "hashtags": ["IA", "Productividad", "Decisiones"]
+      "texto": "Un director de operaciones automatizó los reportes de su equipo. Ganaron medio día libre a la semana. Nadie decidió qué hacer con él.\n\nSe llenó solo: reuniones que antes no cabían y el mismo trabajo de siempre hecho más despacio. Casi toda iniciativa de IA se mide por las horas que ahorra, casi ninguna por lo que pasa con ellas después.\n\nEn este análisis de BECOME desarrollamos el marco para decidirlo antes de que el tiempo se llene solo.",
+      "hashtags": [
+        "IA",
+        "Productividad",
+        "Decisiones"
+      ]
     },
     "bloques": [
       {

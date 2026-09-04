@@ -123,9 +123,45 @@ function revisarCopyLinkedIn(art, di) {
 
   if (texto.includes('—')) d('lleva rayas largas (—); aquí tampoco');
 
+
   const bajo = texto.toLowerCase();
   for (const m of COPY_PROHIBIDO) if (bajo.includes(m)) d(`frase prohibida en el copy: "${m}"`);
   for (const m of MULETILLAS) if (bajo.includes(m)) d(`muletilla de texto generado en el copy: "${m}"`);
+
+  /* ---- Quién habla en el post ----
+   *
+   * El artículo lo firma una persona y se escribe en primera persona, con
+   * experiencia vivida. El post NO: lo publica la página de empresa, así que
+   * quien habla es BECOME.
+   *
+   * El 4 de septiembre salió un post que decía «le pregunté qué habían hecho
+   * con ese tiempo y se quedó callado», firmado por la página. Un «yo» sin
+   * cara, en el muro de una marca, suena a que alguien se equivocó de cuenta.
+   *
+   * La anécdota no sobra: hay que contarla como patrón observado en vez de como
+   * recuerdo propio. «Un director automatizó los reportes y nadie decidió qué
+   * hacer con el tiempo» dice lo mismo y lo puede firmar una empresa. */
+  /* Ojo con `\b`: en JavaScript es ASCII, así que entre la «é» de «pregunté» y
+     el espacio siguiente NO hay frontera de palabra y `\bpregunté\b` no casa
+     nunca. Este mismo error se pagó ya una vez esta semana, en el lector de
+     demanda, donde se perdían todas las búsquedas que empiezan por «qué». Con
+     `\p{L}` y la bandera `u` funciona con tildes. */
+  const YO = [
+    'pregunté', 'preguntamos', 'vi', 'escuché', 'noté', 'encontré', 'descubrí',
+    'recuerdo', 'conocí', 'trabajé', 'acompañé', 'me dijo', 'me contó',
+    'me respondió', 'me preguntó', 'me explicó', 'me confesó', 'he visto',
+    'he escuchado', 'he encontrado', 'he acompañado', 'mi experiencia',
+    'mi cliente', 'mi equipo', 'en mi', 'a mí',
+  ];
+  const rYo = new RegExp(`(?<!\\p{L})(${YO.join('|')})(?!\\p{L})`, 'gu');
+  const marcas = [...new Set(bajo.match(rYo) || [])];
+  if (marcas.length) {
+    d(
+      `el copy habla en primera persona del singular («${marcas.join('», «')}»), y el post lo ` +
+        'publica la página de empresa, no una persona. Cuenta la escena como patrón observado: ' +
+        '«Un director de operaciones automatizó…» en vez de «le pregunté…». Ver automatizacion/copy-linkedin.md',
+    );
+  }
 
   /* Repetir el título es el atajo por defecto y es justo lo que convierte el
      post en un titular con enlace. */

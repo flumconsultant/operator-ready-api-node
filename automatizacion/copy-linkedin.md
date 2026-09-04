@@ -60,11 +60,41 @@ y no así:
 
 > Muchas empresas están implementando pilotos de inteligencia artificial…
 
+### Quién habla
+
+**BECOME, la empresa.** No una persona.
+
+Esto no es un matiz de estilo, es de quién es la cuenta: el post lo publica la
+página de empresa y aparece con su logo y su nombre. El artículo es distinto —lo
+firma una persona y se escribe en primera persona, con experiencia vivida— y esa
+voz **no se traslada aquí**.
+
+El 4 de septiembre salió un post que decía «le pregunté qué habían hecho con ese
+tiempo y se quedó callado», firmado por la página. Un «yo» sin cara, en el muro
+de una marca, suena a que alguien se equivocó de cuenta.
+
+Nada de «pregunté», «he visto», «me contó», «en mi experiencia», «mi cliente».
+Lo comprueba `scripts/validar-articulo.mjs` y rechaza el artículo si aparecen.
+
+**La escena concreta no sobra: sigue siendo lo que hace bueno un post.** Lo que
+cambia es cómo se cuenta. Un recuerdo propio se convierte en patrón observado, y
+dice lo mismo:
+
+> Le pregunté qué habían hecho con ese tiempo y se quedó callado.
+
+se escribe:
+
+> Ganaron medio día libre a la semana. Nadie decidió qué hacer con él.
+
+La segunda no pierde nada y la puede firmar una empresa. Cuando toque hablar de
+BECOME, en plural: «lo desarrollamos», «vemos», «analizamos».
+
 ### La voz
 
 Ejecutiva, inteligente, directa, premium, business-first. Clara, no académica.
 Segura, sin exageraciones. Provocadora cuando la idea lo justifique, nunca
-clickbait.
+clickbait. Corporativa en el sentido de que habla una organización, no en el de
+sonar acartonada: la tensión y el filo se mantienen.
 
 BECOME habla de IA desde transformación, capacidad empresarial, procesos,
 decisiones, personas, datos y operación. No desde el entusiasmo tecnológico.
@@ -97,6 +127,8 @@ El enlace y los hashtags los pone el publicador. No los escribas en el texto.
 - El post tiene que funcionar para alguien que no conoce BECOME.
 - Antes una idea memorable que una explicación completa.
 - Rayas largas (—) no, aquí tampoco.
+- **Ni una primera persona del singular.** Habla la empresa. Si la idea pide una
+  escena vivida, se cuenta en tercera persona como patrón, no como recuerdo.
 
 ### Máximo tres hashtags
 
