@@ -1,0 +1,255 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-09-05",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "ai-native",
+  "formato": "framework",
+  "es": {
+    "slug": "quien-debe-liderar-la-ia-en-una-empresa",
+    "titulo": "Quién lidera la IA no es un título, es una etapa",
+    "entradilla": "Un comité de dirección de doscientas personas leyó el mismo artículo que circula en LinkedIn desde hace meses: uno que compara Chief AI Officer, Chief Data Officer y Chief Information Officer, y explica cuál conviene según el tamaño de la empresa. Ninguno de los tres cabía en la nómina de este año.",
+    "descripcion": "TI lidera el piloto, el negocio lidera cuando escala, y el nuevo rol solo llega cuando el riesgo y el volumen ya lo pagan solos.",
+    "linkedin": {
+      "texto": "Muchos comités debaten qué título ponerle a quien lidera la IA antes de tener más de un proceso de negocio dependiendo de ella.\n\nEl título no es la pregunta correcta. La pregunta es en qué etapa está la empresa: piloto, adopción en un área, coordinación entre varias, o riesgo ya sistémico. Cada etapa tiene un dueño natural, y casi nunca es el cargo nuevo que la empresa está a punto de contratar.\n\nEn el nuevo análisis de BECOME desarrollamos el marco para decidir quién lidera según la etapa, no según lo que hace la empresa de al lado.",
+      "hashtags": ["IA", "Estrategia", "Liderazgo"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Un comité de dirección de doscientas personas leyó el mismo artículo que circula en LinkedIn desde hace meses: uno que compara Chief AI Officer, Chief Data Officer y Chief Information Officer, y explica cuál conviene según el tamaño de la empresa. Ninguno de los tres cabía en la nómina de este año. El comité cerró la pestaña y siguió sin que nadie liderara nada."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Esa comparación de títulos es literatura de multinacional, escrita por firmas de executive search que asesoran a empresas con presupuesto de C-level, media docena de iniciativas de IA corriendo a la vez y un consejo que ya aceptó crear un puesto nuevo. La empresa mediana que de verdad se hace esta pregunta, la que tiene doscientas o quinientas personas y un piloto en dos áreas, no vive en ese contexto. Y cuando copia la pregunta de la empresa grande, copia también una respuesta que no le sirve."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Porque la pregunta real nunca fue de título. Fue de etapa. Quién lidera la IA cambia según cuánta IA hay corriendo de verdad y en cuántas áreas, no según cuánto quiera parecer sofisticada la empresa en el organigrama. Ponerle nombre al puesto antes de tener la etapa que lo justifica es la parte que sale mal."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Quién debe liderar la IA en una empresa: TI, negocio o un rol nuevo?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Se decide mal cuando se responde mirando lo que hizo un competidor grande, en vez de mirar cuánta IA hay corriendo dentro de la propia empresa hoy. El comité discute el título antes de tener el volumen que ese título administraría, y termina eligiendo entre tres opciones abstractas sin ninguna atada a un hecho concreto de la operación."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El comité debate si crear un Chief AI Officer antes de tener más de dos procesos de negocio dependiendo de un sistema de IA.",
+          "Tecnología sigue aprobando qué modelo se prueba, aunque el proceso ya salió de tecnología y hoy lo usan tres áreas de negocio distintas.",
+          "Cada área tiene su propio piloto y nadie en el comité puede nombrar, sin mirar una lista, cuántos hay corriendo a la vez.",
+          "Existe un puesto de responsable de IA en el organigrama, pero sin presupuesto propio ni autoridad para frenar una iniciativa de otra área.",
+          "Se contrata un cargo nuevo antes de decidir qué deja de decidir tecnología y qué deja de decidir cada área de negocio."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema de fondo",
+        "texto": "El título es una respuesta prestada a una pregunta de etapa."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La mayoría de comparativos de títulos vienen de un contexto que la empresa mediana no tiene: una organización que ya pasó por varias etapas de madurez de IA y ahora necesita coordinar el volumen que acumuló. Copiar el título sin haber copiado ese volumen es exactamente lo que falla. Es como contratar un director de logística global para una empresa que todavía reparte con dos camionetas."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y el error no es solo de tamaño, es de secuencia. Tecnología debería liderar el piloto, porque ahí el riesgo es técnico y el criterio también lo es. El negocio debería liderar en cuanto el sistema empieza a decidir algo real dentro de un área, porque ahí el riesgo ya es operativo, no técnico. Un rol dedicado, con presupuesto y autoridad para frenar iniciativas de cualquier área, solo se gana el puesto cuando el volumen y el riesgo agregado de varias áreas a la vez ya no caben en la agenda de nadie que tenga otro trabajo de tiempo completo. Saltarse ese orden es la parte cara."
+      },
+      {
+        "tipo": "cita",
+        "texto": "El título no lidera nada. Lidera quien responde cuando el sistema decide mal, y ese nombre existe mucho antes de que exista el puesto.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "¿Cómo se decide quién lidera, según la etapa?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El orden importa más que el nombre del cargo. Cada etapa tiene un dueño natural y una señal clara de que ya toca pasar a la siguiente, y ninguna de las cuatro exige crear un puesto nuevo antes de tiempo."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Piloto",
+            "definicion": "Uno o dos experimentos de IA corriendo, sin que ningún proceso de negocio dependa todavía de ellos para decidir algo real. Dueño natural: tecnología, porque el riesgo sigue siendo técnico. Señal de salida: el primer piloto entra en producción y alguien del negocio empieza a reclamar voz sobre cómo funciona."
+          },
+          {
+            "termino": "Adopción en un área",
+            "definicion": "Un área concreta, riesgo, ventas, operaciones, ya depende del sistema para tomar una decisión que antes tomaba una persona. Dueño natural: quien dirige esa área, no tecnología ni un cargo corporativo. Señal de salida: aparece un segundo proceso de IA en otra área distinta, decidiendo con un criterio que no tiene nada que ver con el primero."
+          },
+          {
+            "termino": "Coordinación entre áreas",
+            "definicion": "Varias áreas corren IA al mismo tiempo, y empiezan a duplicar trabajo o a decidir cosas que se contradicen entre sí. Dueño natural: una persona con mandato explícito del comité de dirección, aunque no lleve un título nuevo ni encabece un equipo grande; puede ser alguien que ya está en el comité con este encargo sumado por escrito. Señal de salida: el volumen agregado ya exige dedicación de tiempo completo."
+          },
+          {
+            "termino": "Riesgo sistémico",
+            "definicion": "El número de sistemas de IA en producción, o lo que pasaría si uno falla, ya es suficiente para mover la cuenta de resultados o la reputación de la empresa entera. Recién aquí un cargo dedicado, con presupuesto propio y autoridad para frenar cualquier iniciativa, paga lo que cuesta crearlo."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La pregunta que se hacen la mayoría de comités no es en qué etapa está la empresa. Es si pueden permitirse saltar directo a la cuarta, copiando el título de alguien que sí la necesitaba. Casi nunca pueden, y casi nunca lo necesitan todavía."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Cuenta cuántos procesos de negocio dependen hoy de un sistema de IA para decidir algo real, no cuántos pilotos hay corriendo. Si el número es uno, el dueño natural es esa área, no un cargo nuevo. Si son tres o más y nadie coordina entre ellas, la empresa ya cambió de etapa, aunque nadie lo haya decidido todavía."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Quién debe liderar la IA en una empresa: TI, negocio o un rol nuevo?",
+            "respuesta": "Depende de cuánta IA hay corriendo de verdad y en cuántas áreas, no de una preferencia de organigrama. Tecnología lidera bien el piloto inicial. El negocio lidera bien en cuanto un área depende del sistema para decidir algo real. Un rol dedicado solo se justifica cuando varias áreas corren IA a la vez y el volumen agregado exige dedicación de tiempo completo."
+          },
+          {
+            "pregunta": "¿Cuándo conviene crear un cargo dedicado como Chief AI Officer?",
+            "respuesta": "Cuando el número de sistemas de IA en producción, o el riesgo de que uno falle, ya es suficiente para mover la cuenta de resultados o la reputación de toda la empresa, no de un área. Crear el cargo antes de esa etapa suele producir un puesto sin presupuesto ni autoridad real, que existe en el organigrama y no decide nada."
+          },
+          {
+            "pregunta": "¿Puede tecnología seguir liderando la IA cuando ya hay varios procesos de negocio dependiendo de ella?",
+            "respuesta": "No de forma sostenible. En esa etapa el riesgo dejó de ser técnico y pasó a ser operativo: qué pasa si el sistema decide mal un caso real de un cliente, no si el modelo entrena bien. Tecnología puede seguir operando la infraestructura, pero la decisión sobre cómo se usa ese sistema en cada proceso le corresponde a quien responde por el resultado de ese proceso."
+          },
+          {
+            "pregunta": "¿Qué hace una empresa mediana que no puede pagar un cargo de IA nuevo?",
+            "respuesta": "Nombra por escrito a alguien que ya está en el comité de dirección como responsable de coordinar entre áreas, con mandato explícito para frenar una iniciativa si duplica o contradice otra. No hace falta un puesto nuevo ni un equipo propio para pasar de la etapa de adopción aislada a la de coordinación: hace falta que alguien tenga la autoridad por escrito, aunque sea a tiempo parcial."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Decidamos quién lidera tu próxima etapa de IA",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "who-should-lead-ai-in-your-company",
+    "titulo": "Leading AI Isn't a Title, It's a Stage",
+    "entradilla": "A management committee at a two-hundred-person company read the same piece everyone's been sharing on LinkedIn: a comparison of Chief AI Officer, Chief Data Officer and Chief Information Officer, explaining which one fits which size of company. None of the three fit this year's headcount budget.",
+    "descripcion": "IT leads the pilot, the business leads once it scales, and a dedicated role only pays off once the risk is already systemic.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "A management committee at a two-hundred-person company read the same piece everyone's been sharing on LinkedIn: a comparison of Chief AI Officer, Chief Data Officer and Chief Information Officer, explaining which one fits which size of company. None of the three fit this year's headcount budget. The committee closed the tab and kept going without anyone actually in charge."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That comparison is large-enterprise literature, written by executive search firms advising companies with C-suite budget, half a dozen AI initiatives running at once, and a board that already agreed to create a new seat. The mid-sized company actually asking this question, the one with two or three hundred people and a pilot running in two departments, doesn't live in that world. Borrow the question from the large enterprise and you borrow an answer that doesn't fit either."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Because the real question was never about a title. It was about stage. Who leads AI changes depending on how much of it is actually running and in how many departments, not on how sophisticated the org chart is supposed to look. Naming the role before the stage justifies it is where this goes wrong."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "Who should lead AI in a company: IT, the business, or a new role?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "It gets decided badly when the answer copies what a larger competitor did, instead of counting how much AI is actually running inside the company today. The committee debates the title before it has the volume that title would manage, and ends up choosing between three abstractions with nothing tying any of them to an operating fact."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The committee debates creating a Chief AI Officer before more than two business processes depend on an AI system for anything real.",
+          "Technology still approves which model gets tested, even though the process left technology months ago and three different business units now run on it.",
+          "Every department has its own pilot, and nobody on the committee can name, without checking a list, how many are running at once.",
+          "An AI lead role exists on the org chart, with no budget of its own and no authority to stop an initiative in another department.",
+          "A new seat gets hired before anyone decides what technology stops deciding and what each business unit starts deciding instead."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "The title is a borrowed answer to a question about stage."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Most title comparisons come from a context the mid-sized company doesn't have: an organisation that already moved through several stages of AI maturity and now needs to coordinate the volume it built up. Copying the title without having copied that volume is exactly what fails. It's hiring a global logistics director for a company still delivering with two vans."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "And the mistake isn't only about size, it's about sequence. Technology should lead the pilot, because the risk there is technical and so is the judgement call. The business should lead once the system starts deciding something real inside a department, because the risk there is operational, not technical. A dedicated role, with its own budget and the authority to stop initiatives in any department, only earns its seat once the combined volume and risk across several departments stop fitting into the calendar of someone who already has a full-time job. Skipping that order is the expensive part."
+      },
+      {
+        "tipo": "cita",
+        "texto": "The title leads nothing. What leads is whoever answers when the system decides wrong, and that name exists long before the seat does.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "How do you decide who leads, stage by stage?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The order matters more than the job title. Each stage has a natural owner and a clear sign that it's time to move to the next one, and none of the four requires creating a new seat ahead of time."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Pilot",
+            "definicion": "One or two AI experiments running, with no business process yet depending on them for anything real. Natural owner: technology, because the risk is still technical. Exit sign: the first pilot reaches production and someone from the business starts asking for a say in how it works."
+          },
+          {
+            "termino": "Adoption in one area",
+            "definicion": "One specific department, risk, sales, operations, already relies on the system to make a decision a person used to make. Natural owner: whoever runs that department, not technology and not a corporate role. Exit sign: a second AI process shows up in a different department, deciding things by a completely different logic."
+          },
+          {
+            "termino": "Cross-department coordination",
+            "definicion": "Several departments run AI at the same time and start duplicating work or making decisions that contradict each other. Natural owner: one person with an explicit mandate from the management committee, even without a new title or a large team; it can be someone already on the committee who takes this on in writing. Exit sign: the combined volume already demands full-time attention."
+          },
+          {
+            "termino": "Systemic risk",
+            "definicion": "The number of AI systems in production, or what a single failure would do, is already enough to move the whole company's results or reputation. Only here does a dedicated seat, with its own budget and the authority to stop any initiative, pay back what it costs to create it."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The question most committees ask isn't which stage the company is actually in. It's whether they can afford to jump straight to the fourth one, borrowing the title from someone who genuinely needed it. Almost never can they, and almost never do they need to yet."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Count how many business processes depend today on an AI system to decide something real, not how many pilots are running. If the number is one, the natural owner is that department, not a new seat. If it's three or more and nobody is coordinating between them, the company already moved to the next stage, whether or not anyone decided that on purpose."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Who should lead AI in a company: IT, the business, or a new role?",
+            "respuesta": "It depends on how much AI is actually running and in how many departments, not on an org chart preference. Technology leads the early pilot well. The business leads well once a department depends on the system to decide something real. A dedicated role only earns its place once several departments run AI at once and the combined volume demands full-time attention."
+          },
+          {
+            "pregunta": "When does it make sense to create a dedicated role like Chief AI Officer?",
+            "respuesta": "When the number of AI systems in production, or the risk of one failing, is already enough to move the whole company's results or reputation, not just one department's. Creating the seat before that stage usually produces a role with no budget and no real authority, one that exists on the org chart and decides nothing."
+          },
+          {
+            "pregunta": "Can technology keep leading AI once several business processes already depend on it?",
+            "respuesta": "Not sustainably. At that stage the risk stopped being technical and became operational: what happens when the system gets a real customer case wrong, not whether the model trains correctly. Technology can keep running the infrastructure, but the call on how that system gets used in each process belongs to whoever answers for that process's results."
+          },
+          {
+            "pregunta": "What does a mid-sized company do if it can't afford a new AI role?",
+            "respuesta": "It names, in writing, someone already on the management committee as the person coordinating across departments, with explicit authority to stop an initiative if it duplicates or contradicts another. Moving from isolated adoption to cross-department coordination doesn't need a new seat or a dedicated team, it needs someone holding written authority, even part-time."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's decide who leads your next AI stage",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
