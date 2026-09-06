@@ -1,0 +1,263 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-09-06",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "value-adoption",
+  "formato": "framework",
+  "es": {
+    "slug": "cuanto-cuesta-mantener-un-agente-de-ia-en-produccion",
+    "titulo": "¿Cuánto cuesta un agente de IA en producción?",
+    "entradilla": "La licencia es el número que se discute en el comité. El que de verdad importa, el de sostener el agente después de encenderlo, no aparece en ninguna propuesta.",
+    "descripcion": "La licencia es el coste que se ve. Sostener el agente después (reentrenarlo, vigilarlo, corregirlo) no sale en la propuesta y llega solo.",
+    "linkedin": {
+      "texto": "La propuesta de un agente de IA trae un solo número: la licencia. El coste de mantenerlo vivo, vigilarlo, revisar lo que marca como dudoso y corregirlo cuando se desvía casi nunca aparece ahí, y suele superar esa licencia antes del primer año.\n\nEse coste no es un fallo del proyecto. Es lo que cuesta que un sistema decida todos los días en vez de funcionar en una demostración, y casi ningún comité lo presupuesta antes de aprobar el gasto.\n\nEn este análisis de BECOME desglosamos las cinco partidas que hay que presupuestar antes de firmar.",
+      "hashtags": ["IA", "Presupuesto", "Operaciones"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Un director de operaciones me contó hace unas semanas que había cerrado el proyecto de un agente para triar solicitudes de soporte con una cifra clara en la cabeza: lo que costaba la licencia al año. Seis meses después, la factura de cómputo y el tiempo de su equipo revisando los casos dudosos ya superaban esa cifra, y nadie en el comité había preguntado por ninguna de las dos cosas antes de firmar."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ese patrón se repite en casi cualquier comité que aprueba un agente de decisión: el número que se discute es el de la licencia, porque es el único que trae la propuesta comercial. El coste real, el de sostener el sistema funcionando bien mes tras mes, no aparece en ningún renglón, porque nadie de quienes venden el proyecto tiene interés en ponerlo ahí."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y ese coste no es pequeño ni es opcional. Un agente que decide algo, aprobar un reembolso, priorizar un caso, redactar una respuesta, necesita que alguien vigile cuándo se desvía, que alguien revise las excepciones que marca como dudosas, y que alguien vuelva a entrenarlo cuando el mundo que describe deja de parecerse al mundo real. Ese trabajo no lo hace el proveedor por el precio de la licencia. Lo hace, o debería hacerlo, el equipo que lo compró, y casi nunca está presupuestado."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Cuánto cuesta realmente mantener un agente de IA en producción, más allá de la licencia?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La respuesta corta es que casi nadie lo ha medido todavía con cuidado. La respuesta larga empieza por reconocer que el coste no es una cifra fija: es una curva que crece con el volumen de decisiones que toma el agente, y crece más rápido que la licencia."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El presupuesto del proyecto cubre la licencia y la implementación, y termina ahí; nadie reservó una partida para sostenerlo después del lanzamiento.",
+          "El equipo que revisa las excepciones que marca el agente crece cada trimestre, y nadie lo cuenta como coste del proyecto: se cuenta como coste normal de operación.",
+          "El cómputo y el almacenamiento del rastro completo de cada decisión, necesario para poder auditarla, sube de forma silenciosa y aparece mezclado en la factura general de tecnología.",
+          "Nadie ha definido quién revisa si el agente empezó a desviarse, así que se descubre por la queja de un cliente, no por una alerta interna.",
+          "El contrato con el proveedor no dice qué pasa con el precio cuando sube el volumen de uso, y sube justo cuando el proyecto empieza a funcionar bien."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema detrás",
+        "texto": "El presupuesto se firma para encender el agente, no para sostenerlo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Encender un agente es un proyecto, con fecha de inicio y de fin, y los proyectos se presupuestan bien: alcance, plazo, precio. Sostenerlo es una operación continua, sin fecha de fin, y las operaciones continuas casi nunca pasan por el mismo comité que aprobó el proyecto. Por eso el coste de sostenerlo no desaparece, solo se muda a otro presupuesto, el de tecnología o el del área que opera el agente, donde nadie lo relaciona con la decisión original de comprarlo o construirlo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El resultado es previsible. El proyecto se cierra con una cifra que parecía razonable, el agente sale a producción, y a los pocos meses alguien de finanzas pregunta por qué subió el gasto de cómputo sin que nadie autorizara nada nuevo. La respuesta casi siempre es la misma: el agente está haciendo más de lo que hacía en la prueba piloto, y sostenerlo a ese volumen cuesta más que sostenerlo en la prueba, aunque la licencia siga siendo la misma."
+      },
+      {
+        "tipo": "cita",
+        "texto": "La licencia dice cuánto cuesta encender el agente. No dice cuánto cuesta que siga funcionando bien dentro de un año.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "¿Qué presupuestar antes de encender un agente en producción?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Estas cinco partidas se presupuestan antes de firmar la propuesta, no cuando ya llegó la primera factura sorpresa."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Vigilancia",
+            "definicion": "Quién revisa, con qué frecuencia, si el agente sigue decidiendo dentro de los límites esperados. Sin una persona asignada a esta tarea, el desvío se descubre por una queja, no por una alerta."
+          },
+          {
+            "termino": "Reentrenamiento",
+            "definicion": "Cuánto cuesta actualizar el modelo o los datos que lo alimentan cuando el negocio cambia, un producto nuevo, una política nueva, y el agente empieza a decidir sobre un mundo que ya no existe."
+          },
+          {
+            "termino": "Revisión de excepciones",
+            "definicion": "El tiempo humano que cuesta mirar los casos que el agente marca como dudosos. Crece con el volumen de decisiones, no baja con el tiempo, y casi nunca está contado como parte del coste del proyecto."
+          },
+          {
+            "termino": "Trazado",
+            "definicion": "El cómputo y el almacenamiento de guardar el rastro completo de cada decisión, para poder auditarla si alguien la cuestiona. Sin ese rastro, el agente decide y nadie puede reconstruir por qué."
+          },
+          {
+            "termino": "Renegociación",
+            "definicion": "Qué pasa con el precio cuando sube el volumen de uso. Casi ningún contrato fija ese número por adelantado, y sube justo cuando el proyecto empieza a demostrar que funciona."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Sumadas, estas cinco partidas suelen superar el precio de la licencia dentro del primer año, y eso no es una señal de que el proyecto haya fallado. Es el coste real de que un sistema tome decisiones todos los días en vez de funcionar en una demostración. El error no es que ese coste exista. Es presupuestarlo después de que ya llegó."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Antes de aprobar la próxima propuesta de un agente de IA para producción, pide que el proveedor o el equipo interno estimen las cinco partidas de arriba, con una cifra al lado de cada una. Si nadie puede poner un número, todavía no sabes cuánto vas a pagar por este proyecto: solo sabes cuánto cuesta encenderlo."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cuánto cuesta realmente mantener un agente de IA en producción, más allá de la licencia?",
+            "respuesta": "No hay una cifra única porque depende del volumen de decisiones que tome el agente, pero las partidas son siempre las mismas: vigilancia, reentrenamiento, revisión de excepciones, trazado de cada decisión y el riesgo de que el proveedor suba el precio cuando crece el uso. Sumadas, suelen superar el precio de la licencia dentro del primer año."
+          },
+          {
+            "pregunta": "¿Qué es la vigilancia de un agente de IA y por qué cuesta dinero?",
+            "respuesta": "Es la tarea de revisar, con una frecuencia definida, si el agente sigue decidiendo dentro de los límites esperados o si empezó a desviarse. Cuesta dinero porque necesita a alguien asignado con tiempo real para hacerlo, no una alerta automática que nadie mira. Sin esa persona, el desvío se descubre por la queja de un cliente, no antes."
+          },
+          {
+            "pregunta": "¿Por qué un agente de IA que funcionaba bien empieza a fallar con el tiempo?",
+            "respuesta": "Porque el negocio que describe cambia, nuevos productos, nuevas políticas, nuevos tipos de caso, y el modelo sigue decidiendo sobre una versión del mundo que ya quedó atrás. A ese desajuste se le llama desviación del modelo, y se corrige reentrenándolo: un coste que casi nunca se presupuesta junto a la licencia inicial."
+          },
+          {
+            "pregunta": "¿Quién debería presupuestar el coste de mantener un agente de IA, tecnología o el área que lo usa?",
+            "respuesta": "Las dos, porque el coste se reparte entre ambas: tecnología sostiene el cómputo, el almacenamiento y el reentrenamiento, y el área que opera el agente sostiene el tiempo humano de revisar excepciones. Presupuestarlo solo desde tecnología subestima la mitad del coste real, porque esa mitad no aparece en ninguna factura de proveedor."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Presupuestemos lo que cuesta sostener tu agente",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "what-an-ai-agent-really-costs-in-production",
+    "titulo": "What an AI Agent Really Costs After You Sign",
+    "entradilla": "The licence is the number the committee debates. The one that actually matters, what it takes to sustain the agent once it's live, never makes it into a proposal.",
+    "descripcion": "The licence is the cost you see. What it takes to keep an agent working well after that (monitoring, retraining, fixing) never makes the proposal.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "A COO told me a few months ago that the committee had approved an agent to triage support requests with one clear number in mind: the annual licence fee. Six months in, the compute bill and the hours his team spent reviewing flagged cases had already passed that number, and nobody had asked about either before signing."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That pattern shows up in almost every committee that approves a decisioning agent. The number everyone debates is the licence fee, because it is the only one the commercial proposal states. The real cost, keeping the system working well month after month, never shows up on a line item, because nobody selling the project has a reason to put it there."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "And that cost is neither small nor optional. An agent that decides something, approving a refund, prioritising a case, drafting a reply, needs someone watching for when it drifts, someone reviewing the cases it flags as uncertain, and someone retraining it once the world it was built on stops matching the world it now runs in. The vendor does not do that work for the price of the licence. The team that bought the system does, or should, and almost nobody budgeted for it."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "How much does it actually cost to keep an AI agent running in production, beyond the licence?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The short answer is that almost nobody has measured it carefully yet. The long answer starts by admitting the cost is not a fixed number: it is a curve that grows with how many decisions the agent makes, and it grows faster than the licence does."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The project budget covers the licence and the build, and stops there; nobody set aside a line for what comes after launch.",
+          "The team reviewing the cases the agent flags grows every quarter, and nobody counts that as project cost, it gets folded into normal operating cost instead.",
+          "The compute and storage needed to keep a full record of every decision, so it can be audited later, climbs quietly and gets buried inside the general technology bill.",
+          "Nobody owns checking whether the agent started drifting, so it gets discovered through a customer complaint, not an internal alert.",
+          "The vendor contract never states what happens to the price once usage volume rises, and volume rises exactly when the project starts working."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "The budget gets signed to switch the agent on, not to keep it running."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Switching an agent on is a project, with a start date and an end date, and projects get budgeted properly: scope, timeline, price. Keeping it running is an ongoing job with no end date, and ongoing jobs rarely go back through the same committee that approved the project. So the cost of sustaining it does not disappear, it just moves to a different budget, technology or whichever function runs the agent, where nobody ties it back to the original decision to buy or build."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The outcome is predictable. The project closes with a number that looked reasonable, the agent goes live, and a few months later someone in finance asks why the compute bill rose without anyone approving anything new. The answer is almost always the same: the agent is now handling more than it did in the pilot, and sustaining it at that volume costs more than sustaining it in the pilot, even though the licence fee never changed."
+      },
+      {
+        "tipo": "cita",
+        "texto": "The licence tells you what it costs to switch an agent on. It does not tell you what it costs to keep it working well a year from now.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "What to budget before an agent goes into production."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "These five line items get budgeted before signing the proposal, not after the first surprise invoice arrives."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Monitoring",
+            "definicion": "Who checks, and how often, whether the agent is still deciding within expected limits. Without someone assigned to this, drift gets discovered through a complaint, not an alert."
+          },
+          {
+            "termino": "Retraining",
+            "definicion": "What it costs to update the model or the data feeding it once the business changes, a new product, a new policy, and the agent starts deciding against a version of the world that no longer exists."
+          },
+          {
+            "termino": "Exception review",
+            "definicion": "The human time spent looking at the cases the agent flags as uncertain. It grows with volume, it does not shrink over time, and it almost never gets counted as part of the project cost."
+          },
+          {
+            "termino": "Audit trail",
+            "definicion": "The compute and storage needed to keep a full record of every decision, so it can be checked if someone questions it. Without that record, the agent decides and nobody can reconstruct why."
+          },
+          {
+            "termino": "Repricing",
+            "definicion": "What happens to the price once usage volume rises. Almost no contract fixes that number upfront, and volume rises exactly when the project starts proving it works."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Add these five up and they usually pass the licence fee within the first year, and that is not a sign the project failed. It is the real cost of a system deciding every day instead of running in a demo. The mistake is not that the cost exists. It is budgeting for it only after it arrives."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Before approving the next proposal for an AI agent in production, ask the vendor or the internal team to estimate each of the five line items above, with a number next to each one. If nobody can put a figure on them, you do not yet know what this project will cost you, only what it costs to switch it on."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How much does it actually cost to keep an AI agent running in production, beyond the licence?",
+            "respuesta": "There is no single figure because it depends on how many decisions the agent makes, but the line items are always the same: monitoring, retraining, exception review, keeping an audit trail, and the risk the vendor reprices once usage grows. Added together, they usually pass the licence fee within the first year."
+          },
+          {
+            "pregunta": "What does monitoring an AI agent mean, and why does it cost money?",
+            "respuesta": "It means checking, on a defined schedule, whether the agent is still deciding within expected limits or has started drifting. It costs money because it needs someone assigned with real time for it, not an automated alert nobody watches. Without that person, drift gets discovered through a customer complaint, not before."
+          },
+          {
+            "pregunta": "Why does an AI agent that worked well at first start failing over time?",
+            "respuesta": "Because the business it was built to describe keeps changing, new products, new policies, new kinds of cases, while the model keeps deciding against a version of the world that has already moved on. That mismatch is called model drift, and fixing it means retraining, a cost almost nobody budgets for alongside the original licence."
+          },
+          {
+            "pregunta": "Who should budget for keeping an AI agent running, technology or the team that uses it?",
+            "respuesta": "Both, because the cost splits between them: technology carries compute, storage and retraining, while the team running the agent carries the human time spent reviewing exceptions. Budgeting for it from technology alone underestimates half the real cost, since that half never shows up on a vendor invoice."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's budget what it takes to sustain your agent",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
