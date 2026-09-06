@@ -42,6 +42,7 @@ El observatorio las revisa cada domingo, una por una, y hace lo que corresponda:
 - What makes a company AI-native rather than a company using AI?
 - How do you build an AI strategy that survives contact with operations?
 - ¿Quién debe liderar la IA en una empresa: TI, negocio o un rol nuevo?
+- [sin verificar] ¿Qué talento hay que contratar para que una empresa se vuelva AI-native?
 
 ## Agentic work
 
@@ -51,6 +52,7 @@ El observatorio las revisa cada domingo, una por una, y hace lo que corresponda:
 - How do you define the scope of an autonomous AI agent at work?
 - ¿Cómo se supervisa a un agente de IA sin volver a hacer el trabajo a mano?
 - How do you supervise an AI agent without redoing the work yourself?
+- ¿Por qué fallan los sistemas multiagente en producción aunque cada agente funcione bien por separado?
 
 ## Operating-model reinvention
 
@@ -58,6 +60,9 @@ El observatorio las revisa cada domingo, una por una, y hace lo que corresponda:
 - ¿Qué cambia en la estructura de una empresa cuando adopta IA de verdad?
 - How does an operating model change when agents do part of the work?
 - ¿Qué les pasa a los mandos medios cuando los agentes ejecutan parte del trabajo?
+- ¿Qué pasa cuando una empresa despide gente por IA y después tiene que volver a contratarla?
+- [sin verificar] ¿Quién es el dueño de un proceso cuando lo ejecutan juntos una persona y un agente de IA?
+- [sin verificar] ¿Cómo se rediseñan los KPI de un equipo cuando parte del trabajo lo hace un agente?
 
 ## Value and adoption
 
@@ -70,6 +75,11 @@ El observatorio las revisa cada domingo, una por una, y hace lo que corresponda:
 - ¿Cómo justifico ante el directorio una inversión en IA que todavía no da retorno?
 - ¿Cómo se decide qué comprar y qué construir en inteligencia artificial?
 - What do you do with the time AI frees up in your team?
+- ¿Qué le pasa a una empresa que se queda atrás frente a sus competidores en la adopción de IA?
+- ¿Cómo elijo entre varios proveedores de IA que prometen lo mismo?
+- ¿Cuánto cuesta realmente mantener un agente de IA en producción, más allá de la licencia?
+- [sin verificar] ¿Cómo evita una empresa quedar atada a un único proveedor de IA?
+- [sin verificar] ¿Por qué los equipos vuelven al proceso manual después de que la empresa implementa IA?
 
 ## Responsible scale
 
@@ -78,3 +88,6 @@ El observatorio las revisa cada domingo, una por una, y hace lo que corresponda:
 - What governance does a company need before scaling AI?
 - ¿Cómo se audita una decisión que tomó un modelo de IA?
 - How do you audit a decision made by an AI model?
+- ¿De quién es la propiedad intelectual de lo que produce un agente de IA en nombre de la empresa?
+- [sin verificar] ¿Qué hace una empresa cuando descubre que su gente ya usa IA sin permiso (shadow AI)?
+- [sin verificar] ¿Qué responsabilidad tiene una empresa si su proveedor de IA sufre una brecha de datos?

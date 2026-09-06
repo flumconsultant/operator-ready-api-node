@@ -26,17 +26,17 @@ abandonar a la primera algo que solo necesitaba más cuerpo.
 
 | Artículo | Publicado | Pregunta objetivo | Últ. medición | Estado | Notas |
 |---|---|---|---|---|---|
-| `quien-responde-cuando-responde-un-agente` | 2026-08-20 | ¿Quién responde cuando un agente de IA toma una decisión equivocada? / Who is accountable when an AI agent makes a wrong decision? | 2026-09-01 | `nuevo` | Segunda medición (12 días): sigue sin aparecer. Salió ciec.edu.co, entraron cointelegraph.es, dig.es, enbuscadelfuego.com y sapiensdataai.com; psiquiatrialegal.org y nordflux.de resisten. En inglés domina contenido corporativo/legal (Salesforce, ISHIR, el bufete Brownstein), sin consultora de estrategia |
-| `por-que-tus-pilotos-de-ia-no-llegan-a-produccion` | 2026-08-20 | ¿Por qué mis pilotos de IA no llegan a producción? / Why do most AI pilots never scale? | 2026-09-01 | `nuevo` | Segunda medición (12 días): sigue sin aparecer. Irontec y Concentrix se mantienen firmes en español dos semanas seguidas — el único par de líderes estables de todo el barrido —; en nicho se suman ecosistemastartup.com y daisytek.com.mx |
-| `como-se-redisena-un-proceso-para-que-lo-ejecute-una-ia` | 2026-08-21 | ¿Cómo se rediseña un proceso para que lo ejecute en parte una IA? | 2026-09-01 | `nuevo` | Segunda medición (11 días): sigue sin aparecer. Salió alloxentric.com, entraron founderz.com, wowcx.com, bpsolutions.com.ar, delegia.es y networkautomationlabs.com; solo Entel Empresas y agilenext.mx persisten de hace una semana. Terreno sigue sin ganador asentado |
-| `por-que-tu-equipo-no-usa-la-ia-que-le-diste` | 2026-08-22 | ¿Cómo consigo que mi equipo use de verdad las herramientas de IA? | 2026-09-01 | `nuevo` | Segunda medición (10 días): sigue sin aparecer. onext.es, el competidor con framing más cercano al nuestro, que había desaparecido la semana pasada, volvió a aparecer esta semana — vale la pena vigilar si se consolida |
-| `que-puede-hacer-un-agente-sin-supervision` | 2026-08-23 | ¿Cómo se decide qué puede hacer un agente sin supervisión humana? / How do you define the scope of an autonomous AI agent at work? | 2026-09-01 | `nuevo` | Primera medición (9 días): no aparece. En español solo KPMG es consultora de peso, rodeada de nicho; en inglés domina infraestructura/nube (AWS, NVIDIA, Snowflake, JetBrains, Creatio), no consultoría estratégica |
-| `como-medir-el-retorno-real-de-la-ia` | 2026-08-24 | ¿Cómo se mide el retorno real de una iniciativa de IA? / How do you measure the actual value of an AI initiative? | 2026-09-01 | `nuevo` | Primera medición (8 días): no aparece. En español ninguna consultora grande, solo boutiques de nicho (getdarwin.ai, 100x.mx, blackholdconsulting.com); en inglés dominan vendors de analítica/BI (ThoughtSpot, CIO.com, Snowflake) |
-| `que-controles-necesita-una-empresa-antes-de-escalar-la-ia` | 2026-08-25 | ¿Qué controles necesita una empresa antes de escalar la IA? / What governance does a company need before scaling AI? | — | `nuevo` | Recomendación #3 del informe 2026-08-23. Fragmentado, sin actor dominante ni marcos citados por nombre; nadie dice quién firma cuando el control dice que no y el negocio insiste |
-| `que-cambia-la-estructura-de-una-empresa-con-ia` | 2026-08-26 | ¿Qué cambia en la estructura de una empresa cuando adopta IA de verdad? | — | `nuevo` | Recomendación #4 del informe 2026-08-23. Consenso vacío («el control pasa de TI al negocio»); la especificidad de organigrama —qué cajas se fusionan, span de control mixto, presupuesto de plantilla a consumo variable— estaba libre |
-| `como-se-gobierna-la-ia-sin-frenar-al-negocio` | 2026-08-27 | ¿Cómo se gobierna la IA sin frenar al negocio? | — | `nuevo` | Recomendación #5 del informe 2026-08-23. El «clasifica por riesgo» se enuncia en todas partes y no se opera en ninguna; faltaba la taxonomía con ejemplos y el plazo de decisión del propio comité |
-| `por-donde-empieza-un-comite-de-direccion-con-ia` | 2026-08-28 | ¿Por dónde empieza un comité de dirección con inteligencia artificial? | — | `nuevo` | Recomendación #6 del informe 2026-08-23. Esade tiene la crítica más afilada (delegar la IA a un comité solo reubica el problema) pero nadie da el playbook para empresa grande: quién responde por el resultado en la cuenta de resultados, qué pasa en el mes 6, cómo se decide matar una iniciativa |
-| `que-diferencia-a-una-empresa-ai-native-de-una-que-usa-ia` | 2026-08-29 | ¿Qué diferencia a una empresa AI-native de una empresa que usa IA? / What makes a company AI-native rather than a company using AI? | — | `nuevo` | Recomendación #7 del informe 2026-08-23. Pregunta de encuadre del pilar que da nombre a BECOME; en español domina un cluster de marketing sin consultora ni academia, y en inglés HBS/WEF fijan el test de quitar los modelos del producto, que mide el producto y no si la empresa cambió cómo decide. Nadie responde quién es dueño del P&L de esa transición |
+| `quien-responde-cuando-responde-un-agente` | 2026-08-20 | ¿Quién responde cuando un agente de IA toma una decisión equivocada? / Who is accountable when an AI agent makes a wrong decision? | 2026-09-06 | `nuevo` | Tercera medición (17 días): sigue sin aparecer. Rotación total en español — salieron cointelegraph.es, dig.es, enbuscadelfuego.com, sapiensdataai.com, psiquiatrialegal.org y nordflux.de; entraron expoknews.com, letslaw.es, spanish.entrepreneur.com, itmastersmag.com y cloud.google.com; solo ciec.edu.co reaparece. En inglés, Salesforce, ISHIR y el bufete Brownstein resisten por segunda semana seguida — el mismo trío, sin abrir hueco |
+| `por-que-tus-pilotos-de-ia-no-llegan-a-produccion` | 2026-08-20 | ¿Por qué mis pilotos de IA no llegan a producción? / Why do most AI pilots never scale? | 2026-09-06 | `nuevo` | Tercera medición (17 días): sigue sin aparecer. Irontec y Concentrix dominan en español por tercera semana consecutiva — el par de líderes más estable de todo el barrido. En inglés persisten Akkodis, zbrain.ai, Mphasis y aiassemblylines.com; salió Box, entraron eapj.org y wissen.com |
+| `como-se-redisena-un-proceso-para-que-lo-ejecute-una-ia` | 2026-08-21 | ¿Cómo se rediseña un proceso para que lo ejecute en parte una IA? | 2026-09-06 | `nuevo` | Tercera medición (16 días): sigue sin aparecer. Primera semana con elenco mayoritariamente estable: founderz.com, networkautomationlabs.com, bpsolutions.com.ar, wowcx.com y agilenext.mx se repiten sin cambios; solo salió delegia.es y entraron modernsalesia.substack.com y aicodingpatterns.com |
+| `por-que-tu-equipo-no-usa-la-ia-que-le-diste` | 2026-08-22 | ¿Cómo consigo que mi equipo use de verdad las herramientas de IA? | 2026-09-06 | `nuevo` | Tercera medición (15 días): sigue sin aparecer. onext.es, el competidor de framing más cercano al nuestro, se consolida: aparece por segunda semana seguida tras la ausencia de la primera medición. Persisten blog.deiser.com, iacomopuedas.substack.com y 100x.mx; salió magnesium.team, entró privedge.io |
+| `que-puede-hacer-un-agente-sin-supervision` | 2026-08-23 | ¿Cómo se decide qué puede hacer un agente sin supervisión humana? / How do you define the scope of an autonomous AI agent at work? | 2026-09-06 | `nuevo` | Segunda medición (14 días): sigue sin aparecer. En español el hueco se abrió más: la semana pasada KPMG era la única consultora de peso, esta semana no aparece ninguna, solo nicho nuevo (openwebinars.net, letslaw.es, itmastersmag.com, arelance.com, novatierra.com, manuduque.com). En inglés persisten Snowflake, JetBrains y AWS; salieron NVIDIA y Creatio, entró contenido académico (Wikipedia, arXiv) y Teradata |
+| `como-medir-el-retorno-real-de-la-ia` | 2026-08-24 | ¿Cómo se mide el retorno real de una iniciativa de IA? / How do you measure the actual value of an AI initiative? | 2026-09-06 | `nuevo` | Segunda medición (13 días): sigue sin aparecer. En español persisten getdarwin.ai, blackholdconsulting.com y crata-ai.com; salieron 100x.mx y xternus.com, entraron openwebinars.net, una nota de Yahoo Noticias, iaconsultora.com y missyera.com — sigue sin consultora grande, todo boutique. En inglés, ThoughtSpot, CIO.com y Snowflake resisten igual que la semana pasada |
+| `que-controles-necesita-una-empresa-antes-de-escalar-la-ia` | 2026-08-25 | ¿Qué controles necesita una empresa antes de escalar la IA? / What governance does a company need before scaling AI? | 2026-09-06 | `nuevo` | Primera medición (12 días): no aparece. En español domina un vendor grande, Oracle, junto a nicho fragmentado (mentorday.es, rootstack.com, consultoresia.com, aclti.com); sin actor de estrategia. En inglés aparece el bloque de mayor autoridad del barrido hasta ahora — MIT Sloan Management Review y Harvard Business School, junto a TrueFoundry, Scaled Agile, CFA Institute, ValidMind y Forbes —, pero ninguna consultora de estrategia todavía |
+| `que-cambia-la-estructura-de-una-empresa-con-ia` | 2026-08-26 | ¿Qué cambia en la estructura de una empresa cuando adopta IA de verdad? | 2026-09-06 | `nuevo` | Primera medición (11 días): no aparece. Esade vuelve a aparecer (había desaparecido justo antes de publicar) junto con Harvard Deusto, Infobae y una revista científica (Ciencia Latina); McKinsey y Amrop, presentes antes de publicar, ya no aparecen |
+| `como-se-gobierna-la-ia-sin-frenar-al-negocio` | 2026-08-27 | ¿Cómo se gobierna la IA sin frenar al negocio? | 2026-09-06 | `nuevo` | Primera medición (10 días): no aparece. Raona, tabulado.net y el World Economic Forum en español se mantienen desde antes de publicar; se suman Infobae, El Financiero Costa Rica, Foro Jurídico y Smartekh. Sigue sin consultora de estrategia ni marco citado por nombre |
+| `por-donde-empieza-un-comite-de-direccion-con-ia` | 2026-08-28 | ¿Por dónde empieza un comité de dirección con inteligencia artificial? | 2026-09-06 | `nuevo` | Primera medición (9 días): no aparece. Esade se mantiene con la crítica más afilada, ya señalada antes de publicar; se suman Inforges, Syloper e Impulsa3 con guías operativas de «cómo montar el comité» que sí dan el playbook paso a paso que antes faltaba — el terreno se volvió más específico, no solo crítico |
+| `que-diferencia-a-una-empresa-ai-native-de-una-que-usa-ia` | 2026-08-29 | ¿Qué diferencia a una empresa AI-native de una empresa que usa IA? / What makes a company AI-native rather than a company using AI? | 2026-09-06 | `nuevo` | Primera medición (8 días): no aparece. En español sigue sin consultora ni academia: cluster de marketing y contenido individual (Entrepreneur, Vilma Núñez, sustacks). En inglés, Harvard Business School persiste como única ancla de autoridad; el World Economic Forum ya no aparece, y entran varios blogs de producto/SaaS (First Line Software, getmosaic.ai, Shieldbase) compitiendo por la misma definición «AI-native vs AI-enabled» |
 | `como-cambia-el-modelo-operativo-con-agentes` | 2026-08-30 | How does an operating model change when agents do part of the work? | — | `nuevo` | Recomendación #1 del informe 2026-08-30. Distinto de "qué cambia en la estructura" (organigrama) y de "cómo se rediseña un proceso" (una sola tarea): este cubre el nivel intermedio que el informe señalaba como hueco, la cadencia de foros, revisiones y escaladas que coordina agentes y personas a través de varios procesos |
 | `donde-muere-una-estrategia-de-ia-bien-hecha` | 2026-08-31 | How do you build an AI strategy that survives contact with operations? | — | `nuevo` | Recomendación #2 del informe 2026-08-30, la última de las dos que quedaban. Thoughtworks fija el marco de "primer contacto con la realidad" a nivel de principios (iterar, gobernanza, portafolio) sin fricción operativa concreta; este artículo entra por el traspaso que nadie hace entre la matriz de priorización del comité y el calendario, el indicador y el sistema reales de quien absorbe cada iniciativa |
 | `como-se-decide-que-comprar-y-que-construir-en-ia` | 2026-09-01 | ¿Cómo se decide qué comprar y qué construir en inteligencia artificial? | — | `nuevo` | Recomendación #1 del informe 2026-09-01. Los vendors de plataforma se autopromocionan hacia "comprar la suya" y la opción de construir con un socio, la que la evidencia de Quora sí pedía, está casi ausente de las respuestas actuales; el artículo la trata como tercera vía explícita, con un marco de cinco preguntas y sin caso de cliente inventado |
@@ -51,33 +51,43 @@ Esta sección la reescribe el observatorio cada semana, y es la que cierra el
 bucle: quien redacta la lee y ajusta lo que escribe. Mientras no haya
 mediciones suficientes, dice que no las hay en vez de inventar un patrón.
 
-**Segunda semana de mediciones, y la conclusión sigue siendo que no hay
-ninguna señal positiva.** Ya son seis los artículos que superan los siete
-días —tres de value-adoption, dos de agentic-work, uno de operating-model,
-en formatos framework, perspective y field-note— y ninguno aparece en
-ningún resultado de búsqueda para su pregunta objetivo, en español ni en
-inglés. No hay diferencia visible entre pilares ni entre formatos: los seis
-están igual de invisibles.
+**Tercera semana de mediciones, muestra casi duplicada (11 artículos frente
+a los seis de la semana pasada), y la conclusión se mantiene y se
+refuerza: sigue sin haber ninguna señal positiva.** Los 11 artículos que ya
+superan los siete días —de los cinco pilares, en formatos framework,
+perspective y field-note— siguen en cero apariciones, en español y en
+inglés, para su pregunta objetivo. Con el doble de artículos medidos y el
+mismo resultado uniforme, ya no es "todavía poca muestra": es que en las
+primeras dos-tres semanas después de publicar, ningún pilar ni formato
+saca ventaja sobre otro porque ninguno aparece.
 
-Dos cosas sí cambiaron respecto a la semana pasada, y valen más que "sigue
-sin aparecer":
+Lo que sí cambió esta semana, y vale más que repetir "sigue sin aparecer":
 
-- **«Por qué mis pilotos no llegan a producción» tiene, por primera vez,
-  un par de líderes estables:** Irontec y Concentrix dominan el tramo en
-  español dos semanas seguidas sin que nadie los desplace. Es la única
-  pregunta del barrido con un ganador asentado; el resto sigue con el
-  elenco de nicho rotando casi por completo semana a semana (salieron y
-  entraron actores distintos en «quién responde», «rediseño de proceso» y
-  «por qué el equipo no usa la IA»), señal de terreno todavía abierto.
-- **onext.es, el competidor con framing más parecido al nuestro, volvió**
-  a aparecer en «por qué el equipo no usa la IA» tras haber desaparecido la
-  semana pasada. Si se consolida ahí, es el primer caso de un competidor
-  directo afianzándose en vez de solo rotar.
+- **Dos preguntas tienen ya un elenco competidor estable en vez de
+  rotar.** Irontec y Concentrix dominan «por qué mis pilotos no llegan a
+  producción» en español por tercera semana seguida — el par más asentado
+  de todo el barrido. Y por primera vez aparece un segundo caso en inglés:
+  Salesforce, ISHIR y el bufete Brownstein repiten idéntico trío en «quién
+  responde cuando un agente se equivoca» dos semanas seguidas. En ambos
+  casos el terreno se está cerrando, no abriendo.
+- **onext.es, el competidor con framing más parecido al nuestro, se
+  consolida.** Segunda semana seguida apareciendo en «por qué el equipo no
+  usa la IA», tras la ausencia de la primera medición. Es el primer
+  competidor directo que se afianza en vez de solo rotar.
+- **«Cómo se decide qué puede hacer un agente sin supervisión» se movió
+  en la dirección contraria: el hueco se abrió más, no menos.** La semana
+  pasada KPMG era la única consultora de peso en español; esta semana no
+  queda ninguna, solo nicho. Como recordatorio de que "nadie responde bien"
+  puede seguir empeorando en vez de estabilizarse.
+- **«Cómo se rediseña un proceso» tuvo su primera semana con elenco
+  mayoritariamente estable** (cinco de seis sitios repiten sin cambios),
+  después de dos semanas de rotación casi total — señal de que ese terreno
+  de nicho empieza a asentarse, aunque todavía sin ganador claro.
 
-Con seis artículos medidos y cero apariciones, todavía no hay base para
-decir qué formato funciona mejor, si el español se mueve antes que el
-inglés, o si las preguntas frecuentes largas ayudan: sería un patrón
-inventado sobre seis puntos sin ninguna variación real entre ellos más allá
-de la estabilidad del competidor en un solo caso. La primera comparación
-útil sigue esperando a que alguno empiece a aparecer, o a que el resto de
-los artículos publicados cruce también los siete días.
+Todo lo anterior describe al competidor, no a BECOME: en ninguno de los 11
+casos aparece `meetbecome.com`. Sobre qué formato o pilar funciona mejor,
+o si el español se mueve antes que el inglés, la respuesta sigue siendo que
+no hay base para decirlo — no porque falte muestra, sino porque el
+resultado (cero) es idéntico en los 11, y un patrón necesita variación para
+existir. La primera comparación útil real sigue esperando a que algún
+artículo empiece a aparecer en algún resultado.
