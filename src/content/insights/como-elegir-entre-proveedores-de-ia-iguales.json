@@ -1,0 +1,265 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-09-07",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "value-adoption",
+  "formato": "framework",
+  "es": {
+    "slug": "como-elegir-entre-proveedores-de-ia-iguales",
+    "titulo": "¿Cómo elegir entre proveedores de IA iguales?",
+    "entradilla": "Los proveedores de IA no compiten por ser distintos. Compiten por parecerse todos, y ese empate es a propósito.",
+    "descripcion": "Todas las demos de IA se parecen. La diferencia real no está en lo que muestran, está en lo que nadie pregunta antes de firmar.",
+    "linkedin": {
+      "texto": "Tres propuestas de IA sobre la misma mesa. Las tres prometen reducir tiempos, integrarse con lo que ya existe y dar visibilidad sobre lo que decide el sistema. Ninguna dice qué pasa el día que se equivoca.\n\nCuando todo el mercado compite por sonar igual, comparar columnas de una tabla no sirve de mucho. La diferencia real aparece en tres lugares que ninguna propuesta comercial menciona por iniciativa propia.\n\nEn este análisis de BECOME desarrollamos qué preguntar antes de elegir, y por qué la respuesta casi nunca está en la demo.",
+      "hashtags": ["IA", "Proveedores", "Decisiones"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "El director de operaciones tenía sobre la mesa tres propuestas para automatizar la atención de primer nivel. Las tres prometían lo mismo: reducir el tiempo de respuesta, integrarse con lo que ya tenía, y un panel para vigilar lo que decidía el sistema. Ninguna decía qué pasaba el día que el sistema se equivocara. Eligió a la que le devolvió la llamada primero."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ese patrón se repite en casi cualquier comité que ya decidió comprar y ahora tiene que elegir entre proveedores. Las propuestas comerciales de este mercado están escritas para parecerse: mismas diez casillas marcadas con un check verde, mismo lenguaje de panel de control y cumplimiento, misma demo con datos limpios que nunca fallan. No es coincidencia. Es la estrategia de venta más barata que existe: si todos suenan igual, el comprador elige por el trato, no por el producto."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y ese empate es cómodo para el proveedor y caro para quien compra. Cuando la comparación se hace sobre lo que las propuestas dicen que hacen, gana la que mejor escribe la propuesta, no la que mejor sostiene el sistema en producción. El problema aparece seis meses después, cuando llega el volumen real de casos raros: el cliente que escribe mal, el pedido que no encaja en ninguna categoría. Ahí es donde se nota la diferencia que la demo escondía."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Cómo elijo entre varios proveedores de IA que prometen lo mismo?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Se elige mal cuando se compara lo que las tres propuestas afirman en vez de lo que las tres pueden demostrar con algo que no controlan. Una tabla con columnas idénticas y checks idénticos no compara nada: es un empate fabricado por quien escribió las columnas, casi siempre la misma consultoría de compras con las mismas diez preguntas genéricas."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "La tabla comparativa tiene las mismas columnas para los tres proveedores, y las tres las marcan con un check.",
+          "La demo se hizo con datos limpios que preparó el equipo de ventas, nunca con los datos reales y desordenados del cliente.",
+          "Nadie pidió ver qué hace el sistema cuando se equivoca; solo se vio la versión donde acierta.",
+          "La referencia que trajo el proveedor es el caso de éxito publicado en su propia web, no una llamada con un cliente real dispuesto a contar lo malo.",
+          "El precio se comparó para el primer año. Nadie preguntó qué pasa con la factura en el tercero.",
+          "La decisión terminó pareciéndose a quién respondió más rápido el correo, no a lo que decía la propuesta."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema de fondo",
+        "texto": "Todos compiten por parecer iguales, y lo consiguen."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "En un mercado donde cualquier proveedor puede montar una demo convincente en una semana, diferenciarse en el papel es carísimo y parecerse es gratis. Por eso las propuestas convergen: mismas palabras, mismo orden de las diapositivas, mismas capturas de un panel que se ve idéntico entre marcas. Nadie miente. Simplemente nadie compite por ser distinto donde el comprador está mirando."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La diferencia real no vive en el discurso de venta. Vive en tres lugares donde nadie mira antes de firmar: qué hace el sistema el día que se equivoca con un caso real, quién responde cuando falla en producción y no en la demo, y qué te queda si decides irte. Ninguno de los tres sale en una propuesta comercial porque ninguno ayuda a vender."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Cuando todos prometen lo mismo, la pregunta que separa a un proveedor de otro nunca es qué promete. Es qué reconoce que todavía no resuelve.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "¿Qué preguntar antes de elegir un proveedor de IA?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El orden importa tanto como las preguntas: se hacen antes de ver la demo final, no después de haberse enamorado de una. Pedidas después, cualquier proveedor las contesta bien porque ya sabe cuál es la respuesta que el comprador quiere escuchar."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Dato sucio",
+            "definicion": "Pedir la prueba con los datos reales del proceso, con los casos raros incluidos, no con la muestra curada que trae la demo. Un sistema que solo funciona con datos limpios no funciona."
+          },
+          {
+            "termino": "Modo de falla",
+            "definicion": "Preguntar qué hace el sistema cuando se equivoca: si avisa, si se detiene, o si sigue adelante con una respuesta mala sin que nadie lo note. La respuesta a esta pregunta dice más que cualquier caso de éxito."
+          },
+          {
+            "termino": "Referencia verificable",
+            "definicion": "Pedir hablar con un cliente real, de tamaño y proceso parecido, no leer el caso publicado en la web del proveedor. Si el proveedor no puede dar ese contacto, no tiene esa referencia."
+          },
+          {
+            "termino": "Coste después de la licencia",
+            "definicion": "Preguntar quién sostiene el sistema el día después de encenderlo y cuánto cuesta el soporte cuando algo falla, no solo cuánto cuesta la licencia. Es la letra pequeña que aparece en la factura del segundo año, nunca en la propuesta del primero."
+          },
+          {
+            "termino": "Portabilidad",
+            "definicion": "Preguntar qué se queda la empresa si la relación termina: el dato, la configuración entrenada, o solo el recuerdo de haberlo usado. Se negocia antes de firmar, porque después ya no hay con qué negociar."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El proveedor que responde con soltura las preguntas dos y cinco casi siempre es el que tiene más clientes reales en producción, no el que tiene la demo más pulida. Los que evitan la pregunta, que la desvían hacia el discurso de la licencia o hacia una anécdota de otro cliente sin nombre, están diciendo, sin decirlo, que todavía no lo han vivido."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "En la próxima comparación, pide ver el modo de falla antes que la demo feliz. Si el proveedor no tiene una respuesta concreta o la esconde detrás del discurso de la licencia, ya tienes la respuesta que buscabas, y no hacía falta llegar a la quinta propuesta para tenerla."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cómo elijo entre varios proveedores de IA que prometen lo mismo?",
+            "respuesta": "Ignora la tabla comparativa con columnas idénticas y pide tres cosas que ningún proveedor incluye en su propuesta: una prueba con tus datos reales y desordenados, una explicación de qué hace el sistema cuando se equivoca, y una llamada con un cliente actual de tamaño parecido al tuyo. La diferencia entre proveedores aparece ahí, no en la demo."
+          },
+          {
+            "pregunta": "¿Qué preguntas hacerle a un proveedor de IA antes de firmar?",
+            "respuesta": "Pregunta qué pasa cuando el sistema falla con un caso real, quién sostiene la plataforma después del lanzamiento y cuánto cuesta ese soporte, y qué te llevas, el dato, la configuración, el modelo, si decides cambiarte de proveedor. Las tres preguntas se hacen antes de ver ninguna demo, no después."
+          },
+          {
+            "pregunta": "¿Por qué todas las demos de IA se parecen tanto?",
+            "respuesta": "Porque montar una demo convincente con datos limpios es barato y rápido para cualquier proveedor, así que el mercado entero converge en el mismo guion: mismas diapositivas, mismo panel de control, mismos checks verdes. La diferencia real solo aparece meses después, con datos reales y casos que la demo nunca mostró."
+          },
+          {
+            "pregunta": "¿Qué riesgo tiene elegir un proveedor de IA solo por el precio?",
+            "respuesta": "El precio compara el primer año, que es el número más fácil de poner en una diapositiva, y esconde el coste de sostener el sistema después: soporte cuando falla, ajustes cuando el proceso cambia, y lo que cuesta salir si la relación no funciona. Elegir solo por precio suele significar pagar esa diferencia más tarde, sin haberla presupuestado."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Elijamos con criterio, no con la demo",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-to-choose-between-ai-vendors-that-look-alike",
+    "titulo": "How to Choose Between AI Vendors That Look Alike",
+    "entradilla": "AI vendors don't compete on being different. They compete on sounding identical, and that tie is deliberate.",
+    "descripcion": "Every AI vendor demo looks the same. The real difference isn't in what they promise, it's in what nobody asks before signing.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "An operations director had three proposals on the table to automate first-line support. All three promised the same thing: faster response times, integration with what was already running, and a dashboard to watch what the system decided. None of them said what happened the day it got something wrong. He picked the one that called him back first."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That pattern repeats in almost every committee that already decided to buy and now has to pick a vendor. Commercial proposals in this market are written to look alike: the same ten boxes checked green, the same language about a control panel and compliance, the same demo running on clean data that never breaks. That's not an accident. It's the cheapest sales strategy there is: if everyone sounds the same, the buyer picks based on the relationship, not the product."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "And that tie is comfortable for the vendor and expensive for the buyer. When the comparison runs on what three proposals claim instead of what they can prove under conditions they don't control, the best-written proposal wins, not the system that holds up in production. The problem shows up six months later, once the real volume of odd cases arrives: the customer who writes badly, the order that fits no category. That's exactly where the demo hid the difference."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "How do you choose between AI vendors that promise the same thing?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "It gets decided badly when the comparison runs on what three proposals claim rather than what they can demonstrate under something they don't control. A table with identical columns and identical checkmarks doesn't compare anything: it's a manufactured tie built by whoever wrote the columns, usually the same generic ten questions from the same kind of procurement consultant."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The comparison sheet has the same columns for all three vendors, and all three check every one of them.",
+          "The demo ran on clean data the sales team prepared, never on the customer's real, messy data.",
+          "Nobody asked to see what the system does when it gets something wrong, only the version where it gets it right.",
+          "The reference the vendor offered is the case study published on their own site, not a call with a real customer willing to talk about what went badly.",
+          "Price got compared for year one. Nobody asked what the invoice looks like in year three.",
+          "The decision ended up depending on who replied to the email fastest, not on what the proposal actually said."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "Every vendor competes to look alike, and they succeed."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "In a market where any vendor can put together a convincing demo in a week, standing out on paper is expensive and blending in is free. So proposals converge: same words, same slide order, same screenshots of a dashboard that looks identical across brands. Nobody is lying. Nobody is competing to be different where the buyer happens to be looking."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The real difference doesn't live in the sales pitch. It lives in three places nobody checks before signing: what the system does the day it gets a real case wrong, who answers when it fails in production instead of in the demo, and what you keep if you decide to leave. None of the three shows up in a commercial proposal, because none of them helps close the deal."
+      },
+      {
+        "tipo": "cita",
+        "texto": "When every vendor promises the same thing, the question that actually separates them was never what they promise. It's what they admit they still can't solve.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "What should you ask before choosing an AI vendor?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Order matters as much as the questions themselves: ask them before the final demo, not after falling for one. Asked afterwards, any vendor answers well, because by then they already know which answer the buyer wants to hear."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Messy data",
+            "definicion": "Ask for a test run on the process's real data, odd cases included, not the curated sample built for the demo. A system that only works on clean data doesn't work."
+          },
+          {
+            "termino": "Failure mode",
+            "definicion": "Ask what the system does when it gets something wrong: does it flag it, stop, or push through with a bad answer nobody notices. The answer to this one question says more than any case study."
+          },
+          {
+            "termino": "A checkable reference",
+            "definicion": "Ask to speak with a current customer of comparable size and process, not the case study on the vendor's own site. If the vendor can't produce that contact, that reference doesn't exist."
+          },
+          {
+            "termino": "The cost after the license",
+            "definicion": "Ask who sustains the system the day after launch and what support costs when something breaks, not just what the license costs. That's the fine print that shows up on the second year's invoice, never in the first year's proposal."
+          },
+          {
+            "termino": "Portability",
+            "definicion": "Ask what the company keeps if the relationship ends: the data, the tuned configuration, or just the memory of having used it. Negotiate it before signing, because afterwards there's nothing left to negotiate with."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The vendor who answers questions two and five without flinching is almost always the one with more real customers already in production, not the one with the most polished demo. The ones who dodge the question, steering it back to the license pitch or an anonymous story about another customer, are saying, without saying it, that they haven't lived through it yet."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "On the next comparison, ask to see the failure mode before the happy-path demo. If the vendor doesn't have a concrete answer, or hides it behind the license pitch, that's the answer already, and it didn't take a fifth proposal to get it."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How do you choose between AI vendors that promise the same thing?",
+            "respuesta": "Skip the comparison sheet with identical columns and ask for three things no vendor includes in a proposal: a test on your real, messy data, an explanation of what the system does when it's wrong, and a call with a current customer of similar size. That's where the difference between vendors actually shows up, not in the demo."
+          },
+          {
+            "pregunta": "What should you ask an AI vendor before signing?",
+            "respuesta": "Ask what happens when the system fails on a real case, who sustains the platform after launch and what that support costs, and what you keep, the data, the configuration, the model, if you switch vendors later. All three get asked before seeing any demo, not after."
+          },
+          {
+            "pregunta": "Why do all AI vendor demos look so similar?",
+            "respuesta": "Because building a convincing demo on clean data is cheap and fast for any vendor, so the whole market converges on the same script: same slides, same dashboard, same green checkmarks. The real difference only shows up months later, with real data and the cases the demo never ran."
+          },
+          {
+            "pregunta": "What's the risk of choosing an AI vendor on price alone?",
+            "respuesta": "Price compares year one, the easiest number to put on a slide, and hides the cost of keeping the system running afterwards: support when it fails, adjustments when the process changes, and what it costs to leave if the relationship doesn't work out. Choosing on price alone usually means paying that difference later, unbudgeted."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's choose with judgment, not a demo",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
