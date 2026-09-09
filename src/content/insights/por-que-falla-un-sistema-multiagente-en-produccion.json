@@ -1,0 +1,263 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-09-09",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "agentic-work",
+  "formato": "field-note",
+  "es": {
+    "slug": "por-que-falla-un-sistema-multiagente-en-produccion",
+    "titulo": "Por qué falla un sistema multiagente en producción",
+    "entradilla": "Cada agente pasó la prueba por separado. Juntos, en producción, el proceso empezó a fallar, y cuando alguien preguntó cuál de los tres se había roto, la respuesta fue que ninguno.",
+    "descripcion": "Un sistema multiagente no falla donde cada agente decide. Falla en el traspaso entre ellos, donde nadie audita lo que uno le entrega al siguiente.",
+    "linkedin": {
+      "texto": "Tres agentes de IA pasaron cada prueba por separado, con nota alta. Juntos, en producción, empezaron a aprobar lo que no debían aprobar, y ningún agente individual tenía la culpa.\n\nEl problema no vive donde cada agente decide. Vive en el traspaso: el segundo confía en lo que entrega el primero sin volver a comprobarlo, y ese hueco no lo mide nadie porque cada agente se prueba solo, aislado de los demás.\n\nEn este análisis de BECOME desarrollamos el marco para blindar el traspaso entre agentes antes de que falle el conjunto.",
+      "hashtags": ["IA", "Agentes", "Operaciones"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Un equipo montó tres agentes para tramitar reclamos de seguros: uno lee el documento y saca los datos, el segundo los cruza contra la póliza, el tercero aprueba o rechaza. Cada uno pasó semanas de pruebas por separado, y los tres salieron con nota alta. En producción, el conjunto empezó a aprobar reclamos que no debía aprobar. Cuando alguien preguntó cuál de los tres agentes se había roto, la respuesta fue que ninguno."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Esa respuesta suena a excusa y no lo es. Cada agente, probado por su cuenta, seguía haciendo exactamente lo que tenía que hacer. El que extrae datos seguía extrayendo bien la mayoría de las veces. El que cruza la póliza seguía cruzando bien lo que recibía. El que decide seguía decidiendo bien con la información que le llegaba. El sistema fallaba en un lugar que ninguna de esas tres pruebas miraba: el momento en que un agente le entrega su resultado al siguiente, y el siguiente lo da por bueno sin volver a mirarlo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El equipo de datos había hecho su trabajo. Cada agente tenía su ficha de rendimiento, su conjunto de prueba, su aprobación firmada. Nadie había mentido en ningún informe. Y sin embargo el proceso completo, el que de verdad le importa a quien recibe la respuesta a su reclamo, fallaba con una regularidad que ninguna de esas fichas anticipaba, porque ninguna medía lo que pasaba entre un agente y el siguiente."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Esto no es un problema de modelos peores. Es un problema de dónde se pone la lupa. Se prueba cada agente como una caja separada porque así se construye: un equipo por agente, un cronograma por agente, un responsable por agente. Nadie construye, ni prueba, ni es dueño del hilo que los conecta."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Por qué fallan los sistemas multiagente en producción aunque cada agente funcione bien por separado?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Porque la fiabilidad de un agente se mide con los datos que él ve en la prueba, y en producción no ve esos datos: ve lo que el agente anterior decidió entregarle. Un error que ese primer agente comete una vez cada tanto, raro y sin importancia visto solo, deja de ser raro cuando se repite en cada caso que pasa por su salida. Y como nadie diseñó al segundo agente para dudar de lo que recibe, ese error entra al proceso con la misma autoridad que un dato correcto."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El agente que decide trata el resultado del agente anterior como si fuera el dato original, no como una interpretación que también se puede equivocar.",
+          "Cada agente se aprueba con su propio conjunto de prueba, y nadie corre la cadena completa con casos reales antes de ponerla a decidir de verdad.",
+          "Cada agente tiene un dueño en el organigrama. El proceso que forman los tres juntos no tiene ninguno.",
+          "El error de un agente, raro visto de forma aislada, se repite en cada caso que pasa por él, así que se acumula con el volumen en vez de diluirse.",
+          "Cuando el proceso falla, el comité pregunta qué agente se rompió. La pregunta que de verdad importa, dónde se rompió el traspaso entre dos, no se hace."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema detrás",
+        "texto": "Un sistema multiagente no hereda la fiabilidad de sus partes."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Sumar agentes que funcionan bien por separado no da, de forma automática, un proceso que funciona bien junto. Cada traspaso es una oportunidad nueva de que algo se pierda, y con tres agentes hay dos traspasos, no uno. Nadie los cuenta como riesgo porque no aparecen en ninguna ficha de rendimiento: la ficha mide al agente, no la costura entre agentes. Y lo que no se mide, nadie lo vigila hasta que el cliente equivocado recibe la aprobación equivocada."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un sistema multiagente no falla donde cada agente decide. Falla donde uno le entrega el caso al siguiente, y ahí no está vigilando nadie.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "¿Cómo se blinda el traspaso entre agentes antes de que falle el conjunto?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Estas cinco piezas se diseñan antes de sumar el segundo agente a un proceso, no después de la primera aprobación que no debió salir."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Verificación en el traspaso",
+            "definicion": "El agente que recibe un resultado revisa al menos una parte contra la fuente original, no da por buena la palabra del agente anterior sin ningún control propio."
+          },
+          {
+            "termino": "Métrica de cadena",
+            "definicion": "Se mide la tasa de acierto del proceso completo, de principio a fin, no la de cada agente aislado. Un proceso puede tener tres agentes con nota alta y una cadena que falla igual."
+          },
+          {
+            "termino": "Un dueño del proceso",
+            "definicion": "Una persona responde por el resultado del conjunto, no por cada pieza. Sin ese nombre, cuando el proceso falla cada equipo señala a los otros dos y nadie corrige nada."
+          },
+          {
+            "termino": "Ensayo con datos reales",
+            "definicion": "La cadena completa se corre con casos de producción antes de dejarla decidir sola, no solo cada agente en su propio conjunto de prueba."
+          },
+          {
+            "termino": "Corte para intervención humana",
+            "definicion": "Se define en qué traspaso concreto se detiene el proceso y pasa a una persona si la confianza cae, no solo al final de toda la cadena."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguna de las cinco exige un modelo mejor ni un agente más inteligente. Exige tratar el sistema completo como el producto, y a cada agente como una pieza de él, no al revés."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Antes de sumar el próximo agente a un proceso que ya tiene otros, pregunta quién audita lo que ese agente recibe del anterior, no solo lo que produce por su cuenta. Si nadie tiene esa respuesta, el sistema tiene tantos puntos ciegos como traspasos entre agentes."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Por qué fallan los sistemas multiagente en producción aunque cada agente funcione bien por separado?",
+            "respuesta": "Porque cada agente se prueba y se mide de forma aislada, con datos que él controla, y en producción recibe el resultado de otro agente sin volver a comprobarlo. El error deja de estar en un agente concreto y pasa a vivir en el traspaso entre dos, que nadie diseñó para revisar nada."
+          },
+          {
+            "pregunta": "¿Qué es el traspaso entre agentes y por qué es el punto más débil de un sistema multiagente?",
+            "respuesta": "Es el momento en que un agente le entrega su resultado a otro, que lo trata como dato de entrada sin volver a verificarlo. Es el punto más débil porque ningún agente lo prueba: la ficha de rendimiento de cada uno mide su propio trabajo, no si lo que recibió del anterior era correcto."
+          },
+          {
+            "pregunta": "¿Cómo se mide la fiabilidad de un sistema multiagente completo y no la de cada agente por separado?",
+            "respuesta": "Corriendo la cadena entera con casos reales de producción y midiendo la tasa de acierto del resultado final, no la de cada paso intermedio. Un proceso con tres agentes de alto rendimiento puede fallar igual si nadie mide nunca el conjunto, solo las piezas."
+          },
+          {
+            "pregunta": "¿Quién debe responder cuando falla un proceso que ejecutan varios agentes juntos?",
+            "respuesta": "Una sola persona con autoridad sobre el proceso completo, no un dueño distinto por cada agente. Sin ese nombre, cuando el proceso falla cada equipo señala el agente del otro y el traspaso que realmente se rompió queda sin revisar."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Blindemos el traspaso entre tus agentes",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "why-multi-agent-systems-fail-in-production",
+    "titulo": "Why a Multi-Agent System Fails in Production",
+    "entradilla": "Every agent passed its test on its own. Together, in production, the process started failing, and when someone asked which of the three had broken, the answer was none of them.",
+    "descripcion": "A multi-agent system doesn't fail where each agent decides. It fails at the handoff, where nobody checks what one hands the next.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "A team built three agents to process insurance claims: one reads the document and pulls the data, the second checks it against the policy, the third approves or denies. Each one passed weeks of testing on its own, and all three came out with a strong score. In production, the chain started approving claims it should never have approved. When someone asked which of the three agents had broken, the answer was none of them."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That answer sounds like an excuse. It isn't. Each agent, tested on its own, kept doing exactly what it was built to do. The one pulling data kept pulling it correctly most of the time. The one checking the policy kept checking correctly whatever it received. The one deciding kept deciding correctly given the information in front of it. The system broke somewhere none of those three tests ever looked: the moment one agent hands its result to the next, and the next one takes it as fact without checking it again."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The data team had done its job. Each agent had its own scorecard, its own test set, its own sign-off. Nobody had lied on any report. And yet the full process, the one that actually mattered to whoever was waiting on an answer to their claim, failed with a regularity none of those scorecards predicted, because none of them measured what happened between one agent and the next."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "This isn't a problem of weaker models. It's a problem of where the scrutiny lands. Each agent gets tested as its own separate box because that's how it gets built: one team per agent, one timeline per agent, one owner per agent. Nobody builds, tests, or owns the thread that connects them."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "Why do multi-agent systems fail in production even when each agent works fine on its own?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Because an agent's reliability gets measured against the data it sees during testing, and in production it never sees that data again: it sees whatever the agent before it decided to hand over. A mistake that first agent makes once in a while, rare and harmless on its own, stops being rare once it repeats across every case that passes through its output. And because nobody built the second agent to doubt what it receives, that mistake enters the process carrying the same authority as a correct answer."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The deciding agent treats the previous agent's output as the original data, not as an interpretation that can also be wrong.",
+          "Each agent gets approved against its own test set, and nobody runs the full chain against real cases before letting it decide for real.",
+          "Each agent has an owner on the org chart. The process the three of them form together has none.",
+          "One agent's mistake, rare in isolation, repeats across every case that passes through it, so it compounds with volume instead of thinning out.",
+          "When the process fails, the committee asks which agent broke. The question that actually matters, where the handoff between two of them broke, never gets asked."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "A multi-agent system doesn't inherit the reliability of its parts."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Adding agents that each work well on their own doesn't automatically produce a process that works well together. Every handoff is a new chance for something to get lost, and three agents mean two handoffs, not one. Nobody counts those as risk because they never show up on any scorecard: the scorecard measures the agent, not the seam between agents. And what doesn't get measured doesn't get watched, until the wrong customer gets the wrong approval."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A multi-agent system doesn't fail where each agent decides. It fails where one hands the case to the next, and nobody is watching that seam.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "How do you protect the handoff between agents before the whole chain fails?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "These five pieces get designed before adding a second agent to a process, not after the first approval that should never have gone out."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Handoff verification",
+            "definicion": "The agent receiving a result checks at least part of it against the original source, instead of taking the previous agent's word with no control of its own."
+          },
+          {
+            "termino": "Chain-level metric",
+            "definicion": "Track the accuracy of the full process, start to finish, not each agent in isolation. A process can have three high-scoring agents and still fail as a chain."
+          },
+          {
+            "termino": "One process owner",
+            "definicion": "One person answers for the outcome of the whole, not one owner per piece. Without that name, when the process fails each team points at the other two and nothing gets fixed."
+          },
+          {
+            "termino": "Rehearsal on real data",
+            "definicion": "The full chain runs against production cases before it gets to decide alone, not just each agent against its own test set."
+          },
+          {
+            "termino": "A cutoff for human intervention",
+            "definicion": "Define exactly which handoff triggers a stop and routes to a person when confidence drops, not only a check at the very end of the chain."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of the five calls for a smarter model or a better agent. It calls for treating the whole system as the product, and each agent as one part of it, not the other way round."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Before adding the next agent to a process that already has others, ask who audits what that agent receives from the one before it, not just what it produces on its own. If nobody has that answer, the system has as many blind spots as it has handoffs between agents."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Why do multi-agent systems fail in production even when each agent works fine on its own?",
+            "respuesta": "Because each agent gets tested and measured in isolation, against data it controls, and in production it receives another agent's output without checking it again. The failure stops living inside one agent and starts living in the handoff between two, which nobody built to review anything."
+          },
+          {
+            "pregunta": "What is the handoff between agents, and why is it the weakest point in a multi-agent system?",
+            "respuesta": "It's the moment one agent hands its result to another, which treats it as input without verifying it again. It's the weakest point because no agent's scorecard tests it: each scorecard measures that agent's own work, not whether what it received from the one before was correct."
+          },
+          {
+            "pregunta": "How do you measure the reliability of a whole multi-agent system, not just each agent?",
+            "respuesta": "By running the entire chain against real production cases and measuring the accuracy of the final outcome, not each intermediate step. A process with three high-performing agents can still fail as a whole if nobody ever measures the chain, only the pieces."
+          },
+          {
+            "pregunta": "Who should answer for a process that several agents execute together when it fails?",
+            "respuesta": "One person with authority over the entire process, not a separate owner for each agent. Without that name, when the process fails each team points at someone else's agent, and the handoff that actually broke never gets reviewed."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's protect the handoff between your agents",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
