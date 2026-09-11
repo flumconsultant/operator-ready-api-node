@@ -1,0 +1,255 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-09-11",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "operating-model",
+  "formato": "perspective",
+  "es": {
+    "slug": "que-pasa-si-despides-por-ia-y-recontratas",
+    "titulo": "Qué pasa si despides por IA y recontratas",
+    "entradilla": "Dos de cada tres empresas que despidieron gente por IA ya están recontratando parte de esos puestos. La pregunta que nadie hizo antes de firmar la salida no era si la IA funcionaba. Era qué tarea exacta iba a hacer ella y cuál no.",
+    "descripcion": "Un tercio de las empresas que despidieron por IA gastó más recontratando de lo que ahorró. El error no fue la tecnología: fue no medir la cobertura real.",
+    "linkedin": {
+      "texto": "Un tercio de las empresas que despidieron gente por IA terminó gastando más en recontratar de lo que había ahorrado despidiendo.\n\nEl problema no aparece el día del despido. Aparece semanas antes, cuando el caso de negocio se calcula sobre la demostración perfecta del proveedor y no sobre el proceso real, con sus excepciones y sus casos raros.\n\nEn este análisis de BECOME desarrollamos qué hay que medir antes de despedir a alguien por un agente de IA, para no tener que traerlo de vuelta seis meses después.",
+      "hashtags": ["IA", "Talento", "Automatizacion"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Dos de cada tres empresas que despidieron gente por IA ya están recontratando parte de esos puestos. La pregunta que nadie hizo antes de firmar la salida no era si la IA funcionaba. Era qué tarea exacta iba a hacer ella y cuál no."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Lo he visto en más de un comité de dirección: se presenta la reducción de plantilla como consecuencia natural de haber automatizado un proceso, con una diapositiva que muestra el ahorro anual y una fecha de corte. Nadie en la sala pregunta qué parte concreta de ese proceso quedó cubierta y qué parte quedó suelta. Se aprueba con aplausos y se ejecuta el mismo mes."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La encuesta de recursos humanos más citada de este año lo confirma con una cifra incómoda: un 31% de las empresas que despidieron gente por decisiones ligadas a la IA terminó gastando más en recontratar de lo que había ahorrado despidiendo, y otro 42% quedó en tablas, sin ganar ni perder nada. Fuente: encuesta de Careerminds a 600 profesionales de recursos humanos que hicieron despidos en el último año, febrero de 2026."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El error no ocurre el día del despido. Ocurre semanas antes, cuando alguien traduce «la IA puede hacer esto» en «ya no necesitamos a la persona que lo hacía», sin haber corrido el proceso completo con el agente en producción, con los casos raros incluidos, y no solo con la demostración pulida del proveedor."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Qué pasa cuando una empresa despide gente por IA y después tiene que volver a contratarla?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Pasa algo más caro que un error de cálculo. La empresa pierde el conocimiento operativo que esa persona tenía: los atajos, las excepciones, a quién llamar cuando el sistema se cae, justo cuando más lo necesita, porque el agente que debía reemplazarla cubre el camino normal del proceso, no las excepciones que antes resolvía una persona sin que nadie lo notara."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El caso de negocio del despido calculó el ahorro de nómina y nunca calculó el costo de recontratar si el agente no cubría el proceso completo.",
+          "Nadie corrió el proceso con el agente en producción, con datos reales y casos raros, antes de firmar la salida de las personas.",
+          "La persona que se recontrata rara vez es la misma que se fue: se perdió meses de curva de aprendizaje y hay que empezar de nuevo con otra.",
+          "El agente sigue haciendo la parte fácil del trabajo mientras la persona recontratada absorbe otra vez la parte difícil, la que nadie midió antes de despedir.",
+          "El comité que aprobó el despido no vuelve a reunirse para revisar si el ahorro proyectado ocurrió de verdad."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema de fondo",
+        "texto": "No es que la IA prometiera de más. Es que nadie definió el alcance antes de despedir."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El proveedor demuestra el caso perfecto: datos limpios, proceso lineal, sin excepciones. La empresa ve esa demostración y calcula el despido sobre ese escenario, no sobre el proceso real, el que tiene devoluciones, clientes que llaman fuera de horario, documentos mal escaneados y decisiones que dependen de un contexto que el agente no tiene. La distancia entre esos dos procesos, el de la demostración y el real, es exactamente el tamaño del puesto que se va a tener que recontratar seis meses después."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un despido que se decide con la diapositiva del proveedor se paga dos veces: primero en la indemnización, después en el salario de quien hay que traer de vuelta.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "¿Qué hay que medir antes de despedir por un agente de IA?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cuatro preguntas separan un recorte que se sostiene de uno que termina recontratando, y las cuatro se contestan antes de firmar la salida de nadie, no después."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Cobertura real",
+            "definicion": "Qué porcentaje del proceso completo, con excepciones incluidas, resuelve hoy el agente sin intervención humana, medido en producción durante semanas, no en la demostración del proveedor."
+          },
+          {
+            "termino": "Conocimiento tácito",
+            "definicion": "Qué sabe la persona que se va a despedir que no está escrito en ningún manual: excepciones, contactos, atajos. Si nadie lo documentó, ese conocimiento desaparece con la persona y no vuelve con quien se recontrate."
+          },
+          {
+            "termino": "Curva de excepción",
+            "definicion": "Quién resuelve el caso que el agente no reconoce el primer día después del despido, y cuánto tarda esa persona en aprender a hacerlo bien si nunca lo había hecho."
+          },
+          {
+            "termino": "Costo de reversa",
+            "definicion": "Cuánto cuesta recontratar y volver a formar a alguien si la cobertura real resulta menor que la proyectada, y si ese número se comparó con el ahorro antes de aprobar el recorte."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguna de las cuatro exige frenar la automatización de un proceso. Exige medir la cobertura real antes de convertir un ahorro proyectado en una decisión sobre personas que, si sale mal, cuesta el doble deshacer."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Antes de aprobar el próximo recorte ligado a un agente de IA, pide el número de cobertura real medido en producción, no en la demostración. Si nadie lo tiene, lo que se va a despedir es gente, no un proceso ya resuelto."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Qué pasa cuando una empresa despide gente por IA y después tiene que volver a contratarla?",
+            "respuesta": "Pierde dos veces: paga la indemnización del despido y después paga otra vez la búsqueda, el salario y la curva de aprendizaje de recontratar, casi siempre con una persona distinta a la que se fue. Además pierde el conocimiento operativo no documentado que la persona original se llevó consigo, justo el que el agente no cubría."
+          },
+          {
+            "pregunta": "¿Por qué las empresas recontratan después de despedir por IA?",
+            "respuesta": "Porque el despido se calculó sobre la demostración del proveedor, con un proceso limpio y sin excepciones, y no sobre el proceso real que atiende la empresa todos los días. Cuando el agente llega a producción cubre menos de lo proyectado, y alguien tiene que volver a resolver la parte que quedó sin cubrir."
+          },
+          {
+            "pregunta": "¿Cuánto cuesta recontratar después de un despido por IA?",
+            "respuesta": "Depende del puesto, pero la evidencia disponible dice que para un tercio de las empresas el costo de recontratar superó el ahorro que había proyectado el despido, y para otro 42% los dos números terminaron parecidos, sin beneficio real. Fuente: encuesta de Careerminds a 600 profesionales de recursos humanos, febrero de 2026."
+          },
+          {
+            "pregunta": "¿Cómo evita una empresa tener que recontratar después de automatizar un proceso?",
+            "respuesta": "Midiendo la cobertura real del agente en producción, con excepciones incluidas, antes de despedir a nadie, y documentando el conocimiento tácito de la persona que ocupaba el puesto para que no desaparezca con ella. El despido se aprueba después de esa medición, no antes, con la esperanza de que el número se sostenga."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Midamos la cobertura real antes de decidir",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "when-ai-layoffs-force-you-to-rehire",
+    "titulo": "When AI Layoffs Force You to Rehire",
+    "entradilla": "Two in three companies that laid off staff because of AI are already rehiring some of those roles. The question nobody asked before signing the layoffs wasn't whether the AI worked. It was exactly which task it would handle and which one it would not.",
+    "descripcion": "A third of companies that laid off staff for AI spent more rehiring than they saved. The mistake was never measuring real coverage.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Two in three companies that laid off staff because of AI are already rehiring some of those roles. The question nobody asked before signing the layoffs wasn't whether the AI worked. It was exactly which task it would handle and which one it would not."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "I have watched this happen in more than one leadership committee. Headcount reduction gets presented as the natural consequence of having automated a process, with a slide showing annual savings and a cutoff date. Nobody in the room asks which part of that process actually got covered and which part was left hanging. It gets approved with applause and executed the same month."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The most cited HR survey this year confirms it with an uncomfortable number. About 31 percent of companies that laid off staff for AI-related reasons ended up spending more on rehiring than they had saved by cutting the roles, and another 42 percent broke roughly even, no real gain either way. Source: Careerminds survey of 600 HR professionals who carried out layoffs in the past year, February 2026."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The mistake doesn't happen on the day of the layoff. It happens weeks earlier, when someone translates \"the AI can do this\" into \"we no longer need the person who did it,\" without ever running the full process with the agent in production, edge cases included, rather than the vendor's polished demo."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "What happens when a company lays off staff for AI and later has to rehire them?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Something more expensive than a miscalculation happens. The company loses the operational knowledge that person carried: the shortcuts, the exceptions, who to call when the system goes down, right when it needs it most, because the agent meant to replace that person only covers the normal path of the process, not the exceptions a person used to handle without anyone noticing."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The business case for the layoff calculated payroll savings and never calculated the cost of rehiring if the agent didn't cover the whole process.",
+          "Nobody ran the process with the agent in production, on real data and edge cases, before signing off on the layoffs.",
+          "The person rehired is rarely the one who left: months of learning curve are gone, and someone else has to start over.",
+          "The agent keeps handling the easy part of the work while the rehired person absorbs the hard part again, the part nobody measured before the layoff.",
+          "The committee that approved the layoff never reconvenes to check whether the projected savings actually happened."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "It is not that AI overpromised. It is that the vendor defined the scope of the layoff."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The vendor demonstrates the perfect case: clean data, a linear process, no exceptions. The company watches that demo and calculates the layoff against that scenario, not against the real process, the one with returns, customers calling after hours, badly scanned documents, and decisions that depend on context the agent doesn't have. The gap between those two processes, the demo and the real one, is exactly the size of the role that will need rehiring six months later."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A layoff decided from the vendor's slide gets paid for twice: once in severance, then again in the salary of whoever has to be brought back.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "What has to be measured before laying anyone off for an AI agent?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Four questions separate a cut that holds from one that ends in rehiring, and all four get answered before anyone signs off on a layoff, not after."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Real coverage",
+            "definicion": "What share of the full process, exceptions included, the agent handles today without human intervention, measured in production over several weeks, not in the vendor's demo."
+          },
+          {
+            "termino": "Tacit knowledge",
+            "definicion": "What the person being laid off knows that isn't written down anywhere: exceptions, contacts, shortcuts. If nobody documented it, that knowledge leaves with the person and does not come back with whoever gets rehired."
+          },
+          {
+            "termino": "Exception curve",
+            "definicion": "Who handles the case the agent doesn't recognize on day one after the layoff, and how long it takes that person to learn to do it well if they have never done it before."
+          },
+          {
+            "termino": "Reversal cost",
+            "definicion": "How much it costs to rehire and retrain someone if real coverage turns out lower than projected, and whether that number was compared against the savings before the cut was approved."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of the four require freezing automation of a process. They require measuring real coverage before turning a projected saving into a decision about people that, if it goes wrong, costs twice as much to undo."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Before approving the next cut tied to an AI agent, ask for the real coverage number measured in production, not in the demo. If nobody has it, what gets laid off is people, not an already-solved process."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "What happens when a company lays off staff for AI and later has to rehire them?",
+            "respuesta": "It loses twice: it pays severance for the layoff and then pays again for the search, the salary, and the learning curve of rehiring, almost always with a different person than the one who left. It also loses the undocumented operational knowledge the original person carried, exactly the part the agent never covered."
+          },
+          {
+            "pregunta": "Why do companies rehire after laying people off for AI?",
+            "respuesta": "Because the layoff was calculated against the vendor's demo, a clean process with no exceptions, rather than the real process the company runs every day. Once the agent reaches production it covers less than projected, and someone has to come back to handle the part that was left uncovered."
+          },
+          {
+            "pregunta": "How much does it cost to rehire after an AI-driven layoff?",
+            "respuesta": "It depends on the role, but the available evidence shows that for about a third of companies the cost of rehiring exceeded the savings the layoff had projected, and for another 42 percent the two numbers came out roughly even, with no real gain. Source: Careerminds survey of 600 HR professionals, February 2026."
+          },
+          {
+            "pregunta": "How does a company avoid having to rehire after automating a process?",
+            "respuesta": "By measuring the agent's real coverage in production, exceptions included, before laying anyone off, and by documenting the tacit knowledge of the person in that role so it doesn't disappear with them. The layoff gets approved after that measurement, not before, on the hope that the number will hold."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's measure real coverage before you decide",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
