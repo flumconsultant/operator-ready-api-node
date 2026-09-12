@@ -11,10 +11,11 @@ redactado en prosa.
 ```
 Google Sheets (config)              n8n — "PoC Solución de Monitoreo"
   · Config (marca, keywords,   →     1. Trigger diario (cron)
-    competidores, categorías,        2. Lee la Config y los GEO Prompts
-    palabras críticas)               3. Rama social/prensa/reseñas:
-  · GEO Prompts (prompt, motor)         Apify (un actor por fuente)
-                                     4. Rama GEO: por cada prompt activo,
+    competidores, categorías,        2. Lee Config, Búsquedas Apify y GEO Prompts
+    palabras críticas)               3. Rama social/prensa: por cada fila
+  · Búsquedas Apify (una fila            activa de "Búsquedas Apify", corre
+    por búsqueda a correr)               el actor de Apify con esa query
+  · GEO Prompts (prompt, motor)     4. Rama GEO: por cada prompt activo,
                                         llama a ChatGPT / Gemini / Claude
                                      5. Agente Clasificador de Reputación
                                         (Claude + herramienta de historial
@@ -74,9 +75,28 @@ al contexto. Juntos, ninguno de los dos es el único punto de falla.
 |---|---|---|
 | Marca, alias, competidores, categorías, palabras críticas | [BCP Monitoreo — Config](https://docs.google.com/spreadsheets/d/16ZDs6OX_WF7y0U5vp9tVWKSEp2bIIvvN3Ugxx42YEPA/edit) | Tú, cuando quieras — n8n la relee en cada corrida |
 | Prompts de GEO y en qué motor correr cada uno | [BCP Monitoreo — GEO Prompts](https://docs.google.com/spreadsheets/d/1Y0ggnirBN1YwUISWrqA1FhOMGFjAoyBa3xJbSE0Wzro/edit) | Tú — pon `activo=si` en los que quieras correr |
+| Qué buscar con Apify (prensa, social, lo que sea) | [BCP Monitoreo — Búsquedas Apify](https://docs.google.com/spreadsheets/d/1Mk2qwKEVSe3wGjYfQH22hfM8rHSCd3ENTa-ieZXkho0/edit) | Tú — una fila por búsqueda, `{marca}` se reemplaza solo |
 | Datos para el tablero (Looker Studio / Sheets) | [BCP Monitoreo — Log Dashboard](https://docs.google.com/spreadsheets/d/1MWEkDJY9_gRQqLITFWxIM_IBs5N6gJfVFQZ4G1k9sFU/edit) | Nadie a mano — la escribe n8n en cada corrida |
 | El workflow en sí (nodos, credenciales, horario) | [n8n — PoC Solución de Monitoreo](https://n8n.srv836595.hstgr.cloud/workflow/wDgtcn0SkJFnqRNM) | Tú, para poner credenciales y activarlo |
 | El log completo, histórico | Tabla `monitoreo_menciones` en el MySQL de Hostinger | Nadie a mano — la escribe `assets/api/monitoreo.php` |
+
+## ¿Apify me scrapea todo solo?
+
+No. Apify no "sabe" qué es BCP ni sale a buscar por su cuenta — solo corre
+**las búsquedas que tú pusiste** en la hoja "Búsquedas Apify", una corrida
+por fila activa. Y en esta primera versión, esas búsquedas usan el actor
+`apify/google-search-scraper`: es una búsqueda de Google, no una lectura
+directa de X/Twitter, Instagram o Facebook. La fila "social" que viene
+precargada funciona buscando `site:twitter.com OR site:x.com OR ...` dentro
+de Google — te trae lo que Google haya indexado de esos sitios, que es
+bastante para arrancar barato y sin cuentas de redes sociales, pero no es lo
+mismo que un scraper nativo de cada red (que ve posts, comentarios y
+engagement reales, y normalmente cuesta más y pide más configuración).
+
+Para ampliar cobertura más adelante: añade una fila nueva a la hoja con
+`fuente`/`plataforma`/`query` distintos (por ejemplo, reseñas de Google Maps,
+o una comparación contra un competidor — ya hay un ejemplo desactivado en la
+hoja), o cambia el actor por uno dedicado a una red social específica.
 
 ## Por qué el log vive en dos sitios (MySQL y una hoja)
 
