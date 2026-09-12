@@ -1,7 +1,7 @@
 {
   "nombre": "monitoreo",
   "sistema": "Observatorio de reputación BCP · n8n + Apify + Claude",
-  "queHace": "Guarda en el MySQL de Hostinger las menciones que captura Apify (redes sociales, prensa, reseñas) y las respuestas GEO ya clasificadas por Claude (sentimiento, categoría, si es alerta urgente), y arma el resumen que usa n8n para el correo diario y las alertas inmediatas.",
+  "queHace": "Guarda en el MySQL de Hostinger las menciones que captura Apify (redes sociales, prensa, reseñas) y las respuestas GEO, cada una clasificada por su propio agente de IA (Menciones o GEO, con criterios distintos), y arma el resumen que usa n8n para el correo diario y las alertas inmediatas. También responde la última observación GEO guardada para un motor+prompt, que el Agente GEO usa para notar si una respuesta cambió de una corrida a la siguiente.",
   "implementacion": "assets/api/monitoreo.php · workflow de n8n «PoC Solución de Monitoreo» (https://n8n.srv836595.hstgr.cloud/workflow/wDgtcn0SkJFnqRNM)",
   "disparadores": [
     "n8n-diario",
@@ -22,6 +22,11 @@
     },
     {
       "nombre": "resumen",
+      "efecto": "reversible",
+      "ensayo": null
+    },
+    {
+      "nombre": "ultimo_geo",
       "efecto": "reversible",
       "ensayo": null
     }

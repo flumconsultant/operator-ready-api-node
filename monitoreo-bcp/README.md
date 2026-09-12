@@ -17,22 +17,24 @@ Google Sheets (config)              n8n — "PoC Solución de Monitoreo"
     por búsqueda a correr)               el actor de Apify con esa query
   · GEO Prompts (prompt, motor)     4. Rama GEO: por cada prompt activo,
                                         llama a ChatGPT / Gemini / Claude
-                                     5. Agente Clasificador de Reputación
-                                        (Claude + herramienta de historial
-                                        de 7 días + salida estructurada):
-                                        lee cada observación en su contexto
-                                        y decide sentimiento, categoría y si
-                                        es alerta urgente, con una frase de
-                                        razonamiento auditable
-                                     6. Guarda el lote en:
+                                     5a. Agente de Menciones (Apify): lee
+                                        cada reclamo/reseña/prensa real en
+                                        su contexto y decide sentimiento,
+                                        categoría y alerta urgente
+                                     5b. Agente GEO (aparte, con su propio
+                                        criterio): evalúa presencia, postura
+                                        frente a competidores y precisión de
+                                        cada respuesta de IA, comparando con
+                                        la corrida anterior del mismo prompt
+                                     6. Guarda el lote combinado en:
                                         · monitoreo.php → tabla MySQL (log)
                                         · Google Sheet "Log Dashboard"
                                           (para el tablero en Looker Studio)
-                                     7. Guardarraíl determinista: si algo ya
-                                        vino marcado crítico, o trae una
-                                        palabra crítica de la hoja Config,
-                                        fuerza la alerta sin depender del
-                                        criterio del modelo
+                                     7. Guardarraíl determinista: si algún
+                                        agente ya marcó algo crítico, o el
+                                        texto trae una palabra crítica de la
+                                        hoja Config, fuerza la alerta sin
+                                        depender del criterio del modelo
                                      8. Agente de Triage y Reporte: compara
                                         hoy contra la tendencia de 7 días,
                                         decide gravedad y redacta en prosa
@@ -40,34 +42,44 @@ Google Sheets (config)              n8n — "PoC Solución de Monitoreo"
                                         alerta urgente, si aplica)
 ```
 
-### Por qué esto es un agente y no un flujo de reglas fijas
+### Por qué son agentes separados y no uno genérico
 
-La primera versión clasificaba con un llamado directo a la API de Claude y
-decidía "alerta urgente" con un umbral fijo (3× el promedio de la semana).
-Funciona, pero es rígido: no distingue sarcasmo de una queja real, y un pico
-de volumen no siempre es una crisis. La versión actual usa los nodos nativos
+La primera versión tenía un único "Agente Clasificador" atendiendo tanto
+menciones reales como respuestas de GEO con el mismo criterio. Son dos
+trabajos distintos: una reseña real se evalúa por sentimiento y contexto; una
+respuesta de un asistente de IA se evalúa por si menciona la marca, con qué
+postura frente a la competencia y si dice algo incorrecto — eso no es
+"sentimiento". Separarlos en dos agentes con su propio `systemMessage` deja
+afinar cada criterio sin arriesgar el otro, y cada uno trae solo las
+herramientas que le sirven. Son cuatro piezas en total, todas nodos nativos
 de **Agente de IA** de n8n (LangChain: modelo + salida estructurada +
 herramientas), no llamados HTTP sueltos:
 
-- **Agente Clasificador de Reputación** — antes de decidir, puede *usar una
-  herramienta* para consultar el historial de 7 días (¿esto es una racha
-  nueva o algo ya conocido?), y siempre explica su razonamiento en un campo
-  `razonamiento` para que quede auditable.
+- **Agente de Menciones (Apify)** — reclamos, reseñas y prensa reales. Puede
+  *usar una herramienta* para consultar el historial de 7 días (¿esto es una
+  racha nueva o algo ya conocido?), y siempre explica su razonamiento en un
+  campo `razonamiento` auditable.
+- **Agente GEO** — nada de palabras clave ni sentimiento clásico: evalúa
+  presencia (¿aparece la marca?), postura relativa frente a otros bancos,
+  qué competidores nombra, y si el asistente afirmó algo posiblemente
+  incorrecto. Puede *usar una herramienta* para comparar con la última
+  corrida guardada del mismo prompt+motor y notar si la respuesta cambió
+  (deriva) — esto es GEO, no sentiment analysis genérico.
 - **Agente de Triage y Reporte** — no compara contra un múltiplo fijo: lee
   el resumen de hoy y el de 7 días, juzga si hay una racha real, y **redacta**
   el correo de resumen diario en prosa, no con una plantilla HTML armada a
   mano.
 - **Guardarraíl determinista** — la única regla fija que queda a propósito:
-  si el clasificador ya marcó algo crítico, o el texto trae una palabra
-  crítica de la hoja Config, la alerta se dispara sí o sí. Es la red de
-  seguridad para que un desacierto puntual del modelo nunca silencie un
-  fraude real. El agente decide la *gravedad* y la *redacción*, nunca si
-  avisar o no — eso lo protege el guardarraíl.
+  si cualquiera de los dos clasificadores ya marcó algo crítico, o el texto
+  trae una palabra crítica de la hoja Config, la alerta se dispara sí o sí.
+  Es la red de seguridad para que un desacierto puntual de un modelo nunca
+  silencie un fraude real. Los agentes deciden la *gravedad* y la
+  *redacción*, nunca si avisar o no — eso lo protege el guardarraíl.
 
-Esta combinación (agente con criterio + guardarraíl determinista de mínimos)
-es la práctica recomendada para alertas de reputación/seguridad: un agente
-solo puede fallar por un mal juicio puntual, y una regla fija sola es ciega
-al contexto. Juntos, ninguno de los dos es el único punto de falla.
+Esta combinación (agentes con criterio propio + guardarraíl determinista de
+mínimos) es la práctica recomendada para alertas de reputación/seguridad: un
+agente solo puede fallar por un mal juicio puntual, y una regla fija sola es
+ciega al contexto. Juntos, ninguno de los dos es el único punto de falla.
 
 ## Dónde se edita cada cosa
 
@@ -135,9 +147,9 @@ credenciales, porque son cuentas de terceros que no puedo crear por ti:
 2. **OpenAI y Gemini**: API key de cada uno, para los nodos GEO de ChatGPT y
    Gemini.
 3. **Anthropic, dos veces**: la misma API key, pero como **dos credenciales
-   distintas** en n8n — una "HTTP Header Auth" (la usan los nodos HTTP de
+   distintas** en n8n — una "HTTP Header Auth" (la usa el nodo HTTP de
    GEO-Claude) y una credencial **nativa "Anthropic Account"** (la usan los
-   nodos "Modelo Claude (Clasificador)" y "Modelo Claude (Triage)", que son
+   tres nodos "Modelo Claude (...)" — Menciones, GEO y Triage —, que son
    nodos de Agente de IA, no HTTP Request, y n8n les exige su propio tipo de
    credencial).
 4. **Secreto `MONITOREO_TOKEN`** en GitHub (Settings → Secrets and variables
@@ -145,11 +157,47 @@ credenciales, porque son cuentas de terceros que no puedo crear por ti:
    `main` la deja activa en `assets/api/monitoreo.php`. El mismo valor va en
    la credencial HTTP Header Auth del nodo que llama a `monitoreo.php` en
    n8n.
-5. **Revisar los 2 nodos "Formato de salida"** (Structured Output Parser) de
+5. **Revisar los 3 nodos "Formato de salida"** (Structured Output Parser) de
    los agentes: llevan puesto el JSON Schema que esperan, pero si al abrir el
    nodo en n8n lo ves vacío, pégalo tú — está en
    `monitoreo-bcp/schemas-agentes.md` de este mismo repo.
 6. **Activar el workflow** en n8n una vez estén las credenciales.
+7. **Conectar Looker Studio** al tablero — ver la sección de abajo.
+
+## Conectar Looker Studio (el tablero)
+
+Esto no lo puedo automatizar por ti: Looker Studio no tiene una API pública
+para crear reportes desde fuera, es un par de clics dentro de su propia
+interfaz, con tu cuenta de Google. Con la hoja **Log Dashboard** ya
+recibiendo filas de n8n, son cinco pasos:
+
+1. Entra a [lookerstudio.google.com](https://lookerstudio.google.com) con la
+   misma cuenta de Google que es dueña de las hojas (la que usaste para
+   crearlas conmigo).
+2. **Crear** → **Informe**. Te va a pedir una fuente de datos: elige el
+   conector **Hojas de cálculo de Google**, y selecciona el archivo **BCP
+   Monitoreo — Log Dashboard** → la única pestaña que tiene.
+3. Marca "Usar la primera fila como encabezados" si te lo pregunta (los
+   nombres de columna ya vienen listos: `fecha`, `fuente`, `plataforma`,
+   `sentimiento`, `categoria`, `alerta_urgente`, etc.) y pulsa **Añadir**,
+   luego **Añadir al informe**.
+4. Ya tienes un lienzo en blanco conectado a datos reales. Gráficos que valen
+   la pena de entrada:
+   - **Serie de tiempo** de `fecha` (eje X) contando filas (eje Y), desglosado
+     por `sentimiento` — el pulso diario.
+   - **Tabla** con `fuente`, `plataforma`, `categoria` y conteo — dónde
+     aparece más y de qué se habla.
+   - **Tabla o lista** filtrada por `alerta_urgente = 1` — el historial de
+     alertas.
+   - Un **control de fecha** (date range control) arriba de todo, para mirar
+     una semana o un mes a la vez.
+5. **Compartir** → dale acceso a quien más necesite verlo, o **Programar
+   envío por correo** desde el propio Looker Studio si además quieres un PDF
+   periódico (esto es aparte del correo de resumen diario que ya manda n8n).
+
+El tablero se actualiza solo: cada corrida de n8n añade filas nuevas a la
+hoja, y Looker Studio las refleja (por defecto cachea unos minutos; hay un
+botón "Actualizar" en el propio informe para forzarlo al momento).
 
 ## Coste
 

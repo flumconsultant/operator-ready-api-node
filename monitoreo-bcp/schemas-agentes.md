@@ -4,7 +4,7 @@ Cada uno se pega en el campo del nodo **Structured Output Parser**
 correspondiente (nodo "Formato de salida (...)"), en n8n, si al abrirlo lo
 ves vacío.
 
-## Agente Clasificador de Reputación
+## Agente de Menciones (Apify)
 
 ```json
 {
@@ -19,7 +19,6 @@ ves vacío.
       "type": "number",
       "description": "0 a 1: que tan fuerte es el sentimiento"
     },
-    "menciona_marca": { "type": "boolean" },
     "alerta_urgente": { "type": "boolean" },
     "motivo_alerta": { "type": "string" },
     "razonamiento": {
@@ -28,6 +27,50 @@ ves vacío.
     }
   },
   "required": ["sentimiento", "categoria", "score", "alerta_urgente"]
+}
+```
+
+## Agente GEO
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "sentimiento": {
+      "type": "string",
+      "enum": ["positivo", "neutro", "negativo", "negativo_critico"]
+    },
+    "menciona_marca": { "type": "boolean" },
+    "postura": {
+      "type": "string",
+      "enum": ["favorable", "neutral", "desfavorable", "no_mencionada"]
+    },
+    "posicion_relativa": {
+      "type": "string",
+      "enum": [
+        "recomendada_primero",
+        "mencionada_entre_varias",
+        "mencionada_al_final",
+        "no_mencionada",
+        "desaconsejada"
+      ]
+    },
+    "competidores_mencionados": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "posible_informacion_incorrecta": { "type": "boolean" },
+    "detalle_informacion_incorrecta": { "type": "string" },
+    "cambio_vs_corrida_anterior": {
+      "type": "string",
+      "description": "que cambio respecto a la ultima vez que se corrio este mismo prompt+motor; si no hay corrida anterior, decir 'sin historial previo'"
+    },
+    "categoria": { "type": "string" },
+    "alerta_urgente": { "type": "boolean" },
+    "motivo_alerta": { "type": "string" },
+    "razonamiento": { "type": "string" }
+  },
+  "required": ["sentimiento", "menciona_marca", "postura", "posicion_relativa", "alerta_urgente"]
 }
 ```
 
