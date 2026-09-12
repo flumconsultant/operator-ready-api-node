@@ -1,0 +1,263 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-09-12",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "value-adoption",
+  "formato": "executive-brief",
+  "es": {
+    "slug": "como-justificar-ante-el-consejo-una-ia-sin-retorno",
+    "titulo": "Cómo justificar ante el consejo una IA sin retorno",
+    "entradilla": "El manual para justificar el retorno de una IA ya está escrito, y se repite en cada propuesta que llega a un consejo. El problema no es la métrica. Es el consejero que ya vio morir dos pilotos y no se deja convencer por otra tabla de indicadores.",
+    "descripcion": "Pedir presupuesto para una IA que aún no rinde no es un problema de métricas. Es mostrar qué existe antes de que exista el retorno.",
+    "linkedin": {
+      "texto": "Casi toda propuesta de inversión en IA sin retorno todavía se defiende con el mismo manual: definir un indicador, elegir el caso de uso correcto, contar bien la historia.\n\nEse manual resuelve la métrica. No resuelve al consejero que ya vio morir un piloto anterior y no rechaza el número: rechaza a quien lo trae sin haber cerrado en público qué pasó la última vez.\n\nEn este análisis de BECOME explicamos qué hay que llevar a la sala cuando el resultado todavía no existe, y quién responde si esta vez tampoco funciona.",
+      "hashtags": ["IA", "Directorio", "Inversion"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "El manual para justificar el retorno de una IA ya está escrito, y se repite en cada propuesta que llega a un consejo. El problema no es la métrica. Es el consejero que ya vio morir dos pilotos y no se deja convencer por otra tabla de indicadores."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "He estado en la sala donde alguien defiende una inversión en IA que todavía no da nada, y el patrón se repite casi siempre igual. El responsable llega con una diapositiva de indicadores futuros, una narrativa de transformación y un caso de uso bien elegido. Habla quince minutos. Y entonces alguien al fondo de la mesa, el mismo que aprobó dos pilotos que terminaron en nada, pregunta una sola cosa: ¿y esta vez por qué va a ser distinto? Ahí se acaba la diapositiva de indicadores y empieza la conversación real."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Los manuales que circulan hoy resuelven la mitad del problema. Enseñan a elegir un indicador que se pueda medir, a contar una historia en vez de tirar un número solo, a anclar el caso en un proceso concreto. Todo correcto, y todo inútil frente a un consejero que ya dejó de mirar el indicador hace meses: lo que evalúa es si confía en quien lo trae, porque confió antes y le costó algo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y no toda inversión sin retorno es la misma cosa, aunque el consejo las trate igual. Construir la base de datos que hace posible cualquier proyecto de IA no da retorno el primer año, y no tiene por qué darlo. Un piloto que todavía busca su caso de uso tampoco. Escalar algo que ya funcionó en un área y sigue sin mostrar nada en la siguiente ya debería estar mostrando algo. Meter las tres bajo la misma pregunta, cuándo vemos números, es justo la razón por la que la sala nunca queda satisfecha con la respuesta."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Cómo justifico ante el directorio una inversión en IA que todavía no da retorno?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La respuesta que enseñan casi todos los consultores es la misma: define un indicador antes de empezar, elige un caso de uso con impacto visible, cuenta la historia del problema que resuelve. Sirve para la primera vez que alguien pide dinero para IA. Deja de servir en la segunda, cuando ya hay un historial de promesas sin cumplir sentado en la misma mesa."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El comité repite el mismo lenguaje de indicadores futuros que usó hace un año, cuando pidió el presupuesto anterior.",
+          "Nadie en la sala recuerda, sin revisar el acta, qué pasó exactamente con el piloto que se aprobó la última vez.",
+          "El responsable presenta el caso de negocio completo y evita la pregunta de qué se hizo con el dinero anterior.",
+          "El consejero escéptico deja de discutir el indicador propuesto y pregunta por la persona que responde si esta vez tampoco funciona.",
+          "La aprobación llega igual, pero con menos presupuesto y más condiciones que la vez anterior, sin que nadie lo llame por su nombre: desconfianza acumulada."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema de fondo",
+        "texto": "El consejo no vota el indicador. Vota la memoria de la última vez que confió en uno."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La credibilidad ante un consejo funciona como un presupuesto propio, y se gasta igual. Cada promesa que no se cumple retira algo de esa cuenta, y la cuenta no se repone contando mejor la próxima historia. Se repone mostrando que lo que se dijo la última vez, pasó. Un responsable que llega a pedir dinero por tercera vez sin haber cerrado en público qué ocurrió con las dos anteriores no está presentando un caso de negocio. Está pidiendo que el consejo ignore su propio historial, y un consejo con experiencia no lo hace."
+      },
+      {
+        "tipo": "cita",
+        "texto": "El consejo no rechaza el indicador. Rechaza a quien no puede contar qué pasó la última vez que pidió lo mismo.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "¿Qué hay que llevar a la sala cuando el resultado todavía no existe?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cinco piezas separan una petición de presupuesto que un consejo escéptico aprueba de una que solo tolera."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Etapa nombrada",
+            "definicion": "Decir si esto es infraestructura, piloto o escalamiento, porque cada una tiene un plazo distinto y razonable para no dar retorno. Meterlas todas bajo la misma pregunta es lo que agota la paciencia del consejo antes de tiempo."
+          },
+          {
+            "termino": "Cierre del capítulo anterior",
+            "definicion": "Qué pasó exactamente con el último presupuesto de IA aprobado, dicho en la misma sala y sin maquillaje: qué funcionó, qué se cerró, qué se descartó. Sin ese cierre, la nueva petición carga con la deuda de la anterior."
+          },
+          {
+            "termino": "Lo que sí se puede mostrar hoy",
+            "definicion": "Si no hay retorno todavía, qué evidencia intermedia existe: qué se aprendió, qué riesgo se eliminó, qué decisión ya no hay que tomar dos veces. Un consejo escéptico acepta que no haya número si hay algo concreto en su lugar."
+          },
+          {
+            "termino": "Fecha de conversión",
+            "definicion": "El día en que esta inversión tiene que empezar a mostrar un resultado medible o cerrarse, dicho en la misma reunión donde se pide el dinero, no meses después cuando ya nadie lo recuerda."
+          },
+          {
+            "termino": "Quién sostiene la pregunta difícil",
+            "definicion": "El nombre de la persona que vuelve a esa sala si esto tampoco funciona, y responde en persona, no un comité ni una diapositiva nueva. Un consejo confía más en un nombre que en un plan."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguna de las cinco exige un indicador nuevo. Exigen algo más incómodo: decir en voz alta lo que pasó la última vez, antes de que alguien en la sala lo diga primero."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Antes de la próxima presentación al consejo, escribe en una frase qué pasó con el último presupuesto de IA que se aprobó: qué funcionó, qué se cerró, qué se descartó. Si esa frase no existe todavía, ese es el trabajo de esta semana, no la diapositiva de indicadores."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cómo justifico ante el directorio una inversión en IA que todavía no da retorno?",
+            "respuesta": "Nombrando la etapa en la que está la inversión (infraestructura, piloto o escalamiento), mostrando qué pasó con el presupuesto de IA anterior sin maquillarlo, y poniendo una fecha concreta en la que esta inversión tiene que mostrar un resultado medible o cerrarse. El consejo no necesita un indicador nuevo: necesita saber que alguien responde por el resultado y que la petición anterior no quedó sin cerrar."
+          },
+          {
+            "pregunta": "¿Qué diferencia hay entre una inversión en IA que legítimamente no tiene retorno todavía y una que ya debería tenerlo?",
+            "respuesta": "La etapa. Construir la infraestructura de datos que hace posible cualquier proyecto de IA no da retorno el primer año y no tiene por qué darlo. Un piloto que todavía busca su caso de uso tampoco. Pero escalar algo que ya funcionó en un área y sigue sin mostrar nada en la siguiente ya no es una etapa temprana: es una señal de que algo se estancó y nadie lo ha dicho todavía."
+          },
+          {
+            "pregunta": "¿Qué hace un consejero escéptico cuando ya vio fracasar un proyecto de IA antes?",
+            "respuesta": "Deja de evaluar el indicador propuesto y empieza a evaluar a la persona que lo presenta. Pregunta, directa o indirectamente, qué pasó con la promesa anterior, y si nadie en la sala puede contestar sin revisar un acta, la nueva petición hereda la desconfianza de la última que no se cerró en público. Recuperar esa confianza no necesita un mejor indicador. Necesita cerrar en voz alta lo que quedó abierto."
+          },
+          {
+            "pregunta": "¿Qué pasa si el consejo aprueba la inversión igual, aunque nadie resolvió la pregunta política?",
+            "respuesta": "Se aprueba con menos presupuesto, más condiciones y una revisión más frecuente que la vez anterior, aunque nadie lo nombre así en la reunión. Es la forma en que un consejo expresa desconfianza sin decir la palabra: no rechaza el proyecto, lo aprueba a medias, y esa aprobación a medias suele costarle al proyecto más tiempo del que le habría costado esperar y presentar el caso completo."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Preparemos tu próxima presentación al consejo",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-to-justify-an-ai-investment-with-no-roi-yet",
+    "titulo": "How to Justify an AI Investment With No ROI Yet",
+    "entradilla": "The playbook for justifying AI's return is already written, and it gets repeated in every proposal that reaches a board. The problem isn't the metric. It's the director who already watched two pilots die and won't be talked into another slide of indicators.",
+    "descripcion": "Asking a board for AI money with no return yet isn't a metrics problem. It's showing what exists before the return does.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "The playbook for justifying AI's return is already written, and it gets repeated in every proposal that reaches a board. The problem isn't the metric. It's the director who already watched two pilots die and won't be talked into another slide of indicators."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Sit in the room where someone defends an AI investment that isn't producing anything yet, and the pattern repeats almost every time. The sponsor arrives with a slide of future indicators, a transformation narrative, and a well-chosen use case. Fifteen minutes in. Then someone at the far end of the table, the same person who signed off on two pilots that went nowhere, asks one thing: why would this time be different? That is where the indicator deck ends and the real conversation starts."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The playbooks circulating today solve half the problem. They teach how to pick a measurable indicator, tell a story instead of throwing out a bare number, anchor the case in one concrete process. All correct, and none of it lands with a director who stopped looking at the indicator months ago. What that director is weighing is whether to trust the person bringing it, because trust got extended once already and it cost something."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Not every AI investment with no return yet is the same thing, even though a board tends to treat them alike. Building the data foundation that makes any AI project possible does not pay back in year one, and it should not have to. A pilot still hunting for its use case does not either. Scaling something that already worked in one team and still shows nothing in the next one should be showing something by now. Putting all three under the same question, when do we see numbers, is exactly why the room never leaves satisfied with the answer."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "How do you justify an AI investment to the board when it has no return yet?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The answer taught in most playbooks is the same one: pick an indicator before starting, choose a use case with visible impact, tell the story of the problem it solves. It works the first time someone asks for AI money. It stops working the second time, once a record of unmet promises is already sitting at the same table."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The committee repeats the same language of future indicators it used a year ago, when it asked for the last budget.",
+          "Nobody in the room can say, without pulling up the minutes, what actually happened to the pilot approved last time.",
+          "The sponsor presents a complete business case and skips the question of what happened to the previous money.",
+          "The skeptical director stops arguing the proposed indicator and asks instead who answers if this one fails too.",
+          "The budget gets approved anyway, with less money and more conditions than last time, without anyone calling it what it is: accumulated distrust."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "The board isn't voting on the indicator. It's voting on the memory of the last time it trusted one."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Credibility in front of a board works like its own budget, and it spends the same way. Every promise that goes unmet withdraws something from that account, and the account does not refill by telling next quarter's story better. It refills by showing that what got said last time actually happened. A sponsor asking for money a third time without ever closing the loop in public on the previous two is not presenting a business case. They are asking the board to ignore its own record, and an experienced board will not."
+      },
+      {
+        "tipo": "cita",
+        "texto": "The board doesn't reject the indicator. It rejects whoever can't say what happened the last time they asked for the same thing.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "What do you bring into the room when the result doesn't exist yet?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Five pieces separate a budget request a skeptical board approves from one it merely tolerates."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Named stage",
+            "definicion": "Say whether this is infrastructure, a pilot, or scaling, because each one carries a different, reasonable window before it should show a return. Putting all three under the same question is what runs out the board's patience early."
+          },
+          {
+            "termino": "Closing the last chapter",
+            "definicion": "What exactly happened to the last approved AI budget, said in the same room, without dressing it up: what worked, what got shut down, what got dropped. Without that close, the new request inherits the previous one's debt."
+          },
+          {
+            "termino": "What can be shown today",
+            "definicion": "If there is no return yet, what intermediate evidence exists: what got learned, what risk got removed, what decision no longer has to be made twice. A skeptical board accepts no number yet if something concrete stands in its place."
+          },
+          {
+            "termino": "Conversion date",
+            "definicion": "The day this investment has to start showing a measurable result or get shut down, said in the same meeting where the money is requested, not months later once nobody remembers saying it."
+          },
+          {
+            "termino": "Who owns the hard question",
+            "definicion": "The name of the person who comes back into that room if this doesn't work either, and answers in person, not a committee or a new slide. A board trusts a name more than it trusts a plan."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of the five require a new indicator. They require something less comfortable: saying out loud what happened last time, before someone else in the room says it first."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Before the next board presentation, write in one sentence what happened to the last approved AI budget: what worked, what got shut down, what got dropped. If that sentence doesn't exist yet, that is this week's work, not the indicator slide."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How do you justify an AI investment to the board when it has no return yet?",
+            "respuesta": "By naming the stage the investment is at (infrastructure, pilot, or scaling), showing what happened to the last AI budget without dressing it up, and putting a firm date on when this investment has to show a measurable result or get shut down. The board doesn't need a new indicator. It needs to know someone answers for the outcome and that the last request never went unclosed."
+          },
+          {
+            "pregunta": "What's the difference between an AI investment that legitimately has no return yet and one that should already have one?",
+            "respuesta": "The stage. Building the data foundation that makes any AI project possible does not pay back in year one, and it should not have to. A pilot still hunting for its use case does not either. But scaling something that already worked in one team and still shows nothing in the next one is no longer an early stage. It is a sign that something stalled and nobody has said so yet."
+          },
+          {
+            "pregunta": "What does a skeptical board member do after already watching an AI project fail?",
+            "respuesta": "They stop evaluating the proposed indicator and start evaluating the person presenting it. They ask, directly or not, what happened to the last promise, and if nobody in the room can answer without checking the minutes, the new request inherits the distrust the last one never closed in public. Rebuilding that trust doesn't take a better indicator. It takes closing out loud what was left open."
+          },
+          {
+            "pregunta": "What happens if the board approves the investment anyway, without anyone resolving the political question?",
+            "respuesta": "It gets approved with less budget, more conditions, and more frequent review than last time, even if nobody names it that way in the meeting. That is how a board expresses distrust without saying the word: it does not reject the project, it half-approves it, and that half-approval usually costs the project more time than waiting and presenting the full case would have."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's prepare your next board presentation",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
