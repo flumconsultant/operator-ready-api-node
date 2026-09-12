@@ -1,9 +1,10 @@
 # Observatorio de reputación — BCP
 
 Monitoreo diario de menciones de BCP (redes sociales, prensa, reseñas) y de
-qué responden los asistentes de IA sobre BCP (GEO), con sentimiento y
-categoría puestos por Claude, log en el MySQL de Hostinger, alertas
-inmediatas por correo cuando algo es grave y un reporte diario.
+qué responden los asistentes de IA sobre BCP (GEO), clasificado por un agente
+de IA (no una lista de palabras clave), con log en el MySQL de Hostinger,
+alertas inmediatas por correo cuando algo es grave y un reporte diario
+redactado en prosa.
 
 ## Arquitectura
 
@@ -15,19 +16,57 @@ Google Sheets (config)              n8n — "PoC Solución de Monitoreo"
   · GEO Prompts (prompt, motor)         Apify (un actor por fuente)
                                      4. Rama GEO: por cada prompt activo,
                                         llama a ChatGPT / Gemini / Claude
-                                     5. Claude clasifica cada resultado:
-                                        sentimiento, categoría, ¿es alerta
-                                        urgente y por qué?
+                                     5. Agente Clasificador de Reputación
+                                        (Claude + herramienta de historial
+                                        de 7 días + salida estructurada):
+                                        lee cada observación en su contexto
+                                        y decide sentimiento, categoría y si
+                                        es alerta urgente, con una frase de
+                                        razonamiento auditable
                                      6. Guarda el lote en:
                                         · monitoreo.php → tabla MySQL (log)
                                         · Google Sheet "Log Dashboard"
                                           (para el tablero en Looker Studio)
-                                     7. Si algo quedó marcado como urgente →
-                                        correo inmediato
-                                     8. Al final de la corrida → correo con
-                                        el resumen del día (monitoreo.php,
-                                        acción "resumen")
+                                     7. Guardarraíl determinista: si algo ya
+                                        vino marcado crítico, o trae una
+                                        palabra crítica de la hoja Config,
+                                        fuerza la alerta sin depender del
+                                        criterio del modelo
+                                     8. Agente de Triage y Reporte: compara
+                                        hoy contra la tendencia de 7 días,
+                                        decide gravedad y redacta en prosa
+                                        el correo de resumen diario (y el de
+                                        alerta urgente, si aplica)
 ```
+
+### Por qué esto es un agente y no un flujo de reglas fijas
+
+La primera versión clasificaba con un llamado directo a la API de Claude y
+decidía "alerta urgente" con un umbral fijo (3× el promedio de la semana).
+Funciona, pero es rígido: no distingue sarcasmo de una queja real, y un pico
+de volumen no siempre es una crisis. La versión actual usa los nodos nativos
+de **Agente de IA** de n8n (LangChain: modelo + salida estructurada +
+herramientas), no llamados HTTP sueltos:
+
+- **Agente Clasificador de Reputación** — antes de decidir, puede *usar una
+  herramienta* para consultar el historial de 7 días (¿esto es una racha
+  nueva o algo ya conocido?), y siempre explica su razonamiento en un campo
+  `razonamiento` para que quede auditable.
+- **Agente de Triage y Reporte** — no compara contra un múltiplo fijo: lee
+  el resumen de hoy y el de 7 días, juzga si hay una racha real, y **redacta**
+  el correo de resumen diario en prosa, no con una plantilla HTML armada a
+  mano.
+- **Guardarraíl determinista** — la única regla fija que queda a propósito:
+  si el clasificador ya marcó algo crítico, o el texto trae una palabra
+  crítica de la hoja Config, la alerta se dispara sí o sí. Es la red de
+  seguridad para que un desacierto puntual del modelo nunca silencie un
+  fraude real. El agente decide la *gravedad* y la *redacción*, nunca si
+  avisar o no — eso lo protege el guardarraíl.
+
+Esta combinación (agente con criterio + guardarraíl determinista de mínimos)
+es la práctica recomendada para alertas de reputación/seguridad: un agente
+solo puede fallar por un mal juicio puntual, y una regla fija sola es ciega
+al contexto. Juntos, ninguno de los dos es el único punto de falla.
 
 ## Dónde se edita cada cosa
 
@@ -53,14 +92,17 @@ se deja de escribir la hoja.
 
 ## Alertas urgentes
 
-Un lote dispara correo inmediato (aparte del resumen diario) si, en la
-clasificación de Claude, cualquier fila resulta:
+Un lote dispara correo inmediato (aparte del resumen diario) si:
 
-- **Sentimiento negativo crítico** (fraude, caída de servicio, denuncia, no
-  una queja simple), o
-- **Pico de volumen**: muchas más menciones que el promedio de los últimos
-  días en poco tiempo (posible viralización), o
-- Contiene una de las **palabras críticas** de la hoja de Config.
+- el **guardarraíl determinista** encuentra algo que el clasificador ya
+  marcó como `negativo_critico`/`alerta_urgente`, o que trae una **palabra
+  crítica** de la hoja de Config (esto siempre gana, pase lo que pase), o
+- el **Agente de Triage y Reporte** juzga, comparando contra la tendencia de
+  7 días, que la situación amerita avisar aunque nada haya saltado el
+  guardarraíl (por ejemplo, una racha sostenida de quejas del mismo tipo).
+
+La gravedad (`baja`/`media`/`alta`/`critica`) y el texto del correo los
+decide y redacta el agente en cada corrida — no hay una plantilla fija.
 
 ## Qué falta para que esto corra de verdad
 
@@ -71,14 +113,23 @@ credenciales, porque son cuentas de terceros que no puedo crear por ti:
    credencial en el nodo HTTP de cada fuente (X/Twitter, prensa, reseñas) en
    n8n. Actores sugeridos están anotados como sticky notes en el workflow.
 2. **OpenAI y Gemini**: API key de cada uno, para los nodos GEO de ChatGPT y
-   Gemini (Claude reutiliza la misma credencial que la clasificación de
-   sentimiento).
-3. **Secreto `MONITOREO_TOKEN`** en GitHub (Settings → Secrets and variables
+   Gemini.
+3. **Anthropic, dos veces**: la misma API key, pero como **dos credenciales
+   distintas** en n8n — una "HTTP Header Auth" (la usan los nodos HTTP de
+   GEO-Claude) y una credencial **nativa "Anthropic Account"** (la usan los
+   nodos "Modelo Claude (Clasificador)" y "Modelo Claude (Triage)", que son
+   nodos de Agente de IA, no HTTP Request, y n8n les exige su propio tipo de
+   credencial).
+4. **Secreto `MONITOREO_TOKEN`** en GitHub (Settings → Secrets and variables
    → Actions): cualquier cadena aleatoria larga. El próximo despliegue a
    `main` la deja activa en `assets/api/monitoreo.php`. El mismo valor va en
    la credencial HTTP Header Auth del nodo que llama a `monitoreo.php` en
    n8n.
-4. **Activar el workflow** en n8n una vez estén las credenciales.
+5. **Revisar los 2 nodos "Formato de salida"** (Structured Output Parser) de
+   los agentes: llevan puesto el JSON Schema que esperan, pero si al abrir el
+   nodo en n8n lo ves vacío, pégalo tú — está en
+   `monitoreo-bcp/schemas-agentes.md` de este mismo repo.
+6. **Activar el workflow** en n8n una vez estén las credenciales.
 
 ## Coste
 
