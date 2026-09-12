@@ -258,20 +258,25 @@ jobs:
           BD_USUARIO: ${{ secrets.BD_USUARIO }}
           BD_CLAVE: ${{ secrets.BD_CLAVE }}
           DIFUSION_TOKEN: ${{ secrets.DIFUSION_TOKEN }}
+          MONITOREO_TOKEN: ${{ secrets.MONITOREO_TOKEN }}
         run: |
           set -euo pipefail
           if [ -z "${BD_BASE:-}" ] || [ -z "${BD_USUARIO:-}" ] || [ -z "${BD_CLAVE:-}" ]; then
             echo "::warning::Sin los secretos BD_* el formulario de suscripción dirá que no está configurado. El resto del sitio se despliega igual."
             printf '<?php return [];\n' > dist/api/config-datos.php
           else
+            if [ -z "${MONITOREO_TOKEN:-}" ]; then
+              echo "::warning::Sin MONITOREO_TOKEN el endpoint del observatorio de reputación (monitoreo.php) rechaza todo lo que le mande n8n. El resto del sitio se despliega igual."
+            fi
             python3 - <<'PY' > dist/api/config-datos.php
           import base64, json, os
           cfg = {
-              'host':    os.environ.get('BD_HOST') or 'localhost',
-              'base':    os.environ['BD_BASE'],
-              'usuario': os.environ['BD_USUARIO'],
-              'clave':   os.environ['BD_CLAVE'],
-              'difusion': os.environ.get('DIFUSION_TOKEN') or '',
+              'host':      os.environ.get('BD_HOST') or 'localhost',
+              'base':      os.environ['BD_BASE'],
+              'usuario':   os.environ['BD_USUARIO'],
+              'clave':     os.environ['BD_CLAVE'],
+              'difusion':  os.environ.get('DIFUSION_TOKEN') or '',
+              'monitoreo': os.environ.get('MONITOREO_TOKEN') or '',
           }
           blob = base64.b64encode(json.dumps(cfg).encode()).decode()
           print("<?php return json_decode(base64_decode('%s'), true);" % blob)
@@ -288,7 +293,8 @@ jobs:
           for f in dist/index.html dist/.htaccess dist/sitemap.xml dist/robots.txt \
                    dist/llms.txt dist/api/contacto.php dist/api/config.php \
                    dist/api/panel.php dist/api/config-panel.php \
-                   dist/api/suscripcion.php dist/api/correo.php dist/api/config-datos.php; do
+                   dist/api/suscripcion.php dist/api/correo.php dist/api/config-datos.php \
+                   dist/api/monitoreo.php; do
             [ -s "$f" ] || { echo "Falta o está vacío: $f"; exit 1; }
           done
           echo "dist/ listo — $(du -sh dist | cut -f1)"
@@ -800,6 +806,7 @@ jobs:
           BD_CLAVE: ${{ secrets.BD_CLAVE }}
           BD_HOST: ${{ secrets.BD_HOST }}
           DIFUSION_TOKEN: ${{ secrets.DIFUSION_TOKEN }}
+          MONITOREO_TOKEN: ${{ secrets.MONITOREO_TOKEN }}
         run: |
           echo "### Desplegado a producción" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
@@ -811,7 +818,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Secreto | Estado |" >> $GITHUB_STEP_SUMMARY
           echo "|---|---|" >> $GITHUB_STEP_SUMMARY
-          for nombre in MAIL_USER PANEL_TOKEN PANEL_USUARIOS BD_HOST BD_BASE BD_USUARIO BD_CLAVE DIFUSION_TOKEN; do
+          for nombre in MAIL_USER PANEL_TOKEN PANEL_USUARIOS BD_HOST BD_BASE BD_USUARIO BD_CLAVE DIFUSION_TOKEN MONITOREO_TOKEN; do
             valor="${!nombre:-}"
             if [ -z "$valor" ]; then
               echo "| \`$nombre\` | **FALTA** |" >> $GITHUB_STEP_SUMMARY

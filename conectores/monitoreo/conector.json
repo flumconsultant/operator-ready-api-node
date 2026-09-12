@@ -1,0 +1,33 @@
+{
+  "nombre": "monitoreo",
+  "sistema": "Observatorio de reputación BCP · n8n + Apify + Claude",
+  "queHace": "Guarda en el MySQL de Hostinger las menciones que captura Apify (redes sociales, prensa, reseñas) y las respuestas GEO ya clasificadas por Claude (sentimiento, categoría, si es alerta urgente), y arma el resumen que usa n8n para el correo diario y las alertas inmediatas.",
+  "implementacion": "assets/api/monitoreo.php · workflow de n8n «PoC Solución de Monitoreo» (https://n8n.srv836595.hstgr.cloud/workflow/wDgtcn0SkJFnqRNM)",
+  "disparadores": [
+    "n8n-diario",
+    "n8n-alerta-urgente"
+  ],
+  "credenciales": [
+    {
+      "clave": "MONITOREO_TOKEN",
+      "caduca": "al-rotarla",
+      "renueva": "Se genera y se guarda como secreto del repositorio (Settings → Secrets and variables → Actions). El mismo valor se pone en la credencial HTTP Header Auth del nodo de n8n que llama a monitoreo.php."
+    }
+  ],
+  "acciones": [
+    {
+      "nombre": "guardar",
+      "efecto": "reversible",
+      "ensayo": null
+    },
+    {
+      "nombre": "resumen",
+      "efecto": "reversible",
+      "ensayo": null
+    }
+  ],
+  "registro": "tabla monitoreo_menciones en el MySQL de Hostinger (misma base que conectores/base-de-datos)",
+  "centinela": null,
+  "datosPersonales": true,
+  "notas": "Guarda autor/handle público de cada mención cuando la fuente lo trae (redes sociales), por eso datosPersonales va en true — es dato público de terceros, no una lista propia como la de suscripción. Las credenciales de Apify, OpenAI, Gemini y Anthropic que usa el workflow viven como credenciales dentro de n8n, no como secretos de este repositorio: monitoreo.php no las necesita, solo recibe ya clasificado lo que n8n le manda. Ver monitoreo-bcp/README.md para la arquitectura completa y qué falta configurar."
+}
