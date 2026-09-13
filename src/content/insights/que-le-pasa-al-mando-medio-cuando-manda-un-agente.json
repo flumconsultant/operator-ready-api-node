@@ -1,0 +1,273 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-09-13",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "operating-model",
+  "formato": "perspective",
+  "es": {
+    "slug": "que-le-pasa-al-mando-medio-cuando-manda-un-agente",
+    "titulo": "Qué le pasa al mando medio cuando manda un agente",
+    "entradilla": "A un gerente de operaciones le dieron un agente que resuelve la mitad de los casos de su equipo. Nadie le achicó el equipo, nadie le cambió el título, y nadie se sentó con él a decidir qué hacer cuando el agente falla en un caso que él nunca llegó a ver.",
+    "descripcion": "El puesto del mando medio no desaparece con un agente en el equipo. Se vacía de la visibilidad que antes lo sostenía, y nadie lo ha rediseñado.",
+    "linkedin": {
+      "texto": "Un gerente de operaciones se quedó con el mismo equipo, el mismo título y la mitad del trabajo ejecutada por un agente. Nadie rediseñó su puesto.\n\nEl discurso circula alrededor de un rol nuevo, pensado desde cero, para gestionar agentes. Mientras tanto, el mando medio que ya existe sigue firmando por procesos que ya no puede ver ejecutarse completos, sin que nadie haya dicho quién responde cuando el agente se equivoca.\n\nEn el análisis completo de BECOME desarrollamos qué hay que redefinir en ese puesto antes de sumarle un segundo agente.",
+      "hashtags": ["IA", "Liderazgo", "Operaciones"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "A un gerente de operaciones le dieron un agente que resuelve la mitad de los casos de su equipo. Nadie le achicó el equipo, nadie le cambió el título, y nadie se sentó con él a decidir qué hacer cuando el agente falla en un caso que él nunca llegó a ver."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cada vez que una empresa pone un agente a ejecutar parte del trabajo de un equipo, alguien en el comité celebra la ganancia de productividad. Casi nunca alguien se sienta con el mando medio de ese equipo a rediseñar su puesto. El agente entra, una parte del trabajo desaparece de la fila de tareas, y el puesto sigue teniendo el mismo nombre, el mismo organigrama y los mismos indicadores que tenía cuando todo el equipo era gente."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El discurso que circula ahora mismo no ayuda. Habla de un rol nuevo, el «agent manager», pensado desde cero para dirigir flotas de agentes. Es una disciplina que probablemente termine existiendo. Pero no le sirve de nada al gerente que ya tiene el puesto hoy, con un equipo mixto, y que necesita saber qué cambia en su trabajo el lunes, no dentro de tres años cuando el rol nuevo esté maduro."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Mientras esa conversación sigue en el plano conceptual, al mando medio actual le está pasando algo muy concreto, y nadie lo está nombrando."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Qué le pasa a un mando medio cuando el agente ejecuta parte de su trabajo?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Pierde visibilidad sin perder autoridad. Antes veía el trabajo de su equipo porque lo repartía él mismo y revisaba cada entrega antes de que saliera. Con el agente, esa ventana se cierra: la única señal que le llega es la excepción que el propio agente decide marcar. Todo lo que el agente resuelve seguro, aunque se equivoque de forma sistemática, queda fuera de su vista por diseño."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y sigue respondiendo por el resultado completo. Ojo, no por la mitad que todavía hace su gente: por el proceso entero, incluida la parte que ejecuta un sistema que él no configuró y no puede auditar caso por caso. Cuando algo falla, la pregunta de quién responde llega a su escritorio antes que a cualquier otro."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Se entera de un error del agente cuando ya llegó al cliente o al comité, no antes de que saliera.",
+          "Sigue firmando el reporte de su equipo aunque ya no controla cómo se produjo la mitad de lo que reporta.",
+          "Nadie ha dicho si responde él, el área que configuró el agente o el dueño de la plataforma cuando algo sale mal.",
+          "Su semana se llena de casos que el agente escaló como excepción, y esa carga no aparece en ninguna descripción de su puesto.",
+          "El indicador con el que lo evalúan es el mismo del año pasado, cuando el agente todavía no hacía nada de esto.",
+          "Le piden liderazgo de personas para una parte del trabajo que ya no ejecuta ninguna persona."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema detrás",
+        "texto": "El puesto no desapareció. Se vació de lo que lo hacía visible."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La autoridad de un mando medio nunca vino solo del organigrama. Vino de que veía el trabajo pasar por sus manos: lo repartía, lo revisaba, corregía el error antes de que se convirtiera en incidente. Esa visibilidad era el mecanismo real de control, más que cualquier título. El agente no le quita el título. Le quita el mecanismo, y deja el título intacto como si nada hubiera cambiado."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "No se trata de que el mando medio tenga menos trabajo. Se trata de que tiene el mismo trabajo con menos información para hacerlo bien, y con una fuente nueva de riesgo que nadie le enseñó a leer: un agente que se equivoca despacio y por debajo del umbral que activa una alerta no se ve en ningún reporte, hasta que el error acumulado ya es demasiado grande para explicarlo en una frase."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A un mando medio no se le puede pedir que responda por un proceso que ya no puede ver ejecutarse completo.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La transición",
+        "texto": "¿Qué hay que redefinir en el puesto, en vez de inventar uno nuevo?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "No hace falta esperar a que madure la disciplina del «agent manager» para arreglar esto. Lo que hace falta es escribir cuatro cosas que hoy dependen de la costumbre y no de una decisión, para el mando medio que ya tiene el puesto."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Visibilidad mínima",
+            "definicion": "Qué porcentaje de los casos que resuelve el agente ve el mando medio aunque no estén marcados como excepción, y con qué frecuencia. Sin ese mínimo, la única realidad que conoce es la que el propio agente decide mostrarle."
+          },
+          {
+            "termino": "Responsable declarado",
+            "definicion": "Quién firma cuando falla un caso ejecutado en parte por el agente bajo la autoridad nominal del mando medio, escrito antes de que falle, no discutido después con el incidente ya sobre la mesa."
+          },
+          {
+            "termino": "Carga reconocida",
+            "definicion": "El tiempo que el mando medio dedica a resolver las excepciones que el agente le escala entra en su carga formal de trabajo. Si se suma gratis encima de lo anterior, la ganancia de productividad del agente la está pagando su tiempo libre."
+          },
+          {
+            "termino": "Métrica actualizada",
+            "definicion": "El indicador con el que se evalúa al mando medio se reescribe para separar qué parte del resultado depende de su gestión de personas y cuál del comportamiento del agente. Medirlo con el indicador de antes evalúa un puesto que ya no existe."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguna de las cuatro exige contratar a nadie ni definir un cargo nuevo en el organigrama. Exige que quien diseñó el proceso donde entró el agente se siente con el mando medio que ya lo lidera y responda estas cuatro preguntas antes de sumar el segundo agente al mismo equipo."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Elige un proceso donde un agente ya ejecuta parte del trabajo y pregúntale a quien lo lidera hoy quién responde si falla. Si la respuesta es «no lo sé» o tarda más de diez segundos, ahí está el hueco que hay que cerrar antes de escalar el siguiente agente al mismo equipo."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Qué le pasa a un mando medio cuando un agente ejecuta parte del trabajo de su equipo?",
+            "respuesta": "Pierde la visibilidad diaria que antes tenía sobre el trabajo, porque ya no lo reparte ni lo revisa entrega por entrega, y solo ve lo que el agente decide marcar como excepción. Al mismo tiempo conserva la responsabilidad completa sobre el proceso, incluida la parte que ejecuta el agente. Esa combinación, misma responsabilidad y menos visibilidad, es el cambio real, no una reducción de trabajo."
+          },
+          {
+            "pregunta": "¿Un mando medio tiene que convertirse en un 'agent manager'?",
+            "respuesta": "No es la ruta que resuelve el problema de hoy. El 'agent manager' es una disciplina todavía en formación, pensada para quien dirige flotas de agentes desde cero, y no da respuesta a la persona que ya lidera un equipo mixto de personas y agentes en este momento. Lo urgente no es crear ese cargo, es redefinir el que ya existe con visibilidad, responsabilidad y carga escritas de nuevo."
+          },
+          {
+            "pregunta": "¿Quién responde si falla un proceso que ejecuta en parte un agente de IA?",
+            "respuesta": "Tiene que quedar escrito antes de que el proceso entre en marcha, no discutido después de que falle. Casi siempre hay tres candidatos posibles: el mando medio que lidera el equipo, el área que configuró el agente o quien administra la plataforma que lo aloja. Cuando esa decisión no está tomada de antemano, responde por defecto quien tiene la autoridad nominal más visible, aunque no haya sido quien introdujo el error."
+          },
+          {
+            "pregunta": "¿Cómo se mide a un mando medio cuyo equipo ya no hace todo el trabajo?",
+            "respuesta": "Separando el indicador en dos partes en vez de mantener el que existía antes del agente. Una mide la gestión de personas que sigue haciendo el mando medio: coaching, calidad de las decisiones humanas, desarrollo del equipo. La otra mide el comportamiento del agente bajo su supervisión, con una meta distinta porque la palanca para mejorarlo también es distinta. Mezclarlas en un solo número evalúa un puesto que ya cambió con las reglas del puesto anterior."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Rediseñemos el puesto del mando medio",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "what-happens-to-managers-when-agents-do-the-work",
+    "titulo": "What happens to managers when agents do the work",
+    "entradilla": "An operations manager kept the same team, the same title, and half the caseload moved to an agent. Nobody shrank the team, nobody changed the title, and nobody sat down with him to decide what happens when the agent gets a case wrong that he never saw.",
+    "descripcion": "A manager's job does not vanish once an agent joins the team. It empties out of the visibility that used to hold it up, and nobody has redesigned it.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "An operations manager kept the same team, the same title, and half the caseload moved to an agent. Nobody shrank the team, nobody changed the title, and nobody sat down with him to decide what happens when the agent gets a case wrong that he never saw."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Every time a company puts an agent in charge of part of a team's work, someone in the room applauds the productivity gain. Almost nobody sits down with that team's manager to redesign the job underneath it. The agent moves in, a chunk of the work disappears from the queue, and the job keeps the same title, the same reporting line and the same metrics it had when the whole team was human."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The conversation circulating right now does not help. It talks about a brand new role, the \"agent manager,\" built from the ground up to run fleets of agents. That discipline will probably exist one day. It is no use at all to the manager who already holds the job today, running a mixed team of people and agents, and who needs to know what changes in their work on Monday, not once the new role has matured three years from now."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "While that conversation stays theoretical, something very specific is already happening to the manager who already has the job, and nobody is naming it."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "What happens to a manager when an agent takes over part of their team's work?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "They lose visibility without losing authority. They used to see their team's work because they assigned it themselves and checked every piece before it went out. With the agent, that window closes: the only signal that reaches them is whatever exception the agent itself decides to flag. Everything the agent resolves with confidence, even if it is wrong in a consistent pattern, stays out of sight by design."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "And they still answer for the whole result. Not for the half their people still handle by hand, but for the entire process, including the part run by a system they did not configure and cannot audit case by case. When something breaks, the question of who answers for it lands on their desk before it reaches anyone else."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "They find out about an agent's mistake once it has already reached the client or the board, never before it went out.",
+          "They still sign off on the team's report even though they no longer control how half of what it reports was produced.",
+          "Nobody has said whether the manager, the team that configured the agent, or whoever owns the platform answers when something goes wrong.",
+          "Their week fills up with cases the agent escalated as exceptions, and none of that load appears in any job description.",
+          "The metric they are judged on is the same one from last year, from before the agent did any of this.",
+          "They are asked for people leadership over a share of the work that no person executes anymore."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "The job did not disappear. It got emptied of what made it visible."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A manager's authority never came only from the org chart. It came from watching the work pass through their hands: assigning it, checking it, catching an error before it became an incident. That visibility was the real control mechanism, more than any title. The agent does not take the title away. It takes the mechanism away and leaves the title standing as if nothing had changed."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "It is not that the manager now does less work. It is that they carry the same work with less information to do it well, plus a new source of risk nobody trained them to read: an agent that gets things wrong slowly, staying just under the threshold that would trigger a flag, never shows up in any report until the accumulated error is too big to explain in one sentence."
+      },
+      {
+        "tipo": "cita",
+        "texto": "You cannot ask a manager to answer for a process they can no longer watch run in full.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The transition",
+        "texto": "What needs redefining in the job, instead of inventing a new one?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "There is no need to wait for the \"agent manager\" discipline to mature to fix this. What is needed is to write down four things that today live in habit rather than in any actual decision, for the manager who already holds the job."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Minimum visibility",
+            "definicion": "What share of the cases the agent resolves the manager actually sees, even when they are not flagged as exceptions, and how often. Without that minimum, the only reality they know is whatever the agent chooses to surface."
+          },
+          {
+            "termino": "Declared owner",
+            "definicion": "Who signs off when a case handled partly by the agent, under the manager's nominal authority, goes wrong, written down before it fails rather than argued over once the incident is already on the table."
+          },
+          {
+            "termino": "Recognised load",
+            "definicion": "The time the manager spends resolving exceptions the agent escalates counts as part of their formal workload. If it gets stacked on top for free, the agent's productivity gain is being paid for out of the manager's own time."
+          },
+          {
+            "termino": "Updated metric",
+            "definicion": "The indicator used to judge the manager gets rewritten to separate what depends on their people management from what depends on the agent's behaviour. Judging it with the old metric evaluates a job that no longer exists."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of the four requires hiring anyone or inventing a new box on the org chart. It requires whoever designed the process the agent joined to sit down with the manager already running it and answer these four questions before a second agent joins the same team."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Pick one process where an agent already handles part of the work and ask whoever runs it today who answers if it fails. If the answer is \"I don't know\" or takes longer than ten seconds, that is the gap to close before the next agent joins the same team."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "What happens to a manager when an agent takes over part of their team's work?",
+            "respuesta": "They lose the day-to-day visibility they used to have, because they no longer assign or check every piece of work by hand and only see whatever the agent decides to flag as an exception. At the same time they keep full accountability for the process, including the part the agent runs. Same accountability with less visibility is the real change, not a lighter workload."
+          },
+          {
+            "pregunta": "Does a manager need to become an 'agent manager'?",
+            "respuesta": "That is not the path that fixes today's problem. The 'agent manager' is still an emerging discipline, built for someone running fleets of agents from scratch, and it offers nothing to whoever already leads a mixed team of people and agents right now. The urgent move is not creating that new role, it is rewriting the one that already exists with visibility, ownership and workload spelled out again."
+          },
+          {
+            "pregunta": "Who answers when a process partly run by an AI agent fails?",
+            "respuesta": "That has to be written down before the process goes live, not argued over after it fails. There are usually three candidates: the manager running the team, the function that configured the agent, or whoever administers the platform hosting it. When that call has not been made in advance, the person with the most visible nominal authority answers by default, even when they were not the one who introduced the error."
+          },
+          {
+            "pregunta": "How do you measure a manager whose team no longer does all the work?",
+            "respuesta": "By splitting the metric into two instead of keeping the one that predates the agent. One tracks the people management the manager still does: coaching, the quality of human decisions, team development. The other tracks the agent's behaviour under their oversight, with a different target because the lever to improve it is different too. Blending both into a single number judges a job that already changed by the rules of the job it replaced."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's redesign the manager's job",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
