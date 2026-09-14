@@ -1,0 +1,263 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-09-14",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "responsible-scale",
+  "formato": "framework",
+  "es": {
+    "slug": "que-hacer-cuando-tu-equipo-ya-usa-ia-sin-permiso",
+    "titulo": "Qué hacer cuando tu equipo ya usa IA sin permiso",
+    "entradilla": "El área de seguridad de una empresa cruzó sus propios registros de tráfico y encontró que buena parte del personal ya subía documentos internos a una IA que la empresa nunca había aprobado. La reacción fue bloquear el acceso esa misma tarde. Dos semanas después el tráfico volvió, solo que esta vez nadie podía verlo.",
+    "descripcion": "Prohibir la IA que tu gente ya usa no la elimina: la saca de tu radar. Cómo mapear el uso real antes de bloquear nada y dar una ruta segura.",
+    "linkedin": {
+      "texto": "Una auditoría de tráfico encontró que buena parte del personal ya subía documentos internos a una IA que nadie había aprobado. La respuesta fue bloquear el acceso esa misma tarde.\n\nDos semanas después el uso volvió, solo que esta vez nadie podía verlo. Prohibir sin medir no elimina el riesgo, lo saca del radar justo cuando por primera vez se podía ver.\n\nEn este análisis de BECOME desarrollamos qué hacer en las primeras semanas después de descubrir uso no autorizado de IA, antes de escribir una sola línea de política.",
+      "hashtags": ["IA", "Riesgo", "Cumplimiento"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "El área de seguridad de una empresa cruzó sus propios registros de tráfico y encontró que buena parte del personal ya subía documentos internos a una IA que la empresa nunca había aprobado. La reacción fue bloquear el acceso esa misma tarde. Dos semanas después el tráfico volvió, solo que esta vez nadie podía verlo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Pasa en casi cualquier empresa que se pone a mirar en serio. Alguien audita el tráfico saliente, o revisa los gastos de tarjeta corporativa, o simplemente pregunta en una reunión quién ha probado esto, y aparece la misma sorpresa: la gente ya está usando IA, con cuentas personales, con el nivel gratuito, subiendo lo que haga falta para terminar el trabajo a tiempo. Nadie lo decidió en un comité. Lo decidió cada persona, sola, un martes cualquiera, porque la herramienta oficial tardaba semanas en aprobarse y la fecha de entrega no esperaba semanas."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El primer instinto, casi siempre, es cerrar el grifo. Bloquear el dominio, meter la IA en la lista negra del proxy, mandar un correo recordando la política de uso aceptable. Se siente como acción. Y lo es, solo que resuelve el problema equivocado: el riesgo nunca estuvo en que la IA existiera, estuvo en que nadie sabía qué datos salían por ahí. Bloquear el acceso apaga la única señal que la empresa tenía para medir ese riesgo, justo cuando por primera vez podía verlo."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Qué hace una empresa cuando descubre que su gente ya usa IA sin permiso (shadow AI)?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La respuesta que da casi todo el mundo, por reflejo, es prohibir primero y preguntar después. Legal manda el aviso, sistemas cierra el acceso, y el comité respira porque hizo algo visible. Pero el uso no desaparece. Se muda. La gente que ya descubrió que la IA le ahorra horas de trabajo no vuelve al método manual porque llegó un correo. Cambia de dispositivo, usa el teléfono personal, entra desde una red que la empresa no vigila. La empresa gana un comunicado y pierde la visibilidad que tenía por accidente."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El primer aviso de uso no autorizado llega por una auditoría de gastos o de tráfico, casi nunca porque alguien lo reportó.",
+          "La política de uso aceptable existe desde hace tiempo, pero nadie la revisó desde que las herramientas de IA cambiaron tan rápido.",
+          "El equipo que más usa IA sin permiso suele ser el que más presión tiene por entregar rápido, no el que menos entiende el riesgo.",
+          "La respuesta de la empresa se decide en la reunión de crisis del mismo día, antes de haber medido qué datos salieron ni hacia dónde.",
+          "Bloquear el dominio en la red corporativa no reduce el uso: lo mueve al teléfono personal, donde la empresa ya no ve nada."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema de fondo",
+        "texto": "El riesgo no es que tu gente use IA. Es prohibirla sin mirar primero."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cuando una empresa descubre uso no autorizado de IA, tiene, sin saberlo, información que no tenía la semana anterior: sabe que existe demanda real, sabe qué tipo de tarea la gente resuelve con eso, y sabe quién lo hace. Esa información vale más que la que tenía el mes pasado, cuando el uso ya ocurría y nadie lo había mirado. Prohibir de inmediato tira esa información a la basura antes de haberla usado para algo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y hay una segunda pérdida, más cara que la primera. Cada vez que un empleado encuentra una forma de trabajar más rápido y la empresa se la quita sin ofrecer una alternativa igual de rápida, aprende una lección que no se olvida: que resolver el problema por su cuenta funciona mejor que pedir permiso. La próxima herramienta que descubra no la va a reportar. La va a esconder mejor."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Prohibir la IA que ya usa tu gente no elimina el riesgo. Lo saca de tu radar el mismo día en que por fin lo tenías delante.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "¿Qué hacer en las primeras semanas después de descubrir el uso no autorizado?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Las cinco piezas siguientes se trabajan en orden, no todas a la vez, y en las primeras semanas después de que aparece la primera señal, no meses más tarde con un proyecto de gobierno ya armado."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Alcance real",
+            "definicion": "Qué se está usando, con qué datos y en cuántas áreas, antes de decidir cualquier cosa. Sin este mapa, la política que se escriba va a resolver un problema que nadie midió."
+          },
+          {
+            "termino": "Ventana sin sanción",
+            "definicion": "Un plazo corto, comunicado con claridad, donde declarar el uso que ya existe no trae consecuencia disciplinaria. Sin esa ventana, nadie confiesa y el mapa del punto anterior sale incompleto."
+          },
+          {
+            "termino": "Línea roja de datos",
+            "definicion": "Qué categorías de información quedan prohibidas sin excepción, como datos de clientes, contratos o información regulada, mientras el resto espera una decisión más calmada. No todo el uso pesa igual, y tratarlo igual es lo que hace que la prohibición se sienta arbitraria."
+          },
+          {
+            "termino": "Ruta rápida sancionada",
+            "definicion": "Una alternativa aprobada que tarde en aprobarse lo mismo que tarda un empleado en abrir una pestaña nueva, no varias semanas. Si la ruta oficial sigue siendo la más lenta, el uso no autorizado vuelve en un mes."
+          },
+          {
+            "termino": "Dueño del riesgo",
+            "definicion": "Una persona con nombre y cargo que decide, caso por caso, qué se tolera mientras se construye la política definitiva. Sin ese dueño, cada gerente decide por su cuenta y la empresa vuelve al punto de partida."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguna de las cinco exige convertir a la empresa en policía de IA ni tratar a quien ya la usa como si hubiera hecho algo malo. Exige lo contrario: reconocer que esa persona encontró un problema real y una solución más rápida que la que ofrecía la empresa, y construir la versión de esa solución que sí se puede sostener."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Antes de escribir una sola línea de política, pregunta en tres áreas distintas qué herramienta de IA usan hoy, sin que nadie las haya autorizado. Si la respuesta llega rápido y sin rodeos, todavía hay ventana para ordenar esto sin perder la confianza de quien ya te lo va a contar. Si la respuesta es silencio, la ventana ya se cerró y toca ganársela de nuevo."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Qué hace una empresa cuando descubre que su gente ya usa IA sin permiso (shadow AI)?",
+            "respuesta": "Lo primero, casi siempre, es medir antes de prohibir: qué herramientas se usan, con qué tipo de datos y en qué áreas, antes de escribir cualquier política nueva. Bloquear el acceso sin ese mapa no elimina el uso, lo esconde mejor, y la empresa pierde la única oportunidad que tuvo de ver el riesgo con claridad."
+          },
+          {
+            "pregunta": "¿Por qué la gente usa IA sin permiso si ya existe una herramienta aprobada por la empresa?",
+            "respuesta": "Casi siempre porque la herramienta aprobada tarda demasiado en llegar, no porque la persona quiera saltarse una regla. Cuando el proceso de aprobación de una nueva IA tarda semanas y la fecha de entrega no espera, la mayoría elige resolver el trabajo con lo que tiene a mano, aunque no esté autorizado."
+          },
+          {
+            "pregunta": "¿Es mejor prohibir de inmediato el uso de IA no autorizada o dar tiempo para declararlo?",
+            "respuesta": "Dar una ventana corta para declarar el uso sin sanción disciplinaria suele funcionar mejor que prohibir de inmediato, porque produce información real sobre qué se está usando y con qué datos. Prohibir sin esa ventana no elimina el uso: lo mueve a dispositivos personales donde la empresa ya no tiene ninguna visibilidad."
+          },
+          {
+            "pregunta": "¿Quién debe decidir qué hacer con el uso no autorizado de IA que ya existe en una empresa?",
+            "respuesta": "Tiene que haber una persona concreta, con nombre y autoridad para decidir caso por caso, mientras se construye la política definitiva. Sin ese responsable único, cada gerente de área improvisa su propio criterio, y la empresa termina con tantas reglas informales como equipos, que es justo el problema que se quería resolver."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Ordenemos el uso de IA que ya tienes",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "what-to-do-about-the-ai-your-team-already-uses",
+    "titulo": "What to Do About the AI Your Team Already Uses",
+    "entradilla": "A company's security team cross-referenced its own network logs and found that a good part of the staff was already uploading internal documents to an AI nobody had approved. The response was to block access that same afternoon. Two weeks later the traffic came back. Nobody could see it anymore.",
+    "descripcion": "Banning the AI your people already use does not remove it. How to map real use before blocking anything and offer a fast, safe path instead.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "A company's security team cross-referenced its own network logs and found that a good part of the staff was already uploading internal documents to an AI nobody had approved. The response was to block access that same afternoon. Two weeks later the traffic came back. Nobody could see it anymore."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "It happens in almost every company that actually looks. Someone audits outbound traffic, or reviews the corporate card statements, or just asks in a meeting who has tried this, and the same surprise shows up: people are already using AI, on personal accounts, on the free tier, uploading whatever the work requires to hit the deadline. Nobody decided this in a committee. Every person decided it alone, on some ordinary Tuesday, because the approved tool took weeks to clear and the deadline did not wait weeks."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The first instinct is almost always to shut it down. Block the domain, add the AI to the proxy blacklist, send a reminder about acceptable use. It feels like action. And it is, except it solves the wrong problem. The risk was never that the AI existed. It was that nobody knew what data was leaving through it. Blocking access kills the one signal the company had to measure that risk, right when it could finally see it."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "What does a company do when it finds out its people are already using AI without permission (shadow AI)?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The reflex answer almost everyone gives is ban first, ask later. Legal sends the notice, IT closes the access, the committee exhales because it did something visible. But the use does not disappear. It moves. Someone who already found that AI saves hours of work does not go back to the manual method because an email arrived. They switch devices, use a personal phone, log in from a network the company does not watch. The company gets a memo and loses the visibility it had by accident."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The first sign of unauthorized AI use comes from an expense or traffic audit, almost never from someone reporting it.",
+          "The acceptable use policy has existed for a while, but nobody updated it since AI tools changed this fast.",
+          "The team using unauthorized AI the most is usually the one under the most delivery pressure, not the one that understands the risk least.",
+          "The company's response gets decided in a same-day crisis meeting, before anyone measured what data went out or where.",
+          "Blocking the domain on the corporate network does not reduce use. It moves it to a personal phone, where the company sees nothing at all."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "The risk is not that your people use AI. It is banning it before you look."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "When a company discovers unauthorized AI use, it has, without realizing it, information it did not have the week before: real demand exists, this is the kind of task people solve with it, and these are the people doing it. That information is worth more than what the company had a month ago, when the use was already happening and nobody had looked. Banning it immediately throws that information away before it gets used for anything."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "And there is a second loss, costlier than the first. Every time an employee finds a faster way to work and the company takes it away without offering an equally fast alternative, they learn a lesson that sticks: solving the problem on your own works better than asking permission. The next tool they find, they will not report. They will hide it better."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Banning the AI your people already use does not remove the risk. It removes it from view, the same day you finally had it in front of you.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "What should happen in the first weeks after discovering unauthorized use?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The five pieces below get worked in order, not all at once, and in the first weeks after the first signal shows up, not months later as part of a fully built governance project."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Real scope",
+            "definicion": "What is being used, with what data, and across how many teams, before deciding anything. Without this map, whatever policy gets written ends up solving a problem nobody measured."
+          },
+          {
+            "termino": "Amnesty window",
+            "definicion": "A short, clearly communicated period in which declaring existing use carries no disciplinary consequence. Without it, nobody comes forward and the map from the first step stays incomplete."
+          },
+          {
+            "termino": "Data red line",
+            "definicion": "Which categories of information are off limits with no exception, such as client data, contracts, or regulated information, while everything else waits for a calmer decision. Not all use carries the same weight, and treating it as if it did is what makes the ban feel arbitrary."
+          },
+          {
+            "termino": "Sanctioned fast path",
+            "definicion": "An approved alternative that takes as long to clear as it takes an employee to open a new tab, not several weeks. If the official route stays the slowest one, unauthorized use comes back within a month."
+          },
+          {
+            "termino": "Risk owner",
+            "definicion": "One named person with the authority to decide, case by case, what gets tolerated while the permanent policy gets built. Without that owner, every manager improvises their own rule, and the company ends up back where it started."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of the five requires turning the company into an AI police force, or treating whoever already uses it as if they did something wrong. It requires the opposite: recognizing that this person found a real problem and a faster answer than the one the company offered, and building the version of that answer the company can actually sustain."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Before writing a single line of policy, ask three different teams what AI tool they already use today, without anyone having approved it. If the answer comes back fast and straight, there is still a window to sort this out without losing the trust of whoever is about to tell you. If the answer is silence, that window already closed, and it has to be earned back."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "What does a company do when it finds out its people are already using AI without permission (shadow AI)?",
+            "respuesta": "The first move, almost always, is to measure before banning: which tools are in use, with what kind of data, and across which teams, before writing any new policy. Blocking access without that map does not remove the use. It hides it better, and the company loses the one chance it had to see the risk clearly."
+          },
+          {
+            "pregunta": "Why do people use unauthorized AI when the company already has an approved tool?",
+            "respuesta": "Almost always because the approved tool takes too long to arrive, not because the person wants to break a rule. When approving a new AI tool takes weeks and the deadline will not wait, most people choose to get the work done with whatever is at hand, approved or not."
+          },
+          {
+            "pregunta": "Is it better to ban unauthorized AI use immediately or give people time to declare it?",
+            "respuesta": "A short window to declare existing use without disciplinary consequence usually works better than an immediate ban, because it produces real information about what is being used and with what data. Banning it without that window does not remove the use. It moves it to personal devices where the company has no visibility at all."
+          },
+          {
+            "pregunta": "Who should decide what to do about unauthorized AI use that already exists inside a company?",
+            "respuesta": "There has to be one named person with the authority to decide case by case while the permanent policy gets built. Without a single owner, every department manager improvises their own rule, and the company ends up with as many informal policies as teams, which is exactly the problem it was trying to solve."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's get a handle on the AI you already have",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
