@@ -1,0 +1,263 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-09-15",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "value-adoption",
+  "formato": "framework",
+  "es": {
+    "slug": "como-evitar-quedar-atado-a-un-proveedor-de-ia",
+    "titulo": "Cómo evitar quedar atado a un proveedor de IA",
+    "entradilla": "El proveedor cambió las condiciones en la renovación del segundo año. El comité pidió cotizaciones de alternativas y descubrió algo peor que el precio nuevo: migrar iba a tardar más que cambiar de sistema contable. Firmaron.",
+    "descripcion": "Evitar quedar atado a un proveedor de IA no se negocia cuando llega la renovación. Se negocia el día que se firma el primer contrato.",
+    "linkedin": {
+      "texto": "Una empresa descubrió, en plena renovación, que dejar a su proveedor de IA iba a tardar más que cambiar de sistema contable. No lo habían medido nunca porque nunca lo habían necesitado.\n\nLa dependencia de un proveedor de IA no se firma el día del contrato. Se construye después, en cada proceso que aprende a funcionar solo con ese sistema y ninguno de los otros. Para cuando alguien la nota, ya no queda margen para negociar nada.\n\nEn este análisis de BECOME desarrollamos qué negociar antes de firmar, mientras todavía hay algo que negociar.",
+      "hashtags": ["IA", "Proveedores", "Estrategia"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "El proveedor cambió las condiciones en la renovación del segundo año. El comité pidió cotizaciones de alternativas y descubrió algo peor que el precio nuevo: migrar iba a tardar más que cambiar de sistema contable. Firmaron."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Nadie firma un contrato de IA pensando en cómo salir de él. Se firma pensando en la demo, en el precio del primer año y en cuánto tiempo ahorra el equipo desde el primer mes. La pregunta de salida ni siquiera llega a la mesa, y cuando llega, casi siempre la hace el abogado por rutina, no el comité por estrategia. Se contesta con una cláusula genérica que nadie vuelve a leer."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El problema es que la dependencia de un proveedor no se firma ese día. Se construye después, mes a mes, en silencio: un proceso que aprende a funcionar con el formato de datos de ese sistema y ningún otro, un equipo que entrena su criterio sobre las rarezas de esa herramienta específica, una integración escrita directamente contra su API sin ninguna capa intermedia. Para cuando alguien mide cuánto costaría salir, ya no es una pregunta hipotética. Es la pregunta que decide si se puede negociar algo o solo aceptar lo que llegue."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Cómo evita una empresa quedar atada a un único proveedor de IA?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La dependencia avisa antes de volverse un problema, solo que los avisos se ven como normalidad operativa, no como riesgo. Estas son las señales que casi siempre están ahí antes de la renovación que sale cara:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Nadie en la empresa sabe, sin preguntarle al proveedor, cómo se exportan los datos ni en qué formato quedarían.",
+          "El contrato original no menciona qué pasa si la empresa decide irse: ni plazo de transición, ni ayuda, ni precio de esa ayuda.",
+          "El proceso más crítico llama directamente a la API del proveedor desde el código, sin ninguna capa propia en el medio.",
+          "La \"alternativa\" que se evaluó al principio nunca se volvió a mirar, y nadie sabría decir hoy si sigue siendo viable.",
+          "La renovación se firma sola cada año, sin que ningún comité vuelva a comparar el mercado, porque el sistema funciona y nadie quiere abrir esa conversación."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema de fondo",
+        "texto": "El lock-in no se firma. Se acumula."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Casi tres de cada cuatro ejecutivos de empresa dicen que perder a su proveedor principal de IA interrumpiría la operación diaria o los dejaría sin poder funcionar. Solo el 6% podría dejar de usarlo sin ninguna interrupción. Y entre quienes ya intentaron migrar de proveedor, más de la mitad dice que la migración fracasó por completo o tardó bastante más de lo previsto. Fuente: encuesta de Zapier entre 542 ejecutivos de empresa en Estados Unidos, 2026."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Esa cifra no describe un accidente de contrato. Describe lo que pasa cuando ninguna decisión de arquitectura se toma pensando en la salida, porque en el momento de tomarla la salida no es el problema que hay que resolver. El problema es lanzar rápido, y lanzar rápido casi siempre significa la ruta más corta: conectar directo, guardar el dato como lo entrega el proveedor, entrenar al equipo en su interfaz exacta. Cada atajo es razonable el día que se toma. La suma de todos, tres años después, es una empresa que no puede negociar el precio porque no tiene con qué amenazar con irse."
+      },
+      {
+        "tipo": "cita",
+        "texto": "El proveedor más fácil de dejar es el que negociaste antes de necesitarlo. El que es imposible de dejar es el que dejaste crecer sin mirarlo.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "¿Qué negociar antes de firmar con un proveedor de IA?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Las cinco piezas siguientes se negocian o se construyen antes de que la dependencia exista, porque después el proveedor ya sabe que la empresa no tiene alternativa real y deja de tener motivo para ceder nada."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Dato exportable",
+            "definicion": "El contrato tiene que decir, con precisión, en qué formato se entregan los datos y las configuraciones si la empresa se va, no solo que \"tendrá acceso\" mientras dure la relación. Acceso no es lo mismo que propiedad utilizable en otro sistema."
+          },
+          {
+            "termino": "Cláusula de salida firmada antes de necesitarla",
+            "definicion": "Plazo de transición, nivel de ayuda del proveedor saliente y precio de esa ayuda, escritos en el contrato inicial, no negociados en plena crisis cuando ya no queda margen de maniobra."
+          },
+          {
+            "termino": "Capa propia entre el proceso y el proveedor",
+            "definicion": "El proceso crítico no debería hablar directo con la API de un proveedor específico. Una capa intermedia que la empresa controla permite cambiar lo que hay detrás sin rehacer el proceso completo."
+          },
+          {
+            "termino": "Segunda opción probada, no solo evaluada",
+            "definicion": "Para el proceso de mayor riesgo, mantener una alternativa mínima que de verdad funcione, revisada cada cierto tiempo, no una comparación que se hizo una vez al principio y se archivó."
+          },
+          {
+            "termino": "Fecha de revisión obligatoria",
+            "definicion": "Un disparador en el calendario, independiente de si el proveedor satisface o no, que obligue a comparar el mercado antes de que la renovación se firme sola por inercia."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguna de las cinco piezas cuesta más caro negociada al principio que negociada después. Cuesta más barato: al principio el proveedor todavía está compitiendo por el contrato y tiene motivo para ceder. Después, ya ganó, y cada pieza que faltó se paga con el precio de la siguiente renovación."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Antes de la próxima renovación, pide el precio y el plazo de la ayuda para salir, no solo el descuento por quedarte. Si el proveedor no tiene esa cifra lista, ya sabes cuánta prioridad le da a que te quedes por elección y no por el costo de irte."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cómo evita una empresa quedar atada a un único proveedor de IA?",
+            "respuesta": "Negociando las condiciones de salida antes de firmar, no después: formato de exportación de los datos, plazo y precio de la ayuda para migrar, y una capa propia entre el proceso crítico y la API del proveedor. La dependencia se construye mes a mes en cómo se integra el sistema, así que evitarla es una decisión de arquitectura desde el primer día, no una cláusula legal de último momento."
+          },
+          {
+            "pregunta": "¿Qué cláusulas hay que pedir en un contrato de IA para evitar el lock-in?",
+            "respuesta": "Como mínimo tres: el formato exacto en que se entregan los datos y las configuraciones si la empresa se va, el plazo y el costo de la ayuda del proveedor saliente durante la transición, y qué pasa con cualquier ajuste o entrenamiento específico que se hizo sobre el sistema. Sin las tres por escrito, la negociación de salida empieza desde cero el día que hace falta."
+          },
+          {
+            "pregunta": "¿Cuánto cuesta realmente migrar de proveedor de IA?",
+            "respuesta": "Más de lo que casi cualquier empresa calcula antes de intentarlo. Entre las que ya lo intentaron, más de la mitad dice que la migración fracasó por completo o tardó bastante más de lo previsto, según una encuesta de Zapier entre ejecutivos de empresa en 2026. El costo real no es solo técnico: incluye reentrenar al equipo y rehacer procesos que se construyeron alrededor de las particularidades del proveedor anterior."
+          },
+          {
+            "pregunta": "¿Sirve tener dos proveedores de IA a la vez para evitar la dependencia?",
+            "respuesta": "Solo si la segunda opción se mantiene realmente probada y no solo evaluada una vez al principio. Una alternativa que nadie ha vuelto a mirar en dos años no reduce la dependencia, solo da la sensación de tenerla cubierta. Lo que funciona es revisarla en un calendario fijo, no cuando ya apareció el problema que la hace urgente."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Negociemos la salida antes de firmar la entrada",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-to-avoid-getting-locked-into-an-ai-vendor",
+    "titulo": "How to Avoid Getting Locked Into an AI Vendor",
+    "entradilla": "The vendor changed the terms at the year-two renewal. Procurement asked for competing quotes and found something worse than the new price: switching would take longer than replacing the accounting system. They signed.",
+    "descripcion": "Avoiding AI vendor lock-in doesn't get negotiated at renewal time. It gets negotiated the day the first contract is signed.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "The vendor changed the terms at the year-two renewal. Procurement asked for competing quotes and found something worse than the new price: switching would take longer than replacing the accounting system. They signed."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Nobody signs an AI contract thinking about how to get out of it. They sign thinking about the demo, the first-year price, and how much time the team saves from month one. The exit question rarely even reaches the table, and when it does, it's usually the lawyer asking out of habit, not the committee asking as strategy. It gets answered with a generic clause nobody reads again."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The problem is that vendor dependency doesn't get signed that day. It gets built afterward, month by month, quietly: a process that learns to run on that vendor's data format and no other, a team that trains its instincts on that one tool's quirks, an integration written straight against its API with no layer in between. By the time anyone measures what leaving would cost, it isn't a hypothetical question anymore. It's the question that decides whether there's anything left to negotiate, or only terms to accept."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "How do you avoid getting locked into a single AI vendor?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Dependency signals itself before it becomes a problem, except the signals read as ordinary operations, not risk. These are almost always present before the renewal that turns expensive:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Nobody in the company knows, without asking the vendor, how the data would export or in what format it would arrive.",
+          "The original contract says nothing about what happens if the company leaves: no transition period, no assistance, no price for that assistance.",
+          "The most critical process calls the vendor's API directly from the code, with no layer of its own in between.",
+          "The \"alternative\" evaluated at the start was never revisited, and nobody could say today whether it's still viable.",
+          "The renewal signs itself every year, with no committee comparing the market again, because the system works and nobody wants to open that conversation."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "Lock-in doesn't get signed. It accumulates."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Nearly three in four enterprise executives say losing their primary AI vendor would disrupt daily operations or leave them unable to function. Only 6% could walk away with no disruption at all. And among those who already attempted a migration, more than half say it failed outright or took considerably more effort than expected. Source: Zapier survey of 542 U.S. enterprise executives, 2026."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That number doesn't describe a contract accident. It describes what happens when no architecture decision gets made with an exit in mind, because at the moment it's made, the exit isn't the problem anyone is solving. The problem is shipping fast, and shipping fast almost always means the shortest path: connect directly, store the data exactly as the vendor hands it over, train the team on its exact interface. Every shortcut is reasonable the day it's taken. The sum of all of them, three years later, is a company that can't negotiate price because it has nothing to threaten leaving with."
+      },
+      {
+        "tipo": "cita",
+        "texto": "The easiest vendor to leave is the one you negotiated before you needed to. The one you can't leave is the one you let grow without looking at it.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "What should you negotiate before signing with an AI vendor?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The five pieces below get negotiated or built before the dependency exists, because afterward the vendor already knows the company has no real alternative and has no reason left to give anything up."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Exportable data",
+            "definicion": "The contract has to specify, precisely, in what format data and configurations get handed over if the company leaves, not just that it will have \"access\" for as long as the relationship lasts. Access is not the same as ownership usable somewhere else."
+          },
+          {
+            "termino": "Exit terms signed before you need them",
+            "definicion": "Transition period, level of assistance from the departing vendor, and the price of that assistance, written into the original contract, not negotiated mid-crisis once there's nothing left to negotiate with."
+          },
+          {
+            "termino": "A layer of your own between the process and the vendor",
+            "definicion": "A critical process shouldn't talk directly to one vendor's specific API. A layer the company controls in between lets it swap what's behind it without rebuilding the whole process."
+          },
+          {
+            "termino": "A second option that's tested, not just evaluated",
+            "definicion": "For the highest-risk process, keep a minimal alternative that actually works, revisited on a fixed schedule, not a comparison done once at the start and shelved."
+          },
+          {
+            "termino": "A mandatory review date",
+            "definicion": "A calendar trigger, independent of whether the vendor is performing well, that forces a market comparison before the renewal signs itself out of inertia."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of these five pieces costs more negotiated up front than negotiated later. It costs less: at the start, the vendor is still competing for the contract and has a reason to give something up. Afterward, it already won, and whichever piece got skipped shows up in the price of the next renewal."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Before the next renewal, ask for the price and the timeline of the exit assistance, not just the discount for staying. If the vendor doesn't have that number ready, that already tells you how much priority it puts on earning the stay instead of banking on the cost of leaving."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How do you avoid getting locked into a single AI vendor?",
+            "respuesta": "By negotiating exit terms before signing, not after: the data export format, the timeline and cost of migration assistance, and a layer of your own between the critical process and the vendor's API. Dependency gets built month by month through how the system is integrated, so avoiding it is an architecture decision from day one, not a last-minute legal clause."
+          },
+          {
+            "pregunta": "What contract clauses should you ask for to avoid AI vendor lock-in?",
+            "respuesta": "At minimum three: the exact format in which data and configurations get handed over if the company leaves, the timeline and cost of the departing vendor's assistance during transition, and what happens to any fine-tuning or training done on top of the system. Without all three in writing, exit negotiations start from zero the day they're needed."
+          },
+          {
+            "pregunta": "How much does it actually cost to migrate AI vendors?",
+            "respuesta": "More than almost any company estimates before trying. Among those who already attempted it, more than half say the migration failed outright or took considerably more effort than expected, according to a 2026 Zapier survey of enterprise executives. The real cost isn't only technical: it includes retraining the team and rebuilding processes built around the previous vendor's quirks."
+          },
+          {
+            "pregunta": "Does running two AI vendors at once actually reduce dependency?",
+            "respuesta": "Only if the second option stays genuinely tested, not just evaluated once at the start. An alternative nobody has revisited in two years doesn't reduce dependency, it only creates the feeling of having it covered. What works is reviewing it on a fixed schedule, not once the problem that makes it urgent has already shown up."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's negotiate the exit before signing the entry",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
