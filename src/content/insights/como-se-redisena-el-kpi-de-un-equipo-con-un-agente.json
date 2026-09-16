@@ -1,0 +1,263 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-09-16",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "operating-model",
+  "formato": "framework",
+  "es": {
+    "slug": "como-se-redisena-el-kpi-de-un-equipo-con-un-agente",
+    "titulo": "El KPI que no cambió cuando llegó el agente",
+    "entradilla": "Un equipo de soporte cerró el trimestre con la meta cumplida por primera vez en el año: casos resueltos por persona, arriba. Nadie preguntó cuántos de esos casos los redactó el agente que ahora prerredacta cada respuesta, y cuántos los resolvió la persona de verdad. El bono salió igual.",
+    "descripcion": "El KPI de un equipo no cambia solo porque un agente resuelva parte del trabajo. Hay que separar el número, no heredarlo.",
+    "linkedin": {
+      "texto": "Un agente empezó a resolver la mitad de los casos de un equipo de soporte. El número subió y la meta trimestral se cumplió, con el bono calculado con la misma fórmula del año anterior, cuando todo el volumen lo producía una persona.\n\nNadie separó cuánto del resultado es del agente y cuánto de quien todavía revisa los casos difíciles, ni si ese criterio sigue entrenándose o se quedó parado.\n\nAnalizamos en BECOME las cuatro piezas que hay que separar en un KPI antes de fijar la próxima meta.",
+      "hashtags": ["IA", "Operaciones", "Metricas"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Un equipo de soporte cerró el trimestre con la meta cumplida por primera vez en el año: casos resueltos por persona, arriba. Nadie preguntó cuántos de esos casos los redactó el agente que ahora prerredacta cada respuesta, y cuántos los resolvió la persona de verdad. El bono salió igual."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Pasa en soporte, en originación de crédito, en revisión de contratos: cualquier equipo donde alguien mide cuántas unidades de trabajo produce una persona por semana. Llega un agente, se hace cargo de una parte del volumen, y el número que mira el comité sigue subiendo. Nadie se detiene a preguntar de dónde sale ese número nuevo, porque preguntarlo obliga a admitir que el KPI de antes ya no mide lo que dice medir."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El reflejo más común es dejarlo tal cual. El KPI ya existía, ya tiene una meta aprobada, ya está en el tablero que revisa el comité cada mes. Tocarlo significa reabrir una conversación incómoda sobre qué parte del resultado es mérito de la persona y qué parte es mérito de la licencia que la empresa ya paga. Es más fácil dejar que el número suba solo y repartir el crédito como si nada hubiera cambiado."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y mientras tanto el KPI sigue premiando volumen sin decir de dónde viene, castigando en silencio a quien sí revisa con cuidado cada caso difícil, y sin enterarse de que la persona ya no practica el oficio que ese mismo indicador se suponía que debía cultivar."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Cómo se rediseñan los KPI de un equipo cuando parte del trabajo lo hace un agente?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Se nota en el comité antes que en el tablero. El número sube trimestre a trimestre y la explicación siempre es la misma: «el agente está ayudando». Nadie mide cuánto. La meta del año pasado, calculada cuando el equipo era cien por ciento humano, se mantiene idéntica o sube por decreto, sin que nadie recalcule qué parte de ese volumen puede depender de verdad del criterio de una persona."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El número subió y nadie sabe qué parte produjo el agente y qué parte la persona.",
+          "La meta de este trimestre es la del año pasado con un decimal distinto, sin que nadie explique de dónde sale el ajuste.",
+          "Un caso que el agente marcó como cerrado reaparece semanas después como reclamo, y no se resta de ningún indicador.",
+          "La persona ya no toca los casos simples que antes le enseñaban el oficio, y nadie mide si su criterio en los difíciles mejora o se estanca.",
+          "El bono se calcula con la misma fórmula del año pasado, cuando todo el volumen lo producía una persona."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema de fondo",
+        "texto": "El número subió. Lo que medía, no."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Un KPI de volumen nunca midió el volumen por el volumen mismo. Medía, indirectamente, el esfuerzo y el criterio de una persona: cuántos casos podía resolver bien alguien que sabe hacer el trabajo, en una semana normal. Esa era la relación oculta detrás del número, y es la que se rompe en cuanto una parte de esos casos ya no los resuelve una persona, sino un sistema que no se cansa, no aprende del reclamo de un cliente y no arriesga ninguna evaluación de desempeño en cada caso."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ojo, el problema no es que el número suba. Es que sigue subiendo aunque el criterio humano detrás de él se estanque o se erosione, y nadie tiene forma de distinguir las dos cosas mirando solo el tablero."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un KPI que no distingue quién produjo el resultado no mide el trabajo. Mide que alguien, o algo, cerró el caso.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "¿Qué hay que rediseñar en el KPI, y en qué orden?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Rediseñar el KPI no es inventar un indicador nuevo desde cero. Es separar, dentro del que ya existe, cuatro piezas que hoy viven mezcladas en un solo número."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Número partido, no mezclado",
+            "definicion": "El volumen que resuelve el agente y el que resuelve la persona se cuentan por separado, aunque salgan en el mismo tablero. Un solo número que suma los dos no dice si el equipo mejoró o si la empresa simplemente pagó por más máquina."
+          },
+          {
+            "termino": "Resuelto de verdad, no solo cerrado",
+            "definicion": "Un caso cuenta como resuelto cuando no vuelve. Si el agente lo marca cerrado y el cliente lo reabre dos semanas después, ese caso se resta del conteo original, no se suma aparte como uno nuevo cuando alguien por fin lo atiende."
+          },
+          {
+            "termino": "Meta recalculada, no heredada",
+            "definicion": "La meta de este trimestre no es la del año pasado más un ajuste a ojo. Se calcula de nuevo a partir de cuánto puede producir hoy una persona con el agente ya integrado, y se revisa cada vez que el agente cambia de alcance."
+          },
+          {
+            "termino": "Criterio que se sigue entrenando",
+            "definicion": "Si el agente absorbe los casos simples, la persona necesita seguir practicando su oficio en algún lado. El indicador tiene que medir explícitamente su desempeño en los casos difíciles que sí le llegan, no solo el volumen total del equipo."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguna de las cuatro piezas exige un sistema de medición nuevo. Exige que alguien con autoridad sobre el KPI se siente a mirar el número actual y decida, con esas cuatro preguntas delante, qué parte hay que separar antes de fijar la meta del próximo trimestre."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Toma el KPI de un equipo que ya trabaja con un agente y pregúntale a quien lo dirige qué parte del número la produjo el agente. Si la respuesta es «no lo sé», o llega después de armar una hoja de cálculo improvisada, ahí está la primera pieza que falta separar."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Hay que cambiar el KPI de un equipo en cuanto entra un agente?",
+            "respuesta": "No el mismo día, pero sí antes de fijar la meta del siguiente periodo de evaluación. Un KPI diseñado para un equipo cien por ciento humano deja de medir lo que dice medir apenas una parte del volumen la produce un sistema, y seguir usándolo sin ajuste reparte crédito y castigo sobre información que ya no es cierta."
+          },
+          {
+            "pregunta": "¿Cómo se separa lo que produce el agente de lo que produce la persona dentro del mismo número?",
+            "respuesta": "Etiquetando cada caso en el origen, no calculándolo después con una estimación. El sistema que asigna el trabajo ya sabe si lo resolvió el agente, si lo resolvió la persona o si empezó el agente y terminó la persona; ese dato tiene que viajar hasta el tablero en vez de perderse en el conteo total."
+          },
+          {
+            "pregunta": "¿Qué significa que un caso esté «resuelto de verdad» y no solo cerrado?",
+            "respuesta": "Que no vuelve. Un caso cerrado dentro del tiempo de respuesta pero que el cliente reabre, escala o repite la semana siguiente no estaba resuelto, estaba archivado. El indicador tiene que restar esos casos del conteo original en vez de sumarlos aparte cuando alguien finalmente los atiende."
+          },
+          {
+            "pregunta": "¿Cómo se mide si el criterio de una persona sigue desarrollándose cuando el agente absorbe los casos simples?",
+            "respuesta": "Aislando su desempeño en los casos difíciles que sí siguen llegándole, y siguiendo esa cifra en el tiempo en vez del volumen total del equipo. Si esa tasa mejora o se mantiene, el criterio sigue entrenándose. Si se estanca o empeora, la persona dejó de practicar el oficio que el KPI original suponía que estaba cultivando."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Rediseñemos el KPI de tu equipo",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-to-redesign-a-teams-kpis-when-an-agent-joins",
+    "titulo": "The KPI That Never Changed When the Agent Arrived",
+    "entradilla": "A support team hit its quarterly target for the first time all year: cases resolved per person, up. Nobody asked how many of those cases the agent drafted and how many the person actually solved. The bonus went out anyway.",
+    "descripcion": "A team's KPI doesn't fix itself just because an agent takes on part of the work. The number has to be split, not inherited.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "A support team hit its quarterly target for the first time all year: cases resolved per person, up. Nobody asked how many of those cases the agent drafted and how many the person actually solved. The bonus went out anyway."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "It happens in support, in credit origination, in contract review: any team where someone measures how many units of work a person produces in a week. An agent shows up, takes on part of the volume, and the number leadership watches keeps climbing. Nobody stops to ask where the new number comes from, because asking means admitting the old KPI no longer measures what it claims to measure."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The easiest move is to leave it alone. The KPI already exists, already has an approved target, already sits on the dashboard leadership checks every month. Touching it means reopening an uncomfortable conversation about how much of the result is the person's doing and how much belongs to the license the company already pays for. It is simpler to let the number climb on its own and hand out credit as if nothing had changed."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "And meanwhile the KPI keeps rewarding volume without saying where it came from, quietly punishing whoever still reviews every hard case carefully, and missing the fact that the person has stopped practicing the very judgment that metric was supposed to be cultivating."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "How do you redesign a team's KPIs when an agent does part of the work?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "It shows up in the leadership meeting before it shows up on the dashboard. The number climbs quarter after quarter and the explanation is always the same: \"the agent is helping.\" Nobody measures how much. Last year's target, set when the team was fully human, stays identical or climbs by decree, without anyone recalculating how much of that volume can actually depend on a person's judgment."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The number went up and nobody knows how much of it the agent produced versus the person.",
+          "This quarter's target is last year's target with a different decimal point, and nobody explains where the adjustment came from.",
+          "A case the agent marked closed comes back weeks later as a complaint, and it never gets subtracted from anything.",
+          "The person no longer touches the simple cases that used to teach them the job, and nobody tracks whether their judgment on the hard ones is improving or stalling.",
+          "The bonus formula is the same one from last year, when a person produced the entire volume."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "The number went up. What it measured didn't."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A volume KPI never measured volume for its own sake. It measured, indirectly, a person's effort and judgment: how many cases someone who actually knows the job could handle well in a normal week. That hidden relationship is exactly what breaks the moment part of that volume stops coming from a person and starts coming from a system that doesn't get tired, doesn't learn from an angry customer, and never risks a performance review over a single case."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "And the issue isn't that the number is rising. It's that it keeps rising even while the human judgment behind it stalls or erodes, and nobody can tell the two apart by looking at the dashboard alone."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A KPI that can't tell you who produced the result isn't measuring the work. It's measuring that someone, or something, closed the case.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "What has to be redesigned in the KPI, and in what order?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Redesigning the KPI doesn't mean inventing a new metric from scratch. It means separating four pieces that currently live blended into a single number."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Split the number, don't blend it",
+            "definicion": "The volume the agent resolves and the volume the person resolves get counted separately, even if they land on the same dashboard. A single number that adds both together can't tell you whether the team improved or the company simply paid for more machine."
+          },
+          {
+            "termino": "Actually resolved, not just closed",
+            "definicion": "A case counts as resolved when it doesn't come back. If the agent marks it closed and the customer reopens it two weeks later, that case gets subtracted from the original count, not added as a new one once someone finally handles it."
+          },
+          {
+            "termino": "Recalculated target, not inherited",
+            "definicion": "This quarter's target isn't last year's target with a rough adjustment. It gets recalculated from how much a person can actually produce today with the agent already in place, and it gets revisited every time the agent's scope changes."
+          },
+          {
+            "termino": "Judgment that keeps developing",
+            "definicion": "If the agent absorbs the simple cases, the person still needs somewhere to keep practicing the job. The metric has to explicitly track their performance on the hard cases that still reach them, not just the team's total volume."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of the four requires a new measurement system. It requires whoever owns the KPI to sit down with the current number and decide, with these four questions in front of them, what to separate before setting next quarter's target."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take the KPI of a team that already works with an agent and ask whoever runs it how much of the number the agent produced. If the answer is \"I don't know,\" or only comes after digging through an improvised spreadsheet, that's the first piece that needs splitting."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Does a team's KPI need to change the moment an agent joins?",
+            "respuesta": "Not the same day, but before the next performance period's target gets set. A KPI designed for an all-human team stops measuring what it claims to measure once part of the volume comes from a system, and using it unchanged hands out credit and blame based on information that's no longer true."
+          },
+          {
+            "pregunta": "How do you separate what the agent produces from what the person produces inside the same number?",
+            "respuesta": "By tagging each case at the source, not estimating it afterward. The system that routes the work already knows whether the agent solved it, the person solved it, or the agent started it and the person finished it; that data needs to travel all the way to the dashboard instead of getting lost in the total count."
+          },
+          {
+            "pregunta": "What does it mean for a case to be \"actually resolved\" instead of just closed?",
+            "respuesta": "That it doesn't come back. A case closed within the response window that the customer reopens, escalates, or repeats the following week wasn't resolved, it was filed away. The metric needs to subtract those cases from the original count instead of adding them separately once someone finally deals with them."
+          },
+          {
+            "pregunta": "How do you measure whether a person's judgment keeps developing once the agent absorbs the simple cases?",
+            "respuesta": "By isolating their performance on the hard cases that still reach them and tracking that figure over time instead of the team's total volume. If that rate holds or improves, the judgment is still developing. If it stalls or worsens, the person has stopped practicing the very skill the original KPI assumed it was building."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's redesign your team's KPI",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
