@@ -1,0 +1,247 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-09-17",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "ai-native",
+  "formato": "framework",
+  "es": {
+    "slug": "que-talento-necesita-una-empresa-para-ser-ai-native",
+    "titulo": "El talento que falta para ser AI-native",
+    "entradilla": "Todas las ofertas dicen lo mismo: ingeniero joven, nativo digital, fluido en herramientas de IA desde el primer día. Contrata diez y la empresa sigue operando exactamente igual, porque el perfil que falta no es ese.",
+    "descripcion": "Contratar ingenieros AI-native no basta. Faltan tres roles no técnicos para operar el sistema en producción, no solo para construirlo.",
+    "linkedin": {
+      "texto": "Todas las ofertas piden el mismo perfil: ingeniero joven, ya fluido en herramientas de IA. Las empresas contratan veinte y el año siguiente preguntan por qué nada cambió.\n\nEl ingeniero construye el sistema que decide. Nadie definió quién audita esas decisiones, quién decide cuánta autonomía gana el sistema, ni quién responde por el dato que lo alimenta cuando el piloto ya terminó.\n\nEn el nuevo análisis de BECOME identificamos los tres roles que faltan antes de contratar al siguiente ingeniero.",
+      "hashtags": ["IA", "Talento", "Estrategia"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Todas las ofertas dicen lo mismo: ingeniero joven, nativo digital, fluido en herramientas de IA desde el primer día. Contrata diez y la empresa sigue operando exactamente igual, porque el perfil que falta no es ese."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El mercado ya decidió a quién hay que contratar para volverse AI-native, y ese consenso se lee en cualquier bolsa de empleo: graduados jóvenes que ya piensan en prompts, que usan el modelo como quien usa el teclado, sin la fricción de tener que aprenderlo. Reddit y Canva lo dicen en público. Media industria lo copia sin preguntarse si el problema que tiene es de generación."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "He visto comités enteros aprobar un plan de contratación de veinte ingenieros AI-native, con presupuesto propio y titular en la intranet, y al año siguiente preguntarse por qué la empresa sigue decidiendo exactamente igual que antes. La respuesta no está en el rendimiento de esos veinte. Está en que nadie más en la organización sabía qué hacer con lo que construyeron."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Qué talento hay que contratar para que una empresa se vuelva AI-native?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguno solo. El error no es contratar mal al ingeniero, es pensar que ese puesto agota la lista. Volverse AI-native mueve decisiones, procesos y autoridad, y eso no lo resuelve una persona que sabe escribir un buen prompt, por bueno que sea escribiéndolo."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El sistema que construyó el equipo técnico funciona en el piloto y nadie sabe operarlo cuando el proceso cambia en producción.",
+          "Las excepciones que el agente escala llegan a una bandeja sin dueño, porque nadie definió quién decide cuándo el criterio automático no aplica.",
+          "El dato que alimentaba el sistema en la demo se ensucia a los tres meses y no hay nadie cuyo trabajo sea mantenerlo limpio.",
+          "La autonomía del agente crece sola, un paso a la vez, porque no hay nadie con el mandato explícito de decidir cuánto se le suelta.",
+          "El comité celebra la contratación técnica en la memoria de innovación y nadie audita si las decisiones que toma el sistema siguen teniendo criterio."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema detrás",
+        "texto": "El ingeniero construye el sistema. Nadie más sabe operarlo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Construir un sistema de decisión asistida por IA es un proyecto con principio y final. Operarlo no. Y ahí está la confusión de fondo: la empresa contrata para el proyecto y necesita gente para la operación, que es un trabajo distinto, con un ritmo distinto y, sobre todo, con una responsabilidad que no termina el día que el sistema pasa a producción."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El problema no es que el ingeniero haga mal su trabajo. Es que nadie más está haciendo el suyo. Un ingeniero AI-native sabe construir el sistema. No es su trabajo decidir cuánta autonomía le corresponde dentro de un proceso de negocio que él no diseñó, ni auditar si el criterio con el que decide sigue siendo el correcto seis meses después, ni mantener limpio el dato que llega de un área que no controla. Pedirle eso es pedirle un puesto que no es el suyo, y la empresa se queda sin nadie haciendo el trabajo real mientras cree que ya lo resolvió contratando bien."
+      },
+      {
+        "tipo": "cita",
+        "texto": "El ingeniero AI-native construye el sistema que decide. La empresa AI-native necesita, además, a quien decide sobre el sistema.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Tres roles que ninguna oferta de empleo pide todavía"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Traductor de proceso",
+            "definicion": "Convierte un proceso de negocio real en las reglas y las excepciones que un agente puede ejecutar. No escribe el sistema; decide qué parte del criterio humano se puede formalizar y cuál no, antes de que el equipo técnico construya nada."
+          },
+          {
+            "termino": "Auditor de criterio",
+            "definicion": "Revisa en producción, con calendario fijo, si las decisiones del sistema siguen teniendo el mismo criterio que tenían el día del lanzamiento. No mide precisión técnica; mide si el resultado sigue siendo el que la empresa quiere."
+          },
+          {
+            "termino": "Dueño de autonomía",
+            "definicion": "Tiene el mandato explícito de decidir cuánta autonomía gana el sistema en cada paso, y de frenarla cuando hace falta. Sin ese mandato, la autonomía crece por inercia, no por decisión."
+          },
+          {
+            "termino": "Guardián del dato en producción",
+            "definicion": "Responde porque el dato que alimenta al sistema siga limpio después del lanzamiento, no solo durante el piloto. Es trabajo continuo, no un proyecto que se cierra."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguno de los cuatro es un puesto técnico, y ninguno aparece todavía en el organigrama de la mayoría de las empresas que están contratando ingenieros AI-native a toda velocidad. Casi siempre se pueden cubrir con gente que ya está dentro de la empresa, si alguien decide que ese es su trabajo nuevo. No hace falta salir a buscarlos fuera. Hace falta nombrarlos."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Toma el sistema de IA que lleva más tiempo en producción y pregunta quién audita hoy sus decisiones, quién decide su autonomía y quién responde por el dato que lo alimenta. Si las tres respuestas son la misma persona, o son «nadie», ahí está la próxima contratación, y no es un ingeniero."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Qué talento hay que contratar para que una empresa se vuelva AI-native?",
+            "respuesta": "No un solo perfil, sino una combinación que casi ninguna empresa tiene definida todavía: el ingeniero que construye el sistema, y tres roles no técnicos que hoy no aparecen en ningún organigrama, encargados de traducir el proceso de negocio, auditar el criterio del sistema en producción y decidir cuánta autonomía se le suelta. Contratar solo al primero deja a la empresa con un sistema que nadie sabe operar."
+          },
+          {
+            "pregunta": "¿Basta con contratar ingenieros jóvenes fluidos en herramientas de IA para ser AI-native?",
+            "respuesta": "No, y es el error más repetido del último año. Ese perfil sabe construir el sistema de decisión, pero construir y operar son trabajos distintos con responsabilidades distintas. Sin alguien encargado de auditar las decisiones, de decidir la autonomía y de mantener limpio el dato en producción, el sistema funciona en la demo y se degrada solo, sin que nadie lo note a tiempo."
+          },
+          {
+            "pregunta": "¿Quién debe auditar las decisiones de un sistema de IA una vez que está en producción?",
+            "respuesta": "Alguien con criterio de negocio sobre el proceso concreto, no necesariamente un perfil técnico, y con un calendario fijo, no una revisión que ocurre solo cuando algo ya salió mal. Su trabajo es comprobar si el resultado que produce el sistema sigue siendo el que la empresa quiere, que es una pregunta distinta a si el sistema sigue funcionando técnicamente."
+          },
+          {
+            "pregunta": "¿Se pueden cubrir estos roles con gente que ya trabaja en la empresa, o hay que salir a contratar?",
+            "respuesta": "Casi siempre con gente que ya está dentro. Quien conoce el proceso de negocio, quien ya audita calidad o riesgo, quien ya administra los datos del área: todos son candidatos naturales para estos roles. Lo que falta no es encontrarlos fuera, es nombrarlos por escrito dentro, con el mandato explícito de hacer ese trabajo nuevo."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Hablemos del talento que te falta para ser AI-native",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "the-hiring-gap-in-becoming-ai-native",
+    "titulo": "The missing AI-native hire isn't technical",
+    "entradilla": "Every job posting says the same thing: young engineer, AI-fluent, practically born using a prompt. Hire ten of them and the company runs exactly the way it did before, because that was never the role that was missing.",
+    "descripcion": "Hiring AI-fluent engineers isn't enough. A company needs three non-technical roles to run the system in production, not just build it.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Every job posting says the same thing: young engineer, AI-fluent, practically born using a prompt. Hire ten of them and the company runs exactly the way it did before, because that was never the role that was missing."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The market already decided who to hire to become AI-native, and you can read the consensus on any job board: young graduates who already think in prompts, who use the model the way older engineers use a keyboard, without the friction of having to learn it. Reddit and Canva say so in public. Half the industry is copying the move without asking whether their problem is actually about generation."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "I have watched entire committees approve a plan to hire twenty AI-native engineers, budget signed off, headline written for the intranet, and then ask a year later why the company still decides everything the same way it always did. The answer was never in how well those twenty performed. It was that nobody else in the organisation knew what to do with what they built."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "What talent does a company actually need to hire to become AI-native?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of them alone. The mistake isn't hiring the wrong engineer, it's assuming that hire closes the list. Becoming AI-native moves decisions, processes and authority around, and no single person who writes a good prompt, however good they are at it, resolves that on their own."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The system the engineering team built works in the pilot and nobody knows how to run it once the process it touches changes in production.",
+          "The exceptions the agent escalates land in a queue with no owner, because nobody decided who calls it when the automated judgement stops applying.",
+          "The data that fed the system in the demo goes stale within months and there is no one whose job is keeping it clean.",
+          "The agent's autonomy grows on its own, one step at a time, because no one holds the explicit mandate to decide how much gets released.",
+          "The committee celebrates the technical hire in the innovation report, and nobody audits whether the system's decisions still hold the judgement they were meant to."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "The engineer builds the system. Nobody else knows how to run it."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Building an AI decision system is a project with a start and an end. Running one is not. That is the confusion sitting underneath all of this: the company hires for the project and needs people for the operation, which is a different job, on a different rhythm, and carrying a responsibility that does not end the day the system goes live."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The problem isn't that the engineer does their job badly. It's that nobody else is doing theirs. An AI-native engineer knows how to build the system. Deciding how much autonomy that system deserves inside a business process they did not design isn't their job, and neither is auditing whether its judgement still holds six months later, or keeping clean the data that arrives from a team they do not control. Asking them for all of that is asking them to hold a job that isn't theirs, and the company ends up with nobody doing the real work while believing the hiring plan already solved it."
+      },
+      {
+        "tipo": "cita",
+        "texto": "The AI-native engineer builds the system that decides. The AI-native company also needs someone who decides about the system.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "Three roles no job posting asks for yet"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Process translator",
+            "definicion": "Turns a real business process into the rules and exceptions an agent can actually run. They do not write the system; they decide which part of human judgement can be formalised and which cannot, before the engineering team builds anything."
+          },
+          {
+            "termino": "Judgement auditor",
+            "definicion": "Reviews the system's decisions in production, on a fixed schedule, to check whether they still carry the judgement they had on launch day. Not a technical accuracy check; a check on whether the outcome is still the one the company wants."
+          },
+          {
+            "termino": "Autonomy owner",
+            "definicion": "Holds the explicit mandate to decide how much autonomy the system earns at each step, and to pull it back when needed. Without that mandate, autonomy grows by default, not by decision."
+          },
+          {
+            "termino": "Production data steward",
+            "definicion": "Answers for the data feeding the system staying clean after launch, not only during the pilot. It is ongoing work, not a project that gets closed out."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of the four is a technical role, and none of them shows up yet in the org chart of most companies racing to hire AI-native engineers. They can usually be filled by people already inside the company, once somebody decides that this is their new job. The search isn't external. The gap is that nobody has named them."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take the AI system that has been in production the longest and ask who audits its decisions today, who decides its autonomy, and who answers for the data feeding it. If all three answers are the same person, or the answer is no one, that is the next hire, and it isn't an engineer."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "What talent does a company need to hire to become AI-native?",
+            "respuesta": "Not a single profile, but a combination almost no company has defined yet: the engineer who builds the system, plus three non-technical roles that don't appear on any org chart today, responsible for translating the business process, auditing the system's judgement in production, and deciding how much autonomy it gets. Hiring only the first one leaves the company with a system nobody knows how to run."
+          },
+          {
+            "pregunta": "Is hiring young AI-fluent engineers enough to become AI-native?",
+            "respuesta": "No, and it is the most repeated mistake of the past year. That profile knows how to build the decision system, but building and running it are different jobs with different responsibilities. Without someone auditing its decisions, deciding its autonomy and keeping the production data clean, the system works in the demo and quietly degrades, with nobody noticing in time."
+          },
+          {
+            "pregunta": "Who should audit an AI system's decisions once it's in production?",
+            "respuesta": "Someone with business judgement over that specific process, not necessarily a technical profile, working to a fixed schedule rather than a review that only happens after something has already gone wrong. Their job is to check whether the system's output is still the one the company wants, which is a different question from whether the system is still running correctly."
+          },
+          {
+            "pregunta": "Can these roles be filled internally, or does a company need to hire externally?",
+            "respuesta": "Almost always internally. Whoever already knows the business process, whoever already audits quality or risk, whoever already manages the team's data: all of them are natural candidates for these roles. What's missing isn't finding them outside the company, it's naming them in writing inside it, with the explicit mandate to take on this new work."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's talk about the talent you're missing to be AI-native",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
