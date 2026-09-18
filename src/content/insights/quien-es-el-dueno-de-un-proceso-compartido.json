@@ -1,0 +1,263 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-09-18",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "operating-model",
+  "formato": "framework",
+  "es": {
+    "slug": "quien-es-el-dueno-de-un-proceso-compartido",
+    "titulo": "¿De quién es el proceso si lo hacen los dos?",
+    "entradilla": "Una aseguradora pagó un siniestro que no tenía que pagar. El agente lo había preaprobado con la documentación completa; la persona que firmó la aprobación final revisó el monto, no la causa. Cuando el área de riesgo preguntó quién había decidido pagar ese caso, IT dijo que el agente solo recomienda, operaciones dijo que la persona firma lo que le entregan, y nadie más quiso contestar.",
+    "descripcion": "El dueño de un proceso compartido con un agente de IA no es quien firma al final, sino quien queda nombrado antes de repartir el trabajo.",
+    "linkedin": {
+      "texto": "El agente ejecuta casi todo el proceso. La persona firma el resultado final. El día que algo sale mal, ninguna de las dos partes tiene autoridad sobre el conjunto.\n\nIT dice que la herramienta solo recomienda. El área de negocio dice que solo firma lo que le entregan. Las dos tienen razón sobre su propio tramo, y ese es justo el problema.\n\nEn este análisis de BECOME desarrollamos qué hace falta para que un proceso compartido con un agente tenga, de verdad, un dueño.",
+      "hashtags": ["IA", "OperatingModel", "Gobernanza"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Una aseguradora pagó un siniestro que no tenía que pagar. El agente lo había preaprobado con la documentación completa; la persona que firmó la aprobación final revisó el monto, no la causa. Cuando el área de riesgo preguntó quién había decidido pagar ese caso, IT dijo que el agente solo recomienda, operaciones dijo que la persona firma lo que le entregan, y nadie más quiso contestar."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Pasa igual en la revisión de contratos, en la aprobación de crédito, en el filtro de candidatos antes de una entrevista: cualquier proceso donde un agente hace la primera pasada y una persona firma al final. Mientras todo sale bien, a nadie le importa de quién es el proceso. El problema aparece el día que algo sale mal y hay que señalar a alguien con autoridad sobre el resultado completo, no solo sobre su propio tramo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El reflejo natural es repartir la responsabilidad por función: IT es dueño del agente, el área de negocio es dueña de la decisión final. Suena limpio en un organigrama y no dice nada sobre el proceso real, porque el proceso no vive dentro de una sola función. Vive en el relevo entre las dos, y ese relevo es exactamente el punto que nadie nombró como propiedad de alguien."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Quién es el dueño de un proceso cuando lo ejecutan juntos una persona y un agente de IA?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La respuesta que da la mayoría de las empresas es que el proceso es de la persona, porque es quien firma. Esa respuesta funcionaba cuando la persona hacía todo el trabajo y la firma era un resumen de lo que ya había decidido. Deja de funcionar en cuanto la firma se convierte en un trámite sobre un trabajo que otro, el agente, ya hizo casi entero. Firmar no es lo mismo que decidir, y confundir las dos cosas es lo que deja el proceso sin dueño real el día que hay que explicar qué pasó."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El agente prepara el caso completo y la persona revisa solo el número final, sin volver a mirar la causa.",
+          "Cuando algo sale mal, IT dice que el agente solo recomienda y el área de negocio dice que solo firma lo que le entregan.",
+          "Nadie escribió, antes de repartir el trabajo, en qué paso exacto termina el agente y empieza la persona.",
+          "Dos personas del mismo equipo describen el proceso con dueños distintos, y ninguna se equivoca del todo.",
+          "El manual del proceso describe lo que hacía antes de que llegara el agente, y nadie lo actualizó cuando cambió quién hace cada parte."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema de fondo",
+        "texto": "El proceso tiene relevo. La propiedad no."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Un proceso compartido entre una persona y un agente no es un proceso con un dueño y un ayudante. Es un proceso con un punto de relevo, el momento exacto donde el trabajo pasa de uno al otro, y ese punto casi nunca aparece en ningún documento. Se decidió técnicamente, cuando alguien configuró el flujo del sistema, pero nunca se decidió organizacionalmente: quién responde por el resultado completo si el relevo falla."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y falla de formas que no se parecen a un error del agente. El agente hace exactamente lo que le pidieron. La persona revisa exactamente lo que el proceso le pone delante. El fallo está en el medio, en la parte que nadie diseñó a propósito: qué pasa cuando el agente entrega algo ambiguo y la persona lo aprueba por costumbre, no porque lo haya verificado."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un proceso sin dueño no es un proceso sin errores. Es un proceso donde el error tarda más en encontrar a quien tiene que corregirlo.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "¿Qué hace falta para que un proceso compartido tenga dueño de verdad?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Las siguientes piezas se definen antes de repartir un proceso entre una persona y un agente, no después de que un caso salga mal y alguien pregunte quién respondía por él."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Dueño nombrado, no heredado",
+            "definicion": "El proceso tiene una persona con nombre y cargo responsable del resultado completo, no «el área» ni «el equipo». Esa persona responde aunque el agente haya ejecutado la mayor parte del trabajo."
+          },
+          {
+            "termino": "Punto de relevo escrito",
+            "definicion": "El momento exacto donde el trabajo pasa del agente a la persona, o de la persona al agente, queda descrito en un documento que cualquiera puede leer, no solo configurado dentro del sistema."
+          },
+          {
+            "termino": "Registro de quién decidió qué",
+            "definicion": "Cada caso queda etiquetado con lo que decidió el agente, lo que decidió la persona, y si la persona aprobó sin cambios lo que el agente propuso. Sin ese registro, nadie puede reconstruir después qué pasó."
+          },
+          {
+            "termino": "Regla de desempate previa",
+            "definicion": "Cuando el agente y la persona no coinciden, está escrito de antemano quién tiene la última palabra. Improvisarlo en el momento es la razón por la que dos personas describen el mismo proceso con dueños distintos."
+          },
+          {
+            "termino": "Responsable ante el error, no solo ante el resultado",
+            "definicion": "El dueño del proceso responde también cuando algo sale mal semanas después, no solo cuando el número sale bien el día que se revisa el tablero."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguna de las cinco piezas exige rediseñar el proceso ni desconfiar del agente. Exige que alguien con autoridad se siente con el mapa del proceso completo y decida, antes de que vuelva a pasar, en qué paso exacto empieza a responder por el resultado."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Toma un proceso que hoy ejecutan juntos una persona y un agente, y pregunta quién es su dueño. Si la respuesta es «el área» o «depende del caso», ese proceso no tiene dueño: tiene dos funciones que se reparten el trabajo y ninguna responde por el conjunto."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Quién es el dueño de un proceso cuando lo ejecutan juntos una persona y un agente de IA?",
+            "respuesta": "La persona con nombre y cargo a la que la empresa señala como responsable del resultado completo, no de un tramo del trabajo. Si esa persona no existe, o si dos personas describen el proceso con dueños distintos, el proceso no tiene dueño real todavía, aunque alguien firme al final de cada caso."
+          },
+          {
+            "pregunta": "¿Cómo se define el punto de relevo entre un agente y una persona en un mismo proceso?",
+            "respuesta": "Escribiendo, antes de que el proceso empiece a correr, el paso exacto donde termina el trabajo del agente y empieza la revisión de la persona, y qué información tiene que viajar de uno al otro en ese momento. Configurarlo solo dentro del sistema no basta, porque nadie fuera de IT puede leer esa decisión cuando hace falta explicarla."
+          },
+          {
+            "pregunta": "¿Qué pasa cuando el agente y la persona no coinciden en un caso?",
+            "respuesta": "Depende de una regla que tiene que existir antes del desacuerdo, no en el momento. Si la empresa no decidió de antemano quién tiene la última palabra, cada persona resuelve el desacuerdo con su propio criterio, y el mismo tipo de caso puede terminar con decisiones distintas según quién lo haya revisado ese día."
+          },
+          {
+            "pregunta": "¿Por qué IT y el área de negocio se responsabilizan mutuamente cuando falla un proceso compartido?",
+            "respuesta": "Porque cada una tiene razón sobre su propio tramo: IT construyó una herramienta que recomienda, no que decide, y el área de negocio firma sobre la base de lo que la herramienta le entrega. Ninguna de las dos mintió. El proceso completo, el que cruza las dos partes, simplemente nunca tuvo un dueño nombrado con autoridad sobre el conjunto."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Definamos quién es dueño de tu proceso compartido",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "who-owns-a-process-shared-with-an-ai-agent",
+    "titulo": "Who Owns a Process You Run With an Agent?",
+    "entradilla": "An insurer paid a claim it should never have paid. The agent had pre-approved the case with the full file attached; the person who signed the final approval checked the amount, not the cause. When risk asked who had decided to pay that claim, IT said the agent only recommends, operations said the person signs whatever lands on their desk, and nobody else wanted to answer.",
+    "descripcion": "The owner of a process shared with an AI agent isn't whoever signs off last. It's whoever gets named before the work gets split.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "An insurer paid a claim it should never have paid. The agent had pre-approved the case with the full file attached; the person who signed the final approval checked the amount, not the cause. When risk asked who had decided to pay that claim, IT said the agent only recommends, operations said the person signs whatever lands on their desk, and nobody else wanted to answer."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The same thing happens in contract review, credit approval, screening candidates before an interview: any process where an agent runs the first pass and a person signs at the end. Nobody cares who owns the process while it works. The problem shows up the day something goes wrong and someone needs a name with authority over the whole result, not just their own stretch of it."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The instinct is to split responsibility by function: IT owns the agent, the business owns the final call. It reads clean on an org chart and says nothing about the real process, because the process does not live inside one function. It lives in the handoff between the two, and that handoff is exactly the point nobody ever named as anyone's property."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "Who owns a process when a person and an AI agent run it together?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Most companies answer that the process belongs to the person, because the person signs it. That answer worked when the person did the whole job and the signature summarized a decision already made. It stops working the moment the signature turns into a formality on top of work someone else, the agent, already did almost entirely. Signing is not the same as deciding, and confusing the two is what leaves a process without a real owner the day someone has to explain what happened."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The agent builds the full case and the person checks only the final number, without looking at the cause again.",
+          "When something goes wrong, IT says the agent only recommends and the business says it only signs what lands on its desk.",
+          "Nobody wrote down, before splitting the work, exactly where the agent's part ends and the person's part starts.",
+          "Two people on the same team describe the process with different owners, and neither of them is entirely wrong.",
+          "The process manual describes what the work looked like before the agent arrived, and nobody updated it once who did what changed."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "The process has a handoff. Ownership doesn't."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A process shared between a person and an agent is not a process with an owner and a helper. It is a process with a handoff point, the exact moment work passes from one to the other, and that point almost never shows up in any document. It got decided technically, whoever configured the system's workflow, but never organizationally: who answers for the full result if the handoff fails."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "And it fails in ways that don't look like an agent mistake. The agent does exactly what it was asked to do. The person reviews exactly what the process puts in front of them. The failure lives in the middle, in the part nobody designed on purpose: what happens when the agent hands over something ambiguous and the person approves it out of habit, not because they actually checked it."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A process without an owner isn't a process without errors. It's a process where the error takes longer to find whoever has to fix it.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "What does a shared process need to have a real owner?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The pieces below get defined before splitting a process between a person and an agent, not after a case goes wrong and someone asks who was answering for it."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Named owner, not inherited",
+            "definicion": "The process has one named person with a title responsible for the whole result, not \"the team\" or \"the department.\" That person answers even when the agent ran most of the work."
+          },
+          {
+            "termino": "Written handoff point",
+            "definicion": "The exact moment work passes from the agent to the person, or back, is described in a document anyone can read, not just configured somewhere inside the system."
+          },
+          {
+            "termino": "Record of who decided what",
+            "definicion": "Every case gets tagged with what the agent decided, what the person decided, and whether the person approved the agent's proposal without changing it. Without that record, nobody can reconstruct afterward what happened."
+          },
+          {
+            "termino": "Tie-break rule set in advance",
+            "definicion": "When the agent and the person disagree, it is already written down who has the final word. Deciding it in the moment is exactly why two people describe the same process with different owners."
+          },
+          {
+            "termino": "Accountable for the failure, not just the result",
+            "definicion": "The process owner also answers when something goes wrong weeks later, not only when the number looks good on the day someone checks the dashboard."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of the five pieces require redesigning the process or distrusting the agent. They require someone with authority to sit down with the full map of the process and decide, before it happens again, at exactly which step they start answering for the result."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take a process a person and an agent currently run together, and ask who owns it. If the answer is \"the team\" or \"it depends on the case,\" that process has no owner. It has two functions splitting the work, and neither one answers for the whole."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Who owns a process when a person and an AI agent run it together?",
+            "respuesta": "The named person with a title the company points to as responsible for the whole result, not for one stretch of the work. If that person doesn't exist, or if two people describe the process with different owners, the process doesn't have a real owner yet, even if someone signs off on every case."
+          },
+          {
+            "pregunta": "How do you define the handoff point between an agent and a person in the same process?",
+            "respuesta": "By writing down, before the process starts running, the exact step where the agent's work ends and the person's review begins, and what information has to travel from one to the other at that moment. Configuring it only inside the system isn't enough, because nobody outside IT can read that decision when it needs explaining."
+          },
+          {
+            "pregunta": "What happens when the agent and the person disagree on a case?",
+            "respuesta": "It depends on a rule that has to exist before the disagreement happens, not in the moment. If the company never decided in advance who has the final word, each person resolves the disagreement with their own judgment, and the same type of case can end with different decisions depending on who reviewed it that day."
+          },
+          {
+            "pregunta": "Why do IT and the business each blame the other when a shared process fails?",
+            "respuesta": "Because each one is right about its own stretch: IT built a tool that recommends, not one that decides, and the business signs off based on what the tool hands it. Neither side lied. The full process, the one that crosses both sides, simply never had a named owner with authority over the whole thing."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's define who owns your shared process",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
