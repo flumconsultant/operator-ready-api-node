@@ -1,0 +1,255 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-09-19",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "responsible-scale",
+  "formato": "executive-brief",
+  "es": {
+    "slug": "responsabilidad-si-el-proveedor-de-ia-sufre-una-brecha",
+    "titulo": "Responsabilidad si el proveedor de IA sufre brecha",
+    "entradilla": "El proveedor de inteligencia artificial que procesa las hojas de vida de la empresa avisa un viernes a las seis de la tarde: hubo acceso no autorizado a una base de datos. El contrato de tratamiento de datos está firmado desde hace dos años. Nadie sabe todavía si eso alcanza para proteger a la empresa de lo que viene después.",
+    "descripcion": "Firmar un contrato de tratamiento de datos con el proveedor de IA no transfiere la responsabilidad legal de una brecha: sigue siendo de la empresa.",
+    "linkedin": {
+      "texto": "Firmar un contrato de tratamiento de datos con el proveedor de IA se siente como transferir el riesgo. No transfiere casi nada.\n\nFrente al regulador y frente al cliente final, la empresa que recogió los datos sigue siendo quien responde primero, así la brecha haya ocurrido tres capas más abajo, dentro de un proveedor que nunca ha abierto.\n\nEn este análisis de BECOME desarrollamos las cinco decisiones que hay que dejar escritas antes de que llegue ese correo, no después.",
+      "hashtags": ["IA", "Gobernanza", "Datos"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "El proveedor de inteligencia artificial que procesa las hojas de vida de la empresa avisa un viernes a las seis de la tarde: hubo acceso no autorizado a una base de datos. El contrato de tratamiento de datos está firmado desde hace dos años. Nadie sabe todavía si eso alcanza para proteger a la empresa de lo que viene después."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "He acompañado ese viernes más de una vez, y siempre se repite el mismo gesto: alguien busca la cláusula de protección de datos en el contrato del proveedor, la encuentra, respira, y después alguien más pregunta quién tiene que llamar al regulador. Ahí se acaba la tranquilidad. El contrato dice qué tiene que hacer el proveedor. No dice, casi nunca, qué tiene que hacer la empresa mientras tanto, ni en qué plazo, ni con qué información exacta."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La confusión es de fondo, no de redacción. Firmar un contrato de tratamiento de datos con un proveedor de IA se siente como transferir el riesgo hacia afuera. Legalmente no transfiere casi nada. Frente al cliente final y frente al regulador, la empresa sigue siendo quien decidió usar ese proveedor, quien le entregó los datos y quien tiene que responder primero, así el fallo haya ocurrido tres capas más abajo, dentro de una infraestructura que nunca ha visto por dentro."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Qué responsabilidad tiene una empresa si su proveedor de IA sufre una brecha de datos?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La respuesta corta, y la que casi nadie quiere escuchar, es: la misma que si la brecha hubiera ocurrido en sus propios servidores. Marcos como el RGPD en Europa tratan a la empresa que recoge los datos como responsable del tratamiento y al proveedor de IA como encargado, y esa distinción no cambia quién tiene que notificar al regulador ni quién enfrenta la sanción cuando el plazo se vence. El proveedor puede tener su propia obligación de avisar, pero el reloj de la empresa no empieza cuando ella se entera: empieza cuando el proveedor supo, y eso casi nunca coincide."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Nadie en la empresa puede decir, sin llamar al proveedor, qué datos concretos manejaba ese sistema: nombres, correos, contratos, historiales completos.",
+          "El contrato fija un tope de indemnización equivalente a unos meses de cuota, muy por debajo de lo que cuesta notificar y responder a un incidente real.",
+          "El plazo de notificación que exige la ley corre desde que el proveedor detecta el problema, no desde que avisa a la empresa, y esa diferencia se come días enteros.",
+          "Legal descubre en medio de la crisis que nunca quedó escrito quién redacta y quién firma el comunicado al cliente final: el proveedor, la empresa, o los dos a la vez.",
+          "El plan de continuidad de la empresa asume que sus propios sistemas pueden fallar, pero no contempla qué hacer si el que falla es un proveedor externo que aloja parte de los datos."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema de fondo",
+        "texto": "¿Por qué un contrato no alcanza?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Porque un contrato de tratamiento de datos describe una relación en condiciones normales, y una brecha es, por definición, la condición anormal para la que nadie negoció nada. La cláusula de confidencialidad y la de protección de datos existen para que el proveedor haga bien su trabajo todos los días. No existen para decirle a la empresa qué hacer la tarde en que ese trabajo salió mal: a quién avisa primero, con qué información, y quién paga lo que cuesta avisar mal o tarde."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y hay una pieza que casi ninguna empresa tiene, y que solo se nota cuando ya es tarde: un inventario de qué datos exactos entrega a cada proveedor de IA. No el contrato que dice qué categorías puede tratar, sino la lista real de lo que efectivamente viaja hacia ese sistema hoy. Sin eso, la primera hora después del aviso se gasta entera en averiguar el tamaño del problema, en vez de en resolverlo."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un contrato de tratamiento de datos protege al proveedor de que la empresa lo demande mal. No protege a la empresa de tener que responder primero.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "¿Qué tiene que estar decidido antes de que llegue ese correo?"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Inventario de datos",
+            "definicion": "La lista real de qué datos concretos recibe cada proveedor de IA, actualizada, no la categoría genérica que aparece en el contrato. Sin ella, la primera hora de cualquier incidente se pierde en averiguar qué había ahí."
+          },
+          {
+            "termino": "Plazo de aviso del proveedor",
+            "definicion": "Cuántas horas tiene el proveedor para avisar a la empresa desde que detecta el problema, escrito como número, no como «sin demora indebida». Esa frase legal no obliga a nadie a moverse rápido."
+          },
+          {
+            "termino": "Reparto de quién notifica a quién",
+            "definicion": "Quién redacta y quién firma el aviso al regulador y el aviso al cliente final: el proveedor, la empresa o los dos, y en qué orden. Decidirlo en la crisis cuesta el doble de tiempo que decidirlo antes."
+          },
+          {
+            "termino": "Tope de indemnización",
+            "definicion": "El límite de responsabilidad económica que el contrato le pone al proveedor, comparado con lo que de verdad cuesta un incidente: notificación, atención al cliente, auditoría externa, sanción si la hay. La mayoría de los contratos de IA lo fija muy por debajo."
+          },
+          {
+            "termino": "Plan de contención",
+            "definicion": "Qué se corta primero cuando el proveedor avisa: acceso, sincronización de datos, integraciones activas. Sin este plan escrito, la empresa decide en caliente y suele tardar más de lo que el incidente permite."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguna de las cinco es una cláusula legal exótica. Son cinco decisiones operativas que hoy quedan escondidas dentro de un contrato de treinta páginas que nadie vuelve a abrir después de firmarlo, y que solo alguien lee de verdad el día del incidente, cuando ya no hay tiempo para negociar nada."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Pide el contrato que tienes hoy con tu proveedor de IA principal y busca el plazo de notificación en horas, no en días. Si no aparece un número, no tienes un acuerdo de respuesta a incidentes: tienes una cláusula de confidencialidad con otro nombre."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Qué responsabilidad tiene una empresa si su proveedor de IA sufre una brecha de datos?",
+            "respuesta": "La misma responsabilidad que si la brecha hubiera ocurrido en su propia infraestructura, frente al regulador y frente a las personas afectadas. El proveedor puede tener obligaciones contractuales y legales propias, pero la empresa que recogió los datos sigue siendo quien tiene que notificar, explicar y responder primero, más allá de que el fallo técnico haya ocurrido en un sistema que no opera directamente."
+          },
+          {
+            "pregunta": "¿El contrato de tratamiento de datos con el proveedor protege a la empresa de una sanción?",
+            "respuesta": "Protege parcialmente, y solo si el proveedor cumplió lo pactado: reduce el riesgo de que la empresa asuma una negligencia que no fue suya. No la exime de notificar dentro del plazo legal ni de la exposición ante el cliente final, que dependen de la propia empresa y no de lo que diga el contrato firmado con el proveedor."
+          },
+          {
+            "pregunta": "¿Quién debe avisar primero al regulador si la brecha ocurrió en el proveedor?",
+            "respuesta": "En la mayoría de los marcos de protección de datos, la obligación de notificar al regulador recae en quien recogió los datos originalmente, no en quien los procesaba cuando ocurrió la brecha. Por eso el contrato tiene que decir, con nombres y plazos, quién redacta ese aviso y quién lo firma, en vez de asumir que el proveedor lo hará por su cuenta."
+          },
+          {
+            "pregunta": "¿Cómo se negocia el tope de indemnización de un proveedor de IA antes de firmar?",
+            "respuesta": "Se compara el límite que ofrece el contrato con el costo real de un incidente: notificación a los afectados, atención al cliente, auditoría externa y posible sanción, no solo el valor de la cuota anual. Si el proveedor se niega a subir ese tope, esa negativa ya es información sobre cuánto riesgo está dispuesto a asumir por los datos que le entrega la empresa."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Diseñemos tu marco de respuesta",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "who-is-liable-when-your-ai-vendor-is-breached",
+    "titulo": "Who's liable when your AI vendor gets breached",
+    "entradilla": "The AI vendor that screens the company's job applicants sends a note on a Friday evening: unauthorized access to a database. The data processing agreement has been signed for two years. Nobody yet knows if that piece of paper covers what happens next.",
+    "descripcion": "A data processing agreement doesn't transfer the legal liability of an AI vendor's breach. It stays with the company that collected the data.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "The AI vendor that screens the company's job applicants sends a note on a Friday evening: unauthorized access to a database. The data processing agreement has been signed for two years. Nobody yet knows if that piece of paper covers what happens next."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That Friday plays out the same way more than once: someone pulls up the data protection clause in the vendor contract, finds it, exhales, and then someone else asks who is supposed to call the regulator. That is where the relief ends. The contract states what the vendor must do. It almost never states what the company itself has to do in the meantime, on what timeline, or with exactly what information."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The confusion runs deeper than wording. Signing a data processing agreement with an AI vendor feels like pushing the risk outward. Legally, it barely moves anything. In front of the affected customer and in front of the regulator, the company is still the one that chose that vendor, handed over the data, and has to answer first, even when the failure happened three layers down, inside infrastructure it has never seen from the inside."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "Who is liable when an AI vendor suffers a data breach?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The short answer, and the one nobody wants to hear, is: the same party that would be liable if the breach had happened on its own servers. Frameworks like the GDPR treat the company that collects the data as the controller and the AI vendor as the processor, and that distinction does not change who has to notify the regulator or who faces the penalty once the deadline passes. The vendor may carry its own duty to disclose, but the company's clock does not start when it finds out. It starts when the vendor knew, and those two moments rarely line up."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Nobody at the company can say, without calling the vendor, exactly what data that system held: names, emails, contracts, full histories.",
+          "The contract caps damages at a few months of fees, far below what it actually costs to notify people and respond to a real incident.",
+          "The legal notification deadline runs from the moment the vendor detects the problem, not from the moment it tells the company, and that gap eats whole days.",
+          "Legal finds out mid-crisis that nobody ever wrote down who drafts and who signs the notice to the affected customer: the vendor, the company, or both.",
+          "The company's continuity plan assumes its own systems can fail, but never considered what to do when the system that fails is an outside vendor holding part of its data."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "Why isn't a contract enough?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Because a data processing agreement describes a relationship under normal conditions, and a breach is, by definition, the abnormal condition nobody negotiated for. The confidentiality clause and the data protection clause exist so the vendor does its job well every ordinary day. They do not exist to tell the company what to do the afternoon that job goes wrong: who gets called first, with what information, and who pays for calling late or calling wrong."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "And there is a piece almost no company has, and it only shows up once it's too late: an inventory of exactly what data goes to each AI vendor. Not the contract language about which categories it may process, but the actual list of what is flowing into that system today. Without it, the first hour after the notice gets spent figuring out how big the problem is, instead of fixing it."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A data processing agreement protects the vendor from being sued unfairly. It does not protect the company from having to answer first.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "What has to be decided before that email arrives?"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Data inventory",
+            "definicion": "The actual, current list of what data each AI vendor receives, not the generic category named in the contract. Without it, the first hour of any incident is lost figuring out what was even in there."
+          },
+          {
+            "termino": "Vendor notice window",
+            "definicion": "How many hours the vendor has to tell the company once it detects a problem, written as a number, not as \"without undue delay.\" That legal phrase obligates nobody to move fast."
+          },
+          {
+            "termino": "Who notifies whom",
+            "definicion": "Who drafts and who signs the notice to the regulator and the notice to the affected customer: the vendor, the company, or both, and in what order. Deciding this mid-crisis costs twice the time of deciding it beforehand."
+          },
+          {
+            "termino": "Liability cap",
+            "definicion": "The financial limit the contract places on the vendor, measured against what an incident actually costs: notification, customer support, an external audit, a penalty if one lands. Most AI contracts set that cap far too low."
+          },
+          {
+            "termino": "Containment plan",
+            "definicion": "What gets cut first once the vendor reports an incident: access, data syncing, live integrations. Without this written down, the company decides under pressure and usually takes longer than the incident allows."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of these five is an exotic legal clause. They are five operational decisions sitting buried inside a thirty-page contract nobody reopens after signing, one that only gets read closely on the day of the incident, when there is no time left to negotiate anything."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Pull the contract you currently hold with your main AI vendor and look for the notification window in hours, not days. If no number appears, you don't have an incident response agreement. You have a confidentiality clause wearing a different name."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Who is liable when an AI vendor suffers a data breach?",
+            "respuesta": "The same party that would be liable if the breach had happened on its own infrastructure, in front of the regulator and the affected people. The vendor may carry its own contractual and legal obligations, but the company that collected the data is still the one that has to notify, explain and respond first, regardless of whether the technical failure happened inside a system it doesn't directly operate."
+          },
+          {
+            "pregunta": "Does a data processing agreement protect the company from a penalty?",
+            "respuesta": "It protects partially, and only if the vendor kept its end of the deal: it lowers the risk of the company absorbing a negligence that wasn't its own. It does not exempt the company from notifying within the legal deadline or from exposure to the affected customer, both of which depend on the company itself, not on what the vendor contract says."
+          },
+          {
+            "pregunta": "Who has to notify the regulator first if the breach happened at the vendor?",
+            "respuesta": "Under most data protection frameworks, the duty to notify the regulator falls on whoever originally collected the data, not on whoever was processing it when the breach occurred. That is why the contract needs to name, with hours and owners, who drafts that notice and who signs it, instead of assuming the vendor will handle it on its own."
+          },
+          {
+            "pregunta": "How do you negotiate an AI vendor's liability cap before signing?",
+            "respuesta": "Compare the limit the contract offers against the real cost of an incident: notifying those affected, customer support, an external audit and a possible penalty, not just the value of the annual fee. If the vendor refuses to raise that cap, the refusal itself is information about how much risk it is willing to carry for the data the company hands it."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's design your response framework",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
