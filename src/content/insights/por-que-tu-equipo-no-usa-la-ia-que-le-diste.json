@@ -77,19 +77,19 @@
         "items": [
           {
             "termino": "Seguridad",
-            "definicion": "Qué le pasa a quien demuestra que su tarea se hace en la mitad de tiempo. Si la respuesta implícita es que sobra gente, nadie va a demostrarlo."
+            "definicion": "Qué le pasa a quien demuestra que su tarea se hace en la mitad de tiempo. Si la respuesta implícita es que sobra gente, nadie va a demostrarlo. Ponlo por escrito y en voz alta: nadie pierde su puesto por acortar una tarea este trimestre, y sostén esa línea aunque el primer caso incomode a alguien arriba."
           },
           {
             "termino": "Tiempo liberado",
-            "definicion": "A dónde va la hora que la IA ahorra: a menos horas, a otra tarea de valor distinto, o de vuelta a la misma cola. Sin esa respuesta escrita, el equipo la rellena por defecto con más de lo mismo."
+            "definicion": "A dónde va la hora que la IA ahorra: a menos horas, a otra tarea de valor distinto, o de vuelta a la misma cola. Decídelo antes de medir la adopción, no después. Si esa hora va a un proyecto sin dueño ni fecha, nómbralo, o el equipo la devuelve solo a la cola de siempre."
           },
           {
             "termino": "Curva",
-            "definicion": "Quién absorbe el rendimiento más bajo de las primeras semanas mientras alguien aprende a usar la herramienta bien, y durante cuánto tiempo esa caída no cuenta en contra."
+            "definicion": "Quién absorbe el rendimiento más bajo de las primeras semanas mientras alguien aprende a usar la herramienta bien, y durante cuánto tiempo esa caída no cuenta en contra. Pon un plazo explícito, cuatro semanas como mínimo, y anúncialo en la misma reunión donde se lanza la herramienta, no después de que a alguien ya le haya costado una mala evaluación."
           },
           {
             "termino": "Medida",
-            "definicion": "Uso activo por tarea, no licencias activadas. Lo segundo mide compra, no adopción, y es casi lo único que reporta cualquier panel."
+            "definicion": "Uso activo por tarea, no licencias activadas. Lo segundo mide compra, no adopción, y es casi lo único que reporta cualquier panel. Pide al proveedor el desglose por tarea, no el agregado de sesiones: la cifra que vende la renovación no es la que dice si alguien cambió su manera de trabajar."
           }
         ]
       },
@@ -116,6 +116,10 @@
           {
             "pregunta": "¿Qué pasa con el tiempo que libera la IA en un equipo?",
             "respuesta": "Casi siempre se rellena solo, con más tareas de la misma cola, y entonces nadie nota que hubo una ganancia porque el día sigue viéndose igual de lleno. Si esa hora no se destina a algo distinto y visible, decidido antes de medir la adopción, no hay ningún incentivo real para acelerar el trabajo con IA."
+          },
+          {
+            "pregunta": "¿Cuánto tiempo hay que esperar antes de saber si la adopción de una herramienta de IA funcionó?",
+            "respuesta": "Al menos lo que dura la curva de aprendizaje, normalmente unas cuatro semanas, y ese plazo se anuncia antes de lanzar la herramienta, no se inventa después al ver un número que no gusta. Medir en la primera quincena solo captura el valle de rendimiento, no la adopción real, y penalizar esa caída inicial es la forma más rápida de que nadie vuelva a intentarlo con ganas."
           }
         ]
       },
@@ -191,19 +195,19 @@
         "items": [
           {
             "termino": "Safety",
-            "definicion": "What happens to whoever proves their task now takes half the time. If the implicit answer is that headcount is spare, nobody is going to prove it."
+            "definicion": "What happens to whoever proves their task now takes half the time. If the implicit answer is that headcount is spare, nobody is going to prove it. Put it in writing and say it out loud: nobody loses their role for shortening a task this quarter, and hold that line even when the first case makes someone upstairs uncomfortable."
           },
           {
             "termino": "Freed time",
-            "definicion": "Where the saved hour goes: fewer hours, a different task with different value, or straight back into the same queue. Without that answer written down, the team fills it by default with more of the same."
+            "definicion": "Where the saved hour goes: fewer hours, a different task with different value, or straight back into the same queue. Decide before adoption gets measured, not after. If that hour goes to a project with no owner and no date, name one, or the team hands it back to the same queue on its own."
           },
           {
             "termino": "The dip",
-            "definicion": "Who absorbs the lower output of the first weeks while someone learns to use the tool properly, and for how long that dip doesn't count against them."
+            "definicion": "Who absorbs the lower output of the first weeks while someone learns to use the tool properly, and for how long that dip doesn't count against them. Set an explicit window, four weeks at minimum, and announce it at the same meeting where the tool launches, not after someone has already taken a bad review for it."
           },
           {
             "termino": "The measure",
-            "definicion": "Active use per task, not activated seats. The second measures purchase, not adoption, and it's nearly all any dashboard reports."
+            "definicion": "Active use per task, not activated seats. The second measures purchase, not adoption, and it's nearly all any dashboard reports. Ask the vendor for the per-task breakdown, not the session aggregate: the number that sells the renewal isn't the one that shows whether anyone actually changed how they work."
           }
         ]
       },
@@ -230,6 +234,10 @@
           {
             "pregunta": "Why do senior staff use AI less than junior staff?",
             "respuesta": "Because seniors already have a working method, and risking it for an unproven tool costs them more than it costs a junior who has nothing established yet to protect. That gap closes only when using AI well is rewarded rather than read as evidence that the senior's own judgement was replaceable all along."
+          },
+          {
+            "pregunta": "How long before you can tell whether AI adoption actually worked?",
+            "respuesta": "At least as long as the learning curve takes, usually about four weeks, and that window needs announcing before the tool launches, not invented afterward once a number looks bad. Measuring in the first two weeks only captures the performance dip, not real adoption, and punishing that early drop is the fastest way to make sure nobody tries wholeheartedly again."
           }
         ]
       },
