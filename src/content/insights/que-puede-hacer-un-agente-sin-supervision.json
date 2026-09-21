@@ -59,6 +59,10 @@
         "texto": "Riesgo es una palabra que sirve para la diapositiva y no sirve para decidir un caso a las tres de la tarde. Lo que sí decide un caso son tres cosas que se pueden mirar y medir: cuánto dinero mueve la decisión, si se puede deshacer sin daño una vez tomada, y a cuánta gente afecta si sale mal. Un agente que aprueba un reembolso de importe bajo, reversible y que afecta a una sola persona, no necesita el mismo corte que uno que cancela un contrato: mismo «riesgo bajo» en la diapositiva, corte completamente distinto en la realidad."
       },
       {
+        "tipo": "parrafo",
+        "texto": "Y esto no se resuelve escribiéndolo en el prompt del agente. Una instrucción en el prompt es una sugerencia: el modelo la puede olvidar, o alguien puede convencerlo de saltársela con la pregunta formulada distinto. El corte tiene que vivir fuera del modelo, en el código que llama a la herramienta de pago, de reembolso o de cancelación. Si el importe supera el número escrito, la llamada ni se ejecuta, sin que el agente tenga que estar de acuerdo. Es la misma razón por la que ningún banco pone el límite de una tarjeta como una nota en el manual del cajero: lo pone en el sistema que autoriza la transacción."
+      },
+      {
         "tipo": "cita",
         "texto": "Un comité que dice «clasificamos por riesgo» y no puede aplicarlo a un caso concreto en menos de un minuto no tiene un criterio: tiene una palabra que usa para sentirse tranquilo.",
         "fuente": "BECOME"
@@ -81,7 +85,7 @@
           },
           {
             "termino": "Detección",
-            "definicion": "Cómo se sabe que el agente se salió de su perímetro sin esperar la queja del cliente. Una alerta cuando se acerca al límite, no un informe que se lee después del incidente."
+            "definicion": "Cómo se sabe que el agente se salió de su perímetro sin esperar la queja del cliente. Se registra cada llamada a la herramienta con el valor que intentó mover, y salta una alerta automática cuando esa llamada se acerca al límite escrito, antes de que se ejecute, no en el informe que alguien lee después del incidente."
           },
           {
             "termino": "Revisión",
@@ -116,6 +120,10 @@
           {
             "pregunta": "¿Con qué frecuencia hay que revisar el límite de autonomía de un agente?",
             "respuesta": "Cada vez que cambie el tamaño del proceso donde opera, y como mínimo cada trimestre con datos reales de operación, no con la sensación de que va bien. El número fijado el primer día casi nunca sigue siendo el correcto seis meses después, y nadie lo nota si no hay una fecha puesta para volver a mirarlo."
+          },
+          {
+            "pregunta": "¿El límite de autonomía se escribe en el prompt del agente?",
+            "respuesta": "No, y ese es el error más común. Una instrucción en el prompt es una sugerencia que el modelo puede olvidar o dejar de aplicar ante una pregunta formulada distinto; un límite que de verdad protege tiene que estar en el código que ejecuta la acción, fuera del alcance del modelo. Si el importe supera el número escrito, la llamada a la herramienta de pago o de cancelación no se ejecuta, sin que el agente tenga que estar de acuerdo con esa decisión."
           }
         ]
       },
@@ -173,6 +181,10 @@
         "texto": "Risk is a word that works on a slide and does nothing for a decision at three in the afternoon. What actually decides a case is three things you can check and measure: how much money the decision moves, whether it can be undone without harm once it's made, and how many people it affects if it goes wrong. An agent approving a low value, reversible refund that affects one person doesn't need the same cutoff as one cancelling a contract. Same \"low risk\" on the slide, completely different cutoff in reality."
       },
       {
+        "tipo": "parrafo",
+        "texto": "And writing it into the agent's prompt doesn't solve it. A prompt instruction is a suggestion: the model can forget it, or someone can talk it out of following one if the question is phrased differently. The cutoff has to live outside the model, in the code that calls the payment, refund or cancellation tool. If the amount clears the written number, the call simply doesn't fire, whether or not the agent agrees with that. It's the same reason no bank writes a card limit as a note in the teller's manual. It puts it in the system that authorises the transaction."
+      },
+      {
         "tipo": "cita",
         "texto": "A committee that says \"we classify by risk\" and can't apply it to a real case in under a minute doesn't have a criterion. It has a word it uses to feel comfortable.",
         "fuente": "BECOME"
@@ -195,7 +207,7 @@
           },
           {
             "termino": "Detection",
-            "definicion": "How you know the agent stepped outside its perimeter without waiting for the customer complaint. An alert when it approaches the limit, not a report read after the incident."
+            "definicion": "How you know the agent stepped outside its perimeter without waiting for the customer complaint. Every tool call gets logged with the value it tried to move, and an alert fires automatically when that call nears the written limit, before it executes, not in a report someone reads after the incident."
           },
           {
             "termino": "Review",
@@ -230,6 +242,10 @@
           {
             "pregunta": "How often should you review an agent's autonomy limit?",
             "respuesta": "Every time the process it runs in changes size, and at minimum once a quarter against real operating data, not against a sense that things are going well. The number set on day one is almost never still right six months later, and nobody notices unless a date is already on the calendar to check."
+          },
+          {
+            "pregunta": "Should the autonomy limit live in the agent's prompt?",
+            "respuesta": "No, and that's the most common mistake. A prompt instruction is a suggestion the model can forget, or get talked out of if a question is phrased differently; a limit that actually holds has to sit in the code that executes the action, outside the model's reach. If the amount clears the written number, the call to the payment or cancellation tool simply doesn't fire, whether or not the agent agrees with that."
           }
         ]
       },
