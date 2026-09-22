@@ -31,6 +31,10 @@
         "texto": "Lo que se discute nunca es la precisión. Es una pregunta mucho más simple, y mucho más incómoda: si este agente aprueba un descuento que no tocaba, ¿de quién es el error?"
       },
       {
+        "tipo": "parrafo",
+        "texto": "Aquí conviene separar dos preguntas que se mezclan sin querer. Quién responde legalmente cuando un agente causa un daño lo resuelve un tribunal o un contrato, caso por caso, y ya hay despachos especializados en eso. Quién responde dentro de la empresa, todos los días, antes de que pase nada, es una pregunta distinta, y nadie se la delegó al despacho ni al proveedor de la plataforma. Comprar un agente con panel de auditoría tampoco la resuelve: el panel registra qué decidió el agente, pero nunca dice quién decidió que pudiera decidir eso solo."
+      },
+      {
         "tipo": "subtitulo",
         "antetitulo": "El síntoma",
         "texto": "La responsabilidad no se delega hacia arriba."
@@ -116,6 +120,10 @@
           {
             "pregunta": "¿Qué se mide en un agente en producción?",
             "respuesta": "Además de la precisión, cuántas veces la revisión humana cambió realmente la decisión del agente. Si ese número es muy bajo y sostenido, la revisión está costando dinero sin añadir control y el umbral debería subir."
+          },
+          {
+            "pregunta": "¿Es lo mismo la responsabilidad legal que ser el dueño de un agente?",
+            "respuesta": "No. La responsabilidad legal la decide un tribunal o el contrato con el proveedor, después de que algo salió mal, y depende del caso y la jurisdicción. El dueño operativo es la persona que la empresa nombra antes de que el agente actúe, responsable del ámbito, el umbral y la medida. Una empresa puede tener la responsabilidad legal resuelta en el contrato y seguir sin dueño operativo: son preguntas distintas y hace falta responder las dos."
           }
         ]
       },
@@ -143,6 +151,10 @@
       {
         "tipo": "parrafo",
         "texto": "What gets debated is never accuracy. It’s a much simpler and far more uncomfortable question: if this agent approves a discount it shouldn’t have, whose mistake is it?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Two different questions get mixed up here. Who is legally liable when an agent causes harm gets settled by a court or a contract, case by case, and law firms already specialise in exactly that. Who answers inside the company, every day, before anything goes wrong, is a separate question, and nobody handed it to outside counsel or to the platform vendor. Buying an agent with an audit trail doesn’t settle it either: the trail logs what the agent decided. It never says who decided the agent could decide that on its own."
       },
       {
         "tipo": "subtitulo",
@@ -230,6 +242,10 @@
           {
             "pregunta": "What do you measure on an agent in production?",
             "respuesta": "Beyond accuracy, how often human review actually changed the agent’s decision. If that number is low and stays low, the review is costing money without adding control, and the threshold should go up."
+          },
+          {
+            "pregunta": "Is legal liability the same as owning an agent?",
+            "respuesta": "No. Legal liability is decided by a court or the vendor contract after something has already gone wrong, and it depends on the case and the jurisdiction. The operational owner is the person the company names before the agent acts, responsible for its scope, its threshold and how it’s measured. A company can have liability fully covered in a vendor contract and still have no operational owner: those are two different questions, and both need an answer."
           }
         ]
       },
