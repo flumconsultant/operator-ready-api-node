@@ -107,6 +107,27 @@ Nunca pongas tokens en este nodo: los secretos van solo en las credenciales.
 - Si admite `Idempotency-Key` (hoy se envía; si no lo admite, lo ignorará), cómo mantiene la continuidad de conversación y si acepta archivos y de qué tipos.
   Hasta confirmarlo, **ningún archivo se descarga ni se envía**. El usuario recibe una nota con los archivos no analizados.
 
+## Origen real de los mensajes: SendBird
+
+Con la *Fallback URL* de Workvivo, los mensajes llegan desde **SendBird** (`user-agent: SendBird`), **sin `x-workvivo-jwt`**.
+Vienen firmados en `x-sendbird-signature` con HMAC-SHA256 del cuerpo crudo. El workflow admite los dos orígenes (nodo **Origen**):
+
+- `x-workvivo-jwt` → verificación JWT, como se describe arriba.
+- `x-sendbird-signature` → **Validar entrada básica** hace tres cosas:
+  - comprueba que `app_id` sea igual a `SENDBIRD_APP_ID` (valor fijo, nunca una expresión);
+  - reconstruye el cuerpo crudo: JSON compacto, `/` escapado y no-ASCII como `\uXXXX`, y exige que su tamaño coincida con `content-length`;
+  - después, **HMAC SendBird** (nodo Crypto) calcula la firma y **Validar firma SendBird** la compara en tiempo constante. También rechaza eventos con `ts` fuera de la ventana (`JWT_MAX_AGE_SECONDS`).
+- El secreto de firma se guarda en la Data Table `wv_validator_secretos`, en una fila con `name = SENDBIRD_SIGNING_SECRET` y `value = <secreto>`.
+  Queda fuera del workflow y de sus exports. Mientras no exista, todo se rechaza con 503 `CONFIG_SENDBIRD_SECRET_PENDIENTE`.
+- **PENDIENTE:** ese secreto no es el `bot_token` ni el `app_id` (lo comprobé contra una firma real). Lo tiene que proporcionar Workvivo o SendBird.
+- Mapeo confirmado con un evento real:
+  - `message.message_id` → idempotencia
+  - `sender.user_id` y `sender.nickname` → remitente
+  - `message.created_at` → fecha de creación
+  - `mentioned` → menciones
+  - `message.files` → adjuntos (los campos internos se confirman con un evento que traiga archivo)
+- `bot.bot_token` viaja en el payload: nunca se usa, reenvía ni registra.
+
 ## 4. Payload ficticio de prueba (sin secretos)
 
 ```json
