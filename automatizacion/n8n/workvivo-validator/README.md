@@ -56,10 +56,12 @@ Si Workvivo solo publica un JWKS (`WORKVIVO_JWKS_URL`), convierte la clave (`kid
 Cuando Workvivo rote la clave, actualiza la credencial.
 Mientras tanto, los tokens firmados con la clave nueva se rechazan con 401, así que el sistema falla de forma segura.
 
-### Variables de entorno del contenedor n8n (sin secretos)
+### Nodo "Configuración" (sin secretos)
 
-Primero hay que habilitar el acceso a variables desde los nodos: `N8N_BLOCK_ENV_ACCESS_IN_NODE=false`.
-Mientras no esté habilitado, **todo** se rechaza con 503 `CONFIG_ENV_BLOQUEADO` (fail closed).
+Tu instancia bloquea `$env` en los nodos y la licencia no incluye *Variables*.
+Por eso la configuración no secreta vive en el nodo **Configuración** (un Set, justo después del Webhook). Edita ahí los valores.
+Si falta un valor obligatorio, la solicitud se rechaza con 503 `CONFIG_INCOMPLETA`. Son obligatorios:
+`WORKVIVO_API_BASE_URL`, `WORKVIVO_ID`, `CHATGPT_AGENT_API_URL`, `CHATGPT_AGENT_CHANNEL_ID` y `DATASTORE_NAMESPACE`.
 
 | Variable | Ejemplo / nota |
 |---|---|
@@ -84,7 +86,7 @@ Mientras no esté habilitado, **todo** se rechaza con 503 `CONFIG_ENV_BLOQUEADO`
 | `MAX_ATTACHMENT_BYTES` | Por defecto `10485760` |
 | `RATE_LIMIT_PER_MINUTE` | Mensajes por conversación y minuto (por defecto `10`) |
 
-Tras editar el `docker-compose`/`.env` del VPS, reinicia n8n.
+Nunca pongas tokens en este nodo: los secretos van solo en las credenciales.
 
 ## 3. Campos que requieren documentación oficial
 
@@ -122,11 +124,11 @@ node probar-webhook.mjs claves          # par RSA de PRUEBA en ./claves-prueba (
 # Pega claves-prueba/publica.pem en la credencial "Workvivo JWT public key" de DEV (RS256)
 export WEBHOOK_URL=https://<n8n-dev>/webhook/workvivo/validator
 export TEST_ISS=prueba TEST_AUD=prueba TEST_APP_CLAIM=app_id TEST_APP_ID=app-prueba
-# y en DEV: WORKVIVO_EXPECTED_ISSUER=prueba, WORKVIVO_EXPECTED_AUDIENCE=prueba,
+# y en el nodo Configuración de DEV: WORKVIVO_EXPECTED_ISSUER=prueba, WORKVIVO_EXPECTED_AUDIENCE=prueba,
 #           WORKVIVO_APP_ID_CLAIM=app_id, WORKVIVO_APP_ID=app-prueba
 ```
 
-Para las pruebas de Validator y Workvivo, apunta `CHATGPT_AGENT_API_URL` y `WORKVIVO_API_BASE_URL` en DEV a un **workflow mock** de n8n (Webhook + Respond to Webhook). Nunca uses los servicios reales.
+Para las pruebas de Validator y Workvivo, apunta `CHATGPT_AGENT_API_URL` y `WORKVIVO_API_BASE_URL` (nodo Configuración de DEV) a un **workflow mock** de n8n (Webhook + Respond to Webhook). Nunca uses los servicios reales.
 
 ## 5. Pruebas
 
