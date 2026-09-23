@@ -20,7 +20,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// VALIDAR ENTRADA BÁSICA\n// No registra ni devuelve el JWT, tokens ni el contenido del mensaje.\n// El nodo Webhook solo acepta POST; la query string se ignora por diseño.\nconst req = $('Workvivo Chatbot Callback').first().json;\nconst headers = {};\nfor (const [k, v] of Object.entries(req.headers || {})) headers[String(k).toLowerCase()] = Array.isArray(v) ? v[0] : v;\n\nconst correlationId = 'wv-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);\nconst CFG = $('Configuración').first().json;\nconst env = (k, d = '') => { const v = CFG[k]; return v === undefined || v === null || String(v).trim() === '' ? d : String(v).trim(); };\nconst reject = (httpStatus, category) => [{ json: { ok: false, correlationId, httpStatus, category, stage: 'entrada' } }];\n\n// 1) Configuración (nodo \"Configuración\"): si falta un valor obligatorio se rechaza (fail closed).\nconst REQUIRED = ['WORKVIVO_API_BASE_URL', 'WORKVIVO_ID', 'CHATGPT_AGENT_API_URL', 'CHATGPT_AGENT_CHANNEL_ID', 'DATASTORE_NAMESPACE'];\nconst missing = REQUIRED.filter((k) => !env(k));\nif (missing.length) return reject(503, 'CONFIG_INCOMPLETA');\n\n// 2) HTTPS obligatorio (el proxy inverso informa el esquema original).\nconst proto = String(headers['x-forwarded-proto'] || '').split(',')[0].trim().toLowerCase();\nif (proto !== 'https') return reject(403, 'HTTPS_REQUERIDO');\n\n// 3) Content-Type\nconst ct = String(headers['content-type'] || '').toLowerCase();\nif (!ct.startsWith('application/json')) return reject(415, 'CONTENT_TYPE_INVALIDO');\n\n// 4) Tamaño\nconst maxBytes = Number(env('MAX_REQUEST_BYTES', '262144'));\nconst declared = Number(headers['content-length'] || 0);\nconst body = req.body;\nif (!body || typeof body !== 'object' || Array.isArray(body) || Object.keys(body).length === 0) return reject(400, 'BODY_VACIO');\nconst actual = Buffer.byteLength(JSON.stringify(body), 'utf8');\nif (declared > maxBytes || actual > maxBytes) return reject(413, 'PAYLOAD_DEMASIADO_GRANDE');\n\n// 5) JWT presente y bien formado (tres segmentos, firma no vacía)\nconst jwt = headers['x-workvivo-jwt'];\nif (typeof jwt !== 'string' || !jwt) return reject(401, 'JWT_AUSENTE');\nif (jwt.length > 8192 || !/^[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+$/.test(jwt)) return reject(401, 'JWT_MAL_FORMADO');\n\n// 6) Allowlist de algoritmos (defensa previa; la verificación real la hace el nodo JWT con la clave fijada)\nlet jwtHeader;\ntry { jwtHeader = JSON.parse(Buffer.from(jwt.split('.')[0], 'base64url').toString('utf8')); } catch (e) { return reject(401, 'JWT_MAL_FORMADO'); }\nconst allowedAlgs = env('WORKVIVO_JWT_ALGORITHMS', 'RS256').split(',').map((s) => s.trim()).filter(Boolean);\nconst alg = String(jwtHeader && jwtHeader.alg || '');\nif (!alg || alg.toLowerCase() === 'none' || !allowedAlgs.includes(alg)) return reject(401, 'JWT_ALG_NO_PERMITIDO');\n\n// 6b) Endpoint del agente solo por HTTPS\nif (!/^https:\\/\\//i.test(env('CHATGPT_AGENT_API_URL')) || !/^https:\\/\\//i.test(env('WORKVIVO_API_BASE_URL'))) return reject(503, 'CONFIG_URL_NO_HTTPS');\n\n// 7) Campos mínimos. Según el ejemplo de referencia de Workvivo, cada evento trae \"category\" o \"action\".\n// PENDIENTE DE DOCUMENTACIÓN: confirmar con el payload oficial.\nif (!body.category && !body.action) return reject(400, 'PAYLOAD_SIN_TIPO_DE_EVENTO');\n\nreturn [{ json: { ok: true, correlationId, jwt, body } }];\n"
+        "jsCode": "// VALIDAR ENTRADA BÁSICA\n// No registra ni devuelve el JWT, tokens ni el contenido del mensaje.\n// El nodo Webhook solo acepta POST; la query string se ignora por diseño.\nconst req = $('Workvivo Chatbot Callback').first().json;\nconst headers = {};\nfor (const [k, v] of Object.entries(req.headers || {})) headers[String(k).toLowerCase()] = Array.isArray(v) ? v[0] : v;\n\nconst correlationId = 'wv-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);\nconst CFG = $('Configuración').first().json;\nconst env = (k, d = '') => { const v = CFG[k]; return v === undefined || v === null || String(v).trim() === '' ? d : String(v).trim(); };\nlet jwtDiag = '';\nconst reject = (httpStatus, category) => [{ json: { ok: false, correlationId, httpStatus, category, stage: 'entrada', detail: jwtDiag } }];\n\n// 1) Configuración (nodo \"Configuración\"): si falta un valor obligatorio se rechaza (fail closed).\n// Solo lo necesario para recibir de Workvivo. La config de Validator se comprueba antes de llamarlo.\nconst REQUIRED = ['WORKVIVO_API_BASE_URL', 'WORKVIVO_ID', 'DATASTORE_NAMESPACE'];\nconst missing = REQUIRED.filter((k) => !env(k));\nif (missing.length) return reject(503, 'CONFIG_INCOMPLETA');\n\n// 2) HTTPS obligatorio (el proxy inverso informa el esquema original).\nconst proto = String(headers['x-forwarded-proto'] || '').split(',')[0].trim().toLowerCase();\nif (proto !== 'https') return reject(403, 'HTTPS_REQUERIDO');\n\n// 3) Content-Type\nconst ct = String(headers['content-type'] || '').toLowerCase();\nif (!ct.startsWith('application/json')) return reject(415, 'CONTENT_TYPE_INVALIDO');\n\n// 4) Tamaño\nconst maxBytes = Number(env('MAX_REQUEST_BYTES', '262144'));\nconst declared = Number(headers['content-length'] || 0);\nconst body = req.body;\nif (!body || typeof body !== 'object' || Array.isArray(body) || Object.keys(body).length === 0) return reject(400, 'BODY_VACIO');\nconst actual = Buffer.byteLength(JSON.stringify(body), 'utf8');\nif (declared > maxBytes || actual > maxBytes) return reject(413, 'PAYLOAD_DEMASIADO_GRANDE');\n\n// 5) JWT presente y bien formado (tres segmentos, firma no vacía)\nconst jwt = headers['x-workvivo-jwt'];\nif (typeof jwt !== 'string' || !jwt) return reject(401, 'JWT_AUSENTE');\nif (jwt.length > 8192 || !/^[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+$/.test(jwt)) return reject(401, 'JWT_MAL_FORMADO');\n\n// 6) Allowlist de algoritmos (defensa previa; la verificación real la hace el nodo JWT con la clave fijada)\nlet jwtHeader;\ntry { jwtHeader = JSON.parse(Buffer.from(jwt.split('.')[0], 'base64url').toString('utf8')); } catch (e) { return reject(401, 'JWT_MAL_FORMADO'); }\n// Diagnóstico SIN secretos (datos públicos del token, nunca el token): ayuda a obtener la clave y los claims oficiales.\ntry {\n  const p = JSON.parse(Buffer.from(jwt.split('.')[1], 'base64url').toString('utf8'));\n  jwtDiag = `alg=${jwtHeader.alg || ''}; kid=${jwtHeader.kid || ''}; claims=${Object.keys(p).sort().join(',')}; iss=${p.iss || ''}; aud=${JSON.stringify(p.aud || '')}; publicKeyUrl=${p.publicKeyUrl || ''}`.slice(0, 500);\n} catch (e) { jwtDiag = `alg=${jwtHeader.alg || ''}; kid=${jwtHeader.kid || ''}; payload no legible`; }\nconst allowedAlgs = env('WORKVIVO_JWT_ALGORITHMS', 'RS256').split(',').map((s) => s.trim()).filter(Boolean);\nconst alg = String(jwtHeader && jwtHeader.alg || '');\nif (!alg || alg.toLowerCase() === 'none' || !allowedAlgs.includes(alg)) return reject(401, 'JWT_ALG_NO_PERMITIDO');\n\n// 6b) Endpoint del agente solo por HTTPS\nif (!/^https:\\/\\//i.test(env('WORKVIVO_API_BASE_URL'))) return reject(503, 'CONFIG_URL_NO_HTTPS');\n\n// 7) Campos mínimos. Según el ejemplo de referencia de Workvivo, cada evento trae \"category\" o \"action\".\n// PENDIENTE DE DOCUMENTACIÓN: confirmar con el payload oficial.\nif (!body.category && !body.action) return reject(400, 'PAYLOAD_SIN_TIPO_DE_EVENTO');\n\nreturn [{ json: { ok: true, correlationId, jwt, body, jwtDiag } }];\n"
       },
       "id": "102ab2b7-f4d0-506e-ba84-e23f9dd11b9d",
       "name": "Validar entrada básica",
@@ -385,7 +385,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// PREPARAR SOLICITUD PARA VALIDATOR\n// n8n no genera diagnósticos: si no hay texto ni archivo compatible, se envía igualmente\n// una solicitud válida (sin inventar contenido) para que Validator aplique su propia regla.\n// No se envían: token/JWT de Workvivo, headers, nombre del usuario ni logs técnicos.\nconst ev = $('Normalizar evento Workvivo').first().json;\nconst row = $input.first().json || {};\nconst CFG = $('Configuración').first().json;\nconst env = (k, d = '') => { const v = CFG[k]; return v === undefined || v === null || String(v).trim() === '' ? d : String(v).trim(); };\n\nconst conversationId = row.validatorConversationId ? String(row.validatorConversationId) : null;\nconst compatibles = ev.attachments.filter((a) => a.status === 'compatible');\nconst noAnalizados = ev.attachments.filter((a) => a.status !== 'compatible').map((a) => a.name);\nconst hasReviewableInput = !!ev.text || compatibles.length > 0;\n\n// ============ PENDIENTE DE DOCUMENTACIÓN ============\n// Esquema oficial de solicitud del canal API del agente (Agent Builder -> canal API, id \"agtch_...\").\n// Sustituye los NOMBRES de campo de este objeto por los del contrato oficial. Los valores ya son correctos.\nconst validatorBody = {\n  channel_id: env('CHATGPT_AGENT_CHANNEL_ID'), // PENDIENTE: puede ir en la URL en lugar del body\n  input: ev.text,                               // PENDIENTE: nombre del campo de mensaje\n  conversation_id: conversationId,              // PENDIENTE: continuidad de conversación\n  metadata: {                                   // PENDIENTE: solo si el contrato admite metadatos\n    correlation_id: ev.correlationId,\n    source: 'workvivo',\n    has_reviewable_input: hasReviewableInput,\n    attachments_not_analyzed: noAnalizados,\n  },\n};\n// =====================================================\n\nreturn [{ json: { correlationId: ev.correlationId, idempotencyKey: ev.dedupeKey, validatorBody, noAnalizados } }];\n"
+        "jsCode": "// PREPARAR SOLICITUD PARA VALIDATOR\n// n8n no genera diagnósticos: si no hay texto ni archivo compatible, se envía igualmente\n// una solicitud válida (sin inventar contenido) para que Validator aplique su propia regla.\n// No se envían: token/JWT de Workvivo, headers, nombre del usuario ni logs técnicos.\nconst ev = $('Normalizar evento Workvivo').first().json;\nconst row = $input.first().json || {};\nconst CFG = $('Configuración').first().json;\nconst env = (k, d = '') => { const v = CFG[k]; return v === undefined || v === null || String(v).trim() === '' ? d : String(v).trim(); };\n\nconst conversationId = row.validatorConversationId ? String(row.validatorConversationId) : null;\nconst compatibles = ev.attachments.filter((a) => a.status === 'compatible');\nconst noAnalizados = ev.attachments.filter((a) => a.status !== 'compatible').map((a) => a.name);\nconst hasReviewableInput = !!ev.text || compatibles.length > 0;\n\n// ============ PENDIENTE DE DOCUMENTACIÓN ============\n// Esquema oficial de solicitud del canal API del agente (Agent Builder -> canal API, id \"agtch_...\").\n// Sustituye los NOMBRES de campo de este objeto por los del contrato oficial. Los valores ya son correctos.\nconst validatorBody = {\n  channel_id: env('CHATGPT_AGENT_CHANNEL_ID'), // PENDIENTE: puede ir en la URL en lugar del body\n  input: ev.text,                               // PENDIENTE: nombre del campo de mensaje\n  conversation_id: conversationId,              // PENDIENTE: continuidad de conversación\n  metadata: {                                   // PENDIENTE: solo si el contrato admite metadatos\n    correlation_id: ev.correlationId,\n    source: 'workvivo',\n    has_reviewable_input: hasReviewableInput,\n    attachments_not_analyzed: noAnalizados,\n  },\n};\n// =====================================================\n\nconst configOk = /^https:\\/\\//i.test(env('CHATGPT_AGENT_API_URL')) && !!env('CHATGPT_AGENT_CHANNEL_ID');\nif (!configOk) return [{ json: { configOk, route: 'error', correlationId: ev.correlationId, category: 'CONFIG_VALIDATOR_PENDIENTE', node: 'Preparar solicitud Validator', httpStatus: 0 } }];\nreturn [{ json: { configOk, correlationId: ev.correlationId, idempotencyKey: ev.dedupeKey, validatorBody, noAnalizados } }];\n"
       },
       "id": "8bc9366b-5a82-574d-a0c1-938721bd7d65",
       "name": "Preparar solicitud Validator",
@@ -803,7 +803,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// PREPARAR RECHAZO: unifica los rechazos (entrada, firma JWT, claims, payload, rate limit).\n// Solo se conserva correlationId, código HTTP y categoría general. Nunca el JWT ni el contenido.\nconst j = $input.first().json || {};\nlet base = {};\ntry { base = $('Validar entrada básica').first().json; } catch (e) {}\nconst correlationId = j.correlationId || base.correlationId || ('wv-' + Date.now().toString(36));\nlet httpStatus = j.httpStatus;\nlet category = j.category;\nlet stage = j.stage || 'jwt';\n\nif (!category) {\n  // Viene de la salida de error del nodo JWT (firma, expiración, nbf o algoritmo).\n  const msg = String((j.error && (j.error.message || j.error)) || j.message || '').toLowerCase();\n  httpStatus = 401;\n  if (msg.includes('expired')) category = 'JWT_EXPIRADO';\n  else if (msg.includes('not active')) category = 'JWT_NBF';\n  else if (msg.includes('algorithm')) category = 'JWT_ALG_NO_PERMITIDO';\n  else category = 'JWT_FIRMA_INVALIDA';\n}\n\nreturn [{ json: { correlationId, httpStatus: Number(httpStatus) || 400, category, stage, detail: String(j.detail || '').slice(0, 500) } }];\n"
+        "jsCode": "// PREPARAR RECHAZO: unifica los rechazos (entrada, firma JWT, claims, payload, rate limit).\n// Solo se conserva correlationId, código HTTP y categoría general. Nunca el JWT ni el contenido.\nconst j = $input.first().json || {};\nlet base = {};\ntry { base = $('Validar entrada básica').first().json; } catch (e) {}\nconst correlationId = j.correlationId || base.correlationId || ('wv-' + Date.now().toString(36));\nlet httpStatus = j.httpStatus;\nlet category = j.category;\nlet stage = j.stage || 'jwt';\n\nif (!category) {\n  // Viene de la salida de error del nodo JWT (firma, expiración, nbf o algoritmo).\n  const msg = String((j.error && (j.error.message || j.error)) || j.message || '').toLowerCase();\n  httpStatus = 401;\n  if (msg.includes('expired')) category = 'JWT_EXPIRADO';\n  else if (msg.includes('not active')) category = 'JWT_NBF';\n  else if (msg.includes('algorithm')) category = 'JWT_ALG_NO_PERMITIDO';\n  else category = 'JWT_FIRMA_INVALIDA';\n}\n\nreturn [{ json: { correlationId, httpStatus: Number(httpStatus) || 400, category, stage, detail: String(j.detail || (stage === 'jwt' ? base.jwtDiag : '') || '').slice(0, 500) } }];\n"
       },
       "id": "8b575997-684a-5afc-81f0-638fbb28725f",
       "name": "Preparar rechazo",
@@ -1160,6 +1160,40 @@
         },
         "options": {}
       }
+    },
+    {
+      "id": "26608543-b0b9-5a84-a7f1-3435334b5545",
+      "name": "¿Validator configurado?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3022,
+        -256
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dae9e487-9fa3-4a65-9af8-f1421cd5342e",
+              "leftValue": "={{ $json.configOk }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
     }
   ],
   "connections": {
@@ -1352,7 +1386,7 @@
       "main": [
         [
           {
-            "node": "Enviar a Validator",
+            "node": "¿Validator configurado?",
             "type": "main",
             "index": 0
           }
@@ -1529,6 +1563,24 @@
         [
           {
             "node": "Validar entrada básica",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Validator configurado?": {
+      "main": [
+        [
+          {
+            "node": "Enviar a Validator",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Preparar error",
             "type": "main",
             "index": 0
           }

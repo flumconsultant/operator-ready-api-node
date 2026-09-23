@@ -60,8 +60,9 @@ Mientras tanto, los tokens firmados con la clave nueva se rechazan con 401, así
 
 Tu instancia bloquea `$env` en los nodos y la licencia no incluye *Variables*.
 Por eso la configuración no secreta vive en el nodo **Configuración** (un Set, justo después del Webhook). Edita ahí los valores.
-Si falta un valor obligatorio, la solicitud se rechaza con 503 `CONFIG_INCOMPLETA`. Son obligatorios:
-`WORKVIVO_API_BASE_URL`, `WORKVIVO_ID`, `CHATGPT_AGENT_API_URL`, `CHATGPT_AGENT_CHANNEL_ID` y `DATASTORE_NAMESPACE`.
+Para **recibir** de Workvivo son obligatorios `WORKVIVO_API_BASE_URL`, `WORKVIVO_ID` y `DATASTORE_NAMESPACE`. Si falta alguno, la solicitud se rechaza con 503 `CONFIG_INCOMPLETA`.
+`CHATGPT_AGENT_API_URL` y `CHATGPT_AGENT_CHANNEL_ID` se comprueban justo antes de llamar a Validator. Si faltan, se registra `CONFIG_VALIDATOR_PENDIENTE` y el usuario recibe el mensaje neutral.
+En los rechazos de entrada y de JWT, `wv_validator_log.detail` guarda datos públicos del token (alg, kid, nombres de claims, iss, aud y publicKeyUrl), nunca el token.
 
 | Variable | Ejemplo / nota |
 |---|---|
