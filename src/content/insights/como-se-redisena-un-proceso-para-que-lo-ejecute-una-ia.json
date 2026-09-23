@@ -6,8 +6,8 @@
   "formato": "framework",
   "es": {
     "slug": "como-se-redisena-un-proceso-para-que-lo-ejecute-una-ia",
-    "titulo": "Cómo rediseñar un proceso para que lo ejecute una IA",
-    "entradilla": "Metieron un agente en medio del proceso y siguieron haciendo exactamente lo mismo. Solo que ahora hay un paso más: alguien copia lo que dice el agente a la hoja de siempre, por si acaso.",
+    "titulo": "Cómo rediseñar un proceso para que lo ejecute la IA",
+    "entradilla": "Metieron un agente en medio del proceso y siguieron haciendo exactamente lo mismo, solo que con un paso de más: alguien copia lo que dice el agente a la hoja de siempre, por si acaso. Rediseñar no es eso: es pasar cada tarea del proceso por un filtro de cinco preguntas antes de decidir quién la ejecuta.",
     "descripcion": "Rediseñar un proceso no es insertar una IA en él. Es decidir antes qué puede hacer sola, qué necesita firma humana y quién responde si sale mal.",
     "linkedin": {
       "texto": "«Rediseña antes de automatizar» se repite tanto que ya suena a método. Es una consigna: dice qué hacer y no dice cómo.\n\nLo que ocurre después es previsible. El equipo coge el diagrama de siempre, busca dónde encaja la IA y la mete en una caja nueva. El proceso conserva sus pasos, sus revisiones y sus esperas, más una: alguien copia lo que dijo el agente a la hoja de siempre, por si acaso.\n\nEn el artículo completo analizamos qué se rediseña de verdad en un proceso con volumen real.",
@@ -33,7 +33,7 @@
       },
       {
         "tipo": "parrafo",
-        "texto": "La pregunta la hace quien tiene un proceso con volumen real, no una demo. Facturación, reclamos, altas de proveedor, conciliación. Y la respuesta que encuentra en cualquier búsqueda es siempre la misma consigna repetida con otro logo encima. Nadie dice qué criterio decide que una tarea es delegable, qué umbral dispara la escalada a un humano, quién firma el resultado, ni cómo queda ese paso ante un auditor que llega ocho meses después preguntando quién aprobó qué."
+        "texto": "La pregunta la hace quien tiene un proceso con volumen real, no una demo. Facturación, reclamos, altas de proveedor, conciliación. La respuesta directa es esta: se pasa cada tarea del proceso por un filtro de cinco preguntas (reversibilidad, coste del error, estructura del dato, firma y rastro) y solo se delega la que las pasa todas. Lo que encuentra quien busca en cualquier motor es otra cosa: la misma consigna repetida con otro logo encima, sin decir qué criterio hace delegable una tarea, qué umbral dispara la escalada a un humano, quién firma el resultado, ni cómo queda ese paso ante un auditor que llega ocho meses después preguntando quién aprobó qué."
       },
       {
         "tipo": "lista",
@@ -66,7 +66,7 @@
       },
       {
         "tipo": "subtitulo",
-        "antetitulo": "El marco",
+        "antetitulo": "El filtro de cinco preguntas",
         "texto": "¿Qué hay que decidir antes de tocar el proceso?"
       },
       {
@@ -97,14 +97,14 @@
       {
         "tipo": "destacado",
         "antetitulo": "Por dónde empezar",
-        "texto": "Coge el proceso que ibas a rediseñar y, antes de mirar ninguna herramienta, haz una lista de cada tarea que lo compone. Para cada una, escribe una respuesta a las cinco preguntas del marco. Las que salgan verdes en las cinco se automatizan primero. Las que fallen en una sola se quedan con supervisión humana, y esa lista, no el diagrama bonito, es el verdadero plan de rediseño."
+        "texto": "Coge el proceso que ibas a rediseñar y, antes de mirar ninguna herramienta, haz una lista de cada tarea que lo compone. Pasa cada una por el filtro de cinco preguntas: reversibilidad, coste del error, estructura del dato, firma y rastro. Las que salgan verdes en las cinco se automatizan primero. Las que fallen en una sola se quedan con supervisión humana, y esa lista, no el diagrama bonito, es el verdadero plan de rediseño."
       },
       {
         "tipo": "faq",
         "items": [
           {
             "pregunta": "¿Cómo se rediseña un proceso para que lo ejecute en parte una IA?",
-            "respuesta": "Antes de tocar ninguna herramienta, se descompone el proceso en tareas y se decide, tarea por tarea, cuáles son delegables según cuatro criterios: si el error es reversible, cuánto cuesta el peor caso, si el dato de entrada está estructurado y quién firma el resultado. El rediseño es esa decisión escrita, no la caja donde se inserta la IA en el diagrama."
+            "respuesta": "Se pasa cada tarea del proceso por un filtro de cinco preguntas antes de tocar ninguna herramienta: si el error es reversible, cuánto cuesta el peor caso, si el dato de entrada está estructurado, quién firma el resultado y qué rastro deja la decisión. La tarea que responde bien a las cinco se delega; la que falla en una se queda con una persona en el bucle. El rediseño es esa decisión escrita, no la caja donde se inserta la IA en el diagrama."
           },
           {
             "pregunta": "¿Qué tareas puede delegar una empresa a un agente de IA?",
@@ -130,7 +130,7 @@
   "en": {
     "slug": "how-to-redesign-a-process-for-an-ai-to-run",
     "titulo": "How to redesign a process for an AI to run",
-    "entradilla": "They dropped an agent into the middle of the process and kept doing exactly the same thing. Except now there is one extra step: someone copies what the agent says into the usual spreadsheet, just in case.",
+    "entradilla": "They dropped an agent into the middle of the process and kept doing exactly the same thing, just with one extra step: someone copies what the agent says into the usual spreadsheet, just in case. Redesign is not that: it is running every task in the process through a five-question filter before deciding who runs it.",
     "descripcion": "Redesigning a process isn't inserting an AI into it. It means deciding what it can do alone, what needs a signature, and who answers if it fails.",
     "bloques": [
       {
@@ -148,7 +148,7 @@
       },
       {
         "tipo": "parrafo",
-        "texto": "The people asking this run a process with real volume, not a demo. Billing, claims, vendor onboarding, reconciliation. And every search turns up the same slogan under a different logo. Nobody says what criterion makes a task delegable, what threshold triggers escalation to a human, who signs the output, or how that step holds up in front of an auditor who shows up eight months later asking who approved what."
+        "texto": "The people asking this run a process with real volume, not a demo. Billing, claims, vendor onboarding, reconciliation. Here is the direct answer: run every task through a five-question filter (reversibility, cost of error, data structure, signature and trail) and delegate only the one that clears all five. What shows up in any search is something else: the same slogan under a different logo, never saying what criterion makes a task delegable, what threshold triggers escalation to a human, who signs the output, or how that step holds up in front of an auditor who shows up eight months later asking who approved what."
       },
       {
         "tipo": "lista",
@@ -181,7 +181,7 @@
       },
       {
         "tipo": "subtitulo",
-        "antetitulo": "The framework",
+        "antetitulo": "The five-question filter",
         "texto": "What has to be decided before you touch the process?"
       },
       {
@@ -212,14 +212,14 @@
       {
         "tipo": "destacado",
         "antetitulo": "Where to start",
-        "texto": "Take the process you were about to redesign and, before looking at any tool, list every task inside it. For each one, write an answer to the framework's five questions. The ones that come back green on all five get automated first. The ones that fail even one keep a human in the loop, and that list, not the pretty diagram, is the actual redesign plan."
+        "texto": "Take the process you were about to redesign and, before looking at any tool, list every task inside it. Run each one through the five-question filter: reversibility, cost of error, data structure, signature and trail. The ones that come back green on all five get automated first. The ones that fail even one keep a human in the loop, and that list, not the pretty diagram, is the actual redesign plan."
       },
       {
         "tipo": "faq",
         "items": [
           {
             "pregunta": "How do you redesign a process for an AI to run part of it?",
-            "respuesta": "Before touching any tool, break the process into tasks and decide, task by task, which are delegable against four tests: whether the error is reversible, what the worst case costs, whether the input data is structured, and who signs the outcome. The redesign is that written decision, not the box where AI gets inserted into the diagram."
+            "respuesta": "Run every task through a five-question filter before touching any tool: whether the error is reversible, what the worst case costs, whether the input data is structured, who signs the outcome, and what trail the decision leaves. A task that clears all five gets delegated; one that fails even one keeps a person in the loop. The redesign is that written decision, not the box where AI gets inserted into the diagram."
           },
           {
             "pregunta": "What tasks can a company delegate to an AI agent?",
