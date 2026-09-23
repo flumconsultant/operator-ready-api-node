@@ -12,3 +12,4 @@ contenido/revision/*.zip
 
 # Las capturas del recorrido del panel: se regeneran al ejecutarlo.
 capturas-panel/
+automatizacion/n8n/workvivo-validator/claves-prueba/
