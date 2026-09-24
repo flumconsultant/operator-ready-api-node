@@ -95,7 +95,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ conversation_key: $json.body.channel.channel_url, input: 'MENSAJE DEL USUARIO:\\n' + $json.body.message.text + '\\n\\nDATOS PARA RESPONDER (usar tal cual en responder_en_workvivo):\\nchannel_url: ' + $json.body.channel.channel_url + '\\nbot_userid: ' + $json.body.bot.bot_userid }) }}",
+        "jsonBody": "={{ JSON.stringify({ conversation_key: 'wv-' + String($json.body.message.message_id), input: 'MENSAJE DEL USUARIO:\\n' + $json.body.message.text + '\\n\\nDATOS PARA RESPONDER (usar tal cual en responder_en_workvivo):\\nchannel_url: ' + $json.body.channel.channel_url + '\\nbot_userid: ' + $json.body.bot.bot_userid }) }}",
         "options": {
           "timeout": 30000
         }
