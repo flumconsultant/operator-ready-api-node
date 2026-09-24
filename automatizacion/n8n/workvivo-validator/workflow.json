@@ -122,7 +122,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://api.workvivo.io/v1/chat/bots/message",
+        "url": "https://api.workvivo.us/v1/chat/bots/message",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpBearerAuth",
         "sendHeaders": true,
