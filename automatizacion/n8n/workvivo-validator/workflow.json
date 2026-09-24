@@ -2,101 +2,31 @@
   "name": "Middleware Workvivo - Chatgpt",
   "nodes": [
     {
-      "parameters": {
-        "httpMethod": "POST",
-        "path": "workvivo/validator",
-        "responseMode": "responseNode",
-        "options": {}
-      },
-      "id": "ca2c74c5-12bf-5de8-b41f-3338a231e008",
-      "name": "Workvivo Chatbot Callback",
+      "id": "3b5a822c-9ba2-55a1-ba14-db84240579ab",
+      "name": "Mensaje de Workvivo",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -224,
+        0,
         0
       ],
-      "webhookId": "3f6b2d9e-8a41-4c7e-9b15-5d0e7a1c9f42"
-    },
-    {
+      "webhookId": "3f6b2d9e-8a41-4c7e-9b15-5d0e7a1c9f42",
       "parameters": {
-        "jsCode": "// VALIDAR ENTRADA BÁSICA\n// No registra ni devuelve el JWT, tokens ni el contenido del mensaje.\n// El nodo Webhook solo acepta POST; la query string se ignora por diseño.\nconst req = $('Workvivo Chatbot Callback').first().json;\nconst headers = {};\nfor (const [k, v] of Object.entries(req.headers || {})) headers[String(k).toLowerCase()] = Array.isArray(v) ? v[0] : v;\n\nconst correlationId = 'wv-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);\nconst CFG = $('Configuración').first().json;\nconst env = (k, d = '') => { const v = CFG[k]; return v === undefined || v === null || String(v).trim() === '' ? d : String(v).trim(); };\nlet jwtDiag = '';\nconst reject = (httpStatus, category) => [{ json: { ok: false, correlationId, httpStatus, category, stage: 'entrada', detail: jwtDiag } }];\n\n// 1) Configuración (nodo \"Configuración\"): si falta un valor obligatorio se rechaza (fail closed).\n// Solo lo necesario para recibir de Workvivo. La config de Validator se comprueba antes de llamarlo.\nconst REQUIRED = ['WORKVIVO_API_BASE_URL', 'WORKVIVO_ID', 'DATASTORE_NAMESPACE'];\nconst missing = REQUIRED.filter((k) => !env(k));\nif (missing.length) return reject(503, 'CONFIG_INCOMPLETA');\n\n// 2) HTTPS obligatorio (el proxy inverso informa el esquema original).\nconst proto = String(headers['x-forwarded-proto'] || '').split(',')[0].trim().toLowerCase();\nif (proto !== 'https') return reject(403, 'HTTPS_REQUERIDO');\n\n// 3) Content-Type\nconst ct = String(headers['content-type'] || '').toLowerCase();\nif (!ct.startsWith('application/json')) return reject(415, 'CONTENT_TYPE_INVALIDO');\n\n// 4) Tamaño\nconst maxBytes = Number(env('MAX_REQUEST_BYTES', '262144'));\nconst declared = Number(headers['content-length'] || 0);\nconst body = req.body;\nif (!body || typeof body !== 'object' || Array.isArray(body) || Object.keys(body).length === 0) return reject(400, 'BODY_VACIO');\nconst actual = Buffer.byteLength(JSON.stringify(body), 'utf8');\nif (declared > maxBytes || actual > maxBytes) return reject(413, 'PAYLOAD_DEMASIADO_GRANDE');\n\n// 4b) App de SendBird esperada (filtro de origen; NO sustituye la verificación de firma).\nconst expectedApp = env('SENDBIRD_APP_ID');\nif (expectedApp && body.app_id !== undefined && String(body.app_id) !== expectedApp) return reject(403, 'APP_ID_INVALIDO');\n\n// 5) Origen. Workvivo puede llegar de dos formas:\n//    a) x-workvivo-jwt (JWT firmado por Workvivo)          -> verificación JWT\n//    b) x-sendbird-signature (HMAC-SHA256 del cuerpo crudo) -> verificación de firma SendBird\nconst jwt = headers['x-workvivo-jwt'];\nconst sbSig = String(headers['x-sendbird-signature'] || '');\nif ((typeof jwt !== 'string' || !jwt) && sbSig) {\n  if (!/^[0-9a-f]{64}$/i.test(sbSig)) return reject(401, 'FIRMA_SENDBIRD_MAL_FORMADA');\n  const expectedAppSb = env('SENDBIRD_APP_ID');\n  if (!expectedAppSb) return reject(503, 'CONFIG_SENDBIRD_APP_ID_PENDIENTE');\n  if (String(body.app_id || '') !== expectedAppSb) return reject(403, 'APP_ID_INVALIDO');\n  // SendBird envía JSON compacto con \"/\" escapado y no-ASCII como \\uXXXX (header unicode-escaped).\n  // Se reconstruye el cuerpo crudo y se exige que su longitud coincida con content-length.\n  const rawBody = JSON.stringify(body)\n    .replace(/\\//g, '\\\\/')\n    .replace(/[\\u007f-\\uffff]/g, (c) => '\\\\u' + c.charCodeAt(0).toString(16).padStart(4, '0'));\n  if (declared && Buffer.byteLength(rawBody, 'utf8') !== declared) return reject(401, 'CUERPO_NO_RECONSTRUIBLE');\n  return [{ json: { ok: true, origin: 'sendbird', correlationId, body, rawBody, sendbirdSignature: sbSig.toLowerCase(), jwtDiag: '' } }];\n}\nif (typeof jwt !== 'string' || !jwt) return reject(401, 'FIRMA_AUSENTE');\nif (jwt.length > 8192 || !/^[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+$/.test(jwt)) return reject(401, 'JWT_MAL_FORMADO');\n\n// 6) Allowlist de algoritmos (defensa previa; la verificación real la hace el nodo JWT con la clave fijada)\nlet jwtHeader;\ntry { jwtHeader = JSON.parse(Buffer.from(jwt.split('.')[0], 'base64url').toString('utf8')); } catch (e) { return reject(401, 'JWT_MAL_FORMADO'); }\n// Diagnóstico SIN secretos (datos públicos del token, nunca el token): ayuda a obtener la clave y los claims oficiales.\ntry {\n  const p = JSON.parse(Buffer.from(jwt.split('.')[1], 'base64url').toString('utf8'));\n  jwtDiag = `alg=${jwtHeader.alg || ''}; kid=${jwtHeader.kid || ''}; claims=${Object.keys(p).sort().join(',')}; iss=${p.iss || ''}; aud=${JSON.stringify(p.aud || '')}; publicKeyUrl=${p.publicKeyUrl || ''}`.slice(0, 500);\n} catch (e) { jwtDiag = `alg=${jwtHeader.alg || ''}; kid=${jwtHeader.kid || ''}; payload no legible`; }\nconst allowedAlgs = env('WORKVIVO_JWT_ALGORITHMS', 'RS256').split(',').map((s) => s.trim()).filter(Boolean);\nconst alg = String(jwtHeader && jwtHeader.alg || '');\nif (!alg || alg.toLowerCase() === 'none' || !allowedAlgs.includes(alg)) return reject(401, 'JWT_ALG_NO_PERMITIDO');\n\n// 6b) Endpoint del agente solo por HTTPS\nif (!/^https:\\/\\//i.test(env('WORKVIVO_API_BASE_URL'))) return reject(503, 'CONFIG_URL_NO_HTTPS');\n\n// 7) Campos mínimos. Según el ejemplo de referencia de Workvivo, cada evento trae \"category\" o \"action\".\n// PENDIENTE DE DOCUMENTACIÓN: confirmar con el payload oficial.\nif (!body.category && !body.action) return reject(400, 'PAYLOAD_SIN_TIPO_DE_EVENTO');\n\nreturn [{ json: { ok: true, origin: 'workvivo_jwt', correlationId, jwt, body, jwtDiag } }];\n"
-      },
-      "id": "102ab2b7-f4d0-506e-ba84-e23f9dd11b9d",
-      "name": "Validar entrada básica",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        224,
-        0
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "9150b321-95ee-460f-b9ec-485da27b8108",
-              "leftValue": "={{ $json.ok }}",
-              "rightValue": "",
-              "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
+        "httpMethod": "POST",
+        "path": "workvivo/validator",
+        "responseMode": "onReceived",
         "options": {}
-      },
-      "id": "c1406ccc-5a8c-5bbb-9f50-e0b7f33fe396",
-      "name": "¿Entrada válida?",
+      }
+    },
+    {
+      "id": "5e39492a-865a-5a81-80dc-3c372064238c",
+      "name": "¿Es mensaje de un usuario?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        448,
-        208
-      ]
-    },
-    {
-      "parameters": {
-        "operation": "verify",
-        "token": "={{ $json.jwt }}",
-        "options": {
-          "clockTolerance": 30
-        }
-      },
-      "id": "98d9d88f-0cac-50c8-8f2f-6700cb6f30ff",
-      "name": "Validar firma JWT (Workvivo)",
-      "type": "n8n-nodes-base.jwt",
-      "typeVersion": 1,
-      "position": [
-        1332,
-        128
+        240,
+        0
       ],
-      "onError": "continueErrorOutput"
-    },
-    {
-      "parameters": {
-        "jsCode": "// VALIDAR CLAIMS JWT\n// La firma, el algoritmo, exp y nbf ya fueron verificados criptográficamente por el nodo\n// \"Validar firma JWT (Workvivo)\" con la clave pública fijada en su credencial.\n// Aquí se comprueban issuer, audience, aplicación/tenant y antigüedad.\n// Valor especial \"NO_APLICA\": desactiva explícitamente un claim que Workvivo no emite (nunca en silencio).\nconst claims = $input.first().json || {};\nconst base = $('Validar entrada básica').first().json;\nconst CFG = $('Configuración').first().json;\nconst env = (k, d = '') => { const v = CFG[k]; return v === undefined || v === null || String(v).trim() === '' ? d : String(v).trim(); };\nconst now = Math.floor(Date.now() / 1000);\nconst claimKeys = Object.keys(claims).sort().join(',');\nconst fail = (httpStatus, category, withDiag = false) => [{ json: {\n  jwtValid: false, correlationId: base.correlationId, httpStatus, category, stage: 'jwt',\n  // Diagnóstico sin secretos: nombres de claims y valores públicos iss/aud, útil para completar la configuración.\n  detail: withDiag ? `claims=${claimKeys}; iss=${String(claims.iss || '')}; aud=${JSON.stringify(claims.aud || '')}` : '',\n} }];\n\nif (typeof claims.exp !== 'number') return fail(401, 'JWT_SIN_EXP', true);\nif (claims.exp < now - 30) return fail(401, 'JWT_EXPIRADO');\nif (typeof claims.nbf === 'number' && claims.nbf > now + 30) return fail(401, 'JWT_NBF');\nconst maxAge = Number(env('JWT_MAX_AGE_SECONDS', '300'));\nif (typeof claims.iat === 'number' && (now - claims.iat > maxAge || claims.iat > now + 60)) return fail(401, 'JWT_FUERA_DE_VENTANA');\n\nconst expIss = env('WORKVIVO_EXPECTED_ISSUER');\nif (!expIss) return fail(503, 'CONFIG_ISSUER_PENDIENTE', true);\nif (expIss !== 'NO_APLICA' && claims.iss !== expIss) return fail(403, 'JWT_ISSUER_INVALIDO', true);\n\nconst expAud = env('WORKVIVO_EXPECTED_AUDIENCE');\nif (!expAud) return fail(503, 'CONFIG_AUDIENCE_PENDIENTE', true);\nconst auds = Array.isArray(claims.aud) ? claims.aud : [claims.aud];\nif (expAud !== 'NO_APLICA' && !auds.includes(expAud)) return fail(403, 'JWT_AUDIENCE_INVALIDO', true);\n\n// Aplicación: el nombre del claim se configura en WORKVIVO_APP_ID_CLAIM (PENDIENTE DE DOCUMENTACIÓN).\nconst expApp = env('WORKVIVO_APP_ID');\nif (!expApp) return fail(503, 'CONFIG_APP_ID_PENDIENTE', true);\nif (expApp !== 'NO_APLICA') {\n  const appClaim = env('WORKVIVO_APP_ID_CLAIM');\n  if (!appClaim) return fail(503, 'CONFIG_APP_ID_CLAIM_PENDIENTE', true);\n  if (String(claims[appClaim] ?? '') !== expApp) return fail(403, 'JWT_APP_INVALIDA', true);\n}\n\n// Tenant (opcional): si se define WORKVIVO_TENANT_CLAIM, su valor debe coincidir con WORKVIVO_ID.\nconst tenantClaim = env('WORKVIVO_TENANT_CLAIM');\nif (tenantClaim && String(claims[tenantClaim] ?? '') !== env('WORKVIVO_ID')) return fail(403, 'JWT_TENANT_INVALIDO', true);\n\n// El ejemplo de referencia incluye \"publicKeyUrl\" en el payload. Nunca se usa para obtener claves\n// (la clave está fijada en la credencial); si viene, debe coincidir con la URL oficial configurada.\nconst jwksUrl = env('WORKVIVO_JWKS_URL');\nif (claims.publicKeyUrl && jwksUrl && claims.publicKeyUrl !== jwksUrl) return fail(403, 'JWT_ORIGEN_DE_CLAVE_INESPERADO', true);\n\nreturn [{ json: { jwtValid: true, correlationId: base.correlationId, jti: claims.jti ? String(claims.jti) : null } }];\n"
-      },
-      "id": "4839389d-5ba7-5b99-be09-9be02646a7f3",
-      "name": "Validar claims JWT",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1556,
-        16
-      ]
-    },
-    {
       "parameters": {
         "conditions": {
           "options": {
@@ -105,301 +35,67 @@
             "typeValidation": "loose",
             "version": 2
           },
+          "combinator": "and",
           "conditions": [
             {
-              "id": "f81d8880-0ed5-4f8d-9e48-933cb67e75b3",
-              "leftValue": "={{ $json.jwtValid }}",
+              "id": "96f8e6af-7531-43fd-a69f-57e68c138c53",
+              "leftValue": "={{ $json.body.category }}",
+              "rightValue": "bot_message_notification",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "65c49657-4e94-4bee-9ffa-ac11d1adc0ed",
+              "leftValue": "={{ $json.body.app_id }}",
+              "rightValue": "FD0AEB65-5E89-415B-A51B-6D76E1998671",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "eb4120da-0d92-42d8-be24-48b75d37209c",
+              "leftValue": "={{ $json.body.sender.user_id }}",
+              "rightValue": "={{ $json.body.bot.bot_userid }}",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "c5a42649-4cba-4959-b0d0-f010c687ebde",
+              "leftValue": "={{ $json.body.message.text }}",
               "rightValue": "",
               "operator": {
-                "type": "boolean",
-                "operation": "true",
+                "type": "string",
+                "operation": "notEmpty",
                 "singleValue": true
               }
             }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "id": "4d216306-8c2c-59b5-ae94-ccf9bed2e4df",
-      "name": "¿Origen verificado?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        1780,
-        16
-      ]
-    },
-    {
-      "parameters": {
-        "jsCode": "// NORMALIZAR EVENTO WORKVIVO\n// Evento real recibido (SendBird, user-agent 'SendBird'): trae category, app_id, channel, bot y sender.\n// Nunca se usa ni se reenvía bot.bot_token.\n// Mapeo tomado del ejemplo de referencia publicado por Workvivo/Zoom\n// (github.com/Yosuke-workvivo/Workvivo-Chatbot). Los campos con [] son\n// PENDIENTE DE DOCUMENTACIÓN: complétalos con las rutas del payload oficial\n// (developer.workvivo.com -> Chat -> Bots) o de un evento real de pruebas. No se adivinan.\nconst MAP = {\n  category:        ['category'],            // 'bot_message_notification' = mensaje de un usuario al bot\n  action:          ['action'],              // 'chat_bot_message_sent'    = mensaje enviado por el bot\n  botUserId:       ['bot.bot_userid'],\n  chatId:          ['channel.channel_url'],\n  text:            ['message.text'],\n  eventId:         [],  // no viene en el evento (se usa messageId)\n  messageId:       ['message.message_id'],\n  threadId:        ['message.parent_message_id'],  // vacío si no es respuesta en hilo\n  userId:          ['sender.user_id'],   // confirmado con evento real\n  userDisplayName: ['sender.nickname'],  // confirmado con evento real (no se envía a Validator)\n  mentions:        ['mentioned'],\n  attachments:     ['message.files'],\n  messageCreatedAt: ['message.created_at'],\n};\n// Rutas dentro de cada adjunto. PENDIENTE DE DOCUMENTACIÓN.\nconst ATTACHMENT_MAP = { url: ['url'], name: ['name'], mimeType: ['type'], size: ['size'] }; // confirmar con un evento que traiga adjunto\n// El contrato del canal API de Validator no está documentado todavía: ningún archivo se envía.\nconst VALIDATOR_ACCEPTS_FILES = false; // PENDIENTE DE DOCUMENTACIÓN\nconst VALIDATOR_FILE_TYPES = [];        // PENDIENTE DE DOCUMENTACIÓN (MIME admitidos por el canal API)\n\nconst base = $('Validar entrada básica').first().json;\nconst jwtInfo = $input.first().json;\nconst b = base.body || {};\nconst CFG = $('Configuración').first().json;\nconst env = (k, d = '') => { const v = CFG[k]; return v === undefined || v === null || String(v).trim() === '' ? d : String(v).trim(); };\nconst get = (o, p) => p.split('.').reduce((a, k) => (a !== undefined && a !== null ? a[k] : undefined), o);\nconst pickFrom = (o, paths) => { for (const p of paths) { const v = get(o, p); if (v !== undefined && v !== null && String(v).trim() !== '') return v; } return null; };\nconst pick = (k) => pickFrom(b, MAP[k]);\nconst str = (v) => (v === null || v === undefined ? '' : String(v));\n\nconst ns = env('DATASTORE_NAMESPACE');\nconst tenantId = env('WORKVIVO_ID');\nconst ev = {\n  correlationId: base.correlationId,\n  eventId: str(pick('eventId')),\n  tenantId,\n  botId: str(pick('botUserId')),\n  chatId: str(pick('chatId')),\n  threadId: str(pick('threadId')),\n  userId: str(pick('userId')),\n  userDisplayName: str(pick('userDisplayName')),\n  messageId: str(pick('messageId')),\n  text: str(pick('text')).trim(),\n  mentions: Array.isArray(pick('mentions')) ? pick('mentions') : [],\n  attachments: [],\n  receivedAt: new Date().toISOString(),\n  createdAt: pick('messageCreatedAt') ? new Date(Number(pick('messageCreatedAt'))).toISOString() : '',\n};\nconst category = str(pick('category'));\nconst action = str(pick('action'));\n\n// ---- Adjuntos: política anti-SSRF y de tipos. No se descarga nada mientras el contrato esté pendiente.\nconst allowedHosts = env('ALLOWED_ATTACHMENT_HOSTS').split(',').map((h) => h.trim().toLowerCase()).filter(Boolean);\nconst maxAtt = Number(env('MAX_ATTACHMENT_BYTES', '10485760'));\nconst BLOCKED_EXT = /\\.(exe|dll|bat|cmd|com|msi|scr|ps1|vbs|js|jar|sh|app|dmg|iso|apk|html?|svg|zip|rar|7z)$/i;\nconst rawAtt = Array.isArray(pick('attachments')) ? pick('attachments') : [];\nfor (const a of rawAtt.slice(0, 10)) {\n  const url = str(pickFrom(a, ATTACHMENT_MAP.url));\n  const name = str(pickFrom(a, ATTACHMENT_MAP.name)).slice(0, 200) || 'archivo';\n  const mime = str(pickFrom(a, ATTACHMENT_MAP.mimeType)).toLowerCase();\n  const size = Number(pickFrom(a, ATTACHMENT_MAP.size) || 0);\n  let status = 'no_soportado', reason = 'CANAL_VALIDATOR_SIN_SOPORTE_DE_ARCHIVOS';\n  let u = null; try { u = new URL(url); } catch (e) {}\n  const host = u ? u.hostname.toLowerCase() : '';\n  if (!u || u.protocol !== 'https:' || u.username || u.password) { status = 'rechazado'; reason = 'URL_NO_PERMITIDA'; }\n  else if (/^[\\d.]+$/.test(host) || host.includes(':') || host === 'localhost') { status = 'rechazado'; reason = 'HOST_IP_NO_PERMITIDO'; }\n  else if (!allowedHosts.some((h) => host === h || host.endsWith('.' + h))) { status = 'rechazado'; reason = 'HOST_NO_AUTORIZADO'; }\n  else if (BLOCKED_EXT.test(name)) { status = 'rechazado'; reason = 'TIPO_PELIGROSO'; }\n  else if (size > maxAtt) { status = 'rechazado'; reason = 'ARCHIVO_DEMASIADO_GRANDE'; }\n  else if (VALIDATOR_ACCEPTS_FILES && VALIDATOR_FILE_TYPES.includes(mime)) { status = 'compatible'; reason = ''; }\n  ev.attachments.push({ name, mimeType: mime, size, status, reason }); // la URL no sale de este nodo\n}\n\n// ---- Decisión de ruta\nlet route = 'procesar', httpStatus = 200, reason = '';\nif (action === 'chat_bot_message_sent') { route = 'ignorar'; reason = 'EVENTO_DEL_PROPIO_BOT'; }\nelse if (category !== 'bot_message_notification') { route = 'ignorar'; reason = 'EVENTO_NO_SOPORTADO'; }\nelse if (ev.userId && ev.botId && ev.userId === ev.botId) { route = 'ignorar'; reason = 'MENSAJE_PROPIO_BOT'; }\nelse if (!ev.chatId || !ev.botId) { route = 'rechazar'; httpStatus = 400; reason = 'PAYLOAD_INCOMPLETO'; }\n\n// Clave de conversación estable (un canal de bot en Workvivo es 1:1 usuario-bot).\nconst convKey = `${ns}:${tenantId}:${ev.chatId}:${ev.userId || 'sin-user-id'}`;\n\n// Rate limit por conversación (ventana de 60 s, en memoria del workflow de producción).\nif (route === 'procesar') {\n  const limit = Number(env('RATE_LIMIT_PER_MINUTE', '10'));\n  const sd = $getWorkflowStaticData('global');\n  sd.rl = sd.rl || {};\n  const nowMs = Date.now();\n  for (const k of Object.keys(sd.rl)) if (nowMs - sd.rl[k].t > 60000) delete sd.rl[k];\n  const rl = sd.rl[convKey] || { t: nowMs, n: 0 };\n  rl.n += 1; sd.rl[convKey] = rl;\n  if (rl.n > limit) { route = 'rechazar'; httpStatus = 429; reason = 'RATE_LIMIT'; }\n}\n\n// Idempotencia: eventId > messageId > jti del JWT. Sin ninguno, no se puede deduplicar (queda marcado).\nconst idPart = ev.eventId ? 'evt:' + ev.eventId : ev.messageId ? 'msg:' + ev.messageId : jwtInfo.jti ? 'jti:' + jwtInfo.jti : '';\nconst dedupeKey = idPart ? `${ns}:${tenantId}:${idPart}` : `${ns}:sin-id:${ev.correlationId}`;\n\nreturn [{ json: { ...ev, route, httpStatus, category: reason, stage: 'evento', convKey, dedupeKey, dedupeAvailable: !!idPart } }];\n"
-      },
-      "id": "0ac36a78-8c78-5970-9fcc-a0e8ac3ba384",
-      "name": "Normalizar evento Workvivo",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        2004,
-        -160
-      ]
-    },
-    {
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "8e6fe333-1857-431b-8b49-bdd46aca5228",
-                    "leftValue": "={{ $json.route }}",
-                    "rightValue": "procesar",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "procesar"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "7745a275-1f4b-4f2e-81bb-c0c563ff4a72",
-                    "leftValue": "={{ $json.route }}",
-                    "rightValue": "ignorar",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "ignorar"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "ec9e6bbd-4fb6-4fc3-8d63-8a05e8afb857",
-                    "leftValue": "={{ $json.route }}",
-                    "rightValue": "rechazar",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "rechazar"
-            }
           ]
         },
         "options": {}
-      },
-      "id": "245e00cf-c5a9-5714-97a2-5492c3afef7f",
-      "name": "Decidir ruta",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2,
-      "position": [
-        2228,
-        -176
-      ]
+      }
     },
     {
-      "parameters": {
-        "operation": "get",
-        "dataTableId": {
-          "__rl": true,
-          "mode": "id",
-          "value": "6LwBJyhwM4N5gf3O",
-          "cachedResultName": "wv_validator_idempotencia"
-        },
-        "matchType": "allConditions",
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "dedupeKey",
-              "keyValue": "={{ $json.dedupeKey }}"
-            }
-          ]
-        },
-        "limit": 1
-      },
-      "id": "c690f8d8-560e-5448-bb1f-fba1e4e5b649",
-      "name": "Idempotencia: buscar",
-      "type": "n8n-nodes-base.dataTable",
-      "typeVersion": 1.1,
+      "id": "0b55066e-c920-50d9-87da-b761b63a7520",
+      "name": "Enviar a Validator",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
       "position": [
-        2452,
-        -320
+        480,
+        0
       ],
-      "alwaysOutputData": true
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "loose",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "11f409cb-1542-4c5d-82e7-a29f708163e9",
-              "leftValue": "={{ !!$json.id && new Date($json.expiresAt).getTime() > Date.now() }}",
-              "rightValue": "",
-              "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "id": "189c2e83-6e81-5004-bcb8-521137dbbf52",
-      "name": "¿Duplicado?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        2676,
-        -320
-      ]
-    },
-    {
-      "parameters": {
-        "operation": "upsert",
-        "dataTableId": {
-          "__rl": true,
-          "mode": "id",
-          "value": "6LwBJyhwM4N5gf3O",
-          "cachedResultName": "wv_validator_idempotencia"
-        },
-        "matchType": "allConditions",
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "dedupeKey",
-              "keyValue": "={{ $('Normalizar evento Workvivo').first().json.dedupeKey }}"
-            }
-          ]
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "matchingColumns": [
-            "dedupeKey"
-          ],
-          "value": {
-            "dedupeKey": "={{ $('Normalizar evento Workvivo').first().json.dedupeKey }}",
-            "expiresAt": "={{ $now.plus({ hours: 24 }).toISO() }}",
-            "correlationId": "={{ $('Normalizar evento Workvivo').first().json.correlationId }}"
-          }
-        },
-        "options": {}
-      },
-      "id": "1ded94a2-ad93-574c-98bc-bab91e23cec4",
-      "name": "Idempotencia: registrar",
-      "type": "n8n-nodes-base.dataTable",
-      "typeVersion": 1.1,
-      "position": [
-        2900,
-        -416
-      ]
-    },
-    {
-      "parameters": {
-        "respondWith": "json",
-        "responseBody": "={{ JSON.stringify({ received: true, correlationId: $('Normalizar evento Workvivo').first().json.correlationId }) }}",
-        "options": {
-          "responseCode": 200
-        }
-      },
-      "id": "2dee7b89-3974-5f52-ba1c-6b9c904c265e",
-      "name": "ACK 200 a Workvivo",
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.5,
-      "position": [
-        3124,
-        -416
-      ]
-    },
-    {
-      "parameters": {
-        "operation": "get",
-        "dataTableId": {
-          "__rl": true,
-          "mode": "id",
-          "value": "v2Zm3sAvSEiJbQ0B",
-          "cachedResultName": "wv_validator_conversaciones"
-        },
-        "matchType": "allConditions",
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "convKey",
-              "keyValue": "={{ $('Normalizar evento Workvivo').first().json.convKey }}"
-            }
-          ]
-        },
-        "limit": 1
-      },
-      "id": "376a7482-62f3-52b1-be22-82b195c758ee",
-      "name": "Conversación: buscar",
-      "type": "n8n-nodes-base.dataTable",
-      "typeVersion": 1.1,
-      "position": [
-        3348,
-        -416
-      ],
-      "alwaysOutputData": true
-    },
-    {
-      "parameters": {
-        "jsCode": "// PREPARAR SOLICITUD PARA VALIDATOR\n// n8n no genera diagnósticos: si no hay texto ni archivo compatible, se envía igualmente\n// una solicitud válida (sin inventar contenido) para que Validator aplique su propia regla.\n// No se envían: token/JWT de Workvivo, headers, nombre del usuario ni logs técnicos.\nconst ev = $('Normalizar evento Workvivo').first().json;\nconst row = $input.first().json || {};\nconst CFG = $('Configuración').first().json;\nconst env = (k, d = '') => { const v = CFG[k]; return v === undefined || v === null || String(v).trim() === '' ? d : String(v).trim(); };\n\nconst conversationId = row.validatorConversationId ? String(row.validatorConversationId) : null;\nconst compatibles = ev.attachments.filter((a) => a.status === 'compatible');\nconst noAnalizados = ev.attachments.filter((a) => a.status !== 'compatible').map((a) => a.name);\nconst hasReviewableInput = !!ev.text || compatibles.length > 0;\n\n// ============ PENDIENTE DE DOCUMENTACIÓN ============\n// Esquema oficial de solicitud del canal API del agente (Agent Builder -> canal API, id \"agtch_...\").\n// Sustituye los NOMBRES de campo de este objeto por los del contrato oficial. Los valores ya son correctos.\nconst validatorBody = {\n  channel_id: env('CHATGPT_AGENT_CHANNEL_ID'), // PENDIENTE: puede ir en la URL en lugar del body\n  input: ev.text,                               // PENDIENTE: nombre del campo de mensaje\n  conversation_id: conversationId,              // PENDIENTE: continuidad de conversación\n  metadata: {                                   // PENDIENTE: solo si el contrato admite metadatos\n    correlation_id: ev.correlationId,\n    source: 'workvivo',\n    has_reviewable_input: hasReviewableInput,\n    attachments_not_analyzed: noAnalizados,\n  },\n};\n// =====================================================\n\nconst configOk = /^https:\\/\\//i.test(env('CHATGPT_AGENT_API_URL')) && !!env('CHATGPT_AGENT_CHANNEL_ID');\nif (!configOk) return [{ json: { configOk, route: 'error', correlationId: ev.correlationId, category: 'CONFIG_VALIDATOR_PENDIENTE', node: 'Preparar solicitud Validator', httpStatus: 0 } }];\nreturn [{ json: { configOk, correlationId: ev.correlationId, idempotencyKey: ev.dedupeKey, validatorBody, noAnalizados } }];\n"
-      },
-      "id": "8bc9366b-5a82-574d-a0c1-938721bd7d65",
-      "name": "Preparar solicitud Validator",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        3572,
-        -416
-      ]
-    },
-    {
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000,
+      "notes": "Reemplaza agtch_PEGAR_AQUI por el ID del canal API del agente (Agent Builder → API channel).",
+      "notesInFlow": true,
       "parameters": {
         "method": "POST",
-        "url": "={{ $('Configuración').first().json.CHATGPT_AGENT_API_URL }}",
+        "url": "https://api.chatgpt.com/v1/workspace_agents/agtch_PEGAR_AQUI/trigger",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpBearerAuth",
         "sendHeaders": true,
@@ -407,367 +103,51 @@
           "parameters": [
             {
               "name": "Idempotency-Key",
-              "value": "={{ $('Preparar solicitud Validator').first().json.idempotencyKey }}"
+              "value": "={{ $json.body.message.message_id }}"
             }
           ]
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify($('Preparar solicitud Validator').first().json.validatorBody) }}",
+        "jsonBody": "={{ JSON.stringify({ conversation_key: $json.body.channel.channel_url, input: $json.body.message.text + '\\n\\n---\\nResponder en Workvivo con: channel_url=' + $json.body.channel.channel_url + ' ; bot_userid=' + $json.body.bot.bot_userid }) }}",
         "options": {
-          "redirect": {
-            "redirect": {
-              "followRedirects": false
-            }
-          },
-          "response": {
-            "response": {
-              "fullResponse": true,
-              "neverError": true,
-              "responseFormat": "json"
-            }
-          },
-          "timeout": 90000
+          "timeout": 30000
         }
-      },
-      "id": "9c5ed5c6-0572-57cc-817b-f60240256099",
-      "name": "Enviar a Validator",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      }
+    },
+    {
+      "id": "da8cb423-8d1f-565d-8e80-977c0fd0b1e6",
+      "name": "Respuesta de Validator",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
       "position": [
-        3796,
-        -416
+        0,
+        300
       ],
-      "onError": "continueRegularOutput"
-    },
-    {
+      "webhookId": "e4541067-5688-537c-b898-f91f87d76568",
       "parameters": {
-        "jsCode": "// EVALUAR RESPUESTA DE VALIDATOR: reintentos con backoff exponencial, 429 (Retry-After), 4xx y 5xx.\n// $runIndex cuenta cuántas veces se ha ejecutado este nodo en la ejecución = número de intento - 1.\nconst r = $input.first().json || {};\nconst prep = $('Preparar solicitud Validator').first().json;\nconst CFG = $('Configuración').first().json;\nconst env = (k, d = '') => { const v = CFG[k]; return v === undefined || v === null || String(v).trim() === '' ? d : String(v).trim(); };\nconst maxRetries = Number(env('VALIDATOR_MAX_RETRIES', '3'));\nconst attempt = $runIndex;\n\nlet status = Number(r.statusCode || 0);\nlet category = '', retryable = false;\nif (r.error || !status) {\n  const msg = String((r.error && (r.error.message || r.error.code || r.error)) || '').toLowerCase();\n  category = /timeout|timedout|econnaborted|etimedout/.test(msg) ? 'VALIDATOR_TIMEOUT' : 'VALIDATOR_RED';\n  retryable = true;\n} else if (status >= 200 && status < 300) {\n  return [{ json: { route: 'ok', correlationId: prep.correlationId, statusCode: status, body: r.body } }];\n} else if (status === 429) { category = 'VALIDATOR_429'; retryable = true; }\nelse if (status === 408 || status >= 500) { category = 'VALIDATOR_5XX'; retryable = true; }\nelse { category = 'VALIDATOR_4XX'; retryable = false; }\n\nif (retryable && attempt < maxRetries) {\n  const hdr = r.headers || {};\n  const ra = Number(hdr['retry-after'] || hdr['Retry-After'] || 0);\n  const backoff = Math.min(2 ** attempt * 2, 30) + Math.random();\n  const waitSeconds = Math.min(ra > 0 ? ra : backoff, 30);\n  return [{ json: { route: 'reintentar', correlationId: prep.correlationId, attempt: attempt + 1, waitSeconds, category } }];\n}\nreturn [{ json: { route: 'error', correlationId: prep.correlationId, category, httpStatus: status, node: 'Enviar a Validator' } }];\n"
-      },
-      "id": "d057a62f-ecbc-5b13-83a0-018d90fe8ba1",
-      "name": "Evaluar respuesta Validator",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        4020,
-        -528
-      ]
-    },
-    {
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "b722e961-6d59-453e-ae41-11d414932c6f",
-                    "leftValue": "={{ $json.route }}",
-                    "rightValue": "ok",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "ok"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "840fe81e-2b70-46a3-ade4-c45d377b693d",
-                    "leftValue": "={{ $json.route }}",
-                    "rightValue": "reintentar",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "reintentar"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "b4398ae3-8d8e-46b8-8a5f-af25488acdf6",
-                    "leftValue": "={{ $json.route }}",
-                    "rightValue": "error",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "error"
-            }
-          ]
-        },
+        "httpMethod": "POST",
+        "path": "workvivo/validator/respuesta",
+        "authentication": "headerAuth",
+        "responseMode": "onReceived",
         "options": {}
-      },
-      "id": "d8b393b6-b5e8-5efe-9b2f-d79f91b88e5c",
-      "name": "Ruta Validator",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2,
-      "position": [
-        4244,
-        -544
-      ]
+      }
     },
     {
-      "parameters": {
-        "amount": "={{ $json.waitSeconds }}"
-      },
-      "id": "3b2e5c0a-b385-5366-be45-1256a81d52b8",
-      "name": "Backoff exponencial",
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        4468,
-        -640
-      ],
-      "webhookId": "a7c3e1d2-5b64-4f8a-9e20-1c4d7b8f6a31"
-    },
-    {
-      "parameters": {
-        "jsCode": "// EXTRAER RESPUESTA DE VALIDATOR\n// Solo el texto final visible para el usuario. Nunca razonamiento, trazas ni metadatos técnicos.\n// PENDIENTE DE DOCUMENTACIÓN: rutas del esquema oficial de respuesta del canal API. Se configuran con\n// VALIDATOR_RESPONSE_TEXT_PATH y VALIDATOR_RESPONSE_CONVERSATION_PATH (notación con puntos, p. ej. \"a.b.0.c\").\n// Si la API es asíncrona (devuelve un \"run\" en curso), hace falta un paso adicional: ver README.\nconst r = $input.first().json;\nconst ev = $('Normalizar evento Workvivo').first().json;\nconst prep = $('Preparar solicitud Validator').first().json;\nconst CFG = $('Configuración').first().json;\nconst env = (k, d = '') => { const v = CFG[k]; return v === undefined || v === null || String(v).trim() === '' ? d : String(v).trim(); };\nconst get = (o, p) => p.split('.').reduce((a, k) => (a !== undefined && a !== null ? a[k] : undefined), o);\n\nconst textPath = env('VALIDATOR_RESPONSE_TEXT_PATH');\nconst convPath = env('VALIDATOR_RESPONSE_CONVERSATION_PATH');\nconst err = (category) => [{ json: { route: 'error', correlationId: ev.correlationId, category, httpStatus: r.statusCode || 0, node: 'Extraer respuesta de Validator' } }];\nif (!textPath) return err('VALIDATOR_ESQUEMA_PENDIENTE');\n\nlet body = r.body;\nif (typeof body === 'string') { try { body = JSON.parse(body); } catch (e) { return err('VALIDATOR_RESPUESTA_NO_JSON'); } }\nconst text = get(body, textPath);\nif (typeof text !== 'string' || !text.trim()) return err('VALIDATOR_SIN_TEXTO_FINAL');\n\nlet replyText = text.trim();\nif (prep.noAnalizados && prep.noAnalizados.length) {\n  replyText += `\\n\\nNota: no pude analizar ${prep.noAnalizados.length === 1 ? 'este archivo' : 'estos archivos'} porque el canal de Validator no los admite: ${prep.noAnalizados.join(', ')}.`;\n}\nconst newConv = convPath ? get(body, convPath) : null;\n\nreturn [{ json: {\n  route: 'ok', correlationId: ev.correlationId, replyText,\n  validatorConversationId: newConv ? String(newConv) : '',\n  convKey: ev.convKey, botUserId: ev.botId, chatId: ev.chatId,\n} }];\n"
-      },
-      "id": "d8333d32-946a-53aa-8cba-852065259cde",
-      "name": "Extraer respuesta de Validator",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        4468,
-        -448
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "loose",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "7a902951-356b-4c52-b080-4a2f1a115a4b",
-              "leftValue": "={{ $json.route === 'ok' }}",
-              "rightValue": "",
-              "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "id": "08c743a5-a33b-50e5-ab70-b5112d1e5e7e",
-      "name": "¿Respuesta válida?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        4692,
-        -448
-      ]
-    },
-    {
-      "parameters": {
-        "operation": "upsert",
-        "dataTableId": {
-          "__rl": true,
-          "mode": "id",
-          "value": "v2Zm3sAvSEiJbQ0B",
-          "cachedResultName": "wv_validator_conversaciones"
-        },
-        "matchType": "allConditions",
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "convKey",
-              "keyValue": "={{ $('Extraer respuesta de Validator').first().json.convKey }}"
-            }
-          ]
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "matchingColumns": [
-            "convKey"
-          ],
-          "value": {
-            "convKey": "={{ $('Extraer respuesta de Validator').first().json.convKey }}",
-            "validatorConversationId": "={{ $('Extraer respuesta de Validator').first().json.validatorConversationId || $('Preparar solicitud Validator').first().json.validatorBody.conversation_id || '' }}",
-            "lastSeenAt": "={{ $now.toISO() }}"
-          }
-        },
-        "options": {}
-      },
-      "id": "16d0fd02-cc8a-518e-8ba4-fd75d6a68cd9",
-      "name": "Conversación: guardar",
-      "type": "n8n-nodes-base.dataTable",
-      "typeVersion": 1.1,
-      "position": [
-        4916,
-        -512
-      ],
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "={{ $('Configuración').first().json.WORKVIVO_API_BASE_URL }}/chat/bots/message",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpBearerAuth",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Workvivo-Id",
-              "value": "={{ $('Configuración').first().json.WORKVIVO_ID }}"
-            }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ bot_userid: $('Extraer respuesta de Validator').first().json.botUserId, channel_url: $('Extraer respuesta de Validator').first().json.chatId, type: 'message', message: $('Extraer respuesta de Validator').first().json.replyText }) }}",
-        "options": {
-          "redirect": {
-            "redirect": {
-              "followRedirects": false
-            }
-          },
-          "timeout": 15000
-        }
-      },
-      "id": "33648ea6-879f-502d-83f9-755e9efa7c9c",
+      "id": "16c43636-ce14-531f-b4c9-5057a3bfc1ee",
       "name": "Responder en Workvivo",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        5140,
-        -512
+        240,
+        300
       ],
       "retryOnFail": true,
       "maxTries": 3,
       "waitBetweenTries": 3000,
-      "onError": "continueErrorOutput"
-    },
-    {
-      "parameters": {
-        "jsCode": "// PREPARAR ERROR: registra nodo, código HTTP y categoría. Sin secretos ni trazas.\n// Decide si corresponde avisar al usuario con un mensaje neutral.\nconst j = $input.first().json || {};\nconst ev = $('Normalizar evento Workvivo').first().json;\nlet category = j.category, node = j.node, httpStatus = Number(j.httpStatus || 0);\nif (!category) {\n  // Salida de error del nodo \"Responder en Workvivo\"\n  category = 'WORKVIVO_API';\n  node = 'Responder en Workvivo';\n  const m = String((j.error && (j.error.message || j.error)) || '').match(/\\b([45]\\d\\d)\\b/);\n  httpStatus = m ? Number(m[1]) : 0;\n}\n// Si falló la propia API de Workvivo, un aviso por la misma API también fallaría.\nconst notifyUser = category !== 'WORKVIVO_API';\nreturn [{ json: {\n  correlationId: ev.correlationId, stage: 'procesamiento', category, node: node || '', httpStatus,\n  notifyUser, botUserId: ev.botId, chatId: ev.chatId,\n} }];\n"
-      },
-      "id": "0ffa8313-d9f2-55e3-b5e2-29412e61b952",
-      "name": "Preparar error",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        5364,
-        -336
-      ]
-    },
-    {
-      "parameters": {
-        "dataTableId": {
-          "__rl": true,
-          "mode": "id",
-          "value": "zpfDlhTB7KqjYsRI",
-          "cachedResultName": "wv_validator_log"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "matchingColumns": [],
-          "value": {
-            "correlationId": "={{ $('Preparar error').first().json.correlationId }}",
-            "stage": "={{ $('Preparar error').first().json.stage }}",
-            "category": "={{ $('Preparar error').first().json.category }}",
-            "httpStatus": "={{ $('Preparar error').first().json.httpStatus }}",
-            "node": "={{ $('Preparar error').first().json.node || '' }}",
-            "detail": "={{ $('Preparar error').first().json.detail || '' }}",
-            "at": "={{ $now.toISO() }}"
-          }
-        },
-        "options": {}
-      },
-      "id": "323c3a8b-bcd6-59e3-b28c-b300c72ca51f",
-      "name": "Registrar error",
-      "type": "n8n-nodes-base.dataTable",
-      "typeVersion": 1.1,
-      "position": [
-        5572,
-        -336
-      ],
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "loose",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "81c3a5e9-fca5-427a-83e0-59acfed38a10",
-              "leftValue": "={{ $('Preparar error').first().json.notifyUser }}",
-              "rightValue": "",
-              "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "id": "5d599043-be77-5d55-8a9b-222c5d26c612",
-      "name": "¿Avisar al usuario?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        5796,
-        -336
-      ]
-    },
-    {
       "parameters": {
         "method": "POST",
-        "url": "={{ $('Configuración').first().json.WORKVIVO_API_BASE_URL }}/chat/bots/message",
+        "url": "https://api.workvivo.io/v1/chat/bots/message",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpBearerAuth",
         "sendHeaders": true,
@@ -775,788 +155,48 @@
           "parameters": [
             {
               "name": "Workvivo-Id",
-              "value": "={{ $('Configuración').first().json.WORKVIVO_ID }}"
+              "value": "1000242"
             }
           ]
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ bot_userid: $('Preparar error').first().json.botUserId, channel_url: $('Preparar error').first().json.chatId, type: 'message', message: 'No pude procesar tu solicitud en este momento. Inténtalo nuevamente.' }) }}",
+        "jsonBody": "={{ JSON.stringify({ bot_userid: $json.body.bot_userid, channel_url: $json.body.channel_url, type: 'message', message: $json.body.message }) }}",
         "options": {
-          "redirect": {
-            "redirect": {
-              "followRedirects": false
-            }
-          },
           "timeout": 15000
         }
-      },
-      "id": "cc651da5-0f91-56b6-908f-5b59b313c032",
-      "name": "Aviso neutral en Workvivo",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        6052,
-        -352
-      ],
-      "onError": "continueRegularOutput"
+      }
     },
     {
-      "parameters": {
-        "jsCode": "// PREPARAR RECHAZO: unifica los rechazos (entrada, firma JWT, claims, payload, rate limit).\n// Solo se conserva correlationId, código HTTP y categoría general. Nunca el JWT ni el contenido.\nconst j = $input.first().json || {};\nlet base = {};\ntry { base = $('Validar entrada básica').first().json; } catch (e) {}\nconst correlationId = j.correlationId || base.correlationId || ('wv-' + Date.now().toString(36));\nlet httpStatus = j.httpStatus;\nlet category = j.category;\nlet stage = j.stage || 'jwt';\n\nif (!category) {\n  // Viene de la salida de error del nodo JWT (firma, expiración, nbf o algoritmo).\n  const msg = String((j.error && (j.error.message || j.error)) || j.message || '').toLowerCase();\n  httpStatus = 401;\n  if (msg.includes('expired')) category = 'JWT_EXPIRADO';\n  else if (msg.includes('not active')) category = 'JWT_NBF';\n  else if (msg.includes('algorithm')) category = 'JWT_ALG_NO_PERMITIDO';\n  else category = 'JWT_FIRMA_INVALIDA';\n}\n\nreturn [{ json: { correlationId, httpStatus: Number(httpStatus) || 400, category, stage, detail: String(j.detail || (stage === 'jwt' ? base.jwtDiag : '') || '').slice(0, 500) } }];\n"
-      },
-      "id": "8b575997-684a-5afc-81f0-638fbb28725f",
-      "name": "Preparar rechazo",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        2452,
-        224
-      ]
-    },
-    {
-      "parameters": {
-        "dataTableId": {
-          "__rl": true,
-          "mode": "id",
-          "value": "zpfDlhTB7KqjYsRI",
-          "cachedResultName": "wv_validator_log"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "correlationId": "={{ $('Preparar rechazo').first().json.correlationId }}",
-            "stage": "={{ $('Preparar rechazo').first().json.stage }}",
-            "category": "={{ $('Preparar rechazo').first().json.category }}",
-            "httpStatus": "={{ $('Preparar rechazo').first().json.httpStatus }}",
-            "node": "={{ $('Preparar rechazo').first().json.node || '' }}",
-            "detail": "={{ $('Preparar rechazo').first().json.detail || '' }}",
-            "at": "={{ $now.toISO() }}"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "correlationId",
-              "displayName": "correlationId",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "stage",
-              "displayName": "stage",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "category",
-              "displayName": "category",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "httpStatus",
-              "displayName": "httpStatus",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "node",
-              "displayName": "node",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "detail",
-              "displayName": "detail",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "at",
-              "displayName": "at",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "readOnly": false,
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "id": "d013a3b5-8256-5549-822e-6b10507820b2",
-      "name": "Registrar rechazo",
-      "type": "n8n-nodes-base.dataTable",
-      "typeVersion": 1.1,
-      "position": [
-        2676,
-        224
-      ],
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "respondWith": "json",
-        "responseBody": "={{ JSON.stringify({ received: false, correlationId: $('Preparar rechazo').first().json.correlationId }) }}",
-        "options": {
-          "responseCode": "={{ $('Preparar rechazo').first().json.httpStatus }}"
-        }
-      },
-      "id": "582eb704-10e6-5614-8ada-480b2aee20a1",
-      "name": "Responder rechazo",
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.5,
-      "position": [
-        2900,
-        224
-      ]
-    },
-    {
-      "parameters": {
-        "respondWith": "json",
-        "responseBody": "={{ JSON.stringify({ received: true, correlationId: $('Normalizar evento Workvivo').first().json.correlationId }) }}",
-        "options": {
-          "responseCode": 200
-        }
-      },
-      "id": "9f7bb80e-774d-5cd6-95e9-940b5b7ca498",
-      "name": "Responder 200 (ignorado)",
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.5,
-      "position": [
-        2452,
-        -128
-      ]
-    },
-    {
-      "parameters": {
-        "respondWith": "json",
-        "responseBody": "={{ JSON.stringify({ received: true, correlationId: $('Normalizar evento Workvivo').first().json.correlationId }) }}",
-        "options": {
-          "responseCode": 200
-        }
-      },
-      "id": "dba33319-a884-56b5-b166-928aff24fd05",
-      "name": "Responder 200 (duplicado)",
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.5,
-      "position": [
-        2900,
-        -224
-      ]
-    },
-    {
-      "parameters": {
-        "content": "## Middleware Workvivo ↔ Validator (ChatGPT)\n**Flujo:** Webhook → validación básica → firma JWT (nodo JWT, clave fijada) → claims → normalización → idempotencia → **ACK 200 inmediato** → Validator (con backoff) → respuesta en Workvivo.\n\n- Tras el ACK el procesamiento continúa en la misma ejecución, así Workvivo no espera a Validator.\n- Secretos solo en credenciales: *Workvivo Bot API* (Bearer), *ChatGPT Validator* (Bearer), *Workvivo JWT public key* (JWT/PEM).\n- Configuración no secreta en el nodo **Configuración** (tu instancia bloquea `$env`). Campos vacíos obligatorios → 503 `CONFIG_INCOMPLETA`.\n- Logs: tabla `wv_validator_log` (solo correlationId, etapa, categoría, código HTTP, nodo).\n\n⚠️ **No activar ni habilitar el bot en Workvivo hasta completar las pruebas de seguridad.**",
-        "height": 420,
-        "width": 620,
-        "color": 4
-      },
-      "id": "a4cc3626-bb29-5ea7-acee-989575ed264c",
-      "name": "Nota: resumen",
+      "id": "9de00772-ea9b-580f-a6cd-1b5466de071a",
+      "name": "Nota",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -256,
-        -624
-      ]
-    },
-    {
+        -40,
+        -340
+      ],
       "parameters": {
-        "content": "### PENDIENTE DE DOCUMENTACIÓN — Workvivo\nMapeo y endpoint tomados del ejemplo de referencia de Workvivo/Zoom (github.com/Yosuke-workvivo/Workvivo-Chatbot):\n- Evento de usuario: `category = bot_message_notification`; texto `message.text`; bot `bot.bot_userid`; chat `channel.channel_url`.\n- Evento del propio bot: `action = chat_bot_message_sent` (se ignora → evita bucles).\n- Publicar: `POST {WORKVIVO_API_BASE_URL}/chat/bots/message` + header `Workvivo-Id`.\nConfirmar en developer.workvivo.com: eventId, messageId, userId, threadId, adjuntos, claims del JWT.",
+        "width": 760,
         "height": 300,
-        "width": 700,
-        "color": 3
-      },
-      "id": "e7d5d94c-c117-53ad-94ea-bb5691c94ef3",
-      "name": "Nota: contrato Workvivo",
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        1972,
-        -624
-      ]
-    },
-    {
-      "parameters": {
-        "content": "### PENDIENTE DE DOCUMENTACIÓN — Canal API de Validator\n- `CHATGPT_AGENT_API_URL`: URL exacta del trigger del canal API (Agent Builder → canal API, id `agtch_...`).\n- Nombres de campo del body: editar solo el bloque marcado en **Preparar solicitud Validator**.\n- Respuesta: `VALIDATOR_RESPONSE_TEXT_PATH` y `VALIDATOR_RESPONSE_CONVERSATION_PATH`.\n- Si la API es asíncrona (devuelve un run), hay que añadir consulta de estado o callback.\n- Archivos: no se envían hasta que el contrato lo permita.",
-        "height": 260,
-        "width": 700,
-        "color": 3
-      },
-      "id": "9a607d45-367b-59e5-87fb-cf7fca48dba2",
-      "name": "Nota: contrato Validator",
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        3524,
-        -944
-      ]
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "a2b7075b-97b5-54d0-9db3-c3862c6fa566",
-              "name": "WORKVIVO_API_BASE_URL",
-              "value": "https://api.workvivo.io/v1",
-              "type": "string"
-            },
-            {
-              "id": "4d27c54c-57fb-50e1-9ee4-d3b309ce5a44",
-              "name": "WORKVIVO_ID",
-              "value": "1000242",
-              "type": "string"
-            },
-            {
-              "id": "3997f695-1435-5e20-b94c-ecb760a4c897",
-              "name": "SENDBIRD_APP_ID",
-              "value": "FD0AEB65-5E89-415B-A51B-6D76E1998671",
-              "type": "string"
-            },
-            {
-              "id": "2c7d5a78-920e-5a4c-9870-0ea33e07175a",
-              "name": "WORKVIVO_JWKS_URL",
-              "value": "",
-              "type": "string"
-            },
-            {
-              "id": "c6eadbca-0e1e-5377-82ed-e56eb7e75079",
-              "name": "WORKVIVO_EXPECTED_ISSUER",
-              "value": "",
-              "type": "string"
-            },
-            {
-              "id": "869de7a8-78a1-51b9-98c3-5990e66e7c65",
-              "name": "WORKVIVO_EXPECTED_AUDIENCE",
-              "value": "",
-              "type": "string"
-            },
-            {
-              "id": "d821de4f-f39b-5410-a8b3-e1d23da1da43",
-              "name": "WORKVIVO_APP_ID",
-              "value": "",
-              "type": "string"
-            },
-            {
-              "id": "3ef81c68-ecd0-528d-94df-12b5a8f17f00",
-              "name": "WORKVIVO_APP_ID_CLAIM",
-              "value": "",
-              "type": "string"
-            },
-            {
-              "id": "4e343e3d-47bb-50a1-8801-92adbf805ae2",
-              "name": "WORKVIVO_TENANT_CLAIM",
-              "value": "",
-              "type": "string"
-            },
-            {
-              "id": "2045445e-6861-50aa-9772-97fee901ae65",
-              "name": "WORKVIVO_JWT_ALGORITHMS",
-              "value": "RS256",
-              "type": "string"
-            },
-            {
-              "id": "aaa33250-caae-5fc0-8c48-a01d10d73078",
-              "name": "JWT_MAX_AGE_SECONDS",
-              "value": "300",
-              "type": "string"
-            },
-            {
-              "id": "2a35624f-d74a-5ab2-b217-3d8a612ef6bd",
-              "name": "CHATGPT_AGENT_API_URL",
-              "value": "",
-              "type": "string"
-            },
-            {
-              "id": "419afcfd-c59e-5702-bcd4-fef9e0e2af0d",
-              "name": "CHATGPT_AGENT_CHANNEL_ID",
-              "value": "",
-              "type": "string"
-            },
-            {
-              "id": "7804c272-30f7-5eea-9300-be600f844f83",
-              "name": "VALIDATOR_RESPONSE_TEXT_PATH",
-              "value": "",
-              "type": "string"
-            },
-            {
-              "id": "1f37fd6a-df8e-5916-9647-df6094e11e58",
-              "name": "VALIDATOR_RESPONSE_CONVERSATION_PATH",
-              "value": "",
-              "type": "string"
-            },
-            {
-              "id": "144a4f36-1b75-58d8-8511-21caa45d31f4",
-              "name": "VALIDATOR_MAX_RETRIES",
-              "value": "3",
-              "type": "string"
-            },
-            {
-              "id": "7e4429bf-5871-5881-a80a-ed81d1124b29",
-              "name": "DATASTORE_NAMESPACE",
-              "value": "prod",
-              "type": "string"
-            },
-            {
-              "id": "ec62f1ca-133e-5ba2-af1d-11eac4bb88d1",
-              "name": "ALLOWED_ATTACHMENT_HOSTS",
-              "value": "",
-              "type": "string"
-            },
-            {
-              "id": "ad6e6e29-a449-5ad4-8fc4-7d587e986aff",
-              "name": "MAX_REQUEST_BYTES",
-              "value": "262144",
-              "type": "string"
-            },
-            {
-              "id": "6efa47e9-ec69-5849-881e-92ac0657596d",
-              "name": "MAX_ATTACHMENT_BYTES",
-              "value": "10485760",
-              "type": "string"
-            },
-            {
-              "id": "f339e35e-6fe9-530a-a5bc-7f9e5a098eae",
-              "name": "RATE_LIMIT_PER_MINUTE",
-              "value": "10",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "e72e942b-c355-5502-af6c-cf65db5661b2",
-      "name": "Configuración",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        0,
-        0
-      ],
-      "notesInFlow": true,
-      "notes": "Configuración NO secreta. Los tokens y la clave pública van en credenciales, nunca aquí."
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "loose",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "dae9e487-9fa3-4a65-9af8-f1421cd5342e",
-              "leftValue": "={{ $json.configOk }}",
-              "rightValue": "",
-              "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "id": "26608543-b0b9-5a84-a7f1-3435334b5545",
-      "name": "¿Validator configurado?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        3684,
-        -256
-      ]
-    },
-    {
-      "id": "089182e1-485c-501f-8070-da1ebf3df816",
-      "name": "Origen",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2,
-      "position": [
-        660,
-        0
-      ],
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "0d53e45f-7734-43d8-bd2d-fc4f5af05a23",
-                    "leftValue": "={{ $json.origin }}",
-                    "rightValue": "workvivo_jwt",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "workvivo_jwt"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "c24f5c98-0548-47d8-bbe6-afbfbf26fbde",
-                    "leftValue": "={{ $json.origin }}",
-                    "rightValue": "sendbird",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "sendbird"
-            }
-          ]
-        },
-        "options": {}
-      }
-    },
-    {
-      "id": "bd3f87f9-4b99-562b-ba9b-a6723fcc4c93",
-      "name": "Secreto: firma SendBird",
-      "type": "n8n-nodes-base.dataTable",
-      "typeVersion": 1.1,
-      "position": [
-        880,
-        200
-      ],
-      "alwaysOutputData": true,
-      "parameters": {
-        "resource": "row",
-        "operation": "get",
-        "dataTableId": {
-          "__rl": true,
-          "mode": "id",
-          "value": "m9HTbqrdJyAF4IwY",
-          "cachedResultName": "wv_validator_secretos"
-        },
-        "matchType": "allConditions",
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "name",
-              "condition": "eq",
-              "keyValue": "SENDBIRD_SIGNING_SECRET"
-            }
-          ]
-        },
-        "returnAll": false,
-        "limit": 1
-      }
-    },
-    {
-      "id": "ba9aac0a-9f23-5b07-af14-7fbd0b2bafa6",
-      "name": "HMAC SendBird",
-      "type": "n8n-nodes-base.crypto",
-      "typeVersion": 2,
-      "position": [
-        1100,
-        200
-      ],
-      "onError": "continueRegularOutput",
-      "parameters": {
-        "action": "hmac",
-        "type": "SHA256",
-        "value": "={{ $('Validar entrada básica').first().json.rawBody }}",
-        "dataPropertyName": "computedSignature",
-        "secret": "={{ $json.value || '' }}",
-        "encoding": "hex"
-      }
-    },
-    {
-      "id": "ec8f6cb6-9f28-5351-9d85-bc451d3a5c4b",
-      "name": "Validar firma SendBird",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1320,
-        200
-      ],
-      "parameters": {
-        "jsCode": "// VALIDAR FIRMA SENDBIRD\n// Workvivo entrega los mensajes del bot vía SendBird: header x-sendbird-signature =\n// HMAC-SHA256(cuerpo crudo, secreto de firma). El HMAC lo calcula el nodo Crypto; aquí se compara\n// en tiempo constante y se aplica la ventana anti-replay con el \"ts\" del evento.\nconst base = $('Validar entrada básica').first().json;\nconst CFG = $('Configuración').first().json;\nconst env = (k, d = '') => { const v = CFG[k]; return v === undefined || v === null || String(v).trim() === '' ? d : String(v).trim(); };\nlet hasSecret = false;\ntry { hasSecret = !!String($('Secreto: firma SendBird').first().json.value || '').trim(); } catch (e) {}\nconst fail = (httpStatus, category) => [{ json: { jwtValid: false, correlationId: base.correlationId, httpStatus, category, stage: 'firma' } }];\n\nif (!hasSecret) return fail(503, 'CONFIG_SENDBIRD_SECRET_PENDIENTE');\nconst got = String(base.sendbirdSignature || '').toLowerCase();\nconst computed = String($input.first().json.computedSignature || '').toLowerCase();\nif (!/^[0-9a-f]{64}$/.test(got) || !/^[0-9a-f]{64}$/.test(computed)) return fail(401, 'FIRMA_SENDBIRD_INVALIDA');\nlet diff = 0;\nfor (let i = 0; i < 64; i++) diff |= got.charCodeAt(i) ^ computed.charCodeAt(i);\nif (diff !== 0) return fail(401, 'FIRMA_SENDBIRD_INVALIDA');\n\nconst maxAgeMs = Number(env('JWT_MAX_AGE_SECONDS', '300')) * 1000;\nconst ts = Number(base.body.ts || 0);\nif (!ts || Math.abs(Date.now() - ts) > maxAgeMs) return fail(401, 'EVENTO_FUERA_DE_VENTANA');\n\nreturn [{ json: { jwtValid: true, correlationId: base.correlationId, jti: null } }];\n"
+        "color": 4,
+        "content": "## Workvivo ↔ Validator (simple)\n**Ida:** Workvivo → *Mensaje de Workvivo* → filtro → *Enviar a Validator* (canal API, responde 202).\n**Vuelta:** el canal API de ChatGPT **no devuelve la respuesta** (es asíncrono). Validator la envía por POST a *Respuesta de Validator* con:\n`{ \"channel_url\": \"...\", \"bot_userid\": \"...\", \"message\": \"texto\" }` → *Responder en Workvivo*.\n\nCredenciales: **ChatGPT Validator** (Bearer, token de Workspace Agent), **Workvivo Bot API** (Bearer), **Validator → n8n** (Header Auth en el webhook de vuelta)."
       }
     }
   ],
   "connections": {
-    "Workvivo Chatbot Callback": {
+    "Mensaje de Workvivo": {
       "main": [
         [
           {
-            "node": "Configuración",
+            "node": "¿Es mensaje de un usuario?",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Validar entrada básica": {
-      "main": [
-        [
-          {
-            "node": "¿Entrada válida?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "¿Entrada válida?": {
-      "main": [
-        [
-          {
-            "node": "Origen",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Preparar rechazo",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Validar firma JWT (Workvivo)": {
-      "main": [
-        [
-          {
-            "node": "Validar claims JWT",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Preparar rechazo",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Validar claims JWT": {
-      "main": [
-        [
-          {
-            "node": "¿Origen verificado?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Normalizar evento Workvivo": {
-      "main": [
-        [
-          {
-            "node": "Decidir ruta",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Decidir ruta": {
-      "main": [
-        [
-          {
-            "node": "Idempotencia: buscar",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Responder 200 (ignorado)",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Preparar rechazo",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Idempotencia: buscar": {
-      "main": [
-        [
-          {
-            "node": "¿Duplicado?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "¿Duplicado?": {
-      "main": [
-        [
-          {
-            "node": "Responder 200 (duplicado)",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Idempotencia: registrar",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Idempotencia: registrar": {
-      "main": [
-        [
-          {
-            "node": "ACK 200 a Workvivo",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "ACK 200 a Workvivo": {
-      "main": [
-        [
-          {
-            "node": "Conversación: buscar",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Conversación: buscar": {
-      "main": [
-        [
-          {
-            "node": "Preparar solicitud Validator",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Preparar solicitud Validator": {
-      "main": [
-        [
-          {
-            "node": "¿Validator configurado?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Enviar a Validator": {
-      "main": [
-        [
-          {
-            "node": "Evaluar respuesta Validator",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Evaluar respuesta Validator": {
-      "main": [
-        [
-          {
-            "node": "Ruta Validator",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Ruta Validator": {
-      "main": [
-        [
-          {
-            "node": "Extraer respuesta de Validator",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Backoff exponencial",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Preparar error",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Backoff exponencial": {
+    "¿Es mensaje de un usuario?": {
       "main": [
         [
           {
@@ -1564,39 +204,11 @@
             "type": "main",
             "index": 0
           }
-        ]
-      ]
-    },
-    "Extraer respuesta de Validator": {
-      "main": [
-        [
-          {
-            "node": "¿Respuesta válida?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "¿Respuesta válida?": {
-      "main": [
-        [
-          {
-            "node": "Conversación: guardar",
-            "type": "main",
-            "index": 0
-          }
         ],
-        [
-          {
-            "node": "Preparar error",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
-    "Conversación: guardar": {
+    "Respuesta de Validator": {
       "main": [
         [
           {
@@ -1606,180 +218,10 @@
           }
         ]
       ]
-    },
-    "Responder en Workvivo": {
-      "main": [
-        [],
-        [
-          {
-            "node": "Preparar error",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Preparar error": {
-      "main": [
-        [
-          {
-            "node": "Registrar error",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Registrar error": {
-      "main": [
-        [
-          {
-            "node": "¿Avisar al usuario?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "¿Avisar al usuario?": {
-      "main": [
-        [
-          {
-            "node": "Aviso neutral en Workvivo",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Preparar rechazo": {
-      "main": [
-        [
-          {
-            "node": "Registrar rechazo",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Registrar rechazo": {
-      "main": [
-        [
-          {
-            "node": "Responder rechazo",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Configuración": {
-      "main": [
-        [
-          {
-            "node": "Validar entrada básica",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "¿Validator configurado?": {
-      "main": [
-        [
-          {
-            "node": "Enviar a Validator",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Preparar error",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Origen": {
-      "main": [
-        [
-          {
-            "node": "Validar firma JWT (Workvivo)",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Secreto: firma SendBird",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Secreto: firma SendBird": {
-      "main": [
-        [
-          {
-            "node": "HMAC SendBird",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HMAC SendBird": {
-      "main": [
-        [
-          {
-            "node": "Validar firma SendBird",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Validar firma SendBird": {
-      "main": [
-        [
-          {
-            "node": "¿Origen verificado?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "¿Origen verificado?": {
-      "main": [
-        [
-          {
-            "node": "Normalizar evento Workvivo",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Preparar rechazo",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
   "settings": {
     "executionOrder": "v1",
-    "saveDataSuccessExecution": "none",
-    "saveDataErrorExecution": "all",
-    "saveManualExecutions": false,
-    "saveExecutionProgress": false,
-    "executionTimeout": 300,
-    "callerPolicy": "workflowsFromSameOwner"
+    "saveManualExecutions": true
   }
 }
