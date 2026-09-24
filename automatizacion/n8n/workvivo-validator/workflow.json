@@ -74,9 +74,189 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        240,
+        220,
         0
       ]
+    },
+    {
+      "id": "1c1bd4c9-e5ba-55f1-90c5-5dddca224543",
+      "name": "¿Evento ya recibido?",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        440,
+        0
+      ],
+      "alwaysOutputData": true,
+      "parameters": {
+        "resource": "row",
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "LCot7sUNh6WtlVwQ",
+          "cachedResultName": "wv_requests"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "event_id",
+              "condition": "eq",
+              "keyValue": "={{ String($json.body.message.message_id) }}"
+            }
+          ]
+        },
+        "returnAll": false,
+        "limit": 1
+      }
+    },
+    {
+      "id": "4a171035-973f-5e5d-b2ac-45743b5170a1",
+      "name": "¿Evento nuevo?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        660,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cf36b3a3-e6bc-479a-b98a-c1542cbb00d0",
+              "leftValue": "={{ !$json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "6d275901-8630-5b73-bde7-36d9a703118e",
+      "name": "Crear solicitud",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// CREAR SOLICITUD: request_id único + datos de correlación (nunca se envían al modelo).\nconst b = $('Mensaje de Workvivo').first().json.body;\nconst hex = () => Math.floor(Math.random() * 0x1000000).toString(16).padStart(6, '0');\nconst request_id = 'req_' + hex() + hex() + hex() + hex();\nconst now = new Date();\nconst TTL_MINUTOS = 10; // Propuesta: la latencia observada de Validator fue 30–130 s.\nreturn [{ json: {\n  request_id,\n  conversation_key: 'workvivo:v2:' + b.bot.bot_userid + ':' + b.channel.channel_url,\n  channel_url: b.channel.channel_url,\n  bot_userid: b.bot.bot_userid,\n  event_id: String(b.message.message_id),\n  workvivo_user_id: String(b.sender.user_id),\n  text: String(b.message.text),\n  user_sent_at: new Date(Number(b.message.created_at || b.ts || now.getTime())).toISOString(),\n  received_at: now.toISOString(),\n  expires_at: new Date(now.getTime() + TTL_MINUTOS * 60000).toISOString(),\n} }];\n"
+      }
+    },
+    {
+      "id": "98c23ae6-5b50-5b03-a48a-dd5bd22d1ea8",
+      "name": "Registrar solicitud",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1100,
+        0
+      ],
+      "parameters": {
+        "resource": "row",
+        "operation": "upsert",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "LCot7sUNh6WtlVwQ",
+          "cachedResultName": "wv_requests"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "request_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.request_id }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "request_id"
+          ],
+          "value": {
+            "request_id": "={{ $json.request_id }}",
+            "conversation_key": "={{ $json.conversation_key }}",
+            "channel_url": "={{ $json.channel_url }}",
+            "bot_userid": "={{ $json.bot_userid }}",
+            "event_id": "={{ $json.event_id }}",
+            "workvivo_user_id": "={{ $json.workvivo_user_id }}",
+            "status": "received",
+            "user_sent_at": "={{ $json.user_sent_at }}",
+            "received_at": "={{ $json.received_at }}",
+            "expires_at": "={{ $json.expires_at }}"
+          }
+        }
+      }
+    },
+    {
+      "id": "45d0077d-f45d-5ab4-bc52-53ea5bd13374",
+      "name": "Acuse en Workvivo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1320,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.workvivo.us/v1/chat/bots/message",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Workvivo-Id",
+              "value": "1000242"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ bot_userid: $('Crear solicitud').first().json.bot_userid, channel_url: $('Crear solicitud').first().json.channel_url, type: 'message', message: 'Estoy revisando tu consulta…' }) }}",
+        "options": {
+          "timeout": 15000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "c1fd5485-5c8e-5671-ab27-07beeddd5aa4",
+      "name": "Hora ACK",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// Marca de tiempo del acuse \"Estoy revisando tu consulta…\".\nconst r = $input.first().json || {};\nreturn [{ json: { ack_at: new Date().toISOString(), ack_http_status: Number(r.statusCode || 0) } }];\n"
+      }
     },
     {
       "parameters": {
@@ -89,13 +269,13 @@
           "parameters": [
             {
               "name": "Idempotency-Key",
-              "value": "={{ String($json.body.message.message_id) }}"
+              "value": "={{ 'workvivo:' + $('Crear solicitud').first().json.event_id }}"
             }
           ]
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ conversation_key: 'wv-' + String($json.body.message.message_id), input: 'MENSAJE DEL USUARIO:\\n' + $json.body.message.text + '\\n\\nDATOS PARA RESPONDER (usar tal cual en responder_en_workvivo):\\nchannel_url: ' + $json.body.channel.channel_url + '\\nbot_userid: ' + $json.body.bot.bot_userid }) }}",
+        "jsonBody": "={{ JSON.stringify({ conversation_key: $('Crear solicitud').first().json.conversation_key, input: 'Request ID: ' + $('Crear solicitud').first().json.request_id + '\\nSource: Workvivo\\nUser message: ' + $('Crear solicitud').first().json.text }) }}",
         "options": {
           "timeout": 30000
         }
@@ -105,12 +285,159 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        480,
+        1760,
         0
       ],
       "retryOnFail": true,
       "maxTries": 3,
-      "waitBetweenTries": 3000
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "77cfecc9-4ac8-5d8b-a33a-474cf20cc39c",
+      "name": "Trigger aceptado",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1980,
+        -100
+      ],
+      "parameters": {
+        "jsCode": "// El canal API aceptó la ejecución (no devuelve texto; solo conversation_url).\nconst s = $('Crear solicitud').first().json;\nconst ack = $('Hora ACK').first().json;\nconst now = new Date();\nreturn [{ json: {\n  request_id: s.request_id, status: 'triggered', error_code: '', http_status: 202,\n  ack_at: ack.ack_at, trigger_at: now.toISOString(),\n  t_ack_ms: new Date(ack.ack_at) - new Date(s.user_sent_at),\n  t_trigger_ms: now - new Date(s.received_at),\n} }];\n"
+      }
+    },
+    {
+      "id": "af550584-7046-5af3-add8-1c90c7531ac3",
+      "name": "Trigger fallido",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1980,
+        100
+      ],
+      "parameters": {
+        "jsCode": "// El canal API rechazó la ejecución tras los reintentos (401/403/404/409/5xx...).\nconst s = $('Crear solicitud').first().json;\nconst ack = $('Hora ACK').first().json;\nconst e = $input.first().json || {};\nconst msg = String((e.error && (e.error.message || e.error)) || e.message || '');\nconst m = msg.match(/\\b([1-5]\\d\\d)\\b/);\nconst now = new Date();\nreturn [{ json: {\n  request_id: s.request_id, status: 'failed', error_code: 'TRIGGER_' + (m ? m[1] : 'ERROR'), http_status: m ? Number(m[1]) : 0,\n  ack_at: ack.ack_at, trigger_at: now.toISOString(),\n  t_ack_ms: new Date(ack.ack_at) - new Date(s.user_sent_at),\n  t_trigger_ms: now - new Date(s.received_at),\n} }];\n"
+      }
+    },
+    {
+      "id": "2aec9829-bc5e-5fa2-a97f-1c6a9795ae28",
+      "name": "Actualizar solicitud",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        2200,
+        0
+      ],
+      "parameters": {
+        "resource": "row",
+        "operation": "upsert",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "LCot7sUNh6WtlVwQ",
+          "cachedResultName": "wv_requests"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "request_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.request_id }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "request_id"
+          ],
+          "value": {
+            "request_id": "={{ $json.request_id }}",
+            "status": "={{ $json.status }}",
+            "error_code": "={{ $json.error_code }}",
+            "http_status": "={{ $json.http_status }}",
+            "ack_at": "={{ $json.ack_at }}",
+            "trigger_at": "={{ $json.trigger_at }}",
+            "t_ack_ms": "={{ $json.t_ack_ms }}",
+            "t_trigger_ms": "={{ $json.t_trigger_ms }}"
+          }
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "9e317b4e-137c-565d-8ded-7a1446dbcfb6",
+      "name": "¿Trigger fallido?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2420,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "3cb75933-6c29-44a8-82e9-7f69d8e66095",
+              "leftValue": "={{ $('Actualizar solicitud').first().json.status === 'failed' || $input.first().json.status === 'failed' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "33f4c061-5f2c-50b9-a176-244a33a13fde",
+      "name": "Error a Workvivo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2640,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.workvivo.us/v1/chat/bots/message",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Workvivo-Id",
+              "value": "1000242"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ bot_userid: $('Crear solicitud').first().json.bot_userid, channel_url: $('Crear solicitud').first().json.channel_url, type: 'message', message: 'No pude procesar tu consulta en este momento. Inténtalo nuevamente.' }) }}",
+        "options": {
+          "timeout": 15000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "onError": "continueRegularOutput"
     },
     {
       "id": "9bcf9fc8-3cc5-520a-be1e-9dac2e10d461",
@@ -119,7 +446,7 @@
       "typeVersion": 2,
       "position": [
         0,
-        300
+        420
       ],
       "webhookId": "54cbf0e9-88ea-5bc1-93da-0591b32caf35",
       "parameters": {
@@ -127,16 +454,16 @@
       }
     },
     {
-      "id": "0e6901bb-1aba-5010-b395-89a4fd2519e8",
-      "name": "responder_en_workvivo",
+      "id": "64890f91-afc4-54e8-af0e-2643b760b2b8",
+      "name": "send_workvivo_reply",
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
         0,
-        520
+        640
       ],
       "parameters": {
-        "description": "Publica la respuesta final de Validator en el chat de Workvivo del usuario. Usa channel_url y bot_userid exactamente como aparecen en el bloque \"DATOS PARA RESPONDER\". Llámala una sola vez por mensaje. Devuelve resultado OK o ERROR con status y detalle.",
+        "description": "Entrega la respuesta final del agente al usuario de Workvivo. Llamar exactamente una vez por Request ID, con el request_id recibido sin modificar y la respuesta final completa en message.",
         "workflowId": {
           "__rl": true,
           "value": "jfKm2fSrV8EazttC",
@@ -145,24 +472,14 @@
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "channel_url": "={{ $fromAI('channel_url', `channel_url exacto del bloque DATOS PARA RESPONDER`, 'string') }}",
-            "bot_userid": "={{ $fromAI('bot_userid', `bot_userid exacto del bloque DATOS PARA RESPONDER`, 'string') }}",
-            "message": "={{ $fromAI('message', `Respuesta final para el usuario, sin razonamiento interno ni datos técnicos`, 'string') }}"
+            "request_id": "={{ $fromAI('request_id', `Request ID exacto recibido en la solicitud (formato req_...)`, 'string') }}",
+            "message": "={{ $fromAI('message', `Respuesta final completa para el usuario`, 'string') }}"
           },
           "matchingColumns": [],
           "schema": [
             {
-              "id": "channel_url",
-              "displayName": "channel_url",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string"
-            },
-            {
-              "id": "bot_userid",
-              "displayName": "bot_userid",
+              "id": "request_id",
+              "displayName": "request_id",
               "required": true,
               "defaultMatch": false,
               "display": true,
@@ -185,23 +502,19 @@
       }
     },
     {
-      "id": "2a93b0da-f76f-58fb-88c8-61431caac0ff",
-      "name": "Entrada responder_en_workvivo",
+      "id": "7d92ad73-9e6b-5237-bfa0-4dff5fa28cf9",
+      "name": "Entrada send_workvivo_reply",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
         300,
-        760
+        860
       ],
       "parameters": {
         "workflowInputs": {
           "values": [
             {
-              "name": "channel_url",
-              "type": "string"
-            },
-            {
-              "name": "bot_userid",
+              "name": "request_id",
               "type": "string"
             },
             {
@@ -213,26 +526,26 @@
       }
     },
     {
-      "id": "807bed6c-d70f-51b7-9866-ec6e5ff02409",
-      "name": "Validar solicitud",
+      "id": "15a3e39e-3cb9-523f-8901-56b8ad9e2e85",
+      "name": "Validar parámetros",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         520,
-        760
+        860
       ],
       "parameters": {
-        "jsCode": "// VALIDAR SOLICITUD DE VALIDATOR (herramienta responder_en_workvivo)\nconst i = $input.first().json || {};\nconst channel_url = String(i.channel_url ?? '').trim();\nconst bot_userid = String(i.bot_userid ?? '').trim();\nconst message = String(i.message ?? '').trim();\n\nconst faltan = [!channel_url && 'channel_url', !bot_userid && 'bot_userid', !message && 'message'].filter(Boolean);\nlet error = faltan.length ? 'Faltan parámetros obligatorios: ' + faltan.join(', ') : '';\n// Solo bots de esta organización de Workvivo (1000242).\nif (!error && !bot_userid.startsWith('wv_1000242_')) error = 'bot_userid no pertenece a esta organización de Workvivo';\n\n// Idempotencia: el formato del mensaje a Validator no incluye el id del evento original,\n// así que la clave es channel_url + huella (FNV-1a) del texto. Evita publicar dos veces la misma respuesta.\nconst fnv = (s, seed) => { let h = seed >>> 0; for (let k = 0; k < s.length; k++) { h ^= s.charCodeAt(k); h = Math.imul(h, 16777619) >>> 0; } return h.toString(16).padStart(8, '0'); };\nconst base = channel_url + '\\n' + message;\nconst dedupeKey = 'reply:' + channel_url + ':' + fnv(base, 2166136261) + fnv(base, 0x811c9dc5 ^ 0x5bd1e995);\n\nreturn [{ json: { valid: !error, error, channel_url, bot_userid, message, dedupeKey } }];\n"
+        "jsCode": "// VALIDAR PARÁMETROS DE send_workvivo_reply\nconst i = $input.first().json || {};\nconst request_id = String(i.request_id ?? '').trim();\nconst message = String(i.message ?? '').trim();\nlet error = '';\nif (!/^req_[0-9a-f]{24}$/.test(request_id)) error = 'invalid_request_id';\nelse if (!message) error = 'empty_message';\nelse if (message.length > 20000) error = 'message_too_long';\nreturn [{ json: { valid: !error, error, request_id, message } }];\n"
       }
     },
     {
-      "id": "1efbd80a-cea1-5e97-838b-552965e5b009",
-      "name": "¿Solicitud válida?",
+      "id": "328b7a8b-451e-53f9-95da-392f93af6f94",
+      "name": "¿Parámetros válidos?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
         740,
-        760
+        860
       ],
       "parameters": {
         "conditions": {
@@ -245,7 +558,7 @@
           "combinator": "and",
           "conditions": [
             {
-              "id": "7871d07d-08b4-4d28-8521-11d90ab6cf81",
+              "id": "5d55bd74-5daf-46b6-a68a-ec4406021d1a",
               "leftValue": "={{ $json.valid }}",
               "rightValue": "",
               "operator": {
@@ -260,13 +573,13 @@
       }
     },
     {
-      "id": "994f354c-d3d6-5c45-a60d-af613e013afe",
-      "name": "Buscar publicación previa",
+      "id": "d6b4e562-d125-595c-a35b-ba0601b02ed8",
+      "name": "Buscar solicitud",
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
       "position": [
         960,
-        680
+        780
       ],
       "alwaysOutputData": true,
       "parameters": {
@@ -275,16 +588,16 @@
         "dataTableId": {
           "__rl": true,
           "mode": "id",
-          "value": "6LwBJyhwM4N5gf3O",
-          "cachedResultName": "wv_validator_idempotencia"
+          "value": "LCot7sUNh6WtlVwQ",
+          "cachedResultName": "wv_requests"
         },
         "matchType": "allConditions",
         "filters": {
           "conditions": [
             {
-              "keyName": "dedupeKey",
+              "keyName": "request_id",
               "condition": "eq",
-              "keyValue": "={{ $('Validar solicitud').first().json.dedupeKey }}"
+              "keyValue": "={{ $('Validar parámetros').first().json.request_id }}"
             }
           ]
         },
@@ -293,33 +606,101 @@
       }
     },
     {
-      "id": "e1878546-5e70-5306-a23b-cb6cdb2e59b4",
-      "name": "¿Ya publicado?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
+      "id": "5882f82a-2f64-5018-87f3-e3dbb9a5b5fb",
+      "name": "Evaluar solicitud",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
         1180,
-        680
+        780
       ],
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "loose",
-            "version": 2
-          },
-          "combinator": "and",
-          "conditions": [
+        "jsCode": "// EVALUAR SOLICITUD: el request_id debe existir (creado por el backend), no estar enviado ni vencido.\nconst v = $('Validar parámetros').first().json;\nconst row = $input.first().json || {};\nconst now = new Date();\nlet action = 'send', status = '';\nif (!row.id || row.request_id !== v.request_id) { action = 'reject'; status = 'not_found'; }\nelse if (row.status === 'completed' || row.status === 'sending') { action = 'reject'; status = 'already_sent'; }\nelse if (row.status === 'timeout' || row.status === 'failed') { action = 'reject'; status = row.status; }\nelse if (row.expires_at && new Date(row.expires_at) < now) { action = 'expire'; status = 'timeout'; }\nreturn [{ json: {\n  action, status, request_id: v.request_id, message: v.message,\n  channel_url: row.channel_url || '', bot_userid: row.bot_userid || '',\n  mcp_at: now.toISOString(), trigger_at: row.trigger_at || null, user_sent_at: row.user_sent_at || null, received_at: row.received_at || null,\n} }];\n"
+      }
+    },
+    {
+      "id": "1b9d3270-ccea-5763-b802-48e34ada7ce4",
+      "name": "Acción",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1400,
+        780
+      ],
+      "parameters": {
+        "rules": {
+          "values": [
             {
-              "id": "0cbd11c9-7188-4c2c-a856-6bbb29a99f58",
-              "leftValue": "={{ !!$json.id && new Date($json.expiresAt).getTime() > Date.now() }}",
-              "rightValue": "",
-              "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
-              }
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "6f175c2c-5075-4768-9a88-df6b176d5779",
+                    "leftValue": "={{ $json.action }}",
+                    "rightValue": "send",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "send"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "7440eb55-84bb-4ef8-8ed6-12806a78a5a4",
+                    "leftValue": "={{ $json.action }}",
+                    "rightValue": "expire",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "expire"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "77ca4524-cedb-4128-85a6-f7c1a4e904d4",
+                    "leftValue": "={{ $json.action }}",
+                    "rightValue": "reject",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "reject"
             }
           ]
         },
@@ -327,28 +708,55 @@
       }
     },
     {
-      "id": "5ec1e359-a00b-5761-a2a1-f3623d1dda20",
-      "name": "Resultado duplicado",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
+      "id": "4fdb1038-8d3d-52d6-a94d-fd23483f0856",
+      "name": "Reservar envío",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
       "position": [
-        1400,
-        560
+        1620,
+        680
       ],
       "parameters": {
-        "jsCode": "// RESPUESTA DUPLICADA: ya se publicó el mismo texto en este canal en los últimos 10 minutos.\nreturn [{ json: {\n  resultado: 'OK',\n  status: 200,\n  detalle: 'Esta respuesta ya había sido publicada en Workvivo; no se volvió a publicar (duplicado).',\n  instruccion: 'No vuelvas a llamar a esta herramienta para este mensaje.',\n} }];\n"
+        "resource": "row",
+        "operation": "upsert",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "LCot7sUNh6WtlVwQ",
+          "cachedResultName": "wv_requests"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "request_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.request_id }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "request_id"
+          ],
+          "value": {
+            "request_id": "={{ $json.request_id }}",
+            "status": "sending",
+            "mcp_at": "={{ $json.mcp_at }}"
+          }
+        }
       }
     },
     {
-      "id": "c6149074-650e-5a46-aa9a-0b118fcdcdfd",
+      "id": "ac2d37c8-d2ba-543a-8929-daa4041406c3",
       "name": "Publicar en Workvivo",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1400,
-        760
+        1840,
+        680
       ],
-      "onError": "continueRegularOutput",
       "parameters": {
         "method": "POST",
         "url": "https://api.workvivo.us/v1/chat/bots/message",
@@ -365,7 +773,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ bot_userid: $('Validar solicitud').first().json.bot_userid, channel_url: $('Validar solicitud').first().json.channel_url, type: 'message', message: $('Validar solicitud').first().json.message }) }}",
+        "jsonBody": "={{ JSON.stringify({ bot_userid: $('Evaluar solicitud').first().json.bot_userid, channel_url: $('Evaluar solicitud').first().json.channel_url, type: 'message', message: $('Evaluar solicitud').first().json.message }) }}",
         "options": {
           "timeout": 15000,
           "response": {
@@ -376,102 +784,237 @@
             }
           }
         }
-      }
+      },
+      "onError": "continueRegularOutput"
     },
     {
-      "id": "cf359619-af31-5bc4-9613-33f804e64114",
-      "name": "¿Publicado OK?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
+      "id": "93e16ab6-a514-56fa-af31-d35f62cb0686",
+      "name": "Cerrar solicitud",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
-        1620,
-        760
+        2060,
+        680
       ],
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "loose",
-            "version": 2
-          },
-          "combinator": "and",
-          "conditions": [
-            {
-              "id": "a5bac07e-b08c-481a-878e-e46f94c375a8",
-              "leftValue": "={{ !$json.error && $json.statusCode >= 200 && $json.statusCode < 300 }}",
-              "rightValue": "",
-              "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
-              }
-            }
-          ]
-        },
-        "options": {}
+        "jsCode": "// CERRAR SOLICITUD: resultado del envío a Workvivo + métricas de latencia.\nconst ev = $('Evaluar solicitud').first().json;\nconst r = $input.first().json || {};\nconst code = Number(r.statusCode || 0);\nconst ok = !r.error && code >= 200 && code < 300;\nconst now = new Date();\nconst ms = (a, b) => (a && b ? new Date(b) - new Date(a) : null);\nreturn [{ json: {\n  request_id: ev.request_id,\n  // Si falla la publicación, vuelve a \"triggered\" para permitir un reintento del agente.\n  status: ok ? 'completed' : 'triggered',\n  error_code: ok ? '' : 'WORKVIVO_' + (code || 'ERROR'),\n  http_status: code,\n  mcp_at: ev.mcp_at,\n  sent_at: ok ? now.toISOString() : null,\n  t_agent_ms: ms(ev.trigger_at, ev.mcp_at),\n  t_delivery_ms: ok ? ms(ev.mcp_at, now) : null,\n  t_total_ms: ok ? ms(ev.user_sent_at || ev.received_at, now) : null,\n} }];\n"
       }
     },
     {
-      "id": "74191a02-6d98-5091-801f-22223734921c",
-      "name": "Registrar publicación",
+      "id": "2b844fc8-5703-55eb-a5df-2180e84638c3",
+      "name": "Guardar resultado",
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
       "position": [
-        1840,
+        2280,
         680
       ],
-      "onError": "continueRegularOutput",
       "parameters": {
         "resource": "row",
         "operation": "upsert",
         "dataTableId": {
           "__rl": true,
           "mode": "id",
-          "value": "6LwBJyhwM4N5gf3O",
-          "cachedResultName": "wv_validator_idempotencia"
+          "value": "LCot7sUNh6WtlVwQ",
+          "cachedResultName": "wv_requests"
         },
         "matchType": "allConditions",
         "filters": {
           "conditions": [
             {
-              "keyName": "dedupeKey",
+              "keyName": "request_id",
               "condition": "eq",
-              "keyValue": "={{ $('Validar solicitud').first().json.dedupeKey }}"
+              "keyValue": "={{ $json.request_id }}"
             }
           ]
         },
         "columns": {
           "mappingMode": "defineBelow",
           "matchingColumns": [
-            "dedupeKey"
+            "request_id"
           ],
           "value": {
-            "dedupeKey": "={{ $('Validar solicitud').first().json.dedupeKey }}",
-            "expiresAt": "={{ $now.plus({ minutes: 10 }).toISO() }}",
-            "correlationId": "responder_en_workvivo"
+            "request_id": "={{ $json.request_id }}",
+            "status": "={{ $json.status }}",
+            "error_code": "={{ $json.error_code }}",
+            "http_status": "={{ $json.http_status }}",
+            "mcp_at": "={{ $json.mcp_at }}",
+            "sent_at": "={{ $json.sent_at }}",
+            "t_agent_ms": "={{ $json.t_agent_ms }}",
+            "t_delivery_ms": "={{ $json.t_delivery_ms }}",
+            "t_total_ms": "={{ $json.t_total_ms }}"
           }
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "675f6b8b-e625-5873-a187-5c75e4ee718d",
+      "name": "Marcar vencida",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1620,
+        880
+      ],
+      "parameters": {
+        "resource": "row",
+        "operation": "upsert",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "LCot7sUNh6WtlVwQ",
+          "cachedResultName": "wv_requests"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "request_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.request_id }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "request_id"
+          ],
+          "value": {
+            "request_id": "={{ $json.request_id }}",
+            "status": "timeout",
+            "error_code": "TIMEOUT_LATE_REPLY",
+            "mcp_at": "={{ $json.mcp_at }}"
+          }
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "536c11b6-445e-5eda-806d-c8d732b7c0ca",
+      "name": "Resultado",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2500,
+        860
+      ],
+      "parameters": {
+        "jsCode": "// RESPUESTA MÍNIMA PARA EL AGENTE\nlet out;\ntry {\n  const c = $('Cerrar solicitud').first().json;\n  out = c.status === 'completed'\n    ? { success: true, request_id: c.request_id, status: 'sent' }\n    : { success: false, request_id: c.request_id, status: 'error', http_status: c.http_status };\n} catch (e) {\n  const v = $('Validar parámetros').first().json;\n  let ev = null; try { ev = $('Evaluar solicitud').first().json; } catch (e2) {}\n  if (!v.valid) out = { success: false, request_id: v.request_id, status: v.error };\n  else if (ev && ev.status === 'already_sent') out = { success: true, request_id: ev.request_id, status: 'already_sent' };\n  else out = { success: false, request_id: v.request_id, status: ev ? ev.status : 'error' };\n}\nreturn [{ json: out }];\n"
+      }
+    },
+    {
+      "id": "6cfc7bef-52e5-5c6e-93ba-1094ec41b170",
+      "name": "Cada 5 minutos",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        1160
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 5
+            }
+          ]
         }
       }
     },
     {
-      "id": "2eccfb2a-d74a-59e2-a84d-6cae78992c03",
-      "name": "Resultado para Validator",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
+      "id": "db326c94-d638-50d1-8276-4d99dd9505ef",
+      "name": "Solicitudes en curso",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
       "position": [
-        2060,
-        780
+        220,
+        1160
       ],
       "parameters": {
-        "jsCode": "// RESULTADO PARA VALIDATOR: confirmación clara de éxito o error con status y detalle.\nconst v = $('Validar solicitud').first().json;\nlet status = 0, ok = false, detalle = '';\nif (!v.valid) {\n  status = 400; detalle = v.error;\n} else {\n  const r = $('Publicar en Workvivo').first().json || {};\n  status = Number(r.statusCode || 0);\n  ok = !r.error && status >= 200 && status < 300;\n  const body = r.error ? String(r.error.message || r.error) : (typeof r.body === 'string' ? r.body : JSON.stringify(r.body ?? ''));\n  detalle = ok ? 'Mensaje publicado en Workvivo.' : body.slice(0, 1000);\n}\nreturn [{ json: {\n  resultado: ok ? 'OK' : 'ERROR',\n  status,\n  detalle,\n  instruccion: ok ? 'La respuesta ya fue entregada. No vuelvas a llamar a esta herramienta para este mensaje.' : 'No se publicó. No reintentes más de una vez.',\n} }];\n"
+        "resource": "row",
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "LCot7sUNh6WtlVwQ",
+          "cachedResultName": "wv_requests"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "status",
+              "condition": "eq",
+              "keyValue": "triggered"
+            }
+          ]
+        },
+        "returnAll": true
       }
     },
     {
+      "id": "2653945d-445a-5715-a938-8f0b385c7156",
+      "name": "Filtrar vencidas",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        1160
+      ],
       "parameters": {
-        "content": "## Workvivo ↔ Validator (asíncrono + MCP)\n**Ida:** Mensaje de Workvivo → ¿Es mensaje de un usuario? → Enviar a Validator (canal API, solo devuelve conversation_url).\n**Vuelta:** Validator → MCP para Validator → herramienta **responder_en_workvivo** → sub-flujo: validar → ¿ya publicado? → Publicar en Workvivo → resultado OK/ERROR para Validator.",
-        "height": 220,
-        "width": 1100,
+        "jsCode": "// SOLICITUDES VENCIDAS: \"triggered\" cuyo expires_at ya pasó -> timeout.\nconst now = new Date();\nreturn $input.all()\n  .map((i) => i.json)\n  .filter((r) => r && r.request_id && r.status === 'triggered' && r.expires_at && new Date(r.expires_at) < now)\n  .map((r) => ({ json: { request_id: r.request_id, status: 'timeout', error_code: 'TIMEOUT' } }));\n"
+      }
+    },
+    {
+      "id": "304e9c4e-d5ba-53b5-aee4-0d7f0e97dfb9",
+      "name": "Marcar timeout",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        660,
+        1160
+      ],
+      "parameters": {
+        "resource": "row",
+        "operation": "upsert",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "LCot7sUNh6WtlVwQ",
+          "cachedResultName": "wv_requests"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "request_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.request_id }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "request_id"
+          ],
+          "value": {
+            "request_id": "={{ $json.request_id }}",
+            "status": "={{ $json.status }}",
+            "error_code": "={{ $json.error_code }}"
+          }
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "## Workvivo ↔ Validator (Workspace Agent, asíncrono)\n**Ida:** Webhook → filtro (sin mensajes del bot) → ¿evento nuevo? → Crear solicitud (request_id) → registrar → **Acuse fijo \"Estoy revisando tu consulta…\"** → Enviar a Validator (Request ID, Source, User message; Idempotency-Key workvivo:{event_id}) → estado triggered / failed (+ mensaje de error).\n**Vuelta:** Validator → MCP → **send_workvivo_reply(request_id, message)** → busca request_id en `wv_requests` → evita duplicados → publica en Workvivo → completed → `{success, request_id, status}`.\n**Barrido:** cada 5 min marca como timeout las solicitudes triggered vencidas (TTL 10 min). Métricas en `wv_requests`: t_ack_ms, t_trigger_ms, t_agent_ms, t_delivery_ms, t_total_ms.",
+        "height": 280,
+        "width": 2860,
         "color": 4
       },
       "id": "9de00772-ea9b-580f-a6cd-1b5466de071a",
@@ -480,7 +1023,7 @@
       "typeVersion": 1,
       "position": [
         -40,
-        -280
+        -330
       ]
     }
   ],
@@ -500,7 +1043,7 @@
       "main": [
         [
           {
-            "node": "Enviar a Validator",
+            "node": "¿Evento ya recibido?",
             "type": "main",
             "index": 0
           }
@@ -508,7 +1051,137 @@
         []
       ]
     },
-    "responder_en_workvivo": {
+    "¿Evento ya recibido?": {
+      "main": [
+        [
+          {
+            "node": "¿Evento nuevo?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Evento nuevo?": {
+      "main": [
+        [
+          {
+            "node": "Crear solicitud",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Crear solicitud": {
+      "main": [
+        [
+          {
+            "node": "Registrar solicitud",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Registrar solicitud": {
+      "main": [
+        [
+          {
+            "node": "Acuse en Workvivo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Acuse en Workvivo": {
+      "main": [
+        [
+          {
+            "node": "Hora ACK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hora ACK": {
+      "main": [
+        [
+          {
+            "node": "Enviar a Validator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar a Validator": {
+      "main": [
+        [
+          {
+            "node": "Trigger aceptado",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Trigger fallido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trigger aceptado": {
+      "main": [
+        [
+          {
+            "node": "Actualizar solicitud",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trigger fallido": {
+      "main": [
+        [
+          {
+            "node": "Actualizar solicitud",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Actualizar solicitud": {
+      "main": [
+        [
+          {
+            "node": "¿Trigger fallido?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Trigger fallido?": {
+      "main": [
+        [
+          {
+            "node": "Error a Workvivo",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "send_workvivo_reply": {
       "ai_tool": [
         [
           {
@@ -519,66 +1192,95 @@
         ]
       ]
     },
-    "Entrada responder_en_workvivo": {
+    "Entrada send_workvivo_reply": {
       "main": [
         [
           {
-            "node": "Validar solicitud",
+            "node": "Validar parámetros",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Validar solicitud": {
+    "Validar parámetros": {
       "main": [
         [
           {
-            "node": "¿Solicitud válida?",
+            "node": "¿Parámetros válidos?",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "¿Solicitud válida?": {
+    "¿Parámetros válidos?": {
       "main": [
         [
           {
-            "node": "Buscar publicación previa",
+            "node": "Buscar solicitud",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Resultado para Validator",
+            "node": "Resultado",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Buscar publicación previa": {
+    "Buscar solicitud": {
       "main": [
         [
           {
-            "node": "¿Ya publicado?",
+            "node": "Evaluar solicitud",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "¿Ya publicado?": {
+    "Evaluar solicitud": {
       "main": [
         [
           {
-            "node": "Resultado duplicado",
+            "node": "Acción",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Acción": {
+      "main": [
+        [
+          {
+            "node": "Reservar envío",
             "type": "main",
             "index": 0
           }
         ],
+        [
+          {
+            "node": "Marcar vencida",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Resultado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reservar envío": {
+      "main": [
         [
           {
             "node": "Publicar en Workvivo",
@@ -592,36 +1294,73 @@
       "main": [
         [
           {
-            "node": "¿Publicado OK?",
+            "node": "Cerrar solicitud",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "¿Publicado OK?": {
+    "Cerrar solicitud": {
       "main": [
         [
           {
-            "node": "Registrar publicación",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Resultado para Validator",
+            "node": "Guardar resultado",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Registrar publicación": {
+    "Guardar resultado": {
       "main": [
         [
           {
-            "node": "Resultado para Validator",
+            "node": "Resultado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Marcar vencida": {
+      "main": [
+        [
+          {
+            "node": "Resultado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cada 5 minutos": {
+      "main": [
+        [
+          {
+            "node": "Solicitudes en curso",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Solicitudes en curso": {
+      "main": [
+        [
+          {
+            "node": "Filtrar vencidas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrar vencidas": {
+      "main": [
+        [
+          {
+            "node": "Marcar timeout",
             "type": "main",
             "index": 0
           }
