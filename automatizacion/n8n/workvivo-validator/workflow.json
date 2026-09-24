@@ -291,32 +291,19 @@
       "retryOnFail": true,
       "maxTries": 3,
       "waitBetweenTries": 2000,
-      "onError": "continueErrorOutput"
+      "onError": "continueRegularOutput"
     },
     {
-      "id": "77cfecc9-4ac8-5d8b-a33a-474cf20cc39c",
-      "name": "Trigger aceptado",
+      "id": "46f22d3e-09e8-53c2-9447-1c49faf135a5",
+      "name": "Resultado del trigger",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         1980,
-        -100
+        0
       ],
       "parameters": {
-        "jsCode": "// El canal API aceptó la ejecución (no devuelve texto; solo conversation_url).\nconst s = $('Crear solicitud').first().json;\nconst ack = $('Hora ACK').first().json;\nconst now = new Date();\nreturn [{ json: {\n  request_id: s.request_id, status: 'triggered', error_code: '', http_status: 202,\n  ack_at: ack.ack_at, trigger_at: now.toISOString(),\n  t_ack_ms: new Date(ack.ack_at) - new Date(s.user_sent_at),\n  t_trigger_ms: now - new Date(s.received_at),\n} }];\n"
-      }
-    },
-    {
-      "id": "af550584-7046-5af3-add8-1c90c7531ac3",
-      "name": "Trigger fallido",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1980,
-        100
-      ],
-      "parameters": {
-        "jsCode": "// El canal API rechazó la ejecución tras los reintentos (401/403/404/409/5xx...).\nconst s = $('Crear solicitud').first().json;\nconst ack = $('Hora ACK').first().json;\nconst e = $input.first().json || {};\nconst msg = String((e.error && (e.error.message || e.error)) || e.message || '');\nconst m = msg.match(/\\b([1-5]\\d\\d)\\b/);\nconst now = new Date();\nreturn [{ json: {\n  request_id: s.request_id, status: 'failed', error_code: 'TRIGGER_' + (m ? m[1] : 'ERROR'), http_status: m ? Number(m[1]) : 0,\n  ack_at: ack.ack_at, trigger_at: now.toISOString(),\n  t_ack_ms: new Date(ack.ack_at) - new Date(s.user_sent_at),\n  t_trigger_ms: now - new Date(s.received_at),\n} }];\n"
+        "jsCode": "// RESULTADO DEL TRIGGER: 202 → triggered; error tras reintentos (401/403/404/409/5xx...) → failed.\nconst s = $('Crear solicitud').first().json;\nconst ack = $('Hora ACK').first().json;\nconst e = $input.first().json || {};\nconst now = new Date();\nlet status = 'triggered', error_code = '', http_status = 202;\nif (e.error) {\n  const m = String(e.error.message || e.error).match(/\\b([1-5]\\d\\d)\\b/);\n  status = 'failed'; http_status = m ? Number(m[1]) : 0; error_code = 'TRIGGER_' + (m ? m[1] : 'ERROR');\n}\nreturn [{ json: {\n  request_id: s.request_id, status, error_code, http_status,\n  ack_at: ack.ack_at, trigger_at: now.toISOString(),\n  t_ack_ms: new Date(ack.ack_at) - new Date(s.user_sent_at),\n  t_trigger_ms: now - new Date(s.received_at),\n} }];\n"
       }
     },
     {
@@ -387,7 +374,7 @@
           "conditions": [
             {
               "id": "3cb75933-6c29-44a8-82e9-7f69d8e66095",
-              "leftValue": "={{ $('Actualizar solicitud').first().json.status === 'failed' || $input.first().json.status === 'failed' }}",
+              "leftValue": "={{ $('Resultado del trigger').first().json.status === 'failed' }}",
               "rightValue": "",
               "operator": {
                 "type": "boolean",
@@ -526,60 +513,13 @@
       }
     },
     {
-      "id": "15a3e39e-3cb9-523f-8901-56b8ad9e2e85",
-      "name": "Validar parámetros",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        520,
-        860
-      ],
-      "parameters": {
-        "jsCode": "// VALIDAR PARÁMETROS DE send_workvivo_reply\nconst i = $input.first().json || {};\nconst request_id = String(i.request_id ?? '').trim();\nconst message = String(i.message ?? '').trim();\nlet error = '';\nif (!/^req_[0-9a-f]{24}$/.test(request_id)) error = 'invalid_request_id';\nelse if (!message) error = 'empty_message';\nelse if (message.length > 20000) error = 'message_too_long';\nreturn [{ json: { valid: !error, error, request_id, message } }];\n"
-      }
-    },
-    {
-      "id": "328b7a8b-451e-53f9-95da-392f93af6f94",
-      "name": "¿Parámetros válidos?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        740,
-        860
-      ],
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "loose",
-            "version": 2
-          },
-          "combinator": "and",
-          "conditions": [
-            {
-              "id": "5d55bd74-5daf-46b6-a68a-ec4406021d1a",
-              "leftValue": "={{ $json.valid }}",
-              "rightValue": "",
-              "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
-              }
-            }
-          ]
-        },
-        "options": {}
-      }
-    },
-    {
       "id": "d6b4e562-d125-595c-a35b-ba0601b02ed8",
       "name": "Buscar solicitud",
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
       "position": [
-        960,
-        780
+        520,
+        860
       ],
       "alwaysOutputData": true,
       "parameters": {
@@ -597,7 +537,7 @@
             {
               "keyName": "request_id",
               "condition": "eq",
-              "keyValue": "={{ $('Validar parámetros').first().json.request_id }}"
+              "keyValue": "={{ String($json.request_id ?? '').trim() }}"
             }
           ]
         },
@@ -611,100 +551,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1180,
-        780
+        740,
+        860
       ],
       "parameters": {
-        "jsCode": "// EVALUAR SOLICITUD: el request_id debe existir (creado por el backend), no estar enviado ni vencido.\nconst v = $('Validar parámetros').first().json;\nconst row = $input.first().json || {};\nconst now = new Date();\nlet action = 'send', status = '';\nif (!row.id || row.request_id !== v.request_id) { action = 'reject'; status = 'not_found'; }\nelse if (row.status === 'completed' || row.status === 'sending') { action = 'reject'; status = 'already_sent'; }\nelse if (row.status === 'timeout' || row.status === 'failed') { action = 'reject'; status = row.status; }\nelse if (row.expires_at && new Date(row.expires_at) < now) { action = 'expire'; status = 'timeout'; }\nreturn [{ json: {\n  action, status, request_id: v.request_id, message: v.message,\n  channel_url: row.channel_url || '', bot_userid: row.bot_userid || '',\n  mcp_at: now.toISOString(), trigger_at: row.trigger_at || null, user_sent_at: row.user_sent_at || null, received_at: row.received_at || null,\n} }];\n"
-      }
-    },
-    {
-      "id": "1b9d3270-ccea-5763-b802-48e34ada7ce4",
-      "name": "Acción",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2,
-      "position": [
-        1400,
-        780
-      ],
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "combinator": "and",
-                "conditions": [
-                  {
-                    "id": "6f175c2c-5075-4768-9a88-df6b176d5779",
-                    "leftValue": "={{ $json.action }}",
-                    "rightValue": "send",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    }
-                  }
-                ]
-              },
-              "renameOutput": true,
-              "outputKey": "send"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "combinator": "and",
-                "conditions": [
-                  {
-                    "id": "7440eb55-84bb-4ef8-8ed6-12806a78a5a4",
-                    "leftValue": "={{ $json.action }}",
-                    "rightValue": "expire",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    }
-                  }
-                ]
-              },
-              "renameOutput": true,
-              "outputKey": "expire"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "combinator": "and",
-                "conditions": [
-                  {
-                    "id": "77ca4524-cedb-4128-85a6-f7c1a4e904d4",
-                    "leftValue": "={{ $json.action }}",
-                    "rightValue": "reject",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    }
-                  }
-                ]
-              },
-              "renameOutput": true,
-              "outputKey": "reject"
-            }
-          ]
-        },
-        "options": {}
+        "jsCode": "// EVALUAR SOLICITUD: valida parámetros y exige un request_id creado por el backend, no enviado ni vencido.\nconst i = $('Entrada send_workvivo_reply').first().json || {};\nconst request_id = String(i.request_id ?? '').trim();\nconst message = String(i.message ?? '').trim();\nconst row = $input.first().json || {};\nconst now = new Date();\nlet status = 'ok';\nif (!/^req_[0-9a-f]{24}$/.test(request_id)) status = 'invalid_request_id';\nelse if (!message) status = 'empty_message';\nelse if (!row.id || row.request_id !== request_id) status = 'not_found';\nelse if (row.status === 'completed' || row.status === 'sending') status = 'already_sent';\nelse if (row.status === 'timeout' || row.status === 'failed') status = row.status;\nelse if (row.expires_at && new Date(row.expires_at) < now) status = 'timeout';\nreturn [{ json: {\n  send: status === 'ok', status, request_id, message,\n  channel_url: row.channel_url || '', bot_userid: row.bot_userid || '',\n  mcp_at: now.toISOString(), trigger_at: row.trigger_at || null, user_sent_at: row.user_sent_at || null, received_at: row.received_at || null,\n} }];\n"
       }
     },
     {
@@ -713,8 +564,8 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
       "position": [
-        1620,
-        680
+        1180,
+        760
       ],
       "parameters": {
         "resource": "row",
@@ -754,8 +605,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1840,
-        680
+        1400,
+        760
       ],
       "parameters": {
         "method": "POST",
@@ -793,8 +644,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2060,
-        680
+        1620,
+        760
       ],
       "parameters": {
         "jsCode": "// CERRAR SOLICITUD: resultado del envío a Workvivo + métricas de latencia.\nconst ev = $('Evaluar solicitud').first().json;\nconst r = $input.first().json || {};\nconst code = Number(r.statusCode || 0);\nconst ok = !r.error && code >= 200 && code < 300;\nconst now = new Date();\nconst ms = (a, b) => (a && b ? new Date(b) - new Date(a) : null);\nreturn [{ json: {\n  request_id: ev.request_id,\n  // Si falla la publicación, vuelve a \"triggered\" para permitir un reintento del agente.\n  status: ok ? 'completed' : 'triggered',\n  error_code: ok ? '' : 'WORKVIVO_' + (code || 'ERROR'),\n  http_status: code,\n  mcp_at: ev.mcp_at,\n  sent_at: ok ? now.toISOString() : null,\n  t_agent_ms: ms(ev.trigger_at, ev.mcp_at),\n  t_delivery_ms: ok ? ms(ev.mcp_at, now) : null,\n  t_total_ms: ok ? ms(ev.user_sent_at || ev.received_at, now) : null,\n} }];\n"
@@ -806,8 +657,8 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
       "position": [
-        2280,
-        680
+        1840,
+        760
       ],
       "parameters": {
         "resource": "row",
@@ -849,59 +700,16 @@
       "onError": "continueRegularOutput"
     },
     {
-      "id": "675f6b8b-e625-5873-a187-5c75e4ee718d",
-      "name": "Marcar vencida",
-      "type": "n8n-nodes-base.dataTable",
-      "typeVersion": 1.1,
-      "position": [
-        1620,
-        880
-      ],
-      "parameters": {
-        "resource": "row",
-        "operation": "upsert",
-        "dataTableId": {
-          "__rl": true,
-          "mode": "id",
-          "value": "LCot7sUNh6WtlVwQ",
-          "cachedResultName": "wv_requests"
-        },
-        "matchType": "allConditions",
-        "filters": {
-          "conditions": [
-            {
-              "keyName": "request_id",
-              "condition": "eq",
-              "keyValue": "={{ $json.request_id }}"
-            }
-          ]
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "matchingColumns": [
-            "request_id"
-          ],
-          "value": {
-            "request_id": "={{ $json.request_id }}",
-            "status": "timeout",
-            "error_code": "TIMEOUT_LATE_REPLY",
-            "mcp_at": "={{ $json.mcp_at }}"
-          }
-        }
-      },
-      "onError": "continueRegularOutput"
-    },
-    {
       "id": "536c11b6-445e-5eda-806d-c8d732b7c0ca",
       "name": "Resultado",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2500,
+        2060,
         860
       ],
       "parameters": {
-        "jsCode": "// RESPUESTA MÍNIMA PARA EL AGENTE\nlet out;\ntry {\n  const c = $('Cerrar solicitud').first().json;\n  out = c.status === 'completed'\n    ? { success: true, request_id: c.request_id, status: 'sent' }\n    : { success: false, request_id: c.request_id, status: 'error', http_status: c.http_status };\n} catch (e) {\n  const v = $('Validar parámetros').first().json;\n  let ev = null; try { ev = $('Evaluar solicitud').first().json; } catch (e2) {}\n  if (!v.valid) out = { success: false, request_id: v.request_id, status: v.error };\n  else if (ev && ev.status === 'already_sent') out = { success: true, request_id: ev.request_id, status: 'already_sent' };\n  else out = { success: false, request_id: v.request_id, status: ev ? ev.status : 'error' };\n}\nreturn [{ json: out }];\n"
+        "jsCode": "// RESPUESTA MÍNIMA PARA EL AGENTE\nconst ev = $('Evaluar solicitud').first().json;\nlet out;\nif (ev.send) {\n  const c = $('Cerrar solicitud').first().json;\n  out = c.status === 'completed'\n    ? { success: true, request_id: c.request_id, status: 'sent' }\n    : { success: false, request_id: c.request_id, status: 'error', http_status: c.http_status };\n} else {\n  out = { success: ev.status === 'already_sent', request_id: ev.request_id, status: ev.status };\n}\nreturn [{ json: out }];\n"
       }
     },
     {
@@ -1012,7 +820,7 @@
     },
     {
       "parameters": {
-        "content": "## Workvivo ↔ Validator (Workspace Agent, asíncrono)\n**Ida:** Webhook → filtro (sin mensajes del bot) → ¿evento nuevo? → Crear solicitud (request_id) → registrar → **Acuse fijo \"Estoy revisando tu consulta…\"** → Enviar a Validator (Request ID, Source, User message; Idempotency-Key workvivo:{event_id}) → estado triggered / failed (+ mensaje de error).\n**Vuelta:** Validator → MCP → **send_workvivo_reply(request_id, message)** → busca request_id en `wv_requests` → evita duplicados → publica en Workvivo → completed → `{success, request_id, status}`.\n**Barrido:** cada 5 min marca como timeout las solicitudes triggered vencidas (TTL 10 min). Métricas en `wv_requests`: t_ack_ms, t_trigger_ms, t_agent_ms, t_delivery_ms, t_total_ms.",
+        "content": "## Workvivo ↔ Validator (Workspace Agent, asíncrono)\n**Ida:** Webhook → filtro (sin mensajes del bot) → ¿evento nuevo? → Crear solicitud (request_id) → registrar → **Acuse fijo \"Estoy revisando tu consulta…\"** → Enviar a Validator (Request ID, Source, User message; Idempotency-Key workvivo:{event_id}) → Resultado del trigger: triggered / failed (+ mensaje de error).\n**Vuelta:** Validator → MCP → **send_workvivo_reply(request_id, message)** → busca request_id en `wv_requests` → evita duplicados → publica en Workvivo → completed → `{success, request_id, status}`.\n**Barrido:** cada 5 min marca como timeout las solicitudes triggered vencidas (TTL 10 min). Métricas en `wv_requests`: t_ack_ms, t_trigger_ms, t_agent_ms, t_delivery_ms, t_total_ms.",
         "height": 280,
         "width": 2860,
         "color": 4
@@ -1025,6 +833,40 @@
         -40,
         -330
       ]
+    },
+    {
+      "id": "17f90571-6e5d-5d05-881d-5c047a615a9c",
+      "name": "¿Enviar?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        960,
+        860
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "0f00dc30-ec36-4c1b-bb98-39b0d00bca63",
+              "leftValue": "={{ $json.send }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
     }
   ],
   "connections": {
@@ -1122,36 +964,7 @@
       "main": [
         [
           {
-            "node": "Trigger aceptado",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Trigger fallido",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Trigger aceptado": {
-      "main": [
-        [
-          {
-            "node": "Actualizar solicitud",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Trigger fallido": {
-      "main": [
-        [
-          {
-            "node": "Actualizar solicitud",
+            "node": "Resultado del trigger",
             "type": "main",
             "index": 0
           }
@@ -1196,36 +1009,7 @@
       "main": [
         [
           {
-            "node": "Validar parámetros",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Validar parámetros": {
-      "main": [
-        [
-          {
-            "node": "¿Parámetros válidos?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "¿Parámetros válidos?": {
-      "main": [
-        [
-          {
             "node": "Buscar solicitud",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Resultado",
             "type": "main",
             "index": 0
           }
@@ -1247,32 +1031,7 @@
       "main": [
         [
           {
-            "node": "Acción",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Acción": {
-      "main": [
-        [
-          {
-            "node": "Reservar envío",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Marcar vencida",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Resultado",
+            "node": "¿Enviar?",
             "type": "main",
             "index": 0
           }
@@ -1323,17 +1082,6 @@
         ]
       ]
     },
-    "Marcar vencida": {
-      "main": [
-        [
-          {
-            "node": "Resultado",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Cada 5 minutos": {
       "main": [
         [
@@ -1361,6 +1109,35 @@
         [
           {
             "node": "Marcar timeout",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resultado del trigger": {
+      "main": [
+        [
+          {
+            "node": "Actualizar solicitud",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Enviar?": {
+      "main": [
+        [
+          {
+            "node": "Reservar envío",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Resultado",
             "type": "main",
             "index": 0
           }
