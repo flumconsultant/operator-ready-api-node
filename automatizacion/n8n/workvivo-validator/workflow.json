@@ -94,9 +94,16 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ conversation_key: $json.body.channel.channel_url, input: 'MENSAJE DEL USUARIO:\\n' + $json.body.message.text + '\\n\\nDATOS PARA RESPONDER (usar tal cual en responder_en_workvivo):\\nchannel_url: ' + $json.body.channel.channel_url + '\\nbot_userid: ' + $json.body.bot.bot_userid }) }}",
+        "jsonBody": "={{ JSON.stringify({ conversation_key: $json.body.channel.channel_url, input: 'MENSAJE DEL USUARIO:\\n' + $json.body.message.text + '\\n\\nDATOS PARA RESPONDER:\\nchannel_url: ' + $json.body.channel.channel_url + '\\nbot_userid: ' + $json.body.bot.bot_userid }) }}",
         "options": {
-          "timeout": 30000
+          "timeout": 120000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
         }
       },
       "id": "0b55066e-c920-50d9-87da-b761b63a7520",
@@ -104,18 +111,68 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        512,
-        -16
+        480,
+        0
       ],
-      "retryOnFail": true,
-      "maxTries": 3,
-      "waitBetweenTries": 3000,
-      "notesInFlow": true,
-      "notes": "Reemplaza agtch_PEGAR_AQUI por el ID del canal API del agente (Agent Builder → API channel)."
+      "onError": "continueRegularOutput"
     },
     {
+      "id": "c6ce9cbe-e466-58ff-bbba-297d35961038",
+      "name": "Extraer respuesta de Validator",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        720,
+        0
+      ],
       "parameters": {
-        "toolDescription": "Publica la respuesta final de Validator en el chat de Workvivo del usuario. Llamar una sola vez por mensaje, al terminar la revisión.",
+        "jsCode": "// EXTRAER RESPUESTA DE VALIDATOR\n// Solo se publica el texto final. Nunca razonamiento, trazas ni datos técnicos.\nconst wh = $('Mensaje de Workvivo').first().json.body;\nconst r = $input.first().json || {};\nconst status = Number(r.statusCode || 0);\nlet body = r.body;\nif (typeof body === 'string') { try { body = JSON.parse(body); } catch (e) {} }\n\n// Texto final según el formato documentado de la API Responses de OpenAI:\n// output[] -> elementos type \"message\" -> content[] con type \"output_text\".\n// El endpoint actual del canal API (workspace_agents/.../trigger) NO devuelve texto (solo conversation_url).\nlet text = '';\nif (body && Array.isArray(body.output)) {\n  text = body.output\n    .filter((o) => o && o.type === 'message')\n    .flatMap((o) => o.content || [])\n    .filter((c) => c && c.type === 'output_text' && typeof c.text === 'string')\n    .map((c) => c.text)\n    .join('\\n')\n    .trim();\n}\n\nconst ok = !r.error && status >= 200 && status < 300 && text.length > 0;\nconst bodyRecibido = r.error ? String(r.error.message || r.error) : (typeof body === 'string' ? body : JSON.stringify(body ?? ''));\nreturn [{ json: {\n  ok,\n  text,\n  channel_url: wh.channel.channel_url,\n  bot_userid: wh.bot.bot_userid,\n  message_id: String(wh.message.message_id),\n  httpStatus: status,\n  error: ok ? '' : (r.error ? 'ERROR_DE_RED_O_TIMEOUT' : (status < 200 || status >= 300) ? 'HTTP_' + status : 'RESPUESTA_SIN_TEXTO'),\n  bodyRecibido: ok ? '' : bodyRecibido.slice(0, 2000),\n} }];\n"
+      }
+    },
+    {
+      "id": "d1e9bd53-def3-5333-a03f-b6af08c45ac9",
+      "name": "¿Respuesta válida?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        960,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "a56ea3be-dd97-4ae9-adfd-662db09bfeae",
+              "leftValue": "={{ $json.ok }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "1883565a-c1aa-59bb-9f76-79d6589c328b",
+      "name": "Publicar en Workvivo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1200,
+        -100
+      ],
+      "parameters": {
         "method": "POST",
         "url": "https://api.workvivo.us/v1/chat/bots/message",
         "authentication": "genericCredentialType",
@@ -131,25 +188,49 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ bot_userid: $fromAI('bot_userid', 'Valor bot_userid indicado al final del mensaje recibido', 'string'), channel_url: $fromAI('channel_url', 'Valor channel_url indicado al final del mensaje recibido', 'string'), type: 'message', message: $fromAI('message', 'Respuesta final para el usuario, sin razonamiento interno', 'string') }) }}",
+        "jsonBody": "={{ JSON.stringify({ bot_userid: $json.bot_userid, channel_url: $json.channel_url, type: 'message', message: $json.text }) }}",
         "options": {
           "timeout": 15000
         }
-      },
-      "id": "16c43636-ce14-531f-b4c9-5057a3bfc1ee",
-      "name": "responder_en_workvivo",
-      "type": "n8n-nodes-base.httpRequestTool",
-      "typeVersion": 4.2,
+      }
+    },
+    {
+      "id": "d637e2b9-ee7b-5b92-aa48-59cacc36e133",
+      "name": "Registrar error",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
       "position": [
-        320,
-        432
-      ]
+        1200,
+        120
+      ],
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "zpfDlhTB7KqjYsRI",
+          "cachedResultName": "wv_validator_log"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "value": {
+            "correlationId": "={{ $json.message_id }}",
+            "stage": "validator",
+            "category": "={{ $json.error }}",
+            "httpStatus": "={{ $json.httpStatus }}",
+            "node": "Enviar a Validator",
+            "detail": "={{ $json.bodyRecibido }}",
+            "at": "={{ $now.toISO() }}"
+          }
+        }
+      }
     },
     {
       "parameters": {
-        "content": "## Workvivo ↔ Validator (simple)\n**Ida:** Workvivo → *Mensaje de Workvivo* → filtro → *Enviar a Validator* (canal API, responde 202).\n**Vuelta:** el canal API no devuelve la respuesta. Validator usa la herramienta **responder_en_workvivo** del servidor **MCP para Validator** (añadido como MCP personalizado en Agent Builder), que publica en Workvivo.",
-        "height": 300,
-        "width": 760,
+        "content": "## Workvivo ↔ Validator (síncrono)\nMensaje de Workvivo → ¿Es mensaje de un usuario? → Enviar a Validator → Extraer respuesta → ¿Respuesta válida? → Publicar en Workvivo / Registrar error (tabla `wv_validator_log`).\n⚠️ El endpoint actual `workspace_agents/{agtch}/trigger` es asíncrono y solo devuelve `conversation_url`: con él **nunca** habrá texto que publicar (se registra `RESPUESTA_SIN_TEXTO`).",
+        "height": 240,
+        "width": 1400,
         "color": 4
       },
       "id": "9de00772-ea9b-580f-a6cd-1b5466de071a",
@@ -157,23 +238,9 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -48,
-        -336
+        -40,
+        -300
       ]
-    },
-    {
-      "parameters": {
-        "path": "wv-validator-RUTA_SECRETA"
-      },
-      "id": "9bcf9fc8-3cc5-520a-be1e-9dac2e10d461",
-      "name": "MCP para Validator",
-      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
-      "typeVersion": 2,
-      "position": [
-        0,
-        304
-      ],
-      "webhookId": "54cbf0e9-88ea-5bc1-93da-0591b32caf35"
     }
   ],
   "connections": {
@@ -200,12 +267,41 @@
         []
       ]
     },
-    "responder_en_workvivo": {
-      "ai_tool": [
+    "Enviar a Validator": {
+      "main": [
         [
           {
-            "node": "MCP para Validator",
-            "type": "ai_tool",
+            "node": "Extraer respuesta de Validator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extraer respuesta de Validator": {
+      "main": [
+        [
+          {
+            "node": "¿Respuesta válida?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Respuesta válida?": {
+      "main": [
+        [
+          {
+            "node": "Publicar en Workvivo",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Registrar error",
+            "type": "main",
             "index": 0
           }
         ]
