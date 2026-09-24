@@ -1,0 +1,255 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-09-24",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "agentic-work",
+  "formato": "framework",
+  "es": {
+    "slug": "cuantos-agentes-puede-supervisar-una-persona",
+    "titulo": "¿Cuántos agentes puede supervisar una persona?",
+    "entradilla": "La respuesta que circula en cada comité es un número fijo: cuatro, doce, veinte. La que de verdad sirve depende de una variable que nadie pone en la diapositiva.",
+    "descripcion": "El techo de agentes que sostiene una persona no es un número fijo: depende de qué tan determinista es el trabajo, y se calcula con tres variables.",
+    "linkedin": {
+      "texto": "Un operador estaba dimensionado para doce agentes. Hoy sostiene cuatro, y el organigrama todavía dice doce.\n\nEl número de agentes que puede llevar una persona no es una cifra fija. Depende de qué tan determinista es el trabajo, no de cuántos agentes tiene el equipo. Cuando el trabajo se vuelve ambiguo, cada agente interrumpe más, y el mismo operador que sostenía doce apenas aguanta cuatro.\n\nEn el análisis completo de BECOME desarrollamos el marco de tres números para dimensionar un equipo real.",
+      "hashtags": ["IA", "AgenticWork", "Operaciones"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "La pregunta se repite en cada comité que arma la plantilla del área que administra agentes: ¿cuántos agentes puede llevar una persona? La respuesta que circula es un número fijo, cuatro, doce, veinte. La que de verdad sirve depende de una variable que nadie pone en la diapositiva: qué tan determinista es el trabajo que hace cada agente."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Greg Meyer, que estudia cómo se arman estos equipos, describe el caso que resume el problema entero. Una empresa dimensionó a un operador para doce agentes, cuando el trabajo era predecible: instrucciones claras, resultado verificable en segundos. El trabajo se volvió ambiguo con el tiempo, y ese mismo operador hoy apenas sostiene cuatro. El organigrama sigue diciendo doce. Fuente: Greg Meyer, gregmeyer.com, junio de 2026."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Tomasz Tunguz, inversionista que opera agentes a diario para su propio trabajo, llega al mismo número por otro camino: dice no poder manejar más de cuatro agentes de IA a la vez, y culpa a la interrupción constante. Cada agente que pide permiso, pregunta algo o entrega un resultado a medio resolver le exige atención en el momento, no cuando a él le conviene revisarlo. Fuente: Tomasz Tunguz, tomtunguz.com, 2026."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y en el otro extremo, los operadores más entrenados sostienen entre diez y quince agentes a la vez, porque el trabajo que reciben es distinto: tareas bien definidas, sin ambigüedad, que se revisan en bloque al terminar en vez de atenderse una por una. El rango completo, de cuatro a quince, no depende de qué tan hábil sea el operador. Depende de qué tan determinista es la tarea que tiene enfrente."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "La plantilla se fija una vez y no se vuelve a mirar."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Se nota antes de que el área entera se atrase. Alguien calculó cuántos agentes hacían falta con el mismo criterio con el que se calculan licencias de software: un número fijo por persona, que entra al presupuesto del año. El cálculo se hizo con el primer caso de uso, el más simple, el que salió limpio en la demo. Ocho meses después el equipo opera cinco procesos distintos con ese mismo ratio, y nadie ha vuelto a medir cuánto sostiene de verdad una persona en el proceso número cinco, el más ambiguo de todos."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El ratio de agentes por persona se decidió una vez, con el caso más simple, y nunca se volvió a calcular contra el trabajo real.",
+          "Nadie cuenta cuántas veces por hora un agente interrumpe para pedir permiso o resolver una excepción; solo se cuenta cuántos agentes hay activos.",
+          "El operador que sostenía diez tareas deterministas hoy hace malabares con cuatro ambiguas, y en el papel sigue apareciendo con la misma carga.",
+          "La ambigüedad entra despacio: el primer mes el proceso es simple, el sexto ya arrastra siete excepciones que nadie documentó.",
+          "Cuando el operador empieza a fallar, la primera pregunta es «necesita más entrenamiento», nunca «cuántos agentes le estamos pidiendo que sostenga a la vez»."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema de fondo",
+        "texto": "El techo no lo pone el operador. Lo pone qué tan determinista es la tarea."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Un agente que hace lo mismo siempre, con una entrada clara y una salida que se verifica en segundos, casi no interrumpe: hace el trabajo, entrega, y la revisión es un vistazo. Un agente que opera en terreno ambiguo, donde «terminado» no tiene una definición única, interrumpe todo el tiempo: pide permiso para el caso raro, pregunta cómo interpretar una instrucción, entrega algo que hay que revisar con cuidado porque puede estar mal de una forma que no se nota a simple vista. La diferencia entre sostener quince y sostener cuatro no está en el operador. Está en cuántas veces por hora cada agente le exige algo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y esto cambia con el tiempo, no solo entre procesos distintos. El mismo agente, en el mismo proceso, se vuelve más ambiguo a medida que el negocio le mete casos que no estaban en el diseño original: una excepción nueva, un cliente que no encaja en ninguna categoría, una regla que cambió y nadie actualizó. La tasa de interrupción sube sin que nadie la esté midiendo, y el operador que sostenía diez agentes hace tres meses hoy sostiene seis sin que el cambio se haya anotado en ningún lado. Para cuando alguien lo nota, ya lleva semanas siendo el cuello de botella del equipo, no el multiplicador que se suponía que iba a ser."
+        },
+      {
+        "tipo": "cita",
+        "texto": "El número que importa no es cuántos agentes tiene el equipo. Es cuántos puede sostener la persona antes de convertirse ella misma en el cuello de botella. Y ese número se mueve todas las semanas, aunque el organigrama no se entere.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Tres números antes de fijar cuántos agentes lleva una persona."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Tasa de interrupción",
+            "definicion": "Cuántas veces por hora un agente típico de ese proceso necesita algo del operador: permiso para un caso raro, una decisión ambigua, una corrección. Se mide observando una semana real, no preguntando de memoria cuántas veces interrumpe."
+          },
+          {
+            "termino": "Costo de revisión",
+            "definicion": "Cuánto tiempo toma comprobar que lo que entregó el agente está bien, no solo que terminó. Un agente que entrega rápido pero exige una revisión larga no libera tiempo: lo traslada a otro momento del día."
+          },
+          {
+            "termino": "Bloque de atención real",
+            "definicion": "Cuántas horas de foco sin interrupción tiene esa persona para dedicar a supervisar, no las ocho horas de la jornada completa. Entre reuniones, otras responsabilidades y el resto del trabajo, casi nunca son más de dos o tres."
+          },
+          {
+            "termino": "Techo real",
+            "definicion": "El resultado de dividir el bloque de atención disponible entre lo que consume cada agente, sumando interrupción y revisión. No es una cifra que se fija una vez: se vuelve a calcular cada vez que el proceso cambia de forma."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Con estos tres números, un operador dimensionado para un proceso determinista puede sostener diez o quince agentes sin problema. El mismo operador, moviendo el mismo tipo de trabajo a un proceso ambiguo, puede necesitar bajar a cuatro sin que eso signifique que perdió capacidad. Perdió el terreno donde ese ratio alto era posible."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Toma al operador que hoy lleva más agentes en tu equipo y cuenta, durante una semana real, cuántas veces cada agente le pidió algo: permiso, una decisión, una corrección. Si nadie lo ha contado nunca, ese número por sí solo ya explica por qué la plantilla que se diseñó en la demo no aguanta en producción."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cuántos agentes de IA puede supervisar una persona en la práctica?",
+            "respuesta": "No hay una cifra única. Quien opera agentes a diario en trabajo ambiguo reporta un techo cercano a cuatro; los operadores más entrenados, con trabajo determinista y buena herramienta de cola, sostienen entre diez y quince. El número correcto para un equipo depende de qué tan predecible es la tarea, no de la habilidad de la persona."
+          },
+          {
+            "pregunta": "¿Por qué un operador que sostenía doce agentes ahora apenas maneja cuatro?",
+            "respuesta": "Porque el trabajo se volvió más ambiguo con el tiempo, aunque el proceso siguiera llamándose igual. Cada excepción nueva que nadie documentó sube la tasa de interrupción, y el mismo operador termina atendiendo más preguntas por agente sin que su capacidad real haya cambiado en absoluto."
+          },
+          {
+            "pregunta": "¿Qué hace que un agente interrumpa más que otro?",
+            "respuesta": "La ambigüedad de la tarea, no su complejidad técnica. Un agente con una entrada clara y un resultado verificable casi no pide nada; uno que opera donde «terminado» no tiene una única definición pide permiso, pregunta y entrega trabajo que hay que revisar con cuidado, y cada una de esas veces consume atención del operador."
+          },
+          {
+            "pregunta": "¿Cómo se calcula cuántos agentes puede llevar una persona en un equipo real?",
+            "respuesta": "Dividiendo el bloque de atención real que tiene disponible, casi nunca la jornada completa, entre lo que consume cada agente sumando su tasa de interrupción y el costo de revisar lo que entrega. El resultado cambia cada vez que el proceso se vuelve más o menos ambiguo, así que hay que volver a calcularlo, no fijarlo una vez y olvidarlo."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Dimensionemos tu equipo de agentes",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-many-ai-agents-can-one-person-run",
+    "titulo": "How Many AI Agents Can One Person Run?",
+    "entradilla": "The number every staffing committee reaches for is fixed: four, twelve, twenty. The one that actually matters depends on a variable nobody puts on the slide.",
+    "descripcion": "The ceiling on how many agents one person can run isn't fixed. It depends on how deterministic the work is, and three numbers set it.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Every committee that staffs an agent team asks the same question: how many agents can one person run? The number that circulates is fixed, four, twelve, twenty. The one that actually matters depends on a variable nobody puts on the slide: how deterministic the work each agent does really is."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Greg Meyer, who studies how these teams get built, tells the case that sums up the whole problem. A company staffed one operator for twelve agents, back when the work was predictable: clear instructions, output you could check in seconds. The work drifted into ambiguity over time, and that same operator now barely holds four. The org chart still says twelve. Source: Greg Meyer, gregmeyer.com, June 2026."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Tomasz Tunguz, an investor who runs agents daily for his own work, lands on the same number from a different direction: he says he can barely manage four AI agents at once, and blames constant interruption. Every agent that asks for permission, raises a question or hands back something half finished demands attention the moment it happens, not when it suits him to look. Source: Tomasz Tunguz, tomtunguz.com, 2026."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "At the other end, the most practiced operators hold ten to fifteen agents at once, because the work handed to them is different: well defined tasks, no ambiguity, reviewed in batches once they finish instead of one at a time. The full range, four to fifteen, has nothing to do with how skilled the operator is. It comes down to how deterministic the task in front of them is."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "The staffing ratio gets set once and never gets checked again."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "It shows up before the whole team falls behind. Someone worked out how many agents the team needed the same way you would size a software license: one fixed number per person, baked into the year's budget. The math got done against the first use case, the simplest one, the one that looked clean in the demo. Eight months later the team is running five different processes on that same ratio, and nobody has gone back to measure what one person can actually hold on process number five, the messiest of the lot."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The agents-per-person ratio got set once, against the simplest case, and never got recalculated against the real work.",
+          "Nobody counts how many times an hour an agent stops to ask for permission or handle an exception; only how many agents are running gets counted.",
+          "The operator who used to hold ten deterministic tasks is now juggling four ambiguous ones, and on paper still shows the same workload.",
+          "Ambiguity creeps in slowly: month one the process is simple, by month six it carries seven undocumented exceptions.",
+          "When an operator starts missing things, the first question is whether they need more training, never how many agents they are being asked to hold at once."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "The ceiling isn't set by the operator. It's set by how deterministic the task is."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "An agent that does the same thing every time, with a clear input and an output checkable in seconds, barely interrupts: it does the work, hands it over, and review is a glance. An agent working in ambiguous territory, where \"done\" has no single definition, interrupts constantly: it asks for permission on the edge case, checks how to read an instruction, hands back something that needs careful review because it can be wrong in a way that doesn't show at a glance. The gap between holding fifteen and holding four isn't about the operator. It's about how many times an hour each agent needs something from them."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "And this shifts over time, not just between different processes. The same agent, on the same process, gets more ambiguous as the business feeds it cases that were not in the original design: a new exception, a customer that does not fit any category, a rule that changed and nobody updated. The interruption rate climbs without anyone measuring it, and the operator who held ten agents three months ago now holds six without the change ever getting written down anywhere. By the time someone notices, they have been the team's bottleneck for weeks, not the multiplier they were supposed to be."
+      },
+      {
+        "tipo": "cita",
+        "texto": "The number that matters isn't how many agents the team has. It's how many the person can hold before becoming the bottleneck themselves. And that number moves every week, whether or not the org chart notices.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "Three numbers before you set how many agents one person runs."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Interruption rate",
+            "definicion": "How many times an hour a typical agent in that process needs something from the operator: permission on an edge case, an ambiguous call, a correction. Measured by watching one real week, not by guessing from memory how often it interrupts."
+          },
+          {
+            "termino": "Review cost",
+            "definicion": "How long it takes to check that what the agent handed back is actually right, not just that it finished. An agent that delivers fast but demands a long review does not free up time. It just moves the cost to another part of the day."
+          },
+          {
+            "termino": "Real attention block",
+            "definicion": "How many hours of uninterrupted focus that person actually has to spend supervising, not the full eight hours of the working day. Between meetings, other responsibilities and the rest of the job, it is rarely more than two or three."
+          },
+          {
+            "termino": "Real ceiling",
+            "definicion": "The result of dividing the available attention block by what each agent consumes, interruption plus review combined. It is not a number set once. It gets recalculated every time the process changes shape."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "With these three numbers, an operator staffed for a deterministic process can comfortably hold ten or fifteen agents. The same operator, moving the same kind of work onto an ambiguous process, might need to drop to four without that meaning they lost any capability. They lost the ground where that higher ratio was possible."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take whoever on your team currently runs the most agents and count, over one real week, how many times each agent asked them for something: permission, a decision, a correction. If nobody has ever counted that, the number alone explains why the staffing plan that looked fine in the demo does not hold up in production."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How many AI agents can one person actually supervise?",
+            "respuesta": "There is no single figure. Someone running agents daily on ambiguous work reports a ceiling close to four; the most practiced operators, working on deterministic tasks with a solid queue tool, hold ten to fifteen. The right number for a given team depends on how predictable the task is, not on how skilled the person is."
+          },
+          {
+            "pregunta": "Why would an operator who used to hold twelve agents now barely manage four?",
+            "respuesta": "Because the work got more ambiguous over time, even though the process kept the same name. Every new exception nobody documented raises the interruption rate, and the same operator ends up fielding more questions per agent without their actual capacity changing at all."
+          },
+          {
+            "pregunta": "What makes one agent interrupt more than another?",
+            "respuesta": "How ambiguous the task is, not how technically complex it is. An agent with a clear input and a checkable output barely asks for anything; one operating where \"done\" has no single definition asks for permission, raises questions and hands back work that needs careful review, and every one of those moments pulls on the operator's attention."
+          },
+          {
+            "pregunta": "How do you calculate how many agents one person can run on a real team?",
+            "respuesta": "Divide the real attention block that person has available, almost never the full working day, by what each agent consumes: its interruption rate plus the cost of reviewing what it hands back. The result changes every time the process gets more or less ambiguous, so it needs recalculating, not fixing once and forgetting."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's size your agent team",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}

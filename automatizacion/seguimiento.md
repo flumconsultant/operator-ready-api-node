@@ -58,6 +58,7 @@ abandonar a la primera algo que solo necesitaba más cuerpo.
 | `que-talento-necesita-una-empresa-para-ser-ai-native` | 2026-09-17 | ¿Qué talento hay que contratar para que una empresa se vuelva AI-native? | — | `nuevo` | Recomendación #5 del informe 2026-09-13. Publicado hace 3 días |
 | `quien-es-el-dueno-de-un-proceso-compartido` | 2026-09-18 | ¿Quién es el dueño de un proceso cuando lo ejecutan juntos una persona y un agente de IA? | — | `nuevo` | Recomendación #6 del informe 2026-09-13. Publicado hace 2 días |
 | `responsabilidad-si-el-proveedor-de-ia-sufre-una-brecha` | 2026-09-19 | ¿Qué responsabilidad tiene una empresa si su proveedor de IA sufre una brecha de datos? | — | `nuevo` | Recomendación #7 del informe 2026-09-13. Publicado ayer |
+| `cuantos-agentes-puede-supervisar-una-persona` | 2026-09-24 | ¿Cuántos agentes de IA puede supervisar de verdad una persona? | — | `nuevo` | Recomendación #6 del informe 2026-09-20 (huecos nuevos). Las cinco revisiones de «Qué hay que revisar» del mismo informe ya estaban hechas entre el 2026-09-20 y el 2026-09-23, así que tocaba escribir. Primera medición la semana que viene |
 
 ## Qué está funcionando
 
