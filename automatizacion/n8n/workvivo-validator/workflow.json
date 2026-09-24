@@ -88,22 +88,16 @@
         "headerParameters": {
           "parameters": [
             {
-              "value": "={{ $json.body.message.message_id }}"
+              "name": "Idempotency-Key",
+              "value": "={{ String($json.body.message.message_id) }}"
             }
           ]
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ conversation_key: $json.body.channel.channel_url, input: 'MENSAJE DEL USUARIO:\\n' + $json.body.message.text + '\\n\\nDATOS PARA RESPONDER:\\nchannel_url: ' + $json.body.channel.channel_url + '\\nbot_userid: ' + $json.body.bot.bot_userid }) }}",
+        "jsonBody": "={{ JSON.stringify({ conversation_key: $json.body.channel.channel_url, input: 'MENSAJE DEL USUARIO:\\n' + $json.body.message.text + '\\n\\nDATOS PARA RESPONDER (usar tal cual en responder_en_workvivo):\\nchannel_url: ' + $json.body.channel.channel_url + '\\nbot_userid: ' + $json.body.bot.bot_userid }) }}",
         "options": {
-          "timeout": 120000,
-          "response": {
-            "response": {
-              "fullResponse": true,
-              "neverError": true,
-              "responseFormat": "json"
-            }
-          }
+          "timeout": 30000
         }
       },
       "id": "0b55066e-c920-50d9-87da-b761b63a7520",
@@ -114,43 +108,145 @@
         480,
         0
       ],
-      "onError": "continueRegularOutput"
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000
     },
     {
-      "id": "c6ce9cbe-e466-58ff-bbba-297d35961038",
-      "name": "Extraer respuesta de Validator",
-      "type": "n8n-nodes-base.code",
+      "id": "9bcf9fc8-3cc5-520a-be1e-9dac2e10d461",
+      "name": "MCP para Validator",
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
       "typeVersion": 2,
       "position": [
-        720,
-        0
+        0,
+        300
       ],
+      "webhookId": "54cbf0e9-88ea-5bc1-93da-0591b32caf35",
       "parameters": {
-        "jsCode": "// EXTRAER RESPUESTA DE VALIDATOR\n// Solo se publica el texto final. Nunca razonamiento, trazas ni datos técnicos.\nconst wh = $('Mensaje de Workvivo').first().json.body;\nconst r = $input.first().json || {};\nconst status = Number(r.statusCode || 0);\nlet body = r.body;\nif (typeof body === 'string') { try { body = JSON.parse(body); } catch (e) {} }\n\n// Texto final según el formato documentado de la API Responses de OpenAI:\n// output[] -> elementos type \"message\" -> content[] con type \"output_text\".\n// El endpoint actual del canal API (workspace_agents/.../trigger) NO devuelve texto (solo conversation_url).\nlet text = '';\nif (body && Array.isArray(body.output)) {\n  text = body.output\n    .filter((o) => o && o.type === 'message')\n    .flatMap((o) => o.content || [])\n    .filter((c) => c && c.type === 'output_text' && typeof c.text === 'string')\n    .map((c) => c.text)\n    .join('\\n')\n    .trim();\n}\n\nconst ok = !r.error && status >= 200 && status < 300 && text.length > 0;\nconst bodyRecibido = r.error ? String(r.error.message || r.error) : (typeof body === 'string' ? body : JSON.stringify(body ?? ''));\nreturn [{ json: {\n  ok,\n  text,\n  channel_url: wh.channel.channel_url,\n  bot_userid: wh.bot.bot_userid,\n  message_id: String(wh.message.message_id),\n  httpStatus: status,\n  error: ok ? '' : (r.error ? 'ERROR_DE_RED_O_TIMEOUT' : (status < 200 || status >= 300) ? 'HTTP_' + status : 'RESPUESTA_SIN_TEXTO'),\n  bodyRecibido: ok ? '' : bodyRecibido.slice(0, 2000),\n} }];\n"
+        "path": "wv-validator-RUTA_SECRETA"
       }
     },
     {
-      "id": "d1e9bd53-def3-5333-a03f-b6af08c45ac9",
-      "name": "¿Respuesta válida?",
+      "id": "0e6901bb-1aba-5010-b395-89a4fd2519e8",
+      "name": "responder_en_workvivo",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        520
+      ],
+      "parameters": {
+        "description": "Publica la respuesta final de Validator en el chat de Workvivo del usuario. Usa channel_url y bot_userid exactamente como aparecen en el bloque \"DATOS PARA RESPONDER\". Llámala una sola vez por mensaje. Devuelve resultado OK o ERROR con status y detalle.",
+        "workflowId": {
+          "__rl": true,
+          "value": "jfKm2fSrV8EazttC",
+          "mode": "id"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "channel_url": "={{ $fromAI('channel_url', `channel_url exacto del bloque DATOS PARA RESPONDER`, 'string') }}",
+            "bot_userid": "={{ $fromAI('bot_userid', `bot_userid exacto del bloque DATOS PARA RESPONDER`, 'string') }}",
+            "message": "={{ $fromAI('message', `Respuesta final para el usuario, sin razonamiento interno ni datos técnicos`, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "channel_url",
+              "displayName": "channel_url",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "bot_userid",
+              "displayName": "bot_userid",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      }
+    },
+    {
+      "id": "2a93b0da-f76f-58fb-88c8-61431caac0ff",
+      "name": "Entrada responder_en_workvivo",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        300,
+        760
+      ],
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "channel_url",
+              "type": "string"
+            },
+            {
+              "name": "bot_userid",
+              "type": "string"
+            },
+            {
+              "name": "message",
+              "type": "string"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "807bed6c-d70f-51b7-9866-ec6e5ff02409",
+      "name": "Validar solicitud",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        520,
+        760
+      ],
+      "parameters": {
+        "jsCode": "// VALIDAR SOLICITUD DE VALIDATOR (herramienta responder_en_workvivo)\nconst i = $input.first().json || {};\nconst channel_url = String(i.channel_url ?? '').trim();\nconst bot_userid = String(i.bot_userid ?? '').trim();\nconst message = String(i.message ?? '').trim();\n\nconst faltan = [!channel_url && 'channel_url', !bot_userid && 'bot_userid', !message && 'message'].filter(Boolean);\nlet error = faltan.length ? 'Faltan parámetros obligatorios: ' + faltan.join(', ') : '';\n// Solo bots de esta organización de Workvivo (1000242).\nif (!error && !bot_userid.startsWith('wv_1000242_')) error = 'bot_userid no pertenece a esta organización de Workvivo';\n\n// Idempotencia: el formato del mensaje a Validator no incluye el id del evento original,\n// así que la clave es channel_url + huella (FNV-1a) del texto. Evita publicar dos veces la misma respuesta.\nconst fnv = (s, seed) => { let h = seed >>> 0; for (let k = 0; k < s.length; k++) { h ^= s.charCodeAt(k); h = Math.imul(h, 16777619) >>> 0; } return h.toString(16).padStart(8, '0'); };\nconst base = channel_url + '\\n' + message;\nconst dedupeKey = 'reply:' + channel_url + ':' + fnv(base, 2166136261) + fnv(base, 0x811c9dc5 ^ 0x5bd1e995);\n\nreturn [{ json: { valid: !error, error, channel_url, bot_userid, message, dedupeKey } }];\n"
+      }
+    },
+    {
+      "id": "1efbd80a-cea1-5e97-838b-552965e5b009",
+      "name": "¿Solicitud válida?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        960,
-        0
+        740,
+        760
       ],
       "parameters": {
         "conditions": {
           "options": {
             "caseSensitive": true,
             "leftValue": "",
-            "typeValidation": "strict",
+            "typeValidation": "loose",
             "version": 2
           },
           "combinator": "and",
           "conditions": [
             {
-              "id": "a56ea3be-dd97-4ae9-adfd-662db09bfeae",
-              "leftValue": "={{ $json.ok }}",
+              "id": "7871d07d-08b4-4d28-8521-11d90ab6cf81",
+              "leftValue": "={{ $json.valid }}",
               "rightValue": "",
               "operator": {
                 "type": "boolean",
@@ -164,14 +260,95 @@
       }
     },
     {
-      "id": "1883565a-c1aa-59bb-9f76-79d6589c328b",
+      "id": "994f354c-d3d6-5c45-a60d-af613e013afe",
+      "name": "Buscar publicación previa",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        960,
+        680
+      ],
+      "alwaysOutputData": true,
+      "parameters": {
+        "resource": "row",
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "6LwBJyhwM4N5gf3O",
+          "cachedResultName": "wv_validator_idempotencia"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "dedupeKey",
+              "condition": "eq",
+              "keyValue": "={{ $('Validar solicitud').first().json.dedupeKey }}"
+            }
+          ]
+        },
+        "returnAll": false,
+        "limit": 1
+      }
+    },
+    {
+      "id": "e1878546-5e70-5306-a23b-cb6cdb2e59b4",
+      "name": "¿Ya publicado?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1180,
+        680
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "0cbd11c9-7188-4c2c-a856-6bbb29a99f58",
+              "leftValue": "={{ !!$json.id && new Date($json.expiresAt).getTime() > Date.now() }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "5ec1e359-a00b-5761-a2a1-f3623d1dda20",
+      "name": "Resultado duplicado",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1400,
+        560
+      ],
+      "parameters": {
+        "jsCode": "// RESPUESTA DUPLICADA: ya se publicó el mismo texto en este canal en los últimos 10 minutos.\nreturn [{ json: {\n  resultado: 'OK',\n  status: 200,\n  detalle: 'Esta respuesta ya había sido publicada en Workvivo; no se volvió a publicar (duplicado).',\n  instruccion: 'No vuelvas a llamar a esta herramienta para este mensaje.',\n} }];\n"
+      }
+    },
+    {
+      "id": "c6149074-650e-5a46-aa9a-0b118fcdcdfd",
       "name": "Publicar en Workvivo",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1200,
-        -100
+        1400,
+        760
       ],
+      "onError": "continueRegularOutput",
       "parameters": {
         "method": "POST",
         "url": "https://api.workvivo.us/v1/chat/bots/message",
@@ -188,49 +365,113 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ bot_userid: $json.bot_userid, channel_url: $json.channel_url, type: 'message', message: $json.text }) }}",
+        "jsonBody": "={{ JSON.stringify({ bot_userid: $('Validar solicitud').first().json.bot_userid, channel_url: $('Validar solicitud').first().json.channel_url, type: 'message', message: $('Validar solicitud').first().json.message }) }}",
         "options": {
-          "timeout": 15000
-        }
-      }
-    },
-    {
-      "id": "d637e2b9-ee7b-5b92-aa48-59cacc36e133",
-      "name": "Registrar error",
-      "type": "n8n-nodes-base.dataTable",
-      "typeVersion": 1.1,
-      "position": [
-        1200,
-        120
-      ],
-      "onError": "continueRegularOutput",
-      "parameters": {
-        "dataTableId": {
-          "__rl": true,
-          "mode": "id",
-          "value": "zpfDlhTB7KqjYsRI",
-          "cachedResultName": "wv_validator_log"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "matchingColumns": [],
-          "value": {
-            "correlationId": "={{ $json.message_id }}",
-            "stage": "validator",
-            "category": "={{ $json.error }}",
-            "httpStatus": "={{ $json.httpStatus }}",
-            "node": "Enviar a Validator",
-            "detail": "={{ $json.bodyRecibido }}",
-            "at": "={{ $now.toISO() }}"
+          "timeout": 15000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "json"
+            }
           }
         }
       }
     },
     {
+      "id": "cf359619-af31-5bc4-9613-33f804e64114",
+      "name": "¿Publicado OK?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1620,
+        760
+      ],
       "parameters": {
-        "content": "## Workvivo ↔ Validator (síncrono)\nMensaje de Workvivo → ¿Es mensaje de un usuario? → Enviar a Validator → Extraer respuesta → ¿Respuesta válida? → Publicar en Workvivo / Registrar error (tabla `wv_validator_log`).\n⚠️ El endpoint actual `workspace_agents/{agtch}/trigger` es asíncrono y solo devuelve `conversation_url`: con él **nunca** habrá texto que publicar (se registra `RESPUESTA_SIN_TEXTO`).",
-        "height": 240,
-        "width": 1400,
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "a5bac07e-b08c-481a-878e-e46f94c375a8",
+              "leftValue": "={{ !$json.error && $json.statusCode >= 200 && $json.statusCode < 300 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "74191a02-6d98-5091-801f-22223734921c",
+      "name": "Registrar publicación",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1840,
+        680
+      ],
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "resource": "row",
+        "operation": "upsert",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "6LwBJyhwM4N5gf3O",
+          "cachedResultName": "wv_validator_idempotencia"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "dedupeKey",
+              "condition": "eq",
+              "keyValue": "={{ $('Validar solicitud').first().json.dedupeKey }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "dedupeKey"
+          ],
+          "value": {
+            "dedupeKey": "={{ $('Validar solicitud').first().json.dedupeKey }}",
+            "expiresAt": "={{ $now.plus({ minutes: 10 }).toISO() }}",
+            "correlationId": "responder_en_workvivo"
+          }
+        }
+      }
+    },
+    {
+      "id": "2eccfb2a-d74a-59e2-a84d-6cae78992c03",
+      "name": "Resultado para Validator",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2060,
+        780
+      ],
+      "parameters": {
+        "jsCode": "// RESULTADO PARA VALIDATOR: confirmación clara de éxito o error con status y detalle.\nconst v = $('Validar solicitud').first().json;\nlet status = 0, ok = false, detalle = '';\nif (!v.valid) {\n  status = 400; detalle = v.error;\n} else {\n  const r = $('Publicar en Workvivo').first().json || {};\n  status = Number(r.statusCode || 0);\n  ok = !r.error && status >= 200 && status < 300;\n  const body = r.error ? String(r.error.message || r.error) : (typeof r.body === 'string' ? r.body : JSON.stringify(r.body ?? ''));\n  detalle = ok ? 'Mensaje publicado en Workvivo.' : body.slice(0, 1000);\n}\nreturn [{ json: {\n  resultado: ok ? 'OK' : 'ERROR',\n  status,\n  detalle,\n  instruccion: ok ? 'La respuesta ya fue entregada. No vuelvas a llamar a esta herramienta para este mensaje.' : 'No se publicó. No reintentes más de una vez.',\n} }];\n"
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Workvivo ↔ Validator (asíncrono + MCP)\n**Ida:** Mensaje de Workvivo → ¿Es mensaje de un usuario? → Enviar a Validator (canal API, solo devuelve conversation_url).\n**Vuelta:** Validator → MCP para Validator → herramienta **responder_en_workvivo** → sub-flujo: validar → ¿ya publicado? → Publicar en Workvivo → resultado OK/ERROR para Validator.",
+        "height": 220,
+        "width": 1100,
         "color": 4
       },
       "id": "9de00772-ea9b-580f-a6cd-1b5466de071a",
@@ -239,7 +480,7 @@
       "typeVersion": 1,
       "position": [
         -40,
-        -300
+        -280
       ]
     }
   ],
@@ -267,40 +508,120 @@
         []
       ]
     },
-    "Enviar a Validator": {
+    "responder_en_workvivo": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP para Validator",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Entrada responder_en_workvivo": {
       "main": [
         [
           {
-            "node": "Extraer respuesta de Validator",
+            "node": "Validar solicitud",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Extraer respuesta de Validator": {
+    "Validar solicitud": {
       "main": [
         [
           {
-            "node": "¿Respuesta válida?",
+            "node": "¿Solicitud válida?",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "¿Respuesta válida?": {
+    "¿Solicitud válida?": {
       "main": [
         [
           {
-            "node": "Publicar en Workvivo",
+            "node": "Buscar publicación previa",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Registrar error",
+            "node": "Resultado para Validator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar publicación previa": {
+      "main": [
+        [
+          {
+            "node": "¿Ya publicado?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Ya publicado?": {
+      "main": [
+        [
+          {
+            "node": "Resultado duplicado",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Publicar en Workvivo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Publicar en Workvivo": {
+      "main": [
+        [
+          {
+            "node": "¿Publicado OK?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Publicado OK?": {
+      "main": [
+        [
+          {
+            "node": "Registrar publicación",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Resultado para Validator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Registrar publicación": {
+      "main": [
+        [
+          {
+            "node": "Resultado para Validator",
             "type": "main",
             "index": 0
           }
