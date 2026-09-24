@@ -2,6 +2,11 @@
   "name": "Middleware Workvivo - Chatgpt",
   "nodes": [
     {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "workvivo/validator",
+        "options": {}
+      },
       "id": "3b5a822c-9ba2-55a1-ba14-db84240579ab",
       "name": "Mensaje de Workvivo",
       "type": "n8n-nodes-base.webhook",
@@ -10,32 +15,17 @@
         0,
         0
       ],
-      "webhookId": "3f6b2d9e-8a41-4c7e-9b15-5d0e7a1c9f42",
-      "parameters": {
-        "httpMethod": "POST",
-        "path": "workvivo/validator",
-        "responseMode": "onReceived",
-        "options": {}
-      }
+      "webhookId": "3f6b2d9e-8a41-4c7e-9b15-5d0e7a1c9f42"
     },
     {
-      "id": "5e39492a-865a-5a81-80dc-3c372064238c",
-      "name": "¿Es mensaje de un usuario?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        240,
-        0
-      ],
       "parameters": {
         "conditions": {
           "options": {
             "caseSensitive": true,
             "leftValue": "",
-            "typeValidation": "loose",
+            "typeValidation": "strict",
             "version": 2
           },
-          "combinator": "and",
           "conditions": [
             {
               "id": "96f8e6af-7531-43fd-a69f-57e68c138c53",
@@ -74,77 +64,62 @@
                 "singleValue": true
               }
             }
-          ]
+          ],
+          "combinator": "and"
         },
         "options": {}
-      }
+      },
+      "id": "5e39492a-865a-5a81-80dc-3c372064238c",
+      "name": "¿Es mensaje de un usuario?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        240,
+        0
+      ]
     },
     {
-      "id": "0b55066e-c920-50d9-87da-b761b63a7520",
-      "name": "Enviar a Validator",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        480,
-        0
-      ],
-      "retryOnFail": true,
-      "maxTries": 3,
-      "waitBetweenTries": 3000,
-      "notes": "Reemplaza agtch_PEGAR_AQUI por el ID del canal API del agente (Agent Builder → API channel).",
-      "notesInFlow": true,
       "parameters": {
         "method": "POST",
-        "url": "https://api.chatgpt.com/v1/workspace_agents/agtch_PEGAR_AQUI/trigger",
+        "url": "https://api.chatgpt.com/v1/workspace_agents/agtch_6ab45ece754c8191808065bce0dabc9a/trigger",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpBearerAuth",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
             {
-              "name": "Idempotency-Key",
               "value": "={{ $json.body.message.message_id }}"
             }
           ]
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ conversation_key: $json.body.channel.channel_url, input: $json.body.message.text + '\\n\\n---\\nResponder en Workvivo con: channel_url=' + $json.body.channel.channel_url + ' ; bot_userid=' + $json.body.bot.bot_userid }) }}",
+        "jsonBody": "={{ JSON.stringify({ conversation_key: $json.body.channel.channel_url, input: $json.body.message.text + '\\n\\n---\\nCuando tengas tu respuesta final, usa la herramienta responder_en_workvivo con channel_url=' + $json.body.channel.channel_url + ' y bot_userid=' + $json.body.bot.bot_userid }) }}",
         "options": {
           "timeout": 30000
         }
-      }
-    },
-    {
-      "id": "da8cb423-8d1f-565d-8e80-977c0fd0b1e6",
-      "name": "Respuesta de Validator",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2.1,
-      "position": [
-        0,
-        300
-      ],
-      "webhookId": "e4541067-5688-537c-b898-f91f87d76568",
-      "parameters": {
-        "httpMethod": "POST",
-        "path": "workvivo/validator/respuesta",
-        "authentication": "headerAuth",
-        "responseMode": "onReceived",
-        "options": {}
-      }
-    },
-    {
-      "id": "16c43636-ce14-531f-b4c9-5057a3bfc1ee",
-      "name": "Responder en Workvivo",
+      },
+      "id": "0b55066e-c920-50d9-87da-b761b63a7520",
+      "name": "Enviar a Validator",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        240,
-        300
+        512,
+        -16
       ],
       "retryOnFail": true,
       "maxTries": 3,
       "waitBetweenTries": 3000,
+      "notesInFlow": true,
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "9ysXWLiFAeZZAHhJ",
+          "name": "Bearer Auth account"
+        }
+      },
+      "notes": "Reemplaza agtch_PEGAR_AQUI por el ID del canal API del agente (Agent Builder → API channel)."
+    },
+    {
       "parameters": {
         "method": "POST",
         "url": "https://api.workvivo.io/v1/chat/bots/message",
@@ -161,26 +136,55 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ bot_userid: $json.body.bot_userid, channel_url: $json.body.channel_url, type: 'message', message: $json.body.message }) }}",
+        "jsonBody": "={{ JSON.stringify({ bot_userid: $fromAI('bot_userid', 'Valor bot_userid indicado al final del mensaje recibido', 'string'), channel_url: $fromAI('channel_url', 'Valor channel_url indicado al final del mensaje recibido', 'string'), type: 'message', message: $fromAI('message', 'Respuesta final para el usuario, sin razonamiento interno', 'string') }) }}",
         "options": {
           "timeout": 15000
+        },
+        "toolDescription": "Publica la respuesta final de Validator en el chat de Workvivo del usuario. Llamar una sola vez por mensaje, al terminar la revisión."
+      },
+      "id": "16c43636-ce14-531f-b4c9-5057a3bfc1ee",
+      "name": "responder_en_workvivo",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        240,
+        520
+      ],
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "9ysXWLiFAeZZAHhJ",
+          "name": "Bearer Auth account"
         }
       }
     },
     {
+      "parameters": {
+        "content": "## Workvivo ↔ Validator (simple)\n**Ida:** Workvivo → *Mensaje de Workvivo* → filtro → *Enviar a Validator* (canal API, responde 202).\n**Vuelta:** el canal API no devuelve la respuesta. Validator usa la herramienta **responder_en_workvivo** del servidor **MCP para Validator** (añadido como MCP personalizado en Agent Builder), que publica en Workvivo.",
+        "height": 300,
+        "width": 760,
+        "color": 4
+      },
       "id": "9de00772-ea9b-580f-a6cd-1b5466de071a",
       "name": "Nota",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -40,
-        -340
+        -48,
+        -336
+      ]
+    },
+    {
+      "id": "9bcf9fc8-3cc5-520a-be1e-9dac2e10d461",
+      "name": "MCP para Validator",
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "typeVersion": 2,
+      "position": [
+        0,
+        300
       ],
+      "webhookId": "54cbf0e9-88ea-5bc1-93da-0591b32caf35",
       "parameters": {
-        "width": 760,
-        "height": 300,
-        "color": 4,
-        "content": "## Workvivo ↔ Validator (simple)\n**Ida:** Workvivo → *Mensaje de Workvivo* → filtro → *Enviar a Validator* (canal API, responde 202).\n**Vuelta:** el canal API de ChatGPT **no devuelve la respuesta** (es asíncrono). Validator la envía por POST a *Respuesta de Validator* con:\n`{ \"channel_url\": \"...\", \"bot_userid\": \"...\", \"message\": \"texto\" }` → *Responder en Workvivo*.\n\nCredenciales: **ChatGPT Validator** (Bearer, token de Workspace Agent), **Workvivo Bot API** (Bearer), **Validator → n8n** (Header Auth en el webhook de vuelta)."
+        "path": "wv-validator-RUTA_SECRETA"
       }
     }
   ],
@@ -208,12 +212,12 @@
         []
       ]
     },
-    "Respuesta de Validator": {
-      "main": [
+    "responder_en_workvivo": {
+      "ai_tool": [
         [
           {
-            "node": "Responder en Workvivo",
-            "type": "main",
+            "node": "MCP para Validator",
+            "type": "ai_tool",
             "index": 0
           }
         ]
@@ -222,6 +226,11 @@
   },
   "settings": {
     "executionOrder": "v1",
-    "saveManualExecutions": true
+    "saveDataSuccessExecution": "none",
+    "saveDataErrorExecution": "all",
+    "saveManualExecutions": true,
+    "saveExecutionProgress": false,
+    "executionTimeout": 300,
+    "callerPolicy": "workflowsFromSameOwner"
   }
 }
