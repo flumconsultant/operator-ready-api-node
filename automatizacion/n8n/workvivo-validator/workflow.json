@@ -94,7 +94,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ conversation_key: $json.body.channel.channel_url, input: $json.body.message.text + '\\n\\n---\\nCuando tengas tu respuesta final, usa la herramienta responder_en_workvivo con channel_url=' + $json.body.channel.channel_url + ' y bot_userid=' + $json.body.bot.bot_userid }) }}",
+        "jsonBody": "={{ JSON.stringify({ conversation_key: $json.body.channel.channel_url, input: 'MENSAJE DEL USUARIO:\\n' + $json.body.message.text + '\\n\\nDATOS PARA RESPONDER (usar tal cual en responder_en_workvivo):\\nchannel_url: ' + $json.body.channel.channel_url + '\\nbot_userid: ' + $json.body.bot.bot_userid }) }}",
         "options": {
           "timeout": 30000
         }
@@ -111,16 +111,11 @@
       "maxTries": 3,
       "waitBetweenTries": 3000,
       "notesInFlow": true,
-      "credentials": {
-        "httpBearerAuth": {
-          "id": "9ysXWLiFAeZZAHhJ",
-          "name": "Bearer Auth account"
-        }
-      },
       "notes": "Reemplaza agtch_PEGAR_AQUI por el ID del canal API del agente (Agent Builder → API channel)."
     },
     {
       "parameters": {
+        "toolDescription": "Publica la respuesta final de Validator en el chat de Workvivo del usuario. Llamar una sola vez por mensaje, al terminar la revisión.",
         "method": "POST",
         "url": "https://api.workvivo.us/v1/chat/bots/message",
         "authentication": "genericCredentialType",
@@ -139,23 +134,16 @@
         "jsonBody": "={{ JSON.stringify({ bot_userid: $fromAI('bot_userid', 'Valor bot_userid indicado al final del mensaje recibido', 'string'), channel_url: $fromAI('channel_url', 'Valor channel_url indicado al final del mensaje recibido', 'string'), type: 'message', message: $fromAI('message', 'Respuesta final para el usuario, sin razonamiento interno', 'string') }) }}",
         "options": {
           "timeout": 15000
-        },
-        "toolDescription": "Publica la respuesta final de Validator en el chat de Workvivo del usuario. Llamar una sola vez por mensaje, al terminar la revisión."
+        }
       },
       "id": "16c43636-ce14-531f-b4c9-5057a3bfc1ee",
       "name": "responder_en_workvivo",
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
       "position": [
-        240,
-        520
-      ],
-      "credentials": {
-        "httpBearerAuth": {
-          "id": "9ysXWLiFAeZZAHhJ",
-          "name": "Bearer Auth account"
-        }
-      }
+        320,
+        432
+      ]
     },
     {
       "parameters": {
@@ -174,18 +162,18 @@
       ]
     },
     {
+      "parameters": {
+        "path": "wv-validator-RUTA_SECRETA"
+      },
       "id": "9bcf9fc8-3cc5-520a-be1e-9dac2e10d461",
       "name": "MCP para Validator",
       "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
       "typeVersion": 2,
       "position": [
         0,
-        300
+        304
       ],
-      "webhookId": "54cbf0e9-88ea-5bc1-93da-0591b32caf35",
-      "parameters": {
-        "path": "wv-validator-RUTA_SECRETA"
-      }
+      "webhookId": "54cbf0e9-88ea-5bc1-93da-0591b32caf35"
     }
   ],
   "connections": {
@@ -226,7 +214,7 @@
   },
   "settings": {
     "executionOrder": "v1",
-    "saveDataSuccessExecution": "none",
+    "saveDataSuccessExecution": "all",
     "saveDataErrorExecution": "all",
     "saveManualExecutions": true,
     "saveExecutionProgress": false,
