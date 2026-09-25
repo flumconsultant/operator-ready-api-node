@@ -1,0 +1,255 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-09-25",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "value-adoption",
+  "formato": "field-note",
+  "es": {
+    "slug": "por-que-tu-equipo-vuelve-al-proceso-manual",
+    "titulo": "Por qué tu equipo vuelve al proceso manual",
+    "entradilla": "Compraste la herramienta, la lanzaste bien y funcionó. Durante meses. Hasta que un agente se equivocó una sola vez, en el momento que no tocaba, y desde entonces medio equipo hace la tarea dos veces: con la IA, para cumplir, y a mano, por si acaso.",
+    "descripcion": "Los equipos no vuelven a lo manual por falta de formación: lo hacen tras un error caro de la IA sin protocolo de recuperación, y nadie lo diseñó.",
+    "linkedin": {
+      "texto": "Un agente aprueba un reembolso que no debía. Alguien lo nota tres días después y lo revierte a mano. Desde ese día hace la tarea dos veces: con el agente, para cumplir, y sola, por si acaso.\n\nEl 74% de las empresas que puso agentes de atención al cliente en producción terminó revirtiéndolos, al menos en parte. No es una falla de adopción. Es la ausencia de un protocolo para el día en que el agente se equivoca.\n\nEn este análisis de BECOME desarrollamos qué hace falta para que la confianza sobreviva al primer error.",
+      "hashtags": ["IA", "Adopcion", "Operaciones"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Compraste la herramienta, la lanzaste bien y funcionó. Durante meses. Hasta que un agente se equivocó una sola vez, en el momento que no tocaba, y desde entonces medio equipo hace la tarea dos veces: con la IA, para cumplir, y a mano, por si acaso."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La lectura fácil es que la adopción fracasó. No fracasó: funcionó durante meses, con métricas de uso que subían y un comité contento. Lo que pasó es otra cosa, más incómoda de admitir en la diapositiva. El agente cometió un error caro, alguien lo pagó, y nadie había diseñado qué hacer la próxima vez que pasara. Así que el equipo lo diseñó solo, en silencio, y la respuesta fue volver a hacerlo a mano."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La cifra es más grande de lo que cualquier comité quiere admitir. Sinch encuestó a 2.527 responsables de decisión en diez países y encontró que el 74% de las empresas que puso agentes de atención al cliente en producción terminó revirtiéndolos, al menos en parte. No es un caso aislado ni la anécdota de un cliente difícil. Es la mayoría. Fuente: Sinch, «AI Production Paradox», citado por The Register, 2026."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y no es solo atención al cliente. WalkMe encuestó a 3.750 personas en catorce países para su informe anual sobre uso real de herramientas digitales y encontró que el 54% había hecho al menos una tarea a mano en el último mes en vez de usar la herramienta que la empresa le dio. Fuente: WalkMe, «State of Digital» (informe anual), citado por Fortune, 2026. La herramienta seguía instalada. El botón seguía ahí. Y la gente, de todos modos, abrió la hoja de cálculo de siempre."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Por qué mi equipo vuelve al proceso manual después de implementar IA?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "No es el mismo síntoma que la no adopción. La no adopción se ve desde el primer mes: las cuentas activadas no se abren nunca. Esto es distinto, y más caro, porque pasa después de que la herramienta ya demostró que funcionaba. El uso sube, se estabiliza, y entonces un día el agente aprueba un reembolso que no debía, o responde a un cliente con un dato que ya no era cierto, o ejecuta una acción que alguien tiene que deshacer a mano y explicar arriba. Ese día no mueve el promedio de uso. Mueve la confianza de quien tiene que responder por el resultado, y esa persona no vuelve a soltar el control del todo."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El uso general de la herramienta se mantiene estable en el panel, pero un subgrupo empezó, en una fecha exacta, a hacer todo dos veces.",
+          "Nadie llama «revertir» a lo que hace: lo llama «doble chequeo», «verificación» o «por si acaso», y por eso no aparece en ningún reporte de adopción.",
+          "El incidente que lo disparó casi nunca se documentó como incidente. Se resolvió en privado, entre dos personas, y quedó fuera de cualquier panel.",
+          "La confianza no vuelve sola con el tiempo. Sigue baja meses después del error, aunque la herramienta no haya vuelto a fallar ni una vez.",
+          "El proceso manual paralelo cuesta más que el que había antes de la IA, porque ahora corren dos procesos a la vez, no uno solo."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema de fondo",
+        "texto": "El fallo no rompió el proceso. Rompió el protocolo que no existía para el fallo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Diseñar la implementación de un agente casi siempre significa diseñar el camino feliz: qué hace, con qué datos, a quién le entrega el resultado. Casi nunca significa diseñar el camino después del error: quién lo nota primero, en cuántos minutos, qué tan caro es deshacerlo, y quién tiene autoridad para pausar el agente sin pedir permiso mientras se arregla. Cuando ese segundo camino no existe, la primera vez que el agente se equivoca de verdad, cada persona cercana al incidente diseña su propio protocolo de emergencia. Y el protocolo que diseña casi siempre es el mismo: hacerlo ella misma, a mano, la próxima vez, para no tener que confiar de nuevo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y no es una minoría descontenta. Una encuesta de Adaptavist a 2.500 empleados de oficina, citada por CIO.com, encontró que el 65% preferiría revertir la adopción de IA en toda su empresa, no solo en una tarea puntual. Fuente: Adaptavist, citada por CIO.com, 2026. Ese protocolo casero no es irracional. Es la respuesta correcta a una pregunta que la empresa nunca contestó: ¿qué tan caro es detectar y corregir un error del agente, comparado con no haberlo cometido nunca? Si la respuesta es «muy caro, y nadie sabe cuánto tarda en notarse», la persona que respondió por ese error una vez no va a esperar a que pase una segunda. Va a construir su propio seguro, y ese seguro se llama volver a lo manual."
+      },
+      {
+        "tipo": "cita",
+        "texto": "El equipo no dejó de confiar en la IA porque falle mucho. Dejó de confiar porque nadie le mostró qué pasa la primera vez que falla, y tuvo que averiguarlo pagando el error.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Cuatro preguntas antes de que el primer error decida la adopción por ti."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Costo del fallo",
+            "definicion": "Cuánto cuesta detectar que el agente se equivocó y deshacerlo, comparado con el costo de haberlo hecho a mano desde el principio. Si nadie ha calculado ese número, la primera persona que absorbe un error caro lo calcula por su cuenta y decide sola que el precio es demasiado alto."
+          },
+          {
+            "termino": "Protocolo de incidente",
+            "definicion": "Qué pasa en los primeros minutos después de un error: quién lo detecta, cómo se pausa el agente sin pedir permiso a nadie, y quién tiene autoridad para revertir la acción antes de que se vuelva más cara. Sin este protocolo escrito, cada persona improvisa el suyo la primera vez que le toca."
+          },
+          {
+            "termino": "Proceso sombra declarado",
+            "definicion": "Si un equipo decide mantener un respaldo manual mientras la confianza está baja, que sea una decisión tomada en voz alta y con fecha de revisión, no un secreto que cada quien arma por su cuenta y nadie mide. Un proceso sombra sin dueño no se revisa nunca ni se cierra nunca."
+          },
+          {
+            "termino": "Ventana de reconfianza",
+            "definicion": "Cuánto tiempo y cuántas repeticiones sin fallo hacen falta antes de que alguien vuelva a soltar el proceso manual, y quién decide cuándo se cumplió ese umbral. Sin una respuesta explícita, el proceso manual se vuelve permanente por defecto, porque nadie lo declara terminado."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguna de las cuatro preguntas exige presupuesto nuevo. Exige que alguien las conteste antes del primer incidente, no después de que ya le haya costado la confianza a quien lo vivió. El equipo que las tiene resueltas absorbe el primer error y sigue. El que no, absorbe el error y en silencio sostiene un segundo proceso, el manual, que nadie aprobó y que nadie va a cancelar nunca."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Busca en tu equipo a quien hoy hace una tarea dos veces: con el agente, para cumplir, y a mano, por si acaso. Pregúntale qué pasó la primera vez que confió solo en el agente. Casi siempre hay una fecha y un error concreto detrás de la respuesta, y esa fecha es el día real en que la adopción se rompió, no el día que dice el panel de uso."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Por qué mi equipo vuelve al proceso manual después de implementar IA?",
+            "respuesta": "Casi nunca por falta de formación. Pasa porque el agente cometió un error caro en algún momento, alguien tuvo que detectarlo y corregirlo a mano, y nadie había diseñado qué hacer en ese momento. Sin un protocolo claro para el día del fallo, cada persona cercana al incidente construye su propio respaldo manual como forma de no volver a exponerse."
+          },
+          {
+            "pregunta": "¿Es lo mismo que un equipo no adopte la IA a que la abandone después de usarla?",
+            "respuesta": "No. La no adopción se nota desde el primer mes, con cuentas que nunca se abren. Volver al proceso manual pasa después de meses de uso real, casi siempre disparado por un error concreto y caro que rompió la confianza de quien respondió por el resultado, no por desconocimiento de la herramienta."
+          },
+          {
+            "pregunta": "¿Cómo se detecta que un equipo volvió a lo manual sin decirlo?",
+            "respuesta": "El panel de uso general no lo muestra, porque sigue mostrando actividad. Se detecta preguntando directamente a quien trabaja más cerca del proceso si hace la tarea dos veces, o revisando si el tiempo que debería haber liberado la herramienta sigue ocupado en la misma tarea de siempre, solo que ahora hecha a mano."
+          },
+          {
+            "pregunta": "¿Qué hace falta para que un equipo vuelva a confiar en el agente después de un error?",
+            "respuesta": "Un protocolo visible de qué pasa cuando el agente falla: quién lo detecta, cómo se revierte el error y en cuánto tiempo, y quién tiene autoridad para pausarlo sin pedir permiso. La confianza no vuelve por decreto ni por tiempo transcurrido: vuelve cuando la persona que pagó el error ve que la próxima vez el sistema atrapa el fallo antes que ella."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Diseñemos tu protocolo de incidente",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "why-teams-revert-to-manual-work-after-ai",
+    "titulo": "Why Teams Revert to Manual Work After AI",
+    "entradilla": "You bought the tool, rolled it out well, and it worked. For months. Until one agent got something wrong exactly once, at the worst moment, and ever since half the team does the task twice: with the agent, to comply, and by hand, just in case.",
+    "descripcion": "Teams don't revert to manual work from undertraining. It follows one costly AI failure with no recovery protocol, and nobody ever designed one.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "You bought the tool, rolled it out well, and it worked. For months. Until one agent got something wrong exactly once, at the worst moment, and ever since half the team does the task twice: with the agent, to comply, and by hand, just in case."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The easy read is that adoption failed. It didn't: it worked for months, with usage numbers climbing and a happy steering committee. What actually happened is harder to put on a slide. The agent made one expensive mistake, someone paid for it, and nobody had designed what to do the next time it happened. So the team designed it themselves, quietly, and the answer was going back to doing it by hand."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The number is bigger than any committee wants to admit. Sinch surveyed 2,527 decision makers across ten countries and found that 74% of companies that put customer-service agents into production ended up reverting them, at least in part. That isn't one difficult account. That's the majority. Source: Sinch, 'AI Production Paradox', cited by The Register, 2026."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "And it isn't only customer service. WalkMe surveyed 3,750 people across fourteen countries for its 'State of Digital Adoption' report and found that 54% had done at least one task by hand in the last month instead of using the tool the company gave them. Source: WalkMe, 'State of Digital Adoption', cited by Fortune, 2026. The tool was still installed. The button was still there. And people opened the same old spreadsheet anyway."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "Why does my team go back to manual work after rolling out AI?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "This isn't the same symptom as non-adoption. Non-adoption shows up in month one: the activated seats never get opened. This is different, and more expensive, because it happens after the tool already proved it worked. Usage climbs, it stabilizes, and then one day the agent approves a refund it shouldn't have, or answers a customer with a fact that was no longer true, or takes an action someone has to undo by hand and explain upward. That day doesn't move the usage average. It moves the trust of whoever has to answer for the result, and that person never lets go of full control again."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Overall tool usage holds steady on the dashboard, while a subgroup starts, on one exact date, doing everything twice.",
+          "Nobody calls it reverting. They call it a double check, verification, or just in case, which is why it never shows up in any adoption report.",
+          "The incident that triggered it almost never gets logged as an incident. It gets solved privately, between two people, and stays off every dashboard.",
+          "Trust doesn't come back on its own over time. It stays low months after the error, even if the tool hasn't failed again once.",
+          "The parallel manual process costs more than the one that existed before AI, because now there are two processes running at once, not one."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "The failure didn't break the process. It broke the protocol that never existed for the failure."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Designing an agent rollout almost always means designing the happy path: what it does, on what data, who receives the result. It almost never means designing the path after the error: who notices first, how many minutes it takes, how expensive it is to undo, and who has the authority to pause the agent without asking permission while it gets fixed. When that second path doesn't exist, the first time the agent gets something seriously wrong, everyone close to the incident designs their own emergency protocol. And the protocol they design is almost always the same one: do it themselves, by hand, next time, so they never have to trust it again."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "And it isn't a small, disgruntled minority. An Adaptavist survey of 2,500 office workers, cited by CIO.com, found that 65% would rather roll back AI adoption across their entire company, not just in one task. Source: Adaptavist, cited by CIO.com, 2026. That homemade protocol isn't irrational. It's the correct answer to a question the company never answered: how expensive is it to catch and fix an agent's error, compared with never having made it in the first place? If the answer is 'very expensive, and nobody knows how long it takes to notice,' the person who paid for that error once isn't going to wait for a second time. They're going to build their own insurance, and that insurance is called going back to manual."
+      },
+      {
+        "tipo": "cita",
+        "texto": "The team didn't stop trusting the AI because it fails often. It stopped trusting it because nobody showed it what happens the first time it fails, and it had to find out by paying for the mistake.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "Four questions before the first error decides adoption for you."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Cost of failure",
+            "definicion": "How much it costs to detect that the agent got something wrong and undo it, compared with the cost of having done it by hand from the start. If nobody has run that number, the first person who absorbs an expensive error runs it on their own and decides alone that the price is too high."
+          },
+          {
+            "termino": "Incident protocol",
+            "definicion": "What happens in the first minutes after an error: who detects it, how the agent gets paused without asking anyone's permission, and who has the authority to reverse the action before it gets more expensive. Without this written down, everyone improvises their own the first time it's their turn."
+          },
+          {
+            "termino": "Declared shadow process",
+            "definicion": "If a team decides to keep a manual backup while trust is low, that should be a decision made out loud, with a review date, not a secret each person builds on their own that nobody measures. A shadow process with no owner never gets reviewed and never gets closed."
+          },
+          {
+            "termino": "Window for renewed trust",
+            "definicion": "How much time and how many failure-free repetitions it takes before someone lets go of the manual process again, and who decides when that threshold is met. Without an explicit answer, the manual process becomes permanent by default, because nobody ever declares it over."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of the four questions requires new budget. They require someone to answer them before the first incident, not after it has already cost the trust of the person who lived through it. The team that has them answered absorbs the first error and keeps going. The one that doesn't absorbs the error and quietly runs a second process, the manual one, that nobody approved and nobody is ever going to cancel."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Find whoever on your team currently does one task twice: with the agent, to comply, and by hand, just in case. Ask them what happened the first time they trusted the agent alone. There's almost always a date and a specific error behind the answer, and that date is the real day adoption broke, not the day the usage dashboard shows."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Why does my team go back to manual work after rolling out AI?",
+            "respuesta": "Almost never from undertraining. It happens because the agent made an expensive mistake at some point, someone had to catch and fix it by hand, and nobody had designed what to do at that moment. Without a clear protocol for the day of the failure, everyone close to the incident builds their own manual backup as a way to avoid being exposed again."
+          },
+          {
+            "pregunta": "Is a team not adopting AI the same as a team abandoning it after using it?",
+            "respuesta": "No. Non-adoption shows up in month one, with seats that never get opened. Reverting to manual work happens after months of real use, almost always triggered by one specific, expensive error that broke the trust of whoever answered for the result, not by unfamiliarity with the tool."
+          },
+          {
+            "pregunta": "How do you spot a team that quietly went back to manual work?",
+            "respuesta": "The overall usage dashboard won't show it, because it still shows activity. You spot it by asking directly whether people near the process do the task twice, or by checking whether the time the tool should have freed up is still spent on the same task as before, just done by hand now."
+          },
+          {
+            "pregunta": "What does it take for a team to trust an agent again after an error?",
+            "respuesta": "A visible protocol for what happens when the agent fails: who detects it, how fast the error gets reversed, and who has the authority to pause it without asking permission. Trust doesn't return by decree or by time passing. It returns once the person who paid for the error sees that next time the system catches the mistake before they do."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's design your incident protocol",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
