@@ -1,0 +1,255 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-09-26",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "responsible-scale",
+  "formato": "executive-brief",
+  "es": {
+    "slug": "tiene-mi-consejo-conocimiento-de-ia-para-supervisarla",
+    "titulo": "¿Tu consejo entiende la IA que aprueba?",
+    "entradilla": "Un consejo aprobó hace poco un modelo de detección de fraude con la misma ceremonia con la que aprueba una adquisición: comité, diapositiva, preguntas de rigor. Nadie preguntó qué tan raro es el fraude que el modelo intenta encontrar. Sin esa cifra, la precisión que presentaron no decía nada.",
+    "descripcion": "Aprobar IA no es supervisarla. Se mide en si el consejo sabe hacer la pregunta que desarma un caso mal armado antes de firmarlo.",
+    "linkedin": {
+      "texto": "Un consejo puede aprobar un caso de IA sin entender jamás si funciona.\n\nRevisa presupuesto, plazo y retorno con el mismo rigor de siempre, y nadie pregunta lo único que importa: qué tasa real predice ese modelo, y qué pasa cuando falla. No hace falta que el consejo sepa programar. Hace falta que sepa hacer la pregunta que desarma un caso mal armado antes de firmarlo, no después del incidente.\n\nEn este análisis de BECOME desarrollamos qué capacidad necesita un consejo para supervisar IA de verdad, no solo aprobarla.",
+      "hashtags": ["IA", "Gobierno", "Consejo"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Un consejo aprobó hace poco un modelo de detección de fraude con la misma ceremonia con la que aprueba una adquisición: comité, diapositiva, preguntas de rigor. Nadie preguntó qué tan raro es el fraude que el modelo intenta encontrar. Sin esa cifra, la precisión que presentaron no decía nada."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Es el patrón que se repite en consejo tras consejo. Preguntan por presupuesto, por plazo, por quién responde si algo sale mal. Rara vez preguntan si el número que sostiene todo el caso significa lo que parece significar. Y esa pregunta, la que de verdad separaría un caso sólido de uno maquillado, es justo la que nadie hace. Parece técnica, y en la sala nadie quiere admitir que no sabría responderla."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El problema no es que los consejeros no entiendan de modelos. No tienen por qué. El problema es que confunden aprobar con supervisar, y son dos cosas que en el papel se parecen mucho y en la práctica no tienen nada que ver."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Tiene mi consejo de administración el conocimiento de IA suficiente para supervisarla, o solo la aprueba sin entenderla?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La respuesta que más se repite hoy es contratar una capacitación de IA para el consejo: un par de horas, una consultora externa, un certificado al final. Sirve para que nadie se sienta desinformado en la próxima reunión. No sirve para que alguien, en el momento en que se presenta un caso real, sepa hacer la pregunta que lo desarma si está mal construido. Una cosa es vocabulario. Otra es criterio bajo presión, con el equipo que construyó el caso sentado enfrente."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El consejo aprueba el caso por unanimidad y nadie recuerda, dos semanas después, cuál era la métrica que lo justificaba.",
+          "Cuando el equipo técnico usa un término que nadie entiende del todo, la sala asiente en vez de pedir que lo traduzcan.",
+          "El comité de auditoría revisa el modelo financiero de la iniciativa con lupa y el modelo de IA con una diapositiva de resumen.",
+          "Nadie en la sala sabe distinguir un modelo que funciona de uno que solo se probó con los datos fáciles.",
+          "La pregunta «¿y si esto falla, quién se entera primero?» no aparece en ninguna acta."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema detrás",
+        "texto": "El problema no es cuánto sabe el consejo de inteligencia artificial. Es si sabe reconocer un caso mal armado."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Un consejo no necesita entender cómo se entrena un modelo, de la misma forma que no necesita saber auditar un balance para aprobar uno. Necesita saber qué preguntarle a quien sí entiende, y reconocer cuándo la respuesta es una evasión con vocabulario técnico encima. Esa capacidad no sale de un curso de dos horas. Sale de haber hecho la pregunta incómoda las veces suficientes como para que el equipo que presenta ya sepa que se la van a hacer."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Y ahí está la asimetría que nadie corrige. Quien presenta el caso lleva semanas trabajándolo, conoce sus puntos débiles y decide qué mostrar. Quien lo aprueba tiene una hora, una diapositiva, y la sensación de que preguntar demasiado delata que no entendió el resto de la presentación. Esa asimetría no se cierra con más diapositivas. Se cierra con un puñado de preguntas fijas que el consejo hace siempre, entienda o no entienda el resto del material."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un consejo que no sabe hacer la pregunta que desarma un caso de IA no lo está supervisando. Lo está aprobando a ciegas, con más pasos en el medio.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "¿Qué preguntas tiene que saber hacer un consejo antes de aprobar un caso de IA?"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "La tasa de base",
+            "definicion": "Qué tan frecuente es, en la realidad, el fenómeno que el modelo intenta predecir o detectar. Un modelo con una precisión que suena alta puede ser inútil si lo que busca es raro: la pregunta correcta no es qué tan preciso es, es comparado con qué."
+          },
+          {
+            "termino": "El modo de falla",
+            "definicion": "Qué pasa exactamente cuando el modelo se equivoca: quién lo nota primero, cuánto tarda en notarse y qué le cuesta a la empresa ese error concreto. Sin esa respuesta, el consejo aprueba un promedio y no sabe nada del peor caso posible."
+          },
+          {
+            "termino": "El desafío externo",
+            "definicion": "Si alguien ajeno al equipo que construyó el caso tuvo oportunidad de ponerlo a prueba antes de que llegara al consejo, con una pregunta incómoda y no solo con el material que trae el propio equipo. Sin ese desafío previo, la revisión del consejo es la última capa de un proceso que nunca tuvo una primera."
+          },
+          {
+            "termino": "La fecha de vencimiento",
+            "definicion": "Cuándo se vuelve a validar el modelo con datos nuevos, y qué pasa si nadie lo hace. Un modelo aprobado en una fecha puede estar comportándose distinto meses después, y la aprobación original no cubre ese cambio."
+          },
+          {
+            "termino": "El traductor sin interés",
+            "definicion": "Alguien en la sala, sin ningún interés en que el caso se apruebe, capaz de traducir el vocabulario técnico a una pregunta de negocio que cualquier consejero entienda. Sin esa persona, la sala depende de que quien presenta traduzca su propio caso con honestidad."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguna de las cinco exige que un consejero se convierta en científico de datos. Exige la misma disciplina que ya aplican en otras materias que tampoco dominan técnicamente: en una revisión financiera nadie espera que el consejo audite personalmente los libros, pero sí espera que sepa qué preguntarle al auditor. Con la IA, esa disciplina todavía no ha llegado a la mayoría de las salas."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Coge la última presentación de un caso de IA que aprobó tu consejo y busca en el acta si alguien preguntó cuál era la tasa de base del fenómeno que el modelo predice. Si esa pregunta no aparece, tu consejo no evaluó el caso: lo acompañó."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Qué significa que un consejo tenga conocimiento de IA suficiente para supervisarla?",
+            "respuesta": "No significa que los consejeros sepan programar ni entrenar modelos. Significa que la sala tiene, de forma sistemática, un puñado de preguntas fijas (la tasa de base del fenómeno, el modo de falla concreto, quién desafió el caso antes de que llegara ahí) que hace siempre, sin importar cuánto entienda del resto de la presentación."
+          },
+          {
+            "pregunta": "¿Los consejeros necesitan formación técnica en inteligencia artificial?",
+            "respuesta": "Ayuda, pero no es lo que resuelve el problema. Un consejero con un certificado de dos horas puede seguir sin saber hacer la pregunta que desarma un caso mal armado si nunca practicó hacerla bajo presión, con el equipo que construyó el caso sentado enfrente esperando que la sala asienta."
+          },
+          {
+            "pregunta": "¿Cómo se comprueba si un consejo realmente entiende lo que aprueba, y no solo lo acompaña?",
+            "respuesta": "Revisando el acta de la última aprobación de un caso de IA y buscando si quedó registrada alguna pregunta incómoda, no solo la decisión final. Un consejo que solo deja constancia de un aprobado por unanimidad probablemente no desafió el caso; uno que dejó constancia de qué preguntó y qué le respondieron, sí lo hizo."
+          },
+          {
+            "pregunta": "¿Qué pasa si el consejo aprobó un caso de IA sin entenderlo y el modelo falla después?",
+            "respuesta": "La responsabilidad legal la termina resolviendo un tribunal o un contrato, después del hecho. Lo que importa antes de llegar ahí es distinto: si el consejo nunca pudo demostrar que entendió lo que aprobaba, esa discusión legal empieza en la peor posición posible, porque no hay registro de que la supervisión existiera de verdad."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Preparemos a tu consejo para supervisar IA",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "does-my-board-know-enough-about-ai-to-oversee-it",
+    "titulo": "Does your board understand the AI it approves?",
+    "entradilla": "A board recently approved a fraud detection model with the same ceremony it uses for an acquisition: committee, slide deck, the usual due diligence questions. Nobody asked how rare the fraud the model was built to catch actually is. Without that number, the accuracy figure on the slide meant nothing.",
+    "descripcion": "Approving AI isn't overseeing it. It's measured in whether the board can ask the question that breaks a badly built case before signing off.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "A board recently approved a fraud detection model with the same ceremony it uses for an acquisition: committee, slide deck, the usual due diligence questions. Nobody asked how rare the fraud the model was built to catch actually is. Without that number, the accuracy figure on the slide meant nothing."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The pattern repeats across boardroom after boardroom. Directors ask about budget, about timeline, about who answers for it if something goes wrong. They rarely ask whether the number holding up the whole case actually means what it appears to mean. And that question, the one that would separate a solid case from a dressed-up one, is exactly the one nobody asks. It sounds technical, and nobody in the room wants to admit they couldn't answer it themselves."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The problem isn't that directors don't understand models. They don't need to. The problem is that they confuse approving with overseeing, two things that look nearly identical on paper and have nothing to do with each other in practice."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "Does my board have enough AI knowledge to oversee it, or does it just approve it without understanding it?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The answer circulating today is to hire an AI training session for the board: a couple of hours, an outside firm, a certificate at the end. It works well enough that nobody feels uninformed at the next meeting. It does not work for the moment a real case gets presented and someone needs to ask the question that breaks it if it was badly built. Vocabulary is one thing. Judgment under pressure, with the team that built the case sitting across the table, is another."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The board approves the case unanimously, and two weeks later nobody remembers which metric justified it.",
+          "When the technical team uses a term nobody fully understands, the room nods instead of asking for a translation.",
+          "The audit committee reviews the initiative's financial model line by line and the AI model gets a one-slide summary.",
+          "Nobody in the room can tell a model that actually works apart from one that was only tested on the easy cases.",
+          "The question, who finds out first if this fails, never makes it into the minutes."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "The problem isn't how much the board knows about artificial intelligence. It's whether it can recognize a badly built case."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A board doesn't need to understand how a model gets trained, any more than it needs to know how to audit a balance sheet to approve one. It needs to know what to ask the person who does understand, and to recognize when the answer is an evasion dressed up in technical language. That ability doesn't come from a two hour session. It comes from having asked the uncomfortable question often enough that the team presenting already expects it."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "And there is the asymmetry nobody fixes. Whoever presents the case has spent weeks on it, knows its weak points, and decides what to show. Whoever approves it gets an hour, one slide, and the feeling that asking too much would reveal they didn't follow the rest of the presentation. That asymmetry doesn't close with more slides. It closes with a fixed handful of questions the board always asks, whether or not it followed the rest of the material."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A board that can't ask the question that breaks an AI case isn't overseeing it. It's approving it blind, with extra steps in between.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "What does a board need to know how to ask before approving an AI case?"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "The base rate",
+            "definicion": "How often the thing the model is trying to predict or catch actually happens in reality. A model with a high sounding accuracy figure can be useless if what it looks for is rare: the right question isn't how accurate is it, it's compared to what."
+          },
+          {
+            "termino": "The failure mode",
+            "definicion": "What exactly happens when the model gets it wrong: who notices first, how long it takes to notice, and what that specific error costs the business. Without that answer, the board is approving an average and knows nothing about the worst case."
+          },
+          {
+            "termino": "The outside challenge",
+            "definicion": "Whether someone outside the team that built the case had a chance to stress test it with an uncomfortable question before it reached the board, rather than relying only on the material the team itself brought. Without that prior challenge, the board's review is the last layer of a process that never had a first one."
+          },
+          {
+            "termino": "The expiry date",
+            "definicion": "When the model gets revalidated against new data, and what happens if nobody does it. A model approved on a given date can be behaving differently months later, and the original approval doesn't cover that drift."
+          },
+          {
+            "termino": "The disinterested translator",
+            "definicion": "Someone in the room with no stake in whether the case gets approved, able to turn technical language into a business question any director can understand. Without that person, the room depends on whoever is presenting to translate their own case honestly."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of the five requires a director to become a data scientist. They require the same discipline boards already apply to other areas they don't master technically: nobody expects a board to personally audit the books during a financial review, but they do expect it to know what to ask the auditor. With AI, that discipline hasn't reached most boardrooms yet."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Pull up the last AI case your board approved and check the minutes for whether anyone asked what the base rate of the thing the model predicts actually is. If that question is missing, your board didn't evaluate the case. It went along with it."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "What does it mean for a board to have enough AI knowledge to oversee it?",
+            "respuesta": "It doesn't mean directors can code or train models. It means the room systematically asks a fixed handful of questions, the base rate of the phenomenon, the specific failure mode, who challenged the case before it got there, every time, regardless of how much of the rest of the presentation they followed."
+          },
+          {
+            "pregunta": "Do board members need technical training in artificial intelligence?",
+            "respuesta": "It helps, but it isn't what solves the problem. A director with a two hour certificate can still fail to ask the question that breaks a badly built case if they never practiced asking it under pressure, with the team that built the case sitting across the table expecting the room to nod."
+          },
+          {
+            "pregunta": "How do you tell whether a board actually understands what it approves, rather than just going along with it?",
+            "respuesta": "Check the minutes from the last AI case approval for any uncomfortable question on record, not just the final decision. A board that only logs an approved unanimously line probably didn't challenge the case; one that logged what it asked and what it was told, did."
+          },
+          {
+            "pregunta": "What happens if the board approved an AI case without understanding it and the model fails later?",
+            "respuesta": "The legal responsibility ultimately gets resolved by a court or a contract, after the fact. What matters before that is different: if the board can never show it understood what it approved, that legal discussion starts from the worst possible position, because there's no record that real oversight ever happened."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's prepare your board to oversee AI",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
