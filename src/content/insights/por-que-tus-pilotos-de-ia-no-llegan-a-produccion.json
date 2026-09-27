@@ -24,7 +24,7 @@
       },
       {
         "tipo": "parrafo",
-        "texto": "Un patrón frecuente: pilotos perfectamente ejecutados que mueren en silencio. Sin reunión de cancelación, sin acta. Nadie los mata y nadie los financia, así que se quedan corriendo en un entorno de pruebas hasta que el equipo que los construyó se deshace. Al año siguiente el mismo caso de uso reaparece en el backlog con otro nombre y otro sponsor, y el ciclo vuelve a empezar."
+        "texto": "He visto pilotos perfectamente ejecutados morir en silencio, más de una vez. Sin reunión de cancelación, sin acta. Nadie los mata y nadie los financia, así que se quedan corriendo en un entorno de pruebas hasta que el equipo que los construyó se deshace. Al año siguiente el mismo caso de uso reaparece en el backlog con otro nombre y otro sponsor, y el ciclo vuelve a empezar."
       },
       {
         "tipo": "parrafo",
@@ -69,7 +69,7 @@
       },
       {
         "tipo": "parrafo",
-        "texto": "Y hay una segunda cosa, bastante menos cómoda de decir. El piloto lleva dentro un incentivo perverso: mientras siga siendo piloto, nadie responde por su retorno. Se puede enseñar en el comité, se puede meter en la memoria anual, se puede presentar como avance en el reporte de transformación. En cuanto entra en operación se convierte en una línea de coste con nombre y apellido, y alguien tiene que defenderla el año que viene delante de un CFO. Hay más gente de la que parece a quien le conviene que el piloto siga siendo piloto."
+        "texto": "Y hay una segunda cosa, bastante menos cómoda de decir. El piloto lleva dentro un incentivo perverso: mientras siga siendo piloto, nadie responde por su retorno. Se puede enseñar en el comité, se puede meter en la memoria anual, se puede presentar como avance en el reporte de transformación. En cuanto entra en operación se convierte en una línea de coste con nombre y apellido, y alguien tiene que defenderla el año que viene delante de un CFO. Hay más gente de la que parece a quien le conviene que el piloto siga siendo piloto. Lo he escuchado casi con esas palabras en un comité de seguimiento: «démosle un trimestre más para ver cómo evoluciona», dicho por alguien que no iba a pagar ese trimestre de su propio presupuesto. Nadie mintió en esa frase. Es que nadie en la sala tenía ningún incentivo para poner la fecha."
       },
       {
         "tipo": "cita",
@@ -204,7 +204,7 @@
       },
       {
         "tipo": "parrafo",
-        "texto": "And there is a second thing, considerably less comfortable to say out loud. A pilot carries a perverse incentive inside it: while it stays a pilot, nobody answers for its return. You can walk it through the board, put it in the annual report, dress up the transformation update with it. The moment it goes live it becomes a cost line with somebody's name on it, and that somebody defends it next year in front of a CFO. More people than you would think are quietly served by the pilot staying a pilot."
+        "texto": "And there is a second thing, considerably less comfortable to say out loud. A pilot carries a perverse incentive inside it: while it stays a pilot, nobody answers for its return. You can walk it through the board, put it in the annual report, dress up the transformation update with it. The moment it goes live it becomes a cost line with somebody's name on it, and that somebody defends it next year in front of a CFO. More people than you would think are quietly served by the pilot staying a pilot. I have heard almost that exact sentence in a steering committee: 'let's give it one more quarter and see how it develops,' said by someone who was not the one paying for that quarter. Nobody in that room was lying. Nobody in it had any reason to put a date on the wall."
       },
       {
         "tipo": "cita",
