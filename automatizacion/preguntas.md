@@ -42,7 +42,7 @@ El observatorio las revisa cada domingo, una por una, y hace lo que corresponda:
 - What makes a company AI-native rather than a company using AI?
 - How do you build an AI strategy that survives contact with operations?
 - ¿Quién debe liderar la IA en una empresa: TI, negocio o un rol nuevo?
-- [sin verificar] ¿Qué talento hay que contratar para que una empresa se vuelva AI-native?
+- ¿Qué talento hay que contratar para que una empresa se vuelva AI-native?
 - ¿En qué etapa de madurez de IA está realmente mi empresa, más allá de lo que decimos en las reuniones?
 
 ## Agentic work
@@ -56,7 +56,6 @@ El observatorio las revisa cada domingo, una por una, y hace lo que corresponda:
 - ¿Por qué fallan los sistemas multiagente en producción aunque cada agente funcione bien por separado?
 - ¿Cuántos agentes de IA puede supervisar de verdad una persona?
 - ¿Necesitan los agentes de IA una identidad y credenciales propias, distintas a las de un empleado?
-- [sin verificar] ¿Se puede «despedir» o reemplazar un agente de IA que no rinde, igual que a un empleado?
 
 ## Operating-model reinvention
 
@@ -65,8 +64,8 @@ El observatorio las revisa cada domingo, una por una, y hace lo que corresponda:
 - How does an operating model change when agents do part of the work?
 - ¿Qué les pasa a los mandos medios cuando los agentes ejecutan parte del trabajo?
 - ¿Qué pasa cuando una empresa despide gente por IA y después tiene que volver a contratarla?
-- [sin verificar] ¿Quién es el dueño de un proceso cuando lo ejecutan juntos una persona y un agente de IA?
-- [sin verificar] ¿Cómo se rediseñan los KPI de un equipo cuando parte del trabajo lo hace un agente?
+- ¿Quién es el dueño de un proceso cuando lo ejecutan juntos una persona y un agente de IA?
+- ¿Cómo se rediseñan los KPI de un equipo cuando parte del trabajo lo hace un agente?
 - Si la IA hace el trabajo de los junior, ¿de dónde van a salir los senior del futuro?
 - ¿Qué proceso automatizamos primero con IA, y cómo lo decidimos sin quemarnos en el primer intento?
 - ¿Nos conviene montar un centro de excelencia de IA o es una capa burocrática más?
@@ -85,7 +84,7 @@ El observatorio las revisa cada domingo, una por una, y hace lo que corresponda:
 - ¿Qué le pasa a una empresa que se queda atrás frente a sus competidores en la adopción de IA?
 - ¿Cómo elijo entre varios proveedores de IA que prometen lo mismo?
 - ¿Cuánto cuesta realmente mantener un agente de IA en producción, más allá de la licencia?
-- [sin verificar] ¿Cómo evita una empresa quedar atada a un único proveedor de IA?
+- ¿Cómo evita una empresa quedar atada a un único proveedor de IA?
 - ¿Por qué los equipos vuelven al proceso manual después de que la empresa implementa IA?
 - ¿Cómo evitamos pagar por licencias de IA que nadie usa?
 - ¿Por qué mi equipo sigue las recomendaciones de la IA aunque no confíe en ellas, en lugar de dejar de usarla sin más?
@@ -98,8 +97,8 @@ El observatorio las revisa cada domingo, una por una, y hace lo que corresponda:
 - ¿Cómo se audita una decisión que tomó un modelo de IA?
 - How do you audit a decision made by an AI model?
 - ¿De quién es la propiedad intelectual de lo que produce un agente de IA en nombre de la empresa?
-- [sin verificar] ¿Qué hace una empresa cuando descubre que su gente ya usa IA sin permiso (shadow AI)?
-- [sin verificar] ¿Qué responsabilidad tiene una empresa si su proveedor de IA sufre una brecha de datos?
+- ¿Qué hace una empresa cuando descubre que su gente ya usa IA sin permiso (shadow AI)?
+- ¿Qué responsabilidad tiene una empresa si su proveedor de IA sufre una brecha de datos?
 - ¿Nos aplica el AI Act europeo aunque no operemos en Europa?
 - ¿Qué pasa cuando falla un agente: tenemos un plan de respuesta o solo un registro de riesgos?
 - ¿Tiene mi consejo de administración el conocimiento de IA suficiente para supervisarla, o solo la aprueba sin entenderla?
