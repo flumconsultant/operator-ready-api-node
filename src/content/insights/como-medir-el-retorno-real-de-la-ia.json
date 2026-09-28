@@ -59,6 +59,10 @@
         "texto": "Y sin línea base ni ventana de comparación, cualquier mejora que se observe puede venir de la IA o puede venir de que el trimestre fue mejor por otra razón: se contrató a alguien, se simplificó un proceso, bajó la demanda. Atribuirle esa mejora entera a la IA porque coincidió en el tiempo es la forma más común de comprar humo con datos reales."
       },
       {
+        "tipo": "parrafo",
+        "texto": "Lo vi hace poco en una revisión de resultados: el equipo de operaciones mostró una caída notable en el tiempo de ciclo y la atribuyó entera al asistente de IA que habían desplegado dos meses antes. Nadie mencionó que ese mismo trimestre se había simplificado el formulario de entrada, que por sí solo quitaba pasos manuales del proceso. La IA probablemente ayudó. Cuánto, nadie lo sabía, porque nadie se preguntó cuánto habría bajado ese tiempo solo con el formulario nuevo, sin tocar la herramienta."
+      },
+      {
         "tipo": "cita",
         "texto": "Un dashboard de adopción no es un caso de negocio. Es la prueba de que alguien usó la herramienta, no de que la empresa ganó algo por usarla.",
         "fuente": "BECOME"
@@ -175,6 +179,10 @@
       {
         "tipo": "parrafo",
         "texto": "And without a baseline or a comparison window, any improvement you observe could come from the AI or from the quarter simply being better for another reason: a new hire, a simplified process, lower demand. Crediting the whole gain to AI because it happened at the same time is the most common way to buy smoke with real data."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "I saw this recently in a results review: the operations team showed a sharp drop in cycle time and credited the whole thing to the AI assistant they had rolled out two months earlier. Nobody mentioned that the same quarter, the intake form had been simplified, cutting manual steps on its own. The AI probably helped. How much, nobody knew, because nobody asked how far that time would have dropped from the new form alone, without touching the tool."
       },
       {
         "tipo": "cita",
