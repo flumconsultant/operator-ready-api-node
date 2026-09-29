@@ -11,7 +11,11 @@
     "descripcion": "Escalar IA se frena cuando nadie decide quién puede frenar un caso ya aprobado, con qué umbral y qué pasa si el negocio insiste.",
     "linkedin": {
       "texto": "Un consejo aprueba una política de IA y se siente cubierto. Lo está en papel.\n\nLo que casi ningún consejo ha decidido es quién tiene autoridad para frenar un caso de uso ya en marcha cuando el control levanta la mano, con qué umbral, y qué pasa si el negocio insiste igual. Sin esa respuesta escrita, la política es una intención, no un control.\n\nEn este análisis de BECOME desarrollamos las cinco decisiones que un consejo tiene que firmar antes de escalar, y no después de un incidente.",
-      "hashtags": ["IA", "Gobierno", "Consejo"]
+      "hashtags": [
+        "IA",
+        "Gobierno",
+        "Consejo"
+      ]
     },
     "bloques": [
       {
@@ -57,7 +61,7 @@
       {
         "tipo": "parrafo",
         "texto": "Y hay algo más incómodo todavía. Un consejo que aprueba una lista larga de controles se siente cubierto. Lo está en papel. No lo está en la práctica si nadie puede nombrar, para el último caso que se escaló, quién lo revisó, con qué criterio y cuándo. Ese vacío no se nota hasta que hay un incidente, y entonces el consejo descubre que firmó una política, no un mecanismo."
-        },
+      },
       {
         "tipo": "cita",
         "texto": "Un consejo que aprueba controles de IA sin nombrar quién los hace cumplir no gestiona el riesgo. Lo aplaza hasta el día del incidente.",
@@ -98,6 +102,29 @@
         "texto": "Ninguna de las cinco es una norma técnica. Son cinco decisiones de gobierno corporativo, del tipo que un consejo ya sabe tomar en otras áreas: riesgo financiero, cumplimiento normativo, seguridad. La diferencia con la IA es que estas cinco todavía no se han tomado, porque el tema entró a la agenda como un asunto técnico y quedó delegado a un comité sin autoridad para pararle los pies al negocio."
       },
       {
+        "tipo": "subtitulo",
+        "antetitulo": "La prueba",
+        "texto": "¿Cómo sabes si un control funciona o es decoración?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Pruébalo con un caso real, no con una diapositiva. Imagina un agente que responde reclamaciones de clientes y que lleva cuatro meses en producción. Un lunes, el equipo de riesgo detecta que está aprobando devoluciones fuera de la política. El control levanta la mano. Lo que pasa en las siguientes doce horas te dice si tenías un marco o una carpeta. Cada uno de los cinco controles tiene su propia versión de esa prueba, y se puede hacer en una sola reunión."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Umbral: elige tres casos de uso en marcha y pregunta a sus responsables si necesitaron aprobación del comité. Si dos dicen que no y ninguno sabe por qué, el umbral no existe.",
+          "Autoridad de veto: pide el nombre de quien puede apagar un caso un viernes por la tarde sin llamar a nadie. Si la respuesta empieza con «depende», no hay veto.",
+          "Registro de decisiones: pide la última decisión que cruzó el umbral, con quién la tomó y qué evidencia vio. Si tarda más de un día en aparecer, no hay registro.",
+          "Cadencia de revisión: busca el caso aprobado hace más tiempo y mira cuándo se revisó por última vez. Si la fecha es la de aprobación, nadie lo ha vuelto a mirar.",
+          "Salida: recuerda la última vez que el negocio siguió adelante contra la recomendación del control. Si no quedó por escrito quién lo decidió, la próxima vez tampoco quedará."
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ojo con el orden. Si solo tienes tiempo para empezar por uno, empieza por la autoridad de veto. Los otros cuatro se pueden ir construyendo. Sin ese nombre, ninguno de ellos tiene a quién rendirle cuentas."
+      },
+      {
         "tipo": "destacado",
         "antetitulo": "Por dónde empezar",
         "texto": "Coge el último caso que se escaló y pregunta quién habría firmado su freno si el control hubiera dicho que no. Si nadie en la sala puede contestar con un nombre, no tienes un marco de control: tienes una carpeta de documentos que nadie ha probado bajo presión."
@@ -120,6 +147,14 @@
           {
             "pregunta": "¿Qué marcos sirven de referencia para escalar IA con controles?",
             "respuesta": "ISO/IEC 42001 y el NIST AI RMF ordenan el catálogo de riesgos y dan una estructura de gestión, y ayudan a que el ejercicio no empiece de cero. Ninguno de los dos sustituye la decisión que le corresponde al consejo: quién tiene autoridad para decir que no dentro de esta empresa, en concreto, cuando el control y el negocio no coinciden."
+          },
+          {
+            "pregunta": "¿Cuánto tarda una empresa en montar estos cinco controles?",
+            "respuesta": "El papel se escribe en semanas. Lo que tarda es probarlo: hacer un simulacro con un caso real, ver dónde se atasca la decisión y corregirlo. Una empresa que solo escribe y no simula tiene los cinco controles en un documento y ninguno en funcionamiento, y lo descubre el día del incidente."
+          },
+          {
+            "pregunta": "¿Con qué control conviene empezar si no hay tiempo para los cinco?",
+            "respuesta": "Con la autoridad de veto: un nombre concreto que pueda frenar un caso en producción sin convocar de nuevo al comité. Es la decisión más incómoda de tomar y la que más pesa cuando algo falla. El umbral, el registro y la cadencia se pueden afinar después, pero sin esa persona los demás no tienen quién los haga cumplir."
           }
         ]
       },
@@ -220,6 +255,29 @@
         "texto": "None of the five is a technical standard. They are five corporate governance decisions, the kind a board already knows how to make in other areas: financial risk, regulatory compliance, security. The only difference with AI is that these five haven't been made yet, because the topic entered the agenda as a technical matter and got delegated to a committee with no authority to stop the business."
       },
       {
+        "tipo": "subtitulo",
+        "antetitulo": "The test",
+        "texto": "How do you tell a working control from decoration?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Test it with a real case, not a slide. Picture an agent that handles customer complaints and has been in production for four months. One Monday, the risk team finds it approving refunds outside policy. The control puts its hand up. What happens in the next twelve hours tells you whether you had a framework or a folder. Each of the five controls has its own version of that test, and you can run all of them in one meeting."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Threshold: pick three live use cases and ask their owners whether they needed committee approval. If two say no and none can say why, the threshold does not exist.",
+          "Veto authority: ask for the name of the person who can switch a case off on a Friday afternoon without calling anyone. If the answer starts with \"it depends\", there is no veto.",
+          "Decision log: ask for the last decision that crossed the threshold, who made it and what evidence they saw. If it takes more than a day to surface, there is no log.",
+          "Review cadence: find the longest-running approved case and check when it was last reviewed. If the date is the approval date, nobody has looked since.",
+          "Exit: recall the last time the business went ahead against the control's recommendation. If nobody wrote down who decided, nobody will next time either."
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Mind the order. If you only have time to start with one, start with veto authority. The other four can be built over time. Without that name, none of them has anyone to answer to."
+      },
+      {
         "tipo": "destacado",
         "antetitulo": "Where to start",
         "texto": "Take the last use case that got scaled and ask who would have signed off on stopping it if the control had said no. If nobody in the room can answer with a name, you don't have a control framework. You have a folder of documents nobody has tested under pressure."
@@ -242,6 +300,14 @@
           {
             "pregunta": "Which frameworks are useful references for scaling AI with controls?",
             "respuesta": "ISO/IEC 42001 and the NIST AI RMF organize the risk catalogue and provide a management structure, so the exercise doesn't start from zero. Neither one replaces the decision that belongs to the board: who has the authority to say no inside this specific company, when the control and the business don't agree."
+          },
+          {
+            "pregunta": "How long does it take to set up these five controls?",
+            "respuesta": "The paperwork takes weeks. Testing it is what takes time: running a drill on a real case, seeing where the decision stalls and fixing it. A company that writes but never drills has all five controls in a document and none in operation, and it finds out on the day of the incident."
+          },
+          {
+            "pregunta": "Which control should you start with if there is no time for all five?",
+            "respuesta": "Veto authority: one named person who can stop a live case without reconvening the committee. It is the most uncomfortable decision to make and the one that matters most when something breaks. The threshold, the log and the cadence can be tuned later, but without that person the rest have nobody to enforce them."
           }
         ]
       },
