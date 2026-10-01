@@ -11,7 +11,11 @@
     "descripcion": "La gobernanza de IA frena el negocio cuando el comité no mide su propio plazo de decisión ni delega la clasificación del riesgo bajo.",
     "linkedin": {
       "texto": "Un comité de gobierno de IA aprueba un marco de niveles de riesgo y se siente cubierto. Lo está en la diapositiva.\n\nLo que casi ningún comité ha medido es cuánto tarda él mismo en decidir un caso, del que entra al que sale con un sí o un no. Sin ese número, el negocio deja de pedir permiso mucho antes de que alguien note que la gobernanza dejó de funcionar.\n\nEn este análisis de BECOME desarrollamos las cinco piezas que faltan para que el riesgo clasifique rápido sin frenar lo demás.",
-      "hashtags": ["IA", "Gobernanza", "Riesgo"]
+      "hashtags": [
+        "IA",
+        "Gobernanza",
+        "Riesgo"
+      ]
     },
     "bloques": [
       {
@@ -30,6 +34,10 @@
         "tipo": "subtitulo",
         "antetitulo": "El síntoma",
         "texto": "¿Cómo se gobierna la IA sin frenar al negocio?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La IA se gobierna sin frenar al negocio cuando el comité clasifica el riesgo de cada caso el día que llega, publica un plazo máximo de decisión por nivel y deja que el riesgo bajo avance con la firma de un responsable delegado, sin esperar a la reunión. El comité audita una muestra después y cuenta cuántas veces el negocio tuvo que actuar porque el plazo se venció. Esa es la respuesta corta. El resto del artículo explica por qué casi ningún comité la aplica."
       },
       {
         "tipo": "parrafo",
@@ -67,6 +75,10 @@
         "tipo": "subtitulo",
         "antetitulo": "El marco",
         "texto": "¿Qué hace falta para que el riesgo clasifique rápido sin frenar lo demás?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Yo lo llamo el reloj del comité: cinco piezas que ponen un cronómetro sobre la decisión y no solo sobre el riesgo. Un ejemplo corriente. Un asistente interno que resume actas de reuniones y un modelo que fija límites de crédito entran el mismo lunes a la misma cola. Sin reloj, el resumen de actas espera detrás del modelo de crédito porque llegó dos horas después. Con reloj, alguien con autoridad delegada firma el resumen esa misma tarde, y el comité dedica su tiempo al modelo de crédito, que es donde el tiempo sirve."
       },
       {
         "tipo": "indice",
@@ -120,6 +132,14 @@
           {
             "pregunta": "¿Qué pasa si el comité de gobierno de IA no cumple su propio plazo de decisión?",
             "respuesta": "El negocio deja de pedir permiso y actúa igual, porque esperar sin límite cuesta más que el riesgo de equivocarse. Ese es el momento en que la gobernanza deja de existir en la práctica aunque siga existiendo en el documento, y ningún comité se entera hasta que revisa un caso que ya lleva meses operando sin haber pasado por él."
+          },
+          {
+            "pregunta": "¿Qué es un carril rápido en el gobierno de la IA y quién lo firma?",
+            "respuesta": "Es un camino de aprobación para los casos de riesgo bajo que no pasa por el comité completo. Lo firma un responsable con autoridad delegada y un criterio escrito, distinto del equipo que construyó el caso. El comité no lo revisa antes sino después, sobre una muestra, y si encuentra clasificaciones dudosas ajusta los niveles en lugar de volver a convocar a todos para cada caso."
+          },
+          {
+            "pregunta": "¿Qué plazo de decisión debe tener un comité de gobierno de IA?",
+            "respuesta": "El que la empresa pueda cumplir y escribir, distinto para cada nivel de riesgo: días para el riesgo bajo y semanas para el alto es un punto de partida razonable, no una norma. Lo que importa es que el plazo exista por escrito, que alguien lo mida y que haya un registro de las veces que se incumplió. Un plazo que nadie mide funciona igual que no tenerlo."
           }
         ]
       },
@@ -152,6 +172,10 @@
         "tipo": "subtitulo",
         "antetitulo": "The symptom",
         "texto": "How do you govern AI without slowing the business down?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "You govern AI without slowing the business when the committee classifies each case's risk the day it arrives, publishes a maximum decision time for each tier, and lets low risk move on the signature of a delegated owner instead of waiting for the next meeting. The committee audits a sample afterward and counts how often the business had to act because the deadline lapsed. That is the short answer. The rest of this piece explains why almost no committee applies it."
       },
       {
         "tipo": "parrafo",
@@ -189,6 +213,10 @@
         "tipo": "subtitulo",
         "antetitulo": "The framework",
         "texto": "What does it take for risk to clear fast without slowing everything else down?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "I call it the committee clock: five pieces that put a stopwatch on the decision, not only on the risk. A common example. An internal assistant that summarizes meeting minutes and a model that sets credit limits land in the same queue on the same Monday. With no clock, the minutes summary waits behind the credit model because it arrived two hours later. With a clock, someone with delegated authority signs off the summary that afternoon, and the committee spends its time on the credit model, which is where its time earns something."
       },
       {
         "tipo": "indice",
@@ -242,6 +270,14 @@
           {
             "pregunta": "What happens when an AI governance committee misses its own decision deadline?",
             "respuesta": "The business stops asking permission and proceeds anyway, because waiting indefinitely costs more than the risk of getting it wrong. That is the moment governance stops functioning in practice while it still exists on paper, and no committee finds out until it reviews a case that has already been running for months without ever going through it."
+          },
+          {
+            "pregunta": "What is a fast lane in AI governance, and who signs it off?",
+            "respuesta": "It is an approval path for low-risk cases that skips the full committee. Someone with delegated authority and a written standard signs it, and that person is not on the team that built the case. The committee reviews a sample afterward rather than every case beforehand, and if it finds shaky calls it adjusts the tiers instead of convening everyone again for each case."
+          },
+          {
+            "pregunta": "How long should an AI governance committee take to decide?",
+            "respuesta": "As long as the company can commit to in writing and actually meet, set separately for each risk tier: days for low risk and weeks for high risk is a sensible starting point, not a rule. What matters is that the deadline exists on paper, that someone measures it, and that there is a log of every time it was missed. A deadline nobody measures works the same as having none."
           }
         ]
       },
