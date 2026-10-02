@@ -11,7 +11,11 @@
     "descripcion": "Nombrar un comité de IA no es el punto de partida: hay que decidir antes quién responde por el resultado y cuándo se cierra un piloto.",
     "linkedin": {
       "texto": "Casi todo consejo que decide tomarse la inteligencia artificial en serio hace lo mismo primero: nombra un comité.\n\nEs el movimiento que menos resuelve. Un comité sin mandato escrito no decide nada, solo reubica la pregunta: quién responde por el resultado, cuándo un piloto pasa a operación o se cierra, bajo qué criterio se mata una iniciativa. Sin esas tres respuestas, el comité se convierte en una sala de espera con actas.\n\nEn este análisis de BECOME desarrollamos qué tiene que decidir un consejo antes de convocar la primera reunión.",
-      "hashtags": ["IA", "Consejo", "Estrategia"]
+      "hashtags": [
+        "IA",
+        "Consejo",
+        "Estrategia"
+      ]
     },
     "bloques": [
       {
@@ -98,6 +102,29 @@
         "texto": "Ninguna de las cinco exige entender un modelo. Exigen la misma disciplina que un consejo ya aplica a una adquisición o a un plan de reducción de costes: nombrar a quien responde, poner fecha a la decisión, y aceptar que parte de lo que se apruebe hoy se va a cerrar mañana sin que eso sea un fracaso. Cuando esas cinco respuestas existen, formar el comité es un trámite de un día. Cuando no existen, el comité sustituye a haberlas tomado, y dura años."
       },
       {
+        "tipo": "subtitulo",
+        "antetitulo": "La primera reunión",
+        "texto": "¿Qué lleva la agenda de la primera reunión de un comité de IA?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cuando por fin se convoca, la primera reunión sirve para una cosa: salir con las cinco respuestas de arriba escritas, aunque sean provisionales. Una hora no da para más. Y si se gasta en una presentación de tendencias, se pierde."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Antes de la reunión: cada iniciativa en marcha llega en una sola hoja, con su responsable, lo que ha costado hasta hoy y desde qué fecha está viva.",
+          "Primeros veinte minutos: nombrar al dueño del resultado de cada iniciativa. Si dos personas creen serlo, o ninguna, se resuelve en la sala y no por correo.",
+          "Siguientes veinte: poner fecha de decisión a cada piloto y escribir la señal que bastaría para cerrarlo.",
+          "Últimos veinte: fijar el mandato (qué decide el comité, hasta qué importe, sin subir al consejo pleno) y la fecha del primer informe al consejo.",
+          "Quién se sienta: quien manda sobre el presupuesto operativo, alguien de finanzas que pueda decir cuánto se ha gastado, y quien responde por riesgo y datos. Quien presenta un piloto no vota si el suyo sigue o se cierra."
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El acta de esa reunión cabe en una página: una fila por iniciativa y cuatro columnas, dueño, fecha de decisión, criterio de cierre y próxima rendición. Si la segunda reunión empieza leyendo esa página, el comité ya decide. Si empieza con diapositivas nuevas, volvió a la sala de espera."
+      },
+      {
         "tipo": "destacado",
         "antetitulo": "Por dónde empezar",
         "texto": "Antes de convocar la primera reunión del comité, pon nombre a quien responde por el resultado de la primera iniciativa que ya está corriendo. Si nadie en el consejo puede nombrarla, no tienes un comité pendiente de formar: tienes una decisión de gobierno pendiente de tomar, y formar el comité solo la va a aplazar otro trimestre."
@@ -108,6 +135,10 @@
           {
             "pregunta": "¿Por dónde debe empezar un consejo con la inteligencia artificial?",
             "respuesta": "No por nombrar un comité. Empieza por decidir quién responde por el resultado de cada iniciativa en la cuenta de resultados, con qué fecha un piloto tiene que pasar a operación o cerrarse, y bajo qué criterio se mata algo antes de que se vuelva imposible de cerrar. El comité se forma después, para ejecutar esas tres decisiones, no para tomarlas."
+          },
+          {
+            "pregunta": "¿Qué debe llevar la agenda de la primera reunión de un comité de IA?",
+            "respuesta": "Tres decisiones y una hoja por iniciativa. Se nombra al dueño del resultado de cada iniciativa en marcha, se pone fecha de decisión a cada piloto con la señal que bastaría para cerrarlo, y se fija qué puede decidir el comité sin subir al consejo pleno. Se sale con una página de acta que la segunda reunión empieza leyendo."
           },
           {
             "pregunta": "¿Qué diferencia hay entre un comité de IA que decide y uno que solo recomienda?",
@@ -220,6 +251,29 @@
         "texto": "None of the five require understanding a model. They require the same discipline a board already applies to an acquisition or a cost-cutting plan: name who answers for it, put a date on the decision, and accept that part of what gets approved today will close tomorrow without that being a failure. When those five answers exist, forming the committee is a one-day formality. When they do not, the committee substitutes for having made them, and it lasts for years."
       },
       {
+        "tipo": "subtitulo",
+        "antetitulo": "The first meeting",
+        "texto": "What goes on the agenda of an AI committee's first meeting?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "When the meeting finally gets called, it has one job: to end with the five answers above written down, even if provisional. One hour allows nothing more. And if it gets spent on a trends presentation, it is gone."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Before the meeting: every initiative already running arrives on a single sheet, with its lead, what it has cost to date and since when it has been alive.",
+          "First twenty minutes: name the result owner for each initiative. If two people think they own it, or nobody does, it gets settled in the room, not by email.",
+          "Next twenty: put a decision date on every pilot and write down the signal that would be enough to shut it down.",
+          "Last twenty: set the mandate (what the committee decides, up to what amount, without escalating to the full board) and the date of the first report to the board.",
+          "Who sits there: whoever controls the operating budget, someone from finance who can say what has been spent, and whoever answers for risk and data. The person presenting a pilot does not vote on whether it continues or closes."
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The minutes of that meeting fit on one page: a row per initiative and four columns, owner, decision date, kill criteria and next report. If the second meeting opens by reading that page, the committee is deciding. If it opens with new slides, it is back in the waiting room."
+      },
+      {
         "tipo": "destacado",
         "antetitulo": "Where to start",
         "texto": "Before calling the committee's first meeting, name who answers for the result of the one initiative already running. If nobody on the board can name that person, you do not have a committee left to form. You have a governance decision left to make, and forming the committee will only postpone it another quarter."
@@ -230,6 +284,10 @@
           {
             "pregunta": "Where should a board start with artificial intelligence?",
             "respuesta": "Not by naming a committee. Start by deciding who answers for each initiative's result on the P&L, by what date a pilot has to move into operation or shut down, and under what criteria an initiative gets killed before it becomes impossible to close. The committee gets formed afterward, to execute those three decisions, not to make them."
+          },
+          {
+            "pregunta": "What should the agenda of an AI committee's first meeting include?",
+            "respuesta": "Three decisions and one sheet per initiative. You name the result owner of every initiative already running, put a decision date on each pilot along with the signal that would be enough to close it, and set what the committee can decide without escalating to the full board. You leave with a one-page record that the second meeting opens by reading."
           },
           {
             "pregunta": "What is the difference between an AI committee that decides and one that only recommends?",
