@@ -33,6 +33,14 @@
       },
       {
         "tipo": "parrafo",
+        "texto": "Con IA de verdad cambian tres cosas, y las tres se ven en el organigrama. Se fusionan las áreas que firmaban partes distintas de un mismo proceso. La carga de un manager deja de medirse por personas a cargo y pasa a medirse por decisiones que revisa. Y el presupuesto de ese proceso deja de ser plantilla fija para ser un rango de consumo con un dueño nombrado que lo autoriza. Si una empresa dice que se reestructuró por IA y no puede señalar ninguna de las tres, lo que hizo fue redibujar el organigrama."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en un agente que atiende reclamaciones de punta a punta: lee el correo del cliente, consulta el pedido y propone el reembolso. Antes, servicio al cliente aprobaba la respuesta y operaciones aprobaba el reembolso. Con el agente, esas dos firmas son una sola decisión que ocurre en segundos. El cambio de estructura real es que una de las dos firmas desaparece y el proceso pasa a tener un solo dueño. Su manager ya no cuenta personas: cuenta reembolsos revisados por semana. Y el coste, que antes eran tres sueldos, ahora sube y baja con el número de reclamaciones. Ese es el presupuesto que hay que aprobar. Lo demás es lámina."
+      },
+      {
+        "tipo": "parrafo",
         "texto": "Lo que circula es intención, no organigrama. Se habla de democratizar la decisión, de acercar el dato al negocio, de romper silos. Ningún directivo se opone a esas frases porque ninguna obliga a nada. El problema aparece cuando alguien pregunta, en la misma sala, qué caja concreta desaparece del organigrama la semana que viene. Ahí el silencio dura más de lo que debería."
       },
       {
@@ -102,6 +110,10 @@
             "respuesta": "Cambian tres cosas que no aparecen en una lámina de organigrama: qué cajas se fusionan o desaparecen de verdad, cómo se mide la carga de un manager cuando parte de su equipo son agentes, y cómo se rehace el presupuesto cuando el coste deja de ser plantilla fija y pasa a ser consumo variable. Si ninguna de las tres se decidió con nombre y apellido, el organigrama nuevo es solo un cartel distinto sobre la misma oficina."
           },
           {
+            "pregunta": "¿Qué caja del organigrama desaparece primero cuando un agente ejecuta un proceso de punta a punta?",
+            "respuesta": "La firma duplicada. Cuando un agente cruza un proceso entero, las dos áreas que antes aprobaban cada una su tramo ya no tienen dos decisiones separadas, sino una. Una de las dos deja de firmar y el proceso pasa a tener un solo dueño. Si después del despliegue las dos áreas siguen firmando, la estructura no cambió, aunque el organigrama diga lo contrario."
+          },
+          {
             "pregunta": "¿Cómo cambia el span of control cuando un manager supervisa agentes además de personas?",
             "respuesta": "El número de personas a cargo deja de describir la carga real del manager, porque parte de su trabajo ahora es revisar y corregir decisiones que toma un agente, no coordinar personas. La mayoría de las empresas todavía mide el span de control solo por cabezas, así que un manager puede aparecer con poca carga en el reporte de plantilla mientras revisa cientos de decisiones automatizadas por semana que ese reporte no cuenta."
           },
@@ -144,6 +156,14 @@
         "tipo": "subtitulo",
         "antetitulo": "The symptom",
         "texto": "What actually changes in a company's structure when it adopts AI for real?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Three things change when a company adopts AI for real, and all three show up on the org chart. The areas that used to sign off separate slices of one process merge. A manager's load stops being measured in people managed and starts being measured in decisions reviewed. And the budget for that process stops being fixed headcount and becomes a consumption range with a named owner who authorizes it. If a company says it restructured around AI and cannot point to any of the three, it redrew the chart."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture an agent that handles customer complaints end to end: it reads the customer's email, checks the order and proposes the refund. Before, customer service approved the reply and operations approved the refund. With the agent, those two signatures become one decision that happens in seconds. The real structural change is that one of the two signatures disappears and the process ends up with a single owner. Its manager no longer counts people. They count refunds reviewed per week. And the cost, which used to be three salaries, now rises and falls with the number of complaints. That is the budget you have to approve. The rest is slideware."
       },
       {
         "tipo": "parrafo",
@@ -214,6 +234,10 @@
           {
             "pregunta": "What actually changes in a company's structure when it adopts AI for real?",
             "respuesta": "Three things that never show up on an org chart slide change: which boxes actually merge or disappear, how a manager's real load gets measured once part of their team is agents, and how the budget gets rebuilt once cost stops being fixed headcount and becomes variable consumption. If none of the three gets decided by name, the new chart is just a different sign on the same office."
+          },
+          {
+            "pregunta": "Which box on the org chart disappears first when an agent runs a process end to end?",
+            "respuesta": "The duplicated signature. Once an agent crosses a whole process, the two departments that each used to approve their own slice no longer have two separate decisions, they have one. One of them stops signing and the process ends up with a single owner. If both departments still sign after the rollout, the structure did not change, whatever the chart says."
           },
           {
             "pregunta": "How does span of control change when a manager oversees agents as well as people?",
