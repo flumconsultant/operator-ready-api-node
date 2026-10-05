@@ -11,7 +11,11 @@
     "descripcion": "AI-native no se mide quitando los modelos del producto. Se mide en el organigrama, el presupuesto y quién responde cuando el sistema decide mal.",
     "linkedin": {
       "texto": "El test más citado para saber si una empresa es AI-native consiste en quitarle los modelos y ver si el producto sigue funcionando.\n\nUn banco lo pasa sin problema: quita cada modelo de su aplicación y sigue prestando dinero mañana mismo. El test dice que no es AI-native. Y puede llevar tres años decidiendo el riesgo de crédito con un sistema que antes decidía un comité entero.\n\nEn el nuevo análisis de BECOME explicamos qué hay que mirar en el organigrama y el presupuesto para responder la pregunta de verdad.",
-      "hashtags": ["IA", "Estrategia", "Transformacion"]
+      "hashtags": [
+        "IA",
+        "Estrategia",
+        "Transformacion"
+      ]
     },
     "bloques": [
       {
@@ -30,6 +34,10 @@
         "tipo": "subtitulo",
         "antetitulo": "El síntoma",
         "texto": "¿Qué diferencia a una empresa AI-native de una empresa que usa IA?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Una empresa AI-native es la que ya cambió quién decide dentro de sus procesos: algún puesto perdió autoridad de decisión por escrito, el gasto del sistema pasó del fondo de innovación al presupuesto operativo, y una persona con nombre responde por el resultado agregado. Una empresa que usa IA tiene los mismos modelos y el mismo organigrama de antes."
       },
       {
         "tipo": "parrafo",
@@ -148,6 +156,10 @@
         "tipo": "subtitulo",
         "antetitulo": "The symptom",
         "texto": "What makes a company AI-native rather than a company using AI?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "An AI-native company is one that has already changed who decides inside its processes: some role lost decision authority in writing, the spend on the system moved from the innovation fund into the operating budget, and a named person answers for the aggregate result. A company that merely uses AI has the same models and the same org chart it had before."
       },
       {
         "tipo": "parrafo",
