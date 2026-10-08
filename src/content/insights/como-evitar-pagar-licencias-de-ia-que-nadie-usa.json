@@ -1,0 +1,251 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-10-08",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "value-adoption",
+  "formato": "executive-brief",
+  "es": {
+    "slug": "como-evitar-pagar-licencias-de-ia-que-nadie-usa",
+    "titulo": "Cómo evitar pagar licencias de IA que nadie usa",
+    "entradilla": "Una licencia de IA se compra por persona y se usa por tarea. Esa diferencia explica por qué muchas empresas pagan asientos que nadie abre, y por qué cortar los que menos se usan puede apagar justo lo que no conviene apagar.",
+    "descripcion": "Para evitar pagar licencias de IA sin uso, mide qué tarea resuelve cada una antes de contar accesos. Un criterio de tres preguntas para renovar o cortar.",
+    "linkedin": {
+      "texto": "Una licencia de IA se compra por persona. El valor aparece por tarea.\n\nPor eso contar accesos engaña: el asiento que se abre una vez al mes puede sostener el cierre contable, y el que se abre a diario puede no cambiar nada.\n\nEl criterio para decidir qué licencias renovar, cuáles mover y cuáles cortar antes de la próxima renovación.",
+      "hashtags": [
+        "IA",
+        "Adopcion",
+        "Finanzas"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Una licencia de IA se compra por persona y se usa por tarea. Esa diferencia explica por qué muchas empresas pagan asientos que nadie abre, y por qué cortar los que menos se usan puede apagar justo lo que no conviene apagar."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por cómo se compra. Casi todas las herramientas de IA para empresas se contratan por asiento: cada persona con acceso es una línea en la factura. Se compran en bloque, cuando una dirección decide que \"hay que tener IA\", y se asignan por organigrama: todo un área, todo un nivel. Nadie pregunta, en ese momento, para qué tarea concreta va a servir cada una."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Meses después llega la renovación y finanzas o compras de TI hacen la pregunta razonable: de todo esto, ¿qué se usa? El panel del proveedor responde con lo que tiene, que son accesos, sesiones y mensajes. Con ese dato, la tentación es cortar una parte de los asientos con menos actividad. Es un buen primer paso para encontrar dinero, y un mal criterio para decidir."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Cómo saber qué licencias de IA no se usan?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay señales que se ven en cualquier panel de administración y que casi siempre apuntan a dinero que se va sin retorno. Ninguna basta por sí sola, pero juntas dibujan la lista de candidatas a revisar."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Personas que no han iniciado sesión desde que se les asignó la licencia.",
+          "Licencias asignadas a quien cambió de puesto o dejó la empresa y nunca se liberaron.",
+          "Equipos enteros con uso de unas pocas sesiones al mes, repartidas entre muchas personas.",
+          "Dos herramientas que hacen lo mismo contratadas por áreas distintas, cada una con su bloque de asientos.",
+          "Licencias nominales que en la práctica comparte una sola persona con otras que no tienen acceso."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema detrás",
+        "texto": "¿Por qué contar accesos no basta para decidir qué licencias cortar?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Porque la frecuencia de uso mide hábito, no valor. Piensa en un analista de cierre contable que abre la herramienta de IA una vez al mes, el día del cierre, y en ese día le ahorra una jornada de conciliaciones. En el panel parece un usuario inactivo. Al lado, alguien que la abre veinte veces al día para reformular correos aparece como el usuario modelo, y su trabajo no cambió. Si se corta por actividad, se apaga la primera licencia y se renueva la segunda."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El mecanismo de fondo es que el asiento se asignó antes de definir la tarea. Cuando la tarea no está definida, nadie puede decir qué se pierde al cortar, y esa incertidumbre pesa más que el ahorro. Por eso muchas empresas prefieren pagar de más que arriesgarse a quitar algo que alguien necesita. Es una decisión racional con la información que tienen, y se arregla con mejor información, no con más disciplina."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Una licencia sin tarea asignada no se puede cortar con criterio ni renovar con criterio: solo se puede cortar o renovar a ciegas.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El criterio",
+        "texto": "¿Qué licencias de IA se renuevan, se mueven o se cortan?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Tres preguntas, en este orden, por cada licencia o grupo de licencias. La primera descarta lo obvio, la segunda protege lo crítico y la tercera convierte el ahorro en decisión."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "¿Qué tarea resuelve?",
+            "definicion": "Pide a cada responsable de área que nombre la tarea concreta en la que esa licencia interviene. Si no puede nombrarla, la licencia es candidata a cortarse o a reasignarse sin riesgo."
+          },
+          {
+            "termino": "¿Qué pasa si falta ese día?",
+            "definicion": "Para las que sí tienen tarea, pregunta qué ocurre si la herramienta no está el día que se necesita. Si la respuesta es un retraso o un coste real (un cierre, una auditoría, una entrega), el uso es bajo pero la licencia es crítica y se protege."
+          },
+          {
+            "termino": "¿Se puede compartir o mover?",
+            "definicion": "Si la tarea es puntual, quizá basta una licencia que rote entre dos o tres personas del equipo. Si el uso es diario y creciente, quizá hace falta ampliar. El ahorro sale de ajustar la cantidad a la tarea, no de aplicar un recorte lineal."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Este ejercicio lleva días, no meses, porque se hace por áreas y con quien conoce la tarea. Lo que cambia es la conversación de renovación: en lugar de negociar un precio por asiento sobre un número heredado, la empresa llega con una cifra de asientos que puede defender uno por uno."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Antes de la próxima renovación, saca del panel la lista de licencias sin actividad y envíasela a cada responsable de área con una sola pregunta: ¿para qué tarea la necesitas? Lo que nadie reclame en dos semanas se libera. Lo que alguien defienda con una tarea concreta se queda, con nombre y motivo escritos."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cómo evitamos pagar por licencias de IA que nadie usa?",
+            "respuesta": "Asigna cada licencia a una tarea concreta y a un responsable que pueda defenderla. Las que nadie reclame en un plazo razonable se liberan, y las que se defiendan se documentan con su motivo. El ahorro viene de ajustar la cantidad de licencias a las tareas reales, y se repite en cada renovación para que no vuelvan a acumularse."
+          },
+          {
+            "pregunta": "¿Es buena idea cortar las licencias de IA con menos actividad?",
+            "respuesta": "Como primer filtro sirve, pero como decisión final no. La frecuencia de uso mide hábito y no valor: una licencia que se usa una vez al mes en un cierre contable puede ser más crítica que una que se abre veinte veces al día. Conviene revisar cada candidata con quien conoce la tarea antes de cortar nada."
+          },
+          {
+            "pregunta": "¿Cada cuánto hay que revisar las licencias de IA?",
+            "respuesta": "Antes de cada renovación como mínimo, y de forma ligera cada trimestre para liberar las de quien cambió de puesto o salió de la empresa. Una revisión periódica pequeña evita que la acumulación crezca hasta convertirse en un recorte grande y arriesgado el día de la renovación."
+          },
+          {
+            "pregunta": "¿Quién debe decidir qué licencias de IA se mantienen?",
+            "respuesta": "La decisión la toma el responsable del área que usa la licencia, con el apoyo de finanzas o compras de TI que aportan los datos de uso y el coste. Quien conoce la tarea sabe qué se pierde al cortar, y quien lleva el presupuesto sabe cuánto cuesta mantenerla. Ninguno de los dos decide bien por separado."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos juntos qué licencias de IA merece la pena renovar",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-to-stop-paying-for-ai-licences-nobody-uses",
+    "titulo": "How to Stop Paying for Unused AI Licences",
+    "entradilla": "An AI licence is bought per person and used per task. That gap is why many companies pay for seats nobody opens, and why cutting the least-used ones can switch off exactly what you should keep.",
+    "descripcion": "To stop paying for unused AI licences, map each one to a task before counting logins. A three-question test for what to renew, move or cut.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "An AI licence is bought per person and used per task. That gap is why many companies pay for seats nobody opens, and why cutting the least-used ones can switch off exactly what you should keep."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Start with how they are bought. Most enterprise AI tools are sold by the seat: every person with access is a line on the invoice. They get bought in bulk, when leadership decides the company needs AI, and assigned by org chart: a whole function, a whole grade. Nobody asks, at that point, which specific task each seat is meant to serve."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Months later the renewal arrives, and finance or IT procurement asks the reasonable question: of all this, what gets used? The vendor dashboard answers with what it has, which is logins, sessions and messages. With that data the temptation is to cut the seats with the least activity. It is a good first step for finding money and a poor basis for deciding."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "How do you tell which AI licences nobody uses?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Some signals show up in any admin console and almost always point to money leaving with no return. None is enough alone, but together they draw the list of licences worth reviewing."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "People who have not logged in since the licence was assigned.",
+          "Licences held by someone who changed role or left the company and were never released.",
+          "Whole teams with only a few sessions a month, spread thinly across many people.",
+          "Two tools doing the same job, bought by different functions, each with its own block of seats.",
+          "Named licences that one person effectively shares with colleagues who have no access."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "Why isn't counting logins enough to decide which licences to cut?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Because frequency of use measures habit, not value. Picture an accounting analyst who opens the AI tool once a month, on close day, and saves a full day of reconciliations. On the dashboard that person looks inactive. Next to them, someone who opens it twenty times a day to rephrase emails looks like the model user, and their work has not changed. Cut by activity and you switch off the first licence and renew the second."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The underlying mechanism is that the seat was assigned before the task was defined. With no defined task, nobody can say what is lost by cutting, and that uncertainty weighs more than the saving. So many companies prefer to overpay than to risk removing something somebody needs. It is a rational decision given the information they have, and it is fixed with better information, not with more discipline."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A licence with no task attached cannot be cut with judgment or renewed with judgment. It can only be cut or renewed blind.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The test",
+        "texto": "Which AI licences should you renew, move or cut?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Three questions, in this order, for each licence or group of licences. The first clears the obvious cases, the second protects what is critical, and the third turns the saving into a decision."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "What task does it serve?",
+            "definicion": "Ask each function head to name the specific task the licence supports. If they cannot name one, the licence is a candidate to cut or reassign with little risk."
+          },
+          {
+            "termino": "What happens if it is missing that day?",
+            "definicion": "For the ones with a task, ask what happens if the tool is unavailable on the day it is needed. If the answer is a delay or a real cost, such as a close, an audit or a delivery, usage is low but the licence is critical and gets protected."
+          },
+          {
+            "termino": "Can it be shared or moved?",
+            "definicion": "If the task is occasional, one licence rotating among two or three people may be enough. If use is daily and growing, you may need more. The saving comes from matching the number of seats to the tasks, not from a flat cut."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "This exercise takes days, not months, because it runs function by function with the person who knows the task. What changes is the renewal conversation: instead of negotiating a price per seat on an inherited number, the company arrives with a seat count it can defend one by one."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Before the next renewal, pull the list of inactive licences from the console and send it to each function head with one question: what task do you need it for? Whatever nobody claims within two weeks gets released. Whatever someone defends with a concrete task stays, with the name and the reason written down."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How do we stop paying for AI licences nobody uses?",
+            "respuesta": "Tie each licence to a specific task and to an owner who can defend it. Those nobody claims within a reasonable window get released, and those that are defended get documented with their reason. The saving comes from matching the number of licences to real tasks, and the review repeats at every renewal so they do not pile up again."
+          },
+          {
+            "pregunta": "Is it a good idea to cut the AI licences with the least activity?",
+            "respuesta": "As a first filter, yes. As a final decision, no. Frequency of use measures habit, not value: a licence used once a month at an accounting close can matter more than one opened twenty times a day. Review each candidate with the person who knows the task before cutting anything."
+          },
+          {
+            "pregunta": "How often should AI licences be reviewed?",
+            "respuesta": "Before every renewal at a minimum, and lightly each quarter to release the seats of people who changed role or left. A small periodic review stops the build-up from growing into a large, risky cut on renewal day."
+          },
+          {
+            "pregunta": "Who should decide which AI licences to keep?",
+            "respuesta": "The head of the function that uses the licence decides, supported by finance or IT procurement, who provide usage data and cost. The person who knows the task knows what is lost by cutting, and the person who owns the budget knows what it costs to keep. Neither decides well alone."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's review which AI licences are worth renewing",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
