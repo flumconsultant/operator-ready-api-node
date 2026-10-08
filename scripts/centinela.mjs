@@ -72,6 +72,12 @@ const normaliza = (t) => t
   .replace(/\s+/g, ' ').trim().toLowerCase();
 
 const fallos = [];
+/* «No pude preguntar» no es «la respuesta fue mala». Van aparte desde que, el
+   8 de octubre de 2026, este guardián informó de 74 páginas no servidas cuando
+   lo único que pasaba era que no había salida a internet. Un aviso que se
+   equivoca en rojo enseña a ignorar los avisos, y entonces el guardián que
+   sobrevive es el que nadie lee. */
+const mudos = [];
 let comprobadas = 0;
 
 for (const a of articulos) {
@@ -83,7 +89,8 @@ for (const a of articulos) {
     comprobadas++;
 
     if (estado !== 200) {
-      fallos.push(`${url} → ${error ? `sin respuesta (${error})` : `HTTP ${estado}`}`);
+      if (error) mudos.push(`${url} → sin respuesta (${error})`);
+      else fallos.push(`${url} → HTTP ${estado}`);
       continue;
     }
     /* La prueba de fondo: que la página servida sea ESTA página. Una ruta que
@@ -107,7 +114,8 @@ for (const lang of ['es', 'en']) {
   const { estado, html, error } = await pedir(url);
   comprobadas++;
   if (estado !== 200) {
-    fallos.push(`${url} → ${error ? `sin respuesta (${error})` : `HTTP ${estado}`}`);
+    if (error) mudos.push(`${url} → sin respuesta (${error})`);
+    else fallos.push(`${url} → HTTP ${estado}`);
   } else if (!html.includes(`/${lang}/insights/${t.slug}`)) {
     fallos.push(`${url} → no contiene el último artículo («${t.titulo}»): el feed publicado se quedó en una versión anterior.`);
   }
@@ -115,6 +123,23 @@ for (const lang of ['es', 'en']) {
 
 console.log(`Artículos publicados en el repositorio: ${articulos.length}`);
 console.log(`Direcciones comprobadas contra ${SITIO}: ${comprobadas}`);
+
+/* Si no se pudo preguntar a nada, no hay diagnóstico que dar. Se dice así y se
+   sale en rojo igual —algo hay que mirar—, pero nombrando la causa correcta:
+   mandar a alguien a revisar el despliegue cuando lo que falla es la red le
+   hace perder la tarde y le enseña a desconfiar del aviso. */
+if (mudos.length && !fallos.length) {
+  console.error(`::error::No se pudo preguntar al sitio: ${mudos.length} direcciones sin respuesta.`);
+  console.error(`::error::Esto NO significa que el sitio esté desactualizado. Significa que esta comprobación no pudo mirar: sin red, DNS caído o dominio sin responder.`);
+  for (const m of mudos.slice(0, 5)) console.error(`::error::  ${m}`);
+  if (mudos.length > 5) console.error(`::error::  …y ${mudos.length - 5} más, todas con el mismo error.`);
+  process.exit(1);
+}
+
+if (mudos.length) {
+  console.log(`::warning::${mudos.length} direcciones no respondieron y no se pudieron comprobar. Son aparte de los fallos de abajo.`);
+  for (const m of mudos.slice(0, 3)) console.log(`::warning::  ${m}`);
+}
 
 if (fallos.length) {
   console.log('');

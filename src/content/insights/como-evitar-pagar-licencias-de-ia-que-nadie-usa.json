@@ -52,7 +52,7 @@
       {
         "tipo": "subtitulo",
         "antetitulo": "El problema detrás",
-        "texto": "¿Por qué contar accesos no basta para decidir qué licencias cortar?"
+        "texto": "La frecuencia de uso mide hábito, no valor"
       },
       {
         "tipo": "parrafo",
@@ -70,7 +70,7 @@
       {
         "tipo": "subtitulo",
         "antetitulo": "El criterio",
-        "texto": "¿Qué licencias de IA se renuevan, se mueven o se cortan?"
+        "texto": "Renovar, mover o cortar se decide por la tarea, no por el usuario"
       },
       {
         "tipo": "parrafo",
@@ -170,7 +170,7 @@
       {
         "tipo": "subtitulo",
         "antetitulo": "The problem underneath",
-        "texto": "Why isn't counting logins enough to decide which licences to cut?"
+        "texto": "Usage frequency measures habit, not value"
       },
       {
         "tipo": "parrafo",
@@ -188,7 +188,7 @@
       {
         "tipo": "subtitulo",
         "antetitulo": "The test",
-        "texto": "Which AI licences should you renew, move or cut?"
+        "texto": "Renew, move or cut is decided by the task, not by the user"
       },
       {
         "tipo": "parrafo",

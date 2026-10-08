@@ -20,6 +20,37 @@ de Python, `sed` ni redirecciones de Bash para escribir en el repositorio: el
 entorno los bloquea y el 07-10 un script de Python dejó el día sin artículo. Si
 Edit o Write también se deniegan, para y deja dicho cuál fue la denegación.
 
+## Lo primero de todo: ¿llegó a la web lo de ayer?
+
+Antes de leer nada y antes de escribir nada:
+
+```
+node scripts/centinela.mjs
+```
+
+Le pregunta al dominio real por cada artículo publicado y comprueba que está
+servido de verdad. Tarda segundos y no toca nada.
+
+**Si falla, eso encabeza tu respuesta final**, antes incluso de decir qué
+escribiste hoy. Con estas palabras o parecidas: «Aviso: el artículo del <fecha>
+sigue sin estar en la web». Y si puedes ver por qué —un despliegue en rojo en la
+pestaña Actions—, dilo en la misma línea.
+
+Esto existe por lo que pasó entre el 29 de septiembre y el 8 de octubre de 2026.
+Una sola palabra en español de España bloqueó el QA de lenguaje, y con él todos
+los despliegues, diez días seguidos. El sistema lo sabía desde el primer minuto:
+hubo un despliegue en rojo cada día, y el centinela lo cantó cada noche. **La
+información existía y no llegaba a una persona.** Nadie se enteró hasta que
+alguien preguntó por qué el blog estaba parado.
+
+Tu respuesta sí llega: la rutina manda notificación al móvil. Por eso el aviso
+va aquí y no en otro guardián nuevo. No faltaba una alarma más, faltaba que una
+sonara donde hay alguien escuchando.
+
+Si el centinela no puede preguntar —sin red, dominio caído—, **dilo también**.
+«No pude comprobarlo» y «está todo bien» no son lo mismo, y confundirlos es
+exactamente cómo se pierden diez días.
+
 ## Qué hay que hacer
 
 1. Lee `automatizacion/seguimiento.md`, sección **«Qué está funcionando»**. Es
@@ -391,6 +422,16 @@ node scripts/tarjeta-social.mjs src/content/insights/<tu-archivo>.json
 Deja dos archivos en `assets/images/tarjetas/`, uno por idioma, que entran en el
 commit con el artículo. Sin ellos, el artículo compartido en LinkedIn aparece
 como un enlace desnudo, y un enlace desnudo se pulsa mucho menos.
+
+## Qué tiene que decir tu respuesta
+
+Dos líneas, y en este orden:
+
+1. **El aviso del centinela, si falló.** Lo primero, siempre. Es lo único que
+   puede estar roto sin que nadie lo sepa.
+2. **Qué publicaste y en qué dirección quedó.** O, si hoy tocaba revisión, qué
+   artículo revisaste y qué le cambiaste. O, si no había nada que mereciera un
+   artículo, dilo con esas palabras.
 
 ## Si hoy no hay nada bueno que decir
 
