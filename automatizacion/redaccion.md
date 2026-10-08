@@ -21,11 +21,19 @@ queda publicado bajo el nombre de una persona real. Escribe en consecuencia.
    todavía no hay datos, sigue adelante sin más; si dice algo, tenlo en cuenta
    al elegir formato y enfoque.
 2. Lee el informe más reciente de `automatizacion/informes/`.
-3. **Mira primero la sección «Qué hay que revisar»**, si la hay. Un artículo que
-   ya existe y no rinde está más cerca de rendir que uno en blanco: mejorarlo
-   vale más que publicar otro. Si hay algo ahí, hoy tu trabajo es ese, y salta
-   al apartado «Cuando toca revisar en vez de escribir».
-4. Si no hay nada que revisar, toma el hueco de la sección «Recomendación».
+3. **Alterna revisión y artículo nuevo.** Mira el último commit de
+   `src/content/insights/` (`git log -1 --format=%s -- src/content/insights`).
+   Si empieza por «Insights: revisión de», hoy toca artículo nuevo (salta al
+   paso 4 ignorando las revisiones). Si el último fue un artículo nuevo, o no
+   hay ningún commit reciente, hoy toca revisar. Sin esta alternancia, una
+   lista larga de revisiones se come todos los días y el sitio deja de
+   publicar: pasó del 27-09 al 08-10.
+   Cuando toque revisar, mira la sección «Qué hay que revisar» del informe. Un
+   artículo que ya existe y no rinde está más cerca de rendir que uno en
+   blanco. Si hay algo ahí, salta al apartado «Cuando toca revisar en vez de
+   escribir». Si no hay nada que revisar, sigue al paso 4.
+4. Toma el hueco de la sección «Recomendación» (el primero que no sea una
+   revisión). Si no queda ninguno, ve al paso 6.
 5. Comprueba en `src/content/insights/` que no esté ya cubierto. Si lo está,
    coge el siguiente hueco de la lista.
 6. **Si se acaba la lista y todos están cubiertos, no te pares ahí.** Ejecuta:
