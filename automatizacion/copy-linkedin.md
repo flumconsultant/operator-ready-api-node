@@ -136,6 +136,41 @@ Ejemplos del resultado (inventados para esta guía, no son de ningún artículo)
 >
 > Qué debe estar definido antes de dejar que un agente decida solo.
 
+> Para revisar un copy contra todo esto hay una skill del proyecto,
+> `linkedin-become`, con las seis preguntas de revisión.
+
+### Tres recursos que usa Gartner y aquí se aprovechan poco
+
+La estructura de arriba ya es la suya. Estos tres son los que hacen que un post
+suyo se reconozca aunque le quites el logo.
+
+**1. Si hay una cifra, abre con ella.** Es su firma. No una cifra de adorno: la
+que hace incómoda la afirmación. «Solo el 39 % de los directivos de tecnología
+confía en que su inversión actual en IA mejore el resultado financiero» funciona
+porque el lector se cuenta a sí mismo entre ese 61 %.
+
+Y la regla de siempre manda sobre esto: **una cifra sin fuente comprobada no
+existe**. Si el artículo no la trae verificada, se abre con la afirmación y ya
+está. Inventar un porcentaje para que el post arranque mejor es exactamente lo
+que destruye la confianza que el post venía a construir.
+
+**2. Pon nombre a la idea.** Gartner empaqueta cada concepto en dos o tres
+palabras que se pueden repetir: «return on intelligence», «talent remix». No es
+marketing: es que una idea con nombre se puede citar en una reunión, y una sin
+nombre se olvida al salir. Si el artículo propone un criterio o un marco, dale un
+nombre corto en español y úsalo en el post.
+
+**3. La advertencia junto a la promesa.** Nunca dejan una afirmación optimista
+sola: al lado va el riesgo de llevarla demasiado lejos. «Quien use la IA sobre
+todo para recortar costes se arriesga a recortar demasiado y demasiado pronto.»
+Eso es lo que separa a un analista de un vendedor, y es lo que hace que un
+directivo se fíe. Cabe dentro del giro, en la misma frase o en la siguiente.
+
+**Lo que no se copia de ellos.** Gartner atribuye cada idea a un analista con
+nombre y cargo. Aquí publica la página de empresa y no hay analista que citar,
+así que esa pieza se deja fuera: inventar un portavoz sería fingir una autoridad
+que no existe.
+
 ### Reglas
 
 - Entre 30 y 75 palabras (el guardián solo rechaza por encima de 100). Un post de Gartner cabe en una pantalla; si necesita

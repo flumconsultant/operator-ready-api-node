@@ -187,6 +187,69 @@ commit y que la ponga una persona.
 - Un `subtitulo` en forma de pregunta se cita mejor que uno en forma de título.
 - El `cta` va a `/es/contacto` en español y a `/en/contact` en inglés.
 
+## La arquitectura del argumento
+
+> Para revisar un artículo contra todo esto hay una skill del proyecto,
+> `blog-become`, con la prueba de los subtítulos y las cinco preguntas de
+> revisión. No repite estas reglas: las comprueba.
+
+La voz de McKinsey se imita fácil; su arquitectura, no. Y es la arquitectura lo
+que hace que un directivo termine de leer. El método se llama Pirámide de Minto,
+lo desarrolló Barbara Minto dentro de la firma, y es lo que ordena sus artículos
+por debajo del tono.
+
+**1. La idea rectora.** Antes de escribir, una frase que **toma posición**, no
+que nombra un tema. «El presupuesto de IA» es un tema. «El presupuesto de IA se
+descontrola porque se aprueba por licencias y se consume por tareas» es una idea
+rectora. Si el lector solo retuviera una frase del artículo, sería esa. Escríbela
+aparte antes de empezar; si no te sale en una frase, todavía no sabes qué quieres
+decir.
+
+**2. La respuesta primero.** Se piensa de abajo arriba y se escribe de arriba
+abajo. La entradilla y los dos primeros párrafos ya contienen la respuesta: el
+resto del artículo explica por qué es cierta. No se guarda la conclusión para el
+final; eso es un relato, y quien dirige no lee relatos, lee hasta que entiende.
+
+**3. La entrada en cuatro tiempos.** Situación, complicación, pregunta,
+respuesta. Primero lo que el lector ya da por cierto, luego lo que lo rompe,
+luego la pregunta que eso abre, y después la respuesta. Sirve para que el lector
+sepa **por qué** le importa antes de recibir la tesis.
+
+**4. Tres apoyos, y que no se pisen.** La idea rectora se sostiene sobre tres
+argumentos —tres, rara vez cuatro—, y entre ellos se aplican dos pruebas: ¿se
+solapan? Si dos dicen lo mismo con otras palabras, sobra uno. ¿Bastan? Si los
+tres son ciertos, ¿queda probada la idea rectora? Si no, falta un apoyo.
+
+**5. Los subtítulos afirman, no etiquetan.** Esto es lo que más se nota al leer.
+Un subtítulo no es el nombre del apartado, es su conclusión:
+
+| Etiqueta (no) | Afirmación (sí) |
+|---|---|
+| El coste de las licencias | Las licencias se compran por persona y el valor aparece por tarea |
+| Gobierno de agentes | Un agente sin perímetro no es autónomo, es un riesgo sin dueño |
+| Medición | Lo que no se mide por proceso no se puede recortar sin romper algo |
+
+Leídos los subtítulos seguidos, sin el cuerpo, tiene que entenderse el argumento
+completo. Es la prueba más rápida de si el artículo está bien construido.
+
+**6. Los datos van debajo del argumento que sostienen.** Una cifra suelta no
+convence a nadie. Va pegada a la afirmación que demuestra, nunca en un apartado
+de datos.
+
+### La excepción, y hay que respetarla
+
+Hay una tensión real entre este método y cómo se cita a un artículo en los
+asistentes: **un subtítulo en forma de pregunta se cita mejor**, porque coincide
+con cómo pregunta la gente. Las dos cosas son ciertas y se reparten así:
+
+- **Uno o dos subtítulos en forma de pregunta**, los que recogen la pregunta
+  literal del hueco, y el bloque `faq` entero. Eso es lo que se cita.
+- **El resto, afirmaciones.** Son los que sostienen el argumento.
+
+Un artículo con todos los subtítulos en pregunta se lee como un cuestionario; uno
+sin ninguna pierde la cita. La mezcla no es un apaño: cada forma hace un trabajo
+distinto.
+
 ## La voz de Carlos
 
 La referencia es un socio senior de una consultora grande explicándole a un
