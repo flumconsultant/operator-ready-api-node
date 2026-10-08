@@ -13,6 +13,13 @@ Lo que escribas se publica en la web sin que nadie lo lea antes. Esa es la
 decisión de quien firma, y significa que no hay red: lo que quede mal escrito
 queda publicado bajo el nombre de una persona real. Escribe en consecuencia.
 
+## Cómo se escribe el archivo
+
+Crea y modifica los JSON con las herramientas **Write y Edit**. No uses scripts
+de Python, `sed` ni redirecciones de Bash para escribir en el repositorio: el
+entorno los bloquea y el 07-10 un script de Python dejó el día sin artículo. Si
+Edit o Write también se deniegan, para y deja dicho cuál fue la denegación.
+
 ## Qué hay que hacer
 
 1. Lee `automatizacion/seguimiento.md`, sección **«Qué está funcionando»**. Es
