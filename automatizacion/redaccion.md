@@ -21,7 +21,15 @@ queda publicado bajo el nombre de una persona real. Escribe en consecuencia.
    todavía no hay datos, sigue adelante sin más; si dice algo, tenlo en cuenta
    al elegir formato y enfoque.
 2. Lee el informe más reciente de `automatizacion/informes/`.
-3. **Alterna revisión y artículo nuevo.** Mira el último commit de
+3. **Modo recuperación (hasta el 2026-10-20).** Del 27-09 al 08-10 no salió
+   ningún artículo nuevo. Mientras dure este modo, cada ejecución hace **las
+   dos cosas**: primero un artículo nuevo de la cola (commit y push propios),
+   y después, si queda margen y no ha habido fallos, una revisión de la
+   sección «Qué hay que revisar» (segundo commit y push). Si el artículo
+   nuevo no pasa el guardián, no hagas la revisión ese día. A partir del
+   2026-10-21 vale solo la alternancia de abajo.
+
+   **Alterna revisión y artículo nuevo.** Mira el último commit de
    `src/content/insights/` (`git log -1 --format=%s -- src/content/insights`).
    Si empieza por «Insights: revisión de», hoy toca artículo nuevo (salta al
    paso 4 ignorando las revisiones). Si el último fue un artículo nuevo, o no
