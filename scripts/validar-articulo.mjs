@@ -105,11 +105,12 @@ function revisarCopyLinkedIn(art, di) {
   const texto = String(copy.texto || '').trim();
   if (!texto) { d('está el campo pero el texto está vacío'); return; }
 
-  /* 60–100 palabras es el encargo. El margen es de una palabra por lado y no
+  /* 30–100 palabras es el límite duro (el objetivo del encargo es 30–75, ver
+     copy-linkedin.md; el techo sigue en 100 para no invalidar lo ya publicado). No
      más: el rango existe porque un post largo se corta con «…ver más» y uno
      corto no da razón para pulsar. */
   const n = texto.split(/\s+/).filter(Boolean).length;
-  if (n < 60) d(`el copy tiene ${n} palabras; por debajo de 60 no plantea nada, solo anuncia`);
+  if (n < 30) d(`el copy tiene ${n} palabras; por debajo de 30 no plantea nada, solo anuncia`);
   if (n > 100) d(`el copy tiene ${n} palabras; por encima de 100 el lector ya no necesita abrir el artículo`);
 
   /* El enlace lo pone el publicador. Uno escrito a mano dentro del texto sale

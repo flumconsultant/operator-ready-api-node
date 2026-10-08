@@ -98,7 +98,7 @@ export default function Editor({ articulo, alCambiar, publicadoAntes }) {
 
   /* El copy de LinkedIn vive dentro del artículo, en español. Se cuenta aquí
      para poder enseñar el número mientras se escribe: el rango del encargo es
-     60–100 palabras y sin contador nadie acierta a ojo. */
+     30–75 palabras (máx. 100) y sin contador nadie acierta a ojo. */
   const copyLinkedIn = (articulo.es && articulo.es.linkedin) || {};
   const palabrasCopy = String(copyLinkedIn.texto || '').split(/\s+/).filter(Boolean).length;
   const mover = (i, d) => {
@@ -240,8 +240,8 @@ export default function Editor({ articulo, alCambiar, publicadoAntes }) {
             <div style={{ background: marco.papel, border: marco.linea, borderRadius: 2, padding: 16, display: 'grid', gap: 12 }}>
               <Fila style={{ justifyContent: 'space-between' }}>
                 <Etiqueta pista="lo que se lee en LinkedIn cuando salga el artículo">Post de LinkedIn</Etiqueta>
-                <span style={{ font: 'var(--type-mono)', fontSize: 12, color: palabrasCopy > 100 || (palabrasCopy && palabrasCopy < 60) ? 'var(--estado-error, #b42318)' : 'var(--text-faint)' }}>
-                  {palabrasCopy} palabras · 60–100
+                <span style={{ font: 'var(--type-mono)', fontSize: 12, color: palabrasCopy > 100 || (palabrasCopy && palabrasCopy < 30) ? 'var(--estado-error, #b42318)' : 'var(--text-faint)' }}>
+                  {palabrasCopy} palabras · 30–75 (máx. 100)
                 </span>
               </Fila>
               <Area

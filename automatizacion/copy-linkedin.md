@@ -91,44 +91,72 @@ BECOME, en plural: «lo desarrollamos», «vemos», «analizamos».
 
 ### La voz
 
-Ejecutiva, inteligente, directa, premium, business-first. Clara, no académica.
-Segura, sin exageraciones. Provocadora cuando la idea lo justifique, nunca
-clickbait. Corporativa en el sentido de que habla una organización, no en el de
-sonar acartonada: la tensión y el filo se mantienen.
+La referencia es el LinkedIn de Gartner: corto, seguro, sin adornos. Una
+organización que habla con autoridad de lo que ve, no un amigo que cuenta algo ni
+un vendedor que empuja. Frases cortas y declarativas, en el presente. Una sola
+idea por post. El peso lo lleva una afirmación sobre cómo están las empresas, no
+un adjetivo.
 
 BECOME habla de IA desde transformación, capacidad empresarial, procesos,
 decisiones, personas, datos y operación. No desde el entusiasmo tecnológico.
 
 ### La estructura
 
-1. **Gancho.** Una frase corta con una tensión, un hallazgo o una pregunta.
-2. **Desarrollo.** Dos o tres frases, no más, sobre por qué le importa a una
-   empresa. Sin revelar las conclusiones del artículo.
-3. **Invitación.** Una frase natural para seguir leyendo: «Lo desarrollamos en
-   este nuevo análisis de BECOME», «Exploramos qué cambia cuando…», «En el
-   artículo completo analizamos…».
+Tres bloques, separados por una línea en blanco. Es la estructura de los posts de
+Gartner y no hace falta inventar otra:
 
-El enlace y los hashtags los pone el publicador. No los escribas en el texto.
+1. **La afirmación.** Una línea que dice cómo están las cosas, o una creencia
+   común que el artículo cuestiona. «Muchas empresas creen que sacar más valor de
+   la IA exige gastar más en IA.» «La mayoría de las inversiones en IA no
+   entrega un retorno medible.» Puede abrir con un único emoji si aporta (⚠️ 📉 💡
+   🔮), nunca más de uno en todo el post.
+2. **El giro.** Una o dos líneas que dicen dónde está de verdad el problema. Aquí
+   cabe el contraste «el reto no es X, es Y», una vez, sin florituras: «El reto
+   real no es cuánto se invierte. Es la disciplina con que se invierte.» No
+   adelantes las conclusiones del artículo.
+3. **La invitación.** Una línea que promete algo concreto que el lector se lleva
+   del artículo y empieza con un verbo: «Tres decisiones para que el gasto en IA
+   no se descontrole.» «Cómo identificar los procesos donde un agente aporta valor
+   medible.» «Qué tiene que existir antes de escalar agentes con seguridad.» El
+   enlace y los hashtags los pone el publicador.
+
+Ejemplos del resultado (inventados para esta guía, no son de ningún artículo):
+
+> Muchas organizaciones creen que sacar más valor de la IA exige gastar más en IA.
+>
+> El reto real no es cuánto se invierte, sino la disciplina con que se hace.
+>
+> Tres decisiones para que el gasto no se descontrole.
+
+> ⚠️ A diferencia de la IA digital, un agente que actúa en la operación no tiene
+> botón de reinicio.
+>
+> Un error tiene consecuencias reales, así que gobierno y coordinación pesan tanto
+> como la inteligencia del modelo.
+>
+> Qué debe estar definido antes de dejar que un agente decida solo.
 
 ### Reglas
 
-- Entre 60 y 100 palabras.
-- Párrafos cortos, separados por una línea en blanco.
+- Entre 30 y 75 palabras (el guardián solo rechaza por encima de 100). Un post de Gartner cabe en una pantalla; si necesita
+  más, es dos ideas.
+- Párrafos de una a dos líneas, separados por una línea en blanco.
+- Una sola idea. Si hay dos, hay dos posts.
 - No empezar por «Nuevo artículo».
 - Prohibidas: «La IA está revolucionando el mundo», «En un mundo cada vez más
   digital», «Descubre cómo», «¿Estás listo para el futuro?», «No te lo puedes
   perder».
-- Sin emojis, salvo que uno aporte algo evidente.
-- **Un solo signo de interrogación en todo el post.** Dos preguntas seguidas
-  diluyen la primera.
+- Un emoji como máximo, y solo al principio de una línea.
+- **Un solo signo de interrogación en todo el post**, y no hace falta ninguno.
+  Gartner afirma más de lo que pregunta.
 - No convertir el post en una lista.
-- Nada de datos, resultados ni conclusiones que no estén en el artículo.
+- Nada de datos, resultados ni conclusiones que no estén en el artículo. Si el
+  post lleva una cifra, tiene que estar en el artículo con su fuente.
 - No repetir el título literalmente salvo que haga falta.
 - El post tiene que funcionar para alguien que no conoce BECOME.
-- Antes una idea memorable que una explicación completa.
 - Rayas largas (—) no, aquí tampoco.
 - **Ni una primera persona del singular.** Habla la empresa. Si la idea pide una
-  escena vivida, se cuenta en tercera persona como patrón, no como recuerdo.
+  escena, se cuenta como patrón («un director de operaciones automatizó…»).
 
 ### Máximo tres hashtags
 

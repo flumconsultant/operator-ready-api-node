@@ -301,7 +301,7 @@ pase: el mismo guardián corre en el despliegue y lo va a rechazar igual, solo
 que entonces no habrá nadie para arreglarlo y el día se queda sin artículo.
 
 El guardián revisa también el post de LinkedIn si lo has escrito: que tenga
-entre 60 y 100 palabras, que no repita el título ni la entradilla, que no lleve
+entre 30 y 100 palabras (objetivo 30–75), que no repita el título ni la entradilla, que no lleve
 el enlace dentro y que los hashtags sean tres como mucho.
 
 Y cuando pase, genera la tarjeta para compartir:
