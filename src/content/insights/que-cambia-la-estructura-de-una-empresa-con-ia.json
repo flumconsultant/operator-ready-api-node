@@ -37,7 +37,7 @@
       },
       {
         "tipo": "parrafo",
-        "texto": "Piensa en un agente que atiende reclamaciones de punta a punta: lee el correo del cliente, consulta el pedido y propone el reembolso. Antes, servicio al cliente aprobaba la respuesta y operaciones aprobaba el reembolso. Con el agente, esas dos firmas son una sola decisión que ocurre en segundos. El cambio de estructura real es que una de las dos firmas desaparece y el proceso pasa a tener un solo dueño. Su manager ya no cuenta personas: cuenta reembolsos revisados por semana. Y el coste, que antes eran tres sueldos, ahora sube y baja con el número de reclamaciones. Ese es el presupuesto que hay que aprobar. Lo demás es lámina."
+        "texto": "Piensa en un agente que atiende reclamos de punta a punta: lee el correo del cliente, consulta el pedido y propone el reembolso. Antes, servicio al cliente aprobaba la respuesta y operaciones aprobaba el reembolso. Con el agente, esas dos firmas son una sola decisión que ocurre en segundos. El cambio de estructura real es que una de las dos firmas desaparece y el proceso pasa a tener un solo dueño. Su manager ya no cuenta personas: cuenta reembolsos revisados por semana. Y el coste, que antes eran tres sueldos, ahora sube y baja con el número de reclamos. Ese es el presupuesto que hay que aprobar. Lo demás es lámina."
       },
       {
         "tipo": "parrafo",

@@ -108,7 +108,7 @@
       },
       {
         "tipo": "parrafo",
-        "texto": "Pruébalo con un caso real, no con una diapositiva. Imagina un agente que responde reclamaciones de clientes y que lleva cuatro meses en producción. Un lunes, el equipo de riesgo detecta que está aprobando devoluciones fuera de la política. El control levanta la mano. Lo que pasa en las siguientes doce horas te dice si tenías un marco o una carpeta. Cada uno de los cinco controles tiene su propia versión de esa prueba, y se puede hacer en una sola reunión."
+        "texto": "Pruébalo con un caso real, no con una diapositiva. Imagina un agente que responde reclamos de clientes y que lleva cuatro meses en producción. Un lunes, el equipo de riesgo detecta que está aprobando devoluciones fuera de la política. El control levanta la mano. Lo que pasa en las siguientes doce horas te dice si tenías un marco o una carpeta. Cada uno de los cinco controles tiene su propia versión de esa prueba, y se puede hacer en una sola reunión."
       },
       {
         "tipo": "lista",
