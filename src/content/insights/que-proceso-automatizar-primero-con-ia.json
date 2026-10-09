@@ -1,0 +1,249 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-10-09",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "operating-model",
+  "formato": "framework",
+  "es": {
+    "slug": "que-proceso-automatizar-primero-con-ia",
+    "titulo": "Qué proceso automatizar primero con IA",
+    "entradilla": "El primer proceso que se automatiza con IA no debería ser el que más duele ni el más vistoso. Debería ser el que tiene dueño, repite con poca variación y falla de forma que se ve a tiempo. Con esos tres filtros, el primer intento deja de ser una apuesta.",
+    "descripcion": "Para elegir el primer proceso que automatizar con IA, busca uno con dueño claro, volumen repetido y errores baratos de detectar. Tres filtros para decidir.",
+    "linkedin": {
+      "texto": "El primer proceso que una empresa automatiza con IA casi siempre es el equivocado: el que más duele, el que pide el comité.\n\nEl que funciona suele ser más modesto. Tiene dueño, repite cada semana y, cuando falla, alguien lo ve el mismo día.\n\nTres filtros para elegirlo sin quemarse en el primer intento.",
+      "hashtags": [
+        "IA",
+        "Operaciones",
+        "Transformacion"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "El primer proceso que se automatiza con IA no debería ser el que más duele ni el más vistoso. Debería ser el que tiene dueño, repite con poca variación y falla de forma que se ve a tiempo. Con esos tres filtros, el primer intento deja de ser una apuesta."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por cómo se suele elegir. Un comité reúne una lista de procesos candidatos y los ordena por dolor: el que más horas consume, el que más se queja, el que más cuesta. Es un criterio lógico, y es el que lleva al primer intento a fracasar con más frecuencia. Los procesos que más duelen son casi siempre los más enredados, los que tienen más excepciones y los que dependen de más áreas a la vez."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La respuesta corta es que el primer proceso se elige por lo que permite aprender, no por lo que ahorra. Un primer intento que sale bien, aunque sea pequeño, fija cómo se supervisa, cómo se mide y quién responde. Uno que sale mal en un proceso crítico enseña lo mismo, pero con la dirección mirando y con menos paciencia para el segundo."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El error habitual",
+        "texto": "¿Por qué fracasa el primer proceso que se automatiza con IA?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en un proceso de conciliación de facturas con proveedores. Duele mucho: lo hacen seis personas, tarda días y genera discrepancias. Parece el candidato ideal. Pero cada proveedor factura con su formato, cada país tiene su regla fiscal y la mitad de las discrepancias se resuelven con una llamada. Un agente que intente cubrir todo eso desde el primer día se encuentra con cientos de casos especiales, y cada uno de ellos necesita que alguien decida."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El resultado habitual es un piloto que funciona con los casos sencillos y obliga a revisar a mano el resto, de modo que el equipo trabaja más que antes. La conclusión que se escucha entonces es que la IA todavía no está lista. Lo que no estaba listo era la elección del proceso."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Un buen primer proceso pasa tres filtros, no uno"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Tres filtros, en este orden. Los dos primeros descartan casi todo lo que no conviene, y el tercero decide entre los que quedan."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Tiene un dueño que lo conoce y puede cambiarlo",
+            "definicion": "Una persona concreta sabe cómo funciona el proceso de punta a punta y tiene autoridad para modificarlo. Sin ella, nadie decide qué hacer cuando el agente se topa con un caso raro, y el proyecto se queda esperando una reunión."
+          },
+          {
+            "termino": "2. Repite con poca variación",
+            "definicion": "El mismo tipo de caso llega muchas veces por semana y las reglas que lo resuelven se pueden escribir. Un proceso con volumen y variación acotada da al agente datos suficientes para aprender y a ti, evidencia suficiente para medir. Uno con pocos casos y todos distintos no da ni lo uno ni lo otro."
+          },
+          {
+            "termino": "3. Sus errores se ven a tiempo y cuestan poco",
+            "definicion": "Si el agente se equivoca, alguien lo detecta el mismo día y el daño se corrige sin consecuencias para un cliente, un regulador o una cifra que se reporta. Es el filtro que más se olvida y el que más protege: permite equivocarse en el primer intento sin que sea caro."
+          }
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El mecanismo",
+        "texto": "El tercer filtro es el que decide si hay un segundo proceso"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Imagina dos candidatos. El primero es la clasificación de correos entrantes de un área de atención: llegan cientos por semana, siguen unas pocas categorías, y si el agente clasifica mal, un supervisor lo ve al revisar la cola esa misma tarde. El segundo es la aprobación de reembolsos de alto importe: pocos casos, mucho criterio y un error que se descubre cuando el cliente ya reclamó."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Los dos son automatizables, pero solo el primero permite aprender con seguridad. Cuando el error se ve rápido, el equipo ajusta las reglas, mide cuántas correcciones necesita y gana confianza con datos propios. Cuando el error se ve tarde, cada ajuste se hace a ciegas y la organización responde con lo único que sabe hacer: añadir revisiones humanas hasta que el ahorro desaparece."
+      },
+      {
+        "tipo": "cita",
+        "texto": "El primer proceso automatizado no se elige por lo mucho que ahorra, sino por lo barato que sale equivocarse en él.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La consecuencia",
+        "texto": "Un primer proceso modesto abre el camino a los difíciles"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Elegir un proceso modesto suele parecer una renuncia a la ambición. En la práctica ocurre lo contrario. El primer caso que funciona deja tres cosas que el siguiente aprovecha: una forma de supervisar el trabajo del agente, un indicador acordado de qué significa que funciona y una persona en la organización que ya sabe responder por él. Los procesos grandes se atacan después, con esas tres piezas ya montadas."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Toma la lista de candidatos y descarta todo proceso que no tenga una persona que lo conozca de punta a punta. De los que queden, quédate con el que recibe más casos parecidos por semana y cuyo error se pueda ver y corregir el mismo día. Ese es tu primer proceso, aunque no sea el que más duele."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Qué proceso automatizamos primero con IA?",
+            "respuesta": "El que tenga un dueño que lo conozca de punta a punta, un volumen repetido de casos parecidos y errores que se vean y se corrijan el mismo día. No hace falta que sea el proceso que más cuesta o el que más se queja. El primer intento sirve para aprender a supervisar, medir y responder por un agente, y eso se aprende mejor donde equivocarse sale barato."
+          },
+          {
+            "pregunta": "¿Por qué no empezar por el proceso que más cuesta?",
+            "respuesta": "Porque los procesos que más cuestan suelen ser también los que tienen más excepciones y dependen de más áreas. Un agente que intenta cubrirlos desde el primer día resuelve una parte y deja el resto a revisión manual, y el equipo termina trabajando más que antes. Conviene llegar a ellos después, con la supervisión y la medición ya montadas."
+          },
+          {
+            "pregunta": "¿Cómo sé si un proceso tiene suficiente volumen para automatizarlo?",
+            "respuesta": "Si llegan varios casos del mismo tipo cada semana y las reglas que los resuelven se pueden escribir en una página, hay volumen y variación suficientes. Si los casos son pocos o cada uno es distinto, el agente no tiene de dónde aprender y tú no tienes evidencia para saber si funciona."
+          },
+          {
+            "pregunta": "¿Qué hacemos si el primer intento no sale bien?",
+            "respuesta": "Revisa primero si el proceso elegido cumplía los tres filtros: dueño, repetición y error barato. Casi siempre falta uno. Si los cumplía, ajusta las reglas con los errores detectados y mide de nuevo en dos o tres semanas. Si no los cumplía, cambia de proceso antes de concluir que la IA no sirve para el caso."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Elijamos juntos el primer proceso que merece automatizarse",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "which-process-to-automate-first-with-ai",
+    "titulo": "Which Process to Automate First with AI",
+    "entradilla": "The first process you automate with AI should not be the one that hurts most or looks most impressive. It should have an owner, repeat with little variation, and fail in ways you can see in time. Those three filters turn the first attempt from a bet into a decision.",
+    "descripcion": "To choose the first process to automate with AI, look for a clear owner, repeated volume and errors that are cheap to catch. Three filters to decide.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "The first process you automate with AI should not be the one that hurts most or looks most impressive. It should have an owner, repeat with little variation, and fail in ways you can see in time. Those three filters turn the first attempt from a bet into a decision."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Start with how the choice is usually made. A committee gathers a list of candidate processes and ranks them by pain: the one that eats the most hours, draws the most complaints, costs the most. It is a logical criterion, and it is the one that most often sends a first attempt to failure. The processes that hurt most tend to be the most tangled, with the most exceptions and the most dependencies across functions."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The short answer is that the first process is chosen for what it lets you learn, not for what it saves. A first attempt that goes well, even a small one, fixes how the work is supervised, how it is measured and who answers for it. One that goes badly on a critical process teaches the same lessons, but with leadership watching and less patience for a second try."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The usual mistake",
+        "texto": "Why does the first AI automation so often fail?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Think of supplier invoice reconciliation. It hurts: six people do it, it takes days and it produces discrepancies. It looks like the ideal candidate. But every supplier invoices in its own format, every country has its own tax rule, and half the discrepancies get settled with a phone call. An agent trying to cover all of that from day one meets hundreds of special cases, and each one needs somebody to decide."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The usual result is a pilot that handles the easy cases and forces a manual check on the rest, so the team ends up working harder than before. The conclusion people then draw is that AI is not ready yet. What was not ready was the choice of process."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "A good first process passes three filters, not one"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Three filters, in this order. The first two rule out most of what does not fit, and the third decides among what remains."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. It has an owner who knows it and can change it",
+            "definicion": "One named person understands the process end to end and has the authority to modify it. Without that person, nobody decides what to do when the agent hits an odd case, and the project sits waiting for a meeting."
+          },
+          {
+            "termino": "2. It repeats with little variation",
+            "definicion": "The same type of case arrives many times a week, and the rules that resolve it can be written down. Volume with bounded variation gives the agent enough to work with and gives you enough evidence to measure. A process with few cases, all different, gives neither."
+          },
+          {
+            "termino": "3. Its errors show up in time and cost little",
+            "definicion": "If the agent gets it wrong, someone spots it the same day and the damage is fixed with no consequence for a customer, a regulator or a reported figure. It is the filter most often forgotten and the one that protects most: it lets you be wrong on the first attempt without it being expensive."
+          }
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The mechanism",
+        "texto": "The third filter decides whether there is a second process"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Imagine two candidates. The first is sorting incoming emails in a customer service team: hundreds a week, a handful of categories, and if the agent sorts one wrong, a supervisor sees it when reviewing the queue that same afternoon. The second is approving high-value refunds: few cases, a lot of judgment, and an error discovered only once the customer has already complained."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Both can be automated, but only the first lets you learn safely. When errors surface fast, the team adjusts the rules, counts how many corrections it needs and builds confidence on its own data. When errors surface late, every adjustment is made blind, and the organisation responds with the only tool it has: adding human reviews until the saving disappears."
+      },
+      {
+        "tipo": "cita",
+        "texto": "The first automated process is not chosen for how much it saves, but for how cheaply you can be wrong in it.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The consequence",
+        "texto": "A modest first process opens the way to the hard ones"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Choosing a modest process often feels like giving up on ambition. In practice the opposite happens. The first case that works leaves three things the next one can use: a way to supervise the agent's work, an agreed measure of what working means, and someone in the organisation who already knows how to answer for it. The big processes get tackled afterwards, with those three pieces already in place."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take your list of candidates and drop any process without someone who knows it end to end. Of the ones left, keep the one that receives the most similar cases each week and whose errors can be seen and corrected the same day. That is your first process, even if it is not the one that hurts most."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Which process should we automate first with AI?",
+            "respuesta": "The one with an owner who knows it end to end, a repeated volume of similar cases, and errors that are seen and fixed the same day. It need not be the costliest process or the one that draws most complaints. The first attempt is for learning how to supervise, measure and answer for an agent, and that is learned best where being wrong is cheap."
+          },
+          {
+            "pregunta": "Why not start with the process that costs the most?",
+            "respuesta": "Because the costliest processes tend to carry the most exceptions and depend on the most functions. An agent trying to cover them from day one resolves part and leaves the rest to manual review, and the team ends up working harder than before. It is better to reach them later, once supervision and measurement are in place."
+          },
+          {
+            "pregunta": "How do we know a process has enough volume to automate?",
+            "respuesta": "If several cases of the same type arrive each week and the rules that resolve them fit on one page, volume and variation are enough. If cases are few or each one is different, the agent has nothing to learn from and you have no evidence to tell whether it works."
+          },
+          {
+            "pregunta": "What if the first attempt does not go well?",
+            "respuesta": "First check whether the chosen process met the three filters: owner, repetition and cheap errors. Usually one is missing. If it did meet them, adjust the rules using the errors caught and measure again in two or three weeks. If it did not, change process before concluding that AI does not work for the case."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's pick the first process worth automating",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
