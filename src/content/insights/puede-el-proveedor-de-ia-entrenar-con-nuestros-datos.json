@@ -1,0 +1,241 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-10-10",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "responsible-scale",
+  "formato": "framework",
+  "es": {
+    "slug": "puede-el-proveedor-de-ia-entrenar-con-nuestros-datos",
+    "titulo": "Proveedor de IA que entrena con tus datos",
+    "entradilla": "Depende de lo que diga el contrato, y casi nunca de lo que dice la página de marketing. La pregunta útil no es si el proveedor entrena con tus datos, sino cuáles de ellos toca, durante cuánto tiempo y quién puede comprobarlo. Con tres cláusulas revisadas, la respuesta deja de ser una suposición.",
+    "descripcion": "Un proveedor de IA entrena con tus datos solo si el contrato lo permite. Tres cláusulas para saber qué datos usa, cuánto los guarda y quién lo verifica.",
+    "linkedin": {
+      "texto": "Muchas empresas preguntan si su proveedor de IA entrena el modelo con sus datos. La pregunta que decide es otra: ¿qué datos, durante cuánto tiempo y quién puede comprobarlo?\n\nLa respuesta no está en la web del proveedor. Está en tres cláusulas del contrato que casi nadie lee antes de firmar.\n\nCuáles son y qué buscar en cada una.",
+      "hashtags": [
+        "IA",
+        "Datos",
+        "Contratos"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Depende de lo que diga el contrato, y casi nunca de lo que dice la página de marketing. La pregunta útil no es si el proveedor entrena con tus datos, sino cuáles de ellos toca, durante cuánto tiempo y quién puede comprobarlo. Con tres cláusulas revisadas, la respuesta deja de ser una suposición."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por lo que suele ocurrir. Un equipo de producto prueba una herramienta de IA con datos reales, funciona bien, y a las pocas semanas alguien de legal o de seguridad pregunta si el proveedor puede usar esa información para mejorar su modelo. Si el proveedor atiende también a la competencia, la pregunta crece: ¿lo que aprendió de nosotros acaba en el producto que usa el de enfrente?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La respuesta corta es que un proveedor solo puede entrenar con tus datos si el contrato se lo permite, y que lo que se permite varía mucho entre proveedores y entre planes del mismo proveedor. Por eso ninguna respuesta general sirve. Lo que sí sirve es saber en qué cláusulas mirar y qué exigir en cada una."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La pregunta",
+        "texto": "¿Puede el proveedor de IA entrenar su modelo con nuestros datos?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Puede si lo autorizas, de forma expresa o por omisión. El segundo caso es el que más sorprende. Muchas condiciones de uso se redactan para que el cliente acepte un uso amplio de lo que envía, y el matiz suele estar en un anexo, en una política enlazada o en una diferencia entre el plan de pago y el gratuito. Un contrato firmado hace un año con un plan distinto puede decir algo muy diferente de lo que dice hoy la web."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay además un segundo uso que se confunde con el entrenamiento: la retención. Un proveedor puede no entrenar con tus datos y aun así guardarlos treinta días para detectar abusos, o conservarlos más tiempo para resolver incidencias. Son decisiones distintas, con riesgos distintos, y se negocian por separado."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Tres cláusulas deciden si tus datos salen de tu control"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Qué datos cuentan como tuyos",
+            "definicion": "El contrato debe distinguir entre lo que envías (documentos, consultas, historiales), lo que el modelo devuelve y los datos derivados, como métricas de uso o ejemplos marcados como buenos o malos. Muchas veces el entrenamiento está prohibido para lo primero y permitido para lo último. Si la definición de «datos del cliente» es estrecha, la prohibición protege poco."
+          },
+          {
+            "termino": "2. Cuánto tiempo se conservan y para qué",
+            "definicion": "Pide por escrito el plazo de retención y el motivo. Un plazo corto con fines de seguridad es razonable. Un plazo indefinido «para mejorar el servicio» es la puerta por la que un uso no previsto entra más tarde. Conviene exigir también qué ocurre al terminar el contrato: borrado, plazo para hacerlo y confirmación."
+          },
+          {
+            "termino": "3. Quién puede comprobarlo",
+            "definicion": "Una promesa de no entrenar vale lo que vale la capacidad de verificarla. Busca el derecho a pedir un informe independiente, la lista de subencargados que tocan tus datos y la obligación de avisarte antes de cambiar las condiciones. Sin eso, la cláusula es una declaración de intenciones."
+          }
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El mecanismo",
+        "texto": "El riesgo con la competencia se decide por el dato, no por el proveedor"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Imagina una aseguradora que sube a una herramienta de IA las notas de sus peritos para automatizar informes. Si esas notas entran al entrenamiento general, el modelo no copia el texto de la aseguradora, pero sí puede absorber patrones: cómo se valora un siniestro, qué criterio se aplica a un tipo de reclamo. Esa ventaja es la que la competencia podría encontrar mañana en el producto que compra al mismo proveedor."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Por eso la decisión sensata no es vetar a un proveedor entero, sino clasificar los datos antes de enviarlos. Lo que es público o trivial puede circular con condiciones estándar. Lo que contiene criterio propio, precios, fórmulas o datos de clientes solo debería viajar con la cláusula de no entrenamiento firmada, el plazo de retención acordado y el derecho de verificación."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un proveedor no decide si aprende de tus datos: lo decide el contrato que firmaste y la capacidad que tengas de comprobarlo.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La consecuencia",
+        "texto": "Revisar el contrato antes del piloto cuesta menos que revisarlo después"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El momento en que se abre esta conversación suele ser el peor: cuando el piloto ya funciona y hay presión para extenderlo. Entonces cualquier cláusula incómoda parece un freno. Si se revisa antes, la misma cláusula se negocia como una condición más. Lo que se gana no es solo protección jurídica, sino la posibilidad de decir con certeza a un cliente o a un regulador qué ocurre con sus datos."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Haz una lista de las herramientas de IA que ya usa tu organización, incluidas las que adoptó un equipo por su cuenta. Para cada una, localiza las tres cláusulas: qué datos cubre, cuánto los conserva y cómo puedes comprobarlo. Donde falte alguna, esa herramienta no debería recibir datos con valor competitivo hasta que se resuelva."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Puede el proveedor de IA entrenar su modelo con nuestros datos?",
+            "respuesta": "Solo si el contrato o las condiciones de uso que aceptaste se lo permiten, y eso puede ocurrir de forma expresa o por omisión. La respuesta cambia según el proveedor y también según el plan contratado. Por eso hay que leer el texto vigente de tu contrato, no la comunicación comercial, y pedir por escrito una cláusula de no entrenamiento si los datos tienen valor."
+          },
+          {
+            "pregunta": "¿Es lo mismo que el proveedor guarde mis datos que que entrene con ellos?",
+            "respuesta": "No. Guardar los datos es retención: puede servir para seguridad, soporte o auditoría, y tiene un plazo. Entrenar es usarlos para mejorar el modelo, y suele ser un uso permanente que no se puede deshacer fácilmente. Un proveedor puede hacer lo primero sin hacer lo segundo, así que conviene negociar cada uno con su propia cláusula."
+          },
+          {
+            "pregunta": "¿Qué pasa si el proveedor también trabaja con mi competencia?",
+            "respuesta": "El riesgo existe solo si tus datos entran al entrenamiento general o a una mejora compartida del producto. Con una cláusula de no entrenamiento, una retención corta y un derecho de verificación, el hecho de que atienda a otros clientes pesa mucho menos. Lo que importa es qué datos cuentan como tuyos y si el contrato los protege también en su forma derivada."
+          },
+          {
+            "pregunta": "¿Cómo puedo comprobar que el proveedor cumple lo que promete?",
+            "respuesta": "Pidiendo tres cosas por escrito: un informe de auditoría independiente, la lista de subencargados que acceden a tus datos y el compromiso de avisarte antes de cambiar las condiciones. Si el proveedor no ofrece ninguna, la promesa depende solo de su palabra, y eso debería pesar en la decisión de qué datos le envías."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos juntos qué datos pueden viajar y bajo qué condiciones",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "can-an-ai-vendor-train-its-model-on-our-data",
+    "titulo": "Can an AI Vendor Train Its Model on Our Data?",
+    "entradilla": "It depends on what the contract says, and rarely on what the marketing page says. The useful question is not whether the vendor trains on your data, but which data it touches, for how long, and who can check. With three clauses reviewed, the answer stops being a guess.",
+    "descripcion": "An AI vendor can train on your data only if the contract allows it. Three clauses to check: which data it covers, how long it is kept, and who can verify.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "It depends on what the contract says, and rarely on what the marketing page says. The useful question is not whether the vendor trains on your data, but which data it touches, for how long, and who can check. With three clauses reviewed, the answer stops being a guess."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Start with what usually happens. A product team tries an AI tool on real data, it works well, and a few weeks later someone in legal or security asks whether the vendor may use that information to improve its model. If the vendor also serves your competitors, the question grows: does what it learned from us end up in the product the company across the street uses?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The short answer is that a vendor can train on your data only if the contract lets it, and what is allowed varies widely between vendors and between plans from the same vendor. That is why no general answer helps. What helps is knowing which clauses to read and what to demand in each."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The question",
+        "texto": "Can an AI vendor train its model on our data?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "It can if you authorise it, expressly or by omission. The second case is the one that surprises people. Many terms of use are drafted so the customer accepts broad use of what it sends, and the nuance often sits in an annex, in a linked policy, or in the difference between the paid and the free plan. A contract signed a year ago on a different plan can say something quite different from what the website says today."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "There is also a second use that gets confused with training: retention. A vendor may not train on your data and still keep it for thirty days to detect abuse, or hold it longer to resolve incidents. These are separate decisions with separate risks, and they are negotiated separately."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "Three clauses decide whether your data leaves your control"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. What counts as your data",
+            "definicion": "The contract should distinguish what you send (documents, queries, histories), what the model returns, and derived data such as usage metrics or examples marked good or bad. Training is often barred for the first and allowed for the last. If the definition of customer data is narrow, the prohibition protects little."
+          },
+          {
+            "termino": "2. How long it is kept and why",
+            "definicion": "Ask in writing for the retention period and the reason. A short period for security purposes is reasonable. An open-ended one «to improve the service» is the door through which an unforeseen use walks in later. Also demand what happens when the contract ends: deletion, the deadline for it, and confirmation."
+          },
+          {
+            "termino": "3. Who can check",
+            "definicion": "A promise not to train is worth what your ability to verify it is worth. Look for the right to request an independent report, the list of subprocessors that touch your data, and an obligation to warn you before terms change. Without those, the clause is a statement of intent."
+          }
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The mechanism",
+        "texto": "The risk with competitors is decided by the data, not by the vendor"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Imagine an insurer uploading its adjusters' notes to an AI tool to automate reports. If those notes enter general training, the model does not copy the insurer's text, but it can absorb patterns: how a loss is valued, which criterion applies to a type of claim. That edge is what a competitor could find tomorrow in the product it buys from the same vendor."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "So the sensible decision is not to veto a vendor outright but to classify data before it is sent. What is public or trivial can travel on standard terms. What contains your own judgment, pricing, formulas or customer data should only travel with the no-training clause signed, the retention period agreed and the right of verification in place."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A vendor does not decide whether it learns from your data: the contract you signed does, along with your ability to check it.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The consequence",
+        "texto": "Reviewing the contract before the pilot costs less than reviewing it after"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The moment this conversation opens is usually the worst one: when the pilot already works and there is pressure to extend it. Then any awkward clause looks like a brake. Reviewed earlier, the same clause is negotiated as one more condition. What you gain is not only legal protection but the ability to tell a customer or a regulator with certainty what happens to their data."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "List the AI tools your organisation already uses, including the ones a team adopted on its own. For each, find the three clauses: what data it covers, how long it keeps it, and how you can check. Where one is missing, that tool should not receive data of competitive value until it is resolved."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Can an AI vendor train its model on our data?",
+            "respuesta": "Only if the contract or the terms of use you accepted allow it, which can happen expressly or by omission. The answer changes by vendor and also by plan. So read the text currently in force in your contract, not the sales material, and ask in writing for a no-training clause if the data has value."
+          },
+          {
+            "pregunta": "Is a vendor keeping my data the same as training on it?",
+            "respuesta": "No. Keeping data is retention: it may serve security, support or audit, and it has a time limit. Training means using the data to improve the model, usually a permanent use that is hard to undo. A vendor can do the first without the second, so negotiate each under its own clause."
+          },
+          {
+            "pregunta": "What if the vendor also works with my competitor?",
+            "respuesta": "The risk exists only if your data enters general training or a shared product improvement. With a no-training clause, short retention and a right of verification, the fact that it serves other customers weighs far less. What matters is what counts as your data and whether the contract protects it in its derived form too."
+          },
+          {
+            "pregunta": "How can I check that the vendor does what it promises?",
+            "respuesta": "Ask for three things in writing: an independent audit report, the list of subprocessors that access your data, and a commitment to warn you before changing terms. If the vendor offers none, the promise rests on its word alone, and that should weigh in deciding what data you send."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's review which data can travel and under what conditions",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
