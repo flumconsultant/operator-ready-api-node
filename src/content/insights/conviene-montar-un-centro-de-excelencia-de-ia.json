@@ -1,0 +1,249 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-10-11",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "operating-model",
+  "formato": "perspective",
+  "es": {
+    "slug": "conviene-montar-un-centro-de-excelencia-de-ia",
+    "titulo": "¿Conviene montar un centro de excelencia de IA?",
+    "entradilla": "Un centro de excelencia de IA conviene cuando hay varias áreas usando IA sin criterios comunes, y sobra cuando todavía casi nadie la usa. El error habitual no es montarlo, es montarlo demasiado pronto: una capa central sin nada que coordinar acaba decidiendo sobre procesos que no conoce.",
+    "descripcion": "Un centro de excelencia de IA conviene cuando varias áreas ya usan IA sin criterios comunes. Antes, es una capa más. Tres señales para decidir.",
+    "linkedin": {
+      "texto": "Un centro de excelencia de IA resuelve un problema de coordinación. Si la empresa todavía no lo tiene, el centro termina inventando trabajo para justificarse.\n\nLa pregunta útil no es si montarlo, sino cuántas áreas ya usan IA y en qué se contradicen.\n\nTres señales para saber si es el momento.",
+      "hashtags": [
+        "IA",
+        "ModeloOperativo",
+        "Estrategia"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Un centro de excelencia de IA conviene cuando hay varias áreas usando IA sin criterios comunes, y sobra cuando todavía casi nadie la usa. El error habitual no es montarlo, es montarlo demasiado pronto: una capa central sin nada que coordinar acaba decidiendo sobre procesos que no conoce."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por cómo llega la propuesta a la mesa. Un comité de dirección ve que la IA avanza en varios frentes, que nadie la lidera y que hay cierto desorden, y concluye que hace falta un lugar donde se concentre el conocimiento. Se nombra un responsable, se reúnen cinco o seis personas técnicas y se les pide que ayuden a todas las áreas. Suena razonable, y a veces lo es."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La respuesta corta es que un centro de excelencia es una solución a un problema de coordinación, y solo conviene cuando ese problema existe. Si hay tres equipos comprando herramientas parecidas, cada uno con sus reglas de datos y su propio criterio de qué es un resultado aceptable, el centro ahorra dinero y riesgo. Si hay un solo piloto y dos curiosos, el centro no tiene qué coordinar y empieza a producir lo único que puede producir: documentos, comités y plantillas."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Cuándo un centro de excelencia de IA se convierte en una capa burocrática?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en un equipo central que acaba de formarse y no tiene ningún caso propio. Para justificar su existencia define un proceso de aprobación: toda iniciativa de IA debe pasar por él antes de empezar. Un área de finanzas que quería probar una herramienta de conciliación descubre que ahora necesita una evaluación, un formulario y una reunión. Tarda semanas en lo que antes tardaba días, y la siguiente vez lo hace sin avisar."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ese es el patrón que convierte al centro en burocracia. No ocurre por mala voluntad de quienes lo forman. Ocurre porque un equipo que no ejecuta solo puede controlar, y el control sin conocimiento del proceso se traduce en requisitos genéricos que retrasan a quien sí está haciendo algo."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El criterio",
+        "texto": "El momento se reconoce por tres señales, no por una intuición"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Antes de decidir, vale la pena comprobar tres cosas. Si se cumplen las tres, el centro tiene trabajo real desde el primer día. Si se cumple una o ninguna, es mejor una alternativa más ligera."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Hay varias áreas usando IA en producción",
+            "definicion": "Con dos o tres equipos que ya tienen algo funcionando, el centro puede aprender de casos reales y repartir lo aprendido. Con pilotos sueltos o ideas en papel, lo que reparte son opiniones."
+          },
+          {
+            "termino": "2. Esas áreas se contradicen en algo que cuesta",
+            "definicion": "Contratan al mismo proveedor con condiciones distintas, tratan los datos con reglas diferentes o miden el resultado con indicadores que no se pueden comparar. Cada contradicción es una decisión que alguien tendría que tomar una vez, y el centro es el lugar donde se toma."
+          },
+          {
+            "termino": "3. Hay una persona con autoridad para decidir, no solo para recomendar",
+            "definicion": "Un centro que solo aconseja depende de que las áreas le hagan caso. Uno que puede fijar un estándar de datos o descartar una compra duplicada tiene influencia real. Sin esa autoridad, la capa existe en el organigrama y no en las decisiones."
+          }
+        ]
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un centro de excelencia no crea la coordinación que falta, la organiza cuando ya hay algo que coordinar.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La alternativa",
+        "texto": "Antes del centro, una persona y una regla pueden bastar"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cuando las tres señales todavía no se cumplen, la alternativa no es no hacer nada. Es una versión mínima: una persona con tiempo asignado, un registro corto de qué se está usando y dónde, y dos o tres reglas que valen para todos, por ejemplo qué datos no salen de la empresa y quién aprueba un gasto recurrente. Eso cubre el riesgo principal sin crear una estructura que después hay que mantener."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ese arreglo mínimo también cumple otra función: muestra con qué frecuencia las áreas chocan. Si pasados unos meses el registro muestra compras duplicadas y criterios enfrentados, ya hay evidencia de que el centro hace falta y de qué tiene que resolver. Si el registro sigue casi vacío, se evitó crear una capa para nada."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La consecuencia",
+        "texto": "Un centro bien situado en el tiempo se paga con las decisiones que ahorra"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cuando se monta en el momento adecuado, el centro deja de medirse por cuántas reuniones organiza y se mide por las decisiones que evita repetir: una negociación con el proveedor en lugar de tres, un estándar de datos en lugar de cuatro interpretaciones. Su diseño cambia también: menos equipo que aprueba, más equipo que ayuda a las áreas a ejecutar, con casos propios que mantiene al día."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Haz una lista de las áreas que hoy usan IA en producción y anota en qué se contradicen. Si la lista tiene menos de tres áreas o ninguna contradicción cara, empieza por una persona y un registro. Si tiene tres o más y hay un conflicto que cuesta dinero, el centro ya tiene su primer trabajo."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cuándo conviene montar un centro de excelencia de IA?",
+            "respuesta": "Cuando varias áreas ya usan IA en producción y toman decisiones contradictorias que cuestan dinero o riesgo, como contratar al mismo proveedor con condiciones distintas o tratar los datos con reglas diferentes. También hace falta alguien con autoridad para fijar estándares. Si eso no existe todavía, un centro no tiene qué coordinar."
+          },
+          {
+            "pregunta": "¿Un centro de excelencia de IA es una capa burocrática?",
+            "respuesta": "Puede serlo si se monta antes de que haya algo que coordinar. Un equipo central sin casos propios suele justificarse con procesos de aprobación, y esos procesos retrasan a las áreas que sí están avanzando. Si se monta cuando hay conflictos reales entre áreas y tiene autoridad para resolverlos, ahorra trabajo en lugar de añadirlo."
+          },
+          {
+            "pregunta": "¿Qué se puede hacer en lugar de un centro de excelencia?",
+            "respuesta": "Una versión mínima: una persona con tiempo asignado, un registro corto de qué herramientas de IA se usan y dónde, y dos o tres reglas comunes sobre datos y gasto. Cubre el riesgo principal sin crear una estructura permanente. Si pasados unos meses el registro muestra duplicidades y conflictos, ya hay evidencia para formalizar el centro."
+          },
+          {
+            "pregunta": "¿Qué tamaño debería tener un centro de excelencia de IA?",
+            "respuesta": "El que permita ayudar a ejecutar, no solo a aprobar. Un equipo pequeño que mantiene casos propios y acompaña a las áreas aprende de la operación real. Uno grande que solo revisa iniciativas ajenas pierde contacto con los procesos y acaba aplicando requisitos genéricos."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos si tu organización está lista para un centro de excelencia",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "should-you-set-up-an-ai-center-of-excellence",
+    "titulo": "Should You Set Up an AI Center of Excellence?",
+    "entradilla": "An AI center of excellence makes sense when several functions already use AI without shared rules, and it is surplus when almost nobody does. The usual mistake is not building one, it is building it too early: a central layer with nothing to coordinate ends up deciding about processes it does not know.",
+    "descripcion": "An AI center of excellence pays off when several functions already use AI without common rules. Earlier, it is one more layer. Three signs it is time.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "An AI center of excellence makes sense when several functions already use AI without shared rules, and it is surplus when almost nobody does. The usual mistake is not building one, it is building it too early: a central layer with nothing to coordinate ends up deciding about processes it does not know."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Start with how the proposal reaches the table. An executive committee sees AI moving on several fronts, with nobody leading it and some disorder, and concludes there should be one place where the knowledge sits. A lead is named, five or six technical people are gathered, and they are asked to help every function. It sounds reasonable, and sometimes it is."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The short answer is that a center of excellence solves a coordination problem, and it only pays off when that problem exists. If three teams are buying similar tools, each with its own data rules and its own idea of an acceptable result, the center saves money and risk. If there is one pilot and two curious people, the center has nothing to coordinate and starts producing the only thing it can: documents, committees and templates."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "When does an AI center of excellence turn into bureaucracy?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture a central team that has just formed and has no cases of its own. To justify itself it defines an approval process: every AI initiative must pass through it before starting. A finance team that wanted to try a reconciliation tool finds it now needs an assessment, a form and a meeting. It takes weeks for what used to take days, and the next time it goes ahead without telling anyone."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That is the pattern that turns a center into bureaucracy. It does not happen out of ill will. It happens because a team that does not execute can only control, and control without knowledge of the process becomes generic requirements that slow down whoever is actually doing something."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The test",
+        "texto": "The moment shows in three signs, not a hunch"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Before deciding, check three things. If all three hold, the center has real work from day one. If one or none do, a lighter alternative serves better."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Several functions run AI in production",
+            "definicion": "With two or three teams that already have something working, the center can learn from real cases and spread what it learns. With scattered pilots or ideas on paper, what it spreads is opinion."
+          },
+          {
+            "termino": "2. Those functions contradict each other on something that costs money",
+            "definicion": "They sign with the same vendor on different terms, treat data under different rules, or measure results with indicators that cannot be compared. Each contradiction is a decision someone should take once, and the center is where it gets taken."
+          },
+          {
+            "termino": "3. Someone has authority to decide, not only to advise",
+            "definicion": "A center that only advises depends on functions choosing to listen. One that can set a data standard or stop a duplicate purchase has real influence. Without that authority, the layer exists on the org chart and not in decisions."
+          }
+        ]
+      },
+      {
+        "tipo": "cita",
+        "texto": "A center of excellence does not create the coordination that is missing. It organizes it once there is something to coordinate.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The alternative",
+        "texto": "Before the center, one person and a few rules can be enough"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "When the three signs are not yet there, the alternative is not doing nothing. It is a minimal version: one person with allocated time, a short register of what is in use and where, and two or three rules for everyone, such as which data never leaves the company and who approves a recurring spend. That covers the main risk without building a structure that must then be maintained."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The minimal setup also does something else: it shows how often functions collide. If after a few months the register shows duplicate purchases and clashing criteria, there is evidence the center is needed and what it has to solve. If the register is still nearly empty, you avoided building a layer for nothing."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The consequence",
+        "texto": "A well-timed center pays for itself in the decisions it saves"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "When it is set up at the right time, the center stops being measured by the meetings it runs and starts being measured by the decisions it prevents from being repeated: one negotiation with the vendor instead of three, one data standard instead of four interpretations. Its design changes too: fewer people approving, more people helping functions execute, with cases of its own that it keeps current."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "List the functions that use AI in production today and note where they contradict each other. If the list has fewer than three functions or no costly contradiction, start with one person and a register. If it has three or more and a conflict that costs money, the center already has its first job."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "When should we set up an AI center of excellence?",
+            "respuesta": "When several functions already run AI in production and make contradictory decisions that cost money or add risk, such as signing with the same vendor on different terms or treating data under different rules. You also need someone with authority to set standards. If that does not exist yet, a center has nothing to coordinate."
+          },
+          {
+            "pregunta": "Is an AI center of excellence just another layer of bureaucracy?",
+            "respuesta": "It can be, if it is built before there is anything to coordinate. A central team with no cases of its own tends to justify itself with approval processes, and those processes slow down the functions that are making progress. Built when real conflicts exist between functions, and given authority to settle them, it saves work instead of adding it."
+          },
+          {
+            "pregunta": "What can we do instead of a center of excellence?",
+            "respuesta": "A minimal version: one person with allocated time, a short register of which AI tools are used and where, and two or three common rules on data and spend. It covers the main risk without creating a permanent structure. If after a few months the register shows duplicates and conflicts, you have the evidence to formalize the center."
+          },
+          {
+            "pregunta": "How big should an AI center of excellence be?",
+            "respuesta": "Big enough to help execute, not just to approve. A small team that keeps cases of its own and works alongside the functions learns from real operations. A large one that only reviews other people's initiatives loses touch with the processes and ends up applying generic requirements."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's check whether your organization is ready for a center of excellence",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
