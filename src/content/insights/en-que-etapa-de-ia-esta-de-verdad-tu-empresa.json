@@ -1,0 +1,257 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-10-12",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "ai-native",
+  "formato": "framework",
+  "es": {
+    "slug": "en-que-etapa-de-ia-esta-de-verdad-tu-empresa",
+    "titulo": "¿En qué etapa de IA está de verdad tu empresa?",
+    "entradilla": "La madurez de una empresa en IA no se lee en lo que dice el comité, sino en lo que su operación ya no podría hacer sin ella. Tres preguntas con respuesta verificable permiten ubicarla sin depender de ningún modelo de madurez ajeno.",
+    "descripcion": "Para saber en qué etapa de IA está tu empresa, no mires lo declarado: comprueba qué trabajo depende de ella, quién responde y qué se mide. Tres pruebas.",
+    "linkedin": {
+      "texto": "Casi todas las empresas se describen más avanzadas en IA de lo que están.\n\nLa madurez no se ve en las herramientas contratadas. Se ve en el trabajo que ya depende de ellas, en quién responde por él y en qué se mide.\n\nTres pruebas para ubicar la etapa real antes de comprometer la siguiente fase.",
+      "hashtags": [
+        "IA",
+        "Estrategia",
+        "Transformacion"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "La madurez de una empresa en IA no se lee en lo que dice el comité, sino en lo que su operación ya no podría hacer sin ella. Tres preguntas con respuesta verificable permiten ubicarla sin depender de ningún modelo de madurez ajeno."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por cómo se responde hoy esta pregunta. En una reunión de comité alguien dice que la empresa está en una etapa intermedia: hay licencias, un par de pilotos y una iniciativa con nombre. Nadie lo discute, porque nadie tiene con qué contradecirlo. Es una opinión sobre la propia organización, dicha por quienes más interés tienen en que suene bien."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La respuesta corta es que la etapa real se ubica por dependencia, no por declaración. Una empresa está donde está el trabajo que ya se hace con IA, con un responsable y con una medición. Lo demás es intención, y la intención es una etapa respetable, pero distinta."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema de fondo",
+        "texto": "¿Por qué los modelos de madurez de IA dicen lo que quieres oír?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Casi todos los modelos de madurez que circulan los publica alguien que vende la etapa siguiente. Describen escalones con nombres atractivos, y quien los rellena se ubica con el criterio más generoso que encuentra, porque cada respuesta se puede interpretar. «Tenemos casos de uso en producción» es verdad si hay uno y también si hay veinte."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en un cuestionario de veinte afirmaciones que el comité responde en una hora. Sale una puntuación con aspecto de diagnóstico, y nadie ha tenido que abrir un solo proceso para obtenerla. Un diagnóstico serio hace lo contrario: pregunta cosas que se pueden comprobar mirando la operación un martes cualquiera."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Tres pruebas separan la madurez real de la declarada"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Las tres pruebas miran cosas distintas: qué trabajo depende de la IA, quién responde por él y qué evidencia existe de que funciona. Si las tres se cumplen para un proceso, ese proceso está maduro. La etapa de la empresa es la suma de los procesos que las pasan."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Prueba de dependencia: ¿qué trabajo se detendría si apagáramos la IA?",
+            "definicion": "Si apagar las herramientas durante una semana no cambia nada en los plazos, los costes ni las colas, la IA se usa pero la operación no depende de ella. Esa es una etapa de exploración, útil y todavía reversible. El trabajo que se atrasaría, se encarecería o volvería a manos de personas con una carga que ya no tienen es el que cuenta."
+          },
+          {
+            "termino": "2. Prueba de propiedad: ¿quién responde, con nombre, por cada uso?",
+            "definicion": "Para cada proceso con IA debe existir una persona que decide qué hace el agente, qué se revisa y qué pasa cuando se equivoca. Si la respuesta es «el equipo de tecnología» o «el comité», no hay propiedad. Un proceso sin dueño depende de que nada salga mal."
+          },
+          {
+            "termino": "3. Prueba de evidencia: ¿qué se midió antes y qué se mide ahora?",
+            "definicion": "Madurez es poder demostrar con números propios que el proceso mejoró: tiempo de ciclo, errores, coste por caso. Sin una medición previa no hay comparación posible, y sin comparación la historia de éxito es una anécdota. Esta es la prueba que menos empresas superan."
+          }
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El mecanismo",
+        "texto": "La etapa real de una empresa suele ser más baja que su media y más alta que su peor área"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Imagina una empresa con un área de atención al cliente donde un agente resuelve consultas, con una responsable, un indicador de resolución y una comparación con el año anterior. Ese proceso pasa las tres pruebas. En finanzas hay un asistente que algunas personas usan para redactar correos, sin dueño ni medición. En compras hay un piloto parado desde hace seis meses."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Si se promedia, la empresa se declara en una etapa intermedia. Si se mira proceso por proceso, tiene un proceso maduro, uno en exploración y uno detenido. Son tres situaciones que piden decisiones distintas: escalar el primero, ordenar el segundo y decidir si el tercero merece seguir. El promedio esconde justo la diferencia que el comité necesita ver antes de asignar presupuesto."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Una empresa no está en la etapa que dice. Está en la de los procesos que dependen de la IA, tienen dueño y se pueden medir.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La consecuencia",
+        "texto": "Comprometer presupuesto sin esta lectura financia la etapa equivocada"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La decisión que suele apoyarse en el diagnóstico es pasar a la siguiente fase: más licencias, más equipos, más casos de uso. Si la empresa se ubicó por declaración, esa inversión llega a una organización que todavía no sabe supervisar lo que ya tiene. Se multiplican los procesos sin dueño y la medición sigue sin existir, de modo que el gasto crece más rápido que la capacidad de saber si sirve."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay otra consecuencia, menos visible. Cuando la dirección descubre que la etapa real era más baja que la declarada, suele interpretarlo como un fracaso de la IA. Era un error de diagnóstico, y se corrige con una semana de trabajo en cada proceso, no con un cambio de estrategia."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Haz una lista de todos los procesos donde hoy se usa IA, aunque sea poco. Para cada uno, responde las tres pruebas por escrito: qué se detendría sin ella, quién responde con nombre y qué medición había antes. Los que no puedan responder las tres no están maduros, por muy usados que sean."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cómo sé en qué etapa de madurez de IA está mi empresa?",
+            "respuesta": "Haz una lista de los procesos donde se usa IA y comprueba tres cosas en cada uno: si el trabajo dependería de ella si faltara, si hay una persona con nombre que responde por él y si existe una medición de antes y después. La etapa de la empresa es el conjunto de procesos que cumplen las tres. Lo que no las cumple es exploración, aunque tenga licencias y usuarios."
+          },
+          {
+            "pregunta": "¿Sirven los modelos de madurez de IA que publican las consultoras y los proveedores?",
+            "respuesta": "Sirven como vocabulario común, no como diagnóstico. Suelen medir lo que se declara en un cuestionario y no lo que se puede comprobar en la operación, y quien los rellena tiende a elegir la respuesta más favorable. Úsalos para ordenar la conversación y verifica cada respuesta con un proceso concreto."
+          },
+          {
+            "pregunta": "¿Puede una empresa estar en etapas distintas según el área?",
+            "respuesta": "Sí, y es lo normal. Un área puede tener un proceso con dueño y medición mientras otra usa IA de forma informal y una tercera tiene un piloto detenido. Promediarlas oculta qué decisión corresponde a cada una, así que conviene ubicar la etapa por proceso y decidir por separado dónde escalar, dónde ordenar y dónde parar."
+          },
+          {
+            "pregunta": "¿Qué hago si el diagnóstico sale más bajo de lo que esperaba la dirección?",
+            "respuesta": "Preséntalo como un diagnóstico de procesos y no como un juicio sobre la estrategia. Un resultado bajo indica dónde falta dueño o medición, que son tareas concretas y de pocas semanas. Es mejor descubrirlo antes de comprometer presupuesto en la siguiente fase que después de haberlo gastado."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Ubiquemos juntos la etapa real de tu empresa",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-mature-is-your-company-at-ai-really",
+    "titulo": "How Mature Is Your Company at AI, Really?",
+    "entradilla": "A company's AI maturity is not read from what the committee says. It is read from the work its operation could no longer do without it. Three questions with verifiable answers place it, with no outside maturity model needed.",
+    "descripcion": "To tell what AI stage your company is at, ignore what is declared: check what work depends on it, who answers for it and what is measured. Three tests.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "A company's AI maturity is not read from what the committee says. It is read from the work its operation could no longer do without it. Three questions with verifiable answers place it, with no outside maturity model needed."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Start with how the question is answered today. In a committee meeting someone says the company is at an intermediate stage: there are licences, a couple of pilots and a named initiative. Nobody disputes it, because nobody has anything to dispute it with. It is an opinion about the organisation, given by the people with the most interest in it sounding good."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The short answer is that the real stage is located by dependence, not by declaration. A company is where the work already done with AI is, with an owner and a measurement. Everything else is intent, which is a respectable stage, but a different one."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The underlying problem",
+        "texto": "Why do AI maturity models tell you what you want to hear?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Most maturity models in circulation are published by someone who sells the next stage. They describe steps with attractive names, and whoever fills them in picks the most generous reading available, because every answer can be interpreted. \"We have use cases in production\" is true if there is one and also if there are twenty."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture a twenty-statement questionnaire the committee answers in an hour. It produces a score that looks like a diagnosis, and nobody has had to open a single process to get it. A serious diagnosis does the opposite: it asks things you can check by watching the operation on any ordinary Tuesday."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "Three tests separate real maturity from declared maturity"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The three tests look at different things: what work depends on AI, who answers for it, and what evidence shows it works. If all three hold for a process, that process is mature. The company's stage is the sum of the processes that pass."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Dependence test: what work would stop if we switched the AI off?",
+            "definicion": "If switching the tools off for a week changes nothing in lead times, costs or queues, AI is being used but the operation does not depend on it. That is an exploration stage, useful and still reversible. The work that would slow down, get dearer or fall back to people carrying a load they no longer have is the work that counts."
+          },
+          {
+            "termino": "2. Ownership test: who answers, by name, for each use?",
+            "definicion": "Every process with AI needs one person who decides what the agent does, what gets reviewed and what happens when it is wrong. If the answer is \"the technology team\" or \"the committee\", there is no ownership. A process with no owner depends on nothing going wrong."
+          },
+          {
+            "termino": "3. Evidence test: what was measured before, and what is measured now?",
+            "definicion": "Maturity is being able to show with your own numbers that the process improved: cycle time, errors, cost per case. Without a prior measurement there is nothing to compare, and without a comparison the success story is an anecdote. This is the test fewest companies pass."
+          }
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The mechanism",
+        "texto": "A company's real stage is usually below its average and above its worst function"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Imagine a company with a customer service team where an agent resolves queries, with a named owner, a resolution metric and a comparison with last year. That process passes all three tests. In finance, an assistant is used by some people to draft emails, with no owner and no measurement. In procurement, a pilot has been stalled for six months."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Averaged, the company declares an intermediate stage. Looked at process by process, it has one mature process, one in exploration and one stalled. Those are three situations calling for three different decisions: scale the first, tidy up the second and decide whether the third deserves to continue. The average hides exactly the difference the committee needs to see before allocating budget."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A company is not at the stage it says. It is at the stage of the processes that depend on AI, have an owner and can be measured.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The consequence",
+        "texto": "Committing budget without this reading funds the wrong stage"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The decision a diagnosis usually supports is moving to the next phase: more licences, more teams, more use cases. If the company placed itself by declaration, that investment lands in an organisation that still cannot supervise what it already has. Ownerless processes multiply and measurement stays absent, so spending grows faster than the ability to know whether it pays off."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "There is a second consequence, less visible. When leadership finds the real stage was lower than the declared one, it tends to read that as AI failing. It was a diagnostic error, and it is fixed with a week of work on each process, not with a change of strategy."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "List every process where AI is used today, however lightly. For each one, answer the three tests in writing: what would stop without it, who answers by name, and what measurement existed before. Any process that cannot answer all three is not mature, however widely it is used."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How do I know what stage of AI maturity my company is at?",
+            "respuesta": "List the processes where AI is used and check three things in each: whether the work would depend on it if it were gone, whether a named person answers for it, and whether a before-and-after measurement exists. The company's stage is the set of processes that meet all three. What does not is exploration, even if it has licences and users."
+          },
+          {
+            "pregunta": "Are the AI maturity models published by consultancies and vendors useful?",
+            "respuesta": "They are useful as a shared vocabulary, not as a diagnosis. They tend to measure what is declared in a questionnaire rather than what can be checked in the operation, and whoever fills them in leans toward the most favourable answer. Use them to structure the conversation and verify each answer against a specific process."
+          },
+          {
+            "pregunta": "Can a company be at different stages in different functions?",
+            "respuesta": "Yes, and that is the norm. One function may have a process with an owner and a measurement while another uses AI informally and a third has a stalled pilot. Averaging them hides which decision belongs to each, so place the stage process by process and decide separately where to scale, where to tidy up and where to stop."
+          },
+          {
+            "pregunta": "What if the diagnosis comes out lower than leadership expected?",
+            "respuesta": "Present it as a process diagnosis, not a verdict on strategy. A low result shows where an owner or a measurement is missing, which are concrete tasks of a few weeks. It is better to find that out before committing budget to the next phase than after spending it."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's place your company's real stage together",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
