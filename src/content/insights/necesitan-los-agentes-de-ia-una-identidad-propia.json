@@ -1,0 +1,287 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-10-13",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "agentic-work",
+  "formato": "perspective",
+  "es": {
+    "slug": "necesitan-los-agentes-de-ia-una-identidad-propia",
+    "titulo": "¿Necesita un agente de IA identidad propia?",
+    "entradilla": "Sí. Un agente que trabaja con el usuario y la contraseña de un empleado deja de ser distinguible de ese empleado, y con eso la empresa pierde tres cosas a la vez: saber quién hizo qué, limitar lo que puede hacer y apagarlo sin afectar a una persona.",
+    "descripcion": "Un agente de IA necesita identidad y credenciales propias, no las de un empleado: así se sabe qué hizo, se acota su acceso y se apaga sin tocar a nadie.",
+    "linkedin": {
+      "texto": "Para ahorrar tiempo, el agente de conciliación entra con el usuario de una analista. Funciona. Y desde ese día el registro dice que fue ella quien aprobó cada movimiento, incluidos los que hizo el agente a las tres de la mañana.\n\nNo es un detalle técnico. Es la diferencia entre poder explicar una decisión y no poder.\n\nQué se pierde cuando un agente comparte credenciales con una persona, y qué hay que darle en su lugar.",
+      "hashtags": ["IA", "Agentes", "Seguridad"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Sí. Un agente que trabaja con el usuario y la contraseña de un empleado deja de ser distinguible de ese empleado, y con eso la empresa pierde tres cosas a la vez: saber quién hizo qué, limitar lo que puede hacer y apagarlo sin afectar a una persona."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en un agente que concilia pagos contra facturas en un cierre contable. Alguien de finanzas lo conecta a los sistemas con su propio usuario, porque es lo más rápido: no hay que pedir nada a IT y el piloto arranca ese mismo día. Funciona bien. Tres meses después, el agente procesa miles de movimientos por semana y en el registro de auditoría todos llevan el nombre de esa analista."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Es un atajo razonable cuando el agente es un experimento, y se vuelve un problema cuando deja de serlo. Un sistema de acceso está diseñado para responder una pregunta: qué persona hizo esto. Si el agente entra como una persona, la respuesta sigue existiendo y es falsa."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La respuesta corta",
+        "texto": "¿Necesitan los agentes de IA una identidad y credenciales propias, distintas a las de un empleado?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Sí, y la razón no es de seguridad en abstracto. Un agente con identidad propia es un actor que la empresa puede nombrar, acotar y retirar. Un agente con las credenciales de un empleado es una extensión invisible de esa persona, con sus mismos permisos, sin su criterio y sin nadie que lo haya decidido de forma explícita. Las tres consecuencias que siguen son las que justifican el gasto de configurarlo bien."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Primer apoyo",
+        "texto": "Con credenciales compartidas, el registro deja de decir quién decidió"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cuando un auditor, un regulador o el propio comité de riesgos pregunta quién aprobó un movimiento, la respuesta sale del registro de acceso. Si el agente y la analista comparten usuario, ese registro mezcla dos tipos de actor que se comportan distinto: una persona que revisa diez casos al día con atención, y un agente que ejecuta mil sin cansarse y sin preguntarse nada. Separarlos después, a mano, caso por caso, es una investigación y no una consulta."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay además un efecto sobre la persona. La analista queda como autora de decisiones que no tomó. Si una de ellas sale mal, tiene que demostrar que no fue ella, en un sistema que dice lo contrario. Cualquiera que haya vivido un cierre con una diferencia sin explicar sabe lo que cuesta eso."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Segundo apoyo",
+        "texto": "Un empleado tiene permisos para su puesto, no para lo que un agente puede hacer con ellos"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Los permisos de una persona se calibran para una persona. La analista puede ver todas las cuentas del área porque a veces necesita consultar cualquiera, y puede ejecutar pagos hasta cierto monto porque lo hace de uno en uno, con tiempo para dudar. Un agente con esos mismos permisos hereda la amplitud, pero no el freno. Puede recorrer todas las cuentas en un minuto y encadenar pagos hasta el límite de cada uno, sin que nada en el sistema lo distinga de un día normal de trabajo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Una identidad propia permite aplicar el principio de mínimo privilegio, que consiste en darle al agente solo el acceso que su tarea necesita y nada más. El agente de conciliación necesita leer facturas y movimientos y proponer asientos. No necesita iniciar pagos. Con credenciales de la analista tiene ese permiso igual. Con las suyas, no lo tiene, y el perímetro del agente queda en el sistema y no en la confianza."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Tercer apoyo",
+        "texto": "Apagar un agente no debería exigir cambiar la contraseña de una persona"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El día que algo falla, la primera pregunta es cómo se detiene. Si el agente usa el usuario de una empleada, la única forma limpia es bloquear ese usuario, y eso la deja sin acceso a su propio trabajo mientras se investiga. Lo habitual es no hacerlo, porque cuesta demasiado, y el agente sigue corriendo mientras alguien decide. Con una identidad propia, se revoca esa credencial y solo esa. La persona sigue trabajando y el agente queda parado en un paso."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El mismo problema aparece cuando la persona cambia de puesto o se va de la empresa. Su usuario se desactiva, como corresponde, y el agente que dependía de él deja de funcionar sin aviso, o peor, alguien reactiva el acceso para que el proceso no se caiga. Una identidad de agente tiene su propio ciclo de vida: alguien la crea, alguien responde por ella y alguien la retira."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un agente con las credenciales de un empleado no tiene permisos propios. Tiene los de otra persona, sin que ella lo haya decidido.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Qué hace falta",
+        "texto": "Una identidad de agente son cuatro decisiones, no una herramienta"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Casi todos los sistemas corporativos ya permiten crear cuentas de servicio o identidades no humanas, así que lo difícil no es la tecnología. Es decidir cuatro cosas antes de conectar el agente."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Una identidad por agente",
+            "definicion": "Cada agente tiene su propia cuenta, con un nombre que lo identifica como agente en cualquier registro. No se comparte entre agentes distintos, porque entonces vuelve el mismo problema de atribución un nivel más arriba."
+          },
+          {
+            "termino": "Permisos escritos desde la tarea",
+            "definicion": "Se parte de lo que el agente hace y se le da exactamente eso. Si más adelante necesita más, alguien lo pide y alguien lo aprueba. Lo contrario, empezar con los permisos de una persona y quitar después, casi nunca se hace."
+          },
+          {
+            "termino": "Un responsable con nombre",
+            "definicion": "Una persona concreta responde por esa identidad: sabe qué puede hacer, revisa periódicamente que sigue siendo necesario y decide cuándo se retira. Sin responsable, las cuentas de agente se acumulan y nadie se atreve a borrarlas."
+          },
+          {
+            "termino": "Credenciales que caducan",
+            "definicion": "Las claves del agente se renuevan con una frecuencia definida y se pueden revocar de inmediato. Una credencial que no caduca es, en la práctica, un permiso que alguien olvidó que concedió."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Nada de esto frena al agente. Lo que cambia es que cada acción suya queda a nombre de un actor identificable, con un perímetro conocido y con un interruptor que no afecta a nadie más."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Pide a IT la lista de agentes y automatizaciones que hoy corren en la empresa y, para cada una, con qué usuario entran. Todo lo que aparezca con el nombre de una persona es un agente sin identidad propia, y ese es tu primer backlog."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Puede un agente de IA usar el usuario de un empleado?",
+            "respuesta": "Puede, y en muchas pruebas piloto se hace porque es lo más rápido. El coste aparece después: el registro atribuye a la persona lo que hizo el agente, el agente hereda permisos pensados para un humano y no se puede detener sin bloquear a esa persona. Sirve para un experimento acotado y no para un proceso en producción."
+          },
+          {
+            "pregunta": "¿Qué es una identidad no humana y en qué se diferencia de la de un empleado?",
+            "respuesta": "Es una cuenta que representa a un sistema, un servicio o un agente y no a una persona. Se diferencia en que no tiene un puesto del que heredar permisos, no se desactiva cuando alguien se va de la empresa y necesita un responsable humano designado, porque ella no puede responder por sí misma."
+          },
+          {
+            "pregunta": "¿Qué permisos debe tener un agente de IA?",
+            "respuesta": "Los que su tarea exige y ninguno más. Se escribe primero qué hace el agente, se le concede ese acceso y cada ampliación pasa por una aprobación explícita. Es más lento al principio y mucho más barato cuando hay que explicar, ante un auditor o ante un cliente, qué podía hacer el agente y qué no."
+          },
+          {
+            "pregunta": "¿Cómo se detiene un agente de IA que se comporta mal?",
+            "respuesta": "Revocando su credencial propia, que es posible solo si la tiene. Con una identidad independiente, el corte es inmediato y no afecta al trabajo de ninguna persona. Con credenciales compartidas, hay que elegir entre dejarlo correr mientras se decide o bloquear a un empleado, y esa fricción suele retrasar la decisión."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos con qué identidad trabajan tus agentes",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "do-ai-agents-need-their-own-identity-and-credentials",
+    "titulo": "Does an AI Agent Need Its Own Identity?",
+    "entradilla": "Yes. An agent that runs on an employee's username and password becomes indistinguishable from that employee, and the company loses three things at once: knowing who did what, limiting what the agent can do, and switching it off without affecting a person.",
+    "descripcion": "An AI agent needs its own identity, not an employee's: its actions stay traceable, its access narrow, and it can be stopped without locking anyone out.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Yes. An agent that runs on an employee's username and password becomes indistinguishable from that employee, and the company loses three things at once: knowing who did what, limiting what the agent can do, and switching it off without affecting a person."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture an agent that matches payments to invoices during a month-end close. Someone in finance connects it to the systems with their own login, because it is the fastest way: no ticket to IT, and the pilot starts the same day. It works well. Three months later the agent processes thousands of transactions a week, and in the audit trail every one of them carries that analyst's name."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "It is a reasonable shortcut while the agent is an experiment, and it becomes a problem once the agent is not. An access system exists to answer one question: which person did this. If the agent signs in as a person, the answer is still there, and it is wrong."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The short answer",
+        "texto": "Do AI agents need their own identity and credentials, separate from an employee's?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "They do, and the reason is not security in the abstract. An agent with its own identity is an actor the company can name, scope and retire. An agent on an employee's credentials is an invisible extension of that person: same permissions, none of their judgment, and nobody who explicitly decided it should be there. Three consequences follow, and they are what justify the effort of setting it up properly."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "First support",
+        "texto": "With shared credentials, the record stops saying who decided"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "When an auditor, a regulator or the risk committee asks who approved a transaction, the answer comes from the access record. If the agent and the analyst share a login, that record mixes two kinds of actor that behave very differently: a person who reviews ten cases a day with care, and an agent that runs a thousand without tiring and without asking itself anything. Separating them afterwards, case by case, is an investigation and not a query."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "There is an effect on the person too. The analyst ends up as the author of decisions she did not make. If one of them goes wrong, she has to prove it was not her, in a system that says otherwise. Anyone who has lived through a close with an unexplained difference knows what that costs."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Second support",
+        "texto": "An employee's permissions fit a job, not what an agent can do with them"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A person's permissions are calibrated for a person. The analyst can see every account in the department because she sometimes needs to look up any of them, and she can release payments up to a limit because she does it one at a time, with room to hesitate. An agent with the same permissions inherits the breadth but not the brake. It can sweep every account in a minute and chain payments up to each limit, and nothing in the system sets that apart from an ordinary day of work."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A separate identity lets you apply least privilege: give the agent only the access its task needs. The reconciliation agent needs to read invoices and transactions and propose entries. It does not need to release payments. On the analyst's credentials it has that power anyway. On its own, it does not, and the agent's perimeter lives in the system rather than in trust."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Third support",
+        "texto": "Stopping an agent should not mean resetting a person's password"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The day something fails, the first question is how to stop it. If the agent uses an employee's login, the only clean way is to lock that account, which leaves her without access to her own work while the issue is investigated. Usually nobody does it, because it costs too much, and the agent keeps running while someone decides. With its own identity, you revoke that credential and only that one. The person keeps working and the agent is stopped at a single step."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The same problem appears when the person changes roles or leaves. Her account is deactivated, as it should be, and the agent that depended on it stops working without warning, or worse, someone reactivates the access so the process does not break. An agent identity has its own life cycle: someone creates it, someone answers for it and someone retires it."
+      },
+      {
+        "tipo": "cita",
+        "texto": "An agent on an employee's credentials has no permissions of its own. It has another person's, without that person having decided it.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "What it takes",
+        "texto": "An agent identity is four decisions, not a tool"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Almost every corporate system already supports service accounts or non-human identities, so the hard part is not the technology. It is deciding four things before the agent is connected."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "One identity per agent",
+            "definicion": "Each agent has its own account, with a name that marks it as an agent in any record. It is not shared across different agents, because then the attribution problem comes back one level up."
+          },
+          {
+            "termino": "Permissions written from the task",
+            "definicion": "Start from what the agent does and grant exactly that. If it later needs more, someone asks and someone approves. The opposite, starting with a person's permissions and trimming later, almost never happens."
+          },
+          {
+            "termino": "A named owner",
+            "definicion": "A specific person answers for the identity: knows what it can do, checks regularly that it is still needed and decides when it is retired. Without an owner, agent accounts pile up and nobody dares delete them."
+          },
+          {
+            "termino": "Credentials that expire",
+            "definicion": "The agent's keys are rotated on a defined schedule and can be revoked immediately. A credential that never expires is, in practice, a permission somebody forgot they granted."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of this slows the agent down. What changes is that every action it takes is recorded under an identifiable actor, with a known perimeter and a switch that affects nobody else."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Ask IT for the list of agents and automations running in the company today and, for each one, which account it signs in with. Anything that shows up under a person's name is an agent without its own identity, and that is your first backlog."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Can an AI agent use an employee's login?",
+            "respuesta": "It can, and in many pilots it does because it is the fastest route. The cost shows up later: the record attributes the agent's actions to the person, the agent inherits permissions designed for a human, and it cannot be stopped without locking that person out. It works for a contained experiment and not for a process in production."
+          },
+          {
+            "pregunta": "What is a non-human identity and how does it differ from an employee's?",
+            "respuesta": "It is an account that represents a system, a service or an agent rather than a person. It differs in that it has no job role to inherit permissions from, it is not deactivated when someone leaves the company, and it needs a designated human owner, because it cannot answer for itself."
+          },
+          {
+            "pregunta": "What permissions should an AI agent have?",
+            "respuesta": "The ones its task requires and no more. You write down what the agent does, grant that access, and send every extension through an explicit approval. It is slower at the start and far cheaper when you have to explain to an auditor or a customer what the agent could and could not do."
+          },
+          {
+            "pregunta": "How do you stop an AI agent that is misbehaving?",
+            "respuesta": "By revoking its own credential, which is only possible if it has one. With an independent identity the cut is immediate and affects nobody's work. With shared credentials you have to choose between letting it run while you decide or locking out an employee, and that friction usually delays the decision."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's review which identity your agents work under",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
