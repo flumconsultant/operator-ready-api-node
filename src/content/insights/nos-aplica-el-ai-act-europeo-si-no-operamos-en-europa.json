@@ -1,0 +1,231 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-10-14",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "responsible-scale",
+  "formato": "executive-brief",
+  "es": {
+    "slug": "nos-aplica-el-ai-act-europeo-si-no-operamos-en-europa",
+    "titulo": "¿Nos aplica el AI Act si no operamos en Europa?",
+    "entradilla": "El AI Act europeo se aplica por dónde se usa el resultado de un sistema de IA, no por dónde está la empresa. Una compañía sin oficina en Europa puede quedar dentro si lo que su sistema produce llega a personas o decisiones en la Unión Europea.",
+    "descripcion": "El AI Act se aplica según dónde se usa el resultado de la IA, no dónde está tu empresa. Tres preguntas para saber si tu operación queda dentro.",
+    "linkedin": {
+      "texto": "Muchas empresas fuera de Europa dan por hecho que el AI Act es un problema ajeno. El Reglamento no mira dónde está la sede, mira dónde se usa lo que el sistema produce.\n\nUn modelo que puntúa candidatos para una filial en España o una plataforma que atiende clientes europeos desde Lima ya puede estar dentro.\n\nTres preguntas para saber si tu operación lo está.",
+      "hashtags": [
+        "IA",
+        "Regulacion",
+        "Gobierno"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "El AI Act europeo se aplica por dónde se usa el resultado de un sistema de IA, no por dónde está la empresa. Una compañía sin oficina en Europa puede quedar dentro si lo que su sistema produce llega a personas o decisiones en la Unión Europea."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por cómo suele llegar la pregunta. Un director de operaciones en Bogotá, Lima o Ciudad de México lee que Europa aprobó una ley de inteligencia artificial, ve que su empresa no tiene sede ni oficinas allí y archiva el asunto. Es una conclusión razonable si la ley funcionara como un impuesto local. No funciona así."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La respuesta corta es que el Reglamento (UE) 2024/1689 tiene alcance extraterritorial. Su artículo 2 lo aplica a los proveedores que ponen sistemas de IA en el mercado europeo y también a los proveedores y usuarios de sistemas situados fuera de la Unión cuando el resultado que producen se utiliza en ella. El criterio es el destino de lo que sale del sistema, y la ubicación de quien lo opera pasa a segundo plano. Para una empresa latinoamericana con clientes, filiales o proveedores en Europa, eso cambia el punto de partida: lo normal es que haya que mirar, no que se pueda descartar."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El criterio",
+        "texto": "¿Cuándo le aplica el AI Act a una empresa que no opera en Europa?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Para decidirlo no hace falta un despacho de abogados el primer día. Hace falta un inventario honesto de qué sistemas de IA usa la empresa y adónde llega lo que producen. Tres preguntas ordenan ese inventario, y se contestan con información que operaciones ya tiene."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. ¿El resultado del sistema llega a personas en la Unión Europea?",
+            "definicion": "Piensa en un asistente de atención al cliente que contesta desde Lima a usuarios de España, o en un modelo que puntúa solicitudes de crédito de clientes residentes en Alemania. Si la respuesta o la decisión se usa en Europa, el sistema entra en el radar aunque los servidores y el equipo estén fuera."
+          },
+          {
+            "termino": "2. ¿Qué papel tiene la empresa: proveedor o usuario?",
+            "definicion": "Quien desarrolla el sistema o lo vende con su marca es proveedor, y carga con la mayor parte de las obligaciones. Quien lo contrata y lo usa en su operación es usuario, y tiene obligaciones más acotadas, como usarlo según las instrucciones y vigilar su funcionamiento. Muchas empresas son las dos cosas a la vez sin haberlo pensado: compran un modelo y lo integran en un producto que venden."
+          },
+          {
+            "termino": "3. ¿Para qué se usa el sistema?",
+            "definicion": "El Reglamento gradúa las obligaciones según el riesgo del uso. Seleccionar personal, evaluar solvencia o decidir acceso a servicios esenciales se trata como alto riesgo y exige más. Un resumidor de reuniones interno exige mucho menos. Dos empresas con el mismo modelo pueden tener cargas muy distintas por lo que hacen con él."
+          }
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El mecanismo",
+        "texto": "La exposición casi nunca viene de la sede, viene de la cadena de clientes y proveedores"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Aquí lo que importa es cómo se cuela la exposición sin que nadie la decida. Imagina una empresa de servicios de selección de personal con base en Colombia, que usa un modelo para ordenar candidaturas y que ha ganado como cliente a una filial europea de un grupo multinacional. Nadie en la empresa decidió entrar en el mercado europeo. Pero el resultado del modelo, la lista ordenada de candidatos, se usa en una decisión de contratación en la Unión. Ese es exactamente el tipo de caso que el texto del Reglamento quiere cubrir, y además cae en un uso que trata como de alto riesgo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La misma lógica funciona en sentido contrario. Una empresa puede ser solo usuaria de un modelo de un proveedor externo, y creer por eso que la obligación es del proveedor. Si el resultado se usa en Europa, parte de la responsabilidad se queda en quien lo usa. Contratar el sistema fuera no traslada la obligación fuera."
+      },
+      {
+        "tipo": "cita",
+        "texto": "El AI Act no pregunta dónde está tu oficina. Pregunta dónde termina lo que tu sistema produce.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La decisión",
+        "texto": "Un programa de cumplimiento completo solo hace falta donde hay exposición real"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Responder que sí aplica no significa montar un programa de cumplimiento para toda la empresa. Significa saber en qué sistemas concretos hay exposición y proporcionar el esfuerzo. Un sistema de bajo riesgo con resultados que llegan a Europa pide poco más que transparencia y un uso razonable. Uno de alto riesgo pide documentación, supervisión humana y registro, y eso sí es un proyecto con dueño y calendario."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El orden de trabajo que tiene sentido es este: primero un inventario corto de sistemas de IA y de adónde llega su resultado, después una clasificación por uso, y solo entonces la decisión de cuánto invertir. Hacerlo al revés, contratando un programa genérico antes de saber qué hay, gasta dinero en lo que no se necesita y deja sin cubrir lo que sí. Las fechas de entrada en vigor se van escalonando, y su calendario exacto conviene confirmarlo con asesoría jurídica con el Reglamento delante, porque cambia según el tipo de obligación."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Pide a cada área una lista de los sistemas de IA que usa y a quién llega su resultado. Marca los que tocan a personas o empresas en la Unión Europea y, entre esos, los que intervienen en contratación, crédito o acceso a servicios. Esa lista corta es lo que hay que llevar a asesoría jurídica."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿El AI Act aplica a empresas fuera de la Unión Europea?",
+            "respuesta": "Sí, en determinados casos. El Reglamento se aplica a proveedores y usuarios situados fuera de la Unión cuando el resultado que produce su sistema de IA se utiliza dentro de ella. Lo que decide es dónde se usa el resultado, no dónde está la sede de la empresa."
+          },
+          {
+            "pregunta": "¿Una empresa latinoamericana tiene que cumplir el AI Act?",
+            "respuesta": "Depende de si lo que producen sus sistemas de IA llega a personas o decisiones en Europa. Una empresa con clientes europeos, filiales en la Unión o servicios prestados a empresas europeas puede quedar dentro. Una que solo opera en su país y no tiene ese vínculo, normalmente no."
+          },
+          {
+            "pregunta": "¿Soy proveedor o usuario de un sistema de IA según el AI Act?",
+            "respuesta": "Es proveedor quien desarrolla un sistema o lo comercializa con su nombre, y es usuario quien lo emplea en su actividad profesional. Una empresa puede ser las dos cosas si integra un modelo ajeno en un producto propio. Las obligaciones cambian según el papel, y las del proveedor son más amplias."
+          },
+          {
+            "pregunta": "¿Qué hago primero para saber si el AI Act me afecta?",
+            "respuesta": "Un inventario de los sistemas de IA que usa la empresa, con el destino de sus resultados y el uso para el que sirven. Con eso se identifican los sistemas con exposición en la Unión y los que caen en usos de alto riesgo, y se lleva esa lista a asesoría jurídica para que confirme las obligaciones concretas."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos qué sistemas de IA de tu operación tienen exposición en Europa",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "does-the-eu-ai-act-apply-if-we-do-not-operate-in-europe",
+    "titulo": "Does the EU AI Act Apply Outside Europe?",
+    "entradilla": "The EU AI Act applies according to where the output of an AI system is used, not where the company sits. A business with no European office can fall inside it if what its system produces reaches people or decisions in the European Union.",
+    "descripcion": "The EU AI Act turns on where an AI system's output is used, not where your company is based. Three questions to see whether your operation is inside.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "The EU AI Act applies according to where the output of an AI system is used, not where the company sits. A business with no European office can fall inside it if what its system produces reaches people or decisions in the European Union."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Start with how the question usually arrives. An operations director in Bogotá, Lima or Mexico City reads that Europe passed an AI law, sees that the company has no headquarters or offices there, and files it away. That would be a sound conclusion if the law worked like a local tax. It does not."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The short answer is that Regulation (EU) 2024/1689 has extraterritorial reach. Article 2 applies it to providers placing AI systems on the European market, and also to providers and deployers located outside the Union when the output their systems produce is used in it. The test is where the output ends up, and the location of whoever runs the system takes second place. For a Latin American company with customers, subsidiaries or suppliers in Europe, that changes the starting point: the default is to look, not to rule it out."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The test",
+        "texto": "When does the AI Act apply to a company that does not operate in Europe?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "You do not need a law firm on day one to decide this. You need an honest inventory of which AI systems the company uses and where their output goes. Three questions structure that inventory, and operations already holds the answers."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Does the system's output reach people in the European Union?",
+            "definicion": "Think of a customer service assistant answering from Lima to users in Spain, or a model scoring credit applications from residents of Germany. If the answer or the decision is used in Europe, the system is on the radar even when the servers and the team are elsewhere."
+          },
+          {
+            "termino": "2. What is the company's role: provider or deployer?",
+            "definicion": "Whoever develops the system or sells it under their own name is a provider, and carries most of the obligations. Whoever buys it and uses it in their operation is a deployer, with narrower duties such as using it as instructed and monitoring how it behaves. Many companies are both without having thought about it: they buy a model and build it into a product they sell."
+          },
+          {
+            "termino": "3. What is the system used for?",
+            "definicion": "The Regulation scales obligations to the risk of the use. Selecting staff, assessing creditworthiness or deciding access to essential services is treated as high risk and demands more. An internal meeting summarizer demands far less. Two companies with the same model can carry very different loads because of what they do with it."
+          }
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The mechanism",
+        "texto": "Exposure rarely comes from the headquarters, it comes from the chain of customers and suppliers"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "What matters here is how exposure creeps in without anyone deciding it. Imagine a recruitment services firm based in Colombia that uses a model to rank applications and has won a European subsidiary of a multinational group as a client. Nobody at the firm decided to enter the European market. But the model's output, the ranked list of candidates, feeds a hiring decision in the Union. That is exactly the kind of case the text of the Regulation is meant to cover, and it falls in a use it treats as high risk."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The same logic runs the other way. A company may only be a deployer of a model built by an outside provider, and assume the obligation sits with that provider. If the output is used in Europe, part of the responsibility stays with whoever uses it. Buying the system abroad does not move the obligation abroad."
+      },
+      {
+        "tipo": "cita",
+        "texto": "The AI Act does not ask where your office is. It asks where what your system produces ends up.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The decision",
+        "texto": "A full compliance program is only needed where the exposure is real"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Answering yes does not mean building a compliance program for the whole company. It means knowing which specific systems are exposed and sizing the effort to match. A low-risk system whose output reaches Europe asks for little beyond transparency and sensible use. A high-risk one asks for documentation, human oversight and logging, and that is a project with an owner and a timeline."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The sensible order of work is this: first a short inventory of AI systems and where their output goes, then a classification by use, and only then the decision on how much to invest. Doing it the other way around, buying a generic program before knowing what exists, spends money on what is not needed and leaves uncovered what is. The entry-into-application dates are staggered, and the exact calendar is worth confirming with legal counsel against the text of the Regulation, because it varies by type of obligation."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Ask each function for a list of the AI systems it uses and who receives their output. Mark those that touch people or companies in the European Union and, among them, those involved in hiring, credit or access to services. That short list is what to take to legal counsel."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Does the EU AI Act apply to companies outside the European Union?",
+            "respuesta": "Yes, in certain cases. The Regulation applies to providers and deployers located outside the Union when the output of their AI system is used inside it. What decides it is where the output is used, not where the company is headquartered."
+          },
+          {
+            "pregunta": "Does a Latin American company have to comply with the AI Act?",
+            "respuesta": "It depends on whether what its AI systems produce reaches people or decisions in Europe. A company with European customers, subsidiaries in the Union or services provided to European businesses may fall inside. One that only operates in its home country with no such link normally does not."
+          },
+          {
+            "pregunta": "Am I a provider or a deployer under the AI Act?",
+            "respuesta": "A provider is whoever develops a system or markets it under their own name, and a deployer is whoever uses it in their professional activity. A company can be both if it builds someone else's model into its own product. Obligations differ by role, and the provider's are broader."
+          },
+          {
+            "pregunta": "What should I do first to find out whether the AI Act affects me?",
+            "respuesta": "Build an inventory of the AI systems the company uses, with where their output goes and what they are used for. That identifies the systems with exposure in the Union and those in high-risk uses, and you then take the list to legal counsel to confirm the specific obligations."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's review which AI systems in your operation have exposure in Europe",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
