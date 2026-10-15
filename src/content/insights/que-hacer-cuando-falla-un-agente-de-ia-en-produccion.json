@@ -1,0 +1,253 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-10-15",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "responsible-scale",
+  "formato": "framework",
+  "es": {
+    "slug": "que-hacer-cuando-falla-un-agente-de-ia-en-produccion",
+    "titulo": "¿Qué hacer cuando falla un agente de IA?",
+    "entradilla": "Un registro de riesgos dice qué podría fallar. Un plan de respuesta decide quién apaga el agente, qué se revisa primero y a quién se avisa mientras todavía se está averiguando qué pasó. La mayoría de las empresas tiene lo primero y cree que tiene lo segundo.",
+    "descripcion": "Un registro de riesgos no detiene a un agente. Un plan de respuesta sí: quién lo apaga, qué se revisa y a quién se avisa en la primera hora.",
+    "linkedin": {
+      "texto": "Muchas empresas creen que gestionar el riesgo de un agente de IA es tener el riesgo registrado.\n\nUn registro dice qué podría fallar. No dice quién lo detiene un viernes por la tarde ni qué se les cuenta a los clientes afectados.\n\nCuatro piezas que debe tener un plan de respuesta antes del primer incidente.",
+      "hashtags": ["IA", "Agentes", "Riesgo"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Un registro de riesgos dice qué podría fallar. Un plan de respuesta decide quién apaga el agente, qué se revisa primero y a quién se avisa mientras todavía se está averiguando qué pasó. La mayoría de las empresas tiene lo primero y cree que tiene lo segundo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en un agente que responde reclamaciones de clientes y propone reembolsos. Lleva semanas funcionando bien. Un viernes por la tarde, tras un cambio en la tabla de políticas, empieza a aprobar reembolsos que no corresponden. Nadie lo nota hasta el lunes, cuando finanzas ve el cierre de la semana y pregunta qué ocurrió."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "En ese momento la empresa descubre que tenía el riesgo anotado. Estaba en el registro, con su probabilidad, su impacto y un responsable genérico. Lo que no tenía era a alguien con autoridad para detener el agente un viernes, ni una forma de saber cuántos reembolsos había aprobado, ni una decisión previa sobre si había que avisar a los clientes afectados. Un registro de riesgos sirve para aprobar el despliegue. Un plan de respuesta sirve para el día en que el despliegue sale mal."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La respuesta corta",
+        "texto": "¿Tenemos un plan de respuesta para cuando falla un agente, o solo un registro de riesgos?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Tienes un plan de respuesta si puedes contestar, sin abrir ningún documento, cuatro preguntas: quién puede apagar este agente, cómo se reconstruye lo que hizo, quién repara los casos afectados y quién decide qué se comunica y a quién. Si alguna respuesta es «depende» o «habría que preguntar», tienes un registro. La diferencia importa porque un incidente de agente no se parece a una caída de sistema: el agente sigue funcionando, sigue decidiendo y sigue acumulando casos mientras la empresa discute."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Por qué el registro no basta",
+        "texto": "Un agente que falla sigue trabajando, y por eso el primer minuto cuesta más que el último"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cuando un servidor se cae, el daño se detiene solo: no hay servicio. Cuando un agente se equivoca, lo que ocurre es lo contrario. Cada caso nuevo que procesa con el mismo error es un caso más que habrá que revisar después. El coste de un incidente crece con el tiempo que pasa entre el fallo y la parada, y ese tiempo lo decide casi siempre una duda de autoridad: nadie quiere ser quien apagó el agente de otro equipo sin permiso."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Por eso el plan se escribe antes, cuando no hay presión. Un comité que acuerda en caliente quién puede detener un proceso en producción tarda horas, y esas horas se miden en casos mal resueltos."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un plan de respuesta no se mide por lo que describe, sino por lo que permite hacer en la primera hora sin pedir permiso a nadie.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Un plan de respuesta para agentes son cuatro piezas, y cada una responde una pregunta distinta"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguna es técnicamente difícil. Lo difícil es que existan antes del incidente y que cada una tenga un nombre propio detrás."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Un interruptor con dueño",
+            "definicion": "Cada agente tiene una forma de pausarlo que no exige un despliegue ni una reunión, y una persona con autoridad escrita para usarla, también fuera de horario. Importa porque la parada rápida es lo único que limita el daño mientras se investiga. Conviene que pausar sea una decisión barata: si apagar el agente cuesta una discusión, se apaga tarde."
+          },
+          {
+            "termino": "2. Un rastro que se pueda leer",
+            "definicion": "Para cada acción del agente existe un registro de qué recibió, qué decidió y con qué reglas o datos. Importa porque, sin él, la pregunta «¿cuántos casos están afectados?» se contesta revisándolos todos a mano. Con el rastro, se filtra por la fecha en que cambió la tabla de políticas y el problema tiene un tamaño."
+          },
+          {
+            "termino": "3. Una vía de reparación",
+            "definicion": "Está decidido de antemano quién revisa los casos afectados, con qué criterio y en qué orden: primero lo irreversible, como un pago ya enviado, y después lo que se puede corregir sin que nadie se entere. Importa porque reparar sin orden consume al equipo en lo menos urgente."
+          },
+          {
+            "termino": "4. Una regla de comunicación",
+            "definicion": "Alguien decide, según criterios escritos, si hay que avisar a clientes, a un regulador o al consejo, y con qué texto. Importa porque la comunicación improvisada suele llegar tarde o contradecirse, y el aviso a un tercero a veces tiene plazos legales que no esperan a que el equipo termine de investigar."
+          }
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Cómo se comprueba",
+        "texto": "Un plan que no se ha ensayado es otro documento más del registro"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Los equipos de seguridad llevan años haciendo simulacros de incidente, y lo que aprenden es siempre lo mismo: el plan escrito tenía un hueco que solo apareció al ejecutarlo. Con agentes pasa igual. En un simulacro de una hora se pide a alguien que pause el agente, que diga cuántos casos procesó desde cierta fecha y que redacte el aviso a un cliente. Si cualquiera de los tres pasos se queda esperando una autorización, ese es el hueco."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El ensayo también cambia la conversación con quien decide. Es mucho más fácil pedir presupuesto para el rastro de decisiones cuando acaba de verse que, sin él, la pregunta de cuántos casos estaban afectados no tiene respuesta."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Elige el agente que hoy toca más dinero o más clientes y plantea la pregunta de la primera hora: si mañana se equivocara en cada caso, ¿quién lo apaga, con qué permiso y cómo sabríamos cuántos casos afectó? La primera respuesta que falte es tu primer backlog."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Qué es un plan de respuesta a incidentes de un agente de IA?",
+            "respuesta": "Es el conjunto de decisiones tomadas de antemano sobre qué hacer cuando un agente se equivoca en producción: quién puede detenerlo, cómo se reconstruye lo que hizo, quién repara los casos afectados y quién decide qué se comunica. Se diferencia de un registro de riesgos en que no describe lo que podría pasar, sino lo que se hace cuando pasa."
+          },
+          {
+            "pregunta": "¿Quién debe poder apagar un agente de IA?",
+            "respuesta": "Una persona concreta, con autoridad escrita, y un suplente para fuera de horario. Lo habitual es el responsable del proceso que el agente ejecuta, no el equipo técnico, porque quien conoce el negocio sabe cuándo parar cuesta menos que seguir. Lo importante es que pausar no requiera una reunión ni un despliegue."
+          },
+          {
+            "pregunta": "¿Cómo se sabe cuántos casos afectó un agente que falló?",
+            "respuesta": "Solo se sabe si el agente deja un registro de cada acción con la fecha, los datos que recibió y las reglas que aplicó. Con ese rastro se filtran los casos desde el momento en que empezó el error. Sin él, la única opción es revisar a mano toda la actividad del agente, y el tamaño real del problema queda sin conocerse."
+          },
+          {
+            "pregunta": "¿Hay que avisar a los clientes cuando un agente comete un error?",
+            "respuesta": "Depende de qué los afectó. Si el error tuvo consecuencias económicas, legales o sobre datos personales, en muchos casos sí, y a veces con plazos fijados por una norma o un contrato. Por eso la decisión se escribe antes del incidente, con criterios claros y un responsable, en lugar de improvisarla cuando ya hay clientes preguntando."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Probemos tu plan de respuesta con un simulacro",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "what-to-do-when-an-ai-agent-fails-in-production",
+    "titulo": "What to Do When an AI Agent Fails in Production",
+    "entradilla": "A risk register says what could fail. A response plan decides who switches the agent off, what gets checked first and who is told while the company is still working out what happened. Most companies have the first and assume they have the second.",
+    "descripcion": "A risk register does not stop an agent. A response plan does: who switches it off, what gets checked and who is told in the first hour.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "A risk register says what could fail. A response plan decides who switches the agent off, what gets checked first and who is told while the company is still working out what happened. Most companies have the first and assume they have the second."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture an agent that answers customer complaints and proposes refunds. It has worked well for weeks. On a Friday afternoon, after a change to the policy table, it starts approving refunds it should not. Nobody notices until Monday, when finance looks at the weekly close and asks what happened."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That is when the company finds out it had the risk written down. It was in the register, with its probability, its impact and a generic owner. What it did not have was someone with the authority to stop the agent on a Friday, a way to know how many refunds it had approved, or a prior decision on whether the affected customers had to be told. A risk register is for approving the deployment. A response plan is for the day the deployment goes wrong."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The short answer",
+        "texto": "Do we have a response plan for when an agent fails, or only a risk register?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "You have a response plan if you can answer four questions without opening a document: who can switch this agent off, how do we reconstruct what it did, who repairs the affected cases, and who decides what gets communicated and to whom. If any answer is \"it depends\" or \"we would have to ask\", you have a register. The difference matters because an agent incident is not like a system outage: the agent keeps running, keeps deciding and keeps adding cases while the company debates."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Why the register is not enough",
+        "texto": "A failing agent keeps working, which is why the first minute costs more than the last"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "When a server goes down, the damage stops by itself: there is no service. When an agent gets something wrong, the opposite happens. Every new case it processes with the same error is one more case to review later. The cost of an incident grows with the time between the failure and the stop, and that time is almost always set by a question of authority: nobody wants to be the person who switched off another team's agent without permission."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That is why the plan is written beforehand, when there is no pressure. A committee that agrees on the spot who may stop a production process takes hours, and those hours are counted in wrongly resolved cases."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A response plan is not measured by what it describes, but by what it lets you do in the first hour without asking anyone's permission.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "A response plan for agents has four parts, and each answers a different question"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of them is technically hard. What is hard is having them in place before the incident, each with a name behind it."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. A switch with an owner",
+            "definicion": "Every agent has a way to be paused that does not require a deployment or a meeting, and a person with written authority to use it, outside office hours too. It matters because a fast stop is the only thing that limits damage while the investigation runs. Pausing should be a cheap decision: if switching the agent off costs an argument, it gets switched off late."
+          },
+          {
+            "termino": "2. A trail that can be read",
+            "definicion": "For every action the agent takes, there is a record of what it received, what it decided and on which rules or data. It matters because without it, the question \"how many cases are affected?\" is answered by reviewing them all by hand. With the trail, you filter from the date the policy table changed and the problem has a size."
+          },
+          {
+            "termino": "3. A repair path",
+            "definicion": "It is decided in advance who reviews the affected cases, by what criteria and in what order: first what cannot be undone, such as a payment already sent, then what can be corrected quietly. It matters because unordered repair burns the team on the least urgent work."
+          },
+          {
+            "termino": "4. A communication rule",
+            "definicion": "Someone decides, against written criteria, whether customers, a regulator or the board must be told, and with what wording. It matters because improvised communication tends to arrive late or contradict itself, and notice to a third party sometimes has legal deadlines that do not wait for the team to finish investigating."
+          }
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "How to check it",
+        "texto": "A plan nobody has rehearsed is just one more document in the register"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Security teams have run incident drills for years, and what they learn is always the same: the written plan had a gap that only showed up when it was executed. Agents are no different. In a one-hour drill, someone is asked to pause the agent, to say how many cases it processed since a given date, and to draft the notice to a customer. If any of the three steps sits waiting for an authorisation, that is the gap."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The rehearsal also changes the conversation with whoever decides. It is much easier to ask for budget for a decision trail right after the team has seen that, without one, the question of how many cases were affected has no answer."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Pick the agent that touches the most money or the most customers today and ask the first-hour question: if tomorrow it got every case wrong, who switches it off, with what permission, and how would we know how many cases it affected? The first answer that is missing is your first backlog."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "What is an incident response plan for an AI agent?",
+            "respuesta": "It is the set of decisions made in advance about what to do when an agent gets something wrong in production: who can stop it, how its actions are reconstructed, who repairs the affected cases and who decides what is communicated. It differs from a risk register in that it does not describe what might happen, but what is done when it does."
+          },
+          {
+            "pregunta": "Who should be able to switch off an AI agent?",
+            "respuesta": "A specific person with written authority, plus a deputy for out-of-hours. Usually it is the owner of the process the agent runs, not the technical team, because the person who knows the business knows when stopping costs less than carrying on. What matters is that pausing does not require a meeting or a deployment."
+          },
+          {
+            "pregunta": "How do you know how many cases a failed agent affected?",
+            "respuesta": "Only if the agent leaves a record of every action with the date, the data it received and the rules it applied. With that trail you filter the cases from the moment the error began. Without it, the only option is to review all of the agent's activity by hand, and the true size of the problem stays unknown."
+          },
+          {
+            "pregunta": "Do you have to tell customers when an AI agent makes a mistake?",
+            "respuesta": "It depends on what it affected. If the error had financial, legal or personal-data consequences, in many cases yes, sometimes within deadlines set by a regulation or a contract. That is why the decision is written before the incident, with clear criteria and an owner, rather than improvised when customers are already asking."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's test your response plan with a drill",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
