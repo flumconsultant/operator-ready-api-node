@@ -1,0 +1,247 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-10-16",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "operating-model",
+  "formato": "perspective",
+  "es": {
+    "slug": "de-donde-saldran-los-senior-si-la-ia-hace-el-trabajo-junior",
+    "titulo": "¿Cómo se forma un senior si la IA hace lo básico?",
+    "entradilla": "El trabajo de entrada que hoy absorben los agentes producía dos cosas: un entregable y una persona con criterio. La empresa mide solo el entregable, y por eso puede dejar secar su cantera de senior sin que ningún indicador se lo avise.",
+    "descripcion": "Si la IA hace el trabajo de los junior, los senior de dentro de ocho años no se forman solos. Qué rediseñar en la ruta de entrada para que sigan saliendo.",
+    "linkedin": {
+      "texto": "Muchas empresas celebran que un agente ya hace el trabajo de entrada de sus junior.\n\nEse trabajo producía dos cosas: un entregable y una persona con criterio. Solo la primera aparece en el P&L, y la segunda se echa de menos ocho años después.\n\nTres decisiones para que la ruta hacia senior no desaparezca con la tarea.",
+      "hashtags": ["IA", "Talento", "ModeloOperativo"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "El trabajo de entrada que hoy absorben los agentes producía dos cosas: un entregable y una persona con criterio. La empresa mide solo el entregable, y por eso puede dejar secar su cantera de senior sin que ningún indicador se lo avise."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en el equipo de cierre contable de una empresa mediana. Durante años, los analistas junior conciliaban cuentas, perseguían diferencias de centavos y preparaban los borradores que revisaba un supervisor. Era trabajo tedioso y nadie lo defendía como tal. Hoy un agente concilia en minutos, el borrador llega hecho y el equipo de entrada se reduce, o simplemente no se repone cuando alguien se va."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El P&L de ese equipo mejora desde el primer trimestre. Lo que no aparece en ningún reporte es que esos analistas aprendían allí por qué una diferencia de centavos a veces esconde un error de criterio, cómo se ve una cuenta que huele mal y a quién conviene llamar antes de cerrar. Ese aprendizaje era un subproducto del trabajo, y desaparece con el trabajo."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La respuesta corta",
+        "texto": "¿De dónde van a salir los senior si la IA hace el trabajo de los junior?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Si la empresa no lo decide, de ningún sitio. Los senior se forman haciendo muchas veces, y con supervisión, las tareas que hoy hace un agente. Cuando esa práctica se retira, la empresa tiene dos caminos: contratar senior ya formados en el mercado, que será más caro y más escaso porque todos harán lo mismo, o rediseñar la ruta de entrada para que el aprendizaje siga ocurriendo aunque la tarea ya no la haga una persona. El segundo camino exige una decisión de modelo operativo, no un programa de formación."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Primer apoyo",
+        "texto": "La tarea de entrada era un mecanismo de formación, y se está comprando como si solo fuera un coste"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cuando una empresa evalúa automatizar una tarea junior, compara lo que cuesta la persona con lo que cuesta el agente. La cuenta sale a favor del agente casi siempre, porque es una cuenta de entregables. Lo que queda fuera es la parte de la tarea que servía para otra cosa: que alguien con poca experiencia viera, cientos de veces, qué aspecto tiene un caso normal y qué aspecto tiene uno raro. Un senior es, en buena medida, alguien que ha visto suficientes casos para reconocer la excepción antes de que se convierta en problema."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Segundo apoyo",
+        "texto": "El daño llega con años de retraso y no pasa por ningún indicador de la gestión actual"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Este es el motivo por el que el problema no se corrige solo. El ahorro se ve en el trimestre y lo paga una cuenta de resultados que ya está cerrada. La falta de senior aparece cuando alguien tiene que ascender a un jefe de equipo y la bancada de candidatos es corta, o cuando hay que supervisar al agente y no hay nadie que haya hecho el trabajo a mano lo suficiente como para notar que el agente se equivoca. Quien decidió recortar la entrada probablemente ya está en otro puesto, y quien hereda el problema no tiene forma de rastrear su origen."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un agente puede heredar la tarea de un junior. Lo que no hereda es la persona que, repitiendo esa tarea, iba a convertirse en quien sabe cuándo el agente se equivoca.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Tercer apoyo",
+        "texto": "Se arregla rediseñando la ruta de entrada en tres puntos, y ninguno consiste en volver a contratar como antes"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "No se trata de mantener tareas manuales por nostalgia. Se trata de decidir qué parte de ese aprendizaje sigue siendo necesaria y de dónde puede venir ahora. Hay tres puntos de intervención, y cada uno responde a una pérdida distinta."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. La revisión del agente como puesto de entrada",
+            "definicion": "El junior deja de producir el borrador y pasa a revisar el del agente, con una lista de qué comprobar y un senior que le explique cada error que encuentre. Importa porque revisar bien exige entender el trabajo, y porque cada error del agente es un caso de enseñanza gratis. Si la revisión se reduce a pulsar aprobar, la ruta se ha roto de nuevo, así que conviene medir cuántos errores detecta cada persona y no cuántos casos aprueba."
+          },
+          {
+            "termino": "2. Una parte del trabajo se hace a mano a propósito",
+            "definicion": "Cada junior hace de principio a fin, sin agente, una fracción pequeña y rotatoria de los casos. Importa porque la práctica que fija el criterio no se obtiene mirando, y porque ese contraste entre lo que hizo la persona y lo que hizo el agente es el mejor ejercicio de calibración. El coste es visible y pequeño, y se defiende como una inversión en la cantera, no como una ineficiencia."
+          },
+          {
+            "termino": "3. Rotación temprana hacia donde se decide",
+            "definicion": "En lugar de pasar dos años en la tarea de base, el junior rota pronto por los puntos donde se toman las excepciones: el comité que resuelve lo que el agente no supo resolver, o el equipo que redefine las reglas. Importa porque acorta el camino hacia el criterio, y porque ese es el tipo de trabajo que el agente todavía no hace. Requiere que un senior tenga tiempo asignado para explicar cada decisión, o la rotación se queda en observar."
+          }
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Cómo se mide",
+        "texto": "Lo que no se mide hoy se descubre dentro de ocho años, así que hace falta un indicador de cantera"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El indicador más útil es sencillo: para cada puesto senior crítico, cuántas personas hay dentro de la empresa que podrían ocuparlo en tres años y qué han hecho para estar listas. Si ese número baja a medida que sube la automatización, la empresa está consumiendo su cantera. No hace falta una cifra de referencia externa; basta con ver la tendencia de la propia organización y decidir a partir de qué punto resulta incómoda."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Elige el equipo donde más trabajo de entrada ha absorbido un agente en el último año y haz una sola pregunta al responsable: ¿quién, dentro de este equipo, podría supervisar al agente dentro de tres años, y qué ha hecho hasta ahora para aprender a hacerlo? Si la respuesta es un silencio, ahí está el primer rediseño."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Si la IA hace el trabajo de los junior, ¿desaparecen los puestos de entrada?",
+            "respuesta": "Cambian de contenido y, en muchas empresas, se reducen. El trabajo de base que hacía una persona lo asume cada vez más un agente. Lo que sigue necesitándose es alguien que revise, calibre y aprenda a decidir. Si la empresa elimina el puesto de entrada sin crear otra forma de aprender, se queda sin futuros senior."
+          },
+          {
+            "pregunta": "¿Cómo se forma a un senior cuando ya no hay tareas básicas que repetir?",
+            "respuesta": "Con tres mecanismos que sustituyen a la repetición de antes: revisar el trabajo del agente con un senior que explica los errores, hacer a mano a propósito una fracción rotatoria de los casos y rotar pronto por los puntos donde se resuelven las excepciones. Ninguno ocurre solo, así que cada uno necesita un responsable y tiempo asignado."
+          },
+          {
+            "pregunta": "¿Conviene contratar solo senior si un agente ya hace el trabajo junior?",
+            "respuesta": "Resuelve el corto plazo y agrava el medio. Si todas las empresas hacen lo mismo, los senior formados serán más escasos y más caros, y la que no forma a los suyos depende de contratarlos fuera. Además, quien llega de fuera no conoce las excepciones de la operación propia, que es justo lo que un agente no sabe resolver."
+          },
+          {
+            "pregunta": "¿Cómo sabe una empresa que está agotando su cantera de senior?",
+            "respuesta": "Mirando cuántas personas internas podrían ocupar cada puesto senior crítico en tres años. Si ese número baja mientras sube la automatización de tareas de entrada, la empresa está gastando cantera. El indicador es propio de cada organización, y lo que importa es la tendencia y el punto en que deja de ser aceptable."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos juntos la ruta de entrada de tu equipo",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "where-will-senior-people-come-from-if-ai-does-junior-work",
+    "titulo": "Who Becomes Senior When AI Does Junior Work?",
+    "entradilla": "The entry-level work that agents now absorb produced two things: a deliverable and a person with judgment. The company measures only the deliverable, so it can let its pipeline of senior talent run dry without any indicator warning it.",
+    "descripcion": "If AI does the junior work, tomorrow's senior people will not form on their own. What to redesign in the entry path so they keep coming.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "The entry-level work that agents now absorb produced two things: a deliverable and a person with judgment. The company measures only the deliverable, so it can let its pipeline of senior talent run dry without any indicator warning it."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture the month-end close team of a mid-sized company. For years, junior analysts reconciled accounts, chased differences of a few cents and prepared the drafts a supervisor would review. It was tedious work and nobody defended it as anything else. Today an agent reconciles in minutes, the draft arrives finished, and the entry-level team shrinks, or simply is not replaced when someone leaves."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That team's P&L improves from the first quarter. What shows up in no report is that those analysts were learning there why a difference of a few cents sometimes hides a judgment error, what an account that smells wrong looks like and whom to call before closing. That learning was a by-product of the work, and it disappears with the work."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The short answer",
+        "texto": "If AI does junior work, where will the senior people come from?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "If the company does not decide, nowhere. Senior people are formed by doing, many times and under supervision, the tasks an agent now performs. When that practice is withdrawn, the company has two paths: hire fully formed senior people from the market, which will be dearer and scarcer because everyone will do the same, or redesign the entry path so that learning still happens even when a person no longer does the task. The second path is an operating-model decision, not a training programme."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "First support",
+        "texto": "The entry-level task was a training mechanism, and it is being bought as if it were only a cost"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "When a company evaluates automating a junior task, it compares what the person costs with what the agent costs. The sum almost always favours the agent, because it is a sum of deliverables. What falls outside it is the part of the task that served another purpose: someone with little experience seeing, hundreds of times, what a normal case looks like and what an unusual one looks like. A senior is, to a large extent, someone who has seen enough cases to recognise the exception before it becomes a problem."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Second support",
+        "texto": "The damage arrives years late and passes through no indicator in today's management"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "This is why the problem does not correct itself. The saving shows in the quarter and is credited to a P&L that is already closed. The shortage of senior people appears when someone has to promote a team lead and the bench of candidates is short, or when the agent has to be supervised and nobody has done the work by hand for long enough to notice that the agent is wrong. Whoever decided to cut the entry level has probably moved on, and whoever inherits the problem has no way to trace its origin."
+      },
+      {
+        "tipo": "cita",
+        "texto": "An agent can inherit a junior's task. What it cannot inherit is the person who, by repeating that task, was going to become the one who knows when the agent is wrong.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Third support",
+        "texto": "The fix is to redesign the entry path at three points, and none of them means hiring the way we used to"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The point is not to keep manual tasks out of nostalgia. It is to decide which part of that learning is still needed and where it can come from now. There are three points of intervention, and each answers a different loss."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Reviewing the agent as the entry-level role",
+            "definicion": "The junior stops producing the draft and starts reviewing the agent's, with a checklist of what to verify and a senior who explains every error found. It matters because reviewing well requires understanding the work, and because each agent mistake is a free teaching case. If review shrinks to pressing approve, the path is broken again, so measure how many errors each person catches, not how many cases they approve."
+          },
+          {
+            "termino": "2. Part of the work is done by hand on purpose",
+            "definicion": "Each junior handles a small, rotating fraction of cases end to end, without the agent. It matters because the practice that sets judgment is not acquired by watching, and because the contrast between what the person did and what the agent did is the best calibration exercise there is. The cost is visible and small, and it is defended as an investment in the pipeline, not as an inefficiency."
+          },
+          {
+            "termino": "3. Early rotation to where decisions are made",
+            "definicion": "Instead of spending two years on the base task, the junior rotates early through the points where exceptions are decided: the committee that resolves what the agent could not, or the team that rewrites the rules. It matters because it shortens the road to judgment, and because that is the kind of work the agent does not yet do. It needs a senior with allotted time to explain each decision, or the rotation turns into observing."
+          }
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "How to measure it",
+        "texto": "What is not measured today is discovered in eight years, so a pipeline indicator is needed"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The most useful indicator is simple: for each critical senior role, how many people inside the company could fill it within three years, and what have they done to be ready. If that number falls as automation rises, the company is consuming its pipeline. No outside benchmark is needed; the trend inside the organisation is enough, along with a decision on the point where it becomes uncomfortable."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Pick the team where an agent has absorbed the most entry-level work in the past year and ask its manager one question: who inside this team could supervise the agent three years from now, and what have they done so far to learn how? If the answer is silence, that is the first redesign."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "If AI does junior work, do entry-level jobs disappear?",
+            "respuesta": "Their content changes and, in many companies, their number falls. The base work a person used to do is increasingly taken by an agent. What is still needed is someone who reviews, calibrates and learns to decide. If the company removes the entry role without creating another way to learn, it ends up with no future senior people."
+          },
+          {
+            "pregunta": "How do you train a senior when there are no basic tasks left to repeat?",
+            "respuesta": "With three mechanisms that replace the old repetition: reviewing the agent's work with a senior who explains the errors, deliberately doing a rotating fraction of cases by hand, and rotating early through the points where exceptions are resolved. None of them happens on its own, so each needs an owner and allotted time."
+          },
+          {
+            "pregunta": "Should we hire only senior people if an agent already does the junior work?",
+            "respuesta": "It solves the short term and worsens the medium term. If every company does the same, trained senior people become scarcer and dearer, and a company that does not develop its own depends on hiring them outside. People who arrive from outside also do not know the exceptions of your own operation, which is exactly what an agent cannot resolve."
+          },
+          {
+            "pregunta": "How does a company know it is draining its senior pipeline?",
+            "respuesta": "By counting how many internal people could fill each critical senior role in three years. If that number falls while automation of entry-level tasks rises, the company is spending its pipeline. The indicator is specific to each organisation, and what matters is the trend and the point at which it stops being acceptable."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's review your team's entry path together",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
