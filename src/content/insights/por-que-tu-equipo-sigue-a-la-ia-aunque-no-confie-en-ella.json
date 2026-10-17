@@ -1,0 +1,241 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-10-17",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "value-adoption",
+  "formato": "perspective",
+  "es": {
+    "slug": "por-que-tu-equipo-sigue-a-la-ia-aunque-no-confie-en-ella",
+    "titulo": "¿Por qué tu equipo sigue a la IA aunque no confíe?",
+    "entradilla": "Un equipo puede seguir las recomendaciones de la IA sin creerlas porque llevarles la contraria sale más caro que equivocarse con ellas. Mientras esa asimetría exista, la adopción se ve alta y la calidad de las decisiones baja sin que nadie lo note.",
+    "descripcion": "Los equipos siguen a la IA sin confiar porque discrepar cuesta más que equivocarse con ella. Tres causas y cómo hacer barato el desacuerdo.",
+    "linkedin": {
+      "texto": "Que un equipo siga cada recomendación de la IA no prueba que confíe en ella.\n\nA menudo prueba que discrepar le sale más caro que equivocarse. Quien se desvía debe justificarse; quien obedece, no.\n\nTres causas de esa asimetría y qué cambiar para que el desacuerdo deje de tener costo.",
+      "hashtags": [
+        "IA",
+        "Adopcion",
+        "Liderazgo"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Un equipo puede seguir las recomendaciones de la IA sin creerlas porque llevarles la contraria sale más caro que equivocarse con ellas. Mientras esa asimetría exista, la adopción se ve alta y la calidad de las decisiones baja sin que nadie lo note."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por lo que se mide. Casi todas las empresas que despliegan una herramienta de IA siguen dos números: cuánta gente la usa y cuántas recomendaciones se aceptan. Si los dos suben, el tablero se pone verde y la conclusión parece obvia: el equipo confía. Pero un tablero de adopción no distingue entre alguien que acepta una recomendación porque la revisó y alguien que la acepta porque es lo más seguro que puede hacer un martes a las cinco de la tarde."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La respuesta corta a por qué ocurre es de incentivos, no de psicología. La persona que sigue la recomendación y se equivoca puede decir que siguió la herramienta que la empresa le pidió usar. La que se desvía y se equivoca no tiene esa defensa, y la que se desvía y acierta rara vez recibe crédito, porque nadie sabe que hubo una alternativa. Con esas reglas, seguir a la IA aunque se dude de ella es la decisión racional."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Cómo se nota que un equipo sigue a la IA sin confiar en ella?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay señales que el tablero de uso no recoge, pero que cualquier jefe de área puede revisar en una semana. Se pueden mirar en el registro de decisiones de un proceso concreto, por ejemplo una cola de aprobación de créditos o de reembolsos."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "La tasa de aceptación es casi del cien por ciento y no cambia entre casos fáciles y difíciles. Un revisor atento no debería coincidir igual en los dos.",
+          "Las correcciones se concentran en las mismas dos o tres personas, que además se explican mucho más que el resto.",
+          "El tiempo de revisión por caso es muy corto y casi idéntico, lo que sugiere que se confirma sin leer.",
+          "En las conversaciones de pasillo se dice «la herramienta lo marcó así» como forma de cerrar una discusión."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El mecanismo",
+        "texto": "Discrepar con la IA tiene un costo que obedecer no tiene"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Imagina un analista que revisa solicitudes de reembolso con ayuda de un modelo que propone aprobar o rechazar. Si rechaza lo que el modelo aprobó, tiene que escribir una nota, esperar la validación de su jefe y, si el cliente reclama, defender una decisión que ninguna herramienta respalda. Si acepta la propuesta, el caso se cierra en segundos y, si algo sale mal, la discusión pasa a ser sobre el modelo. Ningún reglamento prohíbe discrepar, pero cada paso extra es un costo, y los costos pequeños y repetidos terminan decidiendo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Dos cosas agravan esto. La primera es que la presión de adopción premia el uso visible: cuando el comité pregunta cuántas recomendaciones se aceptaron, aceptar se convierte en la métrica del equipo. La segunda es que la responsabilidad rara vez está definida. Si nadie ha dicho quién responde cuando la recomendación es mala, cada persona asume lo más prudente para sí misma, que es no ser la que contradijo a la herramienta."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un equipo que no puede discrepar con la IA sin pagar por ello no está usando una herramienta, está cumpliendo un trámite.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Hay tres decisiones de diseño que hacen barato el desacuerdo"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Definir quién responde por la decisión final",
+            "definicion": "Escribe, para cada proceso, si la decisión es de la persona que revisa o de la herramienta que propone. Si es de la persona, ella tiene que saber que seguir una mala recomendación no la cubre. Si es de un proceso con un dueño explícito, ese dueño tiene que existir y firmar. Mientras la respuesta sea implícita, cada persona la resuelve a su favor."
+          },
+          {
+            "termino": "2. Quitar el costo de discrepar",
+            "definicion": "Una discrepancia debería costar un clic y una razón corta elegida de una lista, no una nota ni una validación del jefe. Así el desacuerdo deja de ser un incidente y pasa a ser un dato. Reserva la escalación para los casos donde la discrepancia tenga un impacto grande, no para todos."
+          },
+          {
+            "termino": "3. Medir los desacuerdos y qué pasó después",
+            "definicion": "Cambia la métrica del tablero: en vez de cuántas recomendaciones se aceptaron, mira cuántas se contradijeron y quién tuvo razón al final. Si nadie discrepa nunca, el equipo no está confiando, está obedeciendo. Y si discrepan y aciertan más que el modelo, esa información vale más que cualquier mejora del modelo."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El orden importa. Sin definir quién responde, quitar el costo de discrepar no cambia nada porque la gente sigue sin saber si le conviene. Sin quitar el costo, medir los desacuerdos produce un número en cero y una falsa tranquilidad. Y sin medirlos, no hay forma de saber si las dos primeras decisiones funcionaron."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Elige un proceso donde la IA ya recomienda y mira un mes de decisiones: cuántas veces la persona contradijo la recomendación y cuánto le costó hacerlo. Si la respuesta es casi nunca y bastante, ya sabes cuál es el primer cambio."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Por qué los empleados siguen las recomendaciones de la IA aunque no confíen en ella?",
+            "respuesta": "Porque discrepar suele costar más que obedecer. Quien sigue la herramienta y se equivoca puede decir que hizo lo que la empresa le pidió, mientras que quien se desvía tiene que justificarse y rara vez recibe crédito si acierta. Con esos incentivos, seguir a la IA es la opción más segura para la persona, aunque dude."
+          },
+          {
+            "pregunta": "¿Una tasa de adopción alta significa que el equipo confía en la IA?",
+            "respuesta": "No necesariamente. La adopción mide uso y aceptación, no revisión real. Una tasa de aceptación casi total que no cambia entre casos fáciles y difíciles suele indicar que el equipo confirma sin evaluar. Para saber si hay confianza hay que mirar cuántas veces se contradice la recomendación y quién tuvo razón."
+          },
+          {
+            "pregunta": "¿Cómo se consigue que un equipo discrepe de la IA cuando corresponde?",
+            "respuesta": "Hay que hacer barato el desacuerdo: definir quién responde por la decisión final, permitir registrar una discrepancia con un clic y una razón corta, y medir los desacuerdos en lugar de solo las aceptaciones. Si discrepar no tiene costo y se mide, la gente discrepa cuando tiene motivos."
+          },
+          {
+            "pregunta": "¿Qué riesgo corre una empresa cuando su equipo obedece a la IA sin revisarla?",
+            "respuesta": "La calidad de las decisiones depende entonces solo del modelo, sin la revisión humana que se suponía que lo corregía. Los errores del modelo pasan a producción con apariencia de decisión supervisada, y la empresa no tiene registro de dónde la persona habría hecho algo distinto."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos si en tu operación discrepar con la IA tiene costo",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "why-teams-follow-ai-recommendations-they-do-not-trust",
+    "titulo": "Why Teams Follow AI They Do Not Trust",
+    "entradilla": "A team can follow AI recommendations it does not believe because overruling them costs more than being wrong with them. While that asymmetry exists, adoption looks high and decision quality drops without anyone noticing.",
+    "descripcion": "Teams follow AI they do not trust because disagreeing costs more than being wrong with it. Three causes, and how to make disagreement cheap.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "A team can follow AI recommendations it does not believe because overruling them costs more than being wrong with them. While that asymmetry exists, adoption looks high and decision quality drops without anyone noticing."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Start with what gets measured. Most companies that roll out an AI tool track two numbers: how many people use it and how many recommendations are accepted. If both rise, the dashboard turns green and the conclusion seems obvious: the team trusts it. But an adoption dashboard cannot tell apart someone who accepts a recommendation because they checked it from someone who accepts it because it is the safest thing to do at five o'clock on a Tuesday."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The short answer to why this happens is about incentives, not psychology. The person who follows the recommendation and gets it wrong can say they followed the tool the company asked them to use. The one who overrides it and gets it wrong has no such defense, and the one who overrides it and gets it right rarely earns credit, because nobody knows there was an alternative. Under those rules, following the AI while doubting it is the rational choice."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "How can you tell a team is following AI without trusting it?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Some signals never reach a usage dashboard, but any head of function can check them within a week. Look at the decision log of one specific process, such as a credit approval or refund queue."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Acceptance is close to one hundred percent and does not change between easy and hard cases. An attentive reviewer should not agree equally on both.",
+          "Corrections cluster around the same two or three people, who also explain themselves far more than everyone else.",
+          "Review time per case is very short and almost identical, which suggests confirming without reading.",
+          "In hallway conversations, «the tool flagged it that way» is used to close a discussion."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The mechanism",
+        "texto": "Disagreeing with the AI carries a cost that obeying does not"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Imagine an analyst who reviews refund requests with a model that proposes approve or reject. If they reject what the model approved, they have to write a note, wait for their manager to validate it and, if the customer complains, defend a decision no tool backs. If they accept the proposal, the case closes in seconds and, if it goes wrong, the conversation becomes about the model. No rule forbids disagreeing, but every extra step is a cost, and small, repeated costs end up deciding."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Two things make it worse. The first is that adoption pressure rewards visible use: when the committee asks how many recommendations were accepted, accepting becomes the team's metric. The second is that accountability is rarely defined. If nobody has said who answers when a recommendation is bad, each person does what is safest for themselves, which is not to be the one who contradicted the tool."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A team that cannot disagree with the AI without paying for it is not using a tool, it is completing a formality.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "Three design decisions make disagreement cheap"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Define who owns the final decision",
+            "definicion": "Write down, for each process, whether the decision belongs to the person reviewing or to the tool proposing. If it is the person, they need to know that following a bad recommendation does not cover them. If it is a process with an explicit owner, that owner has to exist and sign. While the answer stays implicit, each person resolves it in their own favor."
+          },
+          {
+            "termino": "2. Remove the cost of disagreeing",
+            "definicion": "A disagreement should cost one click and a short reason picked from a list, not a note and a manager's validation. That turns disagreement from an incident into data. Keep escalation for cases where the disagreement carries a large impact, not for all of them."
+          },
+          {
+            "termino": "3. Measure disagreements and what happened next",
+            "definicion": "Change the dashboard metric: instead of how many recommendations were accepted, look at how many were overruled and who turned out to be right. If nobody ever disagrees, the team is not trusting, it is obeying. And if people disagree and beat the model, that information is worth more than any model improvement."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The order matters. Without defining who answers, removing the cost of disagreeing changes nothing, because people still do not know whether it pays. Without removing the cost, measuring disagreements produces a zero and false comfort. And without measuring them, there is no way to know whether the first two decisions worked."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Pick one process where the AI already recommends and look at a month of decisions: how often the person overruled the recommendation and what it cost them to do so. If the answer is almost never and quite a lot, you know the first change."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Why do employees follow AI recommendations even when they do not trust them?",
+            "respuesta": "Because disagreeing usually costs more than obeying. Whoever follows the tool and gets it wrong can say they did what the company asked, while whoever overrides it has to justify themselves and rarely earns credit if they are right. Under those incentives, following the AI is the safest option for the person, even when they doubt it."
+          },
+          {
+            "pregunta": "Does a high adoption rate mean the team trusts the AI?",
+            "respuesta": "Not necessarily. Adoption measures use and acceptance, not real review. Near-total acceptance that does not change between easy and hard cases usually means the team confirms without evaluating. To know whether trust exists, look at how often the recommendation is overruled and who turned out to be right."
+          },
+          {
+            "pregunta": "How do you get a team to disagree with the AI when it should?",
+            "respuesta": "Make disagreement cheap: define who owns the final decision, let people record a disagreement with one click and a short reason, and measure disagreements rather than only acceptances. When disagreeing carries no cost and gets measured, people disagree when they have reason to."
+          },
+          {
+            "pregunta": "What risk does a company run when its team obeys the AI without reviewing it?",
+            "respuesta": "Decision quality then depends on the model alone, without the human review that was supposed to correct it. Model errors reach production looking like supervised decisions, and the company has no record of where a person would have done something different."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's review whether disagreeing with the AI carries a cost in your operation",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
