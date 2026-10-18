@@ -1,0 +1,257 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-10-18",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "responsible-scale",
+  "formato": "executive-brief",
+  "es": {
+    "slug": "hay-que-avisar-al-cliente-de-que-lo-atiende-un-agente-de-ia",
+    "titulo": "¿Hay que avisar al cliente de que habla con IA?",
+    "entradilla": "Sí, y no solo por la norma. Avisar cuesta una línea al inicio de la conversación; no avisar cuesta la confianza del cliente el día que lo descubre. Lo que hay que decidir de verdad es cómo se avisa y qué pasa cuando el cliente pide una persona.",
+    "descripcion": "Sí: avisar al cliente de que lo atiende una IA protege la confianza y, en varios mercados, es obligatorio. Qué decir, cuándo y qué dejar listo.",
+    "linkedin": {
+      "texto": "Un cliente que descubre por su cuenta que hablaba con una IA ya no cree el resto de la conversación.\n\nLa decisión no es si avisar, sino qué hace la empresa cuando el cliente pide una persona. Ahí se gana o se pierde la confianza.\n\nQué decir, en qué momento y qué dejar listo antes de poner un agente de cara al público.",
+      "hashtags": [
+        "IA",
+        "Clientes",
+        "Regulacion"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Sí, y no solo por la norma. Avisar cuesta una línea al inicio de la conversación; no avisar cuesta la confianza del cliente el día que lo descubre. Lo que hay que decidir de verdad es cómo se avisa y qué pasa cuando el cliente pide una persona."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por cómo suele llegar la pregunta. Un responsable de atención al cliente prepara el lanzamiento de un agente que contesta consultas por chat, y alguien del equipo plantea que quizá sea mejor no decir que es una IA, porque los clientes tratan peor a los bots y cortan antes la conversación. El argumento suena práctico. Es también el que más caro sale, y conviene entender por qué antes de discutir cómo redactar el aviso."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La respuesta corta es que hay que avisar, y por tres razones que no se solapan: en varios mercados ya es una obligación, el engaño tiene un costo que aparece tarde y en el peor momento, y avisar bien no reduce la conversión tanto como se teme si el agente resuelve. Lo que queda por decidir es el diseño del aviso, y ahí sí hay criterio que aplicar."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La norma",
+        "texto": "¿Es obligatorio decirle al cliente que habla con una IA?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Depende de dónde estén los clientes, y la dirección en la que se mueven las normas es clara. El artículo 50 del AI Act europeo (Reglamento UE 2024/1689) exige que los sistemas de IA pensados para interactuar directamente con personas se diseñen de modo que la persona sepa que habla con una IA, salvo que sea evidente para cualquier usuario razonablemente informado. Como la norma mira dónde se usa el resultado y no dónde está la empresa, una compañía latinoamericana que atiende por chat a clientes en la Unión Europea puede quedar dentro, tal como se explica en otro artículo de esta serie."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Fuera de Europa el panorama es desigual: algunos países y estados exigen el aviso en ciertos usos, otros no tienen nada. Pero planificar una operación sobre el supuesto de que no habrá obligación en ninguno de los mercados donde se quiere crecer es una apuesta mala. Quitar un aviso que ya existe cuesta una línea de código; añadirlo de urgencia a una operación con diez mil conversaciones diarias cuesta una semana de ingeniería y una conversación incómoda con legal. La confirmación de qué exige cada mercado la da asesoría jurídica con el texto delante, no este artículo."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El costo",
+        "texto": "El engaño no se paga al principio, se paga cuando el cliente lo descubre"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en un cliente que escribe para disputar un cobro. Durante diez minutos cree que habla con una persona: le agradece la paciencia, le cuenta su situación, le cree cuando le dicen que lo van a revisar. Después nota que las respuestas llegan en dos segundos a cualquier hora, que repiten la misma frase ante cada negativa, o que la conversación se corta en el mismo punto que la anterior. En ese momento el cliente no solo se enfada con el agente, revisa hacia atrás todo lo que se le dijo y lo pone en duda, incluido el reembolso que le prometieron."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ese es el mecanismo. La confianza que se pierde no es la del chat, es la de la empresa, y se pierde justo en el tipo de conversación donde más pesa: una disputa, una reclamación, una decisión sobre dinero. Quien ocultó la naturaleza del agente se queda además sin defensa: cualquier error posterior del agente se lee como parte de un engaño, no como un fallo técnico. Con un aviso previo, el mismo error es un fallo; sin él, es mala fe."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Ocultar que el cliente habla con una IA ahorra una línea al inicio y obliga a defender toda la conversación el día que se sepa.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El diseño",
+        "texto": "Un aviso bien diseñado tiene tres piezas, y la más importante es la salida"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El temor de que avisar espante al cliente tiene una parte cierta: un aviso torpe, escondido en la letra pequeña o redactado como una advertencia legal, sí genera rechazo. Lo que cambia la reacción es lo que viene después del aviso. Un cliente tolera hablar con una IA si resuelve su problema y sabe que puede llegar a una persona; lo que no tolera es que se lo hayan ocultado y que no haya salida."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Decirlo al inicio y en lenguaje llano",
+            "definicion": "La primera frase de la conversación nombra lo que es: «Soy el asistente virtual de la empresa, una IA, y puedo ayudarte con pedidos y devoluciones». Sin nombre humano inventado, sin foto de una persona y sin jerga. El aviso funciona cuando el cliente lo lee antes de contar su problema, no cuando lo encuentra en la política de privacidad."
+          },
+          {
+            "termino": "2. Dejar una salida visible hacia una persona",
+            "definicion": "El cliente debe poder pedir un humano en cualquier punto de la conversación y que eso funcione a la primera, sin tener que repetir su caso. Esto exige que alguien haya definido en qué horarios hay personas, cuánto tarda el traspaso y qué información le llega a quien recibe el caso. Un botón que lleva a un formulario sin respuesta cumple la letra del aviso y rompe su sentido."
+          },
+          {
+            "termino": "3. Guardar constancia de qué se dijo y cuándo",
+            "definicion": "Si más adelante alguien reclama que no sabía con quién hablaba, la empresa tiene que poder mostrar el aviso tal como se le presentó y el momento exacto. Es el mismo registro que sirve para auditar las respuestas del agente, y conviene diseñarlo a la vez en lugar de añadirlo después."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El orden importa. Un aviso claro sin salida a una persona convierte la transparencia en una molestia, porque el cliente ya sabe que habla con una máquina y no puede hacer nada con eso. Una salida a una persona sin aviso inicial es un recurso que casi nadie sabe que existe. Y sin constancia, el día de la reclamación la empresa solo puede decir que avisó, sin poder demostrarlo."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La excepción",
+        "texto": "El aviso se puede simplificar cuando el agente no conversa con el cliente"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "No todo uso de IA cara al cliente pide la misma frase. Un modelo que ordena internamente los tickets, o que corrige la ortografía de un correo que firma una persona, no interactúa con el cliente y no necesita aviso conversacional. La línea útil es esta: si el cliente cree razonablemente que habla con una persona y lo que recibe lo genera una máquina, hay que avisar. Si el cliente sabe lo que tiene delante o no hay interacción, el aviso sobra. Ante la duda, avisar."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Abre las diez conversaciones más recientes de tu agente como las vería un cliente. Mira si la primera frase dice que es una IA y si en algún punto hay una forma clara de pedir una persona que funcione. Si falta cualquiera de las dos, ese es el primer cambio, y es de producto, no de legal."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Hay que decirle al cliente que habla con una IA y no con una persona?",
+            "respuesta": "En la práctica, sí. El AI Act europeo exige informar a la persona cuando interactúa con un sistema de IA, salvo que sea evidente, y otras jurisdicciones van en la misma dirección. Aunque el mercado de la empresa no lo exija todavía, ocultarlo expone la confianza del cliente el día que lo descubra, y eso suele costar más que la línea de aviso."
+          },
+          {
+            "pregunta": "¿Avisar de que es una IA hace que los clientes abandonen la conversación?",
+            "respuesta": "Un aviso torpe puede generar rechazo, pero lo que más pesa es si el agente resuelve el problema y si el cliente puede llegar a una persona cuando lo necesita. Un cliente que sabe con quién habla y tiene una salida suele seguir la conversación; uno que lo descubre después de ser engañado revisa todo lo que se le dijo."
+          },
+          {
+            "pregunta": "¿Qué debe decir el aviso de que el cliente habla con una IA?",
+            "respuesta": "Debe aparecer al inicio, en lenguaje llano, y decir que se trata de un asistente de inteligencia artificial y con qué puede ayudar. No debe usar un nombre ni una foto que simulen a una persona. Conviene acompañarlo de una forma clara de pedir hablar con un humano en cualquier momento de la conversación."
+          },
+          {
+            "pregunta": "¿Cuándo no hace falta avisar de que se usa IA con el cliente?",
+            "respuesta": "Cuando el cliente no interactúa con la IA, por ejemplo si un modelo clasifica tickets internamente o una persona revisa y firma lo que se envía, o cuando es evidente que habla con una máquina. Si el cliente puede creer razonablemente que habla con una persona y no es así, hay que avisar."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos qué ve el cliente cuando lo atiende un agente de tu operación",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "do-you-have-to-tell-customers-they-are-talking-to-an-ai-agent",
+    "titulo": "Must You Tell Customers They Are Talking to AI?",
+    "entradilla": "Yes, and not only because of regulation. Disclosure costs one line at the start of the conversation; hiding it costs customer trust the day the customer finds out. The real decisions are how to disclose and what happens when the customer asks for a person.",
+    "descripcion": "Yes: telling customers they are talking to AI protects trust and, in several markets, is required. What to say, when to say it, and what to have ready.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Yes, and not only because of regulation. Disclosure costs one line at the start of the conversation; hiding it costs customer trust the day the customer finds out. The real decisions are how to disclose and what happens when the customer asks for a person."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Start with how the question usually arrives. A head of customer service is preparing to launch an agent that answers chat enquiries, and someone on the team suggests it might be better not to say it is AI, because customers treat bots worse and abandon the chat sooner. The argument sounds practical. It is also the one that costs the most, and it is worth understanding why before debating how to word the disclosure."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The short answer is yes, for three reasons that do not overlap: in several markets it is already an obligation, concealment carries a cost that arrives late and at the worst moment, and a well-designed disclosure hurts conversion less than feared when the agent actually resolves the issue. What remains to decide is the design of the disclosure, and that is where judgement applies."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The rule",
+        "texto": "Is it mandatory to tell a customer they are talking to AI?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "It depends on where the customers are, and the direction of travel is clear. Article 50 of the EU AI Act (Regulation 2024/1689) requires AI systems intended to interact directly with people to be designed so that the person knows they are dealing with AI, unless that is obvious to a reasonably well-informed user. Because the regulation looks at where the output is used rather than where the company sits, a company outside Europe that serves customers in the Union by chat can fall within it, as another article in this series explains."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Outside Europe the picture is uneven: some countries and states require disclosure in certain uses, others have nothing. But building an operation on the assumption that no market where you want to grow will ever require it is a poor bet. Removing a disclosure that already exists costs one line of code; adding one in a hurry to an operation handling ten thousand conversations a day costs a week of engineering and an uncomfortable talk with legal. What each market requires is for counsel to confirm with the text in hand, not for this article."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The cost",
+        "texto": "Concealment is not paid for at the start, it is paid for when the customer finds out"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Think of a customer writing in to dispute a charge. For ten minutes they believe they are talking to a person: they thank them for their patience, explain their situation, believe it when told it will be reviewed. Then they notice that replies arrive in two seconds at any hour, that the same sentence repeats after every refusal, or that the conversation cuts off at the same point as last time. At that moment the customer is not only annoyed with the agent. They look back over everything they were told and doubt it, including the refund they were promised."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That is the mechanism. The trust that is lost is not the chat's, it is the company's, and it is lost in exactly the kind of conversation where it matters most: a dispute, a complaint, a decision about money. A company that hid the nature of the agent also loses its defence: any later error by the agent reads as part of a deception rather than as a technical fault. With prior disclosure the same error is a fault; without it, it is bad faith."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Hiding that the customer is talking to AI saves one line at the start and means defending the whole conversation the day it comes out.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The design",
+        "texto": "A good disclosure has three parts, and the exit to a person matters most"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The fear that disclosure drives customers away is partly right: a clumsy notice, buried in small print or worded like a legal warning, does cause rejection. What changes the reaction is what comes after the notice. A customer will tolerate AI if it solves the problem and they know they can reach a person; what they will not tolerate is having been kept in the dark with no way out."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Say it at the start, in plain words",
+            "definicion": "The first line of the conversation names what it is: «I'm the company's virtual assistant, an AI, and I can help with orders and returns». No invented human name, no photo of a person, no jargon. The notice works when the customer reads it before describing their problem, not when they find it in the privacy policy."
+          },
+          {
+            "termino": "2. Leave a visible exit to a person",
+            "definicion": "The customer must be able to ask for a human at any point and have it work first time, without repeating their case. That requires someone to have defined when people are available, how long the handover takes, and what information reaches whoever receives the case. A button that leads to a form nobody answers meets the letter of the notice and defeats its purpose."
+          },
+          {
+            "termino": "3. Keep a record of what was said and when",
+            "definicion": "If a customer later claims they did not know who they were talking to, the company must be able to show the notice as it was presented and the exact moment. It is the same record that lets you audit the agent's answers, and it is cheaper to design both together than to add one afterwards."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The order matters. A clear notice with no way to reach a person turns transparency into an annoyance, because the customer knows they are talking to a machine and can do nothing about it. An exit to a person with no notice at the start is an option almost nobody knows exists. And without a record, on the day of the complaint the company can only say it disclosed, without being able to prove it."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The exception",
+        "texto": "Disclosure can be simpler when the agent does not converse with the customer"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Not every customer-facing use of AI calls for the same sentence. A model that sorts tickets internally, or that fixes the spelling of an email a person signs, does not interact with the customer and needs no conversational notice. The useful line is this: if the customer could reasonably believe they are talking to a person and what they receive is generated by a machine, disclose. If the customer knows what they are dealing with, or there is no interaction, the notice is superfluous. When in doubt, disclose."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Open your agent's ten most recent conversations the way a customer would see them. Check whether the first line says it is AI and whether there is a clear, working way to ask for a person at any point. If either is missing, that is the first change, and it is a product change, not a legal one."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Do you have to tell a customer they are talking to AI and not a person?",
+            "respuesta": "In practice, yes. The EU AI Act requires people to be informed when they interact with an AI system unless it is obvious, and other jurisdictions are moving the same way. Even where your market does not yet require it, concealment puts customer trust at risk the day it is discovered, and that usually costs more than the line of disclosure."
+          },
+          {
+            "pregunta": "Does telling customers it is AI make them abandon the conversation?",
+            "respuesta": "A clumsy notice can cause rejection, but what weighs most is whether the agent resolves the problem and whether the customer can reach a person when needed. A customer who knows who they are talking to and has an exit usually carries on; one who finds out after being misled reviews everything they were told."
+          },
+          {
+            "pregunta": "What should an AI disclosure to a customer say?",
+            "respuesta": "It should appear at the start, in plain language, and state that this is an artificial intelligence assistant and what it can help with. It should not use a name or photo that imitates a person. It works best alongside a clear way to ask for a human at any point in the conversation."
+          },
+          {
+            "pregunta": "When is it not necessary to disclose AI use to a customer?",
+            "respuesta": "When the customer does not interact with the AI, for example a model that classifies tickets internally or a person who reviews and signs what is sent, or when it is obvious they are dealing with a machine. If the customer could reasonably believe they are speaking to a person and are not, disclose."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's review what your customer sees when an agent serves them",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
