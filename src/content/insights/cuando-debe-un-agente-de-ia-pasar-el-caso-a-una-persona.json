@@ -1,0 +1,265 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-10-19",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "agentic-work",
+  "formato": "framework",
+  "es": {
+    "slug": "cuando-debe-un-agente-de-ia-pasar-el-caso-a-una-persona",
+    "titulo": "¿Cuándo debe un agente de IA pasar a una persona?",
+    "entradilla": "Cuando se cumple una condición que alguien escribió antes, no cuando el agente «duda». El traspaso a una persona falla casi siempre por tres razones: los disparadores son vagos, el caso llega sin contexto o nadie está del otro lado para recibirlo.",
+    "descripcion": "Un agente pasa el caso a una persona por condiciones escritas, no por dudas. Qué disparadores fijar, qué contexto enviar y quién lo recibe.",
+    "linkedin": {
+      "texto": "Un agente que decide por sí mismo cuándo pedir ayuda traspasa muy poco o demasiado, y en ambos casos nadie lo nota hasta la queja.\n\nEl traspaso no se resuelve en el modelo. Se resuelve en tres cosas que la empresa define: cuándo, con qué contexto y quién lo recibe.\n\nLos disparadores que conviene escribir antes de poner un agente a trabajar.",
+      "hashtags": [
+        "IA",
+        "Operaciones",
+        "Agentes"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Cuando se cumple una condición que alguien escribió antes, no cuando el agente «duda». El traspaso a una persona falla casi siempre por tres razones: los disparadores son vagos, el caso llega sin contexto o nadie está del otro lado para recibirlo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por cómo suele resolverse esto en la práctica. Un equipo despliega un agente que atiende devoluciones y alguien pregunta qué pasa cuando el agente no sabe qué hacer. La respuesta habitual es que el agente «escala los casos complicados». Suena razonable, y es la frase que más problemas esconde, porque no dice quién define qué es complicado, ni en qué momento se nota, ni adónde va el caso cuando se escala."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Mi posición es esta: el traspaso a una persona es una decisión de diseño del proceso, no una capacidad del modelo. Se sostiene sobre tres piezas que la empresa escribe antes de dar autonomía: las condiciones que disparan el traspaso, el paquete de contexto que viaja con el caso y la persona que lo recibe, con un plazo. Si falta una, el agente puede ser excelente y el proceso seguirá fallando justo en los casos que más importan."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Los disparadores",
+        "texto": "Un disparador útil es un hecho que se puede observar, no una sensación del agente"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La tentación es pedirle al modelo que traspase cuando «no esté seguro». El problema es que el modelo suele estar igual de seguro cuando acierta que cuando se equivoca, y una regla que depende de esa seguridad traspasa de menos justo donde el riesgo es mayor. Funciona mejor una lista corta de condiciones que cualquiera pueda comprobar mirando la conversación o el sistema, sin interpretar nada."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Lo que está en juego",
+            "definicion": "Un importe, un tipo de cliente o una acción que no se puede deshacer. Por ejemplo, devoluciones por encima de cierto monto, o cualquier cambio sobre una cuenta con un contrato vigente. La condición se escribe con el número o la categoría, no con la palabra «importante»."
+          },
+          {
+            "termino": "2. Lo que el agente no logra resolver",
+            "definicion": "Se mide por hechos: el cliente repite la misma petición dos veces, el agente ha intentado la misma herramienta tres veces sin éxito, o la consulta cae fuera de los temas para los que existe un procedimiento. El conteo de intentos es un disparador más fiable que la autoevaluación del modelo."
+          },
+          {
+            "termino": "3. Lo que el cliente pide",
+            "definicion": "Si la persona pide hablar con alguien, el traspaso es inmediato y no se discute. Es el único disparador que no admite una regla de «primero intenta resolver», porque insistir convierte una atención en una pelea."
+          },
+          {
+            "termino": "4. Lo que el sistema detecta",
+            "definicion": "Un tono de reclamación, una mención a un abogado o a una autoridad, un dato personal sensible que no debía aparecer en la conversación. Son señales que alguien de riesgo o de cumplimiento puede enumerar en una tarde, y que conviene tratar como traspaso automático."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay una razón de fondo para que estas condiciones las escriba quien responde por el resultado del proceso y no quien configura el agente. Un técnico optimiza para que el agente resuelva más casos solo, que es una métrica razonable y tira en la dirección contraria. El responsable de operaciones o de cliente es quien sabe qué errores salen caros en su proceso, y por eso es quien debe fijar dónde el agente se detiene."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El contexto",
+        "texto": "Un traspaso sin contexto obliga al cliente a empezar de cero y borra el valor del agente"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en un cliente que lleva ocho minutos explicando a un agente por qué le cobraron dos veces. El agente detecta el disparador y lo pasa a una persona, que abre el caso y escribe: «Hola, ¿en qué puedo ayudarte?». En ese momento todo lo que ahorró el agente se perdió, y además el cliente tiene ahora una razón nueva para estar molesto. El traspaso técnicamente funcionó. El proceso, no."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Por eso el segundo apoyo es un paquete mínimo que debe llegar siempre con el caso: qué pidió el cliente, qué verificó el agente y con qué resultado, qué acción se intentó o se sugiere, y cuál fue el disparador que detuvo todo. Cuatro líneas legibles en diez segundos, no una transcripción de cuarenta mensajes que la persona no tiene tiempo de leer. Si quien recibe el caso puede retomar la conversación en su primera frase, el traspaso está bien diseñado."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un agente que traspasa bien no es el que pide ayuda menos veces, sino el que deja a la persona en condiciones de retomar el caso en su primera frase.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El receptor",
+        "texto": "Si nadie recibe el caso en un plazo conocido, el traspaso es una cola que nadie mira"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El tercer apoyo es el que más se olvida porque está fuera del agente. Un traspaso necesita un destino con nombre: un equipo, un turno, un plazo máximo de respuesta y una regla para cuando nadie contesta. Imagina un agente que atiende a las once de la noche y traspasa un caso a una cola que se revisa a las nueve de la mañana. Si el cliente no lo sabe, espera una respuesta que no llegará hasta la mañana siguiente."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La solución no siempre es poner personas de guardia. A veces basta con que el agente diga con honestidad cuándo va a responder alguien, deje al cliente un canal alternativo o reduzca el alcance del propio agente en los horarios en los que no hay nadie detrás. Lo que no funciona es traspasar hacia un vacío. Un caso traspasado y sin atender es peor que uno que el agente hubiera rechazado con claridad, porque el cliente cree que ya está resuelto o en manos de alguien."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La revisión",
+        "texto": "La tasa de traspaso se vigila en las dos direcciones"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Una vez en marcha, conviene mirar dos cifras de forma regular. Si el agente traspasa demasiado, el equipo humano recibe trabajo que no necesitaba y el agente deja de aportar. Si traspasa demasiado poco, los casos que debían llegar a una persona se resuelven mal sin que nadie lo vea. Un revisor que lea cada semana una muestra de casos traspasados y otra de casos que el agente cerró solo corrige los disparadores con datos de su propia operación, y el número de la primera semana deja de ser definitivo."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Escribe en una página los disparadores de tu agente más desplegado, con el número o la categoría de cada uno, y pídele a quien recibe los casos que te diga qué le llega y qué le falta. Esa conversación suele mostrar en una hora más de lo que muestra un mes de métricas."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cuándo debe un agente de IA pasar un caso a una persona?",
+            "respuesta": "Cuando se cumple una condición escrita de antemano: lo que está en juego supera un umbral, el agente no logra resolver tras un número fijo de intentos, el cliente pide hablar con alguien o el sistema detecta una señal de riesgo. Las condiciones las define quien responde por el resultado del proceso, no quien configura el agente."
+          },
+          {
+            "pregunta": "¿Puede el agente decidir solo si necesita ayuda humana?",
+            "respuesta": "Es mejor no depender de eso. El modelo suele mostrar la misma seguridad cuando acierta que cuando se equivoca, así que una regla basada en su duda deja pasar los errores más caros. Funcionan mejor los hechos observables, como el número de intentos fallidos, un importe o una petición explícita del cliente."
+          },
+          {
+            "pregunta": "¿Qué información debe viajar con un caso traspasado?",
+            "respuesta": "Lo que pidió el cliente, lo que el agente ya verificó, la acción intentada o sugerida y el disparador que provocó el traspaso. Debe poder leerse en pocos segundos. Si la persona que recibe el caso tiene que releer toda la conversación, el traspaso hace que el cliente empiece de cero."
+          },
+          {
+            "pregunta": "¿Qué pasa si no hay nadie disponible para recibir el caso?",
+            "respuesta": "El traspaso debe tener un plazo y una regla para cuando nadie contesta. Si no hay personas en ese horario, el agente tiene que decirle al cliente cuándo recibirá respuesta, ofrecerle otro canal o limitar lo que atiende fuera de turno. Traspasar hacia una cola que nadie mira empeora la situación del cliente."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Definamos los disparadores de traspaso de tu agente",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "when-should-an-ai-agent-hand-the-case-to-a-person",
+    "titulo": "When Should an AI Agent Hand Off to a Person?",
+    "entradilla": "When a condition someone wrote down in advance is met, not when the agent seems unsure. Handoffs to people fail for three reasons: the triggers are vague, the case arrives without context, or nobody is on the other end to receive it.",
+    "descripcion": "An AI agent should hand off to a person on written conditions, not on doubt. Which triggers to set, what the case must carry, and who receives it.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "When a condition someone wrote down in advance is met, not when the agent seems unsure. Handoffs to people fail for three reasons: the triggers are vague, the case arrives without context, or nobody is on the other end to receive it."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Start with how this usually gets settled. A team deploys an agent that handles refunds, and someone asks what happens when the agent does not know what to do. The usual answer is that the agent \"escalates the complicated cases\". It sounds reasonable, and it hides more problems than any other sentence in the project, because it does not say who defines complicated, when it becomes visible, or where the case goes once escalated."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "My position is this: handing off to a person is a process design decision, not a capability of the model. It rests on three pieces the company writes down before granting autonomy: the conditions that trigger the handoff, the context package that travels with the case, and the person who receives it, with a deadline. If one is missing, the agent can be excellent and the process will still fail on exactly the cases that matter most."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The triggers",
+        "texto": "A useful trigger is an observable fact, not a feeling the agent has"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The temptation is to ask the model to hand off when it is \"not sure\". The trouble is that a model tends to sound just as sure when it is right as when it is wrong, so a rule that depends on that confidence hands off too little exactly where the risk is highest. A short list of conditions anyone can check by looking at the conversation or the system works better, with nothing left to interpret."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. What is at stake",
+            "definicion": "An amount, a type of customer, or an action that cannot be undone. For example, refunds above a certain value, or any change to an account under an active contract. The condition is written with the number or the category, never with the word \"important\"."
+          },
+          {
+            "termino": "2. What the agent cannot resolve",
+            "definicion": "Measured by facts: the customer repeats the same request twice, the agent has tried the same tool three times without success, or the query falls outside the topics for which a procedure exists. A count of attempts is a more reliable trigger than the model's own assessment."
+          },
+          {
+            "termino": "3. What the customer asks for",
+            "definicion": "If the person asks to speak to someone, the handoff is immediate and not up for debate. It is the one trigger that cannot carry a \"try to resolve it first\" rule, because insisting turns a service interaction into an argument."
+          },
+          {
+            "termino": "4. What the system detects",
+            "definicion": "A complaint tone, a mention of a lawyer or a regulator, sensitive personal data that should not be in the conversation. Someone in risk or compliance can list these signals in an afternoon, and they are best treated as automatic handoffs."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "There is a structural reason these conditions should be written by whoever answers for the outcome of the process rather than by whoever configures the agent. A technician optimises for the agent resolving more cases alone, which is a reasonable metric that pulls in the opposite direction. The head of operations or customer service knows which mistakes are expensive in their process, and so is the person who should decide where the agent stops."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The context",
+        "texto": "A handoff without context makes the customer start over and erases the value of the agent"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture a customer who has spent eight minutes explaining to an agent why they were charged twice. The agent hits the trigger and passes the case to a person, who opens it and writes: \"Hello, how can I help you?\". Everything the agent saved is gone at that moment, and the customer now has a fresh reason to be annoyed. Technically the handoff worked. The process did not."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That is why the second support is a minimum package that always arrives with the case: what the customer asked for, what the agent verified and with what result, what action was attempted or suggested, and which trigger stopped it. Four lines readable in ten seconds, not a forty-message transcript the person has no time to read. If the person receiving the case can pick up the conversation in their first sentence, the handoff is well designed."
+      },
+      {
+        "tipo": "cita",
+        "texto": "An agent that hands off well is not the one that asks for help least often, but the one that leaves the person able to pick up the case in their first sentence.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The receiver",
+        "texto": "If nobody receives the case within a known deadline, the handoff is a queue nobody reads"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The third support is the one most often forgotten because it sits outside the agent. A handoff needs a named destination: a team, a shift, a maximum response time, and a rule for when nobody answers. Imagine an agent working at eleven at night that hands a case to a queue reviewed at nine the next morning. If the customer is not told, they wait for a reply that will not come until the following day."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The fix is not always to put people on call. Sometimes it is enough for the agent to say honestly when someone will reply, give the customer another channel, or narrow its own scope during hours when nobody is behind it. What does not work is handing off into a void. A case handed off and left unattended is worse than one the agent had declined clearly, because the customer believes it is already resolved or in someone's hands."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The review",
+        "texto": "The handoff rate is watched in both directions"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Once the agent is running, two numbers deserve regular attention. If it hands off too much, the human team receives work it did not need and the agent stops adding value. If it hands off too little, cases that should have reached a person get resolved badly and nobody sees it. A reviewer who reads a sample of handed-off cases and a sample of cases the agent closed alone each week corrects the triggers with data from their own operation, and the first week's setting stops being final."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Write the triggers of your most widely deployed agent on one page, with the number or category behind each, and ask the people who receive the cases what reaches them and what is missing. That conversation tends to show more in an hour than a month of metrics."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "When should an AI agent hand a case to a person?",
+            "respuesta": "When a condition written in advance is met: what is at stake exceeds a threshold, the agent fails to resolve after a fixed number of attempts, the customer asks to speak to someone, or the system detects a risk signal. The conditions are set by whoever answers for the outcome of the process, not by whoever configures the agent."
+          },
+          {
+            "pregunta": "Can the agent decide on its own whether it needs human help?",
+            "respuesta": "It is better not to rely on that. A model tends to show the same confidence when it is right as when it is wrong, so a rule based on its doubt lets the most expensive errors through. Observable facts work better, such as the number of failed attempts, an amount, or an explicit request from the customer."
+          },
+          {
+            "pregunta": "What information should travel with a handed-off case?",
+            "respuesta": "What the customer asked for, what the agent already verified, the action attempted or suggested, and the trigger that caused the handoff. It should be readable in a few seconds. If the person receiving the case has to reread the whole conversation, the handoff makes the customer start from zero."
+          },
+          {
+            "pregunta": "What happens if nobody is available to receive the case?",
+            "respuesta": "The handoff needs a deadline and a rule for when nobody answers. If no one is on shift, the agent has to tell the customer when to expect a reply, offer another channel, or limit what it handles off-hours. Handing off into a queue nobody watches leaves the customer worse off."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let us define the handoff triggers for your agent",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
