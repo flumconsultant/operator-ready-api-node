@@ -21,33 +21,37 @@
       "webhookId": "ce22ac6e-c60c-46c0-a7e5-1ccb6f28b47a"
     },
     {
-      "id": "278d62ed-2b34-43f7-a5a8-04db91d934a9",
-      "name": "Leer resultados",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.5,
+      "id": "2dc494a1-e1a7-4a06-a777-de5e60132c87",
+      "name": "Pestañas del Sheet (dashboard)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
       "position": [
         240,
         0
       ],
       "parameters": {
-        "operation": "read",
-        "documentId": {
-          "__rl": true,
-          "value": "PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
-          "mode": "id"
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSheetsOAuth2Api",
+        "method": "GET",
+        "url": "https://sheets.googleapis.com/v4/spreadsheets/PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "fields",
+              "value": "sheets.properties(sheetId,title,index)"
+            }
+          ]
         },
-        "sheetName": {
-          "__rl": true,
-          "value": "resultados",
-          "mode": "name"
-        },
-        "options": {}
+        "options": {
+          "timeout": 120000
+        }
       },
-      "alwaysOutputData": true
+      "executeOnce": true
     },
     {
-      "id": "3ffa3f49-1c9a-4f54-a867-32ded0bd9335",
-      "name": "Dashboard",
+      "id": "c706cc65-55c2-4f3b-ad31-4a00b201f20c",
+      "name": "Qué leer (dashboard)",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
@@ -55,7 +59,43 @@
         0
       ],
       "parameters": {
-        "jsCode": "// ═══════════════════════════════════════════════════════════════════════════\n//  MARCA Y COMPETIDORES. Lo usan «Armar fila» (dominios propios → citado_bcp)\n//  y «Dashboard» (ranking y fuentes). Los modelos de cada motor están en el body\n//  de su nodo HTTP.\n// ═══════════════════════════════════════════════════════════════════════════\nconst CONFIG = {\n  marca: {\n    nombre: 'BCP',\n    alias: ['BCP', 'Banco de Crédito del Perú', 'Banco de Crédito', 'Banco de Credito', 'ViaBCP', 'Via BCP'],\n    dominios: ['viabcp.com', 'bcp.com.pe']\n  },\n  competidores: [\n    { nombre: 'Interbank', alias: ['Interbank'] },\n    { nombre: 'BBVA', alias: ['BBVA', 'BBVA Perú', 'BBVA Continental', 'Banco Continental'] },\n    { nombre: 'Scotiabank', alias: ['Scotiabank', 'Scotia'] },\n    { nombre: 'BanBif', alias: ['BanBif', 'Banbif', 'Banco Interamericano de Finanzas'] },\n    { nombre: 'Pichincha', alias: ['Pichincha', 'Banco Pichincha'] },\n    { nombre: 'Banco de la Nación', alias: ['Banco de la Nación', 'Banco de la Nacion', 'BN'] }\n  ]\n};\n// ═══════════════════════════════════════════════════════════════════════════\n\nconst MOTORES = [\n  { key: 'chatgpt', label: 'ChatGPT', color: '#10A37F' },\n  { key: 'claude', label: 'Claude', color: '#D97757' },\n  { key: 'gemini', label: 'Gemini', color: '#4285F4' },\n  { key: 'perplexity', label: 'Perplexity', color: '#20808D' },\n  { key: 'ai_overview', label: 'AI Overview', color: '#FBBC04' }\n];\n\n\n// Arma la respuesta de /geo-dashboard a partir de las filas de la hoja\n// Resultados. Sin dependencias: build.mjs lo pega en el nodo Code «Dashboard».\n//\n// Las filas llegan de Google Sheets como texto: «TRUE», «0,25», «3». Por eso\n// todo pasa por aBool y aNum antes de sumar.\n\nfunction aBool(v) {\n  if (typeof v === 'boolean') return v;\n  return ['true', 'verdadero', '1', 'si', 'sí', 'x'].includes(String(v || '').trim().toLowerCase());\n}\n\nfunction aNum(v) {\n  if (typeof v === 'number') return isFinite(v) ? v : null;\n  const s = String(v == null ? '' : v).trim().replace(',', '.');\n  if (s === '') return null;\n  const n = Number(s);\n  return isFinite(n) ? n : null;\n}\n\nfunction aLista(v) {\n  if (Array.isArray(v)) return v;\n  return String(v || '').split(/[,;|]/).map(s => s.trim()).filter(Boolean);\n}\n\nfunction pct(a, b) {\n  return b ? Math.round((a / b) * 1000) / 10 : 0;\n}\n\nfunction promedio(xs) {\n  const v = xs.filter(x => x !== null && x !== undefined);\n  return v.length ? Math.round((v.reduce((s, x) => s + x, 0) / v.length) * 100) / 100 : null;\n}\n\nfunction normalizarFila(f) {\n  return {\n    run_id: String(f.run_id || ''),\n    fecha: String(f.fecha || '').slice(0, 10),\n    timestamp: String(f.timestamp || ''),\n    prompt_id: String(f.prompt_id || ''),\n    proyecto: String(f.proyecto || '').trim() || 'Sin proyecto',\n    prompt: String(f.prompt || ''),\n    motor: String(f.motor || ''),\n    estado: String(f.estado || '').trim(),\n    disponible: f.estado !== undefined ? String(f.estado).trim() === 'ok' : aBool(f.disponible),\n    menciona: aBool(f.menciona_bcp !== undefined ? f.menciona_bcp : f.menciona),\n    posicion: aNum(f.posicion_bcp !== undefined ? f.posicion_bcp : f.posicion),\n    sentimiento: aNum(f.sentimiento),\n    citado: aBool(f.citado_bcp !== undefined ? f.citado_bcp : f.citado),\n    marcas: aLista(f.marcas_mencionadas !== undefined ? f.marcas_mencionadas : f.marcas),\n    fuentes: aLista(f.fuentes),\n    respuesta: String(f.respuesta || ''),\n    error: String(f.error || ''),\n    n_menciones_bcp: aNum(f.n_menciones_bcp),\n    n_menciones_bancos: aNum(f.n_menciones_bancos),\n    categoria: String(f.categoria || ''),\n    detalle_marcas: String(f.detalle_marcas || ''),\n    sov_bcp: aNum(f.sov_bcp)\n  };\n}\n\n// Las métricas de un grupo de filas. Las filas con error no cuentan: si a un\n// motor se le acabó el saldo, no es que no nos mencione.\nfunction metricas(filas) {\n  const validas = filas.filter(f => !f.error);\n  const menc = validas.filter(f => f.menciona);\n  return {\n    total_respuestas: validas.length,\n    menciones: menc.length,\n    share_of_model: pct(menc.length, validas.length),\n    citaciones: validas.filter(f => f.citado).length,\n    tasa_citacion: pct(validas.filter(f => f.citado).length, validas.length),\n    sentimiento_promedio: promedio(menc.map(f => f.sentimiento)),\n    posicion_promedio: promedio(menc.map(f => f.posicion))\n  };\n}\n\n// Variación en puntos porcentuales: el último día con datos contra el anterior.\nfunction variacion(filas) {\n  const fechas = [...new Set(filas.filter(f => !f.error).map(f => f.fecha))].sort();\n  if (fechas.length < 2) return null;\n  const ult = metricas(filas.filter(f => f.fecha === fechas[fechas.length - 1])).share_of_model;\n  const ant = metricas(filas.filter(f => f.fecha === fechas[fechas.length - 2])).share_of_model;\n  return Math.round((ult - ant) * 10) / 10;\n}\n\nfunction construirDashboard(filasCrudas, filtros, config) {\n  filtros = filtros || {};\n  const motores = config.motores;\n  const marcaPropia = config.marca.nombre;\n  const dominiosPropios = (config.marca.dominios || []).map(d => d.toLowerCase());\n  const esPropio = d => dominiosPropios.some(p => d === p || d.endsWith('.' + p));\n\n  const todas = filasCrudas\n    .filter(f => f && (f.motor || f.prompt_id))\n    .map(normalizarFila)\n    .filter(f => motores.some(m => m.key === f.motor));\n\n  const filas = todas.filter(f =>\n    (!filtros.proyecto || f.proyecto === filtros.proyecto) &&\n    (!filtros.motor || f.motor === filtros.motor) &&\n    (!filtros.prompt_id || f.prompt_id === filtros.prompt_id) &&\n    (!filtros.desde || f.fecha >= filtros.desde) &&\n    (!filtros.hasta || f.fecha <= filtros.hasta)\n  );\n\n  const base = { motores, filtros };\n  if (!filas.length) {\n    return Object.assign(base, {\n      vacio: !todas.length,\n      kpis: Object.assign(metricas([]), {\n        var_share_of_model: null, presencia_ai_overview: null,\n        ultima_corrida: todas.length ? todas.map(f => f.timestamp || f.fecha).sort().pop() : null\n      }),\n      por_motor: [], tendencia: [], competidores: [], fuentes: [], proyectos: [], prompts: [], respuestas: []\n    });\n  }\n\n  const validas = filas.filter(f => !f.error);\n  const aio = validas.filter(f => f.motor === 'ai_overview');\n\n  const kpis = Object.assign(metricas(filas), {\n    var_share_of_model: variacion(filas),\n    presencia_ai_overview: aio.length ? pct(aio.filter(f => f.disponible).length, aio.length) : null,\n    ultima_corrida: filas.map(f => f.timestamp || f.fecha).sort().pop()\n  });\n\n  const por_motor = motores.map(m => {\n    const fm = filas.filter(f => f.motor === m.key);\n    const x = metricas(fm);\n    return {\n      motor: m.key, label: m.label,\n      share_of_model: x.share_of_model, var_share_of_model: variacion(fm),\n      menciones: x.menciones, total_respuestas: x.total_respuestas, citaciones: x.citaciones,\n      sentimiento_promedio: x.sentimiento_promedio, posicion_promedio: x.posicion_promedio\n    };\n  });\n\n  const fechas = [...new Set(validas.map(f => f.fecha))].sort();\n  const tendencia = fechas.map(fecha => {\n    const fd = validas.filter(f => f.fecha === fecha);\n    const punto = { fecha };\n    for (const m of motores) {\n      const fm = fd.filter(f => f.motor === m.key);\n      punto[m.key] = fm.length ? metricas(fm).share_of_model : null;\n    }\n    punto.total = metricas(fd).share_of_model;\n    return punto;\n  });\n\n  const nombres = [marcaPropia].concat((config.competidores || []).map(c => c.nombre));\n  const competidores = nombres\n    .map(marca => {\n      const n = validas.filter(f => f.marcas.includes(marca)).length;\n      return { marca, menciones: n, share_of_model: pct(n, validas.length), es_bcp: marca === marcaPropia };\n    })\n    .sort((a, b) => b.menciones - a.menciones || (b.es_bcp ? 1 : 0) - (a.es_bcp ? 1 : 0))\n    .map((c, i) => Object.assign({ ranking: i + 1 }, c));\n\n  const conteo = {};\n  for (const f of validas) for (const d of f.fuentes) conteo[d] = (conteo[d] || 0) + 1;\n  const fuentes = Object.keys(conteo)\n    .map(dominio => ({ dominio, citas: conteo[dominio], es_bcp: esPropio(dominio) }))\n    .sort((a, b) => b.citas - a.citas)\n    .slice(0, 30);\n\n  const nombresProyectos = [...new Set(filas.map(f => f.proyecto))].sort();\n  const proyectos = nombresProyectos.map(proyecto => {\n    const fp = filas.filter(f => f.proyecto === proyecto);\n    const x = metricas(fp);\n    return {\n      proyecto, prompts: new Set(fp.map(f => f.prompt_id)).size,\n      share_of_model: x.share_of_model, var_share_of_model: variacion(fp), menciones: x.menciones\n    };\n  });\n\n  // La matriz prompt × motor muestra la última respuesta válida de cada motor.\n  const idsPrompts = [...new Set(filas.map(f => f.prompt_id))];\n  const prompts = idsPrompts.map(id => {\n    const fp = filas.filter(f => f.prompt_id === id);\n    const ultima = fp.map(f => f.fecha).sort().pop();\n    const mot = {};\n    for (const m of motores) {\n      const r = fp.filter(f => f.motor === m.key && !f.error)\n        .sort((a, b) => (a.timestamp || a.fecha).localeCompare(b.timestamp || b.fecha)).pop();\n      mot[m.key] = r\n        ? { menciona: r.menciona, posicion: r.posicion, sentimiento: r.sentimiento, citado: r.citado, marcas: r.marcas, fecha: r.fecha, disponible: r.disponible }\n        : null;\n    }\n    const recientes = fp.filter(f => f.fecha === ultima);\n    return {\n      prompt_id: id, prompt: fp[fp.length - 1].prompt, proyecto: fp[fp.length - 1].proyecto,\n      share_of_model: metricas(recientes).share_of_model, ultima_fecha: ultima, motores: mot\n    };\n  });\n\n  let respuestas = [];\n  if (filtros.proyecto || filtros.prompt_id) {\n    respuestas = filas\n      .slice()\n      .sort((a, b) => (b.timestamp || b.fecha).localeCompare(a.timestamp || a.fecha))\n      .slice(0, 300)\n      .map(f => ({\n        fecha: f.fecha, timestamp: f.timestamp, motor: f.motor, prompt_id: f.prompt_id, prompt: f.prompt,\n        menciona: f.menciona, posicion: f.posicion, sentimiento: f.sentimiento, citado: f.citado,\n        disponible: f.disponible, marcas: f.marcas, fuentes: f.fuentes, respuesta: f.respuesta, error: f.error\n      }));\n  }\n\n  return Object.assign(base, { vacio: false, kpis, por_motor, tendencia, competidores, fuentes, proyectos, prompts, respuestas });\n}\n\nconst q = $('Webhook geo-dashboard').first().json.query || {};\nconst filtros = {};\nfor (const k of ['proyecto', 'motor', 'desde', 'hasta', 'prompt_id']) if (q[k]) filtros[k] = String(q[k]);\nreturn [{ json: construirDashboard($input.all().map(i => i.json), filtros, Object.assign({ motores: MOTORES }, CONFIG)) }];\n"
+        "jsCode": "const SHEET_ID = 'PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET';\n// El Google Sheet, organizado como lo usa el equipo de BCP:\n//   · una pestaña por proyecto con sus prompts (Marca, Ahorros, Cards…)\n//   · una pestaña por día de medición con los resultados (2026-10-21, …)\n//   · las que empiezan con «_» son de sistema (respaldos, notas) y se ignoran.\n// Se lee y escribe con la API de Google Sheets (nodos HTTP con la credencial de\n// Sheets); aquí solo se arman las peticiones y se interpretan las respuestas.\n// Sin dependencias: build.mjs lo pega en los nodos Code que lo necesitan.\n\nconst SHEETS_API = 'https://sheets.googleapis.com/v4/spreadsheets/' + SHEET_ID;\n\n// Encabezados de las pestañas de proyecto (los del Excel original de BCP, más\n// id, activo y fecha para poder gestionarlos desde el front).\nconst COLUMNAS_PROMPTS = ['id', 'Categoría', 'Intención de Búsqueda', 'Prompt', 'Activo', 'Fecha de creación'];\nconst COLUMNAS_RESULTADOS = ['run_id', 'fecha', 'timestamp', 'prompt_id', 'proyecto', 'categoria', 'prompt', 'motor', 'estado',\n  'menciona_bcp', 'posicion_bcp', 'sentimiento', 'marcas_mencionadas', 'fuentes', 'citado_bcp', 'error', 'respuesta',\n  'n_menciones_bcp', 'n_menciones_bancos', 'detalle_marcas', 'sov_bcp'];\n\nfunction esPestanaFecha(titulo) { return /^\\d{4}-\\d{2}-\\d{2}$/.test(String(titulo || '').trim()); }\nfunction esPestanaSistema(titulo) { return String(titulo || '').trim().startsWith('_'); }\nfunction esPestanaProyecto(titulo) { return !esPestanaFecha(titulo) && !esPestanaSistema(titulo) && String(titulo || '').trim() !== ''; }\n\nfunction pestanas(meta) {\n  return ((meta && meta.sheets) || []).map(s => s.properties).filter(Boolean)\n    .map(p => ({ id: p.sheetId, titulo: p.title, indice: p.index }));\n}\n\n// Rango A1 de una pestaña, con el nombre entre comillas (acepta espacios y tildes).\nfunction rango(titulo, celdas) {\n  return \"'\" + String(titulo).replace(/'/g, \"''\") + \"'!\" + celdas;\n}\n\n// Cuerpo de values:batchGetByDataFilter para leer varias pestañas en una llamada.\n// desde (AAAA-MM-DD): solo las pestañas de resultados desde esa fecha.\nfunction cuerpoLectura(meta, { prompts = false, resultadosDesde = null } = {}) {\n  const filtros = [];\n  for (const p of pestanas(meta)) {\n    if (prompts && esPestanaProyecto(p.titulo)) filtros.push({ a1Range: rango(p.titulo, 'A:F') });\n    if (resultadosDesde && esPestanaFecha(p.titulo) && p.titulo >= resultadosDesde) filtros.push({ a1Range: rango(p.titulo, 'A:U') });\n  }\n  // La API no acepta una lista vacía: sin nada que leer, se pide A1 de la primera pestaña.\n  const primera = pestanas(meta)[0];\n  if (!filtros.length && primera) filtros.push({ a1Range: rango(primera.titulo, 'A1:A1') });\n  return { dataFilters: filtros, majorDimension: 'ROWS', valueRenderOption: 'UNFORMATTED_VALUE' };\n}\n\nfunction tituloDeRango(r) {\n  const m = String(r || '').match(/^'((?:[^']|'')*)'!/) || String(r || '').match(/^([^!]+)!/);\n  return m ? m[1].replace(/''/g, \"'\") : '';\n}\n\nfunction claveColumna(c) {\n  const k = String(c || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();\n  if (k === 'id') return 'id';\n  if (k.startsWith('categ')) return 'categoria';\n  if (k.startsWith('intenc')) return 'intencion';\n  if (k.startsWith('prompt')) return 'prompt';\n  if (k.startsWith('activo')) return 'activo';\n  if (k.startsWith('fecha')) return 'fecha_creacion';\n  return '';\n}\n\n// Respuesta de batchGetByDataFilter → {prompts: [...], resultados: [...]}.\n// Cada prompt lleva su pestaña (= proyecto) y su número de fila.\nfunction leerHojas(respuesta) {\n  const prompts = [];\n  const resultados = [];\n  for (const vr of (respuesta && respuesta.valueRanges) || []) {\n    const v = vr.valueRange || vr;\n    const titulo = tituloDeRango(v.range);\n    const filas = v.values || [];\n    if (!filas.length) continue;\n    if (esPestanaFecha(titulo)) {\n      const cab = filas[0].map(String);\n      filas.slice(1).forEach(f => {\n        if (!f || !f.some(x => x !== '' && x !== null)) return;\n        const o = {};\n        cab.forEach((c, i) => { o[c] = f[i] === undefined ? '' : f[i]; });\n        resultados.push(o);\n      });\n    } else if (esPestanaProyecto(titulo)) {\n      const cab = filas[0].map(claveColumna);\n      filas.slice(1).forEach((f, i) => {\n        if (!f || !f.some(x => x !== '' && x !== null)) return;\n        const o = { proyecto: titulo, _fila: i + 2 };\n        cab.forEach((c, j) => { if (c) o[c] = f[j] === undefined ? '' : f[j]; });\n        if (o.fecha_creacion !== undefined) o.fecha_creacion = fechaTexto(o.fecha_creacion);\n        prompts.push(o);\n      });\n    }\n  }\n  return { prompts, resultados };\n}\n\n// Las fechas pueden volver como número de serie de Sheets (UNFORMATTED_VALUE).\nfunction fechaTexto(v) {\n  if (typeof v === 'number' && v > 20000 && v < 80000) {\n    return new Date(Date.UTC(1899, 11, 30) + v * 864e5).toISOString().slice(0, 10);\n  }\n  return String(v || '');\n}\n\nfunction valoresPrompt(p) {\n  return [p.id, p.categoria || '', p.intencion || '', p.prompt || '', p.activo === false ? 'FALSE' : 'TRUE', p.fecha_creacion || ''];\n}\n\nfunction valoresResultado(f) {\n  return COLUMNAS_RESULTADOS.map(c => {\n    const v = f[c];\n    return v === undefined || v === null ? '' : typeof v === 'boolean' ? (v ? 'TRUE' : 'FALSE') : v;\n  });\n}\n\n// ─── Peticiones a la API de Sheets ─────────────────────────────────────────\nconst pedidoSheets = (method, ruta, body) => ({ method, url: SHEETS_API + ruta, body });\nconst crearPestana = (titulo, indice) =>\n  pedidoSheets('POST', ':batchUpdate', { requests: [{ addSheet: { properties: Object.assign({ title: titulo }, indice === undefined ? {} : { index: indice }) } }] });\nconst escribir = (titulo, desde, valores) =>\n  pedidoSheets('PUT', '/values/' + encodeURIComponent(rango(titulo, desde)) + '?valueInputOption=RAW', { values: valores });\nconst agregar = (titulo, valores) =>\n  pedidoSheets('POST', '/values/' + encodeURIComponent(rango(titulo, 'A1')) + ':append?valueInputOption=RAW&insertDataOption=INSERT_ROWS', { values: valores });\nconst borrarFila = (idPestana, fila) =>\n  pedidoSheets('POST', ':batchUpdate', { requests: [{ deleteDimension: { range: { sheetId: idPestana, dimension: 'ROWS', startIndex: fila - 1, endIndex: fila } } }] });\n\n// Crear, editar, activar/desactivar, mover de proyecto o eliminar un prompt.\n// guardado: lo que devuelve prepararGuardado (prompts.js).\n// → {ok, status, respuesta, peticiones}\nfunction planGuardarPrompt(guardado, prompts, meta) {\n  if (!guardado.ok) return { ok: false, status: 400, respuesta: { ok: false, error: guardado.error }, peticiones: [] };\n  const tabs = pestanas(meta);\n  const tab = titulo => tabs.find(t => t.titulo === titulo);\n  const fila = guardado.fila;\n  const actual = prompts.find(p => String(p.id).trim() === fila.id);\n  const proyectosAlFinal = tabs.filter(t => esPestanaProyecto(t.titulo)).length;\n  const asegurarPestana = (titulo, pet) => {\n    if (!tab(titulo)) {\n      pet.push(crearPestana(titulo, proyectosAlFinal));\n      pet.push(escribir(titulo, 'A1', [COLUMNAS_PROMPTS]));\n    }\n  };\n\n  if (guardado.accion === 'eliminar') {\n    if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };\n    return { ok: true, status: 200, respuesta: { ok: true, accion: 'eliminar', id: fila.id }, peticiones: [borrarFila(tab(actual.proyecto).id, actual._fila)] };\n  }\n\n  if (guardado.accion === 'editar') {\n    if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };\n    const nuevo = Object.assign({}, normalizarPrompt(actual), fila);\n    const pet = [];\n    if (nuevo.proyecto === actual.proyecto) {\n      pet.push(escribir(actual.proyecto, 'A' + actual._fila + ':F' + actual._fila, [valoresPrompt(nuevo)]));\n    } else {\n      // Cambio de proyecto: se agrega en la pestaña nueva y se borra de la vieja.\n      asegurarPestana(nuevo.proyecto, pet);\n      pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));\n      pet.push(borrarFila(tab(actual.proyecto).id, actual._fila));\n    }\n    return { ok: true, status: 200, respuesta: { ok: true, accion: 'editar', prompt: limpio(nuevo) }, peticiones: pet };\n  }\n\n  // Crear: un proyecto nuevo crea su pestaña.\n  const nuevo = normalizarPrompt(fila);\n  const pet = [];\n  asegurarPestana(nuevo.proyecto, pet);\n  pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));\n  return { ok: true, status: 200, respuesta: { ok: true, accion: 'crear', prompt: limpio(nuevo) }, peticiones: pet };\n}\n\nfunction limpio(p) {\n  const o = {};\n  for (const k of Object.keys(p)) if (!k.startsWith('_')) o[k] = p[k];\n  return o;\n}\n\n// Guardar las filas de una corrida en la pestaña del día (se crea si no está,\n// justo después de las pestañas de proyecto, para que la más reciente quede primero).\nfunction planGuardarResultados(filas, meta) {\n  const porFecha = new Map();\n  for (const f of filas) {\n    if (!porFecha.has(f.fecha)) porFecha.set(f.fecha, []);\n    porFecha.get(f.fecha).push(valoresResultado(f));\n  }\n  const tabs = pestanas(meta);\n  const proyectos = tabs.filter(t => esPestanaProyecto(t.titulo)).length;\n  const pet = [];\n  for (const [fecha, valores] of porFecha) {\n    if (tabs.some(t => t.titulo === fecha)) pet.push(agregar(fecha, valores));\n    else {\n      pet.push(crearPestana(fecha, proyectos));\n      pet.push(escribir(fecha, 'A1', [COLUMNAS_RESULTADOS].concat(valores)));\n    }\n  }\n  return pet;\n}\n\nreturn [{ json: { cuerpo: cuerpoLectura($input.first().json, { resultadosDesde: new Date(Date.now() - 400 * 864e5).toLocaleDateString('en-CA', { timeZone: 'America/Lima' }) }) } }];\n"
+      }
+    },
+    {
+      "id": "d46e1afb-29dd-44b0-ac23-f5cac99dbbe1",
+      "name": "Leer el Sheet (dashboard)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        680,
+        0
+      ],
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSheetsOAuth2Api",
+        "method": "POST",
+        "url": "https://sheets.googleapis.com/v4/spreadsheets/PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET/values:batchGetByDataFilter",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.cuerpo) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "executeOnce": true
+    },
+    {
+      "id": "3ffa3f49-1c9a-4f54-a867-32ded0bd9335",
+      "name": "Dashboard",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        900,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const SHEET_ID = 'PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET';\n// El Google Sheet, organizado como lo usa el equipo de BCP:\n//   · una pestaña por proyecto con sus prompts (Marca, Ahorros, Cards…)\n//   · una pestaña por día de medición con los resultados (2026-10-21, …)\n//   · las que empiezan con «_» son de sistema (respaldos, notas) y se ignoran.\n// Se lee y escribe con la API de Google Sheets (nodos HTTP con la credencial de\n// Sheets); aquí solo se arman las peticiones y se interpretan las respuestas.\n// Sin dependencias: build.mjs lo pega en los nodos Code que lo necesitan.\n\nconst SHEETS_API = 'https://sheets.googleapis.com/v4/spreadsheets/' + SHEET_ID;\n\n// Encabezados de las pestañas de proyecto (los del Excel original de BCP, más\n// id, activo y fecha para poder gestionarlos desde el front).\nconst COLUMNAS_PROMPTS = ['id', 'Categoría', 'Intención de Búsqueda', 'Prompt', 'Activo', 'Fecha de creación'];\nconst COLUMNAS_RESULTADOS = ['run_id', 'fecha', 'timestamp', 'prompt_id', 'proyecto', 'categoria', 'prompt', 'motor', 'estado',\n  'menciona_bcp', 'posicion_bcp', 'sentimiento', 'marcas_mencionadas', 'fuentes', 'citado_bcp', 'error', 'respuesta',\n  'n_menciones_bcp', 'n_menciones_bancos', 'detalle_marcas', 'sov_bcp'];\n\nfunction esPestanaFecha(titulo) { return /^\\d{4}-\\d{2}-\\d{2}$/.test(String(titulo || '').trim()); }\nfunction esPestanaSistema(titulo) { return String(titulo || '').trim().startsWith('_'); }\nfunction esPestanaProyecto(titulo) { return !esPestanaFecha(titulo) && !esPestanaSistema(titulo) && String(titulo || '').trim() !== ''; }\n\nfunction pestanas(meta) {\n  return ((meta && meta.sheets) || []).map(s => s.properties).filter(Boolean)\n    .map(p => ({ id: p.sheetId, titulo: p.title, indice: p.index }));\n}\n\n// Rango A1 de una pestaña, con el nombre entre comillas (acepta espacios y tildes).\nfunction rango(titulo, celdas) {\n  return \"'\" + String(titulo).replace(/'/g, \"''\") + \"'!\" + celdas;\n}\n\n// Cuerpo de values:batchGetByDataFilter para leer varias pestañas en una llamada.\n// desde (AAAA-MM-DD): solo las pestañas de resultados desde esa fecha.\nfunction cuerpoLectura(meta, { prompts = false, resultadosDesde = null } = {}) {\n  const filtros = [];\n  for (const p of pestanas(meta)) {\n    if (prompts && esPestanaProyecto(p.titulo)) filtros.push({ a1Range: rango(p.titulo, 'A:F') });\n    if (resultadosDesde && esPestanaFecha(p.titulo) && p.titulo >= resultadosDesde) filtros.push({ a1Range: rango(p.titulo, 'A:U') });\n  }\n  // La API no acepta una lista vacía: sin nada que leer, se pide A1 de la primera pestaña.\n  const primera = pestanas(meta)[0];\n  if (!filtros.length && primera) filtros.push({ a1Range: rango(primera.titulo, 'A1:A1') });\n  return { dataFilters: filtros, majorDimension: 'ROWS', valueRenderOption: 'UNFORMATTED_VALUE' };\n}\n\nfunction tituloDeRango(r) {\n  const m = String(r || '').match(/^'((?:[^']|'')*)'!/) || String(r || '').match(/^([^!]+)!/);\n  return m ? m[1].replace(/''/g, \"'\") : '';\n}\n\nfunction claveColumna(c) {\n  const k = String(c || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();\n  if (k === 'id') return 'id';\n  if (k.startsWith('categ')) return 'categoria';\n  if (k.startsWith('intenc')) return 'intencion';\n  if (k.startsWith('prompt')) return 'prompt';\n  if (k.startsWith('activo')) return 'activo';\n  if (k.startsWith('fecha')) return 'fecha_creacion';\n  return '';\n}\n\n// Respuesta de batchGetByDataFilter → {prompts: [...], resultados: [...]}.\n// Cada prompt lleva su pestaña (= proyecto) y su número de fila.\nfunction leerHojas(respuesta) {\n  const prompts = [];\n  const resultados = [];\n  for (const vr of (respuesta && respuesta.valueRanges) || []) {\n    const v = vr.valueRange || vr;\n    const titulo = tituloDeRango(v.range);\n    const filas = v.values || [];\n    if (!filas.length) continue;\n    if (esPestanaFecha(titulo)) {\n      const cab = filas[0].map(String);\n      filas.slice(1).forEach(f => {\n        if (!f || !f.some(x => x !== '' && x !== null)) return;\n        const o = {};\n        cab.forEach((c, i) => { o[c] = f[i] === undefined ? '' : f[i]; });\n        resultados.push(o);\n      });\n    } else if (esPestanaProyecto(titulo)) {\n      const cab = filas[0].map(claveColumna);\n      filas.slice(1).forEach((f, i) => {\n        if (!f || !f.some(x => x !== '' && x !== null)) return;\n        const o = { proyecto: titulo, _fila: i + 2 };\n        cab.forEach((c, j) => { if (c) o[c] = f[j] === undefined ? '' : f[j]; });\n        if (o.fecha_creacion !== undefined) o.fecha_creacion = fechaTexto(o.fecha_creacion);\n        prompts.push(o);\n      });\n    }\n  }\n  return { prompts, resultados };\n}\n\n// Las fechas pueden volver como número de serie de Sheets (UNFORMATTED_VALUE).\nfunction fechaTexto(v) {\n  if (typeof v === 'number' && v > 20000 && v < 80000) {\n    return new Date(Date.UTC(1899, 11, 30) + v * 864e5).toISOString().slice(0, 10);\n  }\n  return String(v || '');\n}\n\nfunction valoresPrompt(p) {\n  return [p.id, p.categoria || '', p.intencion || '', p.prompt || '', p.activo === false ? 'FALSE' : 'TRUE', p.fecha_creacion || ''];\n}\n\nfunction valoresResultado(f) {\n  return COLUMNAS_RESULTADOS.map(c => {\n    const v = f[c];\n    return v === undefined || v === null ? '' : typeof v === 'boolean' ? (v ? 'TRUE' : 'FALSE') : v;\n  });\n}\n\n// ─── Peticiones a la API de Sheets ─────────────────────────────────────────\nconst pedidoSheets = (method, ruta, body) => ({ method, url: SHEETS_API + ruta, body });\nconst crearPestana = (titulo, indice) =>\n  pedidoSheets('POST', ':batchUpdate', { requests: [{ addSheet: { properties: Object.assign({ title: titulo }, indice === undefined ? {} : { index: indice }) } }] });\nconst escribir = (titulo, desde, valores) =>\n  pedidoSheets('PUT', '/values/' + encodeURIComponent(rango(titulo, desde)) + '?valueInputOption=RAW', { values: valores });\nconst agregar = (titulo, valores) =>\n  pedidoSheets('POST', '/values/' + encodeURIComponent(rango(titulo, 'A1')) + ':append?valueInputOption=RAW&insertDataOption=INSERT_ROWS', { values: valores });\nconst borrarFila = (idPestana, fila) =>\n  pedidoSheets('POST', ':batchUpdate', { requests: [{ deleteDimension: { range: { sheetId: idPestana, dimension: 'ROWS', startIndex: fila - 1, endIndex: fila } } }] });\n\n// Crear, editar, activar/desactivar, mover de proyecto o eliminar un prompt.\n// guardado: lo que devuelve prepararGuardado (prompts.js).\n// → {ok, status, respuesta, peticiones}\nfunction planGuardarPrompt(guardado, prompts, meta) {\n  if (!guardado.ok) return { ok: false, status: 400, respuesta: { ok: false, error: guardado.error }, peticiones: [] };\n  const tabs = pestanas(meta);\n  const tab = titulo => tabs.find(t => t.titulo === titulo);\n  const fila = guardado.fila;\n  const actual = prompts.find(p => String(p.id).trim() === fila.id);\n  const proyectosAlFinal = tabs.filter(t => esPestanaProyecto(t.titulo)).length;\n  const asegurarPestana = (titulo, pet) => {\n    if (!tab(titulo)) {\n      pet.push(crearPestana(titulo, proyectosAlFinal));\n      pet.push(escribir(titulo, 'A1', [COLUMNAS_PROMPTS]));\n    }\n  };\n\n  if (guardado.accion === 'eliminar') {\n    if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };\n    return { ok: true, status: 200, respuesta: { ok: true, accion: 'eliminar', id: fila.id }, peticiones: [borrarFila(tab(actual.proyecto).id, actual._fila)] };\n  }\n\n  if (guardado.accion === 'editar') {\n    if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };\n    const nuevo = Object.assign({}, normalizarPrompt(actual), fila);\n    const pet = [];\n    if (nuevo.proyecto === actual.proyecto) {\n      pet.push(escribir(actual.proyecto, 'A' + actual._fila + ':F' + actual._fila, [valoresPrompt(nuevo)]));\n    } else {\n      // Cambio de proyecto: se agrega en la pestaña nueva y se borra de la vieja.\n      asegurarPestana(nuevo.proyecto, pet);\n      pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));\n      pet.push(borrarFila(tab(actual.proyecto).id, actual._fila));\n    }\n    return { ok: true, status: 200, respuesta: { ok: true, accion: 'editar', prompt: limpio(nuevo) }, peticiones: pet };\n  }\n\n  // Crear: un proyecto nuevo crea su pestaña.\n  const nuevo = normalizarPrompt(fila);\n  const pet = [];\n  asegurarPestana(nuevo.proyecto, pet);\n  pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));\n  return { ok: true, status: 200, respuesta: { ok: true, accion: 'crear', prompt: limpio(nuevo) }, peticiones: pet };\n}\n\nfunction limpio(p) {\n  const o = {};\n  for (const k of Object.keys(p)) if (!k.startsWith('_')) o[k] = p[k];\n  return o;\n}\n\n// Guardar las filas de una corrida en la pestaña del día (se crea si no está,\n// justo después de las pestañas de proyecto, para que la más reciente quede primero).\nfunction planGuardarResultados(filas, meta) {\n  const porFecha = new Map();\n  for (const f of filas) {\n    if (!porFecha.has(f.fecha)) porFecha.set(f.fecha, []);\n    porFecha.get(f.fecha).push(valoresResultado(f));\n  }\n  const tabs = pestanas(meta);\n  const proyectos = tabs.filter(t => esPestanaProyecto(t.titulo)).length;\n  const pet = [];\n  for (const [fecha, valores] of porFecha) {\n    if (tabs.some(t => t.titulo === fecha)) pet.push(agregar(fecha, valores));\n    else {\n      pet.push(crearPestana(fecha, proyectos));\n      pet.push(escribir(fecha, 'A1', [COLUMNAS_RESULTADOS].concat(valores)));\n    }\n  }\n  return pet;\n}\n\n// ═══════════════════════════════════════════════════════════════════════════\n//  MARCA Y COMPETIDORES. Lo usan «Armar fila» (dominios propios → citado_bcp)\n//  y «Dashboard» (ranking y fuentes). Los modelos de cada motor están en el body\n//  de su nodo HTTP.\n// ═══════════════════════════════════════════════════════════════════════════\nconst CONFIG = {\n  marca: {\n    nombre: 'BCP',\n    alias: ['BCP', 'Banco de Crédito del Perú', 'Banco de Crédito', 'Banco de Credito', 'ViaBCP', 'Via BCP'],\n    dominios: ['viabcp.com', 'bcp.com.pe']\n  },\n  competidores: [\n    { nombre: 'Interbank', alias: ['Interbank'] },\n    { nombre: 'BBVA', alias: ['BBVA', 'BBVA Perú', 'BBVA Continental', 'Banco Continental'] },\n    { nombre: 'Scotiabank', alias: ['Scotiabank', 'Scotia'] },\n    { nombre: 'BanBif', alias: ['BanBif', 'Banbif', 'Banco Interamericano de Finanzas'] },\n    { nombre: 'Pichincha', alias: ['Pichincha', 'Banco Pichincha'] },\n    { nombre: 'Banco de la Nación', alias: ['Banco de la Nación', 'Banco de la Nacion', 'BN'] }\n  ]\n};\n// ═══════════════════════════════════════════════════════════════════════════\n\nconst MOTORES = [\n  { key: 'chatgpt', label: 'ChatGPT', color: '#10A37F' },\n  { key: 'claude', label: 'Claude', color: '#D97757' },\n  { key: 'gemini', label: 'Gemini', color: '#4285F4' },\n  { key: 'perplexity', label: 'Perplexity', color: '#20808D' },\n  { key: 'ai_overview', label: 'AI Overview', color: '#FBBC04' }\n];\n\n\n// Arma la respuesta de /geo-dashboard a partir de las filas de la hoja\n// Resultados. Sin dependencias: build.mjs lo pega en el nodo Code «Dashboard».\n//\n// Las filas llegan de Google Sheets como texto: «TRUE», «0,25», «3». Por eso\n// todo pasa por aBool y aNum antes de sumar.\n\nfunction aBool(v) {\n  if (typeof v === 'boolean') return v;\n  return ['true', 'verdadero', '1', 'si', 'sí', 'x'].includes(String(v || '').trim().toLowerCase());\n}\n\nfunction aNum(v) {\n  if (typeof v === 'number') return isFinite(v) ? v : null;\n  const s = String(v == null ? '' : v).trim().replace(',', '.');\n  if (s === '') return null;\n  const n = Number(s);\n  return isFinite(n) ? n : null;\n}\n\nfunction aLista(v) {\n  if (Array.isArray(v)) return v;\n  return String(v || '').split(/[,;|]/).map(s => s.trim()).filter(Boolean);\n}\n\nfunction pct(a, b) {\n  return b ? Math.round((a / b) * 1000) / 10 : 0;\n}\n\nfunction promedio(xs) {\n  const v = xs.filter(x => x !== null && x !== undefined);\n  return v.length ? Math.round((v.reduce((s, x) => s + x, 0) / v.length) * 100) / 100 : null;\n}\n\nfunction normalizarFila(f) {\n  return {\n    run_id: String(f.run_id || ''),\n    fecha: String(f.fecha || '').slice(0, 10),\n    timestamp: String(f.timestamp || ''),\n    prompt_id: String(f.prompt_id || ''),\n    proyecto: String(f.proyecto || '').trim() || 'Sin proyecto',\n    prompt: String(f.prompt || ''),\n    motor: String(f.motor || ''),\n    estado: String(f.estado || '').trim(),\n    disponible: f.estado !== undefined ? String(f.estado).trim() === 'ok' : aBool(f.disponible),\n    menciona: aBool(f.menciona_bcp !== undefined ? f.menciona_bcp : f.menciona),\n    posicion: aNum(f.posicion_bcp !== undefined ? f.posicion_bcp : f.posicion),\n    sentimiento: aNum(f.sentimiento),\n    citado: aBool(f.citado_bcp !== undefined ? f.citado_bcp : f.citado),\n    marcas: aLista(f.marcas_mencionadas !== undefined ? f.marcas_mencionadas : f.marcas),\n    fuentes: aLista(f.fuentes),\n    respuesta: String(f.respuesta || ''),\n    error: String(f.error || ''),\n    n_menciones_bcp: aNum(f.n_menciones_bcp),\n    n_menciones_bancos: aNum(f.n_menciones_bancos),\n    categoria: String(f.categoria || ''),\n    detalle_marcas: String(f.detalle_marcas || ''),\n    sov_bcp: aNum(f.sov_bcp)\n  };\n}\n\n// Las métricas de un grupo de filas. Las filas con error no cuentan: si a un\n// motor se le acabó el saldo, no es que no nos mencione.\nfunction metricas(filas) {\n  const validas = filas.filter(f => !f.error);\n  const menc = validas.filter(f => f.menciona);\n  return {\n    total_respuestas: validas.length,\n    menciones: menc.length,\n    share_of_model: pct(menc.length, validas.length),\n    citaciones: validas.filter(f => f.citado).length,\n    tasa_citacion: pct(validas.filter(f => f.citado).length, validas.length),\n    sentimiento_promedio: promedio(menc.map(f => f.sentimiento)),\n    posicion_promedio: promedio(menc.map(f => f.posicion))\n  };\n}\n\n// Variación en puntos porcentuales: el último día con datos contra el anterior.\nfunction variacion(filas) {\n  const fechas = [...new Set(filas.filter(f => !f.error).map(f => f.fecha))].sort();\n  if (fechas.length < 2) return null;\n  const ult = metricas(filas.filter(f => f.fecha === fechas[fechas.length - 1])).share_of_model;\n  const ant = metricas(filas.filter(f => f.fecha === fechas[fechas.length - 2])).share_of_model;\n  return Math.round((ult - ant) * 10) / 10;\n}\n\nfunction construirDashboard(filasCrudas, filtros, config) {\n  filtros = filtros || {};\n  const motores = config.motores;\n  const marcaPropia = config.marca.nombre;\n  const dominiosPropios = (config.marca.dominios || []).map(d => d.toLowerCase());\n  const esPropio = d => dominiosPropios.some(p => d === p || d.endsWith('.' + p));\n\n  const todas = filasCrudas\n    .filter(f => f && (f.motor || f.prompt_id))\n    .map(normalizarFila)\n    .filter(f => motores.some(m => m.key === f.motor));\n\n  const filas = todas.filter(f =>\n    (!filtros.proyecto || f.proyecto === filtros.proyecto) &&\n    (!filtros.motor || f.motor === filtros.motor) &&\n    (!filtros.prompt_id || f.prompt_id === filtros.prompt_id) &&\n    (!filtros.desde || f.fecha >= filtros.desde) &&\n    (!filtros.hasta || f.fecha <= filtros.hasta)\n  );\n\n  const base = { motores, filtros };\n  if (!filas.length) {\n    return Object.assign(base, {\n      vacio: !todas.length,\n      kpis: Object.assign(metricas([]), {\n        var_share_of_model: null, presencia_ai_overview: null,\n        ultima_corrida: todas.length ? todas.map(f => f.timestamp || f.fecha).sort().pop() : null\n      }),\n      por_motor: [], tendencia: [], competidores: [], fuentes: [], proyectos: [], prompts: [], respuestas: []\n    });\n  }\n\n  const validas = filas.filter(f => !f.error);\n  const aio = validas.filter(f => f.motor === 'ai_overview');\n\n  const kpis = Object.assign(metricas(filas), {\n    var_share_of_model: variacion(filas),\n    presencia_ai_overview: aio.length ? pct(aio.filter(f => f.disponible).length, aio.length) : null,\n    ultima_corrida: filas.map(f => f.timestamp || f.fecha).sort().pop()\n  });\n\n  const por_motor = motores.map(m => {\n    const fm = filas.filter(f => f.motor === m.key);\n    const x = metricas(fm);\n    return {\n      motor: m.key, label: m.label,\n      share_of_model: x.share_of_model, var_share_of_model: variacion(fm),\n      menciones: x.menciones, total_respuestas: x.total_respuestas, citaciones: x.citaciones,\n      sentimiento_promedio: x.sentimiento_promedio, posicion_promedio: x.posicion_promedio\n    };\n  });\n\n  const fechas = [...new Set(validas.map(f => f.fecha))].sort();\n  const tendencia = fechas.map(fecha => {\n    const fd = validas.filter(f => f.fecha === fecha);\n    const punto = { fecha };\n    for (const m of motores) {\n      const fm = fd.filter(f => f.motor === m.key);\n      punto[m.key] = fm.length ? metricas(fm).share_of_model : null;\n    }\n    punto.total = metricas(fd).share_of_model;\n    return punto;\n  });\n\n  const nombres = [marcaPropia].concat((config.competidores || []).map(c => c.nombre));\n  const competidores = nombres\n    .map(marca => {\n      const n = validas.filter(f => f.marcas.includes(marca)).length;\n      return { marca, menciones: n, share_of_model: pct(n, validas.length), es_bcp: marca === marcaPropia };\n    })\n    .sort((a, b) => b.menciones - a.menciones || (b.es_bcp ? 1 : 0) - (a.es_bcp ? 1 : 0))\n    .map((c, i) => Object.assign({ ranking: i + 1 }, c));\n\n  const conteo = {};\n  for (const f of validas) for (const d of f.fuentes) conteo[d] = (conteo[d] || 0) + 1;\n  const fuentes = Object.keys(conteo)\n    .map(dominio => ({ dominio, citas: conteo[dominio], es_bcp: esPropio(dominio) }))\n    .sort((a, b) => b.citas - a.citas)\n    .slice(0, 30);\n\n  const nombresProyectos = [...new Set(filas.map(f => f.proyecto))].sort();\n  const proyectos = nombresProyectos.map(proyecto => {\n    const fp = filas.filter(f => f.proyecto === proyecto);\n    const x = metricas(fp);\n    return {\n      proyecto, prompts: new Set(fp.map(f => f.prompt_id)).size,\n      share_of_model: x.share_of_model, var_share_of_model: variacion(fp), menciones: x.menciones\n    };\n  });\n\n  // La matriz prompt × motor muestra la última respuesta válida de cada motor.\n  const idsPrompts = [...new Set(filas.map(f => f.prompt_id))];\n  const prompts = idsPrompts.map(id => {\n    const fp = filas.filter(f => f.prompt_id === id);\n    const ultima = fp.map(f => f.fecha).sort().pop();\n    const mot = {};\n    for (const m of motores) {\n      const r = fp.filter(f => f.motor === m.key && !f.error)\n        .sort((a, b) => (a.timestamp || a.fecha).localeCompare(b.timestamp || b.fecha)).pop();\n      mot[m.key] = r\n        ? { menciona: r.menciona, posicion: r.posicion, sentimiento: r.sentimiento, citado: r.citado, marcas: r.marcas, fecha: r.fecha, disponible: r.disponible }\n        : null;\n    }\n    const recientes = fp.filter(f => f.fecha === ultima);\n    return {\n      prompt_id: id, prompt: fp[fp.length - 1].prompt, proyecto: fp[fp.length - 1].proyecto,\n      share_of_model: metricas(recientes).share_of_model, ultima_fecha: ultima, motores: mot\n    };\n  });\n\n  let respuestas = [];\n  if (filtros.proyecto || filtros.prompt_id) {\n    respuestas = filas\n      .slice()\n      .sort((a, b) => (b.timestamp || b.fecha).localeCompare(a.timestamp || a.fecha))\n      .slice(0, 300)\n      .map(f => ({\n        fecha: f.fecha, timestamp: f.timestamp, motor: f.motor, prompt_id: f.prompt_id, prompt: f.prompt,\n        menciona: f.menciona, posicion: f.posicion, sentimiento: f.sentimiento, citado: f.citado,\n        disponible: f.disponible, marcas: f.marcas, fuentes: f.fuentes, respuesta: f.respuesta, error: f.error\n      }));\n  }\n\n  return Object.assign(base, { vacio: false, kpis, por_motor, tendencia, competidores, fuentes, proyectos, prompts, respuestas });\n}\n\nconst q = $('Webhook geo-dashboard').first().json.query || {};\nconst filtros = {};\nfor (const k of ['proyecto', 'motor', 'desde', 'hasta', 'prompt_id']) if (q[k]) filtros[k] = String(q[k]);\nreturn [{ json: construirDashboard(leerHojas($input.first().json).resultados, filtros, Object.assign({ motores: MOTORES }, CONFIG)) }];\n"
       }
     },
     {
@@ -64,7 +104,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
-        680,
+        1120,
         0
       ],
       "parameters": {
@@ -92,33 +132,37 @@
       "webhookId": "7637025f-e5c6-4a91-a9e3-71270ac8f209"
     },
     {
-      "id": "dc6711b4-5f10-4d1f-a26b-7360e9e6139c",
-      "name": "Leer prompts",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.5,
+      "id": "06d06561-2846-447e-a149-38d10e01c790",
+      "name": "Pestañas del Sheet (prompts)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
       "position": [
         240,
         220
       ],
       "parameters": {
-        "operation": "read",
-        "documentId": {
-          "__rl": true,
-          "value": "PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
-          "mode": "id"
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSheetsOAuth2Api",
+        "method": "GET",
+        "url": "https://sheets.googleapis.com/v4/spreadsheets/PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "fields",
+              "value": "sheets.properties(sheetId,title,index)"
+            }
+          ]
         },
-        "sheetName": {
-          "__rl": true,
-          "value": "prompts",
-          "mode": "name"
-        },
-        "options": {}
+        "options": {
+          "timeout": 120000
+        }
       },
-      "alwaysOutputData": true
+      "executeOnce": true
     },
     {
-      "id": "08d41f2d-cff9-4b3e-a3bb-9f3039a37be3",
-      "name": "Listar prompts",
+      "id": "ff1c6db7-6930-42f5-afae-844c6c854289",
+      "name": "Qué leer (prompts)",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
@@ -126,7 +170,43 @@
         220
       ],
       "parameters": {
-        "jsCode": "// Prompts: listar (/geo-prompts), validar lo que llega a /geo-prompts-save y\n// elegir cuáles entran en una corrida. Sin dependencias, como los otros dos.\n\n// Categoría e intención son texto libre (vienen del universo de prompts de BCP).\n// Estas listas solo son sugerencias para un formulario.\nconst CATEGORIAS = ['Reputación', 'Producto', 'Digital', 'Otra'];\nconst INTENCIONES = ['Informacional', 'Comparativa', 'Transaccional', 'Reputacional', 'Navegacional'];\n\nfunction activoDe(v) {\n  if (typeof v === 'boolean') return v;\n  const s = String(v == null ? '' : v).trim().toLowerCase();\n  if (s === '') return true;\n  return ['true', 'verdadero', '1', 'si', 'sí', 'x'].includes(s);\n}\n\nfunction normalizarPrompt(f) {\n  return {\n    id: String(f.id || '').trim(),\n    proyecto: String(f.proyecto || '').trim() || 'Sin proyecto',\n    prompt: String(f.prompt || '').trim(),\n    categoria: String(f.categoria || '').trim() || 'Otra',\n    intencion: String(f.intencion || '').trim(),\n    activo: activoDe(f.activo),\n    fecha_creacion: String(f.fecha_creacion || f.creado || '')\n  };\n}\n\nfunction listarPrompts(filas) {\n  const prompts = filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .sort((a, b) => b.fecha_creacion.localeCompare(a.fecha_creacion) || b.id.localeCompare(a.id));\n  const proyectos = [...new Set(prompts.map(p => p.proyecto))].sort();\n  const unicos = (base, campo) => [...new Set(base.concat(prompts.map(p => p[campo]).filter(Boolean)))].sort();\n  return {\n    prompts, proyectos,\n    categorias: unicos(CATEGORIAS, 'categoria'), intenciones: unicos(INTENCIONES, 'intencion'),\n    total: prompts.length, activos: prompts.filter(p => p.activo).length\n  };\n}\n\n// Devuelve la fila que hay que escribir (solo con las columnas que cambian,\n// para que «Agregar o actualizar» no pise fecha_creacion al editar) o un error.\n// hoy: AAAA-MM-DD en Lima.\nfunction prepararGuardado(body, hoy, idNuevo) {\n  body = body || {};\n  const id = String(body.id || '').trim();\n  if (body.accion === 'eliminar') {\n    if (!id) return { ok: false, error: 'Falta el id del prompt a eliminar.' };\n    return { ok: true, accion: 'eliminar', fila: { id, activo: false } };\n  }\n  const prompt = String(body.prompt || '').trim();\n  const fila = { id: id || idNuevo };\n  if (!id || body.prompt !== undefined) {\n    if (!prompt) return { ok: false, error: 'El prompt no puede estar vacío.' };\n    if (prompt.length > 2000) return { ok: false, error: 'El prompt pasa de 2.000 caracteres.' };\n    fila.prompt = prompt;\n  }\n  if (!id || body.proyecto !== undefined) fila.proyecto = String(body.proyecto || '').trim() || 'Sin proyecto';\n  if (!id || body.categoria !== undefined) {\n    fila.categoria = String(body.categoria || '').trim().slice(0, 80) || 'Otra';\n  }\n  if (body.intencion !== undefined) fila.intencion = String(body.intencion || '').trim().slice(0, 40);\n  if (!id || body.activo !== undefined) fila.activo = activoDe(body.activo);\n  if (!id) fila.fecha_creacion = hoy;\n  return { ok: true, accion: id ? 'editar' : 'crear', fila };\n}\n\n// Qué prompts entran en la corrida: los activos, y si llegan prompt_ids o\n// proyecto, solo esos. Un prompt_id pedido a mano corre aunque esté inactivo.\nfunction elegirPrompts(filas, peticion) {\n  peticion = peticion || {};\n  const ids = Array.isArray(peticion.prompt_ids) ? peticion.prompt_ids.map(String) : [];\n  return filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .filter(p => (ids.length ? ids.includes(p.id) : p.activo))\n    .filter(p => !peticion.proyecto || p.proyecto === peticion.proyecto);\n}\n\nreturn [{ json: listarPrompts($input.all().map(i => i.json)) }];\n"
+        "jsCode": "const SHEET_ID = 'PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET';\n// El Google Sheet, organizado como lo usa el equipo de BCP:\n//   · una pestaña por proyecto con sus prompts (Marca, Ahorros, Cards…)\n//   · una pestaña por día de medición con los resultados (2026-10-21, …)\n//   · las que empiezan con «_» son de sistema (respaldos, notas) y se ignoran.\n// Se lee y escribe con la API de Google Sheets (nodos HTTP con la credencial de\n// Sheets); aquí solo se arman las peticiones y se interpretan las respuestas.\n// Sin dependencias: build.mjs lo pega en los nodos Code que lo necesitan.\n\nconst SHEETS_API = 'https://sheets.googleapis.com/v4/spreadsheets/' + SHEET_ID;\n\n// Encabezados de las pestañas de proyecto (los del Excel original de BCP, más\n// id, activo y fecha para poder gestionarlos desde el front).\nconst COLUMNAS_PROMPTS = ['id', 'Categoría', 'Intención de Búsqueda', 'Prompt', 'Activo', 'Fecha de creación'];\nconst COLUMNAS_RESULTADOS = ['run_id', 'fecha', 'timestamp', 'prompt_id', 'proyecto', 'categoria', 'prompt', 'motor', 'estado',\n  'menciona_bcp', 'posicion_bcp', 'sentimiento', 'marcas_mencionadas', 'fuentes', 'citado_bcp', 'error', 'respuesta',\n  'n_menciones_bcp', 'n_menciones_bancos', 'detalle_marcas', 'sov_bcp'];\n\nfunction esPestanaFecha(titulo) { return /^\\d{4}-\\d{2}-\\d{2}$/.test(String(titulo || '').trim()); }\nfunction esPestanaSistema(titulo) { return String(titulo || '').trim().startsWith('_'); }\nfunction esPestanaProyecto(titulo) { return !esPestanaFecha(titulo) && !esPestanaSistema(titulo) && String(titulo || '').trim() !== ''; }\n\nfunction pestanas(meta) {\n  return ((meta && meta.sheets) || []).map(s => s.properties).filter(Boolean)\n    .map(p => ({ id: p.sheetId, titulo: p.title, indice: p.index }));\n}\n\n// Rango A1 de una pestaña, con el nombre entre comillas (acepta espacios y tildes).\nfunction rango(titulo, celdas) {\n  return \"'\" + String(titulo).replace(/'/g, \"''\") + \"'!\" + celdas;\n}\n\n// Cuerpo de values:batchGetByDataFilter para leer varias pestañas en una llamada.\n// desde (AAAA-MM-DD): solo las pestañas de resultados desde esa fecha.\nfunction cuerpoLectura(meta, { prompts = false, resultadosDesde = null } = {}) {\n  const filtros = [];\n  for (const p of pestanas(meta)) {\n    if (prompts && esPestanaProyecto(p.titulo)) filtros.push({ a1Range: rango(p.titulo, 'A:F') });\n    if (resultadosDesde && esPestanaFecha(p.titulo) && p.titulo >= resultadosDesde) filtros.push({ a1Range: rango(p.titulo, 'A:U') });\n  }\n  // La API no acepta una lista vacía: sin nada que leer, se pide A1 de la primera pestaña.\n  const primera = pestanas(meta)[0];\n  if (!filtros.length && primera) filtros.push({ a1Range: rango(primera.titulo, 'A1:A1') });\n  return { dataFilters: filtros, majorDimension: 'ROWS', valueRenderOption: 'UNFORMATTED_VALUE' };\n}\n\nfunction tituloDeRango(r) {\n  const m = String(r || '').match(/^'((?:[^']|'')*)'!/) || String(r || '').match(/^([^!]+)!/);\n  return m ? m[1].replace(/''/g, \"'\") : '';\n}\n\nfunction claveColumna(c) {\n  const k = String(c || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();\n  if (k === 'id') return 'id';\n  if (k.startsWith('categ')) return 'categoria';\n  if (k.startsWith('intenc')) return 'intencion';\n  if (k.startsWith('prompt')) return 'prompt';\n  if (k.startsWith('activo')) return 'activo';\n  if (k.startsWith('fecha')) return 'fecha_creacion';\n  return '';\n}\n\n// Respuesta de batchGetByDataFilter → {prompts: [...], resultados: [...]}.\n// Cada prompt lleva su pestaña (= proyecto) y su número de fila.\nfunction leerHojas(respuesta) {\n  const prompts = [];\n  const resultados = [];\n  for (const vr of (respuesta && respuesta.valueRanges) || []) {\n    const v = vr.valueRange || vr;\n    const titulo = tituloDeRango(v.range);\n    const filas = v.values || [];\n    if (!filas.length) continue;\n    if (esPestanaFecha(titulo)) {\n      const cab = filas[0].map(String);\n      filas.slice(1).forEach(f => {\n        if (!f || !f.some(x => x !== '' && x !== null)) return;\n        const o = {};\n        cab.forEach((c, i) => { o[c] = f[i] === undefined ? '' : f[i]; });\n        resultados.push(o);\n      });\n    } else if (esPestanaProyecto(titulo)) {\n      const cab = filas[0].map(claveColumna);\n      filas.slice(1).forEach((f, i) => {\n        if (!f || !f.some(x => x !== '' && x !== null)) return;\n        const o = { proyecto: titulo, _fila: i + 2 };\n        cab.forEach((c, j) => { if (c) o[c] = f[j] === undefined ? '' : f[j]; });\n        if (o.fecha_creacion !== undefined) o.fecha_creacion = fechaTexto(o.fecha_creacion);\n        prompts.push(o);\n      });\n    }\n  }\n  return { prompts, resultados };\n}\n\n// Las fechas pueden volver como número de serie de Sheets (UNFORMATTED_VALUE).\nfunction fechaTexto(v) {\n  if (typeof v === 'number' && v > 20000 && v < 80000) {\n    return new Date(Date.UTC(1899, 11, 30) + v * 864e5).toISOString().slice(0, 10);\n  }\n  return String(v || '');\n}\n\nfunction valoresPrompt(p) {\n  return [p.id, p.categoria || '', p.intencion || '', p.prompt || '', p.activo === false ? 'FALSE' : 'TRUE', p.fecha_creacion || ''];\n}\n\nfunction valoresResultado(f) {\n  return COLUMNAS_RESULTADOS.map(c => {\n    const v = f[c];\n    return v === undefined || v === null ? '' : typeof v === 'boolean' ? (v ? 'TRUE' : 'FALSE') : v;\n  });\n}\n\n// ─── Peticiones a la API de Sheets ─────────────────────────────────────────\nconst pedidoSheets = (method, ruta, body) => ({ method, url: SHEETS_API + ruta, body });\nconst crearPestana = (titulo, indice) =>\n  pedidoSheets('POST', ':batchUpdate', { requests: [{ addSheet: { properties: Object.assign({ title: titulo }, indice === undefined ? {} : { index: indice }) } }] });\nconst escribir = (titulo, desde, valores) =>\n  pedidoSheets('PUT', '/values/' + encodeURIComponent(rango(titulo, desde)) + '?valueInputOption=RAW', { values: valores });\nconst agregar = (titulo, valores) =>\n  pedidoSheets('POST', '/values/' + encodeURIComponent(rango(titulo, 'A1')) + ':append?valueInputOption=RAW&insertDataOption=INSERT_ROWS', { values: valores });\nconst borrarFila = (idPestana, fila) =>\n  pedidoSheets('POST', ':batchUpdate', { requests: [{ deleteDimension: { range: { sheetId: idPestana, dimension: 'ROWS', startIndex: fila - 1, endIndex: fila } } }] });\n\n// Crear, editar, activar/desactivar, mover de proyecto o eliminar un prompt.\n// guardado: lo que devuelve prepararGuardado (prompts.js).\n// → {ok, status, respuesta, peticiones}\nfunction planGuardarPrompt(guardado, prompts, meta) {\n  if (!guardado.ok) return { ok: false, status: 400, respuesta: { ok: false, error: guardado.error }, peticiones: [] };\n  const tabs = pestanas(meta);\n  const tab = titulo => tabs.find(t => t.titulo === titulo);\n  const fila = guardado.fila;\n  const actual = prompts.find(p => String(p.id).trim() === fila.id);\n  const proyectosAlFinal = tabs.filter(t => esPestanaProyecto(t.titulo)).length;\n  const asegurarPestana = (titulo, pet) => {\n    if (!tab(titulo)) {\n      pet.push(crearPestana(titulo, proyectosAlFinal));\n      pet.push(escribir(titulo, 'A1', [COLUMNAS_PROMPTS]));\n    }\n  };\n\n  if (guardado.accion === 'eliminar') {\n    if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };\n    return { ok: true, status: 200, respuesta: { ok: true, accion: 'eliminar', id: fila.id }, peticiones: [borrarFila(tab(actual.proyecto).id, actual._fila)] };\n  }\n\n  if (guardado.accion === 'editar') {\n    if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };\n    const nuevo = Object.assign({}, normalizarPrompt(actual), fila);\n    const pet = [];\n    if (nuevo.proyecto === actual.proyecto) {\n      pet.push(escribir(actual.proyecto, 'A' + actual._fila + ':F' + actual._fila, [valoresPrompt(nuevo)]));\n    } else {\n      // Cambio de proyecto: se agrega en la pestaña nueva y se borra de la vieja.\n      asegurarPestana(nuevo.proyecto, pet);\n      pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));\n      pet.push(borrarFila(tab(actual.proyecto).id, actual._fila));\n    }\n    return { ok: true, status: 200, respuesta: { ok: true, accion: 'editar', prompt: limpio(nuevo) }, peticiones: pet };\n  }\n\n  // Crear: un proyecto nuevo crea su pestaña.\n  const nuevo = normalizarPrompt(fila);\n  const pet = [];\n  asegurarPestana(nuevo.proyecto, pet);\n  pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));\n  return { ok: true, status: 200, respuesta: { ok: true, accion: 'crear', prompt: limpio(nuevo) }, peticiones: pet };\n}\n\nfunction limpio(p) {\n  const o = {};\n  for (const k of Object.keys(p)) if (!k.startsWith('_')) o[k] = p[k];\n  return o;\n}\n\n// Guardar las filas de una corrida en la pestaña del día (se crea si no está,\n// justo después de las pestañas de proyecto, para que la más reciente quede primero).\nfunction planGuardarResultados(filas, meta) {\n  const porFecha = new Map();\n  for (const f of filas) {\n    if (!porFecha.has(f.fecha)) porFecha.set(f.fecha, []);\n    porFecha.get(f.fecha).push(valoresResultado(f));\n  }\n  const tabs = pestanas(meta);\n  const proyectos = tabs.filter(t => esPestanaProyecto(t.titulo)).length;\n  const pet = [];\n  for (const [fecha, valores] of porFecha) {\n    if (tabs.some(t => t.titulo === fecha)) pet.push(agregar(fecha, valores));\n    else {\n      pet.push(crearPestana(fecha, proyectos));\n      pet.push(escribir(fecha, 'A1', [COLUMNAS_RESULTADOS].concat(valores)));\n    }\n  }\n  return pet;\n}\n\nreturn [{ json: { cuerpo: cuerpoLectura($input.first().json, { prompts: true }) } }];\n"
+      }
+    },
+    {
+      "id": "cd71929c-08c1-4836-a557-bd86a91e2bbe",
+      "name": "Leer el Sheet (prompts)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        680,
+        220
+      ],
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSheetsOAuth2Api",
+        "method": "POST",
+        "url": "https://sheets.googleapis.com/v4/spreadsheets/PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET/values:batchGetByDataFilter",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.cuerpo) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "executeOnce": true
+    },
+    {
+      "id": "08d41f2d-cff9-4b3e-a3bb-9f3039a37be3",
+      "name": "Listar prompts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        900,
+        220
+      ],
+      "parameters": {
+        "jsCode": "const SHEET_ID = 'PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET';\n// El Google Sheet, organizado como lo usa el equipo de BCP:\n//   · una pestaña por proyecto con sus prompts (Marca, Ahorros, Cards…)\n//   · una pestaña por día de medición con los resultados (2026-10-21, …)\n//   · las que empiezan con «_» son de sistema (respaldos, notas) y se ignoran.\n// Se lee y escribe con la API de Google Sheets (nodos HTTP con la credencial de\n// Sheets); aquí solo se arman las peticiones y se interpretan las respuestas.\n// Sin dependencias: build.mjs lo pega en los nodos Code que lo necesitan.\n\nconst SHEETS_API = 'https://sheets.googleapis.com/v4/spreadsheets/' + SHEET_ID;\n\n// Encabezados de las pestañas de proyecto (los del Excel original de BCP, más\n// id, activo y fecha para poder gestionarlos desde el front).\nconst COLUMNAS_PROMPTS = ['id', 'Categoría', 'Intención de Búsqueda', 'Prompt', 'Activo', 'Fecha de creación'];\nconst COLUMNAS_RESULTADOS = ['run_id', 'fecha', 'timestamp', 'prompt_id', 'proyecto', 'categoria', 'prompt', 'motor', 'estado',\n  'menciona_bcp', 'posicion_bcp', 'sentimiento', 'marcas_mencionadas', 'fuentes', 'citado_bcp', 'error', 'respuesta',\n  'n_menciones_bcp', 'n_menciones_bancos', 'detalle_marcas', 'sov_bcp'];\n\nfunction esPestanaFecha(titulo) { return /^\\d{4}-\\d{2}-\\d{2}$/.test(String(titulo || '').trim()); }\nfunction esPestanaSistema(titulo) { return String(titulo || '').trim().startsWith('_'); }\nfunction esPestanaProyecto(titulo) { return !esPestanaFecha(titulo) && !esPestanaSistema(titulo) && String(titulo || '').trim() !== ''; }\n\nfunction pestanas(meta) {\n  return ((meta && meta.sheets) || []).map(s => s.properties).filter(Boolean)\n    .map(p => ({ id: p.sheetId, titulo: p.title, indice: p.index }));\n}\n\n// Rango A1 de una pestaña, con el nombre entre comillas (acepta espacios y tildes).\nfunction rango(titulo, celdas) {\n  return \"'\" + String(titulo).replace(/'/g, \"''\") + \"'!\" + celdas;\n}\n\n// Cuerpo de values:batchGetByDataFilter para leer varias pestañas en una llamada.\n// desde (AAAA-MM-DD): solo las pestañas de resultados desde esa fecha.\nfunction cuerpoLectura(meta, { prompts = false, resultadosDesde = null } = {}) {\n  const filtros = [];\n  for (const p of pestanas(meta)) {\n    if (prompts && esPestanaProyecto(p.titulo)) filtros.push({ a1Range: rango(p.titulo, 'A:F') });\n    if (resultadosDesde && esPestanaFecha(p.titulo) && p.titulo >= resultadosDesde) filtros.push({ a1Range: rango(p.titulo, 'A:U') });\n  }\n  // La API no acepta una lista vacía: sin nada que leer, se pide A1 de la primera pestaña.\n  const primera = pestanas(meta)[0];\n  if (!filtros.length && primera) filtros.push({ a1Range: rango(primera.titulo, 'A1:A1') });\n  return { dataFilters: filtros, majorDimension: 'ROWS', valueRenderOption: 'UNFORMATTED_VALUE' };\n}\n\nfunction tituloDeRango(r) {\n  const m = String(r || '').match(/^'((?:[^']|'')*)'!/) || String(r || '').match(/^([^!]+)!/);\n  return m ? m[1].replace(/''/g, \"'\") : '';\n}\n\nfunction claveColumna(c) {\n  const k = String(c || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();\n  if (k === 'id') return 'id';\n  if (k.startsWith('categ')) return 'categoria';\n  if (k.startsWith('intenc')) return 'intencion';\n  if (k.startsWith('prompt')) return 'prompt';\n  if (k.startsWith('activo')) return 'activo';\n  if (k.startsWith('fecha')) return 'fecha_creacion';\n  return '';\n}\n\n// Respuesta de batchGetByDataFilter → {prompts: [...], resultados: [...]}.\n// Cada prompt lleva su pestaña (= proyecto) y su número de fila.\nfunction leerHojas(respuesta) {\n  const prompts = [];\n  const resultados = [];\n  for (const vr of (respuesta && respuesta.valueRanges) || []) {\n    const v = vr.valueRange || vr;\n    const titulo = tituloDeRango(v.range);\n    const filas = v.values || [];\n    if (!filas.length) continue;\n    if (esPestanaFecha(titulo)) {\n      const cab = filas[0].map(String);\n      filas.slice(1).forEach(f => {\n        if (!f || !f.some(x => x !== '' && x !== null)) return;\n        const o = {};\n        cab.forEach((c, i) => { o[c] = f[i] === undefined ? '' : f[i]; });\n        resultados.push(o);\n      });\n    } else if (esPestanaProyecto(titulo)) {\n      const cab = filas[0].map(claveColumna);\n      filas.slice(1).forEach((f, i) => {\n        if (!f || !f.some(x => x !== '' && x !== null)) return;\n        const o = { proyecto: titulo, _fila: i + 2 };\n        cab.forEach((c, j) => { if (c) o[c] = f[j] === undefined ? '' : f[j]; });\n        if (o.fecha_creacion !== undefined) o.fecha_creacion = fechaTexto(o.fecha_creacion);\n        prompts.push(o);\n      });\n    }\n  }\n  return { prompts, resultados };\n}\n\n// Las fechas pueden volver como número de serie de Sheets (UNFORMATTED_VALUE).\nfunction fechaTexto(v) {\n  if (typeof v === 'number' && v > 20000 && v < 80000) {\n    return new Date(Date.UTC(1899, 11, 30) + v * 864e5).toISOString().slice(0, 10);\n  }\n  return String(v || '');\n}\n\nfunction valoresPrompt(p) {\n  return [p.id, p.categoria || '', p.intencion || '', p.prompt || '', p.activo === false ? 'FALSE' : 'TRUE', p.fecha_creacion || ''];\n}\n\nfunction valoresResultado(f) {\n  return COLUMNAS_RESULTADOS.map(c => {\n    const v = f[c];\n    return v === undefined || v === null ? '' : typeof v === 'boolean' ? (v ? 'TRUE' : 'FALSE') : v;\n  });\n}\n\n// ─── Peticiones a la API de Sheets ─────────────────────────────────────────\nconst pedidoSheets = (method, ruta, body) => ({ method, url: SHEETS_API + ruta, body });\nconst crearPestana = (titulo, indice) =>\n  pedidoSheets('POST', ':batchUpdate', { requests: [{ addSheet: { properties: Object.assign({ title: titulo }, indice === undefined ? {} : { index: indice }) } }] });\nconst escribir = (titulo, desde, valores) =>\n  pedidoSheets('PUT', '/values/' + encodeURIComponent(rango(titulo, desde)) + '?valueInputOption=RAW', { values: valores });\nconst agregar = (titulo, valores) =>\n  pedidoSheets('POST', '/values/' + encodeURIComponent(rango(titulo, 'A1')) + ':append?valueInputOption=RAW&insertDataOption=INSERT_ROWS', { values: valores });\nconst borrarFila = (idPestana, fila) =>\n  pedidoSheets('POST', ':batchUpdate', { requests: [{ deleteDimension: { range: { sheetId: idPestana, dimension: 'ROWS', startIndex: fila - 1, endIndex: fila } } }] });\n\n// Crear, editar, activar/desactivar, mover de proyecto o eliminar un prompt.\n// guardado: lo que devuelve prepararGuardado (prompts.js).\n// → {ok, status, respuesta, peticiones}\nfunction planGuardarPrompt(guardado, prompts, meta) {\n  if (!guardado.ok) return { ok: false, status: 400, respuesta: { ok: false, error: guardado.error }, peticiones: [] };\n  const tabs = pestanas(meta);\n  const tab = titulo => tabs.find(t => t.titulo === titulo);\n  const fila = guardado.fila;\n  const actual = prompts.find(p => String(p.id).trim() === fila.id);\n  const proyectosAlFinal = tabs.filter(t => esPestanaProyecto(t.titulo)).length;\n  const asegurarPestana = (titulo, pet) => {\n    if (!tab(titulo)) {\n      pet.push(crearPestana(titulo, proyectosAlFinal));\n      pet.push(escribir(titulo, 'A1', [COLUMNAS_PROMPTS]));\n    }\n  };\n\n  if (guardado.accion === 'eliminar') {\n    if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };\n    return { ok: true, status: 200, respuesta: { ok: true, accion: 'eliminar', id: fila.id }, peticiones: [borrarFila(tab(actual.proyecto).id, actual._fila)] };\n  }\n\n  if (guardado.accion === 'editar') {\n    if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };\n    const nuevo = Object.assign({}, normalizarPrompt(actual), fila);\n    const pet = [];\n    if (nuevo.proyecto === actual.proyecto) {\n      pet.push(escribir(actual.proyecto, 'A' + actual._fila + ':F' + actual._fila, [valoresPrompt(nuevo)]));\n    } else {\n      // Cambio de proyecto: se agrega en la pestaña nueva y se borra de la vieja.\n      asegurarPestana(nuevo.proyecto, pet);\n      pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));\n      pet.push(borrarFila(tab(actual.proyecto).id, actual._fila));\n    }\n    return { ok: true, status: 200, respuesta: { ok: true, accion: 'editar', prompt: limpio(nuevo) }, peticiones: pet };\n  }\n\n  // Crear: un proyecto nuevo crea su pestaña.\n  const nuevo = normalizarPrompt(fila);\n  const pet = [];\n  asegurarPestana(nuevo.proyecto, pet);\n  pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));\n  return { ok: true, status: 200, respuesta: { ok: true, accion: 'crear', prompt: limpio(nuevo) }, peticiones: pet };\n}\n\nfunction limpio(p) {\n  const o = {};\n  for (const k of Object.keys(p)) if (!k.startsWith('_')) o[k] = p[k];\n  return o;\n}\n\n// Guardar las filas de una corrida en la pestaña del día (se crea si no está,\n// justo después de las pestañas de proyecto, para que la más reciente quede primero).\nfunction planGuardarResultados(filas, meta) {\n  const porFecha = new Map();\n  for (const f of filas) {\n    if (!porFecha.has(f.fecha)) porFecha.set(f.fecha, []);\n    porFecha.get(f.fecha).push(valoresResultado(f));\n  }\n  const tabs = pestanas(meta);\n  const proyectos = tabs.filter(t => esPestanaProyecto(t.titulo)).length;\n  const pet = [];\n  for (const [fecha, valores] of porFecha) {\n    if (tabs.some(t => t.titulo === fecha)) pet.push(agregar(fecha, valores));\n    else {\n      pet.push(crearPestana(fecha, proyectos));\n      pet.push(escribir(fecha, 'A1', [COLUMNAS_RESULTADOS].concat(valores)));\n    }\n  }\n  return pet;\n}\n\n// Prompts: listar (/geo-prompts), validar lo que llega a /geo-prompts-save y\n// elegir cuáles entran en una corrida. Sin dependencias, como los otros dos.\n\n// Categoría e intención son texto libre (vienen del universo de prompts de BCP).\n// Estas listas solo son sugerencias para un formulario.\nconst CATEGORIAS = ['Reputación', 'Producto', 'Digital', 'Otra'];\nconst INTENCIONES = ['Informacional', 'Comparativa', 'Transaccional', 'Reputacional', 'Navegacional'];\n\nfunction activoDe(v) {\n  if (typeof v === 'boolean') return v;\n  const s = String(v == null ? '' : v).trim().toLowerCase();\n  if (s === '') return true;\n  return ['true', 'verdadero', '1', 'si', 'sí', 'x'].includes(s);\n}\n\nfunction normalizarPrompt(f) {\n  return {\n    id: String(f.id || '').trim(),\n    proyecto: String(f.proyecto || '').trim() || 'Sin proyecto',\n    prompt: String(f.prompt || '').trim(),\n    categoria: String(f.categoria || '').trim() || 'Otra',\n    intencion: String(f.intencion || '').trim(),\n    activo: activoDe(f.activo),\n    fecha_creacion: String(f.fecha_creacion || f.creado || '')\n  };\n}\n\nfunction listarPrompts(filas) {\n  const prompts = filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .sort((a, b) => b.fecha_creacion.localeCompare(a.fecha_creacion) || b.id.localeCompare(a.id));\n  const proyectos = [...new Set(prompts.map(p => p.proyecto))].sort();\n  const unicos = (base, campo) => [...new Set(base.concat(prompts.map(p => p[campo]).filter(Boolean)))].sort();\n  return {\n    prompts, proyectos,\n    categorias: unicos(CATEGORIAS, 'categoria'), intenciones: unicos(INTENCIONES, 'intencion'),\n    total: prompts.length, activos: prompts.filter(p => p.activo).length\n  };\n}\n\n// Devuelve la fila que hay que escribir (solo con las columnas que cambian,\n// para que «Agregar o actualizar» no pise fecha_creacion al editar) o un error.\n// hoy: AAAA-MM-DD en Lima.\nfunction prepararGuardado(body, hoy, idNuevo) {\n  body = body || {};\n  const id = String(body.id || '').trim();\n  if (body.accion === 'eliminar') {\n    if (!id) return { ok: false, error: 'Falta el id del prompt a eliminar.' };\n    return { ok: true, accion: 'eliminar', fila: { id, activo: false } };\n  }\n  const prompt = String(body.prompt || '').trim();\n  const fila = { id: id || idNuevo };\n  if (!id || body.prompt !== undefined) {\n    if (!prompt) return { ok: false, error: 'El prompt no puede estar vacío.' };\n    if (prompt.length > 2000) return { ok: false, error: 'El prompt pasa de 2.000 caracteres.' };\n    fila.prompt = prompt;\n  }\n  if (!id || body.proyecto !== undefined) fila.proyecto = String(body.proyecto || '').trim() || 'Sin proyecto';\n  if (!id || body.categoria !== undefined) {\n    fila.categoria = String(body.categoria || '').trim().slice(0, 80) || 'Otra';\n  }\n  if (body.intencion !== undefined) fila.intencion = String(body.intencion || '').trim().slice(0, 40);\n  if (!id || body.activo !== undefined) fila.activo = activoDe(body.activo);\n  if (!id) fila.fecha_creacion = hoy;\n  return { ok: true, accion: id ? 'editar' : 'crear', fila };\n}\n\n// Qué prompts entran en la corrida: los activos, y si llegan prompt_ids o\n// proyecto, solo esos. Un prompt_id pedido a mano corre aunque esté inactivo.\nfunction elegirPrompts(filas, peticion) {\n  peticion = peticion || {};\n  const ids = Array.isArray(peticion.prompt_ids) ? peticion.prompt_ids.map(String) : [];\n  return filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .filter(p => (ids.length ? ids.includes(p.id) : p.activo))\n    .filter(p => !peticion.proyecto || p.proyecto === peticion.proyecto);\n}\n\nreturn [{ json: listarPrompts(leerHojas($input.first().json).prompts) }];\n"
       }
     },
     {
@@ -135,7 +215,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
-        680,
+        1120,
         220
       ],
       "parameters": {
@@ -163,222 +243,91 @@
       "webhookId": "034d8e73-a9b5-4b38-a20e-c271d9c2f57b"
     },
     {
-      "id": "bfe13df9-2953-415d-ae42-8b95ba2d2f64",
-      "name": "Validar prompt",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
+      "id": "c3d0215b-4e2a-4df5-a356-b1ee1b98a9ab",
+      "name": "Pestañas del Sheet (guardar)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
       "position": [
         240,
         440
       ],
       "parameters": {
-        "jsCode": "// Prompts: listar (/geo-prompts), validar lo que llega a /geo-prompts-save y\n// elegir cuáles entran en una corrida. Sin dependencias, como los otros dos.\n\n// Categoría e intención son texto libre (vienen del universo de prompts de BCP).\n// Estas listas solo son sugerencias para un formulario.\nconst CATEGORIAS = ['Reputación', 'Producto', 'Digital', 'Otra'];\nconst INTENCIONES = ['Informacional', 'Comparativa', 'Transaccional', 'Reputacional', 'Navegacional'];\n\nfunction activoDe(v) {\n  if (typeof v === 'boolean') return v;\n  const s = String(v == null ? '' : v).trim().toLowerCase();\n  if (s === '') return true;\n  return ['true', 'verdadero', '1', 'si', 'sí', 'x'].includes(s);\n}\n\nfunction normalizarPrompt(f) {\n  return {\n    id: String(f.id || '').trim(),\n    proyecto: String(f.proyecto || '').trim() || 'Sin proyecto',\n    prompt: String(f.prompt || '').trim(),\n    categoria: String(f.categoria || '').trim() || 'Otra',\n    intencion: String(f.intencion || '').trim(),\n    activo: activoDe(f.activo),\n    fecha_creacion: String(f.fecha_creacion || f.creado || '')\n  };\n}\n\nfunction listarPrompts(filas) {\n  const prompts = filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .sort((a, b) => b.fecha_creacion.localeCompare(a.fecha_creacion) || b.id.localeCompare(a.id));\n  const proyectos = [...new Set(prompts.map(p => p.proyecto))].sort();\n  const unicos = (base, campo) => [...new Set(base.concat(prompts.map(p => p[campo]).filter(Boolean)))].sort();\n  return {\n    prompts, proyectos,\n    categorias: unicos(CATEGORIAS, 'categoria'), intenciones: unicos(INTENCIONES, 'intencion'),\n    total: prompts.length, activos: prompts.filter(p => p.activo).length\n  };\n}\n\n// Devuelve la fila que hay que escribir (solo con las columnas que cambian,\n// para que «Agregar o actualizar» no pise fecha_creacion al editar) o un error.\n// hoy: AAAA-MM-DD en Lima.\nfunction prepararGuardado(body, hoy, idNuevo) {\n  body = body || {};\n  const id = String(body.id || '').trim();\n  if (body.accion === 'eliminar') {\n    if (!id) return { ok: false, error: 'Falta el id del prompt a eliminar.' };\n    return { ok: true, accion: 'eliminar', fila: { id, activo: false } };\n  }\n  const prompt = String(body.prompt || '').trim();\n  const fila = { id: id || idNuevo };\n  if (!id || body.prompt !== undefined) {\n    if (!prompt) return { ok: false, error: 'El prompt no puede estar vacío.' };\n    if (prompt.length > 2000) return { ok: false, error: 'El prompt pasa de 2.000 caracteres.' };\n    fila.prompt = prompt;\n  }\n  if (!id || body.proyecto !== undefined) fila.proyecto = String(body.proyecto || '').trim() || 'Sin proyecto';\n  if (!id || body.categoria !== undefined) {\n    fila.categoria = String(body.categoria || '').trim().slice(0, 80) || 'Otra';\n  }\n  if (body.intencion !== undefined) fila.intencion = String(body.intencion || '').trim().slice(0, 40);\n  if (!id || body.activo !== undefined) fila.activo = activoDe(body.activo);\n  if (!id) fila.fecha_creacion = hoy;\n  return { ok: true, accion: id ? 'editar' : 'crear', fila };\n}\n\n// Qué prompts entran en la corrida: los activos, y si llegan prompt_ids o\n// proyecto, solo esos. Un prompt_id pedido a mano corre aunque esté inactivo.\nfunction elegirPrompts(filas, peticion) {\n  peticion = peticion || {};\n  const ids = Array.isArray(peticion.prompt_ids) ? peticion.prompt_ids.map(String) : [];\n  return filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .filter(p => (ids.length ? ids.includes(p.id) : p.activo))\n    .filter(p => !peticion.proyecto || p.proyecto === peticion.proyecto);\n}\n\nlet body = $('Webhook geo-prompts-save').first().json.body || {};\nif (typeof body === 'string') { try { body = JSON.parse(body); } catch (e) { body = {}; } }\nconst hoy = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Lima' });\nconst idNuevo = 'p_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);\nconst r = prepararGuardado(body, hoy, idNuevo);\n// Sale solo la fila a escribir, o {_borrar: id}, o {_error}.\nif (!r.ok) return [{ json: { _error: r.error } }];\nreturn [{ json: r.accion === 'eliminar' ? { _borrar: r.fila.id } : r.fila }];\n"
-      }
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSheetsOAuth2Api",
+        "method": "GET",
+        "url": "https://sheets.googleapis.com/v4/spreadsheets/PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "fields",
+              "value": "sheets.properties(sheetId,title,index)"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "executeOnce": true
     },
     {
-      "id": "3522130e-4e9e-4fcc-a8a2-5c697e5b5e2d",
-      "name": "¿Qué hacer?",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3,
+      "id": "cf97c25c-0061-4d10-a817-51832c9da882",
+      "name": "Qué leer (guardar)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
         460,
         440
       ],
       "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "loose"
-                },
-                "conditions": [
-                  {
-                    "id": "5dd645ea-cb35-43d7-a82f-e3686eb71c2b",
-                    "leftValue": "={{ !$json._error && !$json._borrar }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "guardar"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "loose"
-                },
-                "conditions": [
-                  {
-                    "id": "ed1e1321-9029-4a75-a35d-bc70227f0554",
-                    "leftValue": "={{ !!$json._borrar }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "borrar"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "loose"
-                },
-                "conditions": [
-                  {
-                    "id": "4878fdaf-9494-4815-a309-e2dc66a54360",
-                    "leftValue": "={{ !!$json._error }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "error"
-            }
-          ]
-        },
-        "options": {}
+        "jsCode": "const SHEET_ID = 'PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET';\n// El Google Sheet, organizado como lo usa el equipo de BCP:\n//   · una pestaña por proyecto con sus prompts (Marca, Ahorros, Cards…)\n//   · una pestaña por día de medición con los resultados (2026-10-21, …)\n//   · las que empiezan con «_» son de sistema (respaldos, notas) y se ignoran.\n// Se lee y escribe con la API de Google Sheets (nodos HTTP con la credencial de\n// Sheets); aquí solo se arman las peticiones y se interpretan las respuestas.\n// Sin dependencias: build.mjs lo pega en los nodos Code que lo necesitan.\n\nconst SHEETS_API = 'https://sheets.googleapis.com/v4/spreadsheets/' + SHEET_ID;\n\n// Encabezados de las pestañas de proyecto (los del Excel original de BCP, más\n// id, activo y fecha para poder gestionarlos desde el front).\nconst COLUMNAS_PROMPTS = ['id', 'Categoría', 'Intención de Búsqueda', 'Prompt', 'Activo', 'Fecha de creación'];\nconst COLUMNAS_RESULTADOS = ['run_id', 'fecha', 'timestamp', 'prompt_id', 'proyecto', 'categoria', 'prompt', 'motor', 'estado',\n  'menciona_bcp', 'posicion_bcp', 'sentimiento', 'marcas_mencionadas', 'fuentes', 'citado_bcp', 'error', 'respuesta',\n  'n_menciones_bcp', 'n_menciones_bancos', 'detalle_marcas', 'sov_bcp'];\n\nfunction esPestanaFecha(titulo) { return /^\\d{4}-\\d{2}-\\d{2}$/.test(String(titulo || '').trim()); }\nfunction esPestanaSistema(titulo) { return String(titulo || '').trim().startsWith('_'); }\nfunction esPestanaProyecto(titulo) { return !esPestanaFecha(titulo) && !esPestanaSistema(titulo) && String(titulo || '').trim() !== ''; }\n\nfunction pestanas(meta) {\n  return ((meta && meta.sheets) || []).map(s => s.properties).filter(Boolean)\n    .map(p => ({ id: p.sheetId, titulo: p.title, indice: p.index }));\n}\n\n// Rango A1 de una pestaña, con el nombre entre comillas (acepta espacios y tildes).\nfunction rango(titulo, celdas) {\n  return \"'\" + String(titulo).replace(/'/g, \"''\") + \"'!\" + celdas;\n}\n\n// Cuerpo de values:batchGetByDataFilter para leer varias pestañas en una llamada.\n// desde (AAAA-MM-DD): solo las pestañas de resultados desde esa fecha.\nfunction cuerpoLectura(meta, { prompts = false, resultadosDesde = null } = {}) {\n  const filtros = [];\n  for (const p of pestanas(meta)) {\n    if (prompts && esPestanaProyecto(p.titulo)) filtros.push({ a1Range: rango(p.titulo, 'A:F') });\n    if (resultadosDesde && esPestanaFecha(p.titulo) && p.titulo >= resultadosDesde) filtros.push({ a1Range: rango(p.titulo, 'A:U') });\n  }\n  // La API no acepta una lista vacía: sin nada que leer, se pide A1 de la primera pestaña.\n  const primera = pestanas(meta)[0];\n  if (!filtros.length && primera) filtros.push({ a1Range: rango(primera.titulo, 'A1:A1') });\n  return { dataFilters: filtros, majorDimension: 'ROWS', valueRenderOption: 'UNFORMATTED_VALUE' };\n}\n\nfunction tituloDeRango(r) {\n  const m = String(r || '').match(/^'((?:[^']|'')*)'!/) || String(r || '').match(/^([^!]+)!/);\n  return m ? m[1].replace(/''/g, \"'\") : '';\n}\n\nfunction claveColumna(c) {\n  const k = String(c || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();\n  if (k === 'id') return 'id';\n  if (k.startsWith('categ')) return 'categoria';\n  if (k.startsWith('intenc')) return 'intencion';\n  if (k.startsWith('prompt')) return 'prompt';\n  if (k.startsWith('activo')) return 'activo';\n  if (k.startsWith('fecha')) return 'fecha_creacion';\n  return '';\n}\n\n// Respuesta de batchGetByDataFilter → {prompts: [...], resultados: [...]}.\n// Cada prompt lleva su pestaña (= proyecto) y su número de fila.\nfunction leerHojas(respuesta) {\n  const prompts = [];\n  const resultados = [];\n  for (const vr of (respuesta && respuesta.valueRanges) || []) {\n    const v = vr.valueRange || vr;\n    const titulo = tituloDeRango(v.range);\n    const filas = v.values || [];\n    if (!filas.length) continue;\n    if (esPestanaFecha(titulo)) {\n      const cab = filas[0].map(String);\n      filas.slice(1).forEach(f => {\n        if (!f || !f.some(x => x !== '' && x !== null)) return;\n        const o = {};\n        cab.forEach((c, i) => { o[c] = f[i] === undefined ? '' : f[i]; });\n        resultados.push(o);\n      });\n    } else if (esPestanaProyecto(titulo)) {\n      const cab = filas[0].map(claveColumna);\n      filas.slice(1).forEach((f, i) => {\n        if (!f || !f.some(x => x !== '' && x !== null)) return;\n        const o = { proyecto: titulo, _fila: i + 2 };\n        cab.forEach((c, j) => { if (c) o[c] = f[j] === undefined ? '' : f[j]; });\n        if (o.fecha_creacion !== undefined) o.fecha_creacion = fechaTexto(o.fecha_creacion);\n        prompts.push(o);\n      });\n    }\n  }\n  return { prompts, resultados };\n}\n\n// Las fechas pueden volver como número de serie de Sheets (UNFORMATTED_VALUE).\nfunction fechaTexto(v) {\n  if (typeof v === 'number' && v > 20000 && v < 80000) {\n    return new Date(Date.UTC(1899, 11, 30) + v * 864e5).toISOString().slice(0, 10);\n  }\n  return String(v || '');\n}\n\nfunction valoresPrompt(p) {\n  return [p.id, p.categoria || '', p.intencion || '', p.prompt || '', p.activo === false ? 'FALSE' : 'TRUE', p.fecha_creacion || ''];\n}\n\nfunction valoresResultado(f) {\n  return COLUMNAS_RESULTADOS.map(c => {\n    const v = f[c];\n    return v === undefined || v === null ? '' : typeof v === 'boolean' ? (v ? 'TRUE' : 'FALSE') : v;\n  });\n}\n\n// ─── Peticiones a la API de Sheets ─────────────────────────────────────────\nconst pedidoSheets = (method, ruta, body) => ({ method, url: SHEETS_API + ruta, body });\nconst crearPestana = (titulo, indice) =>\n  pedidoSheets('POST', ':batchUpdate', { requests: [{ addSheet: { properties: Object.assign({ title: titulo }, indice === undefined ? {} : { index: indice }) } }] });\nconst escribir = (titulo, desde, valores) =>\n  pedidoSheets('PUT', '/values/' + encodeURIComponent(rango(titulo, desde)) + '?valueInputOption=RAW', { values: valores });\nconst agregar = (titulo, valores) =>\n  pedidoSheets('POST', '/values/' + encodeURIComponent(rango(titulo, 'A1')) + ':append?valueInputOption=RAW&insertDataOption=INSERT_ROWS', { values: valores });\nconst borrarFila = (idPestana, fila) =>\n  pedidoSheets('POST', ':batchUpdate', { requests: [{ deleteDimension: { range: { sheetId: idPestana, dimension: 'ROWS', startIndex: fila - 1, endIndex: fila } } }] });\n\n// Crear, editar, activar/desactivar, mover de proyecto o eliminar un prompt.\n// guardado: lo que devuelve prepararGuardado (prompts.js).\n// → {ok, status, respuesta, peticiones}\nfunction planGuardarPrompt(guardado, prompts, meta) {\n  if (!guardado.ok) return { ok: false, status: 400, respuesta: { ok: false, error: guardado.error }, peticiones: [] };\n  const tabs = pestanas(meta);\n  const tab = titulo => tabs.find(t => t.titulo === titulo);\n  const fila = guardado.fila;\n  const actual = prompts.find(p => String(p.id).trim() === fila.id);\n  const proyectosAlFinal = tabs.filter(t => esPestanaProyecto(t.titulo)).length;\n  const asegurarPestana = (titulo, pet) => {\n    if (!tab(titulo)) {\n      pet.push(crearPestana(titulo, proyectosAlFinal));\n      pet.push(escribir(titulo, 'A1', [COLUMNAS_PROMPTS]));\n    }\n  };\n\n  if (guardado.accion === 'eliminar') {\n    if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };\n    return { ok: true, status: 200, respuesta: { ok: true, accion: 'eliminar', id: fila.id }, peticiones: [borrarFila(tab(actual.proyecto).id, actual._fila)] };\n  }\n\n  if (guardado.accion === 'editar') {\n    if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };\n    const nuevo = Object.assign({}, normalizarPrompt(actual), fila);\n    const pet = [];\n    if (nuevo.proyecto === actual.proyecto) {\n      pet.push(escribir(actual.proyecto, 'A' + actual._fila + ':F' + actual._fila, [valoresPrompt(nuevo)]));\n    } else {\n      // Cambio de proyecto: se agrega en la pestaña nueva y se borra de la vieja.\n      asegurarPestana(nuevo.proyecto, pet);\n      pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));\n      pet.push(borrarFila(tab(actual.proyecto).id, actual._fila));\n    }\n    return { ok: true, status: 200, respuesta: { ok: true, accion: 'editar', prompt: limpio(nuevo) }, peticiones: pet };\n  }\n\n  // Crear: un proyecto nuevo crea su pestaña.\n  const nuevo = normalizarPrompt(fila);\n  const pet = [];\n  asegurarPestana(nuevo.proyecto, pet);\n  pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));\n  return { ok: true, status: 200, respuesta: { ok: true, accion: 'crear', prompt: limpio(nuevo) }, peticiones: pet };\n}\n\nfunction limpio(p) {\n  const o = {};\n  for (const k of Object.keys(p)) if (!k.startsWith('_')) o[k] = p[k];\n  return o;\n}\n\n// Guardar las filas de una corrida en la pestaña del día (se crea si no está,\n// justo después de las pestañas de proyecto, para que la más reciente quede primero).\nfunction planGuardarResultados(filas, meta) {\n  const porFecha = new Map();\n  for (const f of filas) {\n    if (!porFecha.has(f.fecha)) porFecha.set(f.fecha, []);\n    porFecha.get(f.fecha).push(valoresResultado(f));\n  }\n  const tabs = pestanas(meta);\n  const proyectos = tabs.filter(t => esPestanaProyecto(t.titulo)).length;\n  const pet = [];\n  for (const [fecha, valores] of porFecha) {\n    if (tabs.some(t => t.titulo === fecha)) pet.push(agregar(fecha, valores));\n    else {\n      pet.push(crearPestana(fecha, proyectos));\n      pet.push(escribir(fecha, 'A1', [COLUMNAS_RESULTADOS].concat(valores)));\n    }\n  }\n  return pet;\n}\n\nreturn [{ json: { cuerpo: cuerpoLectura($input.first().json, { prompts: true }) } }];\n"
       }
     },
     {
-      "id": "91085da0-21ce-4ca1-a0ff-edceb2bf0517",
-      "name": "Guardar prompt",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.5,
+      "id": "58fafcee-31da-4494-a9cd-fb7471b9956e",
+      "name": "Leer el Sheet (guardar)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
       "position": [
         680,
-        380
+        440
       ],
       "parameters": {
-        "operation": "appendOrUpdate",
-        "documentId": {
-          "__rl": true,
-          "value": "PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
-          "mode": "id"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "prompts",
-          "mode": "name"
-        },
-        "columns": {
-          "mappingMode": "autoMapInputData",
-          "value": {},
-          "matchingColumns": [
-            "id"
-          ],
-          "schema": []
-        },
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSheetsOAuth2Api",
+        "method": "POST",
+        "url": "https://sheets.googleapis.com/v4/spreadsheets/PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET/values:batchGetByDataFilter",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.cuerpo) }}",
         "options": {
-          "cellFormat": "RAW"
+          "timeout": 120000
         }
-      }
-    },
-    {
-      "id": "d8871af0-0399-42b5-ad8e-5947efe90dd2",
-      "name": "Responder guardado",
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.1,
-      "position": [
-        900,
-        380
-      ],
-      "parameters": {
-        "respondWith": "json",
-        "responseBody": "={{ JSON.stringify({ ok: true, prompt: $('Validar prompt').first().json }) }}",
-        "options": {
-          "responseCode": 200
-        }
-      }
-    },
-    {
-      "id": "848c1b39-1a24-41bb-adae-e936f510f914",
-      "name": "Responder error",
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.1,
-      "position": [
-        680,
-        800
-      ],
-      "parameters": {
-        "respondWith": "json",
-        "responseBody": "={{ JSON.stringify({ ok: false, error: $json._error }) }}",
-        "options": {
-          "responseCode": 400
-        }
-      }
-    },
-    {
-      "id": "03395ca8-25c3-43d1-a118-0e22a4d54cf1",
-      "name": "Leer prompts (borrar)",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.5,
-      "position": [
-        680,
-        620
-      ],
-      "parameters": {
-        "operation": "read",
-        "documentId": {
-          "__rl": true,
-          "value": "PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
-          "mode": "id"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "prompts",
-          "mode": "name"
-        },
-        "options": {}
       },
-      "alwaysOutputData": true,
       "executeOnce": true
     },
     {
-      "id": "6e83cbfb-fec7-4604-a695-b6e53342c14c",
-      "name": "Fila a borrar",
+      "id": "244040e0-cddb-4dce-a14a-4cb0124a6fea",
+      "name": "Planear cambio",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         900,
-        620
+        440
       ],
       "parameters": {
-        "jsCode": "\nconst id = $('Validar prompt').first().json._borrar;\nconst fila = $input.all().map(i => i.json).find(f => String(f.id || '').trim() === id);\nreturn [{ json: fila ? { id, row_number: fila.row_number } : { id, _error: 'No existe el prompt ' + id } }];\n"
+        "jsCode": "const SHEET_ID = 'PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET';\n// El Google Sheet, organizado como lo usa el equipo de BCP:\n//   · una pestaña por proyecto con sus prompts (Marca, Ahorros, Cards…)\n//   · una pestaña por día de medición con los resultados (2026-10-21, …)\n//   · las que empiezan con «_» son de sistema (respaldos, notas) y se ignoran.\n// Se lee y escribe con la API de Google Sheets (nodos HTTP con la credencial de\n// Sheets); aquí solo se arman las peticiones y se interpretan las respuestas.\n// Sin dependencias: build.mjs lo pega en los nodos Code que lo necesitan.\n\nconst SHEETS_API = 'https://sheets.googleapis.com/v4/spreadsheets/' + SHEET_ID;\n\n// Encabezados de las pestañas de proyecto (los del Excel original de BCP, más\n// id, activo y fecha para poder gestionarlos desde el front).\nconst COLUMNAS_PROMPTS = ['id', 'Categoría', 'Intención de Búsqueda', 'Prompt', 'Activo', 'Fecha de creación'];\nconst COLUMNAS_RESULTADOS = ['run_id', 'fecha', 'timestamp', 'prompt_id', 'proyecto', 'categoria', 'prompt', 'motor', 'estado',\n  'menciona_bcp', 'posicion_bcp', 'sentimiento', 'marcas_mencionadas', 'fuentes', 'citado_bcp', 'error', 'respuesta',\n  'n_menciones_bcp', 'n_menciones_bancos', 'detalle_marcas', 'sov_bcp'];\n\nfunction esPestanaFecha(titulo) { return /^\\d{4}-\\d{2}-\\d{2}$/.test(String(titulo || '').trim()); }\nfunction esPestanaSistema(titulo) { return String(titulo || '').trim().startsWith('_'); }\nfunction esPestanaProyecto(titulo) { return !esPestanaFecha(titulo) && !esPestanaSistema(titulo) && String(titulo || '').trim() !== ''; }\n\nfunction pestanas(meta) {\n  return ((meta && meta.sheets) || []).map(s => s.properties).filter(Boolean)\n    .map(p => ({ id: p.sheetId, titulo: p.title, indice: p.index }));\n}\n\n// Rango A1 de una pestaña, con el nombre entre comillas (acepta espacios y tildes).\nfunction rango(titulo, celdas) {\n  return \"'\" + String(titulo).replace(/'/g, \"''\") + \"'!\" + celdas;\n}\n\n// Cuerpo de values:batchGetByDataFilter para leer varias pestañas en una llamada.\n// desde (AAAA-MM-DD): solo las pestañas de resultados desde esa fecha.\nfunction cuerpoLectura(meta, { prompts = false, resultadosDesde = null } = {}) {\n  const filtros = [];\n  for (const p of pestanas(meta)) {\n    if (prompts && esPestanaProyecto(p.titulo)) filtros.push({ a1Range: rango(p.titulo, 'A:F') });\n    if (resultadosDesde && esPestanaFecha(p.titulo) && p.titulo >= resultadosDesde) filtros.push({ a1Range: rango(p.titulo, 'A:U') });\n  }\n  // La API no acepta una lista vacía: sin nada que leer, se pide A1 de la primera pestaña.\n  const primera = pestanas(meta)[0];\n  if (!filtros.length && primera) filtros.push({ a1Range: rango(primera.titulo, 'A1:A1') });\n  return { dataFilters: filtros, majorDimension: 'ROWS', valueRenderOption: 'UNFORMATTED_VALUE' };\n}\n\nfunction tituloDeRango(r) {\n  const m = String(r || '').match(/^'((?:[^']|'')*)'!/) || String(r || '').match(/^([^!]+)!/);\n  return m ? m[1].replace(/''/g, \"'\") : '';\n}\n\nfunction claveColumna(c) {\n  const k = String(c || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();\n  if (k === 'id') return 'id';\n  if (k.startsWith('categ')) return 'categoria';\n  if (k.startsWith('intenc')) return 'intencion';\n  if (k.startsWith('prompt')) return 'prompt';\n  if (k.startsWith('activo')) return 'activo';\n  if (k.startsWith('fecha')) return 'fecha_creacion';\n  return '';\n}\n\n// Respuesta de batchGetByDataFilter → {prompts: [...], resultados: [...]}.\n// Cada prompt lleva su pestaña (= proyecto) y su número de fila.\nfunction leerHojas(respuesta) {\n  const prompts = [];\n  const resultados = [];\n  for (const vr of (respuesta && respuesta.valueRanges) || []) {\n    const v = vr.valueRange || vr;\n    const titulo = tituloDeRango(v.range);\n    const filas = v.values || [];\n    if (!filas.length) continue;\n    if (esPestanaFecha(titulo)) {\n      const cab = filas[0].map(String);\n      filas.slice(1).forEach(f => {\n        if (!f || !f.some(x => x !== '' && x !== null)) return;\n        const o = {};\n        cab.forEach((c, i) => { o[c] = f[i] === undefined ? '' : f[i]; });\n        resultados.push(o);\n      });\n    } else if (esPestanaProyecto(titulo)) {\n      const cab = filas[0].map(claveColumna);\n      filas.slice(1).forEach((f, i) => {\n        if (!f || !f.some(x => x !== '' && x !== null)) return;\n        const o = { proyecto: titulo, _fila: i + 2 };\n        cab.forEach((c, j) => { if (c) o[c] = f[j] === undefined ? '' : f[j]; });\n        if (o.fecha_creacion !== undefined) o.fecha_creacion = fechaTexto(o.fecha_creacion);\n        prompts.push(o);\n      });\n    }\n  }\n  return { prompts, resultados };\n}\n\n// Las fechas pueden volver como número de serie de Sheets (UNFORMATTED_VALUE).\nfunction fechaTexto(v) {\n  if (typeof v === 'number' && v > 20000 && v < 80000) {\n    return new Date(Date.UTC(1899, 11, 30) + v * 864e5).toISOString().slice(0, 10);\n  }\n  return String(v || '');\n}\n\nfunction valoresPrompt(p) {\n  return [p.id, p.categoria || '', p.intencion || '', p.prompt || '', p.activo === false ? 'FALSE' : 'TRUE', p.fecha_creacion || ''];\n}\n\nfunction valoresResultado(f) {\n  return COLUMNAS_RESULTADOS.map(c => {\n    const v = f[c];\n    return v === undefined || v === null ? '' : typeof v === 'boolean' ? (v ? 'TRUE' : 'FALSE') : v;\n  });\n}\n\n// ─── Peticiones a la API de Sheets ─────────────────────────────────────────\nconst pedidoSheets = (method, ruta, body) => ({ method, url: SHEETS_API + ruta, body });\nconst crearPestana = (titulo, indice) =>\n  pedidoSheets('POST', ':batchUpdate', { requests: [{ addSheet: { properties: Object.assign({ title: titulo }, indice === undefined ? {} : { index: indice }) } }] });\nconst escribir = (titulo, desde, valores) =>\n  pedidoSheets('PUT', '/values/' + encodeURIComponent(rango(titulo, desde)) + '?valueInputOption=RAW', { values: valores });\nconst agregar = (titulo, valores) =>\n  pedidoSheets('POST', '/values/' + encodeURIComponent(rango(titulo, 'A1')) + ':append?valueInputOption=RAW&insertDataOption=INSERT_ROWS', { values: valores });\nconst borrarFila = (idPestana, fila) =>\n  pedidoSheets('POST', ':batchUpdate', { requests: [{ deleteDimension: { range: { sheetId: idPestana, dimension: 'ROWS', startIndex: fila - 1, endIndex: fila } } }] });\n\n// Crear, editar, activar/desactivar, mover de proyecto o eliminar un prompt.\n// guardado: lo que devuelve prepararGuardado (prompts.js).\n// → {ok, status, respuesta, peticiones}\nfunction planGuardarPrompt(guardado, prompts, meta) {\n  if (!guardado.ok) return { ok: false, status: 400, respuesta: { ok: false, error: guardado.error }, peticiones: [] };\n  const tabs = pestanas(meta);\n  const tab = titulo => tabs.find(t => t.titulo === titulo);\n  const fila = guardado.fila;\n  const actual = prompts.find(p => String(p.id).trim() === fila.id);\n  const proyectosAlFinal = tabs.filter(t => esPestanaProyecto(t.titulo)).length;\n  const asegurarPestana = (titulo, pet) => {\n    if (!tab(titulo)) {\n      pet.push(crearPestana(titulo, proyectosAlFinal));\n      pet.push(escribir(titulo, 'A1', [COLUMNAS_PROMPTS]));\n    }\n  };\n\n  if (guardado.accion === 'eliminar') {\n    if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };\n    return { ok: true, status: 200, respuesta: { ok: true, accion: 'eliminar', id: fila.id }, peticiones: [borrarFila(tab(actual.proyecto).id, actual._fila)] };\n  }\n\n  if (guardado.accion === 'editar') {\n    if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };\n    const nuevo = Object.assign({}, normalizarPrompt(actual), fila);\n    const pet = [];\n    if (nuevo.proyecto === actual.proyecto) {\n      pet.push(escribir(actual.proyecto, 'A' + actual._fila + ':F' + actual._fila, [valoresPrompt(nuevo)]));\n    } else {\n      // Cambio de proyecto: se agrega en la pestaña nueva y se borra de la vieja.\n      asegurarPestana(nuevo.proyecto, pet);\n      pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));\n      pet.push(borrarFila(tab(actual.proyecto).id, actual._fila));\n    }\n    return { ok: true, status: 200, respuesta: { ok: true, accion: 'editar', prompt: limpio(nuevo) }, peticiones: pet };\n  }\n\n  // Crear: un proyecto nuevo crea su pestaña.\n  const nuevo = normalizarPrompt(fila);\n  const pet = [];\n  asegurarPestana(nuevo.proyecto, pet);\n  pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));\n  return { ok: true, status: 200, respuesta: { ok: true, accion: 'crear', prompt: limpio(nuevo) }, peticiones: pet };\n}\n\nfunction limpio(p) {\n  const o = {};\n  for (const k of Object.keys(p)) if (!k.startsWith('_')) o[k] = p[k];\n  return o;\n}\n\n// Guardar las filas de una corrida en la pestaña del día (se crea si no está,\n// justo después de las pestañas de proyecto, para que la más reciente quede primero).\nfunction planGuardarResultados(filas, meta) {\n  const porFecha = new Map();\n  for (const f of filas) {\n    if (!porFecha.has(f.fecha)) porFecha.set(f.fecha, []);\n    porFecha.get(f.fecha).push(valoresResultado(f));\n  }\n  const tabs = pestanas(meta);\n  const proyectos = tabs.filter(t => esPestanaProyecto(t.titulo)).length;\n  const pet = [];\n  for (const [fecha, valores] of porFecha) {\n    if (tabs.some(t => t.titulo === fecha)) pet.push(agregar(fecha, valores));\n    else {\n      pet.push(crearPestana(fecha, proyectos));\n      pet.push(escribir(fecha, 'A1', [COLUMNAS_RESULTADOS].concat(valores)));\n    }\n  }\n  return pet;\n}\n\n// Prompts: listar (/geo-prompts), validar lo que llega a /geo-prompts-save y\n// elegir cuáles entran en una corrida. Sin dependencias, como los otros dos.\n\n// Categoría e intención son texto libre (vienen del universo de prompts de BCP).\n// Estas listas solo son sugerencias para un formulario.\nconst CATEGORIAS = ['Reputación', 'Producto', 'Digital', 'Otra'];\nconst INTENCIONES = ['Informacional', 'Comparativa', 'Transaccional', 'Reputacional', 'Navegacional'];\n\nfunction activoDe(v) {\n  if (typeof v === 'boolean') return v;\n  const s = String(v == null ? '' : v).trim().toLowerCase();\n  if (s === '') return true;\n  return ['true', 'verdadero', '1', 'si', 'sí', 'x'].includes(s);\n}\n\nfunction normalizarPrompt(f) {\n  return {\n    id: String(f.id || '').trim(),\n    proyecto: String(f.proyecto || '').trim() || 'Sin proyecto',\n    prompt: String(f.prompt || '').trim(),\n    categoria: String(f.categoria || '').trim() || 'Otra',\n    intencion: String(f.intencion || '').trim(),\n    activo: activoDe(f.activo),\n    fecha_creacion: String(f.fecha_creacion || f.creado || '')\n  };\n}\n\nfunction listarPrompts(filas) {\n  const prompts = filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .sort((a, b) => b.fecha_creacion.localeCompare(a.fecha_creacion) || b.id.localeCompare(a.id));\n  const proyectos = [...new Set(prompts.map(p => p.proyecto))].sort();\n  const unicos = (base, campo) => [...new Set(base.concat(prompts.map(p => p[campo]).filter(Boolean)))].sort();\n  return {\n    prompts, proyectos,\n    categorias: unicos(CATEGORIAS, 'categoria'), intenciones: unicos(INTENCIONES, 'intencion'),\n    total: prompts.length, activos: prompts.filter(p => p.activo).length\n  };\n}\n\n// Devuelve la fila que hay que escribir (solo con las columnas que cambian,\n// para que «Agregar o actualizar» no pise fecha_creacion al editar) o un error.\n// hoy: AAAA-MM-DD en Lima.\nfunction prepararGuardado(body, hoy, idNuevo) {\n  body = body || {};\n  const id = String(body.id || '').trim();\n  if (body.accion === 'eliminar') {\n    if (!id) return { ok: false, error: 'Falta el id del prompt a eliminar.' };\n    return { ok: true, accion: 'eliminar', fila: { id, activo: false } };\n  }\n  const prompt = String(body.prompt || '').trim();\n  const fila = { id: id || idNuevo };\n  if (!id || body.prompt !== undefined) {\n    if (!prompt) return { ok: false, error: 'El prompt no puede estar vacío.' };\n    if (prompt.length > 2000) return { ok: false, error: 'El prompt pasa de 2.000 caracteres.' };\n    fila.prompt = prompt;\n  }\n  if (!id || body.proyecto !== undefined) fila.proyecto = String(body.proyecto || '').trim() || 'Sin proyecto';\n  if (!id || body.categoria !== undefined) {\n    fila.categoria = String(body.categoria || '').trim().slice(0, 80) || 'Otra';\n  }\n  if (body.intencion !== undefined) fila.intencion = String(body.intencion || '').trim().slice(0, 40);\n  if (!id || body.activo !== undefined) fila.activo = activoDe(body.activo);\n  if (!id) fila.fecha_creacion = hoy;\n  return { ok: true, accion: id ? 'editar' : 'crear', fila };\n}\n\n// Qué prompts entran en la corrida: los activos, y si llegan prompt_ids o\n// proyecto, solo esos. Un prompt_id pedido a mano corre aunque esté inactivo.\nfunction elegirPrompts(filas, peticion) {\n  peticion = peticion || {};\n  const ids = Array.isArray(peticion.prompt_ids) ? peticion.prompt_ids.map(String) : [];\n  return filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .filter(p => (ids.length ? ids.includes(p.id) : p.activo))\n    .filter(p => !peticion.proyecto || p.proyecto === peticion.proyecto);\n}\n\nlet body = $('Webhook geo-prompts-save').first().json.body || {};\nif (typeof body === 'string') { try { body = JSON.parse(body); } catch (e) { body = {}; } }\nconst hoy = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Lima' });\nconst idNuevo = 'p_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);\nconst plan = planGuardarPrompt(prepararGuardado(body, hoy, idNuevo), leerHojas($input.first().json).prompts, $('Pestañas del Sheet (guardar)').first().json);\n// Un item por petición a la API de Sheets; si no hay nada que hacer, un item con el error.\nif (!plan.ok) return [{ json: { _status: plan.status, _respuesta: plan.respuesta } }];\nreturn plan.peticiones.map(p => ({ json: Object.assign(p, { _respuesta: plan.respuesta }) }));\n"
       }
     },
     {
-      "id": "bf7b3bd5-dc54-45b5-a097-de43dd3a74ae",
-      "name": "¿Existe?",
+      "id": "1b780e5a-e4d5-4016-a6c8-6da883f18701",
+      "name": "¿Hay cambios?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
       "position": [
         1120,
-        620
+        440
       ],
       "parameters": {
         "conditions": {
@@ -389,8 +338,8 @@
           },
           "conditions": [
             {
-              "id": "3478b385-d874-4b33-a7d8-83745dd23312",
-              "leftValue": "={{ !$json._error && $json.row_number > 1 }}",
+              "id": "5d5a1df8-5ce8-4d28-a0c9-4dec85a876b9",
+              "leftValue": "={{ !!$json.method }}",
               "rightValue": "",
               "operator": {
                 "type": "boolean",
@@ -405,62 +354,64 @@
       }
     },
     {
-      "id": "bcab11df-42a7-45b2-a274-8b196c4005bc",
-      "name": "Borrar fila",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.5,
+      "id": "3754cb28-06c1-4555-a06c-ab2ea46da967",
+      "name": "Escribir en el Sheet",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
       "position": [
         1340,
-        560
+        380
       ],
       "parameters": {
-        "operation": "delete",
-        "documentId": {
-          "__rl": true,
-          "value": "PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
-          "mode": "id"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "prompts",
-          "mode": "name"
-        },
-        "toDelete": "rows",
-        "startIndex": "={{ $json.row_number }}",
-        "numberToDelete": 1
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSheetsOAuth2Api",
+        "method": "={{ $json.method }}",
+        "url": "={{ $json.url }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.body) }}",
+        "options": {
+          "timeout": 120000,
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 300
+            }
+          }
+        }
       }
     },
     {
-      "id": "5895afa1-747b-4633-a3e7-080bf0a6c65d",
-      "name": "Responder borrado",
+      "id": "d8871af0-0399-42b5-ad8e-5947efe90dd2",
+      "name": "Responder guardado",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
         1560,
-        560
+        380
       ],
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={{ JSON.stringify({ ok: true, accion: 'eliminar', id: $('Fila a borrar').first().json.id }) }}",
+        "responseBody": "={{ JSON.stringify($('Planear cambio').first().json._respuesta) }}",
         "options": {
           "responseCode": 200
         }
       }
     },
     {
-      "id": "d1f5e604-96f9-4fb0-af4d-022e2ef54cf3",
-      "name": "Responder no existe",
+      "id": "848c1b39-1a24-41bb-adae-e936f510f914",
+      "name": "Responder error",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
         1340,
-        700
+        540
       ],
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={{ JSON.stringify({ ok: false, error: $json._error || 'No se encontró la fila' }) }}",
+        "responseBody": "={{ JSON.stringify($json._respuesta) }}",
         "options": {
-          "responseCode": 404
+          "responseCode": "={{ $json._status }}"
         }
       }
     },
@@ -484,54 +435,68 @@
       "webhookId": "cfa3e35d-0a69-4ba4-afcb-cd6f90052921"
     },
     {
-      "id": "ace21415-7ed8-42d5-a401-ad8610415a76",
-      "name": "Leer resultados (monitor)",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.5,
+      "id": "d74e4f62-bab9-4486-ab25-e27dab024b3c",
+      "name": "Pestañas del Sheet (monitor)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
       "position": [
         240,
         700
       ],
       "parameters": {
-        "operation": "read",
-        "documentId": {
-          "__rl": true,
-          "value": "PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
-          "mode": "id"
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSheetsOAuth2Api",
+        "method": "GET",
+        "url": "https://sheets.googleapis.com/v4/spreadsheets/PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "fields",
+              "value": "sheets.properties(sheetId,title,index)"
+            }
+          ]
         },
-        "sheetName": {
-          "__rl": true,
-          "value": "resultados",
-          "mode": "name"
-        },
-        "options": {}
+        "options": {
+          "timeout": 120000
+        }
       },
-      "alwaysOutputData": true
+      "executeOnce": true
     },
     {
-      "id": "866a0de2-3e56-440d-a828-1421fc6e8d36",
-      "name": "Leer prompts (monitor)",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.5,
+      "id": "f39cd0d0-8fdd-49dd-a0af-9f21146a9f7e",
+      "name": "Qué leer (monitor)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
         460,
         700
       ],
       "parameters": {
-        "operation": "read",
-        "documentId": {
-          "__rl": true,
-          "value": "PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
-          "mode": "id"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "prompts",
-          "mode": "name"
-        },
-        "options": {}
+        "jsCode": "const SHEET_ID = 'PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET';\n// El Google Sheet, organizado como lo usa el equipo de BCP:\n//   · una pestaña por proyecto con sus prompts (Marca, Ahorros, Cards…)\n//   · una pestaña por día de medición con los resultados (2026-10-21, …)\n//   · las que empiezan con «_» son de sistema (respaldos, notas) y se ignoran.\n// Se lee y escribe con la API de Google Sheets (nodos HTTP con la credencial de\n// Sheets); aquí solo se arman las peticiones y se interpretan las respuestas.\n// Sin dependencias: build.mjs lo pega en los nodos Code que lo necesitan.\n\nconst SHEETS_API = 'https://sheets.googleapis.com/v4/spreadsheets/' + SHEET_ID;\n\n// Encabezados de las pestañas de proyecto (los del Excel original de BCP, más\n// id, activo y fecha para poder gestionarlos desde el front).\nconst COLUMNAS_PROMPTS = ['id', 'Categoría', 'Intención de Búsqueda', 'Prompt', 'Activo', 'Fecha de creación'];\nconst COLUMNAS_RESULTADOS = ['run_id', 'fecha', 'timestamp', 'prompt_id', 'proyecto', 'categoria', 'prompt', 'motor', 'estado',\n  'menciona_bcp', 'posicion_bcp', 'sentimiento', 'marcas_mencionadas', 'fuentes', 'citado_bcp', 'error', 'respuesta',\n  'n_menciones_bcp', 'n_menciones_bancos', 'detalle_marcas', 'sov_bcp'];\n\nfunction esPestanaFecha(titulo) { return /^\\d{4}-\\d{2}-\\d{2}$/.test(String(titulo || '').trim()); }\nfunction esPestanaSistema(titulo) { return String(titulo || '').trim().startsWith('_'); }\nfunction esPestanaProyecto(titulo) { return !esPestanaFecha(titulo) && !esPestanaSistema(titulo) && String(titulo || '').trim() !== ''; }\n\nfunction pestanas(meta) {\n  return ((meta && meta.sheets) || []).map(s => s.properties).filter(Boolean)\n    .map(p => ({ id: p.sheetId, titulo: p.title, indice: p.index }));\n}\n\n// Rango A1 de una pestaña, con el nombre entre comillas (acepta espacios y tildes).\nfunction rango(titulo, celdas) {\n  return \"'\" + String(titulo).replace(/'/g, \"''\") + \"'!\" + celdas;\n}\n\n// Cuerpo de values:batchGetByDataFilter para leer varias pestañas en una llamada.\n// desde (AAAA-MM-DD): solo las pestañas de resultados desde esa fecha.\nfunction cuerpoLectura(meta, { prompts = false, resultadosDesde = null } = {}) {\n  const filtros = [];\n  for (const p of pestanas(meta)) {\n    if (prompts && esPestanaProyecto(p.titulo)) filtros.push({ a1Range: rango(p.titulo, 'A:F') });\n    if (resultadosDesde && esPestanaFecha(p.titulo) && p.titulo >= resultadosDesde) filtros.push({ a1Range: rango(p.titulo, 'A:U') });\n  }\n  // La API no acepta una lista vacía: sin nada que leer, se pide A1 de la primera pestaña.\n  const primera = pestanas(meta)[0];\n  if (!filtros.length && primera) filtros.push({ a1Range: rango(primera.titulo, 'A1:A1') });\n  return { dataFilters: filtros, majorDimension: 'ROWS', valueRenderOption: 'UNFORMATTED_VALUE' };\n}\n\nfunction tituloDeRango(r) {\n  const m = String(r || '').match(/^'((?:[^']|'')*)'!/) || String(r || '').match(/^([^!]+)!/);\n  return m ? m[1].replace(/''/g, \"'\") : '';\n}\n\nfunction claveColumna(c) {\n  const k = String(c || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();\n  if (k === 'id') return 'id';\n  if (k.startsWith('categ')) return 'categoria';\n  if (k.startsWith('intenc')) return 'intencion';\n  if (k.startsWith('prompt')) return 'prompt';\n  if (k.startsWith('activo')) return 'activo';\n  if (k.startsWith('fecha')) return 'fecha_creacion';\n  return '';\n}\n\n// Respuesta de batchGetByDataFilter → {prompts: [...], resultados: [...]}.\n// Cada prompt lleva su pestaña (= proyecto) y su número de fila.\nfunction leerHojas(respuesta) {\n  const prompts = [];\n  const resultados = [];\n  for (const vr of (respuesta && respuesta.valueRanges) || []) {\n    const v = vr.valueRange || vr;\n    const titulo = tituloDeRango(v.range);\n    const filas = v.values || [];\n    if (!filas.length) continue;\n    if (esPestanaFecha(titulo)) {\n      const cab = filas[0].map(String);\n      filas.slice(1).forEach(f => {\n        if (!f || !f.some(x => x !== '' && x !== null)) return;\n        const o = {};\n        cab.forEach((c, i) => { o[c] = f[i] === undefined ? '' : f[i]; });\n        resultados.push(o);\n      });\n    } else if (esPestanaProyecto(titulo)) {\n      const cab = filas[0].map(claveColumna);\n      filas.slice(1).forEach((f, i) => {\n        if (!f || !f.some(x => x !== '' && x !== null)) return;\n        const o = { proyecto: titulo, _fila: i + 2 };\n        cab.forEach((c, j) => { if (c) o[c] = f[j] === undefined ? '' : f[j]; });\n        if (o.fecha_creacion !== undefined) o.fecha_creacion = fechaTexto(o.fecha_creacion);\n        prompts.push(o);\n      });\n    }\n  }\n  return { prompts, resultados };\n}\n\n// Las fechas pueden volver como número de serie de Sheets (UNFORMATTED_VALUE).\nfunction fechaTexto(v) {\n  if (typeof v === 'number' && v > 20000 && v < 80000) {\n    return new Date(Date.UTC(1899, 11, 30) + v * 864e5).toISOString().slice(0, 10);\n  }\n  return String(v || '');\n}\n\nfunction valoresPrompt(p) {\n  return [p.id, p.categoria || '', p.intencion || '', p.prompt || '', p.activo === false ? 'FALSE' : 'TRUE', p.fecha_creacion || ''];\n}\n\nfunction valoresResultado(f) {\n  return COLUMNAS_RESULTADOS.map(c => {\n    const v = f[c];\n    return v === undefined || v === null ? '' : typeof v === 'boolean' ? (v ? 'TRUE' : 'FALSE') : v;\n  });\n}\n\n// ─── Peticiones a la API de Sheets ─────────────────────────────────────────\nconst pedidoSheets = (method, ruta, body) => ({ method, url: SHEETS_API + ruta, body });\nconst crearPestana = (titulo, indice) =>\n  pedidoSheets('POST', ':batchUpdate', { requests: [{ addSheet: { properties: Object.assign({ title: titulo }, indice === undefined ? {} : { index: indice }) } }] });\nconst escribir = (titulo, desde, valores) =>\n  pedidoSheets('PUT', '/values/' + encodeURIComponent(rango(titulo, desde)) + '?valueInputOption=RAW', { values: valores });\nconst agregar = (titulo, valores) =>\n  pedidoSheets('POST', '/values/' + encodeURIComponent(rango(titulo, 'A1')) + ':append?valueInputOption=RAW&insertDataOption=INSERT_ROWS', { values: valores });\nconst borrarFila = (idPestana, fila) =>\n  pedidoSheets('POST', ':batchUpdate', { requests: [{ deleteDimension: { range: { sheetId: idPestana, dimension: 'ROWS', startIndex: fila - 1, endIndex: fila } } }] });\n\n// Crear, editar, activar/desactivar, mover de proyecto o eliminar un prompt.\n// guardado: lo que devuelve prepararGuardado (prompts.js).\n// → {ok, status, respuesta, peticiones}\nfunction planGuardarPrompt(guardado, prompts, meta) {\n  if (!guardado.ok) return { ok: false, status: 400, respuesta: { ok: false, error: guardado.error }, peticiones: [] };\n  const tabs = pestanas(meta);\n  const tab = titulo => tabs.find(t => t.titulo === titulo);\n  const fila = guardado.fila;\n  const actual = prompts.find(p => String(p.id).trim() === fila.id);\n  const proyectosAlFinal = tabs.filter(t => esPestanaProyecto(t.titulo)).length;\n  const asegurarPestana = (titulo, pet) => {\n    if (!tab(titulo)) {\n      pet.push(crearPestana(titulo, proyectosAlFinal));\n      pet.push(escribir(titulo, 'A1', [COLUMNAS_PROMPTS]));\n    }\n  };\n\n  if (guardado.accion === 'eliminar') {\n    if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };\n    return { ok: true, status: 200, respuesta: { ok: true, accion: 'eliminar', id: fila.id }, peticiones: [borrarFila(tab(actual.proyecto).id, actual._fila)] };\n  }\n\n  if (guardado.accion === 'editar') {\n    if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };\n    const nuevo = Object.assign({}, normalizarPrompt(actual), fila);\n    const pet = [];\n    if (nuevo.proyecto === actual.proyecto) {\n      pet.push(escribir(actual.proyecto, 'A' + actual._fila + ':F' + actual._fila, [valoresPrompt(nuevo)]));\n    } else {\n      // Cambio de proyecto: se agrega en la pestaña nueva y se borra de la vieja.\n      asegurarPestana(nuevo.proyecto, pet);\n      pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));\n      pet.push(borrarFila(tab(actual.proyecto).id, actual._fila));\n    }\n    return { ok: true, status: 200, respuesta: { ok: true, accion: 'editar', prompt: limpio(nuevo) }, peticiones: pet };\n  }\n\n  // Crear: un proyecto nuevo crea su pestaña.\n  const nuevo = normalizarPrompt(fila);\n  const pet = [];\n  asegurarPestana(nuevo.proyecto, pet);\n  pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));\n  return { ok: true, status: 200, respuesta: { ok: true, accion: 'crear', prompt: limpio(nuevo) }, peticiones: pet };\n}\n\nfunction limpio(p) {\n  const o = {};\n  for (const k of Object.keys(p)) if (!k.startsWith('_')) o[k] = p[k];\n  return o;\n}\n\n// Guardar las filas de una corrida en la pestaña del día (se crea si no está,\n// justo después de las pestañas de proyecto, para que la más reciente quede primero).\nfunction planGuardarResultados(filas, meta) {\n  const porFecha = new Map();\n  for (const f of filas) {\n    if (!porFecha.has(f.fecha)) porFecha.set(f.fecha, []);\n    porFecha.get(f.fecha).push(valoresResultado(f));\n  }\n  const tabs = pestanas(meta);\n  const proyectos = tabs.filter(t => esPestanaProyecto(t.titulo)).length;\n  const pet = [];\n  for (const [fecha, valores] of porFecha) {\n    if (tabs.some(t => t.titulo === fecha)) pet.push(agregar(fecha, valores));\n    else {\n      pet.push(crearPestana(fecha, proyectos));\n      pet.push(escribir(fecha, 'A1', [COLUMNAS_RESULTADOS].concat(valores)));\n    }\n  }\n  return pet;\n}\n\nreturn [{ json: { cuerpo: cuerpoLectura($input.first().json, { prompts: true, resultadosDesde: new Date(Date.now() - 190 * 864e5).toLocaleDateString('en-CA', { timeZone: 'America/Lima' }) }) } }];\n"
+      }
+    },
+    {
+      "id": "922d0763-a43b-4bdc-a8e7-3bd56d84777e",
+      "name": "Leer el Sheet (monitor)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        680,
+        700
+      ],
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSheetsOAuth2Api",
+        "method": "POST",
+        "url": "https://sheets.googleapis.com/v4/spreadsheets/PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET/values:batchGetByDataFilter",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.cuerpo) }}",
+        "options": {
+          "timeout": 120000
+        }
       },
-      "alwaysOutputData": true,
       "executeOnce": true
     },
     {
@@ -540,11 +505,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        680,
+        900,
         700
       ],
       "parameters": {
-        "jsCode": "// ═══════════════════════════════════════════════════════════════════════════\n//  MARCA Y COMPETIDORES. Lo usan «Armar fila» (dominios propios → citado_bcp)\n//  y «Dashboard» (ranking y fuentes). Los modelos de cada motor están en el body\n//  de su nodo HTTP.\n// ═══════════════════════════════════════════════════════════════════════════\nconst CONFIG = {\n  marca: {\n    nombre: 'BCP',\n    alias: ['BCP', 'Banco de Crédito del Perú', 'Banco de Crédito', 'Banco de Credito', 'ViaBCP', 'Via BCP'],\n    dominios: ['viabcp.com', 'bcp.com.pe']\n  },\n  competidores: [\n    { nombre: 'Interbank', alias: ['Interbank'] },\n    { nombre: 'BBVA', alias: ['BBVA', 'BBVA Perú', 'BBVA Continental', 'Banco Continental'] },\n    { nombre: 'Scotiabank', alias: ['Scotiabank', 'Scotia'] },\n    { nombre: 'BanBif', alias: ['BanBif', 'Banbif', 'Banco Interamericano de Finanzas'] },\n    { nombre: 'Pichincha', alias: ['Pichincha', 'Banco Pichincha'] },\n    { nombre: 'Banco de la Nación', alias: ['Banco de la Nación', 'Banco de la Nacion', 'BN'] }\n  ]\n};\n// ═══════════════════════════════════════════════════════════════════════════\n\nconst MOTORES = [\n  { key: 'chatgpt', label: 'ChatGPT', color: '#10A37F' },\n  { key: 'claude', label: 'Claude', color: '#D97757' },\n  { key: 'gemini', label: 'Gemini', color: '#4285F4' },\n  { key: 'perplexity', label: 'Perplexity', color: '#20808D' },\n  { key: 'ai_overview', label: 'AI Overview', color: '#FBBC04' }\n];\n\n\n// Share of Voice, como lo define la Estrategia SEO/GEO de BCP: «visibilidad de\n// la marca vs la competencia, con un score que pondera el peso de la posición,\n// la prominencia y el contexto (positivo/neutral)». Sin dependencias: build.mjs\n// lo pega en «Armar fila» y en «Datos del monitor».\n//\n// Score de cada banco en una respuesta:\n//   posición     1 / posición               (1.º = 1, 2.º = 0,5, 3.º = 0,33…)\n//   prominencia  sus menciones ÷ menciones de todos los bancos\n//   contexto     positivo 1 · neutral 0,75 · negativo 0,25\n//   score = (posición + prominencia) / 2 × contexto\n// SoV de un banco = su score ÷ la suma de los scores de todos los bancos × 100.\n\nfunction pesoContexto(sentimiento) {\n  const s = Number(sentimiento);\n  if (!isFinite(s)) return 0.75;\n  return s > 0.2 ? 1 : s < -0.2 ? 0.25 : 0.75;\n}\n\n// detalle: [{marca, posicion, menciones, sentimiento}] → {marca: SoV 0-100}\nfunction sovPorMarca(detalle) {\n  const lista = (detalle || []).filter(d => d && d.marca);\n  const totalMenciones = lista.reduce((n, d) => n + Math.max(0, Number(d.menciones) || 0), 0);\n  const scores = {};\n  for (const d of lista) {\n    const pos = Number(d.posicion) > 0 ? 1 / Number(d.posicion) : 0;\n    const prom = totalMenciones > 0 ? Math.max(0, Number(d.menciones) || 0) / totalMenciones : 0;\n    scores[d.marca] = (scores[d.marca] || 0) + ((pos + prom) / 2) * pesoContexto(d.sentimiento);\n  }\n  const total = Object.values(scores).reduce((n, v) => n + v, 0);\n  const sov = {};\n  for (const m of Object.keys(scores)) sov[m] = total > 0 ? Math.round((scores[m] / total) * 1000) / 10 : 0;\n  return sov;\n}\n\n// Detalle aproximado para filas sin desglose por banco: el orden de\n// marcas_mencionadas da la posición, una mención cada uno y contexto neutral\n// salvo BCP, que usa su sentimiento.\nfunction detalleDesdeRanking(marcas, marcaPropia, sentimientoPropio, mencionesPropias) {\n  return (marcas || []).map((m, i) => ({\n    marca: m,\n    posicion: i + 1,\n    menciones: m === marcaPropia && mencionesPropias > 0 ? mencionesPropias : 1,\n    sentimiento: m === marcaPropia ? sentimientoPropio : 0\n  }));\n}\n\n// El Analista devuelve el detalle como texto JSON. Se acepta con o sin\n// ```json, y si no se puede leer se devuelve [].\nfunction leerDetalle(texto) {\n  if (Array.isArray(texto)) return texto;\n  const s = String(texto || '').replace(/```(json)?/gi, '').trim();\n  if (!s) return [];\n  try {\n    const v = JSON.parse(s.slice(s.indexOf('['), s.lastIndexOf(']') + 1));\n    return Array.isArray(v) ? v : [];\n  } catch (e) {\n    return [];\n  }\n}\n\n// Arma la respuesta de /geo-dashboard a partir de las filas de la hoja\n// Resultados. Sin dependencias: build.mjs lo pega en el nodo Code «Dashboard».\n//\n// Las filas llegan de Google Sheets como texto: «TRUE», «0,25», «3». Por eso\n// todo pasa por aBool y aNum antes de sumar.\n\nfunction aBool(v) {\n  if (typeof v === 'boolean') return v;\n  return ['true', 'verdadero', '1', 'si', 'sí', 'x'].includes(String(v || '').trim().toLowerCase());\n}\n\nfunction aNum(v) {\n  if (typeof v === 'number') return isFinite(v) ? v : null;\n  const s = String(v == null ? '' : v).trim().replace(',', '.');\n  if (s === '') return null;\n  const n = Number(s);\n  return isFinite(n) ? n : null;\n}\n\nfunction aLista(v) {\n  if (Array.isArray(v)) return v;\n  return String(v || '').split(/[,;|]/).map(s => s.trim()).filter(Boolean);\n}\n\nfunction pct(a, b) {\n  return b ? Math.round((a / b) * 1000) / 10 : 0;\n}\n\nfunction promedio(xs) {\n  const v = xs.filter(x => x !== null && x !== undefined);\n  return v.length ? Math.round((v.reduce((s, x) => s + x, 0) / v.length) * 100) / 100 : null;\n}\n\nfunction normalizarFila(f) {\n  return {\n    run_id: String(f.run_id || ''),\n    fecha: String(f.fecha || '').slice(0, 10),\n    timestamp: String(f.timestamp || ''),\n    prompt_id: String(f.prompt_id || ''),\n    proyecto: String(f.proyecto || '').trim() || 'Sin proyecto',\n    prompt: String(f.prompt || ''),\n    motor: String(f.motor || ''),\n    estado: String(f.estado || '').trim(),\n    disponible: f.estado !== undefined ? String(f.estado).trim() === 'ok' : aBool(f.disponible),\n    menciona: aBool(f.menciona_bcp !== undefined ? f.menciona_bcp : f.menciona),\n    posicion: aNum(f.posicion_bcp !== undefined ? f.posicion_bcp : f.posicion),\n    sentimiento: aNum(f.sentimiento),\n    citado: aBool(f.citado_bcp !== undefined ? f.citado_bcp : f.citado),\n    marcas: aLista(f.marcas_mencionadas !== undefined ? f.marcas_mencionadas : f.marcas),\n    fuentes: aLista(f.fuentes),\n    respuesta: String(f.respuesta || ''),\n    error: String(f.error || ''),\n    n_menciones_bcp: aNum(f.n_menciones_bcp),\n    n_menciones_bancos: aNum(f.n_menciones_bancos),\n    categoria: String(f.categoria || ''),\n    detalle_marcas: String(f.detalle_marcas || ''),\n    sov_bcp: aNum(f.sov_bcp)\n  };\n}\n\n// Las métricas de un grupo de filas. Las filas con error no cuentan: si a un\n// motor se le acabó el saldo, no es que no nos mencione.\nfunction metricas(filas) {\n  const validas = filas.filter(f => !f.error);\n  const menc = validas.filter(f => f.menciona);\n  return {\n    total_respuestas: validas.length,\n    menciones: menc.length,\n    share_of_model: pct(menc.length, validas.length),\n    citaciones: validas.filter(f => f.citado).length,\n    tasa_citacion: pct(validas.filter(f => f.citado).length, validas.length),\n    sentimiento_promedio: promedio(menc.map(f => f.sentimiento)),\n    posicion_promedio: promedio(menc.map(f => f.posicion))\n  };\n}\n\n// Variación en puntos porcentuales: el último día con datos contra el anterior.\nfunction variacion(filas) {\n  const fechas = [...new Set(filas.filter(f => !f.error).map(f => f.fecha))].sort();\n  if (fechas.length < 2) return null;\n  const ult = metricas(filas.filter(f => f.fecha === fechas[fechas.length - 1])).share_of_model;\n  const ant = metricas(filas.filter(f => f.fecha === fechas[fechas.length - 2])).share_of_model;\n  return Math.round((ult - ant) * 10) / 10;\n}\n\nfunction construirDashboard(filasCrudas, filtros, config) {\n  filtros = filtros || {};\n  const motores = config.motores;\n  const marcaPropia = config.marca.nombre;\n  const dominiosPropios = (config.marca.dominios || []).map(d => d.toLowerCase());\n  const esPropio = d => dominiosPropios.some(p => d === p || d.endsWith('.' + p));\n\n  const todas = filasCrudas\n    .filter(f => f && (f.motor || f.prompt_id))\n    .map(normalizarFila)\n    .filter(f => motores.some(m => m.key === f.motor));\n\n  const filas = todas.filter(f =>\n    (!filtros.proyecto || f.proyecto === filtros.proyecto) &&\n    (!filtros.motor || f.motor === filtros.motor) &&\n    (!filtros.prompt_id || f.prompt_id === filtros.prompt_id) &&\n    (!filtros.desde || f.fecha >= filtros.desde) &&\n    (!filtros.hasta || f.fecha <= filtros.hasta)\n  );\n\n  const base = { motores, filtros };\n  if (!filas.length) {\n    return Object.assign(base, {\n      vacio: !todas.length,\n      kpis: Object.assign(metricas([]), {\n        var_share_of_model: null, presencia_ai_overview: null,\n        ultima_corrida: todas.length ? todas.map(f => f.timestamp || f.fecha).sort().pop() : null\n      }),\n      por_motor: [], tendencia: [], competidores: [], fuentes: [], proyectos: [], prompts: [], respuestas: []\n    });\n  }\n\n  const validas = filas.filter(f => !f.error);\n  const aio = validas.filter(f => f.motor === 'ai_overview');\n\n  const kpis = Object.assign(metricas(filas), {\n    var_share_of_model: variacion(filas),\n    presencia_ai_overview: aio.length ? pct(aio.filter(f => f.disponible).length, aio.length) : null,\n    ultima_corrida: filas.map(f => f.timestamp || f.fecha).sort().pop()\n  });\n\n  const por_motor = motores.map(m => {\n    const fm = filas.filter(f => f.motor === m.key);\n    const x = metricas(fm);\n    return {\n      motor: m.key, label: m.label,\n      share_of_model: x.share_of_model, var_share_of_model: variacion(fm),\n      menciones: x.menciones, total_respuestas: x.total_respuestas, citaciones: x.citaciones,\n      sentimiento_promedio: x.sentimiento_promedio, posicion_promedio: x.posicion_promedio\n    };\n  });\n\n  const fechas = [...new Set(validas.map(f => f.fecha))].sort();\n  const tendencia = fechas.map(fecha => {\n    const fd = validas.filter(f => f.fecha === fecha);\n    const punto = { fecha };\n    for (const m of motores) {\n      const fm = fd.filter(f => f.motor === m.key);\n      punto[m.key] = fm.length ? metricas(fm).share_of_model : null;\n    }\n    punto.total = metricas(fd).share_of_model;\n    return punto;\n  });\n\n  const nombres = [marcaPropia].concat((config.competidores || []).map(c => c.nombre));\n  const competidores = nombres\n    .map(marca => {\n      const n = validas.filter(f => f.marcas.includes(marca)).length;\n      return { marca, menciones: n, share_of_model: pct(n, validas.length), es_bcp: marca === marcaPropia };\n    })\n    .sort((a, b) => b.menciones - a.menciones || (b.es_bcp ? 1 : 0) - (a.es_bcp ? 1 : 0))\n    .map((c, i) => Object.assign({ ranking: i + 1 }, c));\n\n  const conteo = {};\n  for (const f of validas) for (const d of f.fuentes) conteo[d] = (conteo[d] || 0) + 1;\n  const fuentes = Object.keys(conteo)\n    .map(dominio => ({ dominio, citas: conteo[dominio], es_bcp: esPropio(dominio) }))\n    .sort((a, b) => b.citas - a.citas)\n    .slice(0, 30);\n\n  const nombresProyectos = [...new Set(filas.map(f => f.proyecto))].sort();\n  const proyectos = nombresProyectos.map(proyecto => {\n    const fp = filas.filter(f => f.proyecto === proyecto);\n    const x = metricas(fp);\n    return {\n      proyecto, prompts: new Set(fp.map(f => f.prompt_id)).size,\n      share_of_model: x.share_of_model, var_share_of_model: variacion(fp), menciones: x.menciones\n    };\n  });\n\n  // La matriz prompt × motor muestra la última respuesta válida de cada motor.\n  const idsPrompts = [...new Set(filas.map(f => f.prompt_id))];\n  const prompts = idsPrompts.map(id => {\n    const fp = filas.filter(f => f.prompt_id === id);\n    const ultima = fp.map(f => f.fecha).sort().pop();\n    const mot = {};\n    for (const m of motores) {\n      const r = fp.filter(f => f.motor === m.key && !f.error)\n        .sort((a, b) => (a.timestamp || a.fecha).localeCompare(b.timestamp || b.fecha)).pop();\n      mot[m.key] = r\n        ? { menciona: r.menciona, posicion: r.posicion, sentimiento: r.sentimiento, citado: r.citado, marcas: r.marcas, fecha: r.fecha, disponible: r.disponible }\n        : null;\n    }\n    const recientes = fp.filter(f => f.fecha === ultima);\n    return {\n      prompt_id: id, prompt: fp[fp.length - 1].prompt, proyecto: fp[fp.length - 1].proyecto,\n      share_of_model: metricas(recientes).share_of_model, ultima_fecha: ultima, motores: mot\n    };\n  });\n\n  let respuestas = [];\n  if (filtros.proyecto || filtros.prompt_id) {\n    respuestas = filas\n      .slice()\n      .sort((a, b) => (b.timestamp || b.fecha).localeCompare(a.timestamp || a.fecha))\n      .slice(0, 300)\n      .map(f => ({\n        fecha: f.fecha, timestamp: f.timestamp, motor: f.motor, prompt_id: f.prompt_id, prompt: f.prompt,\n        menciona: f.menciona, posicion: f.posicion, sentimiento: f.sentimiento, citado: f.citado,\n        disponible: f.disponible, marcas: f.marcas, fuentes: f.fuentes, respuesta: f.respuesta, error: f.error\n      }));\n  }\n\n  return Object.assign(base, { vacio: false, kpis, por_motor, tendencia, competidores, fuentes, proyectos, prompts, respuestas });\n}\n\n// Prompts: listar (/geo-prompts), validar lo que llega a /geo-prompts-save y\n// elegir cuáles entran en una corrida. Sin dependencias, como los otros dos.\n\n// Categoría e intención son texto libre (vienen del universo de prompts de BCP).\n// Estas listas solo son sugerencias para un formulario.\nconst CATEGORIAS = ['Reputación', 'Producto', 'Digital', 'Otra'];\nconst INTENCIONES = ['Informacional', 'Comparativa', 'Transaccional', 'Reputacional', 'Navegacional'];\n\nfunction activoDe(v) {\n  if (typeof v === 'boolean') return v;\n  const s = String(v == null ? '' : v).trim().toLowerCase();\n  if (s === '') return true;\n  return ['true', 'verdadero', '1', 'si', 'sí', 'x'].includes(s);\n}\n\nfunction normalizarPrompt(f) {\n  return {\n    id: String(f.id || '').trim(),\n    proyecto: String(f.proyecto || '').trim() || 'Sin proyecto',\n    prompt: String(f.prompt || '').trim(),\n    categoria: String(f.categoria || '').trim() || 'Otra',\n    intencion: String(f.intencion || '').trim(),\n    activo: activoDe(f.activo),\n    fecha_creacion: String(f.fecha_creacion || f.creado || '')\n  };\n}\n\nfunction listarPrompts(filas) {\n  const prompts = filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .sort((a, b) => b.fecha_creacion.localeCompare(a.fecha_creacion) || b.id.localeCompare(a.id));\n  const proyectos = [...new Set(prompts.map(p => p.proyecto))].sort();\n  const unicos = (base, campo) => [...new Set(base.concat(prompts.map(p => p[campo]).filter(Boolean)))].sort();\n  return {\n    prompts, proyectos,\n    categorias: unicos(CATEGORIAS, 'categoria'), intenciones: unicos(INTENCIONES, 'intencion'),\n    total: prompts.length, activos: prompts.filter(p => p.activo).length\n  };\n}\n\n// Devuelve la fila que hay que escribir (solo con las columnas que cambian,\n// para que «Agregar o actualizar» no pise fecha_creacion al editar) o un error.\n// hoy: AAAA-MM-DD en Lima.\nfunction prepararGuardado(body, hoy, idNuevo) {\n  body = body || {};\n  const id = String(body.id || '').trim();\n  if (body.accion === 'eliminar') {\n    if (!id) return { ok: false, error: 'Falta el id del prompt a eliminar.' };\n    return { ok: true, accion: 'eliminar', fila: { id, activo: false } };\n  }\n  const prompt = String(body.prompt || '').trim();\n  const fila = { id: id || idNuevo };\n  if (!id || body.prompt !== undefined) {\n    if (!prompt) return { ok: false, error: 'El prompt no puede estar vacío.' };\n    if (prompt.length > 2000) return { ok: false, error: 'El prompt pasa de 2.000 caracteres.' };\n    fila.prompt = prompt;\n  }\n  if (!id || body.proyecto !== undefined) fila.proyecto = String(body.proyecto || '').trim() || 'Sin proyecto';\n  if (!id || body.categoria !== undefined) {\n    fila.categoria = String(body.categoria || '').trim().slice(0, 80) || 'Otra';\n  }\n  if (body.intencion !== undefined) fila.intencion = String(body.intencion || '').trim().slice(0, 40);\n  if (!id || body.activo !== undefined) fila.activo = activoDe(body.activo);\n  if (!id) fila.fecha_creacion = hoy;\n  return { ok: true, accion: id ? 'editar' : 'crear', fila };\n}\n\n// Qué prompts entran en la corrida: los activos, y si llegan prompt_ids o\n// proyecto, solo esos. Un prompt_id pedido a mano corre aunque esté inactivo.\nfunction elegirPrompts(filas, peticion) {\n  peticion = peticion || {};\n  const ids = Array.isArray(peticion.prompt_ids) ? peticion.prompt_ids.map(String) : [];\n  return filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .filter(p => (ids.length ? ids.includes(p.id) : p.activo))\n    .filter(p => !peticion.proyecto || p.proyecto === peticion.proyecto);\n}\n\n// Arma la respuesta de /geo-monitor-data: las hojas resultados y prompts con la\n// forma de DATA.monitor y DATA.prompts del front «BCP · Monitor de Visibilidad\n// en IA». El front calcula sus KPIs en el navegador a partir de estas\n// observaciones. Sin dependencias: build.mjs lo pega en el nodo «Datos del\n// monitor» junto con config.js, sov.js, dashboard.js (normalizarFila) y prompts.js.\n\n// Nuestra clave de motor → la del front.\nconst MODELO_FRONT = { chatgpt: 'chatgpt', claude: 'claude', gemini: 'gemini', perplexity: 'perplexity', ai_overview: 'overview' };\n\nfunction slug(s) {\n  return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()\n    .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'sin-proyecto';\n}\n\nfunction etiquetaSentimiento(v) {\n  if (v === null) return null;\n  return v > 0.2 ? 'positivo' : v < -0.2 ? 'negativo' : 'neutral';\n}\n\n// Una fila de resultados → una observación del front.\nfunction observacion(f, config, meta) {\n  const propios = (config.marca.dominios || []).map(d => d.toLowerCase());\n  const esPropio = d => propios.some(p => d === p || d.endsWith('.' + p));\n  const modelId = MODELO_FRONT[f.motor];\n  const projectId = slug(f.proyecto);\n  const error = f.estado === 'error' || (!f.estado && Boolean(f.error));\n  const menciona = !error && f.menciona;\n  const marcas = f.marcas;\n  const propia = config.marca.nombre;\n  // Share of Voice (sov.js). Las filas sin desglose por banco (anteriores al\n  // 21/10) se aproximan con el orden de marcas_mencionadas.\n  let detalle = leerDetalle(f.detalle_marcas);\n  if (!detalle.length && !error) detalle = detalleDesdeRanking(marcas, propia, f.sentimiento, f.n_menciones_bcp);\n  const sovByBrand = error ? {} : sovPorMarca(detalle);\n  const sov = error ? null : menciona ? (f.sov_bcp !== null && f.detalle_marcas ? f.sov_bcp : (sovByBrand[propia] || 0)) : 0;\n  // Proporción de menciones (la métrica anterior), por si se quiere comparar.\n  const mentionShare = menciona && f.n_menciones_bancos > 0 && f.n_menciones_bcp > 0\n    ? Math.round(Math.min(100, (f.n_menciones_bcp / f.n_menciones_bancos) * 100) * 10) / 10\n    : menciona ? Math.round((100 / Math.max(1, marcas.length)) * 10) / 10 : 0;\n  const idxPropio = f.fuentes.findIndex(esPropio);\n  const sentimiento = menciona && f.sentimiento !== null ? f.sentimiento : null;\n  return {\n    id: [projectId, modelId, f.prompt_id, f.fecha].join(':'),\n    projectId,\n    modelId,\n    promptId: f.prompt_id,\n    date: f.fecha,\n    timestamp: f.timestamp,\n    status: error ? 'error' : menciona ? 'ok' : 'not_mentioned',\n    // El front promedia `som` en su KPI principal: lleva el Share of Voice.\n    som: sov,\n    sov,\n    sovByBrand,\n    brandDetail: detalle,\n    mentionShare: error ? null : mentionShare,\n    category: (meta && meta.categoria) || f.categoria || '',\n    intent: (meta && meta.intencion) || '',\n    position: menciona ? f.posicion : null,\n    linkPosition: idxPropio >= 0 ? idxPropio + 1 : null,\n    mentions: menciona ? (f.n_menciones_bcp || 1) : 0,\n    citations: f.fuentes.filter(esPropio).length,\n    sentiment: sentimiento,\n    sentimentLabel: etiquetaSentimiento(sentimiento),\n    blockAppeared: modelId === 'overview' ? (!error && f.estado !== 'sin_overview') : null,\n    brandMentioned: menciona,\n    brandCited: !error && f.citado,\n    sources: f.fuentes.map(d => ({ domain: d, url: 'https://' + d + '/' })),\n    ranking: marcas,\n    response: f.respuesta.length > MAX_RESPUESTA ? f.respuesta.slice(0, MAX_RESPUESTA) + '…' : f.respuesta,\n    error: f.error,\n    isExample: false,\n    source: 'n8n · GEO Tracker'\n  };\n}\n\n// El front muestra como mucho 6 meses; más atrás no se manda.\nconst DIAS_HISTORIA = 190;\n// La respuesta completa queda en el Sheet; al front le basta con esto.\nconst MAX_RESPUESTA = 4000;\n\nfunction construirMonitor(filasResultados, filasPrompts, config, hoy) {\n  const desde = new Date(new Date(hoy + 'T12:00:00Z').getTime() - DIAS_HISTORIA * 864e5).toISOString().slice(0, 10);\n  const metaPrompts = new Map(filasPrompts.filter(f => f && f.id).map(f => [String(f.id).trim(), normalizarPrompt(f)]));\n  // Varias corridas el mismo día: se queda la última de cada prompt y motor.\n  const porId = new Map();\n  for (const crudo of filasResultados) {\n    if (!crudo || !crudo.motor) continue;\n    const f = normalizarFila(crudo);\n    if (!MODELO_FRONT[f.motor] || !f.prompt_id || !f.fecha || f.fecha < desde) continue;\n    const o = observacion(f, config, metaPrompts.get(f.prompt_id));\n    const previa = porId.get(o.id);\n    if (!previa || String(previa.timestamp) < String(o.timestamp)) porId.set(o.id, o);\n  }\n  const observations = [...porId.values()].sort((a, b) => a.date.localeCompare(b.date) || a.id.localeCompare(b.id));\n\n  const prompts = filasPrompts.filter(f => f && f.id && String(f.prompt || '').trim()).map(normalizarPrompt);\n  // Los proyectos salen de la hoja prompts (activos o con observaciones).\n  const conDatos = new Set(observations.map(o => o.promptId));\n  const proyectos = new Map();\n  for (const p of prompts) {\n    if (!p.activo && !conDatos.has(p.id)) continue;\n    const id = slug(p.proyecto);\n    if (!proyectos.has(id)) proyectos.set(id, { id, name: p.proyecto, promptIds: [], categorias: new Set() });\n    const pr = proyectos.get(id);\n    pr.promptIds.push(p.id);\n    pr.categorias.add(p.categoria);\n  }\n  // Lo que ya tiene observaciones tiene que existir aunque la hoja prompts haya\n  // cambiado (prompt borrado o movido de proyecto): el front busca ambos por id.\n  const promptsVistos = new Set(prompts.map(p => p.id));\n  const extra = [];\n  for (const crudo of filasResultados) {\n    if (!crudo || !crudo.motor || !crudo.prompt_id) continue;\n    const f = normalizarFila(crudo);\n    const id = slug(f.proyecto);\n    if (!proyectos.has(id)) proyectos.set(id, { id, name: f.proyecto, promptIds: [], categorias: new Set() });\n    const pr = proyectos.get(id);\n    if (!pr.promptIds.includes(f.prompt_id)) pr.promptIds.push(f.prompt_id);\n    if (crudo.categoria) pr.categorias.add(String(crudo.categoria));\n    if (!promptsVistos.has(f.prompt_id)) {\n      promptsVistos.add(f.prompt_id);\n      extra.push({ id: f.prompt_id, proyecto: f.proyecto, prompt: f.prompt, categoria: String(crudo.categoria || 'Otra'), activo: false });\n    }\n  }\n  prompts.push(...extra);\n\n  const projects = [...proyectos.values()].map(p => ({\n    id: p.id,\n    name: p.name,\n    description: `${p.promptIds.length} prompt${p.promptIds.length === 1 ? '' : 's'} · ${p.categorias.size} categoría${p.categorias.size === 1 ? '' : 's'}`,\n    promptIds: p.promptIds,\n    example: false\n  }));\n\n  const conteo = new Map();\n  for (const o of observations) for (const s of o.sources) conteo.set(s.domain, (conteo.get(s.domain) || 0) + 1);\n  const domains = [...conteo.entries()].sort((a, b) => b[1] - a[1]).slice(0, 30).map(([d]) => [d, 'https://' + d + '/']);\n\n  return {\n    ok: true,\n    generado: new Date().toISOString(),\n    monitor: {\n      projects,\n      observations,\n      referenceDate: hoy,\n      dates: [...new Set(observations.map(o => o.date))].sort(),\n      domains\n    },\n    prompts: prompts.map(p => ({\n      id: p.id, text: p.prompt, project: slug(p.proyecto), category: p.categoria, intent: p.intencion, active: p.activo,\n      status: 'ok', position: null, linkPosition: null, sov: null, ranking: [],\n      response: { isExample: false, screenshotUrl: null, text: '' }\n    }))\n  };\n}\n\nconst hoy = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Lima' });\nconst resultados = $('Leer resultados (monitor)').all().map(i => i.json);\nconst prompts = $('Leer prompts (monitor)').all().map(i => i.json);\nreturn [{ json: construirMonitor(resultados, prompts, CONFIG, hoy) }];\n"
+        "jsCode": "const SHEET_ID = 'PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET';\n// El Google Sheet, organizado como lo usa el equipo de BCP:\n//   · una pestaña por proyecto con sus prompts (Marca, Ahorros, Cards…)\n//   · una pestaña por día de medición con los resultados (2026-10-21, …)\n//   · las que empiezan con «_» son de sistema (respaldos, notas) y se ignoran.\n// Se lee y escribe con la API de Google Sheets (nodos HTTP con la credencial de\n// Sheets); aquí solo se arman las peticiones y se interpretan las respuestas.\n// Sin dependencias: build.mjs lo pega en los nodos Code que lo necesitan.\n\nconst SHEETS_API = 'https://sheets.googleapis.com/v4/spreadsheets/' + SHEET_ID;\n\n// Encabezados de las pestañas de proyecto (los del Excel original de BCP, más\n// id, activo y fecha para poder gestionarlos desde el front).\nconst COLUMNAS_PROMPTS = ['id', 'Categoría', 'Intención de Búsqueda', 'Prompt', 'Activo', 'Fecha de creación'];\nconst COLUMNAS_RESULTADOS = ['run_id', 'fecha', 'timestamp', 'prompt_id', 'proyecto', 'categoria', 'prompt', 'motor', 'estado',\n  'menciona_bcp', 'posicion_bcp', 'sentimiento', 'marcas_mencionadas', 'fuentes', 'citado_bcp', 'error', 'respuesta',\n  'n_menciones_bcp', 'n_menciones_bancos', 'detalle_marcas', 'sov_bcp'];\n\nfunction esPestanaFecha(titulo) { return /^\\d{4}-\\d{2}-\\d{2}$/.test(String(titulo || '').trim()); }\nfunction esPestanaSistema(titulo) { return String(titulo || '').trim().startsWith('_'); }\nfunction esPestanaProyecto(titulo) { return !esPestanaFecha(titulo) && !esPestanaSistema(titulo) && String(titulo || '').trim() !== ''; }\n\nfunction pestanas(meta) {\n  return ((meta && meta.sheets) || []).map(s => s.properties).filter(Boolean)\n    .map(p => ({ id: p.sheetId, titulo: p.title, indice: p.index }));\n}\n\n// Rango A1 de una pestaña, con el nombre entre comillas (acepta espacios y tildes).\nfunction rango(titulo, celdas) {\n  return \"'\" + String(titulo).replace(/'/g, \"''\") + \"'!\" + celdas;\n}\n\n// Cuerpo de values:batchGetByDataFilter para leer varias pestañas en una llamada.\n// desde (AAAA-MM-DD): solo las pestañas de resultados desde esa fecha.\nfunction cuerpoLectura(meta, { prompts = false, resultadosDesde = null } = {}) {\n  const filtros = [];\n  for (const p of pestanas(meta)) {\n    if (prompts && esPestanaProyecto(p.titulo)) filtros.push({ a1Range: rango(p.titulo, 'A:F') });\n    if (resultadosDesde && esPestanaFecha(p.titulo) && p.titulo >= resultadosDesde) filtros.push({ a1Range: rango(p.titulo, 'A:U') });\n  }\n  // La API no acepta una lista vacía: sin nada que leer, se pide A1 de la primera pestaña.\n  const primera = pestanas(meta)[0];\n  if (!filtros.length && primera) filtros.push({ a1Range: rango(primera.titulo, 'A1:A1') });\n  return { dataFilters: filtros, majorDimension: 'ROWS', valueRenderOption: 'UNFORMATTED_VALUE' };\n}\n\nfunction tituloDeRango(r) {\n  const m = String(r || '').match(/^'((?:[^']|'')*)'!/) || String(r || '').match(/^([^!]+)!/);\n  return m ? m[1].replace(/''/g, \"'\") : '';\n}\n\nfunction claveColumna(c) {\n  const k = String(c || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();\n  if (k === 'id') return 'id';\n  if (k.startsWith('categ')) return 'categoria';\n  if (k.startsWith('intenc')) return 'intencion';\n  if (k.startsWith('prompt')) return 'prompt';\n  if (k.startsWith('activo')) return 'activo';\n  if (k.startsWith('fecha')) return 'fecha_creacion';\n  return '';\n}\n\n// Respuesta de batchGetByDataFilter → {prompts: [...], resultados: [...]}.\n// Cada prompt lleva su pestaña (= proyecto) y su número de fila.\nfunction leerHojas(respuesta) {\n  const prompts = [];\n  const resultados = [];\n  for (const vr of (respuesta && respuesta.valueRanges) || []) {\n    const v = vr.valueRange || vr;\n    const titulo = tituloDeRango(v.range);\n    const filas = v.values || [];\n    if (!filas.length) continue;\n    if (esPestanaFecha(titulo)) {\n      const cab = filas[0].map(String);\n      filas.slice(1).forEach(f => {\n        if (!f || !f.some(x => x !== '' && x !== null)) return;\n        const o = {};\n        cab.forEach((c, i) => { o[c] = f[i] === undefined ? '' : f[i]; });\n        resultados.push(o);\n      });\n    } else if (esPestanaProyecto(titulo)) {\n      const cab = filas[0].map(claveColumna);\n      filas.slice(1).forEach((f, i) => {\n        if (!f || !f.some(x => x !== '' && x !== null)) return;\n        const o = { proyecto: titulo, _fila: i + 2 };\n        cab.forEach((c, j) => { if (c) o[c] = f[j] === undefined ? '' : f[j]; });\n        if (o.fecha_creacion !== undefined) o.fecha_creacion = fechaTexto(o.fecha_creacion);\n        prompts.push(o);\n      });\n    }\n  }\n  return { prompts, resultados };\n}\n\n// Las fechas pueden volver como número de serie de Sheets (UNFORMATTED_VALUE).\nfunction fechaTexto(v) {\n  if (typeof v === 'number' && v > 20000 && v < 80000) {\n    return new Date(Date.UTC(1899, 11, 30) + v * 864e5).toISOString().slice(0, 10);\n  }\n  return String(v || '');\n}\n\nfunction valoresPrompt(p) {\n  return [p.id, p.categoria || '', p.intencion || '', p.prompt || '', p.activo === false ? 'FALSE' : 'TRUE', p.fecha_creacion || ''];\n}\n\nfunction valoresResultado(f) {\n  return COLUMNAS_RESULTADOS.map(c => {\n    const v = f[c];\n    return v === undefined || v === null ? '' : typeof v === 'boolean' ? (v ? 'TRUE' : 'FALSE') : v;\n  });\n}\n\n// ─── Peticiones a la API de Sheets ─────────────────────────────────────────\nconst pedidoSheets = (method, ruta, body) => ({ method, url: SHEETS_API + ruta, body });\nconst crearPestana = (titulo, indice) =>\n  pedidoSheets('POST', ':batchUpdate', { requests: [{ addSheet: { properties: Object.assign({ title: titulo }, indice === undefined ? {} : { index: indice }) } }] });\nconst escribir = (titulo, desde, valores) =>\n  pedidoSheets('PUT', '/values/' + encodeURIComponent(rango(titulo, desde)) + '?valueInputOption=RAW', { values: valores });\nconst agregar = (titulo, valores) =>\n  pedidoSheets('POST', '/values/' + encodeURIComponent(rango(titulo, 'A1')) + ':append?valueInputOption=RAW&insertDataOption=INSERT_ROWS', { values: valores });\nconst borrarFila = (idPestana, fila) =>\n  pedidoSheets('POST', ':batchUpdate', { requests: [{ deleteDimension: { range: { sheetId: idPestana, dimension: 'ROWS', startIndex: fila - 1, endIndex: fila } } }] });\n\n// Crear, editar, activar/desactivar, mover de proyecto o eliminar un prompt.\n// guardado: lo que devuelve prepararGuardado (prompts.js).\n// → {ok, status, respuesta, peticiones}\nfunction planGuardarPrompt(guardado, prompts, meta) {\n  if (!guardado.ok) return { ok: false, status: 400, respuesta: { ok: false, error: guardado.error }, peticiones: [] };\n  const tabs = pestanas(meta);\n  const tab = titulo => tabs.find(t => t.titulo === titulo);\n  const fila = guardado.fila;\n  const actual = prompts.find(p => String(p.id).trim() === fila.id);\n  const proyectosAlFinal = tabs.filter(t => esPestanaProyecto(t.titulo)).length;\n  const asegurarPestana = (titulo, pet) => {\n    if (!tab(titulo)) {\n      pet.push(crearPestana(titulo, proyectosAlFinal));\n      pet.push(escribir(titulo, 'A1', [COLUMNAS_PROMPTS]));\n    }\n  };\n\n  if (guardado.accion === 'eliminar') {\n    if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };\n    return { ok: true, status: 200, respuesta: { ok: true, accion: 'eliminar', id: fila.id }, peticiones: [borrarFila(tab(actual.proyecto).id, actual._fila)] };\n  }\n\n  if (guardado.accion === 'editar') {\n    if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };\n    const nuevo = Object.assign({}, normalizarPrompt(actual), fila);\n    const pet = [];\n    if (nuevo.proyecto === actual.proyecto) {\n      pet.push(escribir(actual.proyecto, 'A' + actual._fila + ':F' + actual._fila, [valoresPrompt(nuevo)]));\n    } else {\n      // Cambio de proyecto: se agrega en la pestaña nueva y se borra de la vieja.\n      asegurarPestana(nuevo.proyecto, pet);\n      pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));\n      pet.push(borrarFila(tab(actual.proyecto).id, actual._fila));\n    }\n    return { ok: true, status: 200, respuesta: { ok: true, accion: 'editar', prompt: limpio(nuevo) }, peticiones: pet };\n  }\n\n  // Crear: un proyecto nuevo crea su pestaña.\n  const nuevo = normalizarPrompt(fila);\n  const pet = [];\n  asegurarPestana(nuevo.proyecto, pet);\n  pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));\n  return { ok: true, status: 200, respuesta: { ok: true, accion: 'crear', prompt: limpio(nuevo) }, peticiones: pet };\n}\n\nfunction limpio(p) {\n  const o = {};\n  for (const k of Object.keys(p)) if (!k.startsWith('_')) o[k] = p[k];\n  return o;\n}\n\n// Guardar las filas de una corrida en la pestaña del día (se crea si no está,\n// justo después de las pestañas de proyecto, para que la más reciente quede primero).\nfunction planGuardarResultados(filas, meta) {\n  const porFecha = new Map();\n  for (const f of filas) {\n    if (!porFecha.has(f.fecha)) porFecha.set(f.fecha, []);\n    porFecha.get(f.fecha).push(valoresResultado(f));\n  }\n  const tabs = pestanas(meta);\n  const proyectos = tabs.filter(t => esPestanaProyecto(t.titulo)).length;\n  const pet = [];\n  for (const [fecha, valores] of porFecha) {\n    if (tabs.some(t => t.titulo === fecha)) pet.push(agregar(fecha, valores));\n    else {\n      pet.push(crearPestana(fecha, proyectos));\n      pet.push(escribir(fecha, 'A1', [COLUMNAS_RESULTADOS].concat(valores)));\n    }\n  }\n  return pet;\n}\n\n// ═══════════════════════════════════════════════════════════════════════════\n//  MARCA Y COMPETIDORES. Lo usan «Armar fila» (dominios propios → citado_bcp)\n//  y «Dashboard» (ranking y fuentes). Los modelos de cada motor están en el body\n//  de su nodo HTTP.\n// ═══════════════════════════════════════════════════════════════════════════\nconst CONFIG = {\n  marca: {\n    nombre: 'BCP',\n    alias: ['BCP', 'Banco de Crédito del Perú', 'Banco de Crédito', 'Banco de Credito', 'ViaBCP', 'Via BCP'],\n    dominios: ['viabcp.com', 'bcp.com.pe']\n  },\n  competidores: [\n    { nombre: 'Interbank', alias: ['Interbank'] },\n    { nombre: 'BBVA', alias: ['BBVA', 'BBVA Perú', 'BBVA Continental', 'Banco Continental'] },\n    { nombre: 'Scotiabank', alias: ['Scotiabank', 'Scotia'] },\n    { nombre: 'BanBif', alias: ['BanBif', 'Banbif', 'Banco Interamericano de Finanzas'] },\n    { nombre: 'Pichincha', alias: ['Pichincha', 'Banco Pichincha'] },\n    { nombre: 'Banco de la Nación', alias: ['Banco de la Nación', 'Banco de la Nacion', 'BN'] }\n  ]\n};\n// ═══════════════════════════════════════════════════════════════════════════\n\nconst MOTORES = [\n  { key: 'chatgpt', label: 'ChatGPT', color: '#10A37F' },\n  { key: 'claude', label: 'Claude', color: '#D97757' },\n  { key: 'gemini', label: 'Gemini', color: '#4285F4' },\n  { key: 'perplexity', label: 'Perplexity', color: '#20808D' },\n  { key: 'ai_overview', label: 'AI Overview', color: '#FBBC04' }\n];\n\n\n// Share of Voice, como lo define la Estrategia SEO/GEO de BCP: «visibilidad de\n// la marca vs la competencia, con un score que pondera el peso de la posición,\n// la prominencia y el contexto (positivo/neutral)». Sin dependencias: build.mjs\n// lo pega en «Armar fila» y en «Datos del monitor».\n//\n// Score de cada banco en una respuesta:\n//   posición     1 / posición               (1.º = 1, 2.º = 0,5, 3.º = 0,33…)\n//   prominencia  sus menciones ÷ menciones de todos los bancos\n//   contexto     positivo 1 · neutral 0,75 · negativo 0,25\n//   score = (posición + prominencia) / 2 × contexto\n// SoV de un banco = su score ÷ la suma de los scores de todos los bancos × 100.\n\nfunction pesoContexto(sentimiento) {\n  const s = Number(sentimiento);\n  if (!isFinite(s)) return 0.75;\n  return s > 0.2 ? 1 : s < -0.2 ? 0.25 : 0.75;\n}\n\n// detalle: [{marca, posicion, menciones, sentimiento}] → {marca: SoV 0-100}\nfunction sovPorMarca(detalle) {\n  const lista = (detalle || []).filter(d => d && d.marca);\n  const totalMenciones = lista.reduce((n, d) => n + Math.max(0, Number(d.menciones) || 0), 0);\n  const scores = {};\n  for (const d of lista) {\n    const pos = Number(d.posicion) > 0 ? 1 / Number(d.posicion) : 0;\n    const prom = totalMenciones > 0 ? Math.max(0, Number(d.menciones) || 0) / totalMenciones : 0;\n    scores[d.marca] = (scores[d.marca] || 0) + ((pos + prom) / 2) * pesoContexto(d.sentimiento);\n  }\n  const total = Object.values(scores).reduce((n, v) => n + v, 0);\n  const sov = {};\n  for (const m of Object.keys(scores)) sov[m] = total > 0 ? Math.round((scores[m] / total) * 1000) / 10 : 0;\n  return sov;\n}\n\n// Detalle aproximado para filas sin desglose por banco: el orden de\n// marcas_mencionadas da la posición, una mención cada uno y contexto neutral\n// salvo BCP, que usa su sentimiento.\nfunction detalleDesdeRanking(marcas, marcaPropia, sentimientoPropio, mencionesPropias) {\n  return (marcas || []).map((m, i) => ({\n    marca: m,\n    posicion: i + 1,\n    menciones: m === marcaPropia && mencionesPropias > 0 ? mencionesPropias : 1,\n    sentimiento: m === marcaPropia ? sentimientoPropio : 0\n  }));\n}\n\n// El Analista devuelve el detalle como texto JSON. Se acepta con o sin\n// ```json, y si no se puede leer se devuelve [].\nfunction leerDetalle(texto) {\n  if (Array.isArray(texto)) return texto;\n  const s = String(texto || '').replace(/```(json)?/gi, '').trim();\n  if (!s) return [];\n  try {\n    const v = JSON.parse(s.slice(s.indexOf('['), s.lastIndexOf(']') + 1));\n    return Array.isArray(v) ? v : [];\n  } catch (e) {\n    return [];\n  }\n}\n\n// Arma la respuesta de /geo-dashboard a partir de las filas de la hoja\n// Resultados. Sin dependencias: build.mjs lo pega en el nodo Code «Dashboard».\n//\n// Las filas llegan de Google Sheets como texto: «TRUE», «0,25», «3». Por eso\n// todo pasa por aBool y aNum antes de sumar.\n\nfunction aBool(v) {\n  if (typeof v === 'boolean') return v;\n  return ['true', 'verdadero', '1', 'si', 'sí', 'x'].includes(String(v || '').trim().toLowerCase());\n}\n\nfunction aNum(v) {\n  if (typeof v === 'number') return isFinite(v) ? v : null;\n  const s = String(v == null ? '' : v).trim().replace(',', '.');\n  if (s === '') return null;\n  const n = Number(s);\n  return isFinite(n) ? n : null;\n}\n\nfunction aLista(v) {\n  if (Array.isArray(v)) return v;\n  return String(v || '').split(/[,;|]/).map(s => s.trim()).filter(Boolean);\n}\n\nfunction pct(a, b) {\n  return b ? Math.round((a / b) * 1000) / 10 : 0;\n}\n\nfunction promedio(xs) {\n  const v = xs.filter(x => x !== null && x !== undefined);\n  return v.length ? Math.round((v.reduce((s, x) => s + x, 0) / v.length) * 100) / 100 : null;\n}\n\nfunction normalizarFila(f) {\n  return {\n    run_id: String(f.run_id || ''),\n    fecha: String(f.fecha || '').slice(0, 10),\n    timestamp: String(f.timestamp || ''),\n    prompt_id: String(f.prompt_id || ''),\n    proyecto: String(f.proyecto || '').trim() || 'Sin proyecto',\n    prompt: String(f.prompt || ''),\n    motor: String(f.motor || ''),\n    estado: String(f.estado || '').trim(),\n    disponible: f.estado !== undefined ? String(f.estado).trim() === 'ok' : aBool(f.disponible),\n    menciona: aBool(f.menciona_bcp !== undefined ? f.menciona_bcp : f.menciona),\n    posicion: aNum(f.posicion_bcp !== undefined ? f.posicion_bcp : f.posicion),\n    sentimiento: aNum(f.sentimiento),\n    citado: aBool(f.citado_bcp !== undefined ? f.citado_bcp : f.citado),\n    marcas: aLista(f.marcas_mencionadas !== undefined ? f.marcas_mencionadas : f.marcas),\n    fuentes: aLista(f.fuentes),\n    respuesta: String(f.respuesta || ''),\n    error: String(f.error || ''),\n    n_menciones_bcp: aNum(f.n_menciones_bcp),\n    n_menciones_bancos: aNum(f.n_menciones_bancos),\n    categoria: String(f.categoria || ''),\n    detalle_marcas: String(f.detalle_marcas || ''),\n    sov_bcp: aNum(f.sov_bcp)\n  };\n}\n\n// Las métricas de un grupo de filas. Las filas con error no cuentan: si a un\n// motor se le acabó el saldo, no es que no nos mencione.\nfunction metricas(filas) {\n  const validas = filas.filter(f => !f.error);\n  const menc = validas.filter(f => f.menciona);\n  return {\n    total_respuestas: validas.length,\n    menciones: menc.length,\n    share_of_model: pct(menc.length, validas.length),\n    citaciones: validas.filter(f => f.citado).length,\n    tasa_citacion: pct(validas.filter(f => f.citado).length, validas.length),\n    sentimiento_promedio: promedio(menc.map(f => f.sentimiento)),\n    posicion_promedio: promedio(menc.map(f => f.posicion))\n  };\n}\n\n// Variación en puntos porcentuales: el último día con datos contra el anterior.\nfunction variacion(filas) {\n  const fechas = [...new Set(filas.filter(f => !f.error).map(f => f.fecha))].sort();\n  if (fechas.length < 2) return null;\n  const ult = metricas(filas.filter(f => f.fecha === fechas[fechas.length - 1])).share_of_model;\n  const ant = metricas(filas.filter(f => f.fecha === fechas[fechas.length - 2])).share_of_model;\n  return Math.round((ult - ant) * 10) / 10;\n}\n\nfunction construirDashboard(filasCrudas, filtros, config) {\n  filtros = filtros || {};\n  const motores = config.motores;\n  const marcaPropia = config.marca.nombre;\n  const dominiosPropios = (config.marca.dominios || []).map(d => d.toLowerCase());\n  const esPropio = d => dominiosPropios.some(p => d === p || d.endsWith('.' + p));\n\n  const todas = filasCrudas\n    .filter(f => f && (f.motor || f.prompt_id))\n    .map(normalizarFila)\n    .filter(f => motores.some(m => m.key === f.motor));\n\n  const filas = todas.filter(f =>\n    (!filtros.proyecto || f.proyecto === filtros.proyecto) &&\n    (!filtros.motor || f.motor === filtros.motor) &&\n    (!filtros.prompt_id || f.prompt_id === filtros.prompt_id) &&\n    (!filtros.desde || f.fecha >= filtros.desde) &&\n    (!filtros.hasta || f.fecha <= filtros.hasta)\n  );\n\n  const base = { motores, filtros };\n  if (!filas.length) {\n    return Object.assign(base, {\n      vacio: !todas.length,\n      kpis: Object.assign(metricas([]), {\n        var_share_of_model: null, presencia_ai_overview: null,\n        ultima_corrida: todas.length ? todas.map(f => f.timestamp || f.fecha).sort().pop() : null\n      }),\n      por_motor: [], tendencia: [], competidores: [], fuentes: [], proyectos: [], prompts: [], respuestas: []\n    });\n  }\n\n  const validas = filas.filter(f => !f.error);\n  const aio = validas.filter(f => f.motor === 'ai_overview');\n\n  const kpis = Object.assign(metricas(filas), {\n    var_share_of_model: variacion(filas),\n    presencia_ai_overview: aio.length ? pct(aio.filter(f => f.disponible).length, aio.length) : null,\n    ultima_corrida: filas.map(f => f.timestamp || f.fecha).sort().pop()\n  });\n\n  const por_motor = motores.map(m => {\n    const fm = filas.filter(f => f.motor === m.key);\n    const x = metricas(fm);\n    return {\n      motor: m.key, label: m.label,\n      share_of_model: x.share_of_model, var_share_of_model: variacion(fm),\n      menciones: x.menciones, total_respuestas: x.total_respuestas, citaciones: x.citaciones,\n      sentimiento_promedio: x.sentimiento_promedio, posicion_promedio: x.posicion_promedio\n    };\n  });\n\n  const fechas = [...new Set(validas.map(f => f.fecha))].sort();\n  const tendencia = fechas.map(fecha => {\n    const fd = validas.filter(f => f.fecha === fecha);\n    const punto = { fecha };\n    for (const m of motores) {\n      const fm = fd.filter(f => f.motor === m.key);\n      punto[m.key] = fm.length ? metricas(fm).share_of_model : null;\n    }\n    punto.total = metricas(fd).share_of_model;\n    return punto;\n  });\n\n  const nombres = [marcaPropia].concat((config.competidores || []).map(c => c.nombre));\n  const competidores = nombres\n    .map(marca => {\n      const n = validas.filter(f => f.marcas.includes(marca)).length;\n      return { marca, menciones: n, share_of_model: pct(n, validas.length), es_bcp: marca === marcaPropia };\n    })\n    .sort((a, b) => b.menciones - a.menciones || (b.es_bcp ? 1 : 0) - (a.es_bcp ? 1 : 0))\n    .map((c, i) => Object.assign({ ranking: i + 1 }, c));\n\n  const conteo = {};\n  for (const f of validas) for (const d of f.fuentes) conteo[d] = (conteo[d] || 0) + 1;\n  const fuentes = Object.keys(conteo)\n    .map(dominio => ({ dominio, citas: conteo[dominio], es_bcp: esPropio(dominio) }))\n    .sort((a, b) => b.citas - a.citas)\n    .slice(0, 30);\n\n  const nombresProyectos = [...new Set(filas.map(f => f.proyecto))].sort();\n  const proyectos = nombresProyectos.map(proyecto => {\n    const fp = filas.filter(f => f.proyecto === proyecto);\n    const x = metricas(fp);\n    return {\n      proyecto, prompts: new Set(fp.map(f => f.prompt_id)).size,\n      share_of_model: x.share_of_model, var_share_of_model: variacion(fp), menciones: x.menciones\n    };\n  });\n\n  // La matriz prompt × motor muestra la última respuesta válida de cada motor.\n  const idsPrompts = [...new Set(filas.map(f => f.prompt_id))];\n  const prompts = idsPrompts.map(id => {\n    const fp = filas.filter(f => f.prompt_id === id);\n    const ultima = fp.map(f => f.fecha).sort().pop();\n    const mot = {};\n    for (const m of motores) {\n      const r = fp.filter(f => f.motor === m.key && !f.error)\n        .sort((a, b) => (a.timestamp || a.fecha).localeCompare(b.timestamp || b.fecha)).pop();\n      mot[m.key] = r\n        ? { menciona: r.menciona, posicion: r.posicion, sentimiento: r.sentimiento, citado: r.citado, marcas: r.marcas, fecha: r.fecha, disponible: r.disponible }\n        : null;\n    }\n    const recientes = fp.filter(f => f.fecha === ultima);\n    return {\n      prompt_id: id, prompt: fp[fp.length - 1].prompt, proyecto: fp[fp.length - 1].proyecto,\n      share_of_model: metricas(recientes).share_of_model, ultima_fecha: ultima, motores: mot\n    };\n  });\n\n  let respuestas = [];\n  if (filtros.proyecto || filtros.prompt_id) {\n    respuestas = filas\n      .slice()\n      .sort((a, b) => (b.timestamp || b.fecha).localeCompare(a.timestamp || a.fecha))\n      .slice(0, 300)\n      .map(f => ({\n        fecha: f.fecha, timestamp: f.timestamp, motor: f.motor, prompt_id: f.prompt_id, prompt: f.prompt,\n        menciona: f.menciona, posicion: f.posicion, sentimiento: f.sentimiento, citado: f.citado,\n        disponible: f.disponible, marcas: f.marcas, fuentes: f.fuentes, respuesta: f.respuesta, error: f.error\n      }));\n  }\n\n  return Object.assign(base, { vacio: false, kpis, por_motor, tendencia, competidores, fuentes, proyectos, prompts, respuestas });\n}\n\n// Prompts: listar (/geo-prompts), validar lo que llega a /geo-prompts-save y\n// elegir cuáles entran en una corrida. Sin dependencias, como los otros dos.\n\n// Categoría e intención son texto libre (vienen del universo de prompts de BCP).\n// Estas listas solo son sugerencias para un formulario.\nconst CATEGORIAS = ['Reputación', 'Producto', 'Digital', 'Otra'];\nconst INTENCIONES = ['Informacional', 'Comparativa', 'Transaccional', 'Reputacional', 'Navegacional'];\n\nfunction activoDe(v) {\n  if (typeof v === 'boolean') return v;\n  const s = String(v == null ? '' : v).trim().toLowerCase();\n  if (s === '') return true;\n  return ['true', 'verdadero', '1', 'si', 'sí', 'x'].includes(s);\n}\n\nfunction normalizarPrompt(f) {\n  return {\n    id: String(f.id || '').trim(),\n    proyecto: String(f.proyecto || '').trim() || 'Sin proyecto',\n    prompt: String(f.prompt || '').trim(),\n    categoria: String(f.categoria || '').trim() || 'Otra',\n    intencion: String(f.intencion || '').trim(),\n    activo: activoDe(f.activo),\n    fecha_creacion: String(f.fecha_creacion || f.creado || '')\n  };\n}\n\nfunction listarPrompts(filas) {\n  const prompts = filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .sort((a, b) => b.fecha_creacion.localeCompare(a.fecha_creacion) || b.id.localeCompare(a.id));\n  const proyectos = [...new Set(prompts.map(p => p.proyecto))].sort();\n  const unicos = (base, campo) => [...new Set(base.concat(prompts.map(p => p[campo]).filter(Boolean)))].sort();\n  return {\n    prompts, proyectos,\n    categorias: unicos(CATEGORIAS, 'categoria'), intenciones: unicos(INTENCIONES, 'intencion'),\n    total: prompts.length, activos: prompts.filter(p => p.activo).length\n  };\n}\n\n// Devuelve la fila que hay que escribir (solo con las columnas que cambian,\n// para que «Agregar o actualizar» no pise fecha_creacion al editar) o un error.\n// hoy: AAAA-MM-DD en Lima.\nfunction prepararGuardado(body, hoy, idNuevo) {\n  body = body || {};\n  const id = String(body.id || '').trim();\n  if (body.accion === 'eliminar') {\n    if (!id) return { ok: false, error: 'Falta el id del prompt a eliminar.' };\n    return { ok: true, accion: 'eliminar', fila: { id, activo: false } };\n  }\n  const prompt = String(body.prompt || '').trim();\n  const fila = { id: id || idNuevo };\n  if (!id || body.prompt !== undefined) {\n    if (!prompt) return { ok: false, error: 'El prompt no puede estar vacío.' };\n    if (prompt.length > 2000) return { ok: false, error: 'El prompt pasa de 2.000 caracteres.' };\n    fila.prompt = prompt;\n  }\n  if (!id || body.proyecto !== undefined) fila.proyecto = String(body.proyecto || '').trim() || 'Sin proyecto';\n  if (!id || body.categoria !== undefined) {\n    fila.categoria = String(body.categoria || '').trim().slice(0, 80) || 'Otra';\n  }\n  if (body.intencion !== undefined) fila.intencion = String(body.intencion || '').trim().slice(0, 40);\n  if (!id || body.activo !== undefined) fila.activo = activoDe(body.activo);\n  if (!id) fila.fecha_creacion = hoy;\n  return { ok: true, accion: id ? 'editar' : 'crear', fila };\n}\n\n// Qué prompts entran en la corrida: los activos, y si llegan prompt_ids o\n// proyecto, solo esos. Un prompt_id pedido a mano corre aunque esté inactivo.\nfunction elegirPrompts(filas, peticion) {\n  peticion = peticion || {};\n  const ids = Array.isArray(peticion.prompt_ids) ? peticion.prompt_ids.map(String) : [];\n  return filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .filter(p => (ids.length ? ids.includes(p.id) : p.activo))\n    .filter(p => !peticion.proyecto || p.proyecto === peticion.proyecto);\n}\n\n// Arma la respuesta de /geo-monitor-data: las hojas resultados y prompts con la\n// forma de DATA.monitor y DATA.prompts del front «BCP · Monitor de Visibilidad\n// en IA». El front calcula sus KPIs en el navegador a partir de estas\n// observaciones. Sin dependencias: build.mjs lo pega en el nodo «Datos del\n// monitor» junto con config.js, sov.js, dashboard.js (normalizarFila) y prompts.js.\n\n// Nuestra clave de motor → la del front.\nconst MODELO_FRONT = { chatgpt: 'chatgpt', claude: 'claude', gemini: 'gemini', perplexity: 'perplexity', ai_overview: 'overview' };\n\nfunction slug(s) {\n  return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()\n    .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'sin-proyecto';\n}\n\nfunction etiquetaSentimiento(v) {\n  if (v === null) return null;\n  return v > 0.2 ? 'positivo' : v < -0.2 ? 'negativo' : 'neutral';\n}\n\n// Una fila de resultados → una observación del front.\nfunction observacion(f, config, meta) {\n  const propios = (config.marca.dominios || []).map(d => d.toLowerCase());\n  const esPropio = d => propios.some(p => d === p || d.endsWith('.' + p));\n  const modelId = MODELO_FRONT[f.motor];\n  const projectId = slug(f.proyecto);\n  const error = f.estado === 'error' || (!f.estado && Boolean(f.error));\n  const menciona = !error && f.menciona;\n  const marcas = f.marcas;\n  const propia = config.marca.nombre;\n  // Share of Voice (sov.js). Las filas sin desglose por banco (anteriores al\n  // 21/10) se aproximan con el orden de marcas_mencionadas.\n  let detalle = leerDetalle(f.detalle_marcas);\n  if (!detalle.length && !error) detalle = detalleDesdeRanking(marcas, propia, f.sentimiento, f.n_menciones_bcp);\n  const sovByBrand = error ? {} : sovPorMarca(detalle);\n  const sov = error ? null : menciona ? (f.sov_bcp !== null && f.detalle_marcas ? f.sov_bcp : (sovByBrand[propia] || 0)) : 0;\n  // Proporción de menciones (la métrica anterior), por si se quiere comparar.\n  const mentionShare = menciona && f.n_menciones_bancos > 0 && f.n_menciones_bcp > 0\n    ? Math.round(Math.min(100, (f.n_menciones_bcp / f.n_menciones_bancos) * 100) * 10) / 10\n    : menciona ? Math.round((100 / Math.max(1, marcas.length)) * 10) / 10 : 0;\n  const idxPropio = f.fuentes.findIndex(esPropio);\n  const sentimiento = menciona && f.sentimiento !== null ? f.sentimiento : null;\n  return {\n    id: [projectId, modelId, f.prompt_id, f.fecha].join(':'),\n    projectId,\n    modelId,\n    promptId: f.prompt_id,\n    date: f.fecha,\n    timestamp: f.timestamp,\n    status: error ? 'error' : menciona ? 'ok' : 'not_mentioned',\n    // El front promedia `som` en su KPI principal: lleva el Share of Voice.\n    som: sov,\n    sov,\n    sovByBrand,\n    brandDetail: detalle,\n    mentionShare: error ? null : mentionShare,\n    category: (meta && meta.categoria) || f.categoria || '',\n    intent: (meta && meta.intencion) || '',\n    position: menciona ? f.posicion : null,\n    linkPosition: idxPropio >= 0 ? idxPropio + 1 : null,\n    mentions: menciona ? (f.n_menciones_bcp || 1) : 0,\n    citations: f.fuentes.filter(esPropio).length,\n    sentiment: sentimiento,\n    sentimentLabel: etiquetaSentimiento(sentimiento),\n    blockAppeared: modelId === 'overview' ? (!error && f.estado !== 'sin_overview') : null,\n    brandMentioned: menciona,\n    brandCited: !error && f.citado,\n    sources: f.fuentes.map(d => ({ domain: d, url: 'https://' + d + '/' })),\n    ranking: marcas,\n    response: f.respuesta.length > MAX_RESPUESTA ? f.respuesta.slice(0, MAX_RESPUESTA) + '…' : f.respuesta,\n    error: f.error,\n    isExample: false,\n    source: 'n8n · GEO Tracker'\n  };\n}\n\n// El front muestra como mucho 6 meses; más atrás no se manda.\nconst DIAS_HISTORIA = 190;\n// La respuesta completa queda en el Sheet; al front le basta con esto.\nconst MAX_RESPUESTA = 4000;\n\nfunction construirMonitor(filasResultados, filasPrompts, config, hoy) {\n  const desde = new Date(new Date(hoy + 'T12:00:00Z').getTime() - DIAS_HISTORIA * 864e5).toISOString().slice(0, 10);\n  const metaPrompts = new Map(filasPrompts.filter(f => f && f.id).map(f => [String(f.id).trim(), normalizarPrompt(f)]));\n  // Varias corridas el mismo día: se queda la última de cada prompt y motor.\n  const porId = new Map();\n  for (const crudo of filasResultados) {\n    if (!crudo || !crudo.motor) continue;\n    const f = normalizarFila(crudo);\n    if (!MODELO_FRONT[f.motor] || !f.prompt_id || !f.fecha || f.fecha < desde) continue;\n    const o = observacion(f, config, metaPrompts.get(f.prompt_id));\n    const previa = porId.get(o.id);\n    if (!previa || String(previa.timestamp) < String(o.timestamp)) porId.set(o.id, o);\n  }\n  const observations = [...porId.values()].sort((a, b) => a.date.localeCompare(b.date) || a.id.localeCompare(b.id));\n\n  const prompts = filasPrompts.filter(f => f && f.id && String(f.prompt || '').trim()).map(normalizarPrompt);\n  // Los proyectos salen de la hoja prompts (activos o con observaciones).\n  const conDatos = new Set(observations.map(o => o.promptId));\n  const proyectos = new Map();\n  for (const p of prompts) {\n    if (!p.activo && !conDatos.has(p.id)) continue;\n    const id = slug(p.proyecto);\n    if (!proyectos.has(id)) proyectos.set(id, { id, name: p.proyecto, promptIds: [], categorias: new Set() });\n    const pr = proyectos.get(id);\n    pr.promptIds.push(p.id);\n    pr.categorias.add(p.categoria);\n  }\n  // Lo que ya tiene observaciones tiene que existir aunque la hoja prompts haya\n  // cambiado (prompt borrado o movido de proyecto): el front busca ambos por id.\n  const promptsVistos = new Set(prompts.map(p => p.id));\n  const extra = [];\n  for (const crudo of filasResultados) {\n    if (!crudo || !crudo.motor || !crudo.prompt_id) continue;\n    const f = normalizarFila(crudo);\n    const id = slug(f.proyecto);\n    if (!proyectos.has(id)) proyectos.set(id, { id, name: f.proyecto, promptIds: [], categorias: new Set() });\n    const pr = proyectos.get(id);\n    if (!pr.promptIds.includes(f.prompt_id)) pr.promptIds.push(f.prompt_id);\n    if (crudo.categoria) pr.categorias.add(String(crudo.categoria));\n    if (!promptsVistos.has(f.prompt_id)) {\n      promptsVistos.add(f.prompt_id);\n      extra.push({ id: f.prompt_id, proyecto: f.proyecto, prompt: f.prompt, categoria: String(crudo.categoria || 'Otra'), activo: false });\n    }\n  }\n  prompts.push(...extra);\n\n  const projects = [...proyectos.values()].map(p => ({\n    id: p.id,\n    name: p.name,\n    description: `${p.promptIds.length} prompt${p.promptIds.length === 1 ? '' : 's'} · ${p.categorias.size} categoría${p.categorias.size === 1 ? '' : 's'}`,\n    promptIds: p.promptIds,\n    example: false\n  }));\n\n  const conteo = new Map();\n  for (const o of observations) for (const s of o.sources) conteo.set(s.domain, (conteo.get(s.domain) || 0) + 1);\n  const domains = [...conteo.entries()].sort((a, b) => b[1] - a[1]).slice(0, 30).map(([d]) => [d, 'https://' + d + '/']);\n\n  return {\n    ok: true,\n    generado: new Date().toISOString(),\n    monitor: {\n      projects,\n      observations,\n      referenceDate: hoy,\n      dates: [...new Set(observations.map(o => o.date))].sort(),\n      domains\n    },\n    prompts: prompts.map(p => ({\n      id: p.id, text: p.prompt, project: slug(p.proyecto), category: p.categoria, intent: p.intencion, active: p.activo,\n      status: 'ok', position: null, linkPosition: null, sov: null, ranking: [],\n      response: { isExample: false, screenshotUrl: null, text: '' }\n    }))\n  };\n}\n\nconst hoy = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Lima' });\nconst { prompts, resultados } = leerHojas($input.first().json);\nconst datos = construirMonitor(resultados, prompts, CONFIG, hoy);\n// Los proyectos, en el orden de sus pestañas en el Sheet.\nconst orden = pestanas($('Pestañas del Sheet (monitor)').first().json).map(p => p.titulo);\nconst lugar = n => { const i = orden.indexOf(n); return i < 0 ? 999 : i; };\ndatos.monitor.projects.sort((a, b) => lugar(a.name) - lugar(b.name));\nreturn [{ json: datos }];\n"
       }
     },
     {
@@ -553,7 +518,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
-        900,
+        1120,
         700
       ],
       "parameters": {
@@ -563,18 +528,40 @@
     }
   ],
   "connections": {
-    "Webhook geo-dashboard": {
+    "Pestañas del Sheet (dashboard)": {
       "main": [
         [
           {
-            "node": "Leer resultados",
+            "node": "Qué leer (dashboard)",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Leer resultados": {
+    "Qué leer (dashboard)": {
+      "main": [
+        [
+          {
+            "node": "Leer el Sheet (dashboard)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook geo-dashboard": {
+      "main": [
+        [
+          {
+            "node": "Pestañas del Sheet (dashboard)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer el Sheet (dashboard)": {
       "main": [
         [
           {
@@ -596,18 +583,40 @@
         ]
       ]
     },
-    "Webhook geo-prompts": {
+    "Pestañas del Sheet (prompts)": {
       "main": [
         [
           {
-            "node": "Leer prompts",
+            "node": "Qué leer (prompts)",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Leer prompts": {
+    "Qué leer (prompts)": {
+      "main": [
+        [
+          {
+            "node": "Leer el Sheet (prompts)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook geo-prompts": {
+      "main": [
+        [
+          {
+            "node": "Pestañas del Sheet (prompts)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer el Sheet (prompts)": {
       "main": [
         [
           {
@@ -629,40 +638,66 @@
         ]
       ]
     },
+    "Pestañas del Sheet (guardar)": {
+      "main": [
+        [
+          {
+            "node": "Qué leer (guardar)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qué leer (guardar)": {
+      "main": [
+        [
+          {
+            "node": "Leer el Sheet (guardar)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Webhook geo-prompts-save": {
       "main": [
         [
           {
-            "node": "Validar prompt",
+            "node": "Pestañas del Sheet (guardar)",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Validar prompt": {
+    "Leer el Sheet (guardar)": {
       "main": [
         [
           {
-            "node": "¿Qué hacer?",
+            "node": "Planear cambio",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "¿Qué hacer?": {
+    "Planear cambio": {
       "main": [
         [
           {
-            "node": "Guardar prompt",
+            "node": "¿Hay cambios?",
             "type": "main",
             "index": 0
           }
-        ],
+        ]
+      ]
+    },
+    "¿Hay cambios?": {
+      "main": [
         [
           {
-            "node": "Leer prompts (borrar)",
+            "node": "Escribir en el Sheet",
             "type": "main",
             "index": 0
           }
@@ -676,7 +711,7 @@
         ]
       ]
     },
-    "Guardar prompt": {
+    "Escribir en el Sheet": {
       "main": [
         [
           {
@@ -687,51 +722,22 @@
         ]
       ]
     },
-    "Leer prompts (borrar)": {
+    "Pestañas del Sheet (monitor)": {
       "main": [
         [
           {
-            "node": "Fila a borrar",
+            "node": "Qué leer (monitor)",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Fila a borrar": {
+    "Qué leer (monitor)": {
       "main": [
         [
           {
-            "node": "¿Existe?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "¿Existe?": {
-      "main": [
-        [
-          {
-            "node": "Borrar fila",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Responder no existe",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Borrar fila": {
-      "main": [
-        [
-          {
-            "node": "Responder borrado",
+            "node": "Leer el Sheet (monitor)",
             "type": "main",
             "index": 0
           }
@@ -742,25 +748,14 @@
       "main": [
         [
           {
-            "node": "Leer resultados (monitor)",
+            "node": "Pestañas del Sheet (monitor)",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Leer resultados (monitor)": {
-      "main": [
-        [
-          {
-            "node": "Leer prompts (monitor)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Leer prompts (monitor)": {
+    "Leer el Sheet (monitor)": {
       "main": [
         [
           {

@@ -76,12 +76,30 @@ tiene un endpoint por fila:
 | Archivo | Qué es |
 |---|---|
 | `geo-corrida.n8n.json`, `geo-api.n8n.json` | Los workflows. **Se generan, no se editan a mano.** |
-| `plantilla-geo-monitor.xlsx` | La plantilla del Sheet: pestañas `prompts` y `resultados`. |
+| `plantilla-geo-monitor.xlsx` | La plantilla del Sheet: una pestaña por proyecto con los 150 prompts y `_Léeme`. |
 | `front/` | El front «BCP · Monitor de Visibilidad en IA», con `dist/loader.js`, que lee `geo-monitor-data`. Ver `front/README.md`. |
 | `src/` | El código de los nodos Code: `analisis.js` (respuestas → filas), `monitor.js` (filas → datos del front), `dashboard.js`, `prompts.js`, `config.js` (marca y competidores). |
 | `build.mjs` | Arma los JSON a partir de `src/`: `node automatizacion/geo-monitor/build.mjs` |
 | `test.mjs` | Corre el código real de los nodos con respuestas de ejemplo: `node automatizacion/geo-monitor/test.mjs` |
 | `publicar.mjs` | Sube los dos workflows a n8n con el Sheet y las credenciales: `N8N_API_KEY=… node automatizacion/geo-monitor/publicar.mjs` |
+
+## El Google Sheet
+
+Organizado como el Excel del universo de prompts de BCP:
+
+- **Una pestaña por proyecto** (Marca, Ahorros, Depósito a Plazo Fijo, Fondos
+  Mutuos, Loans, Seguro Vehicular, Seguro de Salud, Cards) con `id · Categoría ·
+  Intención de Búsqueda · Prompt · Activo · Fecha de creación`. Crear un
+  proyecto desde el front crea su pestaña.
+- **Una pestaña por día de medición** (`2026-10-20`, `2026-10-21`…), con una
+  fila por prompt y motor. La crea la primera corrida del día, justo después de
+  las pestañas de proyecto.
+- Las pestañas que empiezan con `_` (`_respaldo prompts`, `_Léeme`) se ignoran.
+
+Todo se lee y escribe con la API de Google Sheets (`src/hoja.js`): nodos HTTP con
+la credencial de Sheets que leen varias pestañas en una sola llamada
+(`batchGetByDataFilter`) y ejecutan, en orden, las peticiones que arma el
+código (crear pestaña, agregar, actualizar o borrar una fila).
 
 ## Estado en n8n (20/10)
 

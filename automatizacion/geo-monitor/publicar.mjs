@@ -48,16 +48,21 @@ const credencial = mapa => {
 };
 const todos = (await api('/workflows?limit=250')).data;
 
+// El ID del Sheet: el de la variable, o el que ya tenga publicado algún nodo.
+const MARCADOR = 'PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET';
+const idEn = nodos => (JSON.stringify(nodos || []).match(/spreadsheets\/([A-Za-z0-9_-]{30,})/) || [])[1]
+  || (nodos || []).find(n => n.type === 'n8n-nodes-base.googleSheets')?.parameters?.documentId?.value;
 let sheetId = process.env.GEO_SHEET_ID;
 for (const w of WORKFLOWS) {
   const wf = JSON.parse(readFileSync(new URL(w.archivo, import.meta.url), 'utf8'));
   const existente = w.id ? await api('/workflows/' + w.id) : todos.find(x => x.name === wf.name);
   const previos = existente?.nodes || [];
-  sheetId ||= previos.find(n => n.type === 'n8n-nodes-base.googleSheets')?.parameters?.documentId?.value;
+  sheetId ||= idEn(previos);
+  if (!sheetId || sheetId === MARCADOR) throw new Error('Falta el ID del Sheet: GEO_SHEET_ID=…');
 
   for (const n of wf.nodes) {
-    if (n.type === 'n8n-nodes-base.googleSheets') {
-      if (sheetId) n.parameters.documentId.value = sheetId;
+    n.parameters = JSON.parse(JSON.stringify(n.parameters).split(MARCADOR).join(sheetId));
+    if (n.parameters.nodeCredentialType === 'googleSheetsOAuth2Api') {
       n.credentials = credencial(SHEETS);
     } else if (CREDENCIALES[n.name]) {
       n.credentials = credencial(CREDENCIALES[n.name]);
@@ -76,4 +81,4 @@ for (const w of WORKFLOWS) {
   console.log(`  ${BASE}/workflow/${r.id}`);
   if (sinCredencial.length) console.log('  Sin credencial:', sinCredencial.join(', '));
 }
-console.log('Sheet:', sheetId && sheetId !== 'PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET' ? sheetId : 'PENDIENTE');
+console.log('Sheet:', sheetId);

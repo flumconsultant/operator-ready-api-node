@@ -54,6 +54,28 @@ const hojaPrompts = [
   { id: 'p003', proyecto: 'Reputación', prompt: '¿Qué banco es más confiable?', categoria: 'Reputación', activo: 'TRUE', fecha_creacion: '2026-10-03' }
 ];
 
+// ─── El Sheet, como lo devuelve la API de Google Sheets ───────────────────
+// Pestañas por proyecto (encabezados del Excel de BCP) y por día de resultados.
+const COLS_PROMPTS = ['id', 'Categoría', 'Intención de Búsqueda', 'Prompt', 'Activo', 'Fecha de creación'];
+const CAMPOS_PROMPTS = ['id', 'categoria', 'intencion', 'prompt', 'activo', 'fecha_creacion'];
+const COLS_RESULTADOS = ['run_id', 'fecha', 'timestamp', 'prompt_id', 'proyecto', 'categoria', 'prompt', 'motor', 'estado',
+  'menciona_bcp', 'posicion_bcp', 'sentimiento', 'marcas_mencionadas', 'fuentes', 'citado_bcp', 'error', 'respuesta',
+  'n_menciones_bcp', 'n_menciones_bancos', 'detalle_marcas', 'sov_bcp'];
+const agrupar = (filas, clave) => filas.reduce((m, f) => m.set(f[clave], (m.get(f[clave]) || []).concat([f])), new Map());
+function comoSheets({ prompts = [], resultados = [] } = {}) {
+  const valueRanges = [];
+  for (const [tab, fs] of agrupar(prompts, 'proyecto')) {
+    valueRanges.push({ valueRange: { range: `'${tab}'!A1:F${fs.length + 1}`, values: [COLS_PROMPTS].concat(fs.map(f => CAMPOS_PROMPTS.map(c => f[c] ?? ''))) } });
+  }
+  for (const [tab, fs] of agrupar(resultados.filter(f => f.fecha), 'fecha')) {
+    valueRanges.push({ valueRange: { range: `'${tab}'!A1:U${fs.length + 1}`, values: [COLS_RESULTADOS].concat(fs.map(f => COLS_RESULTADOS.map(c => f[c] ?? ''))) } });
+  }
+  return { valueRanges };
+}
+function metaSheets(titulos) {
+  return { sheets: titulos.map((title, i) => ({ properties: { sheetId: 1000 + i, title, index: i } })) };
+}
+
 // Con la forma real de cada API.
 const apis = {
   chatgpt: { choices: [{ message: {
@@ -82,7 +104,7 @@ const apis = {
 };
 
 // ─── GEO · Corrida ─────────────────────────────────────────────────────────
-const elegir = webhookBody => correr(corrida, 'Elegir prompts', hojaPrompts,
+const elegir = webhookBody => correr(corrida, 'Elegir prompts', [comoSheets({ prompts: hojaPrompts })],
   webhookBody === undefined ? {} : { 'Webhook geo-run': [{ body: webhookBody }] });
 
 prueba('Elegir prompts: activos, prompt_ids pedidos o un proyecto', () => {
@@ -212,7 +234,8 @@ prueba('Armar fila: si el motor no respondió, no cuenta lo que diga la IA', () 
 
 prueba('Corrida con SerpAPI: los 5 motores en paralelo, un Merge y luego en línea hasta el Sheet', () => {
   const sale = n => corrida.connections[n].main[0].map(l => l.node);
-  assert.deepEqual(sale('Leer prompts'), ['Elegir prompts']);
+  assert.deepEqual(sale('Pestañas del Sheet'), ['Qué leer']);
+  assert.deepEqual(sale('Leer el Sheet'), ['Elegir prompts']);
   assert.deepEqual(sale('Elegir prompts').sort(), ['ChatGPT', 'Claude', 'Gemini', 'Google (SerpAPI)', 'Perplexity']);
   assert.deepEqual(sale('Google (SerpAPI)'), ['AI Overview (página)']);
   const merge = 'Esperar a los motores';
@@ -220,12 +243,14 @@ prueba('Corrida con SerpAPI: los 5 motores en paralelo, un Merge y luego en lín
     .map(m => corrida.connections[m].main[0].find(l => l.node === merge).index);
   assert.deepEqual(entradas, [0, 1, 2, 3, 4], 'cada motor entra por su propia entrada del Merge');
   assert.equal(corrida.nodes.find(n => n.name === merge).parameters.numberInputs, 5);
-  const resto = [merge, 'Juntar respuestas', 'Analista IA', 'Armar fila', 'Guardar resultados'];
+  const resto = [merge, 'Juntar respuestas', 'Analista IA', 'Armar fila', 'Plan de guardado', 'Guardar en la pestaña del día'];
   for (let i = 0; i < resto.length - 1; i++) assert.deepEqual(sale(resto[i]), [resto[i + 1]], resto[i]);
   assert.equal(corrida.connections['Claude · analista'].ai_languageModel[0][0].node, 'Analista IA');
   assert.equal(corrida.nodes.find(n => n.name === 'Webhook geo-run').parameters.responseMode, 'onReceived');
   // Cada modelo recibe solo el prompt: ni la respuesta de otro motor ni nada más.
-  for (const n of corrida.nodes.filter(n => n.type === 'n8n-nodes-base.httpRequest')) {
+  const motores = corrida.nodes.filter(n => n.type === 'n8n-nodes-base.httpRequest' && n.parameters.nodeCredentialType !== 'googleSheetsOAuth2Api');
+  assert.equal(motores.length, 6);
+  for (const n of motores) {
     assert.equal(n.onError, 'continueRegularOutput', n.name);
     if (n.parameters.method === 'POST') {
       const usa = n.parameters.jsonBody.match(/\$json\.\w+|\$\('[^']+'\)/g);
@@ -255,40 +280,92 @@ prueba('Corrida publicada: SerpAPI apagado, 4 motores y sin filas de AI Overview
 });
 
 // ─── GEO · API ─────────────────────────────────────────────────────────────
-prueba('/geo-prompts lista, cuenta activos y saca proyectos', () => {
-  const r = correr(api, 'Listar prompts', hojaPrompts)[0];
+prueba('/geo-prompts lee todas las pestañas de proyecto: cada pestaña es un proyecto', () => {
+  const listar = prompts => correr(api, 'Listar prompts', [comoSheets({ prompts })])[0];
+  const r = listar(hojaPrompts);
   assert.deepEqual([r.total, r.activos], [3, 2]);
   assert.deepEqual(r.proyectos, ['Reputación', 'Tarjetas']);
   assert.ok(r.intenciones.includes('Comparativa'));
-  const conCat = correr(api, 'Listar prompts', [{ ...hojaPrompts[0], categoria: 'Requisitos y apertura', intencion: 'Transaccional' }])[0];
+  const conCat = listar([{ ...hojaPrompts[0], categoria: 'Requisitos y apertura', intencion: 'Transaccional' }]);
   assert.ok(conCat.categorias.includes('Requisitos y apertura'), 'las categorías de la hoja aparecen en la lista');
   assert.equal(conCat.prompts[0].intencion, 'Transaccional');
   assert.equal(r.prompts[0].id, 'p003');
-  assert.equal(correr(api, 'Listar prompts', [{}])[0].total, 0, 'hoja vacía');
+  assert.ok(!('_fila' in r.prompts[0]), 'el número de fila no sale al front');
+  // Pestañas de sistema (_respaldo) y de días no son proyectos; las vacías no rompen nada.
+  const conOtras = correr(api, 'Listar prompts', [{ valueRanges: comoSheets({ prompts: hojaPrompts }).valueRanges.concat([
+    { valueRange: { range: "'_respaldo prompts'!A1:F2", values: [COLS_PROMPTS, ['x1', 'a', 'b', 'no cuenta', 'TRUE', '']] } },
+    { valueRange: { range: "'Vacía'!A1:F1", values: [COLS_PROMPTS] } }
+  ]) }])[0];
+  assert.equal(conOtras.total, 3);
+  assert.equal(correr(api, 'Listar prompts', [{ valueRanges: [] }])[0].total, 0, 'Sheet sin prompts');
 });
 
-prueba('/geo-prompts-save crea, edita sin pisar fecha_creacion, elimina y rechaza vacíos', () => {
-  const guardar = body => correr(api, 'Validar prompt', [{}], { 'Webhook geo-prompts-save': [{ body }] })[0];
-  const nuevo = guardar({ proyecto: 'Digital', prompt: '  ¿Mejor app bancaria?  ', categoria: 'Digital', activo: true });
-  assert.deepEqual(Object.keys(nuevo).sort(), ['activo', 'categoria', 'fecha_creacion', 'id', 'prompt', 'proyecto']);
-  assert.match(nuevo.id, /^p_/);
-  assert.equal(nuevo.prompt, '¿Mejor app bancaria?');
-  assert.deepEqual(Object.keys(guardar({ id: 'p001', activo: false })).sort(), ['activo', 'id']);
-  const editar = guardar({ id: 'p001', prompt: 'nuevo', categoria: 'Requisitos y apertura', intencion: 'Transaccional' });
-  assert.deepEqual([editar.categoria, editar.intencion, editar.fecha_creacion], ['Requisitos y apertura', 'Transaccional', undefined]);
-  assert.equal(guardar({ id: 'p001', categoria: '  ' }).categoria, 'Otra');
-  assert.deepEqual(guardar({ id: 'p001', accion: 'eliminar' }), { _borrar: 'p001' }, 'eliminar borra la fila');
-  // Fila a borrar: busca el row_number que devuelve Google Sheets.
-  const fila = (id, hoja) => correr(api, 'Fila a borrar', hoja, { 'Validar prompt': [{ _borrar: id }] })[0];
-  const hoja = hojaPrompts.map((p, i) => ({ ...p, row_number: i + 2 }));
-  assert.deepEqual(fila('p002', hoja), { id: 'p002', row_number: 3 });
-  assert.match(fila('nada', hoja)._error, /No existe/);
-  const ruta = api.connections['¿Qué hacer?'].main.map(o => o.map(l => l.node));
-  assert.deepEqual(ruta, [['Guardar prompt'], ['Leer prompts (borrar)'], ['Responder error']]);
-  const borrar = api.nodes.find(n => n.name === 'Borrar fila').parameters;
-  assert.deepEqual([borrar.operation, borrar.toDelete, borrar.startIndex, borrar.numberToDelete], ['delete', 'rows', '={{ $json.row_number }}', 1]);
-  assert.match(guardar({ prompt: '   ' })._error, /vacío/);
-  assert.match(guardar({ accion: 'eliminar' })._error, /id/);
+prueba('Qué leer: pestañas de proyecto, de días (desde una fecha) y nunca las de sistema', () => {
+  const meta = metaSheets(['Marca', 'Ahorros', '2026-10-21', '2026-10-20', '2025-01-01', '_respaldo resultados']);
+  const rangos = (nodo, sufijo) => correr(api, nodo, [meta])[0].cuerpo.dataFilters.map(f => f.a1Range);
+  assert.deepEqual(rangos('Qué leer (prompts)'), ["'Marca'!A:F", "'Ahorros'!A:F"]);
+  const mon = rangos('Qué leer (monitor)');
+  assert.ok(mon.includes("'2026-10-21'!A:U") && mon.includes("'Marca'!A:F"));
+  assert.ok(!mon.includes("'2025-01-01'!A:U"), 'más de 6 meses atrás no se lee');
+  assert.ok(!mon.some(r => r.includes('_respaldo')));
+  const vacio = correr(api, 'Qué leer (prompts)', [metaSheets(['2026-10-21'])])[0].cuerpo.dataFilters;
+  assert.equal(vacio.length, 1, 'la API no acepta una lista vacía');
+});
+
+const META = metaSheets(['Tarjetas', 'Reputación', '2026-10-20', '_respaldo prompts']);
+// Fila de cada prompt en su pestaña: p001 → Tarjetas!2, p002 → Tarjetas!3, p003 → Reputación!2.
+const planear = body => correr(api, 'Planear cambio', [comoSheets({ prompts: hojaPrompts })],
+  { 'Webhook geo-prompts-save': [{ body }], 'Pestañas del Sheet (guardar)': [META] });
+const ruta = u => decodeURIComponent(u.replace(/^https:\/\/sheets\.googleapis\.com\/v4\/spreadsheets\/[^/:]+/, ''));
+
+prueba('/geo-prompts-save: crear en su pestaña; un proyecto nuevo crea la pestaña', () => {
+  const [p] = planear({ proyecto: 'Tarjetas', prompt: '  ¿Mejor tarjeta sin membresía?  ', categoria: 'Comparación de opciones', intencion: 'Comparativa' });
+  assert.equal(p.method, 'POST');
+  assert.equal(ruta(p.url), "/values/'Tarjetas'!A1:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS");
+  const [fila] = p.body.values;
+  assert.match(fila[0], /^p_/);
+  assert.deepEqual(fila.slice(1, 5), ['Comparación de opciones', 'Comparativa', '¿Mejor tarjeta sin membresía?', 'TRUE']);
+  assert.match(fila[5], /^\d{4}-\d{2}-\d{2}$/);
+  assert.equal(p._respuesta.accion, 'crear');
+  assert.equal(p._respuesta.prompt.proyecto, 'Tarjetas');
+
+  const nuevo = planear({ proyecto: 'Hipotecario', prompt: '¿Qué banco da el mejor crédito hipotecario?' });
+  assert.deepEqual(nuevo.map(x => x.method), ['POST', 'PUT', 'POST']);
+  assert.deepEqual(nuevo[0].body.requests[0].addSheet.properties, { title: 'Hipotecario', index: 2 }, 'va después de las pestañas de proyecto');
+  assert.deepEqual(nuevo[1].body.values, [COLS_PROMPTS], 'con los encabezados del Excel');
+  assert.equal(ruta(nuevo[2].url).split(':append')[0], "/values/'Hipotecario'!A1");
+});
+
+prueba('/geo-prompts-save: editar, activar/desactivar, mover de proyecto y eliminar', () => {
+  const [editar] = planear({ id: 'p002', prompt: 'texto nuevo', intencion: 'Transaccional' });
+  assert.equal(editar.method, 'PUT');
+  assert.equal(ruta(editar.url), "/values/'Tarjetas'!A3:F3?valueInputOption=RAW");
+  assert.deepEqual(editar.body.values[0], ['p002', 'Producto', 'Transaccional', 'texto nuevo', 'FALSE', '2026-10-02'], 'conserva lo que no cambia');
+
+  const [apagar] = planear({ id: 'p001', activo: false });
+  assert.deepEqual(apagar.body.values[0].slice(3, 6), ['¿Cuál es la mejor tarjeta de crédito en Perú?', 'FALSE', '2026-10-01']);
+
+  const mover = planear({ id: 'p003', proyecto: 'Tarjetas' });
+  assert.deepEqual(mover.map(x => x.method), ['POST', 'POST']);
+  assert.match(ruta(mover[0].url), /'Tarjetas'!A1:append/);
+  assert.deepEqual(mover[1].body.requests[0].deleteDimension.range, { sheetId: 1001, dimension: 'ROWS', startIndex: 1, endIndex: 2 }, 'sale de Reputación, fila 2');
+
+  const [borrar] = planear({ id: 'p002', accion: 'eliminar' });
+  assert.deepEqual(borrar.body.requests[0].deleteDimension.range, { sheetId: 1000, dimension: 'ROWS', startIndex: 2, endIndex: 3 });
+  assert.deepEqual(borrar._respuesta, { ok: true, accion: 'eliminar', id: 'p002' });
+});
+
+prueba('/geo-prompts-save: errores con su código', () => {
+  const [vacio] = planear({ prompt: '   ' });
+  assert.deepEqual([vacio._status, vacio._respuesta.ok, !!vacio.method], [400, false, false]);
+  assert.match(vacio._respuesta.error, /vacío/);
+  const [noExiste] = planear({ id: 'nada', accion: 'eliminar' });
+  assert.equal(noExiste._status, 404);
+  assert.equal(planear({ id: 'nada', prompt: 'x' })[0]._status, 404);
+  const sale = n => api.connections[n].main.map(o => o.map(l => l.node));
+  assert.deepEqual(sale('¿Hay cambios?'), [['Escribir en el Sheet'], ['Responder error']]);
+  const esc = api.nodes.find(n => n.name === 'Escribir en el Sheet').parameters;
+  assert.deepEqual([esc.method, esc.url, esc.options.batching.batch.batchSize], ['={{ $json.method }}', '={{ $json.url }}', 1], 'una petición tras otra, en orden');
 });
 
 // Lo que devolvería Google Sheets: todo texto, decimales con coma.
@@ -309,7 +386,7 @@ const dia1 = filasDia('2026-10-18').map(f => (f.motor === 'chatgpt' ? { ...f, me
 const dia2 = filasDia('2026-10-19');
 const hojaResultados = [...dia1, ...dia2, { ...dia2[0], motor: 'gemini', error: 'quota', menciona_bcp: 'FALSE', estado: 'error' }];
 const dashboard = (query, filas = hojaResultados) =>
-  correr(api, 'Dashboard', filas, { 'Webhook geo-dashboard': [{ query }] })[0];
+  correr(api, 'Dashboard', [comoSheets({ resultados: filas })], { 'Webhook geo-dashboard': [{ query }] })[0];
 
 prueba('Dashboard general: KPIs, variación en pp y filas con error fuera', () => {
   const d = dashboard({});
@@ -340,8 +417,9 @@ prueba('Dashboard con filtros, y vacío sin corridas', () => {
 });
 
 // ─── /geo-monitor-data (lo que lee el front) ───────────────────────────────
-const monitor = (resultados, hojaP = hojaPrompts) => correr(api, 'Datos del monitor', resultados,
-  { 'Leer resultados (monitor)': resultados, 'Leer prompts (monitor)': hojaP })[0];
+const monitor = (resultados, hojaP = hojaPrompts) =>
+  correr(api, 'Datos del monitor', [comoSheets({ prompts: hojaP, resultados })],
+    { 'Pestañas del Sheet (monitor)': [metaSheets(['Tarjetas', 'Reputación', 'Nuevo'])] })[0];
 
 prueba('/geo-monitor-data: observaciones con la forma de DATA.monitor del front', () => {
   const r = juntar();
@@ -409,6 +487,23 @@ prueba('/geo-monitor-data: proyectos y prompts desde la hoja, errores y corridas
   assert.deepEqual([vacio.monitor.observations.length, vacio.monitor.dates.length], [0, 0]);
 });
 
+prueba('Plan de guardado: los resultados van a la pestaña del día', () => {
+  const r = juntar().slice(0, 2);
+  const filas = armar(r, [analisisDia[0], analisisDia[1]]);
+  const plan = meta => correr(corrida, 'Plan de guardado', filas, { 'Pestañas del Sheet': [meta] });
+  const fecha = filas[0].fecha;
+  const nueva = plan(metaSheets(['Marca', 'Ahorros', '2026-10-01']));
+  assert.deepEqual(nueva.map(p => p.method), ['POST', 'PUT']);
+  assert.deepEqual(nueva[0].body.requests[0].addSheet.properties, { title: fecha, index: 2 }, 'la más reciente, primera después de los proyectos');
+  assert.deepEqual(nueva[1].body.values[0], COLS_RESULTADOS);
+  assert.equal(nueva[1].body.values.length, 3);
+  const fila = Object.fromEntries(COLS_RESULTADOS.map((c, i) => [c, nueva[1].body.values[1][i]]));
+  assert.deepEqual([fila.motor, fila.menciona_bcp, fila.prompt_id], [filas[0].motor, filas[0].menciona_bcp ? 'TRUE' : 'FALSE', filas[0].prompt_id]);
+  const existe = plan(metaSheets(['Marca', fecha]));
+  assert.deepEqual(existe.map(p => p.method), ['POST']);
+  assert.match(ruta(existe[0].url), new RegExp("'" + fecha + "'!A1:append"));
+});
+
 prueba('Ambos workflows: conexiones válidas, ids únicos, pestañas de la plantilla', () => {
   for (const wf of [corrida, api]) {
     const nombres = new Set(wf.nodes.map(n => n.name));
@@ -417,8 +512,9 @@ prueba('Ambos workflows: conexiones válidas, ids únicos, pestañas de la plant
       for (const salidas of Object.values(c)) for (const s of salidas) for (const l of s) assert.ok(nombres.has(l.node), l.node);
     }
     assert.equal(new Set(wf.nodes.map(n => n.id)).size, wf.nodes.length);
-    for (const h of wf.nodes.filter(n => n.type === 'n8n-nodes-base.googleSheets')) {
-      assert.ok(['prompts', 'resultados'].includes(h.parameters.sheetName.value), h.name);
+    assert.equal(wf.nodes.filter(n => n.type === 'n8n-nodes-base.googleSheets').length, 0, 'todo va por la API de Sheets');
+    for (const h of wf.nodes.filter(n => n.parameters.nodeCredentialType === 'googleSheetsOAuth2Api')) {
+      assert.match(h.parameters.url, /PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET|\$json\.url/, h.name);
     }
   }
   const rutas = wf => wf.nodes.filter(n => n.type === 'n8n-nodes-base.webhook').map(n => n.parameters.path);

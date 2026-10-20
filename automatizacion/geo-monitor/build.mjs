@@ -47,19 +47,47 @@ function workflow(nombre) {
 const code = (w, name, position, jsCode, mode) =>
   w.node(name, 'n8n-nodes-base.code', 2, position, mode ? { mode, jsCode } : { jsCode });
 
-const sheet = (w, name, position, operation, hoja, extra = {}, nodo = {}) =>
-  w.node(name, 'n8n-nodes-base.googleSheets', 4.5, position, {
-    operation,
-    documentId: { __rl: true, value: SHEET_ID, mode: 'id' },
-    sheetName: { __rl: true, value: hoja, mode: 'name' },
-    ...extra,
-    options: operation === 'read' ? {} : { cellFormat: 'RAW' }
-  }, { ...(operation === 'read' ? { alwaysOutputData: true } : {}), ...nodo });
-
 const webhook = (w, name, method, path, position, responseMode = 'responseNode') =>
   w.node(name, 'n8n-nodes-base.webhook', 2, position,
     { httpMethod: method, path, responseMode, options: { allowedOrigins: '*' } },
     { webhookId: uuid('webhook:' + path) });
+
+// ─── Google Sheets por la API (pestañas por proyecto y por día) ─────────────
+// hoja.js con el ID del Sheet (publicar.mjs reemplaza el marcador por el real).
+const HOJA = () => `const SHEET_ID = '${SHEET_ID}';\n` + src('hoja.js');
+const SHEETS = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}`;
+const sheetsHttp = (w, name, position, params, extra = {}, opciones = {}) =>
+  w.node(name, 'n8n-nodes-base.httpRequest', 4.2, position, {
+    authentication: 'predefinedCredentialType', nodeCredentialType: 'googleSheetsOAuth2Api',
+    ...params, options: { timeout: 120000, ...opciones }
+  }, extra);
+// Lista de pestañas (nombre, id, orden).
+const leerPestanas = (w, name, position) => sheetsHttp(w, name, position, {
+  method: 'GET', url: SHEETS,
+  sendQuery: true, queryParameters: { parameters: [{ name: 'fields', value: 'sheets.properties(sheetId,title,index)' }] }
+}, { executeOnce: true });
+// Lee varias pestañas en una sola llamada; el cuerpo lo arma el nodo anterior.
+const leerRangos = (w, name, position) => sheetsHttp(w, name, position, {
+  method: 'POST', url: SHEETS + '/values:batchGetByDataFilter',
+  sendBody: true, specifyBody: 'json', jsonBody: '={{ JSON.stringify($json.cuerpo) }}'
+}, { executeOnce: true });
+// Ejecuta, en orden, las peticiones que arma hoja.js (crear pestaña, escribir, agregar, borrar fila).
+const ejecutarPeticiones = (w, name, position) => sheetsHttp(w, name, position, {
+  method: '={{ $json.method }}', url: '={{ $json.url }}',
+  sendBody: true, specifyBody: 'json', jsonBody: '={{ JSON.stringify($json.body) }}'
+}, {}, { batching: { batch: { batchSize: 1, batchInterval: 300 } } });
+// Pestañas → qué leer → lectura: los tres nodos con los que empieza cada flujo.
+const lecturaHoja = (w, sufijo, y, opciones) => {
+  const nombres = ['Pestañas del Sheet', 'Qué leer', 'Leer el Sheet'].map(n => sufijo ? `${n} (${sufijo})` : n);
+  leerPestanas(w, nombres[0], [240, y]);
+  code(w, nombres[1], [460, y], HOJA() + `
+return [{ json: { cuerpo: cuerpoLectura($input.first().json, ${opciones}) } }];
+`);
+  leerRangos(w, nombres[2], [680, y]);
+  w.chain(...nombres);
+  return nombres;
+};
+const hace = dias => `new Date(Date.now() - ${dias} * 864e5).toLocaleDateString('en-CA', { timeZone: 'America/Lima' })`;
 
 const responderJson = (w, name, position, body, status = 200) =>
   w.node(name, 'n8n-nodes-base.respondToWebhook', 1.1, position,
@@ -73,8 +101,8 @@ corrida.node('Cada día 7:00 (Lima)', 'n8n-nodes-base.scheduleTrigger', 1.2, [0,
 });
 // Responde al instante («Workflow was started») y la corrida sigue sola.
 webhook(corrida, 'Webhook geo-run', 'POST', 'geo-run', [0, 200], 'onReceived');
-sheet(corrida, 'Leer prompts', [240, 100], 'read', 'prompts');
-code(corrida, 'Elegir prompts', [460, 100], src('prompts.js') + `
+const [pestanasCorrida, , leerCorrida] = lecturaHoja(corrida, '', 100, '{ prompts: true }');
+code(corrida, 'Elegir prompts', [900, 100], HOJA() + '\n' + src('prompts.js') + `
 // Del front llega {prompt_ids?, proyecto?}; la corrida diaria toma todos los activos.
 let peticion = {};
 try { if ($('Webhook geo-run').isExecuted) peticion = $('Webhook geo-run').first().json.body || {}; } catch (e) {}
@@ -82,7 +110,7 @@ if (typeof peticion === 'string') { try { peticion = JSON.parse(peticion); } cat
 const ahora = new Date();
 const runId = 'r_' + ahora.toISOString().replace(/\\D/g, '').slice(0, 14);
 const fecha = ahora.toLocaleDateString('en-CA', { timeZone: 'America/Lima' });
-return elegirPrompts($input.all().map(i => i.json), peticion).map(p => ({
+return elegirPrompts(leerHojas($input.first().json).prompts, peticion).map(p => ({
   json: Object.assign(p, { run_id: runId, fecha, timestamp: ahora.toISOString() })
 }));
 `);
@@ -104,29 +132,29 @@ const body = obj => ({ sendBody: true, specifyBody: 'json', jsonBody: `={{ JSON.
 const headerAuth = { authentication: 'genericCredentialType', genericAuthType: 'httpHeaderAuth' };
 const serpApi = { authentication: 'predefinedCredentialType', nodeCredentialType: 'serpApi' };
 
-http('ChatGPT', [700, -200], {
+http('ChatGPT', [1140, -200], {
   method: 'POST', url: 'https://api.openai.com/v1/chat/completions', ...headerAuth,
   ...body(`{ model: 'gpt-4o-mini-search-preview', web_search_options: { search_context_size: 'low', user_location: { type: 'approximate', approximate: { country: 'PE', city: 'Lima', timezone: 'America/Lima' } } }, messages: [{ role: 'user', content: ${PROMPT} }] }`)
 });
 // La búsqueda web de Claude no acepta country: 'PE' (400 «Country code PE is not
 // supported»): la ubicación va por zona horaria y una línea de sistema.
-http('Claude', [700, 0], {
+http('Claude', [1140, 0], {
   method: 'POST', url: 'https://api.anthropic.com/v1/messages',
   authentication: 'predefinedCredentialType', nodeCredentialType: 'anthropicApi',
   sendHeaders: true, headerParameters: { parameters: [{ name: 'anthropic-version', value: '2023-06-01' }] },
   ...body(`{ model: 'claude-sonnet-5-5', max_tokens: 4000, output_config: { effort: 'low' }, system: 'El usuario está en Lima, Perú.', tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 3, user_location: { type: 'approximate', timezone: 'America/Lima' } }], messages: [{ role: 'user', content: ${PROMPT} }] }`)
 });
-http('Gemini', [700, 200], {
+http('Gemini', [1140, 200], {
   method: 'POST', url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent',
   authentication: 'predefinedCredentialType', nodeCredentialType: 'googlePalmApi',
   ...body(`{ contents: [{ role: 'user', parts: [{ text: ${PROMPT} }] }], tools: [{ google_search: {} }] }`)
 });
-http('Perplexity', [700, 400], {
+http('Perplexity', [1140, 400], {
   method: 'POST', url: 'https://api.perplexity.ai/chat/completions', ...headerAuth,
   ...body(`{ model: 'sonar', web_search_options: { search_context_size: 'low', user_location: { country: 'PE' } }, messages: [{ role: 'user', content: ${PROMPT} }] }`)
 });
 if (SERPAPI_ACTIVO) {
-  http('Google (SerpAPI)', [700, 600], {
+  http('Google (SerpAPI)', [1140, 600], {
     method: 'GET', url: 'https://serpapi.com/search.json', ...serpApi,
     sendQuery: true, queryParameters: { parameters: [
       { name: 'engine', value: 'google' },
@@ -140,7 +168,7 @@ if (SERPAPI_ACTIVO) {
   // Si no hay token, se consulta locations.json: es gratis, no gasta búsquedas y,
   // a diferencia de account.json, no devuelve la API key ni el email de la cuenta.
   const PIDE_PAGINA = `($json.ai_overview && $json.ai_overview.page_token && !($json.ai_overview.text_blocks || []).length)`;
-  http('AI Overview (página)', [920, 600], {
+  http('AI Overview (página)', [1360, 600], {
     method: 'GET', url: `={{ ${PIDE_PAGINA} ? 'https://serpapi.com/search.json' : 'https://serpapi.com/locations.json?q=Lima&limit=1' }}`, ...serpApi,
     sendQuery: true, queryParameters: { parameters: [
       { name: 'engine', value: 'google_ai_overview' },
@@ -151,9 +179,9 @@ if (SERPAPI_ACTIVO) {
 
 // Espera a que terminen todas las ramas.
 const RAMAS = ['ChatGPT', 'Claude', 'Gemini', 'Perplexity'].concat(SERPAPI_ACTIVO ? ['AI Overview (página)'] : []);
-corrida.node('Esperar a los motores', 'n8n-nodes-base.merge', 3, [1160, 100], { numberInputs: RAMAS.length });
+corrida.node('Esperar a los motores', 'n8n-nodes-base.merge', 3, [1600, 100], { numberInputs: RAMAS.length });
 
-code(corrida, 'Juntar respuestas', [1380, 100], src('analisis.js') + `
+code(corrida, 'Juntar respuestas', [1820, 100], src('analisis.js') + `
 // Un item por prompt y motor encendido. Cada nodo HTTP devuelve una
 // respuesta por prompt y en el mismo orden, así que el índice los empareja.
 const prompts = $('Elegir prompts').all();
@@ -171,7 +199,7 @@ return salida;
 
 const marcas = [CONFIG.marca].concat(CONFIG.competidores);
 const listaMarcas = marcas.map(m => `${m.nombre} (${m.alias.filter(a => a !== m.nombre).join(', ') || 'sin alias'})`).join('; ');
-corrida.node('Analista IA', '@n8n/n8n-nodes-langchain.informationExtractor', 1.2, [1600, 100], {
+corrida.node('Analista IA', '@n8n/n8n-nodes-langchain.informationExtractor', 1.2, [2040, 100], {
   text: `={{ 'Pregunta que se le hizo a ' + $json.motor + ':\\n' + $json.prompt + '\\n\\nRespuesta de ' + $json.motor + ':\\n' + ($json.texto || '(sin respuesta)') }}`,
   attributes: { attributes: [
     { name: 'menciona_bcp', type: 'boolean', required: true,
@@ -195,133 +223,107 @@ corrida.node('Analista IA', '@n8n/n8n-nodes-langchain.informationExtractor', 1.2
 }, { onError: 'continueRegularOutput' });
 // Claude Haiku 5.5: el más barato (US$ 0,10 / 0,50 por millón de tokens).
 // Sin temperature: Haiku 5.5 rechaza valores de muestreo distintos al de fábrica.
-corrida.node('Claude · analista', '@n8n/n8n-nodes-langchain.lmChatAnthropic', 1.3, [1600, 320], {
+corrida.node('Claude · analista', '@n8n/n8n-nodes-langchain.lmChatAnthropic', 1.3, [2040, 320], {
   model: { __rl: true, mode: 'id', value: 'claude-haiku-5-5' },
   options: {}
 });
 corrida.link('Claude · analista', 'Analista IA', 0, 'ai_languageModel');
 
-code(corrida, 'Armar fila', [1820, 100], src('config.js') + '\n' + src('sov.js') + '\n' + src('analisis.js') + `
+code(corrida, 'Armar fila', [2260, 100], src('config.js') + '\n' + src('sov.js') + '\n' + src('analisis.js') + `
 // El Analista devuelve un item por respuesta y en el mismo orden.
 const r = $('Juntar respuestas').all()[$itemIndex].json;
 return { json: armarFila(r, $json.output, CONFIG) };
 `, 'runOnceForEachItem');
-sheet(corrida, 'Guardar resultados', [2040, 100], 'append', 'resultados', {
-  columns: { mappingMode: 'autoMapInputData', value: {}, matchingColumns: [], schema: [] }
-});
+// Los resultados van a la pestaña del día (se crea en la primera corrida del día).
+code(corrida, 'Plan de guardado', [2480, 100], HOJA() + `
+const meta = $('Pestañas del Sheet').first().json;
+return planGuardarResultados($input.all().map(i => i.json), meta).map(p => ({ json: p }));
+`);
+ejecutarPeticiones(corrida, 'Guardar en la pestaña del día', [2700, 100]);
 
-corrida.link('Cada día 7:00 (Lima)', 'Leer prompts');
-corrida.link('Webhook geo-run', 'Leer prompts');
-corrida.chain('Leer prompts', 'Elegir prompts');
+corrida.link('Cada día 7:00 (Lima)', pestanasCorrida);
+corrida.link('Webhook geo-run', pestanasCorrida);
+corrida.chain(leerCorrida, 'Elegir prompts');
 for (const m of ['ChatGPT', 'Claude', 'Gemini', 'Perplexity'].concat(SERPAPI_ACTIVO ? ['Google (SerpAPI)'] : [])) corrida.link('Elegir prompts', m);
 if (SERPAPI_ACTIVO) corrida.link('Google (SerpAPI)', 'AI Overview (página)');
 RAMAS.forEach((m, i) => corrida.link(m, 'Esperar a los motores', 0, 'main', i));
-corrida.chain('Esperar a los motores', 'Juntar respuestas', 'Analista IA', 'Armar fila', 'Guardar resultados');
+corrida.chain('Esperar a los motores', 'Juntar respuestas', 'Analista IA', 'Armar fila', 'Plan de guardado', 'Guardar en la pestaña del día');
 
 // ═══ GEO · API ═════════════════════════════════════════════════════════════
 const api = workflow('GEO TRACKER BCP · API');
+const respuesta = (name, position) =>
+  api.node(name, 'n8n-nodes-base.respondToWebhook', 1.1, position, { respondWith: 'firstIncomingItem', options: {} });
 
-// GET /geo-dashboard
+// GET /geo-dashboard (lee las pestañas de días del último año)
 webhook(api, 'Webhook geo-dashboard', 'GET', 'geo-dashboard', [0, 0]);
-sheet(api, 'Leer resultados', [240, 0], 'read', 'resultados');
-code(api, 'Dashboard', [460, 0], src('config.js') + '\n' + src('dashboard.js') + `
+const lectDash = lecturaHoja(api, 'dashboard', 0, `{ resultadosDesde: ${hace(400)} }`);
+code(api, 'Dashboard', [900, 0], HOJA() + '\n' + src('config.js') + '\n' + src('dashboard.js') + `
 const q = $('Webhook geo-dashboard').first().json.query || {};
 const filtros = {};
 for (const k of ['proyecto', 'motor', 'desde', 'hasta', 'prompt_id']) if (q[k]) filtros[k] = String(q[k]);
-return [{ json: construirDashboard($input.all().map(i => i.json), filtros, Object.assign({ motores: MOTORES }, CONFIG)) }];
+return [{ json: construirDashboard(leerHojas($input.first().json).resultados, filtros, Object.assign({ motores: MOTORES }, CONFIG)) }];
 `);
-api.node('Responder dashboard', 'n8n-nodes-base.respondToWebhook', 1.1, [680, 0], { respondWith: 'firstIncomingItem', options: {} });
-api.chain('Webhook geo-dashboard', 'Leer resultados', 'Dashboard', 'Responder dashboard');
+respuesta('Responder dashboard', [1120, 0]);
+api.link('Webhook geo-dashboard', lectDash[0]);
+api.chain(lectDash[2], 'Dashboard', 'Responder dashboard');
 
-// GET /geo-prompts
+// GET /geo-prompts (todas las pestañas de proyecto)
 webhook(api, 'Webhook geo-prompts', 'GET', 'geo-prompts', [0, 220]);
-sheet(api, 'Leer prompts', [240, 220], 'read', 'prompts');
-code(api, 'Listar prompts', [460, 220], src('prompts.js') + `
-return [{ json: listarPrompts($input.all().map(i => i.json)) }];
+const lectPrompts = lecturaHoja(api, 'prompts', 220, '{ prompts: true }');
+code(api, 'Listar prompts', [900, 220], HOJA() + '\n' + src('prompts.js') + `
+return [{ json: listarPrompts(leerHojas($input.first().json).prompts) }];
 `);
-api.node('Responder prompts', 'n8n-nodes-base.respondToWebhook', 1.1, [680, 220], { respondWith: 'firstIncomingItem', options: {} });
-api.chain('Webhook geo-prompts', 'Leer prompts', 'Listar prompts', 'Responder prompts');
+respuesta('Responder prompts', [1120, 220]);
+api.link('Webhook geo-prompts', lectPrompts[0]);
+api.chain(lectPrompts[2], 'Listar prompts', 'Responder prompts');
 
-// POST /geo-prompts-save
+// POST /geo-prompts-save: crear, editar, activar/desactivar, mover de proyecto
+// o eliminar. Un proyecto nuevo crea su pestaña.
 webhook(api, 'Webhook geo-prompts-save', 'POST', 'geo-prompts-save', [0, 440]);
-code(api, 'Validar prompt', [240, 440], src('prompts.js') + `
+const lectSave = lecturaHoja(api, 'guardar', 440, '{ prompts: true }');
+code(api, 'Planear cambio', [900, 440], HOJA() + '\n' + src('prompts.js') + `
 let body = $('Webhook geo-prompts-save').first().json.body || {};
 if (typeof body === 'string') { try { body = JSON.parse(body); } catch (e) { body = {}; } }
 const hoy = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Lima' });
 const idNuevo = 'p_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
-const r = prepararGuardado(body, hoy, idNuevo);
-// Sale solo la fila a escribir, o {_borrar: id}, o {_error}.
-if (!r.ok) return [{ json: { _error: r.error } }];
-return [{ json: r.accion === 'eliminar' ? { _borrar: r.fila.id } : r.fila }];
+const plan = planGuardarPrompt(prepararGuardado(body, hoy, idNuevo), leerHojas($input.first().json).prompts, $('Pestañas del Sheet (guardar)').first().json);
+// Un item por petición a la API de Sheets; si no hay nada que hacer, un item con el error.
+if (!plan.ok) return [{ json: { _status: plan.status, _respuesta: plan.respuesta } }];
+return plan.peticiones.map(p => ({ json: Object.assign(p, { _respuesta: plan.respuesta }) }));
 `);
-const regla = (clave, expr) => ({
+api.node('¿Hay cambios?', 'n8n-nodes-base.if', 2, [1120, 440], {
   conditions: {
     options: { caseSensitive: true, leftValue: '', typeValidation: 'loose' },
-    conditions: [{ id: uuid('accion:' + clave), leftValue: expr, rightValue: '', operator: { type: 'boolean', operation: 'true', singleValue: true } }],
-    combinator: 'and'
-  },
-  renameOutput: true,
-  outputKey: clave
-});
-api.node('¿Qué hacer?', 'n8n-nodes-base.switch', 3, [460, 440], {
-  rules: { values: [
-    regla('guardar', '={{ !$json._error && !$json._borrar }}'),
-    regla('borrar', '={{ !!$json._borrar }}'),
-    regla('error', '={{ !!$json._error }}')
-  ] },
-  options: {}
-});
-sheet(api, 'Guardar prompt', [680, 380], 'appendOrUpdate', 'prompts', {
-  columns: { mappingMode: 'autoMapInputData', value: {}, matchingColumns: ['id'], schema: [] }
-});
-responderJson(api, 'Responder guardado', [900, 380], `={{ JSON.stringify({ ok: true, prompt: $('Validar prompt').first().json }) }}`);
-responderJson(api, 'Responder error', [680, 800], `={{ JSON.stringify({ ok: false, error: $json._error }) }}`, 400);
-api.chain('Webhook geo-prompts-save', 'Validar prompt', '¿Qué hacer?', 'Guardar prompt', 'Responder guardado');
-api.link('¿Qué hacer?', 'Responder error', 2);
-
-// Eliminar borra la fila de la hoja prompts. Sus resultados se quedan en la
-// hoja resultados y el monitor los sigue mostrando.
-sheet(api, 'Leer prompts (borrar)', [680, 620], 'read', 'prompts', {}, { executeOnce: true });
-code(api, 'Fila a borrar', [900, 620], `
-const id = $('Validar prompt').first().json._borrar;
-const fila = $input.all().map(i => i.json).find(f => String(f.id || '').trim() === id);
-return [{ json: fila ? { id, row_number: fila.row_number } : { id, _error: 'No existe el prompt ' + id } }];
-`);
-api.node('¿Existe?', 'n8n-nodes-base.if', 2, [1120, 620], {
-  conditions: {
-    options: { caseSensitive: true, leftValue: '', typeValidation: 'loose' },
-    conditions: [{ id: uuid('existe'), leftValue: '={{ !$json._error && $json.row_number > 1 }}', rightValue: '', operator: { type: 'boolean', operation: 'true', singleValue: true } }],
+    conditions: [{ id: uuid('hay-cambios'), leftValue: '={{ !!$json.method }}', rightValue: '', operator: { type: 'boolean', operation: 'true', singleValue: true } }],
     combinator: 'and'
   },
   options: {}
 });
-api.node('Borrar fila', 'n8n-nodes-base.googleSheets', 4.5, [1340, 560], {
-  operation: 'delete',
-  documentId: { __rl: true, value: SHEET_ID, mode: 'id' },
-  sheetName: { __rl: true, value: 'prompts', mode: 'name' },
-  toDelete: 'rows',
-  startIndex: '={{ $json.row_number }}',
-  numberToDelete: 1
+ejecutarPeticiones(api, 'Escribir en el Sheet', [1340, 380]);
+responderJson(api, 'Responder guardado', [1560, 380], `={{ JSON.stringify($('Planear cambio').first().json._respuesta) }}`);
+api.node('Responder error', 'n8n-nodes-base.respondToWebhook', 1.1, [1340, 540], {
+  respondWith: 'json', responseBody: '={{ JSON.stringify($json._respuesta) }}', options: { responseCode: '={{ $json._status }}' }
 });
-responderJson(api, 'Responder borrado', [1560, 560], `={{ JSON.stringify({ ok: true, accion: 'eliminar', id: $('Fila a borrar').first().json.id }) }}`);
-responderJson(api, 'Responder no existe', [1340, 700], `={{ JSON.stringify({ ok: false, error: $json._error || 'No se encontró la fila' }) }}`, 404);
-api.link('¿Qué hacer?', 'Leer prompts (borrar)', 1);
-api.chain('Leer prompts (borrar)', 'Fila a borrar', '¿Existe?', 'Borrar fila', 'Responder borrado');
-api.link('¿Existe?', 'Responder no existe', 1);
+api.link('Webhook geo-prompts-save', lectSave[0]);
+api.chain(lectSave[2], 'Planear cambio', '¿Hay cambios?', 'Escribir en el Sheet', 'Responder guardado');
+api.link('¿Hay cambios?', 'Responder error', 1);
 
 // GET /geo-monitor-data: lo que lee el front «BCP · Monitor de Visibilidad en IA»
 webhook(api, 'Webhook geo-monitor-data', 'GET', 'geo-monitor-data', [0, 700]);
-sheet(api, 'Leer resultados (monitor)', [240, 700], 'read', 'resultados');
-// executeOnce: llegan tantos items como filas de resultados, pero la hoja se lee una vez.
-sheet(api, 'Leer prompts (monitor)', [460, 700], 'read', 'prompts', {}, { executeOnce: true });
-code(api, 'Datos del monitor', [680, 700], src('config.js') + '\n' + src('sov.js') + '\n' + src('dashboard.js') + '\n' + src('prompts.js') + '\n' + src('monitor.js') + `
+const lectMon = lecturaHoja(api, 'monitor', 700, `{ prompts: true, resultadosDesde: ${hace(190)} }`);
+code(api, 'Datos del monitor', [900, 700], HOJA() + '\n' + src('config.js') + '\n' + src('sov.js') + '\n' + src('dashboard.js') + '\n' + src('prompts.js') + '\n' + src('monitor.js') + `
 const hoy = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Lima' });
-const resultados = $('Leer resultados (monitor)').all().map(i => i.json);
-const prompts = $('Leer prompts (monitor)').all().map(i => i.json);
-return [{ json: construirMonitor(resultados, prompts, CONFIG, hoy) }];
+const { prompts, resultados } = leerHojas($input.first().json);
+const datos = construirMonitor(resultados, prompts, CONFIG, hoy);
+// Los proyectos, en el orden de sus pestañas en el Sheet.
+const orden = pestanas($('Pestañas del Sheet (monitor)').first().json).map(p => p.titulo);
+const lugar = n => { const i = orden.indexOf(n); return i < 0 ? 999 : i; };
+datos.monitor.projects.sort((a, b) => lugar(a.name) - lugar(b.name));
+return [{ json: datos }];
 `);
-api.node('Responder monitor', 'n8n-nodes-base.respondToWebhook', 1.1, [900, 700], { respondWith: 'firstIncomingItem', options: {} });
-api.chain('Webhook geo-monitor-data', 'Leer resultados (monitor)', 'Leer prompts (monitor)', 'Datos del monitor', 'Responder monitor');
+respuesta('Responder monitor', [1120, 700]);
+api.link('Webhook geo-monitor-data', lectMon[0]);
+api.chain(lectMon[2], 'Datos del monitor', 'Responder monitor');
 
 // GEO_BUILD_OUT: carpeta de salida alternativa (test.mjs arma ahí la versión con SerpAPI).
 const salida = process.env.GEO_BUILD_OUT ? new URL('file://' + process.env.GEO_BUILD_OUT.replace(/\/?$/, '/')) : dir;

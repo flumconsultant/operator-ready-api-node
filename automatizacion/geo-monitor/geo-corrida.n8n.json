@@ -41,33 +41,37 @@
       "webhookId": "ef5669e2-ba3b-40ff-aa26-a0bf7a0e8c0e"
     },
     {
-      "id": "bcb53031-b798-486e-ae7a-1f2cda2402f3",
-      "name": "Leer prompts",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.5,
+      "id": "13e2fea9-13ab-4979-abd5-90885ae631fc",
+      "name": "Pestañas del Sheet",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
       "position": [
         240,
         100
       ],
       "parameters": {
-        "operation": "read",
-        "documentId": {
-          "__rl": true,
-          "value": "PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
-          "mode": "id"
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSheetsOAuth2Api",
+        "method": "GET",
+        "url": "https://sheets.googleapis.com/v4/spreadsheets/PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "fields",
+              "value": "sheets.properties(sheetId,title,index)"
+            }
+          ]
         },
-        "sheetName": {
-          "__rl": true,
-          "value": "prompts",
-          "mode": "name"
-        },
-        "options": {}
+        "options": {
+          "timeout": 120000
+        }
       },
-      "alwaysOutputData": true
+      "executeOnce": true
     },
     {
-      "id": "b2f4dde3-7869-4806-aad8-9afd3c45231f",
-      "name": "Elegir prompts",
+      "id": "3ef8a564-e52b-4514-a06a-5e0252d570ac",
+      "name": "Qué leer",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
@@ -75,7 +79,43 @@
         100
       ],
       "parameters": {
-        "jsCode": "// Prompts: listar (/geo-prompts), validar lo que llega a /geo-prompts-save y\n// elegir cuáles entran en una corrida. Sin dependencias, como los otros dos.\n\n// Categoría e intención son texto libre (vienen del universo de prompts de BCP).\n// Estas listas solo son sugerencias para un formulario.\nconst CATEGORIAS = ['Reputación', 'Producto', 'Digital', 'Otra'];\nconst INTENCIONES = ['Informacional', 'Comparativa', 'Transaccional', 'Reputacional', 'Navegacional'];\n\nfunction activoDe(v) {\n  if (typeof v === 'boolean') return v;\n  const s = String(v == null ? '' : v).trim().toLowerCase();\n  if (s === '') return true;\n  return ['true', 'verdadero', '1', 'si', 'sí', 'x'].includes(s);\n}\n\nfunction normalizarPrompt(f) {\n  return {\n    id: String(f.id || '').trim(),\n    proyecto: String(f.proyecto || '').trim() || 'Sin proyecto',\n    prompt: String(f.prompt || '').trim(),\n    categoria: String(f.categoria || '').trim() || 'Otra',\n    intencion: String(f.intencion || '').trim(),\n    activo: activoDe(f.activo),\n    fecha_creacion: String(f.fecha_creacion || f.creado || '')\n  };\n}\n\nfunction listarPrompts(filas) {\n  const prompts = filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .sort((a, b) => b.fecha_creacion.localeCompare(a.fecha_creacion) || b.id.localeCompare(a.id));\n  const proyectos = [...new Set(prompts.map(p => p.proyecto))].sort();\n  const unicos = (base, campo) => [...new Set(base.concat(prompts.map(p => p[campo]).filter(Boolean)))].sort();\n  return {\n    prompts, proyectos,\n    categorias: unicos(CATEGORIAS, 'categoria'), intenciones: unicos(INTENCIONES, 'intencion'),\n    total: prompts.length, activos: prompts.filter(p => p.activo).length\n  };\n}\n\n// Devuelve la fila que hay que escribir (solo con las columnas que cambian,\n// para que «Agregar o actualizar» no pise fecha_creacion al editar) o un error.\n// hoy: AAAA-MM-DD en Lima.\nfunction prepararGuardado(body, hoy, idNuevo) {\n  body = body || {};\n  const id = String(body.id || '').trim();\n  if (body.accion === 'eliminar') {\n    if (!id) return { ok: false, error: 'Falta el id del prompt a eliminar.' };\n    return { ok: true, accion: 'eliminar', fila: { id, activo: false } };\n  }\n  const prompt = String(body.prompt || '').trim();\n  const fila = { id: id || idNuevo };\n  if (!id || body.prompt !== undefined) {\n    if (!prompt) return { ok: false, error: 'El prompt no puede estar vacío.' };\n    if (prompt.length > 2000) return { ok: false, error: 'El prompt pasa de 2.000 caracteres.' };\n    fila.prompt = prompt;\n  }\n  if (!id || body.proyecto !== undefined) fila.proyecto = String(body.proyecto || '').trim() || 'Sin proyecto';\n  if (!id || body.categoria !== undefined) {\n    fila.categoria = String(body.categoria || '').trim().slice(0, 80) || 'Otra';\n  }\n  if (body.intencion !== undefined) fila.intencion = String(body.intencion || '').trim().slice(0, 40);\n  if (!id || body.activo !== undefined) fila.activo = activoDe(body.activo);\n  if (!id) fila.fecha_creacion = hoy;\n  return { ok: true, accion: id ? 'editar' : 'crear', fila };\n}\n\n// Qué prompts entran en la corrida: los activos, y si llegan prompt_ids o\n// proyecto, solo esos. Un prompt_id pedido a mano corre aunque esté inactivo.\nfunction elegirPrompts(filas, peticion) {\n  peticion = peticion || {};\n  const ids = Array.isArray(peticion.prompt_ids) ? peticion.prompt_ids.map(String) : [];\n  return filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .filter(p => (ids.length ? ids.includes(p.id) : p.activo))\n    .filter(p => !peticion.proyecto || p.proyecto === peticion.proyecto);\n}\n\n// Del front llega {prompt_ids?, proyecto?}; la corrida diaria toma todos los activos.\nlet peticion = {};\ntry { if ($('Webhook geo-run').isExecuted) peticion = $('Webhook geo-run').first().json.body || {}; } catch (e) {}\nif (typeof peticion === 'string') { try { peticion = JSON.parse(peticion); } catch (e) { peticion = {}; } }\nconst ahora = new Date();\nconst runId = 'r_' + ahora.toISOString().replace(/\\D/g, '').slice(0, 14);\nconst fecha = ahora.toLocaleDateString('en-CA', { timeZone: 'America/Lima' });\nreturn elegirPrompts($input.all().map(i => i.json), peticion).map(p => ({\n  json: Object.assign(p, { run_id: runId, fecha, timestamp: ahora.toISOString() })\n}));\n"
+        "jsCode": "const SHEET_ID = 'PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET';\n// El Google Sheet, organizado como lo usa el equipo de BCP:\n//   · una pestaña por proyecto con sus prompts (Marca, Ahorros, Cards…)\n//   · una pestaña por día de medición con los resultados (2026-10-21, …)\n//   · las que empiezan con «_» son de sistema (respaldos, notas) y se ignoran.\n// Se lee y escribe con la API de Google Sheets (nodos HTTP con la credencial de\n// Sheets); aquí solo se arman las peticiones y se interpretan las respuestas.\n// Sin dependencias: build.mjs lo pega en los nodos Code que lo necesitan.\n\nconst SHEETS_API = 'https://sheets.googleapis.com/v4/spreadsheets/' + SHEET_ID;\n\n// Encabezados de las pestañas de proyecto (los del Excel original de BCP, más\n// id, activo y fecha para poder gestionarlos desde el front).\nconst COLUMNAS_PROMPTS = ['id', 'Categoría', 'Intención de Búsqueda', 'Prompt', 'Activo', 'Fecha de creación'];\nconst COLUMNAS_RESULTADOS = ['run_id', 'fecha', 'timestamp', 'prompt_id', 'proyecto', 'categoria', 'prompt', 'motor', 'estado',\n  'menciona_bcp', 'posicion_bcp', 'sentimiento', 'marcas_mencionadas', 'fuentes', 'citado_bcp', 'error', 'respuesta',\n  'n_menciones_bcp', 'n_menciones_bancos', 'detalle_marcas', 'sov_bcp'];\n\nfunction esPestanaFecha(titulo) { return /^\\d{4}-\\d{2}-\\d{2}$/.test(String(titulo || '').trim()); }\nfunction esPestanaSistema(titulo) { return String(titulo || '').trim().startsWith('_'); }\nfunction esPestanaProyecto(titulo) { return !esPestanaFecha(titulo) && !esPestanaSistema(titulo) && String(titulo || '').trim() !== ''; }\n\nfunction pestanas(meta) {\n  return ((meta && meta.sheets) || []).map(s => s.properties).filter(Boolean)\n    .map(p => ({ id: p.sheetId, titulo: p.title, indice: p.index }));\n}\n\n// Rango A1 de una pestaña, con el nombre entre comillas (acepta espacios y tildes).\nfunction rango(titulo, celdas) {\n  return \"'\" + String(titulo).replace(/'/g, \"''\") + \"'!\" + celdas;\n}\n\n// Cuerpo de values:batchGetByDataFilter para leer varias pestañas en una llamada.\n// desde (AAAA-MM-DD): solo las pestañas de resultados desde esa fecha.\nfunction cuerpoLectura(meta, { prompts = false, resultadosDesde = null } = {}) {\n  const filtros = [];\n  for (const p of pestanas(meta)) {\n    if (prompts && esPestanaProyecto(p.titulo)) filtros.push({ a1Range: rango(p.titulo, 'A:F') });\n    if (resultadosDesde && esPestanaFecha(p.titulo) && p.titulo >= resultadosDesde) filtros.push({ a1Range: rango(p.titulo, 'A:U') });\n  }\n  // La API no acepta una lista vacía: sin nada que leer, se pide A1 de la primera pestaña.\n  const primera = pestanas(meta)[0];\n  if (!filtros.length && primera) filtros.push({ a1Range: rango(primera.titulo, 'A1:A1') });\n  return { dataFilters: filtros, majorDimension: 'ROWS', valueRenderOption: 'UNFORMATTED_VALUE' };\n}\n\nfunction tituloDeRango(r) {\n  const m = String(r || '').match(/^'((?:[^']|'')*)'!/) || String(r || '').match(/^([^!]+)!/);\n  return m ? m[1].replace(/''/g, \"'\") : '';\n}\n\nfunction claveColumna(c) {\n  const k = String(c || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();\n  if (k === 'id') return 'id';\n  if (k.startsWith('categ')) return 'categoria';\n  if (k.startsWith('intenc')) return 'intencion';\n  if (k.startsWith('prompt')) return 'prompt';\n  if (k.startsWith('activo')) return 'activo';\n  if (k.startsWith('fecha')) return 'fecha_creacion';\n  return '';\n}\n\n// Respuesta de batchGetByDataFilter → {prompts: [...], resultados: [...]}.\n// Cada prompt lleva su pestaña (= proyecto) y su número de fila.\nfunction leerHojas(respuesta) {\n  const prompts = [];\n  const resultados = [];\n  for (const vr of (respuesta && respuesta.valueRanges) || []) {\n    const v = vr.valueRange || vr;\n    const titulo = tituloDeRango(v.range);\n    const filas = v.values || [];\n    if (!filas.length) continue;\n    if (esPestanaFecha(titulo)) {\n      const cab = filas[0].map(String);\n      filas.slice(1).forEach(f => {\n        if (!f || !f.some(x => x !== '' && x !== null)) return;\n        const o = {};\n        cab.forEach((c, i) => { o[c] = f[i] === undefined ? '' : f[i]; });\n        resultados.push(o);\n      });\n    } else if (esPestanaProyecto(titulo)) {\n      const cab = filas[0].map(claveColumna);\n      filas.slice(1).forEach((f, i) => {\n        if (!f || !f.some(x => x !== '' && x !== null)) return;\n        const o = { proyecto: titulo, _fila: i + 2 };\n        cab.forEach((c, j) => { if (c) o[c] = f[j] === undefined ? '' : f[j]; });\n        if (o.fecha_creacion !== undefined) o.fecha_creacion = fechaTexto(o.fecha_creacion);\n        prompts.push(o);\n      });\n    }\n  }\n  return { prompts, resultados };\n}\n\n// Las fechas pueden volver como número de serie de Sheets (UNFORMATTED_VALUE).\nfunction fechaTexto(v) {\n  if (typeof v === 'number' && v > 20000 && v < 80000) {\n    return new Date(Date.UTC(1899, 11, 30) + v * 864e5).toISOString().slice(0, 10);\n  }\n  return String(v || '');\n}\n\nfunction valoresPrompt(p) {\n  return [p.id, p.categoria || '', p.intencion || '', p.prompt || '', p.activo === false ? 'FALSE' : 'TRUE', p.fecha_creacion || ''];\n}\n\nfunction valoresResultado(f) {\n  return COLUMNAS_RESULTADOS.map(c => {\n    const v = f[c];\n    return v === undefined || v === null ? '' : typeof v === 'boolean' ? (v ? 'TRUE' : 'FALSE') : v;\n  });\n}\n\n// ─── Peticiones a la API de Sheets ─────────────────────────────────────────\nconst pedidoSheets = (method, ruta, body) => ({ method, url: SHEETS_API + ruta, body });\nconst crearPestana = (titulo, indice) =>\n  pedidoSheets('POST', ':batchUpdate', { requests: [{ addSheet: { properties: Object.assign({ title: titulo }, indice === undefined ? {} : { index: indice }) } }] });\nconst escribir = (titulo, desde, valores) =>\n  pedidoSheets('PUT', '/values/' + encodeURIComponent(rango(titulo, desde)) + '?valueInputOption=RAW', { values: valores });\nconst agregar = (titulo, valores) =>\n  pedidoSheets('POST', '/values/' + encodeURIComponent(rango(titulo, 'A1')) + ':append?valueInputOption=RAW&insertDataOption=INSERT_ROWS', { values: valores });\nconst borrarFila = (idPestana, fila) =>\n  pedidoSheets('POST', ':batchUpdate', { requests: [{ deleteDimension: { range: { sheetId: idPestana, dimension: 'ROWS', startIndex: fila - 1, endIndex: fila } } }] });\n\n// Crear, editar, activar/desactivar, mover de proyecto o eliminar un prompt.\n// guardado: lo que devuelve prepararGuardado (prompts.js).\n// → {ok, status, respuesta, peticiones}\nfunction planGuardarPrompt(guardado, prompts, meta) {\n  if (!guardado.ok) return { ok: false, status: 400, respuesta: { ok: false, error: guardado.error }, peticiones: [] };\n  const tabs = pestanas(meta);\n  const tab = titulo => tabs.find(t => t.titulo === titulo);\n  const fila = guardado.fila;\n  const actual = prompts.find(p => String(p.id).trim() === fila.id);\n  const proyectosAlFinal = tabs.filter(t => esPestanaProyecto(t.titulo)).length;\n  const asegurarPestana = (titulo, pet) => {\n    if (!tab(titulo)) {\n      pet.push(crearPestana(titulo, proyectosAlFinal));\n      pet.push(escribir(titulo, 'A1', [COLUMNAS_PROMPTS]));\n    }\n  };\n\n  if (guardado.accion === 'eliminar') {\n    if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };\n    return { ok: true, status: 200, respuesta: { ok: true, accion: 'eliminar', id: fila.id }, peticiones: [borrarFila(tab(actual.proyecto).id, actual._fila)] };\n  }\n\n  if (guardado.accion === 'editar') {\n    if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };\n    const nuevo = Object.assign({}, normalizarPrompt(actual), fila);\n    const pet = [];\n    if (nuevo.proyecto === actual.proyecto) {\n      pet.push(escribir(actual.proyecto, 'A' + actual._fila + ':F' + actual._fila, [valoresPrompt(nuevo)]));\n    } else {\n      // Cambio de proyecto: se agrega en la pestaña nueva y se borra de la vieja.\n      asegurarPestana(nuevo.proyecto, pet);\n      pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));\n      pet.push(borrarFila(tab(actual.proyecto).id, actual._fila));\n    }\n    return { ok: true, status: 200, respuesta: { ok: true, accion: 'editar', prompt: limpio(nuevo) }, peticiones: pet };\n  }\n\n  // Crear: un proyecto nuevo crea su pestaña.\n  const nuevo = normalizarPrompt(fila);\n  const pet = [];\n  asegurarPestana(nuevo.proyecto, pet);\n  pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));\n  return { ok: true, status: 200, respuesta: { ok: true, accion: 'crear', prompt: limpio(nuevo) }, peticiones: pet };\n}\n\nfunction limpio(p) {\n  const o = {};\n  for (const k of Object.keys(p)) if (!k.startsWith('_')) o[k] = p[k];\n  return o;\n}\n\n// Guardar las filas de una corrida en la pestaña del día (se crea si no está,\n// justo después de las pestañas de proyecto, para que la más reciente quede primero).\nfunction planGuardarResultados(filas, meta) {\n  const porFecha = new Map();\n  for (const f of filas) {\n    if (!porFecha.has(f.fecha)) porFecha.set(f.fecha, []);\n    porFecha.get(f.fecha).push(valoresResultado(f));\n  }\n  const tabs = pestanas(meta);\n  const proyectos = tabs.filter(t => esPestanaProyecto(t.titulo)).length;\n  const pet = [];\n  for (const [fecha, valores] of porFecha) {\n    if (tabs.some(t => t.titulo === fecha)) pet.push(agregar(fecha, valores));\n    else {\n      pet.push(crearPestana(fecha, proyectos));\n      pet.push(escribir(fecha, 'A1', [COLUMNAS_RESULTADOS].concat(valores)));\n    }\n  }\n  return pet;\n}\n\nreturn [{ json: { cuerpo: cuerpoLectura($input.first().json, { prompts: true }) } }];\n"
+      }
+    },
+    {
+      "id": "b92aa05d-f564-4e5b-a035-279d9e7739aa",
+      "name": "Leer el Sheet",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        680,
+        100
+      ],
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSheetsOAuth2Api",
+        "method": "POST",
+        "url": "https://sheets.googleapis.com/v4/spreadsheets/PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET/values:batchGetByDataFilter",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.cuerpo) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "executeOnce": true
+    },
+    {
+      "id": "b2f4dde3-7869-4806-aad8-9afd3c45231f",
+      "name": "Elegir prompts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        900,
+        100
+      ],
+      "parameters": {
+        "jsCode": "const SHEET_ID = 'PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET';\n// El Google Sheet, organizado como lo usa el equipo de BCP:\n//   · una pestaña por proyecto con sus prompts (Marca, Ahorros, Cards…)\n//   · una pestaña por día de medición con los resultados (2026-10-21, …)\n//   · las que empiezan con «_» son de sistema (respaldos, notas) y se ignoran.\n// Se lee y escribe con la API de Google Sheets (nodos HTTP con la credencial de\n// Sheets); aquí solo se arman las peticiones y se interpretan las respuestas.\n// Sin dependencias: build.mjs lo pega en los nodos Code que lo necesitan.\n\nconst SHEETS_API = 'https://sheets.googleapis.com/v4/spreadsheets/' + SHEET_ID;\n\n// Encabezados de las pestañas de proyecto (los del Excel original de BCP, más\n// id, activo y fecha para poder gestionarlos desde el front).\nconst COLUMNAS_PROMPTS = ['id', 'Categoría', 'Intención de Búsqueda', 'Prompt', 'Activo', 'Fecha de creación'];\nconst COLUMNAS_RESULTADOS = ['run_id', 'fecha', 'timestamp', 'prompt_id', 'proyecto', 'categoria', 'prompt', 'motor', 'estado',\n  'menciona_bcp', 'posicion_bcp', 'sentimiento', 'marcas_mencionadas', 'fuentes', 'citado_bcp', 'error', 'respuesta',\n  'n_menciones_bcp', 'n_menciones_bancos', 'detalle_marcas', 'sov_bcp'];\n\nfunction esPestanaFecha(titulo) { return /^\\d{4}-\\d{2}-\\d{2}$/.test(String(titulo || '').trim()); }\nfunction esPestanaSistema(titulo) { return String(titulo || '').trim().startsWith('_'); }\nfunction esPestanaProyecto(titulo) { return !esPestanaFecha(titulo) && !esPestanaSistema(titulo) && String(titulo || '').trim() !== ''; }\n\nfunction pestanas(meta) {\n  return ((meta && meta.sheets) || []).map(s => s.properties).filter(Boolean)\n    .map(p => ({ id: p.sheetId, titulo: p.title, indice: p.index }));\n}\n\n// Rango A1 de una pestaña, con el nombre entre comillas (acepta espacios y tildes).\nfunction rango(titulo, celdas) {\n  return \"'\" + String(titulo).replace(/'/g, \"''\") + \"'!\" + celdas;\n}\n\n// Cuerpo de values:batchGetByDataFilter para leer varias pestañas en una llamada.\n// desde (AAAA-MM-DD): solo las pestañas de resultados desde esa fecha.\nfunction cuerpoLectura(meta, { prompts = false, resultadosDesde = null } = {}) {\n  const filtros = [];\n  for (const p of pestanas(meta)) {\n    if (prompts && esPestanaProyecto(p.titulo)) filtros.push({ a1Range: rango(p.titulo, 'A:F') });\n    if (resultadosDesde && esPestanaFecha(p.titulo) && p.titulo >= resultadosDesde) filtros.push({ a1Range: rango(p.titulo, 'A:U') });\n  }\n  // La API no acepta una lista vacía: sin nada que leer, se pide A1 de la primera pestaña.\n  const primera = pestanas(meta)[0];\n  if (!filtros.length && primera) filtros.push({ a1Range: rango(primera.titulo, 'A1:A1') });\n  return { dataFilters: filtros, majorDimension: 'ROWS', valueRenderOption: 'UNFORMATTED_VALUE' };\n}\n\nfunction tituloDeRango(r) {\n  const m = String(r || '').match(/^'((?:[^']|'')*)'!/) || String(r || '').match(/^([^!]+)!/);\n  return m ? m[1].replace(/''/g, \"'\") : '';\n}\n\nfunction claveColumna(c) {\n  const k = String(c || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();\n  if (k === 'id') return 'id';\n  if (k.startsWith('categ')) return 'categoria';\n  if (k.startsWith('intenc')) return 'intencion';\n  if (k.startsWith('prompt')) return 'prompt';\n  if (k.startsWith('activo')) return 'activo';\n  if (k.startsWith('fecha')) return 'fecha_creacion';\n  return '';\n}\n\n// Respuesta de batchGetByDataFilter → {prompts: [...], resultados: [...]}.\n// Cada prompt lleva su pestaña (= proyecto) y su número de fila.\nfunction leerHojas(respuesta) {\n  const prompts = [];\n  const resultados = [];\n  for (const vr of (respuesta && respuesta.valueRanges) || []) {\n    const v = vr.valueRange || vr;\n    const titulo = tituloDeRango(v.range);\n    const filas = v.values || [];\n    if (!filas.length) continue;\n    if (esPestanaFecha(titulo)) {\n      const cab = filas[0].map(String);\n      filas.slice(1).forEach(f => {\n        if (!f || !f.some(x => x !== '' && x !== null)) return;\n        const o = {};\n        cab.forEach((c, i) => { o[c] = f[i] === undefined ? '' : f[i]; });\n        resultados.push(o);\n      });\n    } else if (esPestanaProyecto(titulo)) {\n      const cab = filas[0].map(claveColumna);\n      filas.slice(1).forEach((f, i) => {\n        if (!f || !f.some(x => x !== '' && x !== null)) return;\n        const o = { proyecto: titulo, _fila: i + 2 };\n        cab.forEach((c, j) => { if (c) o[c] = f[j] === undefined ? '' : f[j]; });\n        if (o.fecha_creacion !== undefined) o.fecha_creacion = fechaTexto(o.fecha_creacion);\n        prompts.push(o);\n      });\n    }\n  }\n  return { prompts, resultados };\n}\n\n// Las fechas pueden volver como número de serie de Sheets (UNFORMATTED_VALUE).\nfunction fechaTexto(v) {\n  if (typeof v === 'number' && v > 20000 && v < 80000) {\n    return new Date(Date.UTC(1899, 11, 30) + v * 864e5).toISOString().slice(0, 10);\n  }\n  return String(v || '');\n}\n\nfunction valoresPrompt(p) {\n  return [p.id, p.categoria || '', p.intencion || '', p.prompt || '', p.activo === false ? 'FALSE' : 'TRUE', p.fecha_creacion || ''];\n}\n\nfunction valoresResultado(f) {\n  return COLUMNAS_RESULTADOS.map(c => {\n    const v = f[c];\n    return v === undefined || v === null ? '' : typeof v === 'boolean' ? (v ? 'TRUE' : 'FALSE') : v;\n  });\n}\n\n// ─── Peticiones a la API de Sheets ─────────────────────────────────────────\nconst pedidoSheets = (method, ruta, body) => ({ method, url: SHEETS_API + ruta, body });\nconst crearPestana = (titulo, indice) =>\n  pedidoSheets('POST', ':batchUpdate', { requests: [{ addSheet: { properties: Object.assign({ title: titulo }, indice === undefined ? {} : { index: indice }) } }] });\nconst escribir = (titulo, desde, valores) =>\n  pedidoSheets('PUT', '/values/' + encodeURIComponent(rango(titulo, desde)) + '?valueInputOption=RAW', { values: valores });\nconst agregar = (titulo, valores) =>\n  pedidoSheets('POST', '/values/' + encodeURIComponent(rango(titulo, 'A1')) + ':append?valueInputOption=RAW&insertDataOption=INSERT_ROWS', { values: valores });\nconst borrarFila = (idPestana, fila) =>\n  pedidoSheets('POST', ':batchUpdate', { requests: [{ deleteDimension: { range: { sheetId: idPestana, dimension: 'ROWS', startIndex: fila - 1, endIndex: fila } } }] });\n\n// Crear, editar, activar/desactivar, mover de proyecto o eliminar un prompt.\n// guardado: lo que devuelve prepararGuardado (prompts.js).\n// → {ok, status, respuesta, peticiones}\nfunction planGuardarPrompt(guardado, prompts, meta) {\n  if (!guardado.ok) return { ok: false, status: 400, respuesta: { ok: false, error: guardado.error }, peticiones: [] };\n  const tabs = pestanas(meta);\n  const tab = titulo => tabs.find(t => t.titulo === titulo);\n  const fila = guardado.fila;\n  const actual = prompts.find(p => String(p.id).trim() === fila.id);\n  const proyectosAlFinal = tabs.filter(t => esPestanaProyecto(t.titulo)).length;\n  const asegurarPestana = (titulo, pet) => {\n    if (!tab(titulo)) {\n      pet.push(crearPestana(titulo, proyectosAlFinal));\n      pet.push(escribir(titulo, 'A1', [COLUMNAS_PROMPTS]));\n    }\n  };\n\n  if (guardado.accion === 'eliminar') {\n    if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };\n    return { ok: true, status: 200, respuesta: { ok: true, accion: 'eliminar', id: fila.id }, peticiones: [borrarFila(tab(actual.proyecto).id, actual._fila)] };\n  }\n\n  if (guardado.accion === 'editar') {\n    if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };\n    const nuevo = Object.assign({}, normalizarPrompt(actual), fila);\n    const pet = [];\n    if (nuevo.proyecto === actual.proyecto) {\n      pet.push(escribir(actual.proyecto, 'A' + actual._fila + ':F' + actual._fila, [valoresPrompt(nuevo)]));\n    } else {\n      // Cambio de proyecto: se agrega en la pestaña nueva y se borra de la vieja.\n      asegurarPestana(nuevo.proyecto, pet);\n      pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));\n      pet.push(borrarFila(tab(actual.proyecto).id, actual._fila));\n    }\n    return { ok: true, status: 200, respuesta: { ok: true, accion: 'editar', prompt: limpio(nuevo) }, peticiones: pet };\n  }\n\n  // Crear: un proyecto nuevo crea su pestaña.\n  const nuevo = normalizarPrompt(fila);\n  const pet = [];\n  asegurarPestana(nuevo.proyecto, pet);\n  pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));\n  return { ok: true, status: 200, respuesta: { ok: true, accion: 'crear', prompt: limpio(nuevo) }, peticiones: pet };\n}\n\nfunction limpio(p) {\n  const o = {};\n  for (const k of Object.keys(p)) if (!k.startsWith('_')) o[k] = p[k];\n  return o;\n}\n\n// Guardar las filas de una corrida en la pestaña del día (se crea si no está,\n// justo después de las pestañas de proyecto, para que la más reciente quede primero).\nfunction planGuardarResultados(filas, meta) {\n  const porFecha = new Map();\n  for (const f of filas) {\n    if (!porFecha.has(f.fecha)) porFecha.set(f.fecha, []);\n    porFecha.get(f.fecha).push(valoresResultado(f));\n  }\n  const tabs = pestanas(meta);\n  const proyectos = tabs.filter(t => esPestanaProyecto(t.titulo)).length;\n  const pet = [];\n  for (const [fecha, valores] of porFecha) {\n    if (tabs.some(t => t.titulo === fecha)) pet.push(agregar(fecha, valores));\n    else {\n      pet.push(crearPestana(fecha, proyectos));\n      pet.push(escribir(fecha, 'A1', [COLUMNAS_RESULTADOS].concat(valores)));\n    }\n  }\n  return pet;\n}\n\n// Prompts: listar (/geo-prompts), validar lo que llega a /geo-prompts-save y\n// elegir cuáles entran en una corrida. Sin dependencias, como los otros dos.\n\n// Categoría e intención son texto libre (vienen del universo de prompts de BCP).\n// Estas listas solo son sugerencias para un formulario.\nconst CATEGORIAS = ['Reputación', 'Producto', 'Digital', 'Otra'];\nconst INTENCIONES = ['Informacional', 'Comparativa', 'Transaccional', 'Reputacional', 'Navegacional'];\n\nfunction activoDe(v) {\n  if (typeof v === 'boolean') return v;\n  const s = String(v == null ? '' : v).trim().toLowerCase();\n  if (s === '') return true;\n  return ['true', 'verdadero', '1', 'si', 'sí', 'x'].includes(s);\n}\n\nfunction normalizarPrompt(f) {\n  return {\n    id: String(f.id || '').trim(),\n    proyecto: String(f.proyecto || '').trim() || 'Sin proyecto',\n    prompt: String(f.prompt || '').trim(),\n    categoria: String(f.categoria || '').trim() || 'Otra',\n    intencion: String(f.intencion || '').trim(),\n    activo: activoDe(f.activo),\n    fecha_creacion: String(f.fecha_creacion || f.creado || '')\n  };\n}\n\nfunction listarPrompts(filas) {\n  const prompts = filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .sort((a, b) => b.fecha_creacion.localeCompare(a.fecha_creacion) || b.id.localeCompare(a.id));\n  const proyectos = [...new Set(prompts.map(p => p.proyecto))].sort();\n  const unicos = (base, campo) => [...new Set(base.concat(prompts.map(p => p[campo]).filter(Boolean)))].sort();\n  return {\n    prompts, proyectos,\n    categorias: unicos(CATEGORIAS, 'categoria'), intenciones: unicos(INTENCIONES, 'intencion'),\n    total: prompts.length, activos: prompts.filter(p => p.activo).length\n  };\n}\n\n// Devuelve la fila que hay que escribir (solo con las columnas que cambian,\n// para que «Agregar o actualizar» no pise fecha_creacion al editar) o un error.\n// hoy: AAAA-MM-DD en Lima.\nfunction prepararGuardado(body, hoy, idNuevo) {\n  body = body || {};\n  const id = String(body.id || '').trim();\n  if (body.accion === 'eliminar') {\n    if (!id) return { ok: false, error: 'Falta el id del prompt a eliminar.' };\n    return { ok: true, accion: 'eliminar', fila: { id, activo: false } };\n  }\n  const prompt = String(body.prompt || '').trim();\n  const fila = { id: id || idNuevo };\n  if (!id || body.prompt !== undefined) {\n    if (!prompt) return { ok: false, error: 'El prompt no puede estar vacío.' };\n    if (prompt.length > 2000) return { ok: false, error: 'El prompt pasa de 2.000 caracteres.' };\n    fila.prompt = prompt;\n  }\n  if (!id || body.proyecto !== undefined) fila.proyecto = String(body.proyecto || '').trim() || 'Sin proyecto';\n  if (!id || body.categoria !== undefined) {\n    fila.categoria = String(body.categoria || '').trim().slice(0, 80) || 'Otra';\n  }\n  if (body.intencion !== undefined) fila.intencion = String(body.intencion || '').trim().slice(0, 40);\n  if (!id || body.activo !== undefined) fila.activo = activoDe(body.activo);\n  if (!id) fila.fecha_creacion = hoy;\n  return { ok: true, accion: id ? 'editar' : 'crear', fila };\n}\n\n// Qué prompts entran en la corrida: los activos, y si llegan prompt_ids o\n// proyecto, solo esos. Un prompt_id pedido a mano corre aunque esté inactivo.\nfunction elegirPrompts(filas, peticion) {\n  peticion = peticion || {};\n  const ids = Array.isArray(peticion.prompt_ids) ? peticion.prompt_ids.map(String) : [];\n  return filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .filter(p => (ids.length ? ids.includes(p.id) : p.activo))\n    .filter(p => !peticion.proyecto || p.proyecto === peticion.proyecto);\n}\n\n// Del front llega {prompt_ids?, proyecto?}; la corrida diaria toma todos los activos.\nlet peticion = {};\ntry { if ($('Webhook geo-run').isExecuted) peticion = $('Webhook geo-run').first().json.body || {}; } catch (e) {}\nif (typeof peticion === 'string') { try { peticion = JSON.parse(peticion); } catch (e) { peticion = {}; } }\nconst ahora = new Date();\nconst runId = 'r_' + ahora.toISOString().replace(/\\D/g, '').slice(0, 14);\nconst fecha = ahora.toLocaleDateString('en-CA', { timeZone: 'America/Lima' });\nreturn elegirPrompts(leerHojas($input.first().json).prompts, peticion).map(p => ({\n  json: Object.assign(p, { run_id: runId, fecha, timestamp: ahora.toISOString() })\n}));\n"
       }
     },
     {
@@ -84,7 +124,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        700,
+        1140,
         -200
       ],
       "parameters": {
@@ -116,7 +156,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        700,
+        1140,
         0
       ],
       "parameters": {
@@ -157,7 +197,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        700,
+        1140,
         200
       ],
       "parameters": {
@@ -189,7 +229,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        700,
+        1140,
         400
       ],
       "parameters": {
@@ -221,7 +261,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3,
       "position": [
-        1160,
+        1600,
         100
       ],
       "parameters": {
@@ -234,7 +274,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1380,
+        1820,
         100
       ],
       "parameters": {
@@ -247,7 +287,7 @@
       "type": "@n8n/n8n-nodes-langchain.informationExtractor",
       "typeVersion": 1.2,
       "position": [
-        1600,
+        2040,
         100
       ],
       "parameters": {
@@ -310,7 +350,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
       "typeVersion": 1.3,
       "position": [
-        1600,
+        2040,
         320
       ],
       "parameters": {
@@ -328,7 +368,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1820,
+        2260,
         100
       ],
       "parameters": {
@@ -337,39 +377,70 @@
       }
     },
     {
-      "id": "9e43ba51-4353-4852-ac04-7f4998b2fbe3",
-      "name": "Guardar resultados",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.5,
+      "id": "b3054020-001c-46de-a2a2-250570a1207d",
+      "name": "Plan de guardado",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
-        2040,
+        2480,
         100
       ],
       "parameters": {
-        "operation": "append",
-        "documentId": {
-          "__rl": true,
-          "value": "PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
-          "mode": "id"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "resultados",
-          "mode": "name"
-        },
-        "columns": {
-          "mappingMode": "autoMapInputData",
-          "value": {},
-          "matchingColumns": [],
-          "schema": []
-        },
+        "jsCode": "const SHEET_ID = 'PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET';\n// El Google Sheet, organizado como lo usa el equipo de BCP:\n//   · una pestaña por proyecto con sus prompts (Marca, Ahorros, Cards…)\n//   · una pestaña por día de medición con los resultados (2026-10-21, …)\n//   · las que empiezan con «_» son de sistema (respaldos, notas) y se ignoran.\n// Se lee y escribe con la API de Google Sheets (nodos HTTP con la credencial de\n// Sheets); aquí solo se arman las peticiones y se interpretan las respuestas.\n// Sin dependencias: build.mjs lo pega en los nodos Code que lo necesitan.\n\nconst SHEETS_API = 'https://sheets.googleapis.com/v4/spreadsheets/' + SHEET_ID;\n\n// Encabezados de las pestañas de proyecto (los del Excel original de BCP, más\n// id, activo y fecha para poder gestionarlos desde el front).\nconst COLUMNAS_PROMPTS = ['id', 'Categoría', 'Intención de Búsqueda', 'Prompt', 'Activo', 'Fecha de creación'];\nconst COLUMNAS_RESULTADOS = ['run_id', 'fecha', 'timestamp', 'prompt_id', 'proyecto', 'categoria', 'prompt', 'motor', 'estado',\n  'menciona_bcp', 'posicion_bcp', 'sentimiento', 'marcas_mencionadas', 'fuentes', 'citado_bcp', 'error', 'respuesta',\n  'n_menciones_bcp', 'n_menciones_bancos', 'detalle_marcas', 'sov_bcp'];\n\nfunction esPestanaFecha(titulo) { return /^\\d{4}-\\d{2}-\\d{2}$/.test(String(titulo || '').trim()); }\nfunction esPestanaSistema(titulo) { return String(titulo || '').trim().startsWith('_'); }\nfunction esPestanaProyecto(titulo) { return !esPestanaFecha(titulo) && !esPestanaSistema(titulo) && String(titulo || '').trim() !== ''; }\n\nfunction pestanas(meta) {\n  return ((meta && meta.sheets) || []).map(s => s.properties).filter(Boolean)\n    .map(p => ({ id: p.sheetId, titulo: p.title, indice: p.index }));\n}\n\n// Rango A1 de una pestaña, con el nombre entre comillas (acepta espacios y tildes).\nfunction rango(titulo, celdas) {\n  return \"'\" + String(titulo).replace(/'/g, \"''\") + \"'!\" + celdas;\n}\n\n// Cuerpo de values:batchGetByDataFilter para leer varias pestañas en una llamada.\n// desde (AAAA-MM-DD): solo las pestañas de resultados desde esa fecha.\nfunction cuerpoLectura(meta, { prompts = false, resultadosDesde = null } = {}) {\n  const filtros = [];\n  for (const p of pestanas(meta)) {\n    if (prompts && esPestanaProyecto(p.titulo)) filtros.push({ a1Range: rango(p.titulo, 'A:F') });\n    if (resultadosDesde && esPestanaFecha(p.titulo) && p.titulo >= resultadosDesde) filtros.push({ a1Range: rango(p.titulo, 'A:U') });\n  }\n  // La API no acepta una lista vacía: sin nada que leer, se pide A1 de la primera pestaña.\n  const primera = pestanas(meta)[0];\n  if (!filtros.length && primera) filtros.push({ a1Range: rango(primera.titulo, 'A1:A1') });\n  return { dataFilters: filtros, majorDimension: 'ROWS', valueRenderOption: 'UNFORMATTED_VALUE' };\n}\n\nfunction tituloDeRango(r) {\n  const m = String(r || '').match(/^'((?:[^']|'')*)'!/) || String(r || '').match(/^([^!]+)!/);\n  return m ? m[1].replace(/''/g, \"'\") : '';\n}\n\nfunction claveColumna(c) {\n  const k = String(c || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();\n  if (k === 'id') return 'id';\n  if (k.startsWith('categ')) return 'categoria';\n  if (k.startsWith('intenc')) return 'intencion';\n  if (k.startsWith('prompt')) return 'prompt';\n  if (k.startsWith('activo')) return 'activo';\n  if (k.startsWith('fecha')) return 'fecha_creacion';\n  return '';\n}\n\n// Respuesta de batchGetByDataFilter → {prompts: [...], resultados: [...]}.\n// Cada prompt lleva su pestaña (= proyecto) y su número de fila.\nfunction leerHojas(respuesta) {\n  const prompts = [];\n  const resultados = [];\n  for (const vr of (respuesta && respuesta.valueRanges) || []) {\n    const v = vr.valueRange || vr;\n    const titulo = tituloDeRango(v.range);\n    const filas = v.values || [];\n    if (!filas.length) continue;\n    if (esPestanaFecha(titulo)) {\n      const cab = filas[0].map(String);\n      filas.slice(1).forEach(f => {\n        if (!f || !f.some(x => x !== '' && x !== null)) return;\n        const o = {};\n        cab.forEach((c, i) => { o[c] = f[i] === undefined ? '' : f[i]; });\n        resultados.push(o);\n      });\n    } else if (esPestanaProyecto(titulo)) {\n      const cab = filas[0].map(claveColumna);\n      filas.slice(1).forEach((f, i) => {\n        if (!f || !f.some(x => x !== '' && x !== null)) return;\n        const o = { proyecto: titulo, _fila: i + 2 };\n        cab.forEach((c, j) => { if (c) o[c] = f[j] === undefined ? '' : f[j]; });\n        if (o.fecha_creacion !== undefined) o.fecha_creacion = fechaTexto(o.fecha_creacion);\n        prompts.push(o);\n      });\n    }\n  }\n  return { prompts, resultados };\n}\n\n// Las fechas pueden volver como número de serie de Sheets (UNFORMATTED_VALUE).\nfunction fechaTexto(v) {\n  if (typeof v === 'number' && v > 20000 && v < 80000) {\n    return new Date(Date.UTC(1899, 11, 30) + v * 864e5).toISOString().slice(0, 10);\n  }\n  return String(v || '');\n}\n\nfunction valoresPrompt(p) {\n  return [p.id, p.categoria || '', p.intencion || '', p.prompt || '', p.activo === false ? 'FALSE' : 'TRUE', p.fecha_creacion || ''];\n}\n\nfunction valoresResultado(f) {\n  return COLUMNAS_RESULTADOS.map(c => {\n    const v = f[c];\n    return v === undefined || v === null ? '' : typeof v === 'boolean' ? (v ? 'TRUE' : 'FALSE') : v;\n  });\n}\n\n// ─── Peticiones a la API de Sheets ─────────────────────────────────────────\nconst pedidoSheets = (method, ruta, body) => ({ method, url: SHEETS_API + ruta, body });\nconst crearPestana = (titulo, indice) =>\n  pedidoSheets('POST', ':batchUpdate', { requests: [{ addSheet: { properties: Object.assign({ title: titulo }, indice === undefined ? {} : { index: indice }) } }] });\nconst escribir = (titulo, desde, valores) =>\n  pedidoSheets('PUT', '/values/' + encodeURIComponent(rango(titulo, desde)) + '?valueInputOption=RAW', { values: valores });\nconst agregar = (titulo, valores) =>\n  pedidoSheets('POST', '/values/' + encodeURIComponent(rango(titulo, 'A1')) + ':append?valueInputOption=RAW&insertDataOption=INSERT_ROWS', { values: valores });\nconst borrarFila = (idPestana, fila) =>\n  pedidoSheets('POST', ':batchUpdate', { requests: [{ deleteDimension: { range: { sheetId: idPestana, dimension: 'ROWS', startIndex: fila - 1, endIndex: fila } } }] });\n\n// Crear, editar, activar/desactivar, mover de proyecto o eliminar un prompt.\n// guardado: lo que devuelve prepararGuardado (prompts.js).\n// → {ok, status, respuesta, peticiones}\nfunction planGuardarPrompt(guardado, prompts, meta) {\n  if (!guardado.ok) return { ok: false, status: 400, respuesta: { ok: false, error: guardado.error }, peticiones: [] };\n  const tabs = pestanas(meta);\n  const tab = titulo => tabs.find(t => t.titulo === titulo);\n  const fila = guardado.fila;\n  const actual = prompts.find(p => String(p.id).trim() === fila.id);\n  const proyectosAlFinal = tabs.filter(t => esPestanaProyecto(t.titulo)).length;\n  const asegurarPestana = (titulo, pet) => {\n    if (!tab(titulo)) {\n      pet.push(crearPestana(titulo, proyectosAlFinal));\n      pet.push(escribir(titulo, 'A1', [COLUMNAS_PROMPTS]));\n    }\n  };\n\n  if (guardado.accion === 'eliminar') {\n    if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };\n    return { ok: true, status: 200, respuesta: { ok: true, accion: 'eliminar', id: fila.id }, peticiones: [borrarFila(tab(actual.proyecto).id, actual._fila)] };\n  }\n\n  if (guardado.accion === 'editar') {\n    if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };\n    const nuevo = Object.assign({}, normalizarPrompt(actual), fila);\n    const pet = [];\n    if (nuevo.proyecto === actual.proyecto) {\n      pet.push(escribir(actual.proyecto, 'A' + actual._fila + ':F' + actual._fila, [valoresPrompt(nuevo)]));\n    } else {\n      // Cambio de proyecto: se agrega en la pestaña nueva y se borra de la vieja.\n      asegurarPestana(nuevo.proyecto, pet);\n      pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));\n      pet.push(borrarFila(tab(actual.proyecto).id, actual._fila));\n    }\n    return { ok: true, status: 200, respuesta: { ok: true, accion: 'editar', prompt: limpio(nuevo) }, peticiones: pet };\n  }\n\n  // Crear: un proyecto nuevo crea su pestaña.\n  const nuevo = normalizarPrompt(fila);\n  const pet = [];\n  asegurarPestana(nuevo.proyecto, pet);\n  pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));\n  return { ok: true, status: 200, respuesta: { ok: true, accion: 'crear', prompt: limpio(nuevo) }, peticiones: pet };\n}\n\nfunction limpio(p) {\n  const o = {};\n  for (const k of Object.keys(p)) if (!k.startsWith('_')) o[k] = p[k];\n  return o;\n}\n\n// Guardar las filas de una corrida en la pestaña del día (se crea si no está,\n// justo después de las pestañas de proyecto, para que la más reciente quede primero).\nfunction planGuardarResultados(filas, meta) {\n  const porFecha = new Map();\n  for (const f of filas) {\n    if (!porFecha.has(f.fecha)) porFecha.set(f.fecha, []);\n    porFecha.get(f.fecha).push(valoresResultado(f));\n  }\n  const tabs = pestanas(meta);\n  const proyectos = tabs.filter(t => esPestanaProyecto(t.titulo)).length;\n  const pet = [];\n  for (const [fecha, valores] of porFecha) {\n    if (tabs.some(t => t.titulo === fecha)) pet.push(agregar(fecha, valores));\n    else {\n      pet.push(crearPestana(fecha, proyectos));\n      pet.push(escribir(fecha, 'A1', [COLUMNAS_RESULTADOS].concat(valores)));\n    }\n  }\n  return pet;\n}\n\nconst meta = $('Pestañas del Sheet').first().json;\nreturn planGuardarResultados($input.all().map(i => i.json), meta).map(p => ({ json: p }));\n"
+      }
+    },
+    {
+      "id": "1dafb52d-2980-4e73-a595-00dcb1e8e82a",
+      "name": "Guardar en la pestaña del día",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2700,
+        100
+      ],
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSheetsOAuth2Api",
+        "method": "={{ $json.method }}",
+        "url": "={{ $json.url }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.body) }}",
         "options": {
-          "cellFormat": "RAW"
+          "timeout": 120000,
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 300
+            }
+          }
         }
       }
     }
   ],
   "connections": {
+    "Pestañas del Sheet": {
+      "main": [
+        [
+          {
+            "node": "Qué leer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qué leer": {
+      "main": [
+        [
+          {
+            "node": "Leer el Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Claude · analista": {
       "ai_languageModel": [
         [
@@ -385,7 +456,7 @@
       "main": [
         [
           {
-            "node": "Leer prompts",
+            "node": "Pestañas del Sheet",
             "type": "main",
             "index": 0
           }
@@ -396,14 +467,14 @@
       "main": [
         [
           {
-            "node": "Leer prompts",
+            "node": "Pestañas del Sheet",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Leer prompts": {
+    "Leer el Sheet": {
       "main": [
         [
           {
@@ -521,7 +592,18 @@
       "main": [
         [
           {
-            "node": "Guardar resultados",
+            "node": "Plan de guardado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Plan de guardado": {
+      "main": [
+        [
+          {
+            "node": "Guardar en la pestaña del día",
             "type": "main",
             "index": 0
           }
