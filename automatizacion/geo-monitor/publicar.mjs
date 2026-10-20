@@ -18,7 +18,8 @@ const CREDENCIALES = {
   'AI Overview (página)': { tipo: 'serpApi', nombre: 'SerpAPI account' }
   // ChatGPT y Perplexity: sin credencial BCP en la instancia; se asignan a mano.
 };
-const CREDENCIAL_SHEETS = 'BCP Google Sheet';
+// «BCP Google Sheet» quedó vencida; la reconectada el 20/10 es «Google Sheets account».
+const CREDENCIAL_SHEETS = process.env.GEO_SHEETS_CREDENCIAL || 'Google Sheets account';
 
 const api = async (ruta, opciones = {}) => {
   const r = await fetch(BASE + '/api/v1' + ruta, {
@@ -43,11 +44,11 @@ const sheetActual = (actual.nodes || []).find(n => n.type === 'n8n-nodes-base.go
 const sheetId = process.env.GEO_SHEET_ID || sheetActual;
 
 for (const n of wf.nodes) {
-  // Lo que ya se asignó a mano en n8n se conserva.
+  // Las credenciales HTTP asignadas a mano en n8n se conservan.
   const previo = (actual.nodes || []).find(x => x.name === n.name);
   if (n.type === 'n8n-nodes-base.googleSheets') {
     if (sheetId) n.parameters.documentId.value = sheetId;
-    n.credentials = previo?.credentials || { googleSheetsOAuth2Api: buscar('googleSheetsOAuth2Api', CREDENCIAL_SHEETS) };
+    n.credentials = { googleSheetsOAuth2Api: buscar('googleSheetsOAuth2Api', CREDENCIAL_SHEETS) };
   }
   const c = CREDENCIALES[n.name];
   if (c) {

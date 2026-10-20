@@ -47,7 +47,7 @@ espera unos minutos y abre `GET /webhook/geo-dashboard`.
 El workflow ya está subido a
 [GEO TRACKER BCP](https://n8n.srv836595.hstgr.cloud/workflow/dS2FTRZuU8eNPTL5),
 inactivo. `publicar.mjs` asignó estas credenciales que ya existían en la
-instancia: **BCP Google Sheet** (los 5 nodos de Sheets), **LLM BCP** (Claude),
+instancia: **Google Sheets account** (los 5 nodos de Sheets; **BCP Google Sheet** quedó vencida), **LLM BCP** (Claude),
 **GEMINI BCP** (Gemini) y **SerpAPI account** (los 2 nodos de AI Overview).
 Esos nodos usan la credencial predefinida de cada servicio en lugar de Header
 Auth o Query Auth.
@@ -59,9 +59,7 @@ En `resultados`, `estado` vale `ok`, `sin_overview` (Google no mostró un AI
 Overview) o `error`.
 
 Falta:
-1. Reconectar la credencial **BCP Google Sheet**: n8n la rechaza con «needs to
-   be reconnected». La cuenta con la que se reconecte tiene que poder editar el
-   Sheet. Si no es flum2.carlos.ramirez@gmail.com, compártelo con esa cuenta.
+1. ~~Credencial de Google Sheets~~: listo. `geo-prompts` y `geo-dashboard` responden con datos reales del Sheet (probado el 20/10).
 2. Las credenciales de **ChatGPT** y **Perplexity**. Para BCP no hay ninguna,
    así que se crean como Header Auth, según la tabla de abajo.
 3. Activar el workflow.
