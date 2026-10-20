@@ -1,0 +1,596 @@
+{
+  "name": "GEO TRACKER BCP · Corrida",
+  "nodes": [
+    {
+      "id": "1b052a8c-9525-44b1-a492-d7f5741fffce",
+      "name": "Cada día 7:00 (Lima)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 7 * * *"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "4e7d2079-bc98-45d2-abc9-145528b9d773",
+      "name": "Webhook geo-run",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        200
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "geo-run",
+        "responseMode": "onReceived",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "webhookId": "ef5669e2-ba3b-40ff-aa26-a0bf7a0e8c0e"
+    },
+    {
+      "id": "bcb53031-b798-486e-ae7a-1f2cda2402f3",
+      "name": "Leer prompts",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        240,
+        100
+      ],
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "prompts",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "b2f4dde3-7869-4806-aad8-9afd3c45231f",
+      "name": "Elegir prompts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        460,
+        100
+      ],
+      "parameters": {
+        "jsCode": "// Prompts: listar (/geo-prompts), validar lo que llega a /geo-prompts-save y\n// elegir cuáles entran en una corrida. Sin dependencias, como los otros dos.\n\nconst CATEGORIAS = ['Reputación', 'Producto', 'Digital', 'Otra'];\n\nfunction activoDe(v) {\n  if (typeof v === 'boolean') return v;\n  const s = String(v == null ? '' : v).trim().toLowerCase();\n  if (s === '') return true;\n  return ['true', 'verdadero', '1', 'si', 'sí', 'x'].includes(s);\n}\n\nfunction normalizarPrompt(f) {\n  return {\n    id: String(f.id || '').trim(),\n    proyecto: String(f.proyecto || '').trim() || 'Sin proyecto',\n    prompt: String(f.prompt || '').trim(),\n    categoria: String(f.categoria || '').trim() || 'Otra',\n    activo: activoDe(f.activo),\n    fecha_creacion: String(f.fecha_creacion || f.creado || '')\n  };\n}\n\nfunction listarPrompts(filas) {\n  const prompts = filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .sort((a, b) => b.fecha_creacion.localeCompare(a.fecha_creacion) || b.id.localeCompare(a.id));\n  const proyectos = [...new Set(prompts.map(p => p.proyecto))].sort();\n  return { prompts, proyectos, categorias: CATEGORIAS, total: prompts.length, activos: prompts.filter(p => p.activo).length };\n}\n\n// Devuelve la fila que hay que escribir (solo con las columnas que cambian,\n// para que «Agregar o actualizar» no pise fecha_creacion al editar) o un error.\n// hoy: AAAA-MM-DD en Lima.\nfunction prepararGuardado(body, hoy, idNuevo) {\n  body = body || {};\n  const id = String(body.id || '').trim();\n  if (body.accion === 'eliminar') {\n    if (!id) return { ok: false, error: 'Falta el id del prompt a eliminar.' };\n    return { ok: true, accion: 'eliminar', fila: { id, activo: false } };\n  }\n  const prompt = String(body.prompt || '').trim();\n  const fila = { id: id || idNuevo };\n  if (!id || body.prompt !== undefined) {\n    if (!prompt) return { ok: false, error: 'El prompt no puede estar vacío.' };\n    if (prompt.length > 2000) return { ok: false, error: 'El prompt pasa de 2.000 caracteres.' };\n    fila.prompt = prompt;\n  }\n  if (!id || body.proyecto !== undefined) fila.proyecto = String(body.proyecto || '').trim() || 'Sin proyecto';\n  if (!id || body.categoria !== undefined) {\n    const c = String(body.categoria || '').trim() || 'Otra';\n    fila.categoria = CATEGORIAS.includes(c) ? c : 'Otra';\n  }\n  if (!id || body.activo !== undefined) fila.activo = activoDe(body.activo);\n  if (!id) fila.fecha_creacion = hoy;\n  return { ok: true, accion: id ? 'editar' : 'crear', fila };\n}\n\n// Qué prompts entran en la corrida: los activos, y si llegan prompt_ids o\n// proyecto, solo esos. Un prompt_id pedido a mano corre aunque esté inactivo.\nfunction elegirPrompts(filas, peticion) {\n  peticion = peticion || {};\n  const ids = Array.isArray(peticion.prompt_ids) ? peticion.prompt_ids.map(String) : [];\n  return filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .filter(p => (ids.length ? ids.includes(p.id) : p.activo))\n    .filter(p => !peticion.proyecto || p.proyecto === peticion.proyecto);\n}\n\n// Del front llega {prompt_ids?, proyecto?}; la corrida diaria toma todos los activos.\nlet peticion = {};\ntry { if ($('Webhook geo-run').isExecuted) peticion = $('Webhook geo-run').first().json.body || {}; } catch (e) {}\nif (typeof peticion === 'string') { try { peticion = JSON.parse(peticion); } catch (e) { peticion = {}; } }\nconst ahora = new Date();\nconst runId = 'r_' + ahora.toISOString().replace(/\\D/g, '').slice(0, 14);\nconst fecha = ahora.toLocaleDateString('en-CA', { timeZone: 'America/Lima' });\nreturn elegirPrompts($input.all().map(i => i.json), peticion).map(p => ({\n  json: Object.assign(p, { run_id: runId, fecha, timestamp: ahora.toISOString() })\n}));\n"
+      }
+    },
+    {
+      "id": "b0e2ce67-6bf3-47bd-a9f2-6f9c0207c11e",
+      "name": "ChatGPT",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        700,
+        100
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'gpt-4o-search-preview', web_search_options: { user_location: { type: 'approximate', approximate: { country: 'PE', city: 'Lima', timezone: 'America/Lima' } } }, messages: [{ role: 'user', content: $('Elegir prompts').item.json.prompt }] }) }}",
+        "options": {
+          "timeout": 180000,
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 1000
+            }
+          }
+        }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "df23d522-cf53-418d-a216-aa6d43936e1b",
+      "name": "Claude",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        920,
+        100
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "anthropicApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'claude-sonnet-4-5', max_tokens: 2000, messages: [{ role: 'user', content: $('Elegir prompts').item.json.prompt }] }) }}",
+        "options": {
+          "timeout": 180000,
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 1000
+            }
+          }
+        }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "d7dbd4ef-8bce-4ef3-a30e-1b4bd6e642ec",
+      "name": "Gemini",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1140,
+        100
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googlePalmApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ contents: [{ role: 'user', parts: [{ text: $('Elegir prompts').item.json.prompt }] }], tools: [{ google_search: {} }] }) }}",
+        "options": {
+          "timeout": 180000,
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 1000
+            }
+          }
+        }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "5b54eb42-da1b-4f95-aab5-e24059b56c49",
+      "name": "Perplexity",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1360,
+        100
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.perplexity.ai/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'sonar', web_search_options: { user_location: { country: 'PE' } }, messages: [{ role: 'user', content: $('Elegir prompts').item.json.prompt }] }) }}",
+        "options": {
+          "timeout": 180000,
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 1000
+            }
+          }
+        }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "dec59c3a-2154-4882-a9c3-46da00d1e2e7",
+      "name": "Google (SerpAPI)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1580,
+        100
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://serpapi.com/search.json",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "serpApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "engine",
+              "value": "google"
+            },
+            {
+              "name": "q",
+              "value": "={{ $('Elegir prompts').item.json.prompt }}"
+            },
+            {
+              "name": "google_domain",
+              "value": "google.com.pe"
+            },
+            {
+              "name": "gl",
+              "value": "pe"
+            },
+            {
+              "name": "hl",
+              "value": "es"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 180000,
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 1000
+            }
+          }
+        }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "bf820539-7a00-4d7c-a4a7-afc70ccee4bf",
+      "name": "AI Overview (página)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1800,
+        100
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ ($json.ai_overview && $json.ai_overview.page_token && !($json.ai_overview.text_blocks || []).length) ? 'https://serpapi.com/search.json' : 'https://serpapi.com/account.json' }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "serpApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "engine",
+              "value": "google_ai_overview"
+            },
+            {
+              "name": "page_token",
+              "value": "={{ ($json.ai_overview || {}).page_token || '' }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 180000,
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 1000
+            }
+          }
+        }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "8b5dd307-fcb6-4838-a8fb-f3694229408b",
+      "name": "Juntar respuestas",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2020,
+        100
+      ],
+      "parameters": {
+        "jsCode": "// Lo que hace la corrida con las respuestas de los motores. Sin dependencias:\n// build.mjs pega este archivo en los nodos Code «Juntar respuestas» y «Armar\n// fila», y test.mjs lo carga igual para probarlo.\n//\n// Mencion, posicion, sentimiento y marcas los decide el nodo «Analista IA»\n// (Information Extractor). Aqui solo se saca el texto y las fuentes de cada\n// API, y se calcula citado_bcp, que sale de los dominios y no necesita IA.\n\nfunction dominioDe(url) {\n  const s = String(url || '').trim();\n  if (!s) return '';\n  try {\n    const u = new URL(/^https?:\\/\\//i.test(s) ? s : 'https://' + s);\n    return u.hostname.toLowerCase().replace(/^www\\./, '');\n  } catch (e) {\n    return '';\n  }\n}\n\nfunction esDominioPropio(dominio, dominios) {\n  return dominios.some(d => dominio === d || dominio.endsWith('.' + d));\n}\n\n// Saca el texto y las fuentes de lo que devuelve cada API. Si la llamada falló\n// (el nodo HTTP sigue con {error}), lo deja anotado en vez de parar la corrida.\nfunction extraerRespuesta(motor, r) {\n  r = r || {};\n  if (r.error) {\n    const e = r.error;\n    const msg = typeof e === 'string' ? e : (e.message || (e.error && e.error.message) || JSON.stringify(e));\n    return { disponible: false, texto: '', fuentes: [], error: String(msg).slice(0, 500) };\n  }\n  if (motor === 'chatgpt') {\n    const msg = (r.choices && r.choices[0] && r.choices[0].message) || {};\n    const fuentes = (msg.annotations || [])\n      .filter(a => a.type === 'url_citation' && a.url_citation)\n      .map(a => a.url_citation.url);\n    return { disponible: true, texto: msg.content || '', fuentes, error: '' };\n  }\n  if (motor === 'claude') {\n    const texto = (r.content || []).filter(c => c.type === 'text').map(c => c.text).join('\\n');\n    const fuentes = [];\n    for (const c of r.content || []) for (const cit of c.citations || []) if (cit.url) fuentes.push(cit.url);\n    return { disponible: true, texto, fuentes, error: '' };\n  }\n  if (motor === 'gemini') {\n    const cand = (r.candidates && r.candidates[0]) || {};\n    const texto = ((cand.content && cand.content.parts) || []).map(p => p.text || '').join('');\n    // Gemini devuelve enlaces de redirección (vertexaisearch…); el dominio real viene en title.\n    const chunks = (cand.groundingMetadata && cand.groundingMetadata.groundingChunks) || [];\n    const fuentes = chunks.map(c => c.web && (/\\./.test(c.web.title || '') ? c.web.title : c.web.uri)).filter(Boolean);\n    return { disponible: true, texto, fuentes, error: '' };\n  }\n  if (motor === 'perplexity') {\n    const msg = (r.choices && r.choices[0] && r.choices[0].message) || {};\n    const fuentes = (r.search_results || []).map(s => s.url).concat(r.citations || []);\n    return { disponible: true, texto: msg.content || '', fuentes, error: '' };\n  }\n  if (motor === 'ai_overview') {\n    const aio = r.ai_overview;\n    if (!aio || aio.error || !(aio.text_blocks || []).length) {\n      return { disponible: false, texto: '', fuentes: [], error: '' };\n    }\n    const partes = [];\n    const recorrer = bloques => {\n      for (const b of bloques || []) {\n        const linea = [b.title, b.snippet].filter(Boolean).join(' ');\n        if (linea) partes.push(linea);\n        if (b.list) recorrer(b.list);\n        if (b.text_blocks) recorrer(b.text_blocks);\n      }\n    };\n    recorrer(aio.text_blocks);\n    const fuentes = (aio.references || []).map(x => x.link || x.source).filter(Boolean);\n    return { disponible: true, texto: partes.join('\\n'), fuentes, error: '' };\n  }\n  return { disponible: false, texto: '', fuentes: [], error: 'Motor desconocido: ' + motor };\n}\n\n// Las cinco respuestas de un prompt, una por motor. `apis` trae lo que devolvió\n// cada nodo HTTP para ese prompt: {chatgpt, claude, gemini, perplexity,\n// google, ai_overview_pagina}.\nfunction juntarRespuestas(prompt, apis) {\n  const pagina = apis.ai_overview_pagina;\n  // Si hubo segunda llamada, el AI Overview viene ahí; si no, en la búsqueda.\n  const aio = pagina && pagina.ai_overview ? pagina : apis.google;\n  const crudas = {\n    chatgpt: apis.chatgpt, claude: apis.claude, gemini: apis.gemini,\n    perplexity: apis.perplexity, ai_overview: aio\n  };\n  return Object.keys(crudas).map(motor => {\n    const e = extraerRespuesta(motor, crudas[motor]);\n    const fuentes = [];\n    for (const f of e.fuentes) {\n      const d = dominioDe(f);\n      if (d && !fuentes.includes(d)) fuentes.push(d);\n    }\n    return {\n      run_id: prompt.run_id, fecha: prompt.fecha, timestamp: prompt.timestamp,\n      prompt_id: prompt.id, proyecto: prompt.proyecto, categoria: prompt.categoria, prompt: prompt.prompt,\n      motor,\n      // ok: respondió. sin_overview: Google no mostró AI Overview. error: falló la llamada.\n      estado: e.error ? 'error' : e.disponible ? 'ok' : 'sin_overview',\n      texto: e.texto,\n      fuentes,\n      error: e.error\n    };\n  });\n}\n\n// La fila de la hoja resultados: la respuesta más lo que dijo el Analista IA.\n// Si el motor no respondió, no hay nada que analizar y la fila va sin mención.\nfunction armarFila(r, analisis, config) {\n  const a = (r.estado === 'ok' && analisis) || {};\n  const menciona = r.estado === 'ok' && (a.menciona_bcp === true || String(a.menciona_bcp).toLowerCase() === 'true');\n  const posicion = Number(a.posicion_bcp);\n  const sentimiento = Number(a.sentimiento);\n  const dominios = (config.marca.dominios || []).map(d => d.toLowerCase());\n  return {\n    run_id: r.run_id, fecha: r.fecha, timestamp: r.timestamp, prompt_id: r.prompt_id,\n    proyecto: r.proyecto, categoria: r.categoria, prompt: r.prompt, motor: r.motor,\n    estado: r.estado,\n    menciona_bcp: menciona,\n    posicion_bcp: menciona && posicion > 0 ? posicion : '',\n    sentimiento: menciona && isFinite(sentimiento) ? Math.max(-1, Math.min(1, Math.round(sentimiento * 100) / 100)) : '',\n    marcas_mencionadas: r.estado === 'ok' ? String(a.marcas_mencionadas || '') : '',\n    fuentes: r.fuentes.join(', '),\n    citado_bcp: r.fuentes.some(d => esDominioPropio(d, dominios)),\n    error: r.error || (r.estado === 'ok' && !analisis ? 'El Analista IA no devolvió resultado' : ''),\n    // Google Sheets no admite más de 50.000 caracteres por celda.\n    respuesta: String(r.texto || '').slice(0, 20000)\n  };\n}\n\n// Un item por prompt y motor (5 por prompt).\nconst salida = [];\n$input.all().forEach((_, i) => {\n  const de = n => { try { return $(n).itemMatching(i).json; } catch (e) { return { error: 'Sin respuesta de ' + n }; } };\n  const apis = {\n    chatgpt: de('ChatGPT'), claude: de('Claude'), gemini: de('Gemini'), perplexity: de('Perplexity'),\n    google: de('Google (SerpAPI)'), ai_overview_pagina: de('AI Overview (página)')\n  };\n  for (const r of juntarRespuestas(de('Elegir prompts'), apis)) salida.push({ json: r });\n});\nreturn salida;\n"
+      }
+    },
+    {
+      "id": "3f18d0be-a8ac-45de-ad7a-ecae95b1ad92",
+      "name": "Analista IA",
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        2240,
+        100
+      ],
+      "parameters": {
+        "text": "={{ 'Pregunta que se le hizo a ' + $json.motor + ':\\n' + $json.prompt + '\\n\\nRespuesta de ' + $json.motor + ':\\n' + ($json.texto || '(sin respuesta)') }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "menciona_bcp",
+              "type": "boolean",
+              "required": true,
+              "description": "true si la respuesta nombra a BCP (o Banco de Crédito del Perú, Banco de Crédito, Banco de Credito, ViaBCP, Via BCP)."
+            },
+            {
+              "name": "posicion_bcp",
+              "type": "number",
+              "required": true,
+              "description": "Lugar de BCP entre los bancos nombrados, por orden de aparición (1 = el primero). 0 si no aparece."
+            },
+            {
+              "name": "sentimiento",
+              "type": "number",
+              "required": true,
+              "description": "Tono de la respuesta hacia BCP, de -1 (muy negativo) a 1 (muy positivo). 0 si es neutral o no aparece. Solo lo que dice de BCP, no de otros bancos."
+            },
+            {
+              "name": "marcas_mencionadas",
+              "type": "string",
+              "required": true,
+              "description": "Bancos nombrados en la respuesta, en orden de aparición y separados por coma. Usa el nombre canónico de esta lista: BCP (Banco de Crédito del Perú, Banco de Crédito, Banco de Credito, ViaBCP, Via BCP); Interbank (sin alias); BBVA (BBVA Perú, BBVA Continental, Banco Continental); Scotiabank (Scotia); BanBif (Banbif, Banco Interamericano de Finanzas); Pichincha (Banco Pichincha); Banco de la Nación (Banco de la Nacion, BN). Otros bancos, con su nombre tal cual. Vacío si no nombra ninguno."
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "Analizas respuestas de asistentes de IA a preguntas sobre bancos en Perú, para medir la visibilidad de BCP. Te basas solo en el texto de la respuesta: no supongas ni completes nada que no esté escrito. Si la respuesta está vacía, ningún banco aparece."
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "8b2b4d20-8d39-488f-a4bc-e802f43003c4",
+      "name": "Gemini · analista",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        320
+      ],
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash",
+        "options": {
+          "temperature": 0
+        }
+      }
+    },
+    {
+      "id": "9ae583d6-bb61-479c-a643-5b1806299e33",
+      "name": "Armar fila",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2460,
+        100
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// ═══════════════════════════════════════════════════════════════════════════\n//  MARCA Y COMPETIDORES. Lo usan «Armar fila» (dominios propios → citado_bcp)\n//  y «Dashboard» (ranking y fuentes). Los modelos de cada motor están en el body\n//  de su nodo HTTP.\n// ═══════════════════════════════════════════════════════════════════════════\nconst CONFIG = {\n  marca: {\n    nombre: 'BCP',\n    alias: ['BCP', 'Banco de Crédito del Perú', 'Banco de Crédito', 'Banco de Credito', 'ViaBCP', 'Via BCP'],\n    dominios: ['viabcp.com', 'bcp.com.pe']\n  },\n  competidores: [\n    { nombre: 'Interbank', alias: ['Interbank'] },\n    { nombre: 'BBVA', alias: ['BBVA', 'BBVA Perú', 'BBVA Continental', 'Banco Continental'] },\n    { nombre: 'Scotiabank', alias: ['Scotiabank', 'Scotia'] },\n    { nombre: 'BanBif', alias: ['BanBif', 'Banbif', 'Banco Interamericano de Finanzas'] },\n    { nombre: 'Pichincha', alias: ['Pichincha', 'Banco Pichincha'] },\n    { nombre: 'Banco de la Nación', alias: ['Banco de la Nación', 'Banco de la Nacion', 'BN'] }\n  ]\n};\n// ═══════════════════════════════════════════════════════════════════════════\n\nconst MOTORES = [\n  { key: 'chatgpt', label: 'ChatGPT', color: '#10A37F' },\n  { key: 'claude', label: 'Claude', color: '#D97757' },\n  { key: 'gemini', label: 'Gemini', color: '#4285F4' },\n  { key: 'perplexity', label: 'Perplexity', color: '#20808D' },\n  { key: 'ai_overview', label: 'AI Overview', color: '#FBBC04' }\n];\n\n\n// Lo que hace la corrida con las respuestas de los motores. Sin dependencias:\n// build.mjs pega este archivo en los nodos Code «Juntar respuestas» y «Armar\n// fila», y test.mjs lo carga igual para probarlo.\n//\n// Mencion, posicion, sentimiento y marcas los decide el nodo «Analista IA»\n// (Information Extractor). Aqui solo se saca el texto y las fuentes de cada\n// API, y se calcula citado_bcp, que sale de los dominios y no necesita IA.\n\nfunction dominioDe(url) {\n  const s = String(url || '').trim();\n  if (!s) return '';\n  try {\n    const u = new URL(/^https?:\\/\\//i.test(s) ? s : 'https://' + s);\n    return u.hostname.toLowerCase().replace(/^www\\./, '');\n  } catch (e) {\n    return '';\n  }\n}\n\nfunction esDominioPropio(dominio, dominios) {\n  return dominios.some(d => dominio === d || dominio.endsWith('.' + d));\n}\n\n// Saca el texto y las fuentes de lo que devuelve cada API. Si la llamada falló\n// (el nodo HTTP sigue con {error}), lo deja anotado en vez de parar la corrida.\nfunction extraerRespuesta(motor, r) {\n  r = r || {};\n  if (r.error) {\n    const e = r.error;\n    const msg = typeof e === 'string' ? e : (e.message || (e.error && e.error.message) || JSON.stringify(e));\n    return { disponible: false, texto: '', fuentes: [], error: String(msg).slice(0, 500) };\n  }\n  if (motor === 'chatgpt') {\n    const msg = (r.choices && r.choices[0] && r.choices[0].message) || {};\n    const fuentes = (msg.annotations || [])\n      .filter(a => a.type === 'url_citation' && a.url_citation)\n      .map(a => a.url_citation.url);\n    return { disponible: true, texto: msg.content || '', fuentes, error: '' };\n  }\n  if (motor === 'claude') {\n    const texto = (r.content || []).filter(c => c.type === 'text').map(c => c.text).join('\\n');\n    const fuentes = [];\n    for (const c of r.content || []) for (const cit of c.citations || []) if (cit.url) fuentes.push(cit.url);\n    return { disponible: true, texto, fuentes, error: '' };\n  }\n  if (motor === 'gemini') {\n    const cand = (r.candidates && r.candidates[0]) || {};\n    const texto = ((cand.content && cand.content.parts) || []).map(p => p.text || '').join('');\n    // Gemini devuelve enlaces de redirección (vertexaisearch…); el dominio real viene en title.\n    const chunks = (cand.groundingMetadata && cand.groundingMetadata.groundingChunks) || [];\n    const fuentes = chunks.map(c => c.web && (/\\./.test(c.web.title || '') ? c.web.title : c.web.uri)).filter(Boolean);\n    return { disponible: true, texto, fuentes, error: '' };\n  }\n  if (motor === 'perplexity') {\n    const msg = (r.choices && r.choices[0] && r.choices[0].message) || {};\n    const fuentes = (r.search_results || []).map(s => s.url).concat(r.citations || []);\n    return { disponible: true, texto: msg.content || '', fuentes, error: '' };\n  }\n  if (motor === 'ai_overview') {\n    const aio = r.ai_overview;\n    if (!aio || aio.error || !(aio.text_blocks || []).length) {\n      return { disponible: false, texto: '', fuentes: [], error: '' };\n    }\n    const partes = [];\n    const recorrer = bloques => {\n      for (const b of bloques || []) {\n        const linea = [b.title, b.snippet].filter(Boolean).join(' ');\n        if (linea) partes.push(linea);\n        if (b.list) recorrer(b.list);\n        if (b.text_blocks) recorrer(b.text_blocks);\n      }\n    };\n    recorrer(aio.text_blocks);\n    const fuentes = (aio.references || []).map(x => x.link || x.source).filter(Boolean);\n    return { disponible: true, texto: partes.join('\\n'), fuentes, error: '' };\n  }\n  return { disponible: false, texto: '', fuentes: [], error: 'Motor desconocido: ' + motor };\n}\n\n// Las cinco respuestas de un prompt, una por motor. `apis` trae lo que devolvió\n// cada nodo HTTP para ese prompt: {chatgpt, claude, gemini, perplexity,\n// google, ai_overview_pagina}.\nfunction juntarRespuestas(prompt, apis) {\n  const pagina = apis.ai_overview_pagina;\n  // Si hubo segunda llamada, el AI Overview viene ahí; si no, en la búsqueda.\n  const aio = pagina && pagina.ai_overview ? pagina : apis.google;\n  const crudas = {\n    chatgpt: apis.chatgpt, claude: apis.claude, gemini: apis.gemini,\n    perplexity: apis.perplexity, ai_overview: aio\n  };\n  return Object.keys(crudas).map(motor => {\n    const e = extraerRespuesta(motor, crudas[motor]);\n    const fuentes = [];\n    for (const f of e.fuentes) {\n      const d = dominioDe(f);\n      if (d && !fuentes.includes(d)) fuentes.push(d);\n    }\n    return {\n      run_id: prompt.run_id, fecha: prompt.fecha, timestamp: prompt.timestamp,\n      prompt_id: prompt.id, proyecto: prompt.proyecto, categoria: prompt.categoria, prompt: prompt.prompt,\n      motor,\n      // ok: respondió. sin_overview: Google no mostró AI Overview. error: falló la llamada.\n      estado: e.error ? 'error' : e.disponible ? 'ok' : 'sin_overview',\n      texto: e.texto,\n      fuentes,\n      error: e.error\n    };\n  });\n}\n\n// La fila de la hoja resultados: la respuesta más lo que dijo el Analista IA.\n// Si el motor no respondió, no hay nada que analizar y la fila va sin mención.\nfunction armarFila(r, analisis, config) {\n  const a = (r.estado === 'ok' && analisis) || {};\n  const menciona = r.estado === 'ok' && (a.menciona_bcp === true || String(a.menciona_bcp).toLowerCase() === 'true');\n  const posicion = Number(a.posicion_bcp);\n  const sentimiento = Number(a.sentimiento);\n  const dominios = (config.marca.dominios || []).map(d => d.toLowerCase());\n  return {\n    run_id: r.run_id, fecha: r.fecha, timestamp: r.timestamp, prompt_id: r.prompt_id,\n    proyecto: r.proyecto, categoria: r.categoria, prompt: r.prompt, motor: r.motor,\n    estado: r.estado,\n    menciona_bcp: menciona,\n    posicion_bcp: menciona && posicion > 0 ? posicion : '',\n    sentimiento: menciona && isFinite(sentimiento) ? Math.max(-1, Math.min(1, Math.round(sentimiento * 100) / 100)) : '',\n    marcas_mencionadas: r.estado === 'ok' ? String(a.marcas_mencionadas || '') : '',\n    fuentes: r.fuentes.join(', '),\n    citado_bcp: r.fuentes.some(d => esDominioPropio(d, dominios)),\n    error: r.error || (r.estado === 'ok' && !analisis ? 'El Analista IA no devolvió resultado' : ''),\n    // Google Sheets no admite más de 50.000 caracteres por celda.\n    respuesta: String(r.texto || '').slice(0, 20000)\n  };\n}\n\nconst r = $('Juntar respuestas').item.json;\nreturn { json: armarFila(r, $json.output, CONFIG) };\n"
+      }
+    },
+    {
+      "id": "9e43ba51-4353-4852-ac04-7f4998b2fbe3",
+      "name": "Guardar resultados",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2680,
+        100
+      ],
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "resultados",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {
+          "cellFormat": "RAW"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Gemini · analista": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Analista IA",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cada día 7:00 (Lima)": {
+      "main": [
+        [
+          {
+            "node": "Leer prompts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook geo-run": {
+      "main": [
+        [
+          {
+            "node": "Leer prompts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer prompts": {
+      "main": [
+        [
+          {
+            "node": "Elegir prompts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Elegir prompts": {
+      "main": [
+        [
+          {
+            "node": "ChatGPT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ChatGPT": {
+      "main": [
+        [
+          {
+            "node": "Claude",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude": {
+      "main": [
+        [
+          {
+            "node": "Gemini",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini": {
+      "main": [
+        [
+          {
+            "node": "Perplexity",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Perplexity": {
+      "main": [
+        [
+          {
+            "node": "Google (SerpAPI)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google (SerpAPI)": {
+      "main": [
+        [
+          {
+            "node": "AI Overview (página)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Overview (página)": {
+      "main": [
+        [
+          {
+            "node": "Juntar respuestas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Juntar respuestas": {
+      "main": [
+        [
+          {
+            "node": "Analista IA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analista IA": {
+      "main": [
+        [
+          {
+            "node": "Armar fila",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Armar fila": {
+      "main": [
+        [
+          {
+            "node": "Guardar resultados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Lima",
+    "saveManualExecutions": true
+  }
+}

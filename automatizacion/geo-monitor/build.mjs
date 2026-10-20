@@ -1,11 +1,14 @@
-// Genera geo-monitor.n8n.json a partir de src/. El workflow no se edita a mano:
-// se cambia src/ y se vuelve a correr `node automatizacion/geo-monitor/build.mjs`.
+// Genera los dos workflows a partir de src/:
+//   geo-corrida.n8n.json  prompts → 5 motores → Analista IA → hoja resultados
+//   geo-api.n8n.json      los endpoints que usa el front
+// No se editan a mano: se cambia src/ y se corre `node automatizacion/geo-monitor/build.mjs`.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 
 const dir = new URL('.', import.meta.url);
 const src = f => readFileSync(new URL('src/' + f, dir), 'utf8');
 const SHEET_ID = 'PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET';
+const { CONFIG } = new Function(src('config.js') + '\nreturn { CONFIG };')();
 
 // IDs estables: el mismo nombre de nodo da el mismo id en cada build.
 const uuid = s => {
@@ -13,256 +16,232 @@ const uuid = s => {
   return `${h.slice(0, 8)}-${h.slice(8, 12)}-4${h.slice(13, 16)}-a${h.slice(17, 20)}-${h.slice(20, 32)}`;
 };
 
-const nodes = [];
-const connections = {};
-const node = (name, type, typeVersion, position, parameters, extra = {}) => {
-  nodes.push({ id: uuid(name), name, type, typeVersion, position, parameters, ...extra });
-  return name;
-};
-const link = (from, to, output = 0) => {
-  connections[from] ??= { main: [] };
-  while (connections[from].main.length <= output) connections[from].main.push([]);
-  connections[from].main[output].push({ node: to, type: 'main', index: 0 });
-};
+function workflow(nombre) {
+  const nodes = [];
+  const connections = {};
+  const w = {
+    node(name, type, typeVersion, position, parameters, extra = {}) {
+      nodes.push({ id: uuid(nombre + ':' + name), name, type, typeVersion, position, parameters, ...extra });
+      return name;
+    },
+    // Encadena nodos: w.chain('A', 'B', 'C') conecta A→B→C por la salida 0.
+    chain(...nombres) {
+      for (let i = 0; i < nombres.length - 1; i++) w.link(nombres[i], nombres[i + 1]);
+    },
+    link(from, to, output = 0, tipo = 'main') {
+      connections[from] ??= {};
+      connections[from][tipo] ??= [];
+      while (connections[from][tipo].length <= output) connections[from][tipo].push([]);
+      connections[from][tipo][output].push({ node: to, type: tipo, index: 0 });
+    },
+    json: () => ({
+      name: nombre,
+      nodes,
+      connections,
+      settings: { executionOrder: 'v1', timezone: 'America/Lima', saveManualExecutions: true }
+    })
+  };
+  return w;
+}
 
-const code = (name, position, jsCode, mode) =>
-  node(name, 'n8n-nodes-base.code', 2, position, mode ? { mode, jsCode } : { jsCode });
+const code = (w, name, position, jsCode, mode) =>
+  w.node(name, 'n8n-nodes-base.code', 2, position, mode ? { mode, jsCode } : { jsCode });
 
-const webhook = (name, method, path, position) =>
-  node(name, 'n8n-nodes-base.webhook', 2, position,
-    { httpMethod: method, path, responseMode: 'responseNode', options: { allowedOrigins: '*' } },
-    { webhookId: uuid('webhook:' + path) });
-
-const responder = (name, position, options) =>
-  node(name, 'n8n-nodes-base.respondToWebhook', 1.1, position, options);
-
-const responderJson = (name, position, body, status = 200) =>
-  responder(name, position, {
-    respondWith: 'json',
-    responseBody: body,
-    options: { responseCode: status }
-  });
-
-const sheet = (name, position, operation, hoja, extra = {}) =>
-  node(name, 'n8n-nodes-base.googleSheets', 4.5, position, {
+const sheet = (w, name, position, operation, hoja, extra = {}) =>
+  w.node(name, 'n8n-nodes-base.googleSheets', 4.5, position, {
     operation,
     documentId: { __rl: true, value: SHEET_ID, mode: 'id' },
     sheetName: { __rl: true, value: hoja, mode: 'name' },
-    ...extra
+    ...extra,
+    options: operation === 'read' ? {} : { cellFormat: 'RAW' }
   }, operation === 'read' ? { alwaysOutputData: true } : {});
 
-const http = (name, position, params) =>
-  node(name, 'n8n-nodes-base.httpRequest', 4.2, position, {
-    ...params,
-    options: { timeout: 180000, batching: { batch: { batchSize: 1, batchInterval: 1500 } } }
-  }, { onError: 'continueRegularOutput', retryOnFail: true, maxTries: 2, waitBetweenTries: 5000 });
+const webhook = (w, name, method, path, position, responseMode = 'responseNode') =>
+  w.node(name, 'n8n-nodes-base.webhook', 2, position,
+    { httpMethod: method, path, responseMode, options: { allowedOrigins: '*' } },
+    { webhookId: uuid('webhook:' + path) });
 
-const cond = (left, op, right) => ({
-  id: uuid('cond:' + left + op + right),
-  leftValue: left,
-  rightValue: right,
-  operator: op
-});
+const responderJson = (w, name, position, body, status = 200) =>
+  w.node(name, 'n8n-nodes-base.respondToWebhook', 1.1, position,
+    { respondWith: 'json', responseBody: body, options: { responseCode: status } });
 
-// ─── Disparadores ──────────────────────────────────────────────────────────
-webhook('Webhook geo-dashboard', 'GET', 'geo-dashboard', [0, 0]);
-webhook('Webhook geo-prompts', 'GET', 'geo-prompts', [0, 200]);
-webhook('Webhook geo-prompts-save', 'POST', 'geo-prompts-save', [0, 400]);
-webhook('Webhook geo-run', 'POST', 'geo-run', [0, 600]);
-node('Diario 7:00 Lima', 'n8n-nodes-base.scheduleTrigger', 1.2, [0, 800], {
+// ═══ GEO · Corrida ═════════════════════════════════════════════════════════
+const corrida = workflow('GEO TRACKER BCP · Corrida');
+
+corrida.node('Cada día 7:00 (Lima)', 'n8n-nodes-base.scheduleTrigger', 1.2, [0, 0], {
   rule: { interval: [{ field: 'cronExpression', expression: '0 7 * * *' }] }
 });
-
-code('Config', [260, 400], src('config.js') + `
-const ejecutado = n => { try { return $(n).isExecuted; } catch (e) { return false; } };
-const leer = n => $(n).first().json;
-const r = rutaDeEjecucion(ejecutado, leer);
-let peticion = r.peticion;
+// Responde al instante («Workflow was started») y la corrida sigue sola.
+webhook(corrida, 'Webhook geo-run', 'POST', 'geo-run', [0, 200], 'onReceived');
+sheet(corrida, 'Leer prompts', [240, 100], 'read', 'prompts');
+code(corrida, 'Elegir prompts', [460, 100], src('prompts.js') + `
+// Del front llega {prompt_ids?, proyecto?}; la corrida diaria toma todos los activos.
+let peticion = {};
+try { if ($('Webhook geo-run').isExecuted) peticion = $('Webhook geo-run').first().json.body || {}; } catch (e) {}
 if (typeof peticion === 'string') { try { peticion = JSON.parse(peticion); } catch (e) { peticion = {}; } }
 const ahora = new Date();
-return [{ json: Object.assign({}, CONFIG, {
-  motores: MOTORES,
-  ruta: r.ruta,
-  peticion: peticion || {},
-  ahora: ahora.toISOString(),
-  fecha: fechaLocal(ahora, CONFIG.zona_horaria)
-}) }];
-`);
-for (const t of ['Webhook geo-dashboard', 'Webhook geo-prompts', 'Webhook geo-prompts-save', 'Webhook geo-run', 'Diario 7:00 Lima']) link(t, 'Config');
-
-const rutas = ['dashboard', 'prompts', 'guardar', 'ejecutar_webhook', 'ejecutar_diario'];
-node('Ruta', 'n8n-nodes-base.switch', 3, [480, 400], {
-  rules: {
-    values: rutas.map(r => ({
-      conditions: {
-        options: { caseSensitive: true, leftValue: '', typeValidation: 'strict' },
-        conditions: [cond('={{ $json.ruta }}', { type: 'string', operation: 'equals' }, r)],
-        combinator: 'and'
-      },
-      renameOutput: true,
-      outputKey: r
-    }))
-  },
-  options: {}
-});
-link('Config', 'Ruta');
-
-// ─── GET /geo-dashboard ────────────────────────────────────────────────────
-sheet('Leer Resultados', [740, 0], 'read', 'resultados', { options: {} });
-code('Dashboard', [960, 0], src('dashboard.js') + `
-const cfg = $('Config').first().json;
-const q = cfg.peticion || {};
-const filtros = {};
-for (const k of ['proyecto', 'motor', 'desde', 'hasta', 'prompt_id']) if (q[k]) filtros[k] = String(q[k]);
-return [{ json: construirDashboard($input.all().map(i => i.json), filtros, cfg) }];
-`);
-responder('Responder dashboard', [1180, 0], { respondWith: 'firstIncomingItem', options: {} });
-link('Ruta', 'Leer Resultados', 0);
-link('Leer Resultados', 'Dashboard');
-link('Dashboard', 'Responder dashboard');
-
-// ─── GET /geo-prompts ──────────────────────────────────────────────────────
-sheet('Leer Prompts', [740, 200], 'read', 'prompts', { options: {} });
-code('Listar prompts', [960, 200], src('prompts.js') + `
-return [{ json: listarPrompts($input.all().map(i => i.json)) }];
-`);
-responder('Responder prompts', [1180, 200], { respondWith: 'firstIncomingItem', options: {} });
-link('Ruta', 'Leer Prompts', 1);
-link('Leer Prompts', 'Listar prompts');
-link('Listar prompts', 'Responder prompts');
-
-// ─── POST /geo-prompts-save ────────────────────────────────────────────────
-code('Validar prompt', [740, 400], src('prompts.js') + `
-const cfg = $('Config').first().json;
-const idNuevo = 'p_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
-return [{ json: prepararGuardado(cfg.peticion, cfg.fecha, idNuevo) }];
-`);
-node('¿Válido?', 'n8n-nodes-base.if', 2, [960, 400], {
-  conditions: {
-    options: { caseSensitive: true, leftValue: '', typeValidation: 'loose' },
-    conditions: [cond('={{ $json.ok }}', { type: 'boolean', operation: 'true', singleValue: true }, '')],
-    combinator: 'and'
-  },
-  options: {}
-});
-code('Fila a guardar', [1180, 340], `return [{ json: $input.first().json.fila }];`);
-sheet('Guardar prompt', [1400, 340], 'appendOrUpdate', 'prompts', {
-  columns: { mappingMode: 'autoMapInputData', value: {}, matchingColumns: ['id'], schema: [] },
-  options: { cellFormat: 'RAW' }
-});
-responderJson('Responder guardado', [1620, 340],
-  `={{ JSON.stringify({ ok: true, accion: $('Validar prompt').first().json.accion, prompt: $('Validar prompt').first().json.fila }) }}`);
-responderJson('Responder error', [1180, 480], `={{ JSON.stringify({ ok: false, error: $json.error }) }}`, 400);
-link('Ruta', 'Validar prompt', 2);
-link('Validar prompt', '¿Válido?');
-link('¿Válido?', 'Fila a guardar', 0);
-link('¿Válido?', 'Responder error', 1);
-link('Fila a guardar', 'Guardar prompt');
-link('Guardar prompt', 'Responder guardado');
-
-// ─── POST /geo-run y corrida diaria ────────────────────────────────────────
-responderJson('Responder corrida iniciada', [740, 620],
-  `={{ JSON.stringify({ ok: true, mensaje: 'Corrida iniciada; los resultados aparecerán en unos minutos', iniciada: $json.ahora }) }}`);
-sheet('Leer Prompts corrida', [960, 760], 'read', 'prompts', { options: {} });
-code('Elegir prompts', [1180, 760], src('prompts.js') + `
-const cfg = $('Config').first().json;
-const runId = 'r_' + cfg.ahora.replace(/\\D/g, '').slice(0, 14);
-return elegirPrompts($input.all().map(i => i.json), cfg.peticion).map(p => ({
-  json: Object.assign(p, { run_id: runId, fecha: cfg.fecha, timestamp: cfg.ahora })
+const runId = 'r_' + ahora.toISOString().replace(/\\D/g, '').slice(0, 14);
+const fecha = ahora.toLocaleDateString('en-CA', { timeZone: 'America/Lima' });
+return elegirPrompts($input.all().map(i => i.json), peticion).map(p => ({
+  json: Object.assign(p, { run_id: runId, fecha, timestamp: ahora.toISOString() })
 }));
 `);
-link('Ruta', 'Responder corrida iniciada', 3);
-link('Responder corrida iniciada', 'Leer Prompts corrida');
-link('Ruta', 'Leer Prompts corrida', 4);
-link('Leer Prompts corrida', 'Elegir prompts');
 
-const modelo = m => `$('Config').first().json.modelos.${m}`;
+// Los motores van en cadena: cada uno pregunta el prompt original, tal cual,
+// y el siguiente lo vuelve a tomar de «Elegir prompts».
+const PROMPT = `$('Elegir prompts').item.json.prompt`;
+const http = (name, position, params) =>
+  corrida.node(name, 'n8n-nodes-base.httpRequest', 4.2, position, {
+    ...params,
+    options: { timeout: 180000, batching: { batch: { batchSize: 1, batchInterval: 1000 } } }
+  }, { onError: 'continueRegularOutput', retryOnFail: true, maxTries: 2, waitBetweenTries: 5000 });
+const body = obj => ({ sendBody: true, specifyBody: 'json', jsonBody: `={{ JSON.stringify(${obj}) }}` });
 const headerAuth = { authentication: 'genericCredentialType', genericAuthType: 'httpHeaderAuth' };
+const serpApi = { authentication: 'predefinedCredentialType', nodeCredentialType: 'serpApi' };
 
-http('ChatGPT', [1440, 560], {
+http('ChatGPT', [700, 100], {
   method: 'POST', url: 'https://api.openai.com/v1/chat/completions', ...headerAuth,
-  sendBody: true, specifyBody: 'json',
-  jsonBody: `={{ JSON.stringify({ model: ${modelo('chatgpt')}, web_search_options: { user_location: { type: 'approximate', approximate: { country: 'PE', city: 'Lima', timezone: 'America/Lima' } } }, messages: [{ role: 'user', content: $json.prompt }] }) }}`
+  ...body(`{ model: 'gpt-4o-search-preview', web_search_options: { user_location: { type: 'approximate', approximate: { country: 'PE', city: 'Lima', timezone: 'America/Lima' } } }, messages: [{ role: 'user', content: ${PROMPT} }] }`)
 });
-http('Claude', [1440, 700], {
-  method: 'POST', url: 'https://api.anthropic.com/v1/messages', ...headerAuth,
+http('Claude', [920, 100], {
+  method: 'POST', url: 'https://api.anthropic.com/v1/messages',
+  authentication: 'predefinedCredentialType', nodeCredentialType: 'anthropicApi',
   sendHeaders: true, headerParameters: { parameters: [{ name: 'anthropic-version', value: '2023-06-01' }] },
-  sendBody: true, specifyBody: 'json',
-  jsonBody: `={{ JSON.stringify({ model: ${modelo('claude')}, max_tokens: 2000, messages: [{ role: 'user', content: $json.prompt }] }) }}`
+  ...body(`{ model: 'claude-sonnet-4-5', max_tokens: 2000, messages: [{ role: 'user', content: ${PROMPT} }] }`)
 });
-http('Gemini', [1440, 840], {
-  method: 'POST',
-  url: `=https://generativelanguage.googleapis.com/v1beta/models/{{ ${modelo('gemini')} }}:generateContent`,
-  ...headerAuth, sendBody: true, specifyBody: 'json',
-  jsonBody: `={{ JSON.stringify({ contents: [{ role: 'user', parts: [{ text: $json.prompt }] }], tools: [{ google_search: {} }] }) }}`
+http('Gemini', [1140, 100], {
+  method: 'POST', url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
+  authentication: 'predefinedCredentialType', nodeCredentialType: 'googlePalmApi',
+  ...body(`{ contents: [{ role: 'user', parts: [{ text: ${PROMPT} }] }], tools: [{ google_search: {} }] }`)
 });
-http('Perplexity', [1440, 980], {
+http('Perplexity', [1360, 100], {
   method: 'POST', url: 'https://api.perplexity.ai/chat/completions', ...headerAuth,
-  sendBody: true, specifyBody: 'json',
-  jsonBody: `={{ JSON.stringify({ model: ${modelo('perplexity')}, web_search_options: { user_location: { country: 'PE' } }, messages: [{ role: 'user', content: $json.prompt }] }) }}`
+  ...body(`{ model: 'sonar', web_search_options: { user_location: { country: 'PE' } }, messages: [{ role: 'user', content: ${PROMPT} }] }`)
 });
-const serpQuery = extra => ({
-  method: 'GET', url: 'https://serpapi.com/search.json',
-  authentication: 'genericCredentialType', genericAuthType: 'httpQueryAuth',
-  sendQuery: true, queryParameters: { parameters: extra }
+http('Google (SerpAPI)', [1580, 100], {
+  method: 'GET', url: 'https://serpapi.com/search.json', ...serpApi,
+  sendQuery: true, queryParameters: { parameters: [
+    { name: 'engine', value: 'google' },
+    { name: 'q', value: `={{ ${PROMPT} }}` },
+    { name: 'google_domain', value: 'google.com.pe' },
+    { name: 'gl', value: 'pe' },
+    { name: 'hl', value: 'es' }
+  ] }
 });
-http('AI Overview (búsqueda)', [1440, 1120], serpQuery([
-  { name: 'engine', value: 'google' },
-  { name: 'q', value: '={{ $json.prompt }}' },
-  { name: 'google_domain', value: 'google.com.pe' },
-  { name: 'gl', value: 'pe' },
-  { name: 'hl', value: 'es' }
-]));
-node('¿Pide segunda llamada?', 'n8n-nodes-base.if', 2, [1660, 1120], {
+// A veces Google carga el AI Overview aparte y SerpAPI devuelve un page_token.
+// Si no hay token, se consulta account.json, que es gratis y no gasta búsquedas.
+const PIDE_PAGINA = `($json.ai_overview && $json.ai_overview.page_token && !($json.ai_overview.text_blocks || []).length)`;
+http('AI Overview (página)', [1800, 100], {
+  method: 'GET', url: `={{ ${PIDE_PAGINA} ? 'https://serpapi.com/search.json' : 'https://serpapi.com/account.json' }}`, ...serpApi,
+  sendQuery: true, queryParameters: { parameters: [
+    { name: 'engine', value: 'google_ai_overview' },
+    { name: 'page_token', value: `={{ ($json.ai_overview || {}).page_token || '' }}` }
+  ] }
+});
+
+code(corrida, 'Juntar respuestas', [2020, 100], src('analisis.js') + `
+// Un item por prompt y motor (5 por prompt).
+const salida = [];
+$input.all().forEach((_, i) => {
+  const de = n => { try { return $(n).itemMatching(i).json; } catch (e) { return { error: 'Sin respuesta de ' + n }; } };
+  const apis = {
+    chatgpt: de('ChatGPT'), claude: de('Claude'), gemini: de('Gemini'), perplexity: de('Perplexity'),
+    google: de('Google (SerpAPI)'), ai_overview_pagina: de('AI Overview (página)')
+  };
+  for (const r of juntarRespuestas(de('Elegir prompts'), apis)) salida.push({ json: r });
+});
+return salida;
+`);
+
+const marcas = [CONFIG.marca].concat(CONFIG.competidores);
+const listaMarcas = marcas.map(m => `${m.nombre} (${m.alias.filter(a => a !== m.nombre).join(', ') || 'sin alias'})`).join('; ');
+corrida.node('Analista IA', '@n8n/n8n-nodes-langchain.informationExtractor', 1.2, [2240, 100], {
+  text: `={{ 'Pregunta que se le hizo a ' + $json.motor + ':\\n' + $json.prompt + '\\n\\nRespuesta de ' + $json.motor + ':\\n' + ($json.texto || '(sin respuesta)') }}`,
+  attributes: { attributes: [
+    { name: 'menciona_bcp', type: 'boolean', required: true,
+      description: `true si la respuesta nombra a ${CONFIG.marca.nombre} (o ${CONFIG.marca.alias.slice(1).join(', ')}).` },
+    { name: 'posicion_bcp', type: 'number', required: true,
+      description: `Lugar de ${CONFIG.marca.nombre} entre los bancos nombrados, por orden de aparición (1 = el primero). 0 si no aparece.` },
+    { name: 'sentimiento', type: 'number', required: true,
+      description: `Tono de la respuesta hacia ${CONFIG.marca.nombre}, de -1 (muy negativo) a 1 (muy positivo). 0 si es neutral o no aparece. Solo lo que dice de ${CONFIG.marca.nombre}, no de otros bancos.` },
+    { name: 'marcas_mencionadas', type: 'string', required: true,
+      description: 'Bancos nombrados en la respuesta, en orden de aparición y separados por coma. Usa el nombre canónico de esta lista: ' + listaMarcas + '. Otros bancos, con su nombre tal cual. Vacío si no nombra ninguno.' }
+  ] },
+  options: {
+    systemPromptTemplate: 'Analizas respuestas de asistentes de IA a preguntas sobre bancos en Perú, para medir la visibilidad de ' + CONFIG.marca.nombre + '. Te basas solo en el texto de la respuesta: no supongas ni completes nada que no esté escrito. Si la respuesta está vacía, ningún banco aparece.'
+  }
+}, { onError: 'continueRegularOutput' });
+corrida.node('Gemini · analista', '@n8n/n8n-nodes-langchain.lmChatGoogleGemini', 1, [2240, 320], {
+  modelName: 'models/gemini-2.5-flash', options: { temperature: 0 }
+});
+corrida.link('Gemini · analista', 'Analista IA', 0, 'ai_languageModel');
+
+code(corrida, 'Armar fila', [2460, 100], src('config.js') + '\n' + src('analisis.js') + `
+const r = $('Juntar respuestas').item.json;
+return { json: armarFila(r, $json.output, CONFIG) };
+`, 'runOnceForEachItem');
+sheet(corrida, 'Guardar resultados', [2680, 100], 'append', 'resultados', {
+  columns: { mappingMode: 'autoMapInputData', value: {}, matchingColumns: [], schema: [] }
+});
+
+corrida.link('Cada día 7:00 (Lima)', 'Leer prompts');
+corrida.link('Webhook geo-run', 'Leer prompts');
+corrida.chain('Leer prompts', 'Elegir prompts', 'ChatGPT', 'Claude', 'Gemini', 'Perplexity', 'Google (SerpAPI)',
+  'AI Overview (página)', 'Juntar respuestas', 'Analista IA', 'Armar fila', 'Guardar resultados');
+
+// ═══ GEO · API ═════════════════════════════════════════════════════════════
+const api = workflow('GEO TRACKER BCP · API');
+
+// GET /geo-dashboard
+webhook(api, 'Webhook geo-dashboard', 'GET', 'geo-dashboard', [0, 0]);
+sheet(api, 'Leer resultados', [240, 0], 'read', 'resultados');
+code(api, 'Dashboard', [460, 0], src('config.js') + '\n' + src('dashboard.js') + `
+const q = $('Webhook geo-dashboard').first().json.query || {};
+const filtros = {};
+for (const k of ['proyecto', 'motor', 'desde', 'hasta', 'prompt_id']) if (q[k]) filtros[k] = String(q[k]);
+return [{ json: construirDashboard($input.all().map(i => i.json), filtros, Object.assign({ motores: MOTORES }, CONFIG)) }];
+`);
+api.node('Responder dashboard', 'n8n-nodes-base.respondToWebhook', 1.1, [680, 0], { respondWith: 'firstIncomingItem', options: {} });
+api.chain('Webhook geo-dashboard', 'Leer resultados', 'Dashboard', 'Responder dashboard');
+
+// GET /geo-prompts
+webhook(api, 'Webhook geo-prompts', 'GET', 'geo-prompts', [0, 220]);
+sheet(api, 'Leer prompts', [240, 220], 'read', 'prompts');
+code(api, 'Listar prompts', [460, 220], src('prompts.js') + `
+return [{ json: listarPrompts($input.all().map(i => i.json)) }];
+`);
+api.node('Responder prompts', 'n8n-nodes-base.respondToWebhook', 1.1, [680, 220], { respondWith: 'firstIncomingItem', options: {} });
+api.chain('Webhook geo-prompts', 'Leer prompts', 'Listar prompts', 'Responder prompts');
+
+// POST /geo-prompts-save
+webhook(api, 'Webhook geo-prompts-save', 'POST', 'geo-prompts-save', [0, 440]);
+code(api, 'Validar prompt', [240, 440], src('prompts.js') + `
+let body = $('Webhook geo-prompts-save').first().json.body || {};
+if (typeof body === 'string') { try { body = JSON.parse(body); } catch (e) { body = {}; } }
+const hoy = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Lima' });
+const idNuevo = 'p_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const r = prepararGuardado(body, hoy, idNuevo);
+// Si es válido sale solo la fila a escribir; si no, el error.
+return [{ json: r.ok ? r.fila : { _error: r.error } }];
+`);
+api.node('¿Válido?', 'n8n-nodes-base.if', 2, [460, 440], {
   conditions: {
     options: { caseSensitive: true, leftValue: '', typeValidation: 'loose' },
-    conditions: [cond(
-      `={{ !!($json.ai_overview && $json.ai_overview.page_token && !($json.ai_overview.text_blocks || []).length) }}`,
-      { type: 'boolean', operation: 'true', singleValue: true }, '')],
+    conditions: [{ id: uuid('valido'), leftValue: '={{ !$json._error }}', rightValue: '', operator: { type: 'boolean', operation: 'true', singleValue: true } }],
     combinator: 'and'
   },
   options: {}
 });
-http('AI Overview (página)', [1880, 1060], serpQuery([
-  { name: 'engine', value: 'google_ai_overview' },
-  { name: 'page_token', value: '={{ $json.ai_overview.page_token }}' }
-]));
-
-const motoresHttp = [
-  ['chatgpt', 'ChatGPT', 'Resultado ChatGPT', [1660, 560]],
-  ['claude', 'Claude', 'Resultado Claude', [1660, 700]],
-  ['gemini', 'Gemini', 'Resultado Gemini', [1660, 840]],
-  ['perplexity', 'Perplexity', 'Resultado Perplexity', [1660, 980]],
-  ['ai_overview', null, 'Resultado AI Overview', [2100, 1120]]
-];
-sheet('Guardar resultados', [2340, 840], 'append', 'resultados', {
-  columns: { mappingMode: 'autoMapInputData', value: {}, matchingColumns: [], schema: [] },
-  options: { cellFormat: 'RAW' }
+sheet(api, 'Guardar prompt', [680, 380], 'appendOrUpdate', 'prompts', {
+  columns: { mappingMode: 'autoMapInputData', value: {}, matchingColumns: ['id'], schema: [] }
 });
-for (const [motor, httpNode, nombre, pos] of motoresHttp) {
-  code(nombre, pos, src('analisis.js') + `
-const cfg = $('Config').first().json;
-return { json: filaResultado('${motor}', $json, $('Elegir prompts').item.json, cfg) };
-`, 'runOnceForEachItem');
-  if (httpNode) {
-    link('Elegir prompts', httpNode);
-    link(httpNode, nombre);
-  }
-  link(nombre, 'Guardar resultados');
-}
-link('Elegir prompts', 'AI Overview (búsqueda)');
-link('AI Overview (búsqueda)', '¿Pide segunda llamada?');
-link('¿Pide segunda llamada?', 'AI Overview (página)', 0);
-link('¿Pide segunda llamada?', 'Resultado AI Overview', 1);
-link('AI Overview (página)', 'Resultado AI Overview');
+responderJson(api, 'Responder guardado', [900, 380], `={{ JSON.stringify({ ok: true, prompt: $('Validar prompt').first().json }) }}`);
+responderJson(api, 'Responder error', [680, 520], `={{ JSON.stringify({ ok: false, error: $json._error }) }}`, 400);
+api.chain('Webhook geo-prompts-save', 'Validar prompt', '¿Válido?', 'Guardar prompt', 'Responder guardado');
+api.link('¿Válido?', 'Responder error', 1);
 
-const workflow = {
-  name: 'GEO Monitor — Share of Model BCP',
-  nodes,
-  connections,
-  settings: { executionOrder: 'v1', timezone: 'America/Lima', saveManualExecutions: true },
-  pinData: {},
-  meta: { templateCredsSetupCompleted: false }
-};
-writeFileSync(new URL('geo-monitor.n8n.json', dir), JSON.stringify(workflow, null, 2) + '\n');
-console.log(`geo-monitor.n8n.json: ${nodes.length} nodos`);
+for (const [archivo, w] of [['geo-corrida.n8n.json', corrida], ['geo-api.n8n.json', api]]) {
+  const j = w.json();
+  writeFileSync(new URL(archivo, dir), JSON.stringify(j, null, 2) + '\n');
+  console.log(`${archivo}: ${j.nodes.length} nodos`);
+}

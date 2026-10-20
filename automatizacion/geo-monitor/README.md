@@ -1,129 +1,91 @@
 # GEO Monitor: Share of Model de BCP
 
-Pregunta lo mismo a ChatGPT, Claude, Gemini, Perplexity y al AI Overview de
-Google, y mide si mencionan a BCP, en qué posición, con qué tono y si citan sus
-dominios. Es un workflow de n8n con 4 endpoints y una corrida diaria a las
-7:00 a.m. (Lima). Guarda los datos en un Google Sheet.
+Le hace las mismas preguntas a ChatGPT, Claude, Gemini, Perplexity y al AI
+Overview de Google. Mide si mencionan a BCP, en qué posición, con qué tono y si
+citan sus dominios. Son dos workflows de n8n y un Google Sheet.
+
+## El recorrido
+
+**[GEO TRACKER BCP · Corrida](https://n8n.srv836595.hstgr.cloud/workflow/dS2FTRZuU8eNPTL5)**
+es un solo recorrido de izquierda a derecha:
+
+```
+Cada día 7:00 ─┐
+Webhook geo-run┴→ Leer prompts → Elegir prompts
+  → ChatGPT → Claude → Gemini → Perplexity → Google (SerpAPI) → AI Overview (página)
+  → Juntar respuestas → Analista IA (+ Gemini · analista) → Armar fila → Guardar resultados
+```
+
+- **Los motores** son un nodo HTTP cada uno, con su credencial y el modelo en
+  el body. Cada uno recibe el prompt original, tal cual, sin intermediarios. Por
+  eso no hay un Agent: un Agent reescribiría la pregunta, resumiría las
+  respuestas y perdería las fuentes citadas.
+- **Juntar respuestas** saca de cada API el texto y los dominios citados, y deja
+  5 items por prompt, uno por motor.
+- **Analista IA** es un Information Extractor con Gemini 2.5 Flash. Lee cada
+  respuesta y devuelve `menciona_bcp`, `posicion_bcp`, `sentimiento` (-1 a 1)
+  y `marcas_mencionadas`.
+- **Armar fila** agrega `citado_bcp`, que sale de los dominios y no necesita IA,
+  y escribe la fila con las columnas de la hoja `resultados`.
+- Si un motor falla (saldo, modelo, límite), su fila queda con
+  `estado = error` y la corrida sigue. El dashboard no cuenta esas filas.
+
+**[GEO TRACKER BCP · API](https://n8n.srv836595.hstgr.cloud/workflow/AxHUZMTaaBAsnO3l)**
+tiene los tres endpoints que usa el front, cada uno en su fila:
+`geo-dashboard`, `geo-prompts` y `geo-prompts-save`.
+
+## Archivos
 
 | Archivo | Qué es |
 |---|---|
-| `geo-monitor.n8n.json` | El workflow que se importa en n8n. **Se genera, no se edita a mano.** |
-| `plantilla-geo-monitor.xlsx` | La plantilla del Sheet: pestañas `prompts` (6 prompts de ejemplo) y `resultados`. Los nombres de pestañas y columnas son los que usa el workflow. |
-| `src/` | El código de los nodos Code: análisis, dashboard, prompts y config. |
-| `build.mjs` | Arma el JSON a partir de `src/`: `node automatizacion/geo-monitor/build.mjs` |
-| `test.mjs` | Corre el código real de cada nodo con respuestas de ejemplo: `node automatizacion/geo-monitor/test.mjs` |
-| `publicar.mjs` | Sube el JSON al workflow «GEO TRACKER BCP» de n8n por la API y asigna las credenciales BCP: `N8N_API_KEY=… [GEO_SHEET_ID=…] node automatizacion/geo-monitor/publicar.mjs` |
+| `geo-corrida.n8n.json`, `geo-api.n8n.json` | Los workflows. **Se generan, no se editan a mano.** |
+| `plantilla-geo-monitor.xlsx` | La plantilla del Sheet: pestañas `prompts` y `resultados`. |
+| `src/` | El código de los nodos Code: `analisis.js` (respuestas → filas), `dashboard.js`, `prompts.js`, `config.js` (marca y competidores). |
+| `build.mjs` | Arma los JSON a partir de `src/`: `node automatizacion/geo-monitor/build.mjs` |
+| `test.mjs` | Corre el código real de los nodos con respuestas de ejemplo: `node automatizacion/geo-monitor/test.mjs` |
+| `publicar.mjs` | Sube los dos workflows a n8n con el Sheet y las credenciales: `N8N_API_KEY=… node automatizacion/geo-monitor/publicar.mjs` |
 
-## Configuración (unos 15 min)
+## Estado en n8n
 
-1. Sube `plantilla-geo-monitor.xlsx` a Drive y ábrela como Google Sheet
-   (*Archivo → Guardar como Hoja de cálculo de Google*). Copia el ID de la URL,
-   lo que va entre `/d/` y `/edit`.
-2. En n8n, *Workflows → Import from file* y elige `geo-monitor.n8n.json`.
-   Reemplaza `PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET` en los 5 nodos de Google
-   Sheets (Leer Resultados, Leer Prompts, Guardar prompt, Leer Prompts corrida,
-   Guardar resultados) y asígnales tu credencial de Google Sheets OAuth2.
-3. Crea estas credenciales y asígnalas en los nodos HTTP:
+- **Sheet:** [BCP GEO Monitor](https://docs.google.com/spreadsheets/d/12JvqnIyNiUbS9o4HlrJrcSKGi9gNyL57ahepsZE8XY0/edit),
+  con la credencial **Google Sheets account**.
+- **Credenciales asignadas:** **LLM BCP** (Claude), **GEMINI BCP** (Gemini y
+  Gemini · analista) y **SerpAPI account** (los 2 nodos de Google).
+- **Probado el 20/10:** `geo-prompts` devuelve los 6 prompts del Sheet,
+  `geo-dashboard` responde `vacio: true` y `geo-prompts-save` rechaza un prompt
+  vacío con 400. Todavía no se ha hecho ninguna corrida.
+- **Falta:**
+  1. Crear las credenciales de **ChatGPT** y **Perplexity** (Header Auth,
+     `Authorization: Bearer …`) y asignarlas en sus nodos.
+  2. Hacer una corrida de prueba.
+  3. Activar los dos workflows.
 
-| Nodo | Tipo de credencial | Nombre | Valor |
-|---|---|---|---|
-| ChatGPT | Header Auth | `Authorization` | `Bearer sk-...` |
-| Claude | Header Auth | `x-api-key` | tu key de Anthropic |
-| Gemini | Header Auth | `x-goog-api-key` | tu key de Google AI Studio |
-| Perplexity | Header Auth | `Authorization` | `Bearer pplx-...` |
-| AI Overview (búsqueda) y AI Overview (página) | Query Auth | `api_key` | tu key de SerpAPI |
+## Cambiar algo
 
-4. En el nodo **Config** puedes cambiar la marca, sus alias, los dominios
-   propios, los competidores y los modelos. Vienen cargados Interbank, BBVA,
-   Scotiabank, BanBif, Pichincha y Banco de la Nación.
-5. Activa el workflow. Las URLs quedan en
-   `https://n8n.srv836595.hstgr.cloud/webhook/geo-dashboard` y equivalentes.
+- **Modelos de los motores:** en el body de cada nodo HTTP. Son
+  `gpt-4o-search-preview`, `claude-sonnet-4-5`, `gemini-2.5-flash` y `sonar`.
+- **Modelo del analista:** en el nodo **Gemini · analista**.
+- **Marca, alias, dominios propios y competidores:** en `src/config.js`. Después
+  se corren `build.mjs` y `publicar.mjs`. Si se cambian a mano en n8n, hay que
+  tocar «Armar fila», «Dashboard» y las descripciones del Analista IA.
 
-Para comprobarlo antes del primer día: `POST /webhook/geo-run` con `{}`,
-espera unos minutos y abre `GET /webhook/geo-dashboard`.
+## Supuestos
 
-## Publicado en n8n
-
-El workflow ya está subido a
-[GEO TRACKER BCP](https://n8n.srv836595.hstgr.cloud/workflow/dS2FTRZuU8eNPTL5),
-inactivo. `publicar.mjs` asignó estas credenciales que ya existían en la
-instancia: **Google Sheets account** (los 5 nodos de Sheets; **BCP Google Sheet** quedó vencida), **LLM BCP** (Claude),
-**GEMINI BCP** (Gemini) y **SerpAPI account** (los 2 nodos de AI Overview).
-Esos nodos usan la credencial predefinida de cada servicio en lugar de Header
-Auth o Query Auth.
-
-El Sheet es
-[BCP GEO Monitor](https://docs.google.com/spreadsheets/d/12JvqnIyNiUbS9o4HlrJrcSKGi9gNyL57ahepsZE8XY0/edit),
-en el Drive de flum2.carlos.ramirez@gmail.com, y su ID ya está en los 5 nodos.
-En `resultados`, `estado` vale `ok`, `sin_overview` (Google no mostró un AI
-Overview) o `error`.
-
-Falta:
-1. ~~Credencial de Google Sheets~~: listo. `geo-prompts` y `geo-dashboard` responden con datos reales del Sheet (probado el 20/10).
-2. Las credenciales de **ChatGPT** y **Perplexity**. Para BCP no hay ninguna,
-   así que se crean como Header Auth, según la tabla de abajo.
-3. Activar el workflow.
-
-Al volver a correr `publicar.mjs` se conservan el ID del Sheet y las
-credenciales asignadas a mano.
-
-## Cómo está montado
-
-Los cinco disparadores entran en un solo nodo **Config**, que mira cuál se
-ejecutó y deja la ruta en `ruta`. El nodo **Ruta** (Switch) manda cada
-ejecución a su rama. Así la configuración vive en un único sitio.
-
-En la corrida, **Elegir prompts** deja un item por prompt y lo manda a los
-cinco motores. Cada respuesta pasa por su nodo **Resultado …**, que extrae el
-texto y las fuentes y analiza la respuesta. Después se agrega una fila a
-Resultados. Los nodos HTTP siguen aunque fallen (`continueRegularOutput`, con
-un reintento). Si a un motor se le acaba el saldo, su fila queda con `error` y
-el dashboard la descarta. Así un fallo no se cuenta como «no nos menciona».
-
-SerpAPI a veces no trae el AI Overview en la primera búsqueda y devuelve un
-`page_token`. En ese caso **¿Pide segunda llamada?** hace la consulta a
-`google_ai_overview`.
-
-## Supuestos (todos se pueden cambiar)
-
-- **Modelos:** gpt-4o-search-preview (con búsqueda web, ubicación Lima),
-  claude-sonnet-4-5, gemini-2.5-flash (con Google Search) y sonar (ubicación
-  PE). Están en `modelos` del nodo Config: si alguno da error de modelo,
-  cámbialo ahí.
-- **Claude** responde sin búsqueda web.
-- **Sentimiento:** cuenta palabras positivas y negativas de un diccionario
-  dentro de una ventana de 12 palabras alrededor de cada mención de BCP.
-  Invierte el signo si hay un negador justo antes («sin comisiones» suma, «no es
-  seguro» resta). Va de -1 a 1. No usa una IA, así que no cuesta nada. Es
-  aproximado: si una frase compara a BCP con otro banco, las palabras sobre el
-  otro banco también cuentan.
-- **Posición:** el orden en que aparece BCP entre las marcas mencionadas
-  (1 = la primera).
+- **Claude** responde sin búsqueda web. ChatGPT y Perplexity usan ubicación
+  Perú, y Gemini usa Google Search.
 - **Share of Model:** el % de respuestas válidas que mencionan a BCP. En AI
   Overview, una búsqueda sin overview cuenta como respuesta sin mención. Aparte
   se informa `presencia_ai_overview`.
-- **Variación (`var_share_of_model`):** puntos porcentuales del último día con
-  datos frente al día con datos anterior.
-- **«Eliminar» un prompt** solo lo desactiva (`activo = FALSE`), para no perder
-  su historial. Un `prompt_id` pedido a mano en `/geo-run` corre aunque esté
-  inactivo.
-
-## Costo y seguridad
-
-Cada prompt hace 5 consultas por corrida, una por motor (la de AI Overview es
-una búsqueda en SerpAPI), y a veces una segunda para AI Overview. Con 6
-prompts al día son unas 30 consultas diarias.
-
-Los webhooks quedan abiertos, sin autenticación, y con CORS `*`. Eso está bien
-para un prototipo desechable. Si va a salir del equipo, conviene ponerles
-Header Auth en cada nodo Webhook y mandar esa cabecera desde el front.
-
-## Lo que está probado y lo que no
-
-`test.mjs` corre el código real de los nodos Code del JSON generado. Usa un
-`$` simulado y respuestas con la forma de cada API, y cubre rutas, prompts,
-análisis por motor, fallos y dashboard con filtros. No probé importarlo en n8n
-ni hacer llamadas reales a las APIs.
+- **Variación:** puntos porcentuales del último día con datos frente al día con
+  datos anterior.
+- **«Eliminar» un prompt** solo lo desactiva. Un `prompt_id` pedido a mano en
+  `/geo-run` corre aunque esté inactivo.
+- **Costo:** por prompt son 4 llamadas a modelos, 1 o 2 búsquedas en SerpAPI y
+  5 análisis con Gemini Flash. Con 6 prompts al día son unas 30 consultas
+  pagadas más 30 análisis baratos.
+- **Seguridad:** los webhooks quedan abiertos, sin autenticación y con CORS `*`.
+  Está bien para un prototipo. Si va a salir del equipo, conviene ponerles
+  Header Auth.
 
 ## Bloque para el front
 
@@ -139,8 +101,8 @@ MÓDULO PROMPTS + CONEXIÓN AL BACKEND (n8n)
 GET  {API_BASE}/geo-dashboard?proyecto=&motor=&desde=&hasta=&prompt_id=
 GET  {API_BASE}/geo-prompts
 POST {API_BASE}/geo-prompts-save   body: {id?, proyecto, prompt, categoria, activo}  | eliminar: {id, accion:"eliminar"}
-                                   → {ok:true, accion, prompt} | 400 {ok:false, error}
-POST {API_BASE}/geo-run            body: {prompt_ids?: [], proyecto?}  → responde al instante; la corrida tarda varios minutos
+                                   → {ok:true, prompt} | 400 {ok:false, error}
+POST {API_BASE}/geo-run            body: {prompt_ids?: [], proyecto?}  → responde al instante {"message":"Workflow was started"}; la corrida tarda varios minutos
 Fechas desde/hasta en formato AAAA-MM-DD.
 
 3. Motores (keys fijas)
