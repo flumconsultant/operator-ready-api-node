@@ -188,6 +188,10 @@ prueba('/geo-prompts lista, cuenta activos y saca proyectos', () => {
   const r = correr(api, 'Listar prompts', hojaPrompts)[0];
   assert.deepEqual([r.total, r.activos], [3, 2]);
   assert.deepEqual(r.proyectos, ['Reputación', 'Tarjetas']);
+  assert.ok(r.intenciones.includes('Comparativa'));
+  const conCat = correr(api, 'Listar prompts', [{ ...hojaPrompts[0], categoria: 'Requisitos y apertura', intencion: 'Transaccional' }])[0];
+  assert.ok(conCat.categorias.includes('Requisitos y apertura'), 'las categorías de la hoja aparecen en la lista');
+  assert.equal(conCat.prompts[0].intencion, 'Transaccional');
   assert.equal(r.prompts[0].id, 'p003');
   assert.equal(correr(api, 'Listar prompts', [{}])[0].total, 0, 'hoja vacía');
 });
@@ -199,8 +203,9 @@ prueba('/geo-prompts-save crea, edita sin pisar fecha_creacion, elimina y rechaz
   assert.match(nuevo.id, /^p_/);
   assert.equal(nuevo.prompt, '¿Mejor app bancaria?');
   assert.deepEqual(Object.keys(guardar({ id: 'p001', activo: false })).sort(), ['activo', 'id']);
-  const editar = guardar({ id: 'p001', prompt: 'nuevo', categoria: 'Inventada' });
-  assert.deepEqual([editar.categoria, editar.fecha_creacion], ['Otra', undefined]);
+  const editar = guardar({ id: 'p001', prompt: 'nuevo', categoria: 'Requisitos y apertura', intencion: 'Transaccional' });
+  assert.deepEqual([editar.categoria, editar.intencion, editar.fecha_creacion], ['Requisitos y apertura', 'Transaccional', undefined]);
+  assert.equal(guardar({ id: 'p001', categoria: '  ' }).categoria, 'Otra');
   assert.deepEqual(guardar({ id: 'p001', accion: 'eliminar' }), { id: 'p001', activo: false });
   assert.match(guardar({ prompt: '   ' })._error, /vacío/);
   assert.match(guardar({ accion: 'eliminar' })._error, /id/);
@@ -309,6 +314,10 @@ prueba('/geo-monitor-data: proyectos y prompts desde la hoja, errores y corridas
   const ids = huerfano.monitor.projects.map(p => p.id);
   for (const o of huerfano.monitor.observations) assert.ok(ids.includes(o.projectId), 'falta el proyecto ' + o.projectId);
   assert.ok(huerfano.prompts.some(p => p.id === 'p003' && p.text.startsWith('¿Qué banco')), 'el prompt borrado se rescata de resultados');
+  // Solo los últimos ~6 meses, y la respuesta recortada.
+  const viejo = monitor([{ ...temprano[0], fecha: '2025-01-01' }, { ...temprano[1], respuesta: 'x'.repeat(9000) }]);
+  assert.equal(viejo.monitor.observations.length, 1, 'lo de hace más de 6 meses no se manda');
+  assert.ok(viejo.monitor.observations[0].response.length <= 4001);
   const vacio = monitor([{}]);
   assert.deepEqual([vacio.monitor.observations.length, vacio.monitor.dates.length], [0, 0]);
 });

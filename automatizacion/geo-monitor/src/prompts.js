@@ -1,7 +1,10 @@
 // Prompts: listar (/geo-prompts), validar lo que llega a /geo-prompts-save y
 // elegir cuáles entran en una corrida. Sin dependencias, como los otros dos.
 
+// Categoría e intención son texto libre (vienen del universo de prompts de BCP).
+// Estas listas solo son sugerencias para un formulario.
 const CATEGORIAS = ['Reputación', 'Producto', 'Digital', 'Otra'];
+const INTENCIONES = ['Informacional', 'Comparativa', 'Transaccional', 'Reputacional', 'Navegacional'];
 
 function activoDe(v) {
   if (typeof v === 'boolean') return v;
@@ -16,6 +19,7 @@ function normalizarPrompt(f) {
     proyecto: String(f.proyecto || '').trim() || 'Sin proyecto',
     prompt: String(f.prompt || '').trim(),
     categoria: String(f.categoria || '').trim() || 'Otra',
+    intencion: String(f.intencion || '').trim(),
     activo: activoDe(f.activo),
     fecha_creacion: String(f.fecha_creacion || f.creado || '')
   };
@@ -27,7 +31,12 @@ function listarPrompts(filas) {
     .map(normalizarPrompt)
     .sort((a, b) => b.fecha_creacion.localeCompare(a.fecha_creacion) || b.id.localeCompare(a.id));
   const proyectos = [...new Set(prompts.map(p => p.proyecto))].sort();
-  return { prompts, proyectos, categorias: CATEGORIAS, total: prompts.length, activos: prompts.filter(p => p.activo).length };
+  const unicos = (base, campo) => [...new Set(base.concat(prompts.map(p => p[campo]).filter(Boolean)))].sort();
+  return {
+    prompts, proyectos,
+    categorias: unicos(CATEGORIAS, 'categoria'), intenciones: unicos(INTENCIONES, 'intencion'),
+    total: prompts.length, activos: prompts.filter(p => p.activo).length
+  };
 }
 
 // Devuelve la fila que hay que escribir (solo con las columnas que cambian,
@@ -49,9 +58,9 @@ function prepararGuardado(body, hoy, idNuevo) {
   }
   if (!id || body.proyecto !== undefined) fila.proyecto = String(body.proyecto || '').trim() || 'Sin proyecto';
   if (!id || body.categoria !== undefined) {
-    const c = String(body.categoria || '').trim() || 'Otra';
-    fila.categoria = CATEGORIAS.includes(c) ? c : 'Otra';
+    fila.categoria = String(body.categoria || '').trim().slice(0, 80) || 'Otra';
   }
+  if (body.intencion !== undefined) fila.intencion = String(body.intencion || '').trim().slice(0, 40);
   if (!id || body.activo !== undefined) fila.activo = activoDe(body.activo);
   if (!id) fila.fecha_creacion = hoy;
   return { ok: true, accion: id ? 'editar' : 'crear', fila };

@@ -57,20 +57,26 @@ function observacion(f, config) {
     brandCited: !error && f.citado,
     sources: f.fuentes.map(d => ({ domain: d, url: 'https://' + d + '/' })),
     ranking: marcas,
-    response: f.respuesta,
+    response: f.respuesta.length > MAX_RESPUESTA ? f.respuesta.slice(0, MAX_RESPUESTA) + '…' : f.respuesta,
     error: f.error,
     isExample: false,
     source: 'n8n · GEO Tracker'
   };
 }
 
+// El front muestra como mucho 6 meses; más atrás no se manda.
+const DIAS_HISTORIA = 190;
+// La respuesta completa queda en el Sheet; al front le basta con esto.
+const MAX_RESPUESTA = 4000;
+
 function construirMonitor(filasResultados, filasPrompts, config, hoy) {
+  const desde = new Date(new Date(hoy + 'T12:00:00Z').getTime() - DIAS_HISTORIA * 864e5).toISOString().slice(0, 10);
   // Varias corridas el mismo día: se queda la última de cada prompt y motor.
   const porId = new Map();
   for (const crudo of filasResultados) {
     if (!crudo || !crudo.motor) continue;
     const f = normalizarFila(crudo);
-    if (!MODELO_FRONT[f.motor] || !f.prompt_id || !f.fecha) continue;
+    if (!MODELO_FRONT[f.motor] || !f.prompt_id || !f.fecha || f.fecha < desde) continue;
     const o = observacion(f, config);
     const previa = porId.get(o.id);
     if (!previa || String(previa.timestamp) < String(o.timestamp)) porId.set(o.id, o);
@@ -111,7 +117,7 @@ function construirMonitor(filasResultados, filasPrompts, config, hoy) {
   const projects = [...proyectos.values()].map(p => ({
     id: p.id,
     name: p.name,
-    description: `${p.promptIds.length} prompt${p.promptIds.length === 1 ? '' : 's'} · ${[...p.categorias].join(', ')}`,
+    description: `${p.promptIds.length} prompt${p.promptIds.length === 1 ? '' : 's'} · ${p.categorias.size} categoría${p.categorias.size === 1 ? '' : 's'}`,
     promptIds: p.promptIds,
     example: false
   }));
@@ -131,7 +137,7 @@ function construirMonitor(filasResultados, filasPrompts, config, hoy) {
       domains
     },
     prompts: prompts.map(p => ({
-      id: p.id, text: p.prompt, project: slug(p.proyecto), category: p.categoria, active: p.activo,
+      id: p.id, text: p.prompt, project: slug(p.proyecto), category: p.categoria, intent: p.intencion, active: p.activo,
       status: 'ok', position: null, linkPosition: null, sov: null, ranking: [],
       response: { isExample: false, screenshotUrl: null, text: '' }
     }))
