@@ -8,11 +8,10 @@ dominios. Es un workflow de n8n con 4 endpoints y una corrida diaria a las
 | Archivo | Qué es |
 |---|---|
 | `geo-monitor.n8n.json` | El workflow que se importa en n8n. **Se genera, no se edita a mano.** |
-| `plantilla-geo-monitor.xlsx` | La plantilla del Sheet: pestañas Prompts (con 6 prompts de ejemplo), Resultados y Léeme. |
+| `plantilla-geo-monitor.xlsx` | La plantilla del Sheet: pestañas `prompts` (6 prompts de ejemplo) y `resultados`. Los nombres de pestañas y columnas son los que usa el workflow. |
 | `src/` | El código de los nodos Code: análisis, dashboard, prompts y config. |
 | `build.mjs` | Arma el JSON a partir de `src/`: `node automatizacion/geo-monitor/build.mjs` |
 | `test.mjs` | Corre el código real de cada nodo con respuestas de ejemplo: `node automatizacion/geo-monitor/test.mjs` |
-| `plantilla.py` | Regenera la plantilla: `python3 automatizacion/geo-monitor/plantilla.py` |
 | `publicar.mjs` | Sube el JSON al workflow «GEO TRACKER BCP» de n8n por la API y asigna las credenciales BCP: `N8N_API_KEY=… [GEO_SHEET_ID=…] node automatizacion/geo-monitor/publicar.mjs` |
 
 ## Configuración (unos 15 min)
@@ -53,11 +52,16 @@ instancia: **BCP Google Sheet** (los 5 nodos de Sheets), **LLM BCP** (Claude),
 Esos nodos usan la credencial predefinida de cada servicio en lugar de Header
 Auth o Query Auth.
 
+El Sheet es
+[BCP GEO Monitor](https://docs.google.com/spreadsheets/d/12JvqnIyNiUbS9o4HlrJrcSKGi9gNyL57ahepsZE8XY0/edit),
+en el Drive de flum2.carlos.ramirez@gmail.com, y su ID ya está en los 5 nodos.
+En `resultados`, `estado` vale `ok`, `sin_overview` (Google no mostró un AI
+Overview) o `error`.
+
 Falta:
-1. El ID del Google Sheet. Sube la plantilla y vuelve a correr
-   `publicar.mjs` con `GEO_SHEET_ID=…`. También puedes pegarlo a mano en los 5
-   nodos. La cuenta de Google de **BCP Google Sheet** tiene que poder editar
-   ese Sheet.
+1. Reconectar la credencial **BCP Google Sheet**: n8n la rechaza con «needs to
+   be reconnected». La cuenta con la que se reconecte tiene que poder editar el
+   Sheet. Si no es flum2.carlos.ramirez@gmail.com, compártelo con esa cuenta.
 2. Las credenciales de **ChatGPT** y **Perplexity**. Para BCP no hay ninguna,
    así que se crean como Header Auth, según la tabla de abajo.
 3. Activar el workflow.

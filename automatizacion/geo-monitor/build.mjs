@@ -108,7 +108,7 @@ node('Ruta', 'n8n-nodes-base.switch', 3, [480, 400], {
 link('Config', 'Ruta');
 
 // ─── GET /geo-dashboard ────────────────────────────────────────────────────
-sheet('Leer Resultados', [740, 0], 'read', 'Resultados', { options: {} });
+sheet('Leer Resultados', [740, 0], 'read', 'resultados', { options: {} });
 code('Dashboard', [960, 0], src('dashboard.js') + `
 const cfg = $('Config').first().json;
 const q = cfg.peticion || {};
@@ -122,7 +122,7 @@ link('Leer Resultados', 'Dashboard');
 link('Dashboard', 'Responder dashboard');
 
 // ─── GET /geo-prompts ──────────────────────────────────────────────────────
-sheet('Leer Prompts', [740, 200], 'read', 'Prompts', { options: {} });
+sheet('Leer Prompts', [740, 200], 'read', 'prompts', { options: {} });
 code('Listar prompts', [960, 200], src('prompts.js') + `
 return [{ json: listarPrompts($input.all().map(i => i.json)) }];
 `);
@@ -135,7 +135,7 @@ link('Listar prompts', 'Responder prompts');
 code('Validar prompt', [740, 400], src('prompts.js') + `
 const cfg = $('Config').first().json;
 const idNuevo = 'p_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
-return [{ json: prepararGuardado(cfg.peticion, cfg.ahora, idNuevo) }];
+return [{ json: prepararGuardado(cfg.peticion, cfg.fecha, idNuevo) }];
 `);
 node('¿Válido?', 'n8n-nodes-base.if', 2, [960, 400], {
   conditions: {
@@ -146,7 +146,7 @@ node('¿Válido?', 'n8n-nodes-base.if', 2, [960, 400], {
   options: {}
 });
 code('Fila a guardar', [1180, 340], `return [{ json: $input.first().json.fila }];`);
-sheet('Guardar prompt', [1400, 340], 'appendOrUpdate', 'Prompts', {
+sheet('Guardar prompt', [1400, 340], 'appendOrUpdate', 'prompts', {
   columns: { mappingMode: 'autoMapInputData', value: {}, matchingColumns: ['id'], schema: [] },
   options: { cellFormat: 'RAW' }
 });
@@ -163,7 +163,7 @@ link('Guardar prompt', 'Responder guardado');
 // ─── POST /geo-run y corrida diaria ────────────────────────────────────────
 responderJson('Responder corrida iniciada', [740, 620],
   `={{ JSON.stringify({ ok: true, mensaje: 'Corrida iniciada; los resultados aparecerán en unos minutos', iniciada: $json.ahora }) }}`);
-sheet('Leer Prompts corrida', [960, 760], 'read', 'Prompts', { options: {} });
+sheet('Leer Prompts corrida', [960, 760], 'read', 'prompts', { options: {} });
 code('Elegir prompts', [1180, 760], src('prompts.js') + `
 const cfg = $('Config').first().json;
 const runId = 'r_' + cfg.ahora.replace(/\\D/g, '').slice(0, 14);
@@ -235,7 +235,7 @@ const motoresHttp = [
   ['perplexity', 'Perplexity', 'Resultado Perplexity', [1660, 980]],
   ['ai_overview', null, 'Resultado AI Overview', [2100, 1120]]
 ];
-sheet('Guardar resultados', [2340, 840], 'append', 'Resultados', {
+sheet('Guardar resultados', [2340, 840], 'append', 'resultados', {
   columns: { mappingMode: 'autoMapInputData', value: {}, matchingColumns: [], schema: [] },
   options: { cellFormat: 'RAW' }
 });

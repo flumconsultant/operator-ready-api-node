@@ -17,8 +17,7 @@ function normalizarPrompt(f) {
     prompt: String(f.prompt || '').trim(),
     categoria: String(f.categoria || '').trim() || 'Otra',
     activo: activoDe(f.activo),
-    creado: String(f.creado || ''),
-    actualizado: String(f.actualizado || '')
+    fecha_creacion: String(f.fecha_creacion || f.creado || '')
   };
 }
 
@@ -26,22 +25,23 @@ function listarPrompts(filas) {
   const prompts = filas
     .filter(f => f && f.id && String(f.prompt || '').trim())
     .map(normalizarPrompt)
-    .sort((a, b) => b.creado.localeCompare(a.creado));
+    .sort((a, b) => b.fecha_creacion.localeCompare(a.fecha_creacion) || b.id.localeCompare(a.id));
   const proyectos = [...new Set(prompts.map(p => p.proyecto))].sort();
   return { prompts, proyectos, categorias: CATEGORIAS, total: prompts.length, activos: prompts.filter(p => p.activo).length };
 }
 
 // Devuelve la fila que hay que escribir (solo con las columnas que cambian,
-// para que «Agregar o actualizar» no pise creado al editar) o un error.
-function prepararGuardado(body, ahora, idNuevo) {
+// para que «Agregar o actualizar» no pise fecha_creacion al editar) o un error.
+// hoy: AAAA-MM-DD en Lima.
+function prepararGuardado(body, hoy, idNuevo) {
   body = body || {};
   const id = String(body.id || '').trim();
   if (body.accion === 'eliminar') {
     if (!id) return { ok: false, error: 'Falta el id del prompt a eliminar.' };
-    return { ok: true, accion: 'eliminar', fila: { id, activo: false, actualizado: ahora } };
+    return { ok: true, accion: 'eliminar', fila: { id, activo: false } };
   }
   const prompt = String(body.prompt || '').trim();
-  const fila = { id: id || idNuevo, actualizado: ahora };
+  const fila = { id: id || idNuevo };
   if (!id || body.prompt !== undefined) {
     if (!prompt) return { ok: false, error: 'El prompt no puede estar vacío.' };
     if (prompt.length > 2000) return { ok: false, error: 'El prompt pasa de 2.000 caracteres.' };
@@ -53,7 +53,7 @@ function prepararGuardado(body, ahora, idNuevo) {
     fila.categoria = CATEGORIAS.includes(c) ? c : 'Otra';
   }
   if (!id || body.activo !== undefined) fila.activo = activoDe(body.activo);
-  if (!id) fila.creado = ahora;
+  if (!id) fila.fecha_creacion = hoy;
   return { ok: true, accion: id ? 'editar' : 'crear', fila };
 }
 

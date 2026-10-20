@@ -63,9 +63,9 @@ prueba('Cada salida del Switch va al nodo correcto', () => {
 
 // ─── Prompts ───────────────────────────────────────────────────────────────
 const hojaPrompts = [
-  { id: 'p1', proyecto: 'Tarjetas', prompt: '¿Cuál es la mejor tarjeta de crédito en Perú?', categoria: 'Producto', activo: 'TRUE', creado: '2026-10-01T12:00:00Z' },
-  { id: 'p2', proyecto: 'Tarjetas', prompt: '¿Qué banco cobra menos comisiones?', categoria: 'Producto', activo: 'FALSE', creado: '2026-10-02T12:00:00Z' },
-  { id: 'p3', proyecto: 'Reputación', prompt: '¿Qué banco es más confiable?', categoria: 'Reputación', activo: 'TRUE', creado: '2026-10-03T12:00:00Z' }
+  { id: 'p1', proyecto: 'Tarjetas', prompt: '¿Cuál es la mejor tarjeta de crédito en Perú?', categoria: 'Producto', activo: 'TRUE', fecha_creacion: '2026-10-01' },
+  { id: 'p2', proyecto: 'Tarjetas', prompt: '¿Qué banco cobra menos comisiones?', categoria: 'Producto', activo: 'FALSE', fecha_creacion: '2026-10-02' },
+  { id: 'p3', proyecto: 'Reputación', prompt: '¿Qué banco es más confiable?', categoria: 'Reputación', activo: 'TRUE', fecha_creacion: '2026-10-03' }
 ];
 
 prueba('/geo-prompts lista, cuenta activos y saca proyectos', () => {
@@ -84,12 +84,12 @@ prueba('/geo-prompts-save crea, edita sin pisar creado, elimina y rechaza vacío
   assert.equal(nuevo.accion, 'crear');
   assert.match(nuevo.fila.id, /^p_/);
   assert.equal(nuevo.fila.prompt, '¿Mejor app bancaria?');
-  assert.ok(nuevo.fila.creado);
+  assert.match(nuevo.fila.fecha_creacion, /^\d{4}-\d{2}-\d{2}$/);
   const switchActivo = guardar({ id: 'p1', activo: false });
-  assert.deepEqual(Object.keys(switchActivo.fila).sort(), ['activo', 'actualizado', 'id']);
+  assert.deepEqual(Object.keys(switchActivo.fila).sort(), ['activo', 'id']);
   const editar = guardar({ id: 'p1', proyecto: 'X', prompt: 'nuevo', categoria: 'Inventada', activo: true });
   assert.equal(editar.fila.categoria, 'Otra');
-  assert.equal(editar.fila.creado, undefined);
+  assert.equal(editar.fila.fecha_creacion, undefined);
   const eliminar = guardar({ id: 'p1', accion: 'eliminar' });
   assert.deepEqual([eliminar.accion, eliminar.fila.activo], ['eliminar', false]);
   assert.equal(guardar({ prompt: '   ' }).ok, false);
@@ -147,11 +147,11 @@ const resultado = (motor, api) => {
 
 prueba('ChatGPT: mención, posición 1, sentimiento positivo, citado', () => {
   const [f] = resultado('chatgpt', respuestas.chatgpt);
-  assert.equal(f.menciona, true);
-  assert.equal(f.posicion, 1);
+  assert.equal(f.menciona_bcp, true);
+  assert.equal(f.posicion_bcp, 1);
   assert.ok(f.sentimiento > 0.2, 'sentimiento ' + f.sentimiento);
-  assert.equal(f.citado, true);
-  assert.equal(f.marcas, 'BCP, Interbank, BBVA');
+  assert.equal(f.citado_bcp, true);
+  assert.equal(f.marcas_mencionadas, 'BCP, Interbank, BBVA');
   assert.equal(f.fuentes, 'viabcp.com, comparabien.com.pe');
   assert.equal(f.prompt_id, 'p1');
   assert.equal(f.motor, 'chatgpt');
@@ -159,48 +159,48 @@ prueba('ChatGPT: mención, posición 1, sentimiento positivo, citado', () => {
 
 prueba('Claude: alias largo, posición 3, sentimiento negativo, sin citas', () => {
   const [f] = resultado('claude', respuestas.claude);
-  assert.equal(f.menciona, true);
-  assert.equal(f.posicion, 3);
+  assert.equal(f.menciona_bcp, true);
+  assert.equal(f.posicion_bcp, 3);
   assert.ok(f.sentimiento < -0.2, 'sentimiento ' + f.sentimiento);
-  assert.equal(f.citado, false);
+  assert.equal(f.citado_bcp, false);
 });
 
 prueba('Gemini: sin mención; el dominio sale del title y no del redirect', () => {
   const [f] = resultado('gemini', respuestas.gemini);
-  assert.equal(f.menciona, false);
-  assert.equal(f.posicion, '');
+  assert.equal(f.menciona_bcp, false);
+  assert.equal(f.posicion_bcp, '');
   assert.equal(f.sentimiento, '');
   assert.equal(f.fuentes, 'scotiabank.com.pe');
-  assert.equal(f.marcas, 'Scotiabank, BanBif, Pichincha');
+  assert.equal(f.marcas_mencionadas, 'Scotiabank, BanBif, Pichincha');
 });
 
 prueba('Perplexity: la negación da la vuelta («no es caro», «sin problemas»)', () => {
   const [f] = resultado('perplexity', respuestas.perplexity);
-  assert.equal(f.menciona, true);
+  assert.equal(f.menciona_bcp, true);
   assert.ok(f.sentimiento > 0, 'sentimiento ' + f.sentimiento);
-  assert.equal(f.citado, true);
-  assert.ok(f.marcas.includes('Banco de la Nación'));
+  assert.equal(f.citado_bcp, true);
+  assert.ok(f.marcas_mencionadas.includes('Banco de la Nación'));
 });
 
 prueba('AI Overview: lee listas anidadas; sin overview no es error', () => {
   const [f] = resultado('ai_overview', respuestas.ai_overview);
-  assert.equal(f.disponible, true);
-  assert.equal(f.posicion, 2);
+  assert.equal(f.estado, 'ok');
+  assert.equal(f.posicion_bcp, 2);
   assert.ok(f.sentimiento > 0);
   const [sin] = resultado('ai_overview', { organic_results: [] });
-  assert.deepEqual([sin.disponible, sin.menciona, sin.error], [false, false, '']);
+  assert.deepEqual([sin.estado, sin.menciona_bcp, sin.error], ['sin_overview', false, '']);
 });
 
 prueba('Un motor que falla deja el error anotado y no para la corrida', () => {
   const [f] = resultado('claude', { error: { message: 'Your credit balance is too low' } });
-  assert.equal(f.disponible, false);
+  assert.equal(f.estado, 'error');
   assert.match(f.error, /credit balance/);
 });
 
 prueba('No confunde marcas dentro de otras palabras', () => {
   const [f] = resultado('chatgpt', { choices: [{ message: { content: 'El abcp y la escotiabanca no existen; BN sí.' } }] });
-  assert.equal(f.menciona, false);
-  assert.equal(f.marcas, 'Banco de la Nación');
+  assert.equal(f.menciona_bcp, false);
+  assert.equal(f.marcas_mencionadas, 'Banco de la Nación');
 });
 
 // ─── Dashboard ─────────────────────────────────────────────────────────────
@@ -209,9 +209,9 @@ const aHoja = (f, fecha) => Object.fromEntries(Object.entries(f).map(([k, v]) =>
   : typeof v === 'boolean' ? (v ? 'TRUE' : 'FALSE') : typeof v === 'number' ? String(v).replace('.', ',') : v]));
 const filasDia = fecha => ['chatgpt', 'claude', 'gemini', 'perplexity', 'ai_overview']
   .flatMap(m => resultado(m, respuestas[m])).map(f => aHoja({ ...f, timestamp: fecha + 'T12:00:00Z' }, fecha));
-const dia1 = filasDia('2026-10-18').map(f => (f.motor === 'chatgpt' ? { ...f, menciona: 'FALSE', marcas: 'Interbank' } : f));
+const dia1 = filasDia('2026-10-18').map(f => (f.motor === 'chatgpt' ? { ...f, menciona_bcp: 'FALSE', marcas_mencionadas: 'Interbank' } : f));
 const dia2 = filasDia('2026-10-19');
-const errorFila = { ...dia2[0], motor: 'gemini', error: 'quota', menciona: 'FALSE', disponible: 'FALSE' };
+const errorFila = { ...dia2[0], motor: 'gemini', error: 'quota', menciona_bcp: 'FALSE', estado: 'error' };
 const hojaResultados = [...dia1, ...dia2, errorFila];
 
 const dashboard = query => correr('Dashboard', hojaResultados, { Config: [config('Webhook geo-dashboard', { query })] })[0];
@@ -270,6 +270,17 @@ prueba('Conexiones apuntan a nodos que existen y los HTTP no paran la corrida', 
   assert.equal(hojas.length, 5);
   for (const h of hojas) assert.equal(h.parameters.documentId.value, 'PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET');
   assert.equal(new Set(wf.nodes.map(n => n.id)).size, wf.nodes.length);
+});
+
+prueba('Las filas que se escriben tienen las columnas de la plantilla', () => {
+  const RESULTADOS = ['run_id', 'fecha', 'timestamp', 'prompt_id', 'proyecto', 'categoria', 'prompt', 'motor', 'estado',
+    'menciona_bcp', 'posicion_bcp', 'sentimiento', 'marcas_mencionadas', 'fuentes', 'citado_bcp', 'error', 'respuesta'];
+  const PROMPTS = ['id', 'proyecto', 'prompt', 'categoria', 'activo', 'fecha_creacion'];
+  assert.deepEqual(Object.keys(resultado('chatgpt', respuestas.chatgpt)[0]).sort(), RESULTADOS.slice().sort());
+  const g = correr('Validar prompt', [{}], { Config: [config('Webhook geo-prompts-save', { body: { prompt: 'x' } })] })[0];
+  assert.deepEqual(Object.keys(g.fila).sort(), PROMPTS.slice().sort());
+  const hojas = wf.nodes.filter(n => n.type === 'n8n-nodes-base.googleSheets').map(n => n.parameters.sheetName.value);
+  assert.deepEqual([...new Set(hojas)].sort(), ['prompts', 'resultados']);
 });
 
 console.log(`\n${ok} pruebas pasan`);

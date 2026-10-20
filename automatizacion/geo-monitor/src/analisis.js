@@ -202,15 +202,16 @@ function filaResultado(motor, respuestaApi, prompt, config) {
     prompt: prompt.prompt,
     categoria: prompt.categoria,
     motor,
-    disponible: e.disponible,
-    menciona: a.menciona,
-    posicion: a.posicion,
+    // ok: respondió. sin_overview: Google no mostró AI Overview. error: falló la llamada.
+    estado: e.error ? 'error' : e.disponible ? 'ok' : 'sin_overview',
+    menciona_bcp: a.menciona,
+    posicion_bcp: a.posicion,
     sentimiento: a.sentimiento === null ? '' : a.sentimiento,
-    citado: a.citado,
-    marcas: a.marcas.join(', '),
+    marcas_mencionadas: a.marcas.join(', '),
     fuentes: a.fuentes.join(', '),
+    citado_bcp: a.citado,
+    error: e.error,
     // Google Sheets no admite más de 50.000 caracteres por celda.
-    respuesta: e.texto.slice(0, 20000),
-    error: e.error
+    respuesta: e.texto.slice(0, 20000)
   };
 }
