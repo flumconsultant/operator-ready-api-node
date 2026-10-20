@@ -39,6 +39,17 @@ Webhook geo-run┴→ Leer prompts      ├→ Claude ────────�
   LLM BCP). Lee cada respuesta y devuelve `menciona_bcp`, `posicion_bcp`,
   `sentimiento` (-1 a 1), `marcas_mencionadas` y dos conteos para el SOV:
   `n_menciones_bcp` y `n_menciones_bancos`.
+- **Share of Voice** (`src/sov.js`), como lo define la Estrategia SEO/GEO: el
+  Analista desglosa cada banco (`detalle_marcas`: posición, menciones,
+  sentimiento) y cada uno recibe un score = (1/posición + menciones ÷
+  menciones totales) / 2 × contexto (positivo 1, neutral 0,75, negativo
+  0,25). El SoV de BCP (`sov_bcp`) es su score ÷ la suma de todos × 100. El
+  front lo recibe en `sov`/`som` y el de cada banco en `sovByBrand`.
+- **Claude busca en la web** (`web_search_20260209`, hasta 3 búsquedas) con la
+  zona horaria de Lima y una línea de sistema «El usuario está en Lima, Perú».
+  La herramienta rechaza `country: "PE"`. Las fuentes son las URLs citadas o,
+  si no citó, las consultadas. Claude decide cuándo buscar: en Marca buscó en
+  10 de 27 prompts.
 - **Armar fila** agrega `citado_bcp`, que sale de los dominios y no necesita IA,
   pasa los bancos a sus nombres canónicos («Banco Pichincha» → «Pichincha») y
   escribe la fila con las columnas de la hoja `resultados`.

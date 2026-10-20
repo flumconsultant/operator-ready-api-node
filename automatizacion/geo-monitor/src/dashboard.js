@@ -51,7 +51,10 @@ function normalizarFila(f) {
     respuesta: String(f.respuesta || ''),
     error: String(f.error || ''),
     n_menciones_bcp: aNum(f.n_menciones_bcp),
-    n_menciones_bancos: aNum(f.n_menciones_bancos)
+    n_menciones_bancos: aNum(f.n_menciones_bancos),
+    categoria: String(f.categoria || ''),
+    detalle_marcas: String(f.detalle_marcas || ''),
+    sov_bcp: aNum(f.sov_bcp)
   };
 }
 

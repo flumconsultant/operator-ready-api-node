@@ -34,9 +34,17 @@ function extraerRespuesta(motor, r) {
     return { disponible: true, texto: msg.content || '', fuentes, error: '' };
   }
   if (motor === 'claude') {
-    const texto = (r.content || []).filter(c => c.type === 'text').map(c => c.text).join('\n');
+    // Con búsqueda web, el texto llega partido en bloques (uno por cita): se
+    // une sin separador para no cortar frases.
+    const texto = (r.content || []).filter(c => c.type === 'text').map(c => c.text).join('');
     const fuentes = [];
     for (const c of r.content || []) for (const cit of c.citations || []) if (cit.url) fuentes.push(cit.url);
+    // Si no citó nada pero sí buscó, cuentan las páginas que consultó.
+    if (!fuentes.length) {
+      for (const c of r.content || []) {
+        if (c.type === 'web_search_tool_result' && Array.isArray(c.content)) for (const w of c.content) if (w.url) fuentes.push(w.url);
+      }
+    }
     return { disponible: true, texto, fuentes, error: '' };
   }
   if (motor === 'gemini') {
@@ -137,6 +145,8 @@ function armarFila(r, analisis, config) {
   const posicion = Number(a.posicion_bcp);
   const sentimiento = Number(a.sentimiento);
   const dominios = (config.marca.dominios || []).map(d => d.toLowerCase());
+  const detalle = r.estado === 'ok' ? detalleCanonico(a.detalle_marcas, config) : [];
+  const sov = sovPorMarca(detalle);
   return {
     run_id: r.run_id, fecha: r.fecha, timestamp: r.timestamp, prompt_id: r.prompt_id,
     proyecto: r.proyecto, categoria: r.categoria, prompt: r.prompt, motor: r.motor,
@@ -152,6 +162,30 @@ function armarFila(r, analisis, config) {
     respuesta: String(r.texto || '').slice(0, 20000),
     // Para el SOV por respuesta: veces que se nombra a BCP ÷ veces que se nombra a cualquier banco.
     n_menciones_bcp: menciona ? entero(a.n_menciones_bcp) : 0,
-    n_menciones_bancos: r.estado === 'ok' ? entero(a.n_menciones_bancos) : 0
+    n_menciones_bancos: r.estado === 'ok' ? entero(a.n_menciones_bancos) : 0,
+    // Desglose por banco del Analista (nombres canónicos) y el Share of Voice de BCP.
+    detalle_marcas: detalle.length ? JSON.stringify(detalle) : '',
+    sov_bcp: r.estado !== 'ok' ? '' : menciona ? (sov[config.marca.nombre] || 0) : 0
   };
+}
+
+// El detalle por banco del Analista, con nombres canónicos y un banco por fila
+// (si la IA repite un banco con dos nombres, se suman sus menciones).
+function detalleCanonico(texto, config) {
+  const porMarca = new Map();
+  for (const d of leerDetalle(texto)) {
+    const marca = marcasCanonicas(d && d.marca, config);
+    if (!marca) continue;
+    const pos = Math.round(Number(d.posicion));
+    const s = Number(d.sentimiento);
+    const actual = porMarca.get(marca) || { marca, posicion: 0, menciones: 0, sentimiento: 0 };
+    if (pos > 0 && (!actual.posicion || pos < actual.posicion)) actual.posicion = pos;
+    actual.menciones += Math.max(1, entero(d.menciones));
+    if (isFinite(s)) actual.sentimiento = Math.max(-1, Math.min(1, Math.round(s * 100) / 100));
+    porMarca.set(marca, actual);
+  }
+  // Posiciones 1..n en el orden que dio la IA, sin huecos.
+  return [...porMarca.values()]
+    .sort((x, y) => (x.posicion || 99) - (y.posicion || 99))
+    .map((d, i) => Object.assign(d, { posicion: i + 1 }));
 }

@@ -151,3 +151,40 @@ tarjetas, tablas y botones del sitio.
 2. Abrir el sitio: la cabecera sigue diciendo «Datos en vivo» y el dashboard
    muestra datos (no la demo).
 3. Consola del navegador sin errores de CORS ni de JavaScript.
+
+## 7. Share of Voice, % de mención y segmentos (KPIs de la estrategia)
+
+La estrategia SEO/GEO de BCP mide tres indicadores: **posición promedio**,
+**% de mención** y **Share of Voice**. Cada observación de
+`geo-monitor-data` (`DATA.monitor.observations`) ya trae estos campos:
+
+| Campo | Qué es |
+|---|---|
+| `sov` | Share of Voice de BCP en esa respuesta (0–100). Score que pondera posición, prominencia (menciones) y contexto (positivo 1 · neutral 0,75 · negativo 0,25) frente a los otros bancos. `null` si la respuesta dio error. |
+| `som` | Igual a `sov` (el KPI principal actual ya lo usa). |
+| `sovByBrand` | `{ "BCP": 47.6, "BBVA": 21.4, ... }`: el SoV de cada banco en esa respuesta. |
+| `brandDetail` | `[{ marca, posicion, menciones, sentimiento }]` por banco. |
+| `brandMentioned`, `position` | Para % de mención y posición promedio. |
+| `sources`, `brandCited`, `linkPosition` | Fuentes citadas, si cita un dominio de BCP y en qué lugar. |
+| `category`, `intent` | Categoría e intención de búsqueda del prompt. |
+
+Cambios pedidos:
+
+1. **Renombrar** el KPI «Share of Model» a **«Share of Voice»** en todo el
+   sitio (tarjetas, gráficos, tablas, tooltips y exportaciones). Tooltip:
+   «Visibilidad de BCP frente a la competencia. Pondera posición, prominencia
+   y contexto (positivo/neutral) de cada banco en la respuesta.»
+2. **Agregar el KPI «% de mención»** junto a «Posición promedio»:
+   respuestas válidas con `brandMentioned` ÷ respuestas válidas (las de
+   `status: "error"` no cuentan). Variación en puntos porcentuales.
+3. **Competidores:** el ranking usa el promedio de `sovByBrand[marca]` sobre
+   las respuestas válidas del filtro (un banco ausente en una respuesta cuenta
+   0). Mostrar SoV, % de mención y posición promedio por banco, con BCP
+   resaltado.
+4. **Segmentos:** en el detalle de proyecto, una tabla por `category` con
+   posición promedio, % de mención y SoV por motor (como las diapositivas de
+   «Posición promedio» y «Porcentaje de mención»), y un filtro por `intent`.
+5. **Fuentes:** la vista de fuentes ya existe. Agregar el filtro «solo las que
+   citan a BCP» (`brandCited`) y el lugar de la primera fuente de BCP
+   (`linkPosition`).
+6. No toques las fórmulas: `sov` ya viene calculado del backend.

@@ -108,11 +108,13 @@ http('ChatGPT', [700, -200], {
   method: 'POST', url: 'https://api.openai.com/v1/chat/completions', ...headerAuth,
   ...body(`{ model: 'gpt-4o-mini-search-preview', web_search_options: { search_context_size: 'low', user_location: { type: 'approximate', approximate: { country: 'PE', city: 'Lima', timezone: 'America/Lima' } } }, messages: [{ role: 'user', content: ${PROMPT} }] }`)
 });
+// La búsqueda web de Claude no acepta country: 'PE' (400 «Country code PE is not
+// supported»): la ubicación va por zona horaria y una línea de sistema.
 http('Claude', [700, 0], {
   method: 'POST', url: 'https://api.anthropic.com/v1/messages',
   authentication: 'predefinedCredentialType', nodeCredentialType: 'anthropicApi',
   sendHeaders: true, headerParameters: { parameters: [{ name: 'anthropic-version', value: '2023-06-01' }] },
-  ...body(`{ model: 'claude-sonnet-5-5', max_tokens: 2000, output_config: { effort: 'low' }, messages: [{ role: 'user', content: ${PROMPT} }] }`)
+  ...body(`{ model: 'claude-sonnet-5-5', max_tokens: 4000, output_config: { effort: 'low' }, system: 'El usuario está en Lima, Perú.', tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 3, user_location: { type: 'approximate', timezone: 'America/Lima' } }], messages: [{ role: 'user', content: ${PROMPT} }] }`)
 });
 http('Gemini', [700, 200], {
   method: 'POST', url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent',
@@ -182,6 +184,8 @@ corrida.node('Analista IA', '@n8n/n8n-nodes-langchain.informationExtractor', 1.2
       description: `Cuántas veces se nombra a ${CONFIG.marca.nombre} (con cualquiera de sus nombres) en la respuesta. 0 si no aparece.` },
     { name: 'n_menciones_bancos', type: 'number', required: true,
       description: `Cuántas veces se nombra a cualquier banco en total, ${CONFIG.marca.nombre} incluido. Cada aparición cuenta. 0 si no se nombra ninguno.` },
+    { name: 'detalle_marcas', type: 'string', required: true,
+      description: 'Lista JSON con un objeto por banco nombrado, en orden de aparición: [{"marca": "BCP", "posicion": 1, "menciones": 2, "sentimiento": 0.6}]. posicion = orden de aparición (1 = primero); menciones = veces que se nombra ese banco; sentimiento de -1 a 1 sobre lo que la respuesta dice de ese banco (0 si es neutral). Usa los nombres canónicos de la lista de bancos. [] si no nombra ninguno. Solo el JSON, sin texto alrededor.' },
     { name: 'marcas_mencionadas', type: 'string', required: true,
       description: 'Bancos nombrados en la respuesta, en orden de aparición y separados por coma. Usa el nombre canónico de esta lista: ' + listaMarcas + '. Otros bancos, con su nombre tal cual. Vacío si no nombra ninguno.' }
   ] },
@@ -197,7 +201,7 @@ corrida.node('Claude · analista', '@n8n/n8n-nodes-langchain.lmChatAnthropic', 1
 });
 corrida.link('Claude · analista', 'Analista IA', 0, 'ai_languageModel');
 
-code(corrida, 'Armar fila', [1820, 100], src('config.js') + '\n' + src('analisis.js') + `
+code(corrida, 'Armar fila', [1820, 100], src('config.js') + '\n' + src('sov.js') + '\n' + src('analisis.js') + `
 // El Analista devuelve un item por respuesta y en el mismo orden.
 const r = $('Juntar respuestas').all()[$itemIndex].json;
 return { json: armarFila(r, $json.output, CONFIG) };
@@ -310,7 +314,7 @@ webhook(api, 'Webhook geo-monitor-data', 'GET', 'geo-monitor-data', [0, 700]);
 sheet(api, 'Leer resultados (monitor)', [240, 700], 'read', 'resultados');
 // executeOnce: llegan tantos items como filas de resultados, pero la hoja se lee una vez.
 sheet(api, 'Leer prompts (monitor)', [460, 700], 'read', 'prompts', {}, { executeOnce: true });
-code(api, 'Datos del monitor', [680, 700], src('config.js') + '\n' + src('dashboard.js') + '\n' + src('prompts.js') + '\n' + src('monitor.js') + `
+code(api, 'Datos del monitor', [680, 700], src('config.js') + '\n' + src('sov.js') + '\n' + src('dashboard.js') + '\n' + src('prompts.js') + '\n' + src('monitor.js') + `
 const hoy = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Lima' });
 const resultados = $('Leer resultados (monitor)').all().map(i => i.json);
 const prompts = $('Leer prompts (monitor)').all().map(i => i.json);

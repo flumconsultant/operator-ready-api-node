@@ -2,7 +2,7 @@
 // forma de DATA.monitor y DATA.prompts del front «BCP · Monitor de Visibilidad
 // en IA». El front calcula sus KPIs en el navegador a partir de estas
 // observaciones. Sin dependencias: build.mjs lo pega en el nodo «Datos del
-// monitor» junto con config.js, dashboard.js (normalizarFila) y prompts.js.
+// monitor» junto con config.js, sov.js, dashboard.js (normalizarFila) y prompts.js.
 
 // Nuestra clave de motor → la del front.
 const MODELO_FRONT = { chatgpt: 'chatgpt', claude: 'claude', gemini: 'gemini', perplexity: 'perplexity', ai_overview: 'overview' };
@@ -18,7 +18,7 @@ function etiquetaSentimiento(v) {
 }
 
 // Una fila de resultados → una observación del front.
-function observacion(f, config) {
+function observacion(f, config, meta) {
   const propios = (config.marca.dominios || []).map(d => d.toLowerCase());
   const esPropio = d => propios.some(p => d === p || d.endsWith('.' + p));
   const modelId = MODELO_FRONT[f.motor];
@@ -26,15 +26,17 @@ function observacion(f, config) {
   const error = f.estado === 'error' || (!f.estado && Boolean(f.error));
   const menciona = !error && f.menciona;
   const marcas = f.marcas;
-  // SOV de la respuesta: veces que se nombra a BCP ÷ veces que se nombra a un
-  // banco. Filas anteriores a los conteos: 1 ÷ bancos nombrados.
-  let som = 0;
-  if (menciona) {
-    som = f.n_menciones_bancos > 0 && f.n_menciones_bcp > 0
-      ? Math.min(100, (f.n_menciones_bcp / f.n_menciones_bancos) * 100)
-      : 100 / Math.max(1, marcas.length);
-    som = Math.round(som * 10) / 10;
-  }
+  const propia = config.marca.nombre;
+  // Share of Voice (sov.js). Las filas sin desglose por banco (anteriores al
+  // 21/10) se aproximan con el orden de marcas_mencionadas.
+  let detalle = leerDetalle(f.detalle_marcas);
+  if (!detalle.length && !error) detalle = detalleDesdeRanking(marcas, propia, f.sentimiento, f.n_menciones_bcp);
+  const sovByBrand = error ? {} : sovPorMarca(detalle);
+  const sov = error ? null : menciona ? (f.sov_bcp !== null && f.detalle_marcas ? f.sov_bcp : (sovByBrand[propia] || 0)) : 0;
+  // Proporción de menciones (la métrica anterior), por si se quiere comparar.
+  const mentionShare = menciona && f.n_menciones_bancos > 0 && f.n_menciones_bcp > 0
+    ? Math.round(Math.min(100, (f.n_menciones_bcp / f.n_menciones_bancos) * 100) * 10) / 10
+    : menciona ? Math.round((100 / Math.max(1, marcas.length)) * 10) / 10 : 0;
   const idxPropio = f.fuentes.findIndex(esPropio);
   const sentimiento = menciona && f.sentimiento !== null ? f.sentimiento : null;
   return {
@@ -45,7 +47,14 @@ function observacion(f, config) {
     date: f.fecha,
     timestamp: f.timestamp,
     status: error ? 'error' : menciona ? 'ok' : 'not_mentioned',
-    som: error ? null : som,
+    // El front promedia `som` en su KPI principal: lleva el Share of Voice.
+    som: sov,
+    sov,
+    sovByBrand,
+    brandDetail: detalle,
+    mentionShare: error ? null : mentionShare,
+    category: (meta && meta.categoria) || f.categoria || '',
+    intent: (meta && meta.intencion) || '',
     position: menciona ? f.posicion : null,
     linkPosition: idxPropio >= 0 ? idxPropio + 1 : null,
     mentions: menciona ? (f.n_menciones_bcp || 1) : 0,
@@ -71,13 +80,14 @@ const MAX_RESPUESTA = 4000;
 
 function construirMonitor(filasResultados, filasPrompts, config, hoy) {
   const desde = new Date(new Date(hoy + 'T12:00:00Z').getTime() - DIAS_HISTORIA * 864e5).toISOString().slice(0, 10);
+  const metaPrompts = new Map(filasPrompts.filter(f => f && f.id).map(f => [String(f.id).trim(), normalizarPrompt(f)]));
   // Varias corridas el mismo día: se queda la última de cada prompt y motor.
   const porId = new Map();
   for (const crudo of filasResultados) {
     if (!crudo || !crudo.motor) continue;
     const f = normalizarFila(crudo);
     if (!MODELO_FRONT[f.motor] || !f.prompt_id || !f.fecha || f.fecha < desde) continue;
-    const o = observacion(f, config);
+    const o = observacion(f, config, metaPrompts.get(f.prompt_id));
     const previa = porId.get(o.id);
     if (!previa || String(previa.timestamp) < String(o.timestamp)) porId.set(o.id, o);
   }

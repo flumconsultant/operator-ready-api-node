@@ -133,7 +133,7 @@ prueba('Juntar respuestas: sin AI Overview no es error; un motor caído sí', ()
 
 const COLUMNAS = ['run_id', 'fecha', 'timestamp', 'prompt_id', 'proyecto', 'categoria', 'prompt', 'motor', 'estado',
   'menciona_bcp', 'posicion_bcp', 'sentimiento', 'marcas_mencionadas', 'fuentes', 'citado_bcp', 'error', 'respuesta',
-  'n_menciones_bcp', 'n_menciones_bancos'];
+  'n_menciones_bcp', 'n_menciones_bancos', 'detalle_marcas', 'sov_bcp'];
 
 const armar = (respuestas, analisis) => correr(corrida, 'Armar fila',
   analisis.map(a => (a === null ? { error: 'falló' } : { output: a })), { 'Juntar respuestas': respuestas });
@@ -160,6 +160,48 @@ prueba('Armar fila: columnas de la plantilla, análisis de la IA y citado por do
   assert.equal(filas[0].fuentes, 'viabcp.com, comparabien.com.pe');
   assert.deepEqual([filas[0].n_menciones_bcp, filas[0].n_menciones_bancos], [2, 4]);
   assert.deepEqual([filas[1].n_menciones_bcp, filas[1].n_menciones_bancos], [0, 2], 'sin mención, BCP cuenta 0 aunque la IA diga otra cosa');
+});
+
+prueba('Share of Voice: posición, prominencia y contexto, como en la estrategia', () => {
+  const r = juntar().slice(0, 1);
+  const [f] = armar(r, [{
+    menciona_bcp: true, posicion_bcp: 1, sentimiento: 0.8, marcas_mencionadas: 'BCP, Interbank, BBVA',
+    n_menciones_bcp: 2, n_menciones_bancos: 4,
+    detalle_marcas: '```json\n[{"marca":"Banco de Crédito del Perú","posicion":1,"menciones":2,"sentimiento":0.8},' +
+      '{"marca":"Interbank","posicion":2,"menciones":1,"sentimiento":0},{"marca":"BBVA Perú","posicion":3,"menciones":1,"sentimiento":-0.5}]\n```'
+  }]);
+  // BCP: (1 + 2/4)/2 × 1 = 0,75 · Interbank: (1/2 + 1/4)/2 × 0,75 = 0,28125 · BBVA: (1/3 + 1/4)/2 × 0,25 = 0,0729
+  // SoV BCP = 0,75 / 1,1042 = 67,9 %
+  assert.equal(f.sov_bcp, 67.9);
+  const d = JSON.parse(f.detalle_marcas);
+  assert.deepEqual(d.map(x => x.marca), ['BCP', 'Interbank', 'BBVA'], 'nombres canónicos');
+  // Sin mención de BCP, su SoV es 0 aunque haya detalle; con error, vacío.
+  const [sin] = armar(r, [{ menciona_bcp: false, detalle_marcas: '[{"marca":"Interbank","posicion":1,"menciones":1,"sentimiento":0}]' }]);
+  assert.deepEqual([sin.sov_bcp, JSON.parse(sin.detalle_marcas)[0].marca], [0, 'Interbank']);
+  const [err] = armar(r, [null]);
+  assert.deepEqual([err.sov_bcp, err.detalle_marcas], ['', '']);
+  // JSON roto del Analista: no rompe la fila.
+  const [roto] = armar(r, [{ menciona_bcp: true, posicion_bcp: 1, detalle_marcas: 'no es json' }]);
+  assert.deepEqual([roto.detalle_marcas, roto.sov_bcp], ['', 0]);
+});
+
+prueba('Claude con búsqueda web: une el texto citado y toma las fuentes de las citas', () => {
+  const claudeWeb = { content: [
+    { type: 'server_tool_use', name: 'web_search' },
+    { type: 'web_search_tool_result', content: [{ url: 'https://www.sbs.gob.pe/x' }, { url: 'https://www.viabcp.com/y' }] },
+    { type: 'text', text: 'El BCP es el banco más grande ' },
+    { type: 'text', text: 'del Perú', citations: [{ type: 'web_search_result_location', url: 'https://www.viabcp.com/y' }] },
+    { type: 'text', text: '.' }
+  ] };
+  const [f] = juntar({ claude: claudeWeb }).filter(x => x.motor === 'claude');
+  assert.equal(f.texto, 'El BCP es el banco más grande del Perú.');
+  assert.deepEqual(f.fuentes, ['viabcp.com'], 'cuentan las citadas');
+  const sinCitas = { content: [claudeWeb.content[1], { type: 'text', text: 'BCP' }] };
+  assert.deepEqual(juntar({ claude: sinCitas }).find(x => x.motor === 'claude').fuentes, ['sbs.gob.pe', 'viabcp.com'], 'si no citó, las consultadas');
+  const body = publicado.nodes.find(n => n.name === 'Claude').parameters.jsonBody;
+  assert.match(body, /web_search_20260209/);
+  assert.match(body, /Lima, Perú/);
+  assert.doesNotMatch(body, /country/, 'la búsqueda web de Claude rechaza country PE');
 });
 
 prueba('Armar fila: si el motor no respondió, no cuenta lo que diga la IA', () => {
@@ -314,13 +356,20 @@ prueba('/geo-monitor-data: observaciones con la forma de DATA.monitor del front'
   assert.deepEqual([...new Set(o.map(x => x.modelId))].sort(), ['chatgpt', 'claude', 'gemini', 'overview', 'perplexity']);
   const gpt = o.find(x => x.modelId === 'chatgpt' && x.promptId === 'p001');
   assert.equal(gpt.id, 'tarjetas:chatgpt:p001:2026-10-20');
-  assert.deepEqual([gpt.status, gpt.som, gpt.position, gpt.mentions, gpt.linkPosition, gpt.citations], ['ok', 40, 1, 2, 1, 1]);
+  // Sin detalle por banco, el SoV se aproxima con el orden de marcas: BCP 1.º de 3,
+  // 2 de 5 menciones, positivo → (1 + 2/4)/2 = 0,75 frente a 0,28 y 0,19 = 61,6 %.
+  assert.deepEqual([gpt.status, gpt.position, gpt.mentions, gpt.linkPosition, gpt.citations], ['ok', 1, 2, 1, 1]);
+  assert.equal(gpt.som, gpt.sov, 'el KPI principal del front lleva el Share of Voice');
+  assert.ok(gpt.sov > 50 && gpt.sov < 70, 'sov ' + gpt.sov);
+  assert.ok(gpt.sovByBrand.Interbank > 0 && gpt.sovByBrand.BBVA > 0);
+  assert.equal(gpt.mentionShare, 40, 'la proporción de menciones anterior sigue disponible');
+  assert.equal(gpt.category, 'Producto');
   assert.deepEqual([gpt.sentiment, gpt.sentimentLabel, gpt.brandCited, gpt.isExample], [0.6, 'positivo', true, false]);
   assert.deepEqual(gpt.sources[0], { domain: 'viabcp.com', url: 'https://viabcp.com/' });
   assert.deepEqual(gpt.ranking, ['BCP', 'Interbank', 'BBVA']);
   assert.ok(gpt.response.includes('El BCP destaca'), 'la respuesta va en la observación');
   const claude = o.find(x => x.modelId === 'claude' && x.promptId === 'p001');
-  assert.deepEqual([claude.status, claude.som, claude.position, claude.sentiment, claude.mentions], ['not_mentioned', 0, null, null, 0]);
+  assert.deepEqual([claude.status, claude.som, claude.sov, claude.position, claude.sentiment, claude.mentions], ['not_mentioned', 0, 0, null, null, 0]);
   const aio = o.find(x => x.modelId === 'overview' && x.promptId === 'p001');
   assert.equal(aio.blockAppeared, true);
   assert.equal(o.find(x => x.modelId === 'gemini').blockAppeared, null);
@@ -342,7 +391,7 @@ prueba('/geo-monitor-data: proyectos y prompts desde la hoja, errores y corridas
   assert.deepEqual([c.status, c.som, c.brandMentioned], ['error', null, false]);
   const aio = o.find(x => x.modelId === 'overview');
   assert.deepEqual([aio.status, aio.blockAppeared], ['not_mentioned', false], 'sin AI Overview no es error');
-  // Sin conteos (filas antiguas), el SOV es 1 ÷ bancos nombrados.
+  // Un solo banco nombrado: todo el SoV es suyo.
   assert.equal(o.find(x => x.modelId === 'perplexity').som, 100);
   assert.deepEqual(d.monitor.projects.map(p => [p.id, p.name, p.promptIds]), [['tarjetas', 'Tarjetas', ['p001']], ['reputacion', 'Reputación', ['p003']]],
     'el prompt inactivo sin datos no entra');
