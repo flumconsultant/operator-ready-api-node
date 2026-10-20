@@ -13,6 +13,7 @@ dominios. Es un workflow de n8n con 4 endpoints y una corrida diaria a las
 | `build.mjs` | Arma el JSON a partir de `src/`: `node automatizacion/geo-monitor/build.mjs` |
 | `test.mjs` | Corre el código real de cada nodo con respuestas de ejemplo: `node automatizacion/geo-monitor/test.mjs` |
 | `plantilla.py` | Regenera la plantilla: `python3 automatizacion/geo-monitor/plantilla.py` |
+| `publicar.mjs` | Sube el JSON al workflow «GEO TRACKER BCP» de n8n por la API y asigna las credenciales BCP: `N8N_API_KEY=… [GEO_SHEET_ID=…] node automatizacion/geo-monitor/publicar.mjs` |
 
 ## Configuración (unos 15 min)
 
@@ -41,6 +42,28 @@ dominios. Es un workflow de n8n con 4 endpoints y una corrida diaria a las
 
 Para comprobarlo antes del primer día: `POST /webhook/geo-run` con `{}`,
 espera unos minutos y abre `GET /webhook/geo-dashboard`.
+
+## Publicado en n8n
+
+El workflow ya está subido a
+[GEO TRACKER BCP](https://n8n.srv836595.hstgr.cloud/workflow/dS2FTRZuU8eNPTL5),
+inactivo. `publicar.mjs` asignó estas credenciales que ya existían en la
+instancia: **BCP Google Sheet** (los 5 nodos de Sheets), **LLM BCP** (Claude),
+**GEMINI BCP** (Gemini) y **SerpAPI account** (los 2 nodos de AI Overview).
+Esos nodos usan la credencial predefinida de cada servicio en lugar de Header
+Auth o Query Auth.
+
+Falta:
+1. El ID del Google Sheet. Sube la plantilla y vuelve a correr
+   `publicar.mjs` con `GEO_SHEET_ID=…`. También puedes pegarlo a mano en los 5
+   nodos. La cuenta de Google de **BCP Google Sheet** tiene que poder editar
+   ese Sheet.
+2. Las credenciales de **ChatGPT** y **Perplexity**. Para BCP no hay ninguna,
+   así que se crean como Header Auth, según la tabla de abajo.
+3. Activar el workflow.
+
+Al volver a correr `publicar.mjs` se conservan el ID del Sheet y las
+credenciales asignadas a mano.
 
 ## Cómo está montado
 
