@@ -12,6 +12,37 @@ function slug(s) {
     .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'sin-proyecto';
 }
 
+// Categoría de un dominio (SPEC v2 §5 + «comparator»): corrección del Sheet
+// (_dominios) → marca propia/competidor → semilla de config.js → reglas.
+const CATEGORIAS_DOMINIO = ['brand', 'competitor', 'comparator', 'government_ngo', 'news_media', 'social', 'community_forum',
+  'education', 'video', 'encyclopedia', 'blog_personal', 'other', 'unclassified'];
+
+function categoriaDominio(dominio, config, correcciones) {
+  const d = String(dominio || '').toLowerCase();
+  const es = lista => (lista || []).some(x => d === x || d.endsWith('.' + x));
+  if (correcciones && correcciones[d]) return correcciones[d];
+  if (es(config.marca.dominios)) return 'brand';
+  if ((config.competidores || []).some(c => es(c.dominios))) return 'competitor';
+  const semilla = config.dominios || {};
+  const clave = Object.keys(semilla).find(k => d === k || d.endsWith('.' + k));
+  if (clave) return semilla[clave];
+  if (/(^|\.)(gob|gov|gub|mil)(\.|$)|\.int$|onu|unesco|worldbank|imf\.org/.test(d)) return 'government_ngo';
+  if (/wikipedia\.org$|wikiwand|britannica/.test(d)) return 'encyclopedia';
+  if (/youtube|youtu\.be|tiktok|vimeo|twitch/.test(d)) return 'video';
+  if (/facebook|instagram|linkedin|(^|\.)x\.com$|twitter|threads\.net|pinterest/.test(d)) return 'social';
+  if (/reddit|quora|rankia|foro|forum|stackexchange/.test(d)) return 'community_forum';
+  if (/(^|\.)edu(\.|$)|universidad|\.ac\.|coursera|udemy/.test(d)) return 'education';
+  if (/blogspot|wordpress\.com|medium\.com|substack/.test(d)) return 'blog_personal';
+  if (/compara|ranking|mejores|kayak|finanzas?para/.test(d)) return 'comparator';
+  if (/diario|noticia|news|prensa|times|post|tribune|press|journal|semana|revista|tv|radio/.test(d)) return 'news_media';
+  return 'unclassified';
+}
+
+function leerJson(texto, porDefecto) {
+  if (!texto) return porDefecto;
+  try { const v = JSON.parse(texto); return v === null || v === undefined ? porDefecto : v; } catch (e) { return porDefecto; }
+}
+
 function etiquetaSentimiento(v) {
   if (v === null) return null;
   return v > 0.2 ? 'positivo' : v < -0.2 ? 'negativo' : 'neutral';
@@ -37,7 +68,12 @@ function observacion(f, config, meta) {
   const mentionShare = menciona && f.n_menciones_bancos > 0 && f.n_menciones_bcp > 0
     ? Math.round(Math.min(100, (f.n_menciones_bcp / f.n_menciones_bancos) * 100) * 10) / 10
     : menciona ? Math.round((100 / Math.max(1, marcas.length)) * 10) / 10 : 0;
-  const idxPropio = f.fuentes.findIndex(esPropio);
+  // Citas con URL y título (filas desde el 21/10); antes solo había dominios.
+  const detalleFuentes = leerJson(f.fuentes_detalle, []);
+  const sources = Array.isArray(detalleFuentes) && detalleFuentes.length
+    ? detalleFuentes.filter(c => c && c.domain).map((c, i) => ({ domain: c.domain, url: c.url || 'https://' + c.domain + '/', title: c.title || '', position: c.position || i + 1 }))
+    : f.fuentes.map((d, i) => ({ domain: d, url: 'https://' + d + '/', title: '', position: i + 1 }));
+  const idxPropio = sources.findIndex(c => esPropio(c.domain));
   const sentimiento = menciona && f.sentimiento !== null ? f.sentimiento : null;
   return {
     id: [projectId, modelId, f.prompt_id, f.fecha].join(':'),
@@ -58,13 +94,16 @@ function observacion(f, config, meta) {
     position: menciona ? f.posicion : null,
     linkPosition: idxPropio >= 0 ? idxPropio + 1 : null,
     mentions: menciona ? (f.n_menciones_bcp || 1) : 0,
-    citations: f.fuentes.filter(esPropio).length,
+    citations: sources.filter(c => esPropio(c.domain)).length,
     sentiment: sentimiento,
     sentimentLabel: etiquetaSentimiento(sentimiento),
     blockAppeared: modelId === 'overview' ? (!error && f.estado !== 'sin_overview') : null,
     brandMentioned: menciona,
     brandCited: !error && f.citado,
-    sources: f.fuentes.map(d => ({ domain: d, url: 'https://' + d + '/' })),
+    sources,
+    searchQueries: leerJson(f.consultas_busqueda, []),
+    country: (meta && meta.pais) || 'PE',
+    tags: (meta && meta.tags) || [],
     ranking: marcas,
     response: f.respuesta.length > MAX_RESPUESTA ? f.respuesta.slice(0, MAX_RESPUESTA) + '…' : f.respuesta,
     error: f.error,
@@ -78,7 +117,8 @@ const DIAS_HISTORIA = 190;
 // La respuesta completa queda en el Sheet; al front le basta con esto.
 const MAX_RESPUESTA = 4000;
 
-function construirMonitor(filasResultados, filasPrompts, config, hoy) {
+function construirMonitor(filasResultados, filasPrompts, config, hoy, sistema) {
+  sistema = sistema || {};
   const desde = new Date(new Date(hoy + 'T12:00:00Z').getTime() - DIAS_HISTORIA * 864e5).toISOString().slice(0, 10);
   const metaPrompts = new Map(filasPrompts.filter(f => f && f.id).map(f => [String(f.id).trim(), normalizarPrompt(f)]));
   // Varias corridas el mismo día: se queda la última de cada prompt y motor.
@@ -136,6 +176,32 @@ function construirMonitor(filasResultados, filasPrompts, config, hoy) {
   for (const o of observations) for (const s of o.sources) conteo.set(s.domain, (conteo.get(s.domain) || 0) + 1);
   const domains = [...conteo.entries()].sort((a, b) => b[1] - a[1]).slice(0, 30).map(([d]) => [d, 'https://' + d + '/']);
 
+  // Categoría de cada dominio citado, con las correcciones de la pestaña _dominios.
+  const correcciones = {};
+  for (const f of sistema._dominios || []) {
+    const d = String(f.dominio || '').trim().toLowerCase();
+    if (d && CATEGORIAS_DOMINIO.includes(String(f.categoria || '').trim())) correcciones[d] = String(f.categoria).trim();
+  }
+  const domainCategories = {};
+  for (const d of conteo.keys()) domainCategories[d] = categoriaDominio(d, config, correcciones);
+
+  const recStates = {};
+  for (const f of sistema._recomendaciones || []) {
+    if (f.id) recStates[f.id] = { status: f.estado || 'suggested', owner: f.responsable || '', dueDate: fechaTexto(f.fecha_objetivo), doneAt: fechaTexto(f.fecha_hecha), updatedAt: String(f.actualizado || '') };
+  }
+  const audits = (sistema._auditorias || []).map(f => ({ id: String(f.id || ''), type: f.tipo, url: f.url, executedAt: String(f.fecha || ''), result: leerJson(f.resultado, null) }))
+    .filter(a => a.id && a.result).sort((a, b) => b.executedAt.localeCompare(a.executedAt)).slice(0, 40);
+
+  const marcas = [config.marca].concat(config.competidores || []);
+  const brands = marcas.map((m, i) => ({
+    id: slug(m.nombre), name: m.nombre, isOwn: i === 0, domains: m.dominios || [], aliases: m.alias || [], color: m.color || '#94a3b8'
+  }));
+  const aliasPropios = (config.marca.alias || []).map(a => a.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase());
+  const esBranded = texto => {
+    const t = ' ' + String(texto || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ') + ' ';
+    return aliasPropios.some(a => t.includes(' ' + a.replace(/[^a-z0-9]+/g, ' ').trim() + ' '));
+  };
+
   return {
     ok: true,
     generado: new Date().toISOString(),
@@ -144,10 +210,16 @@ function construirMonitor(filasResultados, filasPrompts, config, hoy) {
       observations,
       referenceDate: hoy,
       dates: [...new Set(observations.map(o => o.date))].sort(),
-      domains
+      domains,
+      domainCategories,
+      brands,
+      attributes: config.atributos || [],
+      recStates,
+      audits
     },
     prompts: prompts.map(p => ({
       id: p.id, text: p.prompt, project: slug(p.proyecto), category: p.categoria, intent: p.intencion, active: p.activo,
+      tags: p.tags, funnelStage: p.etapa, intentVolume: p.volumen, country: p.pais, isBranded: esBranded(p.prompt), createdAt: p.fecha_creacion,
       status: 'ok', position: null, linkPosition: null, sov: null, ranking: [],
       response: { isExample: false, screenshotUrl: null, text: '' }
     }))

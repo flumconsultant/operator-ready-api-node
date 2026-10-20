@@ -10,10 +10,11 @@ const SHEETS_API = 'https://sheets.googleapis.com/v4/spreadsheets/' + SHEET_ID;
 
 // Encabezados de las pestañas de proyecto (los del Excel original de BCP, más
 // id, activo y fecha para poder gestionarlos desde el front).
-const COLUMNAS_PROMPTS = ['id', 'Categoría', 'Intención de Búsqueda', 'Prompt', 'Activo', 'Fecha de creación'];
+const COLUMNAS_PROMPTS = ['id', 'Categoría', 'Intención de Búsqueda', 'Prompt', 'Activo', 'Fecha de creación',
+  'Tags', 'Etapa', 'Volumen', 'País'];
 const COLUMNAS_RESULTADOS = ['run_id', 'fecha', 'timestamp', 'prompt_id', 'proyecto', 'categoria', 'prompt', 'motor', 'estado',
   'menciona_bcp', 'posicion_bcp', 'sentimiento', 'marcas_mencionadas', 'fuentes', 'citado_bcp', 'error', 'respuesta',
-  'n_menciones_bcp', 'n_menciones_bancos', 'detalle_marcas', 'sov_bcp'];
+  'n_menciones_bcp', 'n_menciones_bancos', 'detalle_marcas', 'sov_bcp', 'fuentes_detalle', 'consultas_busqueda'];
 
 function esPestanaFecha(titulo) { return /^\d{4}-\d{2}-\d{2}$/.test(String(titulo || '').trim()); }
 function esPestanaSistema(titulo) { return String(titulo || '').trim().startsWith('_'); }
@@ -31,11 +32,16 @@ function rango(titulo, celdas) {
 
 // Cuerpo de values:batchGetByDataFilter para leer varias pestañas en una llamada.
 // desde (AAAA-MM-DD): solo las pestañas de resultados desde esa fecha.
-function cuerpoLectura(meta, { prompts = false, resultadosDesde = null } = {}) {
+// Pestañas de sistema que lee el monitor: correcciones de categoría de dominio,
+// estado de las recomendaciones y auditorías GEO.
+const SISTEMA = ['_dominios', '_recomendaciones', '_auditorias'];
+
+function cuerpoLectura(meta, { prompts = false, resultadosDesde = null, sistema = false } = {}) {
   const filtros = [];
   for (const p of pestanas(meta)) {
-    if (prompts && esPestanaProyecto(p.titulo)) filtros.push({ a1Range: rango(p.titulo, 'A:F') });
-    if (resultadosDesde && esPestanaFecha(p.titulo) && p.titulo >= resultadosDesde) filtros.push({ a1Range: rango(p.titulo, 'A:U') });
+    if (prompts && esPestanaProyecto(p.titulo)) filtros.push({ a1Range: rango(p.titulo, 'A:J') });
+    if (resultadosDesde && esPestanaFecha(p.titulo) && p.titulo >= resultadosDesde) filtros.push({ a1Range: rango(p.titulo, 'A:W') });
+    if (sistema && SISTEMA.includes(p.titulo)) filtros.push({ a1Range: rango(p.titulo, 'A:H') });
   }
   // La API no acepta una lista vacía: sin nada que leer, se pide A1 de la primera pestaña.
   const primera = pestanas(meta)[0];
@@ -56,20 +62,34 @@ function claveColumna(c) {
   if (k.startsWith('prompt')) return 'prompt';
   if (k.startsWith('activo')) return 'activo';
   if (k.startsWith('fecha')) return 'fecha_creacion';
+  if (k === 'tags' || k === 'tag') return 'tags';
+  if (k.startsWith('etapa') || k.startsWith('funnel')) return 'etapa';
+  if (k.startsWith('volumen')) return 'volumen';
+  if (k === 'pais' || k === 'country') return 'pais';
   return '';
 }
 
-// Respuesta de batchGetByDataFilter → {prompts: [...], resultados: [...]}.
+// Respuesta de batchGetByDataFilter → {prompts, resultados, sistema}.
 // Cada prompt lleva su pestaña (= proyecto) y su número de fila.
 function leerHojas(respuesta) {
   const prompts = [];
   const resultados = [];
+  const sistema = {};
   for (const vr of (respuesta && respuesta.valueRanges) || []) {
     const v = vr.valueRange || vr;
     const titulo = tituloDeRango(v.range);
     const filas = v.values || [];
     if (!filas.length) continue;
-    if (esPestanaFecha(titulo)) {
+    if (SISTEMA.includes(titulo)) {
+      const cab = filas[0].map(String);
+      sistema[titulo] = [];
+      filas.slice(1).forEach((f, i) => {
+        if (!f || !f.some(x => x !== '' && x !== null)) return;
+        const o = { _fila: i + 2 };
+        cab.forEach((c, j) => { o[c] = f[j] === undefined ? '' : f[j]; });
+        sistema[titulo].push(o);
+      });
+    } else if (esPestanaFecha(titulo)) {
       const cab = filas[0].map(String);
       filas.slice(1).forEach(f => {
         if (!f || !f.some(x => x !== '' && x !== null)) return;
@@ -88,7 +108,7 @@ function leerHojas(respuesta) {
       });
     }
   }
-  return { prompts, resultados };
+  return { prompts, resultados, sistema };
 }
 
 // Las fechas pueden volver como número de serie de Sheets (UNFORMATTED_VALUE).
@@ -100,7 +120,8 @@ function fechaTexto(v) {
 }
 
 function valoresPrompt(p) {
-  return [p.id, p.categoria || '', p.intencion || '', p.prompt || '', p.activo === false ? 'FALSE' : 'TRUE', p.fecha_creacion || ''];
+  return [p.id, p.categoria || '', p.intencion || '', p.prompt || '', p.activo === false ? 'FALSE' : 'TRUE', p.fecha_creacion || '',
+    (p.tags || []).join(', '), p.etapa || '', p.volumen ? p.volumen : '', p.pais || 'PE'];
 }
 
 function valoresResultado(f) {
@@ -145,10 +166,11 @@ function planGuardarPrompt(guardado, prompts, meta) {
 
   if (guardado.accion === 'editar') {
     if (!actual) return { ok: false, status: 404, respuesta: { ok: false, error: 'No existe el prompt ' + fila.id }, peticiones: [] };
-    const nuevo = Object.assign({}, normalizarPrompt(actual), fila);
+    // Se combina antes de normalizar, para que lo derivado (etapa según intención) use lo nuevo.
+    const nuevo = normalizarPrompt(Object.assign({}, actual, fila));
     const pet = [];
     if (nuevo.proyecto === actual.proyecto) {
-      pet.push(escribir(actual.proyecto, 'A' + actual._fila + ':F' + actual._fila, [valoresPrompt(nuevo)]));
+      pet.push(escribir(actual.proyecto, 'A' + actual._fila + ':J' + actual._fila, [valoresPrompt(nuevo)]));
     } else {
       // Cambio de proyecto: se agrega en la pestaña nueva y se borra de la vieja.
       asegurarPestana(nuevo.proyecto, pet);
@@ -191,4 +213,58 @@ function planGuardarResultados(filas, meta) {
     }
   }
   return pet;
+}
+
+// ─── Pestañas de sistema (_recomendaciones, _dominios, _auditorias) ─────────
+const COLUMNAS_SISTEMA = {
+  _recomendaciones: ['id', 'estado', 'responsable', 'fecha_objetivo', 'fecha_hecha', 'actualizado'],
+  _dominios: ['dominio', 'categoria', 'actualizado'],
+  _auditorias: ['id', 'tipo', 'url', 'fecha', 'resultado']
+};
+
+// Agrega o actualiza el registro cuya columna `clave` coincide. Crea la pestaña
+// (al final del Sheet) si todavía no existe.
+function planUpsertSistema(titulo, registro, clave, filas, meta) {
+  const columnas = COLUMNAS_SISTEMA[titulo];
+  const valores = columnas.map(c => registro[c] === undefined || registro[c] === null ? '' : registro[c]);
+  const existe = pestanas(meta).some(t => t.titulo === titulo);
+  if (!existe) return [crearPestana(titulo), escribir(titulo, 'A1', [columnas, valores])];
+  const actual = (filas || []).find(f => String(f[clave]).trim() === String(registro[clave]).trim());
+  if (!actual) return [agregar(titulo, [valores])];
+  const fin = String.fromCharCode(64 + columnas.length);
+  const combinado = columnas.map((c, i) => (registro[c] === undefined ? (actual[c] === undefined ? '' : actual[c]) : valores[i]));
+  return [escribir(titulo, 'A' + actual._fila + ':' + fin + actual._fila, [combinado])];
+}
+
+const ESTADOS_RECOMENDACION = ['suggested', 'todo', 'in_progress', 'done', 'archived'];
+
+// POST /geo-recs-save: {id, estado, responsable?, fecha_objetivo?}
+function planGuardarRecomendacion(body, filas, meta, ahora) {
+  body = body || {};
+  const id = String(body.id || '').trim();
+  if (!id) return { ok: false, status: 400, respuesta: { ok: false, error: 'Falta el id de la recomendación.' }, peticiones: [] };
+  const estado = body.estado === undefined ? undefined : String(body.estado).trim();
+  if (estado !== undefined && !ESTADOS_RECOMENDACION.includes(estado)) {
+    return { ok: false, status: 400, respuesta: { ok: false, error: 'Estado no válido: ' + estado }, peticiones: [] };
+  }
+  const previo = (filas || []).find(f => String(f.id).trim() === id);
+  const registro = { id, actualizado: ahora };
+  if (estado !== undefined) registro.estado = estado;
+  if (body.responsable !== undefined) registro.responsable = String(body.responsable || '').trim().slice(0, 80);
+  if (body.fecha_objetivo !== undefined) registro.fecha_objetivo = String(body.fecha_objetivo || '').slice(0, 10);
+  // Al pasar a «hecha» se guarda la fecha, para medir el impacto después.
+  if (estado === 'done' && !(previo && previo.fecha_hecha)) registro.fecha_hecha = ahora.slice(0, 10);
+  if (!previo && registro.estado === undefined) registro.estado = 'suggested';
+  return { ok: true, status: 200, respuesta: { ok: true, recomendacion: registro }, peticiones: planUpsertSistema('_recomendaciones', registro, 'id', filas, meta) };
+}
+
+// POST /geo-domain-save: {dominio, categoria}
+function planGuardarDominio(body, filas, meta, ahora, categorias) {
+  body = body || {};
+  const dominio = String(body.dominio || '').trim().toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0];
+  const categoria = String(body.categoria || '').trim();
+  if (!dominio) return { ok: false, status: 400, respuesta: { ok: false, error: 'Falta el dominio.' }, peticiones: [] };
+  if (!categorias.includes(categoria)) return { ok: false, status: 400, respuesta: { ok: false, error: 'Categoría no válida: ' + categoria }, peticiones: [] };
+  const registro = { dominio, categoria, actualizado: ahora };
+  return { ok: true, status: 200, respuesta: { ok: true, dominio: registro }, peticiones: planUpsertSistema('_dominios', registro, 'dominio', filas, meta) };
 }

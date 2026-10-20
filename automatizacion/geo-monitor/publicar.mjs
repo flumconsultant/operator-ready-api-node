@@ -1,9 +1,9 @@
-// Sube los dos workflows a n8n por la API, con el Sheet y las credenciales que
+// Sube los tres workflows a n8n por la API, con el Sheet y las credenciales que
 // ya existen en la instancia asignadas por nombre.
 //   N8N_API_KEY=… [GEO_SHEET_ID=…] node automatizacion/geo-monitor/publicar.mjs
 // La Corrida reemplaza el workflow «GEO TRACKER BCP» (dS2FTRZuU8eNPTL5); la API
-// se busca por nombre y se crea si no existe. Los dos quedan como estaban de
-// activos. Sin GEO_SHEET_ID se conserva el ID ya publicado.
+// y las Herramientas se buscan por nombre y, si no existen, se crean activas.
+// Los que ya existían quedan como estaban de activos. Sin GEO_SHEET_ID se conserva el ID ya publicado.
 import { readFileSync } from 'node:fs';
 
 const BASE = process.env.N8N_URL || 'https://n8n.srv836595.hstgr.cloud';
@@ -12,7 +12,8 @@ if (!KEY) throw new Error('Falta N8N_API_KEY');
 
 const WORKFLOWS = [
   { archivo: 'geo-corrida.n8n.json', id: process.env.N8N_CORRIDA_ID || 'dS2FTRZuU8eNPTL5' },
-  { archivo: 'geo-api.n8n.json' }
+  { archivo: 'geo-api.n8n.json' },
+  { archivo: 'geo-herramientas.n8n.json' }
 ];
 
 // Nodo → credencial de la instancia.
@@ -24,7 +25,9 @@ const CREDENCIALES = {
   Gemini: GEMINI,
   'Claude · analista': { anthropicApi: 'LLM BCP' },
   'Google (SerpAPI)': SERPAPI,
-  'AI Overview (página)': SERPAPI
+  'AI Overview (página)': SERPAPI,
+  'Claude · fan-out': { anthropicApi: 'LLM BCP' },
+  'Claude · investigación': { anthropicApi: 'LLM BCP' }
   // ChatGPT y Perplexity: sin credencial BCP en la instancia; se asignan a mano
   // en n8n y se conservan al volver a publicar.
 };
@@ -76,6 +79,8 @@ for (const w of WORKFLOWS) {
   const r = existente
     ? await api('/workflows/' + existente.id, { method: 'PUT', body: cuerpo })
     : await api('/workflows', { method: 'POST', body: cuerpo });
+  // Un workflow de webhooks recién creado se activa para que respondan.
+  if (!existente && !w.id) await api('/workflows/' + r.id + '/activate', { method: 'POST' });
   const sinCredencial = r.nodes.filter(n => n.type === 'n8n-nodes-base.httpRequest' && !n.credentials).map(n => n.name);
   console.log(`«${r.name}» ${existente ? 'actualizado' : 'creado'}: ${r.nodes.length} nodos, activo=${r.active}`);
   console.log(`  ${BASE}/workflow/${r.id}`);

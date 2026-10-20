@@ -15,6 +15,7 @@ import assert from 'node:assert/strict';
 const cargar = f => JSON.parse(readFileSync(new URL(f, import.meta.url), 'utf8'));
 const publicado = cargar('geo-corrida.n8n.json');
 const api = cargar('geo-api.n8n.json');
+const her = cargar('geo-herramientas.n8n.json');
 const tmp = mkdtempSync(join(tmpdir(), 'geo-'));
 execFileSync(process.execPath, [fileURLToPath(new URL('build.mjs', import.meta.url))], { env: { ...process.env, GEO_SERPAPI: '1', GEO_BUILD_OUT: tmp } });
 const corrida = JSON.parse(readFileSync(join(tmp, 'geo-corrida.n8n.json'), 'utf8'));
@@ -56,11 +57,11 @@ const hojaPrompts = [
 
 // ─── El Sheet, como lo devuelve la API de Google Sheets ───────────────────
 // Pestañas por proyecto (encabezados del Excel de BCP) y por día de resultados.
-const COLS_PROMPTS = ['id', 'Categoría', 'Intención de Búsqueda', 'Prompt', 'Activo', 'Fecha de creación'];
-const CAMPOS_PROMPTS = ['id', 'categoria', 'intencion', 'prompt', 'activo', 'fecha_creacion'];
+const COLS_PROMPTS = ['id', 'Categoría', 'Intención de Búsqueda', 'Prompt', 'Activo', 'Fecha de creación', 'Tags', 'Etapa', 'Volumen', 'País'];
+const CAMPOS_PROMPTS = ['id', 'categoria', 'intencion', 'prompt', 'activo', 'fecha_creacion', 'tags', 'etapa', 'volumen', 'pais'];
 const COLS_RESULTADOS = ['run_id', 'fecha', 'timestamp', 'prompt_id', 'proyecto', 'categoria', 'prompt', 'motor', 'estado',
   'menciona_bcp', 'posicion_bcp', 'sentimiento', 'marcas_mencionadas', 'fuentes', 'citado_bcp', 'error', 'respuesta',
-  'n_menciones_bcp', 'n_menciones_bancos', 'detalle_marcas', 'sov_bcp'];
+  'n_menciones_bcp', 'n_menciones_bancos', 'detalle_marcas', 'sov_bcp', 'fuentes_detalle', 'consultas_busqueda'];
 const agrupar = (filas, clave) => filas.reduce((m, f) => m.set(f[clave], (m.get(f[clave]) || []).concat([f])), new Map());
 function comoSheets({ prompts = [], resultados = [] } = {}) {
   const valueRanges = [];
@@ -155,7 +156,7 @@ prueba('Juntar respuestas: sin AI Overview no es error; un motor caído sí', ()
 
 const COLUMNAS = ['run_id', 'fecha', 'timestamp', 'prompt_id', 'proyecto', 'categoria', 'prompt', 'motor', 'estado',
   'menciona_bcp', 'posicion_bcp', 'sentimiento', 'marcas_mencionadas', 'fuentes', 'citado_bcp', 'error', 'respuesta',
-  'n_menciones_bcp', 'n_menciones_bancos', 'detalle_marcas', 'sov_bcp'];
+  'n_menciones_bcp', 'n_menciones_bancos', 'detalle_marcas', 'sov_bcp', 'fuentes_detalle', 'consultas_busqueda'];
 
 const armar = (respuestas, analisis) => correr(corrida, 'Armar fila',
   analisis.map(a => (a === null ? { error: 'falló' } : { output: a })), { 'Juntar respuestas': respuestas });
@@ -175,7 +176,7 @@ prueba('Armar fila: columnas de la plantilla, análisis de la IA y citado por do
   assert.equal(filas[2].menciona_bcp, false, '«false» como texto');
   assert.equal(filas[3].sentimiento, 1, 'sentimiento acotado a [-1, 1]');
   assert.equal(filas[3].citado_bcp, true, 'bcp.com.pe cuenta como propio');
-  assert.equal(filas[3].marcas_mencionadas, 'BCP, Pichincha, Banco Falabella', 'nombres canónicos y sin repetir');
+  assert.equal(filas[3].marcas_mencionadas, 'BCP, Pichincha, Falabella', 'nombres canónicos (Falabella es competidor) y sin repetir');
   assert.match(filas[4].error, /Analista IA/, 'si el Analista falla, la fila lo dice');
   assert.deepEqual([filas[4].estado, filas[4].menciona_bcp], ['error', false], 'y no cuenta como «no menciona»');
   assert.ok(filas[4].respuesta, 'pero conserva la respuesta del motor');
@@ -224,6 +225,30 @@ prueba('Claude con búsqueda web: une el texto citado y toma las fuentes de las 
   assert.match(body, /web_search_20260209/);
   assert.match(body, /Lima, Perú/);
   assert.doesNotMatch(body, /country/, 'la búsqueda web de Claude rechaza country PE');
+});
+
+prueba('Citas con URL y título, y consultas de búsqueda (fan-out) por motor', () => {
+  const claudeWeb = { content: [
+    { type: 'server_tool_use', name: 'web_search', input: { query: 'mejor banco Perú 2026' } },
+    { type: 'server_tool_use', name: 'web_search', input: { query: 'ranking bancos SBS' } },
+    { type: 'text', text: 'BCP', citations: [{ url: 'https://www.viabcp.com/a', title: 'BCP oficial' }, { url: 'https://www.viabcp.com/a', title: 'BCP oficial' }] }
+  ] };
+  const gem = { candidates: [{ content: { parts: [{ text: 'x' }] }, groundingMetadata: {
+    webSearchQueries: ['bancos peru'], groundingChunks: [{ web: { uri: 'https://vertexaisearch.cloud.google.com/r/1', title: 'sbs.gob.pe' } }] } }] };
+  const r = juntar({ claude: claudeWeb, chatgpt: { choices: [{ message: { content: 'x', annotations: [{ type: 'url_citation', url_citation: { url: 'https://comparabien.com.pe/x', title: 'Comparabien' } }] } }] } });
+  const cl = r.find(x => x.motor === 'claude' && x.prompt_id === 'p001');
+  assert.deepEqual(cl.consultas, ['mejor banco Perú 2026', 'ranking bancos SBS']);
+  assert.deepEqual(cl.citas, [{ url: 'https://www.viabcp.com/a', title: 'BCP oficial', domain: 'viabcp.com', position: 1 }], 'una vez cada URL');
+  assert.equal(r.find(x => x.motor === 'chatgpt').citas[0].title, 'Comparabien');
+  const g = correr(publicado, 'Juntar respuestas', prompts.map(() => ({})), {
+    'Elegir prompts': prompts, ChatGPT: repetir(apis.chatgpt), Claude: repetir(apis.claude), Gemini: repetir(gem), Perplexity: repetir(apis.perplexity)
+  }).find(x => x.motor === 'gemini');
+  assert.deepEqual([g.consultas, g.citas[0].url], [['bancos peru'], 'https://sbs.gob.pe/'], 'Gemini: el dominio real, no el redirect');
+  const [fila] = armar([cl], [{ menciona_bcp: true, posicion_bcp: 1, detalle_marcas: '[{"marca":"BCP","posicion":1,"menciones":1,"sentimiento":0.5,"recomendada":true,"atributos":["seguridad","inventado","Tasas"]}]' }]);
+  assert.deepEqual(JSON.parse(fila.consultas_busqueda), ['mejor banco Perú 2026', 'ranking bancos SBS']);
+  assert.equal(JSON.parse(fila.fuentes_detalle)[0].title, 'BCP oficial');
+  const d = JSON.parse(fila.detalle_marcas)[0];
+  assert.deepEqual([d.recomendada, d.atributos], [true, ['seguridad', 'tasas']], 'atributos solo del vocabulario');
 });
 
 prueba('Armar fila: si el motor no respondió, no cuenta lo que diga la IA', () => {
@@ -303,10 +328,10 @@ prueba('/geo-prompts lee todas las pestañas de proyecto: cada pestaña es un pr
 prueba('Qué leer: pestañas de proyecto, de días (desde una fecha) y nunca las de sistema', () => {
   const meta = metaSheets(['Marca', 'Ahorros', '2026-10-21', '2026-10-20', '2025-01-01', '_respaldo resultados']);
   const rangos = (nodo, sufijo) => correr(api, nodo, [meta])[0].cuerpo.dataFilters.map(f => f.a1Range);
-  assert.deepEqual(rangos('Qué leer (prompts)'), ["'Marca'!A:F", "'Ahorros'!A:F"]);
+  assert.deepEqual(rangos('Qué leer (prompts)'), ["'Marca'!A:J", "'Ahorros'!A:J"]);
   const mon = rangos('Qué leer (monitor)');
-  assert.ok(mon.includes("'2026-10-21'!A:U") && mon.includes("'Marca'!A:F"));
-  assert.ok(!mon.includes("'2025-01-01'!A:U"), 'más de 6 meses atrás no se lee');
+  assert.ok(mon.includes("'2026-10-21'!A:W") && mon.includes("'Marca'!A:J"));
+  assert.ok(!mon.includes("'2025-01-01'!A:W"), 'más de 6 meses atrás no se lee');
   assert.ok(!mon.some(r => r.includes('_respaldo')));
   const vacio = correr(api, 'Qué leer (prompts)', [metaSheets(['2026-10-21'])])[0].cuerpo.dataFilters;
   assert.equal(vacio.length, 1, 'la API no acepta una lista vacía');
@@ -339,8 +364,12 @@ prueba('/geo-prompts-save: crear en su pestaña; un proyecto nuevo crea la pesta
 prueba('/geo-prompts-save: editar, activar/desactivar, mover de proyecto y eliminar', () => {
   const [editar] = planear({ id: 'p002', prompt: 'texto nuevo', intencion: 'Transaccional' });
   assert.equal(editar.method, 'PUT');
-  assert.equal(ruta(editar.url), "/values/'Tarjetas'!A3:F3?valueInputOption=RAW");
-  assert.deepEqual(editar.body.values[0], ['p002', 'Producto', 'Transaccional', 'texto nuevo', 'FALSE', '2026-10-02'], 'conserva lo que no cambia');
+  assert.equal(ruta(editar.url), "/values/'Tarjetas'!A3:J3?valueInputOption=RAW");
+  assert.deepEqual(editar.body.values[0], ['p002', 'Producto', 'Transaccional', 'texto nuevo', 'FALSE', '2026-10-02', 'Tarjetas', 'bofu', '', 'PE'],
+    'conserva lo que no cambia; sin tags, el proyecto; etapa según la intención');
+  const [tags] = planear({ id: 'p001', tags: 'Productos-Tarjetas, Comparativos', etapa: 'mofu', volumen: 4 });
+  assert.deepEqual(tags.body.values[0].slice(6), ['Productos-Tarjetas, Comparativos', 'mofu', 4, 'PE']);
+  assert.match(planear({ id: 'p001', etapa: 'medio' })[0]._respuesta.error, /tofu, mofu o bofu/);
 
   const [apagar] = planear({ id: 'p001', activo: false });
   assert.deepEqual(apagar.body.values[0].slice(3, 6), ['¿Cuál es la mejor tarjeta de crédito en Perú?', 'FALSE', '2026-10-01']);
@@ -443,7 +472,7 @@ prueba('/geo-monitor-data: observaciones con la forma de DATA.monitor del front'
   assert.equal(gpt.mentionShare, 40, 'la proporción de menciones anterior sigue disponible');
   assert.equal(gpt.category, 'Producto');
   assert.deepEqual([gpt.sentiment, gpt.sentimentLabel, gpt.brandCited, gpt.isExample], [0.6, 'positivo', true, false]);
-  assert.deepEqual(gpt.sources[0], { domain: 'viabcp.com', url: 'https://viabcp.com/' });
+  assert.deepEqual(gpt.sources[0], { domain: 'viabcp.com', url: 'https://www.viabcp.com/tarjetas?utm_source=openai', title: '', position: 1 }, 'la URL real citada');
   assert.deepEqual(gpt.ranking, ['BCP', 'Interbank', 'BBVA']);
   assert.ok(gpt.response.includes('El BCP destaca'), 'la respuesta va en la observación');
   const claude = o.find(x => x.modelId === 'claude' && x.promptId === 'p001');
@@ -487,6 +516,35 @@ prueba('/geo-monitor-data: proyectos y prompts desde la hoja, errores y corridas
   assert.deepEqual([vacio.monitor.observations.length, vacio.monitor.dates.length], [0, 0]);
 });
 
+prueba('/geo-monitor-data: marcas, categorías de dominio, metadatos de prompts y pestañas de sistema', () => {
+  const r = juntar();
+  const filas = armar(r, r.map((_, i) => analisisDia[i % 5])).map(f => aHoja({ ...f, timestamp: '2026-10-20T12:00:00Z' }, '2026-10-20'));
+  const hojaP = hojaPrompts.map(p => (p.id === 'p001' ? { ...p, tags: 'Productos-Tarjetas, Comparativos', etapa: 'bofu', volumen: 4, prompt: '¿Es mejor el BCP o Interbank?' } : p));
+  const sistema = { valueRanges: [
+    { valueRange: { range: "'_dominios'!A1:B2", values: [['dominio', 'categoria'], ['comparabien.com.pe', 'news_media']] } },
+    { valueRange: { range: "'_recomendaciones'!A1:F2", values: [['id', 'estado', 'responsable', 'fecha_objetivo', 'fecha_hecha', 'actualizado'], ['new_page:p003', 'todo', 'Ana', '2026-11-01', '', '2026-10-21T10:00:00Z']] } },
+    { valueRange: { range: "'_auditorias'!A1:E2", values: [['id', 'tipo', 'url', 'fecha', 'resultado'], ['a1', 'crawl', 'https://www.viabcp.com', '2026-10-16T10:00:00Z', '{"bots":[]}']] } }
+  ] };
+  const base = comoSheets({ prompts: hojaP, resultados: filas });
+  const d = correr(api, 'Datos del monitor', [{ valueRanges: base.valueRanges.concat(sistema.valueRanges) }],
+    { 'Pestañas del Sheet (monitor)': [metaSheets(['Tarjetas', 'Reputación'])] })[0];
+  const M = d.monitor;
+  assert.deepEqual(M.brands.slice(0, 2).map(b => [b.id, b.isOwn, b.color]), [['bcp', true, '#1a1a4e'], ['interbank', false, '#8b5cf6']]);
+  assert.equal(M.domainCategories['viabcp.com'], 'brand');
+  assert.equal(M.domainCategories['comparabien.com.pe'], 'news_media', 'la corrección de _dominios gana');
+  assert.equal(M.domainCategories['sbs.gob.pe'], 'government_ngo');
+  assert.equal(M.domainCategories['bbva.pe'], 'competitor');
+  assert.deepEqual(M.recStates['new_page:p003'], { status: 'todo', owner: 'Ana', dueDate: '2026-11-01', doneAt: '', updatedAt: '2026-10-21T10:00:00Z' });
+  assert.equal(M.audits[0].type, 'crawl');
+  assert.ok(M.attributes.includes('seguridad'));
+  const p1 = d.prompts.find(p => p.id === 'p001');
+  assert.deepEqual([p1.tags, p1.funnelStage, p1.intentVolume, p1.country, p1.isBranded], [['Productos-Tarjetas', 'Comparativos'], 'bofu', 4, 'PE', true]);
+  const p3 = d.prompts.find(p => p.id === 'p003');
+  assert.deepEqual([p3.tags, p3.funnelStage, p3.isBranded], [['Reputación'], 'tofu', false], 'sin tags: el proyecto; sin etapa: por intención');
+  const o = M.observations.find(x => x.promptId === 'p001' && x.modelId === 'chatgpt');
+  assert.deepEqual([o.country, o.tags], ['PE', ['Productos-Tarjetas', 'Comparativos']]);
+});
+
 prueba('Plan de guardado: los resultados van a la pestaña del día', () => {
   const r = juntar().slice(0, 2);
   const filas = armar(r, [analisisDia[0], analisisDia[1]]);
@@ -504,8 +562,8 @@ prueba('Plan de guardado: los resultados van a la pestaña del día', () => {
   assert.match(ruta(existe[0].url), new RegExp("'" + fecha + "'!A1:append"));
 });
 
-prueba('Ambos workflows: conexiones válidas, ids únicos, pestañas de la plantilla', () => {
-  for (const wf of [corrida, api]) {
+prueba('Los tres workflows: conexiones válidas, ids únicos, pestañas de la plantilla', () => {
+  for (const wf of [corrida, api, her]) {
     const nombres = new Set(wf.nodes.map(n => n.name));
     for (const [de, c] of Object.entries(wf.connections)) {
       assert.ok(nombres.has(de), de);
@@ -519,7 +577,133 @@ prueba('Ambos workflows: conexiones válidas, ids únicos, pestañas de la plant
   }
   const rutas = wf => wf.nodes.filter(n => n.type === 'n8n-nodes-base.webhook').map(n => n.parameters.path);
   assert.deepEqual(rutas(corrida), ['geo-run']);
-  assert.deepEqual(rutas(api).sort(), ['geo-dashboard', 'geo-monitor-data', 'geo-prompts', 'geo-prompts-save']);
+  assert.deepEqual(rutas(api).sort(), ['geo-dashboard', 'geo-domain-save', 'geo-monitor-data', 'geo-prompts', 'geo-prompts-save', 'geo-recs-save']);
+  assert.deepEqual(rutas(her).sort(), ['geo-audit', 'geo-fanout', 'geo-prompt-research']);
+});
+
+// ─── Pestañas de sistema: recomendaciones y dominios ──────────────────────
+const sistemaSheets = tabs => ({ valueRanges: Object.entries(tabs).map(([t, filas]) => ({ valueRange: { range: `'${t}'!A1:F9`, values: filas } })) });
+const CAB_RECS = ['id', 'estado', 'responsable', 'fecha_objetivo', 'fecha_hecha', 'actualizado'];
+const guardarSistema = (nodo, hook, lect, body, hoja, titulos) =>
+  correr(api, nodo, [sistemaSheets(hoja)], { [hook]: [{ body }], [lect]: [metaSheets(titulos)] });
+const guardarRec = (body, hoja = {}, titulos = ['Marca']) =>
+  guardarSistema('Planear (recomendación)', 'Webhook geo-recs-save', 'Pestañas del Sheet (recomendación)', body, hoja, titulos);
+
+prueba('/geo-recs-save: crea la pestaña, agrega, actualiza y marca la fecha de hecha', () => {
+  const nueva = guardarRec({ id: 'r1', estado: 'todo', responsable: 'Ana' });
+  assert.deepEqual(nueva.map(p => p.method), ['POST', 'PUT']);
+  assert.equal(nueva[0].body.requests[0].addSheet.properties.title, '_recomendaciones');
+  assert.deepEqual(nueva[1].body.values[0], CAB_RECS);
+  assert.deepEqual(nueva[1].body.values[1].slice(0, 3), ['r1', 'todo', 'Ana']);
+  const hoja = { _recomendaciones: [CAB_RECS, ['r0', 'todo', '', '', '', ''], [], ['r1', 'in_progress', 'Ana', '2026-11-01', '', '']] };
+  const otra = guardarRec({ id: 'r2', estado: 'todo' }, hoja, ['Marca', '_recomendaciones']);
+  assert.deepEqual(otra.map(p => p.method), ['POST']);
+  assert.match(ruta(otra[0].url), /'_recomendaciones'!A1:append/);
+  const hecha = guardarRec({ id: 'r1', estado: 'done' }, hoja, ['Marca', '_recomendaciones']);
+  assert.match(ruta(hecha[0].url), /'_recomendaciones'!A4:F4/, 'la fila real, aunque haya una vacía antes');
+  const v = hecha[0].body.values[0];
+  assert.deepEqual(v.slice(0, 4), ['r1', 'done', 'Ana', '2026-11-01'], 'conserva lo que no se cambia');
+  assert.match(v[4], /^\d{4}-\d{2}-\d{2}$/);
+  const mal = guardarRec({ id: 'r1', estado: 'quizás' });
+  assert.deepEqual([mal[0]._status, mal[0]._respuesta.ok], [400, false]);
+  assert.equal(guardarRec({ estado: 'todo' })[0]._status, 400);
+});
+
+prueba('/geo-domain-save: corrige la categoría de un dominio', () => {
+  const g = (body, hoja = {}, titulos = ['Marca']) =>
+    guardarSistema('Planear (dominio)', 'Webhook geo-domain-save', 'Pestañas del Sheet (dominio)', body, hoja, titulos);
+  const nueva = g({ dominio: 'https://www.Rankia.pe/foros', categoria: 'community_forum' });
+  assert.deepEqual(nueva[1].body.values.slice(0, 2).map(f => f.slice(0, 2)), [['dominio', 'categoria'], ['rankia.pe', 'community_forum']]);
+  const hoja = { _dominios: [['dominio', 'categoria', 'actualizado'], ['rankia.pe', 'news_media', '']] };
+  const cambio = g({ dominio: 'rankia.pe', categoria: 'community_forum' }, hoja, ['_dominios']);
+  assert.match(ruta(cambio[0].url), /'_dominios'!A2:C2/);
+  assert.equal(g({ dominio: 'x.pe', categoria: 'inventada' })[0]._status, 400);
+});
+
+// ─── Herramientas: auditoría GEO, fan-out e investigación de prompts ──────
+const armarAuditoria = body => correr(her, 'Armar auditoría', [{}], { 'Webhook geo-audit': [{ body }] });
+const auditar = (body, respuestas) => {
+  const pedidos = armarAuditoria(body);
+  return correr(her, 'Resultado de la auditoría', respuestas(pedidos), { 'Armar auditoría': pedidos })[0];
+};
+const ROBOTS = 'User-agent: *\nDisallow: /privado/\n\nUser-agent: GPTBot\nUser-agent: CCBot\nDisallow: /\n\nUser-agent: ClaudeBot\nDisallow: /\nAllow: /personas\n';
+
+prueba('/geo-audit crawl: 21 bots + robots.txt, acceso del servidor y reglas por bot', () => {
+  const pedidos = armarAuditoria({ url: 'www.viabcp.com/personas' });
+  assert.equal(pedidos.length, 22);
+  assert.equal(pedidos[21].url, 'https://www.viabcp.com/robots.txt');
+  assert.match(pedidos.find(p => p.agente === 'GPTBot').headers['User-Agent'], /GPTBot/);
+  const a = auditar({ url: 'www.viabcp.com/personas' }, ps => ps.map(p =>
+    p.rol === 'robots' ? { statusCode: 200, body: ROBOTS }
+    : p.agente === 'Bytespider' ? { statusCode: 403, body: 'Forbidden' }
+    : p.agente === 'CCBot' ? { error: { code: 'ECONNRESET' } }
+    : { statusCode: 200, body: '<html>ok</html>' }));
+  assert.equal(a.ok, true);
+  const r = a.auditoria.result;
+  const bot = n => r.bots.find(b => b.agent === n);
+  assert.deepEqual([bot('GPTBot').serverAccess, bot('GPTBot').robots], ['ok', 'disallowed']);
+  assert.deepEqual([bot('ClaudeBot').robots, bot('OAI-SearchBot').robots], ['allowed', 'allowed'], 'Allow más largo gana; el resto cae en *');
+  assert.deepEqual([bot('Bytespider').serverAccess, bot('Bytespider').httpStatus], ['blocked', 403]);
+  assert.equal(bot('CCBot').serverAccess, 'unreachable');
+  assert.deepEqual(r.resumen, { ok: 19, blocked: 1, unreachable: 1, robotsTxt: 'found' });
+  assert.equal(r.critico, false);
+  const privado = auditar({ url: 'https://viabcp.com/privado/x' }, ps => ps.map(p => (p.rol === 'robots' ? { statusCode: 200, body: ROBOTS } : { statusCode: 403 })));
+  assert.equal(privado.auditoria.result.bots.find(b => b.agent === 'OAI-SearchBot').robots, 'disallowed');
+  assert.equal(privado.auditoria.result.critico, true, 'ningún bot entra: crítico');
+  assert.deepEqual(armarAuditoria({ url: 'no es una url' }), [{ error: 'URL no válida.' }]);
+});
+
+prueba('/geo-audit contenido: texto sin JavaScript, encabezados, FAQ y datos estructurados', () => {
+  const pedidos = armarAuditoria({ tipo: 'contenido', url: 'https://www.viabcp.com/tarjetas', agente: 'GPTBot' });
+  assert.deepEqual([pedidos.length, pedidos[0].agente], [1, 'GPTBot']);
+  const texto = Array(320).fill('palabra').join(' ');
+  const html = `<html><head><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"FAQPage"},{"@type":"Organization"}]}</script><script>var x=1;</script></head>
+    <body><h1>Tarjetas</h1><h2>Beneficios</h2><p>${texto}</p></body></html>`;
+  const c = auditar({ tipo: 'contenido', url: 'https://www.viabcp.com/tarjetas', agente: 'GPTBot' }, () => [{ statusCode: 200, body: html }]).auditoria;
+  assert.equal(c.type, 'content');
+  assert.deepEqual(c.result.contentAnalysis.headings, { h1: 1, h2: 1, h3: 0 });
+  assert.deepEqual(c.result.structuredData.types, ['FAQPage', 'Organization']);
+  assert.equal(c.result.staticVsDynamic.verdict, 'ok');
+  assert.deepEqual(c.result.contentAnalysis.issues, []);
+  const spa = auditar({ tipo: 'contenido', url: 'https://app.example.com' }, () => [{ statusCode: 200, body: '<html><body><div id="root"></div><script>' + 'x'.repeat(5000) + '</script></body></html>' }]).auditoria.result;
+  assert.equal(spa.staticVsDynamic.verdict, 'fail');
+  assert.ok(spa.contentAnalysis.issues.includes('No tiene H1.'));
+  assert.ok(spa.contentAnalysis.score < 50);
+});
+
+prueba('Auditoría guardada en _auditorias y fan-out con las búsquedas de Claude', () => {
+  const a = { ok: true, auditoria: { id: 'a_1', type: 'crawl', url: 'https://x.pe/', executedAt: '2026-10-20 10:00', result: { resumen: {} } } };
+  const pet = correr(her, 'Guardar auditoría', [metaSheets(['Marca'])], { 'Resultado de la auditoría': [a] });
+  assert.deepEqual(pet.map(p => p.method), ['POST', 'PUT']);
+  assert.deepEqual(pet[1].body.values[1].slice(0, 3), ['a_1', 'crawl', 'https://x.pe/']);
+  const armado = correr(her, 'Armar fan-out', [{}], { 'Webhook geo-fanout': [{ body: { query: '¿Mejor cuenta de ahorros?' } }] })[0];
+  assert.equal(armado.cuerpo.tools[0].type, 'web_search_20260209');
+  assert.deepEqual(correr(her, 'Armar fan-out', [{}], { 'Webhook geo-fanout': [{ body: {} }] })[0], { error: 'Escribe un prompt.' });
+  const f = correr(her, 'Leer fan-out', [{ content: [
+    { type: 'server_tool_use', name: 'web_search', input: { query: 'mejor cuenta de ahorros Perú 2026' } },
+    { type: 'web_search_tool_result', content: [] },
+    { type: 'server_tool_use', name: 'web_search', input: { query: 'tasas cuentas ahorro SBS' } },
+    { type: 'text', text: '...' }
+  ] }], { 'Armar fan-out': [armado] })[0];
+  assert.deepEqual(f.consultas.map(c => c.subQuery), ['mejor cuenta de ahorros Perú 2026', 'tasas cuentas ahorro SBS']);
+  assert.equal(f.query, '¿Mejor cuenta de ahorros?');
+});
+
+prueba('/geo-prompt-research: pedido por modo y candidatos normalizados', () => {
+  const armar = body => correr(her, 'Armar investigación', [{}], { 'Webhook geo-prompt-research': [{ body }] })[0];
+  const k = armar({ modo: 'keywords', keywords: 'tarjeta de crédito\ncuenta sueldo\n' });
+  assert.equal(k.cuerpo.model, 'claude-haiku-5-5');
+  assert.match(k.cuerpo.messages[0].content, /tarjeta de crédito\ncuenta sueldo$/);
+  assert.match(k.cuerpo.system, /NO deben nombrar a BCP/);
+  const u = armar({ modo: 'url', url: 'viabcp.com/tarjetas' });
+  assert.equal(u.cuerpo.tools[0].name, 'web_fetch');
+  assert.deepEqual(armar({ modo: 'keywords' }), { error: 'Escribe al menos una keyword.' });
+  const texto = 'Aquí van:\n[{"prompt":"¿Qué tarjeta conviene para viajar?","etapa":"MOFU","tag":"Productos-Tarjetas","volumen":7,"razon":"comparativo"},{"etapa":"tofu"},{"prompt":"¿Cómo abrir una cuenta?","etapa":"x"}]';
+  const r = correr(her, 'Leer candidatos', [{ content: [{ type: 'text', text: texto }] }], { 'Armar investigación': [k] })[0];
+  assert.equal(r.ok, true);
+  assert.deepEqual(r.candidatos.map(c => [c.etapa, c.volumen]), [['mofu', 5], ['tofu', 1]]);
+  const e = correr(her, 'Leer candidatos', [{ error: { message: 'overloaded' } }], { 'Armar investigación': [k] })[0];
+  assert.deepEqual([e.ok, e.error], [false, 'overloaded']);
 });
 
 console.log(`\n${ok} pruebas pasan`);

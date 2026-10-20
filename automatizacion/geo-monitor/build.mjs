@@ -1,6 +1,7 @@
-// Genera los dos workflows a partir de src/:
+// Genera los tres workflows a partir de src/:
 //   geo-corrida.n8n.json  prompts → 5 motores en paralelo → Analista IA → hoja resultados
 //   geo-api.n8n.json      los endpoints que usa el front
+//   geo-herramientas.n8n.json  auditoría GEO, fan-out e investigación de prompts
 // No se editan a mano: se cambia src/ y se corre `node automatizacion/geo-monitor/build.mjs`.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -213,7 +214,7 @@ corrida.node('Analista IA', '@n8n/n8n-nodes-langchain.informationExtractor', 1.2
     { name: 'n_menciones_bancos', type: 'number', required: true,
       description: `Cuántas veces se nombra a cualquier banco en total, ${CONFIG.marca.nombre} incluido. Cada aparición cuenta. 0 si no se nombra ninguno.` },
     { name: 'detalle_marcas', type: 'string', required: true,
-      description: 'Lista JSON con un objeto por banco nombrado, en orden de aparición: [{"marca": "BCP", "posicion": 1, "menciones": 2, "sentimiento": 0.6}]. posicion = orden de aparición (1 = primero); menciones = veces que se nombra ese banco; sentimiento de -1 a 1 sobre lo que la respuesta dice de ese banco (0 si es neutral). Usa los nombres canónicos de la lista de bancos. [] si no nombra ninguno. Solo el JSON, sin texto alrededor.' },
+      description: 'Lista JSON con un objeto por banco nombrado, en orden de aparición: [{"marca": "BCP", "posicion": 1, "menciones": 2, "sentimiento": 0.6, "recomendada": true, "atributos": ["seguridad", "tasas"]}]. posicion = orden de aparición (1 = primero); menciones = veces que se nombra ese banco; sentimiento de -1 a 1 sobre lo que la respuesta dice de ese banco (0 si es neutral); recomendada = true si la respuesta lo propone como una opción a elegir o contratar, false si solo lo menciona; atributos = cuáles de estos se le asocian en la respuesta: ' + CONFIG.atributos.join(', ') + ' ([] si ninguno). Usa los nombres canónicos de la lista de bancos. [] si no nombra ninguno. Solo el JSON, sin texto alrededor.' },
     { name: 'marcas_mencionadas', type: 'string', required: true,
       description: 'Bancos nombrados en la respuesta, en orden de aparición y separados por coma. Usa el nombre canónico de esta lista: ' + listaMarcas + '. Otros bancos, con su nombre tal cual. Vacío si no nombra ninguno.' }
   ] },
@@ -310,11 +311,11 @@ api.link('¿Hay cambios?', 'Responder error', 1);
 
 // GET /geo-monitor-data: lo que lee el front «BCP · Monitor de Visibilidad en IA»
 webhook(api, 'Webhook geo-monitor-data', 'GET', 'geo-monitor-data', [0, 700]);
-const lectMon = lecturaHoja(api, 'monitor', 700, `{ prompts: true, resultadosDesde: ${hace(190)} }`);
+const lectMon = lecturaHoja(api, 'monitor', 700, `{ prompts: true, sistema: true, resultadosDesde: ${hace(190)} }`);
 code(api, 'Datos del monitor', [900, 700], HOJA() + '\n' + src('config.js') + '\n' + src('sov.js') + '\n' + src('dashboard.js') + '\n' + src('prompts.js') + '\n' + src('monitor.js') + `
 const hoy = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Lima' });
-const { prompts, resultados } = leerHojas($input.first().json);
-const datos = construirMonitor(resultados, prompts, CONFIG, hoy);
+const { prompts, resultados, sistema } = leerHojas($input.first().json);
+const datos = construirMonitor(resultados, prompts, CONFIG, hoy, sistema);
 // Los proyectos, en el orden de sus pestañas en el Sheet.
 const orden = pestanas($('Pestañas del Sheet (monitor)').first().json).map(p => p.titulo);
 const lugar = n => { const i = orden.indexOf(n); return i < 0 ? 999 : i; };
@@ -325,9 +326,143 @@ respuesta('Responder monitor', [1120, 700]);
 api.link('Webhook geo-monitor-data', lectMon[0]);
 api.chain(lectMon[2], 'Datos del monitor', 'Responder monitor');
 
+// POST /geo-recs-save y /geo-domain-save: estado de una recomendación y
+// categoría de un dominio, en las pestañas de sistema (se crean si faltan).
+const bodyDe = nodo => `let body = $('${nodo}').first().json.body || {};
+if (typeof body === 'string') { try { body = JSON.parse(body); } catch (e) { body = {}; } }
+const ahora = new Date().toLocaleString('sv-SE', { timeZone: 'America/Lima' }).slice(0, 16);`;
+const siHayPeticiones = (w, name, position) => w.node(name, 'n8n-nodes-base.if', 2, position, {
+  conditions: {
+    options: { caseSensitive: true, leftValue: '', typeValidation: 'loose' },
+    conditions: [{ id: uuid(name), leftValue: '={{ !!$json.method }}', rightValue: '', operator: { type: 'boolean', operation: 'true', singleValue: true } }],
+    combinator: 'and'
+  },
+  options: {}
+});
+const PLAN_A_ITEMS = `if (!plan.ok) return [{ json: { _status: plan.status, _respuesta: plan.respuesta } }];
+return plan.peticiones.map(p => ({ json: Object.assign(p, { _respuesta: plan.respuesta }) }));`;
+function endpointSistema(w, { ruta, sufijo, y, planear }) {
+  const hook = `Webhook ${ruta}`;
+  webhook(w, hook, 'POST', ruta, [0, y]);
+  const lect = lecturaHoja(w, sufijo, y, '{ sistema: true }');
+  const plan = `Planear (${sufijo})`, si = `¿Hay cambios? (${sufijo})`, escr = `Escribir (${sufijo})`;
+  code(w, plan, [900, y], HOJA() + '\n' + src('monitor.js') + '\n' + bodyDe(hook) + `
+const sistema = leerHojas($input.first().json).sistema;
+const meta = $('${lect[0]}').first().json;
+const plan = ${planear};
+${PLAN_A_ITEMS}
+`);
+  siHayPeticiones(w, si, [1120, y]);
+  ejecutarPeticiones(w, escr, [1340, y - 60]);
+  responderJson(w, `Responder (${sufijo})`, [1560, y - 60], `={{ JSON.stringify($('${plan}').first().json._respuesta) }}`);
+  w.node(`Responder error (${sufijo})`, 'n8n-nodes-base.respondToWebhook', 1.1, [1340, y + 100], {
+    respondWith: 'json', responseBody: '={{ JSON.stringify($json._respuesta) }}', options: { responseCode: '={{ $json._status }}' }
+  });
+  w.link(hook, lect[0]);
+  w.chain(lect[2], plan, si, escr, `Responder (${sufijo})`);
+  w.link(si, `Responder error (${sufijo})`, 1);
+}
+endpointSistema(api, { ruta: 'geo-recs-save', sufijo: 'recomendación', y: 960,
+  planear: `planGuardarRecomendacion(body, sistema._recomendaciones, meta, ahora)` });
+endpointSistema(api, { ruta: 'geo-domain-save', sufijo: 'dominio', y: 1220,
+  planear: `planGuardarDominio(body, sistema._dominios, meta, ahora, CATEGORIAS_DOMINIO)` });
+
+// ═══ GEO · Herramientas ════════════════════════════════════════════════════
+// Auditoría GEO (crawlability y contenido), query fan-out e investigación de
+// prompts. Se llaman a demanda desde el front; no tocan la corrida diaria.
+const her = workflow('GEO TRACKER BCP · Herramientas');
+const HER = () => src('config.js') + '\n' + src('herramientas.js');
+const claudeHttp = (name, position) => her.node(name, 'n8n-nodes-base.httpRequest', 4.2, position, {
+  method: 'POST', url: 'https://api.anthropic.com/v1/messages',
+  authentication: 'predefinedCredentialType', nodeCredentialType: 'anthropicApi',
+  sendHeaders: true, headerParameters: { parameters: [{ name: 'anthropic-version', value: '2023-06-01' }] },
+  sendBody: true, specifyBody: 'json', jsonBody: '={{ JSON.stringify($json.cuerpo) }}',
+  options: { timeout: 240000 }
+}, { onError: 'continueRegularOutput' });
+// Valida el pedido: si hay error responde 400; si no, sigue por la salida 0.
+const siValido = (name, position) => her.node(name, 'n8n-nodes-base.if', 2, position, {
+  conditions: {
+    options: { caseSensitive: true, leftValue: '', typeValidation: 'loose' },
+    conditions: [{ id: uuid(name), leftValue: '={{ !$json.error }}', rightValue: '', operator: { type: 'boolean', operation: 'true', singleValue: true } }],
+    combinator: 'and'
+  },
+  options: {}
+});
+const responder400 = (name, position) => responderJson(her, name, position, '={{ JSON.stringify({ ok: false, error: $json.error }) }}', 400);
+
+// POST /geo-audit {tipo: 'crawl'|'contenido', url, agente?, cabecera?}
+webhook(her, 'Webhook geo-audit', 'POST', 'geo-audit', [0, 0]);
+code(her, 'Armar auditoría', [220, 0], HER() + '\n' + bodyDe('Webhook geo-audit') + `
+const a = pedidosAuditoria(body);
+if (a.error) return [{ json: { error: a.error } }];
+return a.pedidos.map(p => ({ json: Object.assign({ _tipo: a.tipo, _url: a.url }, p) }));
+`);
+siValido('¿URL válida?', [440, 0]);
+her.node('Pedir la página', 'n8n-nodes-base.httpRequest', 4.2, [660, -60], {
+  method: 'GET', url: '={{ $json.url }}',
+  sendHeaders: true, specifyHeaders: 'json', jsonHeaders: '={{ JSON.stringify($json.headers) }}',
+  options: { timeout: 20000, response: { response: { fullResponse: true, neverError: true, responseFormat: 'text' } } }
+}, { onError: 'continueRegularOutput' });
+code(her, 'Resultado de la auditoría', [880, -60], HER() + `
+const pedidos = $('Armar auditoría').all().map(i => i.json);
+const respuestas = $input.all().map(i => i.json);
+const p0 = pedidos[0];
+const resultado = p0._tipo === 'contenido'
+  ? resultadoContenido(p0._url, p0.agente, respuestas[0])
+  : resultadoCrawl(p0._url, pedidos, respuestas);
+const fecha = new Date().toLocaleString('sv-SE', { timeZone: 'America/Lima' }).slice(0, 16);
+const id = 'a_' + Date.now().toString(36);
+return [{ json: { ok: true, auditoria: { id, type: p0._tipo === 'contenido' ? 'content' : 'crawl', url: p0._url, executedAt: fecha, result: resultado } } }];
+`);
+leerPestanas(her, 'Pestañas del Sheet', [1100, -60]);
+code(her, 'Guardar auditoría', [1320, -60], HOJA() + `
+const a = $('Resultado de la auditoría').first().json.auditoria;
+const registro = { id: a.id, tipo: a.type, url: a.url, fecha: a.executedAt, resultado: JSON.stringify(a.result).slice(0, 45000) };
+return planUpsertSistema('_auditorias', registro, 'id', [], $input.first().json).map(p => ({ json: p }));
+`);
+ejecutarPeticiones(her, 'Escribir en _auditorias', [1540, -60]);
+responderJson(her, 'Responder auditoría', [1760, -60], `={{ JSON.stringify($('Resultado de la auditoría').first().json) }}`);
+responder400('Responder URL no válida', [660, 120]);
+her.chain('Webhook geo-audit', 'Armar auditoría', '¿URL válida?', 'Pedir la página', 'Resultado de la auditoría', 'Pestañas del Sheet', 'Guardar auditoría', 'Escribir en _auditorias', 'Responder auditoría');
+her.link('¿URL válida?', 'Responder URL no válida', 1);
+
+// POST /geo-fanout {query}: las búsquedas que Claude despliega para un prompt.
+webhook(her, 'Webhook geo-fanout', 'POST', 'geo-fanout', [0, 320]);
+code(her, 'Armar fan-out', [220, 320], HER() + '\n' + bodyDe('Webhook geo-fanout') + `
+return [{ json: cuerpoFanout(body) }];
+`);
+siValido('¿Hay prompt?', [440, 320]);
+claudeHttp('Claude · fan-out', [660, 260]);
+code(her, 'Leer fan-out', [880, 260], HER() + `
+const r = leerFanout($input.first().json);
+return [{ json: Object.assign({ ok: !r.error, query: $('Armar fan-out').first().json.cuerpo.messages[0].content }, r) }];
+`);
+const responderTal = (name, position) =>
+  her.node(name, 'n8n-nodes-base.respondToWebhook', 1.1, position, { respondWith: 'firstIncomingItem', options: {} });
+responderTal('Responder fan-out', [1100, 260]);
+responder400('Responder sin prompt', [660, 420]);
+her.chain('Webhook geo-fanout', 'Armar fan-out', '¿Hay prompt?', 'Claude · fan-out', 'Leer fan-out', 'Responder fan-out');
+her.link('¿Hay prompt?', 'Responder sin prompt', 1);
+
+// POST /geo-prompt-research {modo: 'keywords'|'url'|'marca', keywords?, url?, idioma?, pais?}
+webhook(her, 'Webhook geo-prompt-research', 'POST', 'geo-prompt-research', [0, 600]);
+code(her, 'Armar investigación', [220, 600], HER() + '\n' + bodyDe('Webhook geo-prompt-research') + `
+return [{ json: cuerpoInvestigacion(body, CONFIG) }];
+`);
+siValido('¿Pedido válido?', [440, 600]);
+claudeHttp('Claude · investigación', [660, 540]);
+code(her, 'Leer candidatos', [880, 540], HER() + `
+const r = leerCandidatos($input.first().json);
+return [{ json: Object.assign({ ok: !r.error, modo: $('Armar investigación').first().json.modo }, r) }];
+`);
+responderTal('Responder investigación', [1100, 540]);
+responder400('Responder pedido no válido', [660, 700]);
+her.chain('Webhook geo-prompt-research', 'Armar investigación', '¿Pedido válido?', 'Claude · investigación', 'Leer candidatos', 'Responder investigación');
+her.link('¿Pedido válido?', 'Responder pedido no válido', 1);
+
 // GEO_BUILD_OUT: carpeta de salida alternativa (test.mjs arma ahí la versión con SerpAPI).
 const salida = process.env.GEO_BUILD_OUT ? new URL('file://' + process.env.GEO_BUILD_OUT.replace(/\/?$/, '/')) : dir;
-for (const [archivo, w] of [['geo-corrida.n8n.json', corrida], ['geo-api.n8n.json', api]]) {
+for (const [archivo, w] of [['geo-corrida.n8n.json', corrida], ['geo-api.n8n.json', api], ['geo-herramientas.n8n.json', her]]) {
   const j = w.json();
   writeFileSync(new URL(archivo, salida), JSON.stringify(j, null, 2) + '\n');
   if (!process.env.GEO_BUILD_OUT) console.log(`${archivo}: ${j.nodes.length} nodos`);

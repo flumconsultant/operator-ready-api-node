@@ -17,54 +17,61 @@ function esDominioPropio(dominio, dominios) {
   return dominios.some(d => dominio === d || dominio.endsWith('.' + d));
 }
 
-// Saca el texto y las fuentes de lo que devuelve cada API. Si la llamada falló
-// (el nodo HTTP sigue con {error}), lo deja anotado en vez de parar la corrida.
+// Saca el texto, las fuentes ({url, title}) y las consultas de búsqueda que hizo
+// el motor (fan-out) de lo que devuelve cada API. Si la llamada falló (el nodo
+// HTTP sigue con {error}), lo deja anotado en vez de parar la corrida.
 function extraerRespuesta(motor, r) {
   r = r || {};
+  const vacia = { disponible: false, texto: '', fuentes: [], consultas: [], error: '' };
   if (r.error) {
     const e = r.error;
     const msg = typeof e === 'string' ? e : (e.message || (e.error && e.error.message) || JSON.stringify(e));
-    return { disponible: false, texto: '', fuentes: [], error: String(msg).slice(0, 500) };
+    return Object.assign(vacia, { error: String(msg).slice(0, 500) });
   }
+  const f = (url, title) => ({ url: String(url || ''), title: String(title || '') });
   if (motor === 'chatgpt') {
     const msg = (r.choices && r.choices[0] && r.choices[0].message) || {};
     const fuentes = (msg.annotations || [])
       .filter(a => a.type === 'url_citation' && a.url_citation)
-      .map(a => a.url_citation.url);
-    return { disponible: true, texto: msg.content || '', fuentes, error: '' };
+      .map(a => f(a.url_citation.url, a.url_citation.title));
+    return { disponible: true, texto: msg.content || '', fuentes, consultas: [], error: '' };
   }
   if (motor === 'claude') {
     // Con búsqueda web, el texto llega partido en bloques (uno por cita): se
     // une sin separador para no cortar frases.
     const texto = (r.content || []).filter(c => c.type === 'text').map(c => c.text).join('');
     const fuentes = [];
-    for (const c of r.content || []) for (const cit of c.citations || []) if (cit.url) fuentes.push(cit.url);
+    for (const c of r.content || []) for (const cit of c.citations || []) if (cit.url) fuentes.push(f(cit.url, cit.title));
     // Si no citó nada pero sí buscó, cuentan las páginas que consultó.
     if (!fuentes.length) {
       for (const c of r.content || []) {
-        if (c.type === 'web_search_tool_result' && Array.isArray(c.content)) for (const w of c.content) if (w.url) fuentes.push(w.url);
+        if (c.type === 'web_search_tool_result' && Array.isArray(c.content)) for (const w of c.content) if (w.url) fuentes.push(f(w.url, w.title));
       }
     }
-    return { disponible: true, texto, fuentes, error: '' };
+    const consultas = (r.content || [])
+      .filter(c => c.type === 'server_tool_use' && c.name === 'web_search' && c.input && c.input.query)
+      .map(c => String(c.input.query));
+    return { disponible: true, texto, fuentes, consultas, error: '' };
   }
   if (motor === 'gemini') {
     const cand = (r.candidates && r.candidates[0]) || {};
     const texto = ((cand.content && cand.content.parts) || []).map(p => p.text || '').join('');
     // Gemini devuelve enlaces de redirección (vertexaisearch…); el dominio real viene en title.
-    const chunks = (cand.groundingMetadata && cand.groundingMetadata.groundingChunks) || [];
-    const fuentes = chunks.map(c => c.web && (/\./.test(c.web.title || '') ? c.web.title : c.web.uri)).filter(Boolean);
-    return { disponible: true, texto, fuentes, error: '' };
+    const meta = cand.groundingMetadata || {};
+    const fuentes = (meta.groundingChunks || []).filter(c => c.web).map(c => {
+      const titulo = c.web.title || '';
+      return /\./.test(titulo) && !/\s/.test(titulo) ? f('https://' + titulo + '/', titulo) : f(c.web.uri, titulo);
+    });
+    return { disponible: true, texto, fuentes, consultas: (meta.webSearchQueries || []).map(String), error: '' };
   }
   if (motor === 'perplexity') {
     const msg = (r.choices && r.choices[0] && r.choices[0].message) || {};
-    const fuentes = (r.search_results || []).map(s => s.url).concat(r.citations || []);
-    return { disponible: true, texto: msg.content || '', fuentes, error: '' };
+    const fuentes = (r.search_results || []).map(s => f(s.url, s.title)).concat((r.citations || []).map(u => f(u, '')));
+    return { disponible: true, texto: msg.content || '', fuentes, consultas: [], error: '' };
   }
   if (motor === 'ai_overview') {
     const aio = r.ai_overview;
-    if (!aio || aio.error || !(aio.text_blocks || []).length) {
-      return { disponible: false, texto: '', fuentes: [], error: '' };
-    }
+    if (!aio || aio.error || !(aio.text_blocks || []).length) return vacia;
     const partes = [];
     const recorrer = bloques => {
       for (const b of bloques || []) {
@@ -75,10 +82,10 @@ function extraerRespuesta(motor, r) {
       }
     };
     recorrer(aio.text_blocks);
-    const fuentes = (aio.references || []).map(x => x.link || x.source).filter(Boolean);
-    return { disponible: true, texto: partes.join('\n'), fuentes, error: '' };
+    const fuentes = (aio.references || []).map(x => f(x.link || x.source, x.title)).filter(x => x.url);
+    return { disponible: true, texto: partes.join('\n'), fuentes, consultas: [], error: '' };
   }
-  return { disponible: false, texto: '', fuentes: [], error: 'Motor desconocido: ' + motor };
+  return Object.assign(vacia, { error: 'Motor desconocido: ' + motor });
 }
 
 // Las cinco respuestas de un prompt, una por motor. `apis` trae lo que devolvió
@@ -95,10 +102,19 @@ function juntarRespuestas(prompt, apis) {
   // Un motor apagado (por ejemplo SerpAPI) no viene en `apis`: no genera fila.
   return Object.keys(crudas).filter(motor => crudas[motor] !== undefined).map(motor => {
     const e = extraerRespuesta(motor, crudas[motor]);
+    // fuentes: dominios únicos (para citado_bcp y la columna fuentes).
+    // citas: cada URL citada una vez, con título y lugar en la respuesta.
     const fuentes = [];
-    for (const f of e.fuentes) {
-      const d = dominioDe(f);
-      if (d && !fuentes.includes(d)) fuentes.push(d);
+    const citas = [];
+    for (const x of e.fuentes) {
+      const url = typeof x === 'string' ? x : x.url;
+      const d = dominioDe(url);
+      if (!d) continue;
+      if (!fuentes.includes(d)) fuentes.push(d);
+      const limpia = /^https?:\/\//i.test(url) ? url : 'https://' + url;
+      if (!citas.some(c => c.url === limpia)) {
+        citas.push({ url: limpia.slice(0, 500), title: String((x && x.title) || '').slice(0, 160), domain: d, position: citas.length + 1 });
+      }
     }
     return {
       run_id: prompt.run_id, fecha: prompt.fecha, timestamp: prompt.timestamp,
@@ -108,6 +124,8 @@ function juntarRespuestas(prompt, apis) {
       estado: e.error ? 'error' : e.disponible ? 'ok' : 'sin_overview',
       texto: e.texto,
       fuentes,
+      citas,
+      consultas: (e.consultas || []).slice(0, 10),
       error: e.error
     };
   });
@@ -165,7 +183,10 @@ function armarFila(r, analisis, config) {
     n_menciones_bancos: r.estado === 'ok' ? entero(a.n_menciones_bancos) : 0,
     // Desglose por banco del Analista (nombres canónicos) y el Share of Voice de BCP.
     detalle_marcas: detalle.length ? JSON.stringify(detalle) : '',
-    sov_bcp: r.estado !== 'ok' ? '' : menciona ? (sov[config.marca.nombre] || 0) : 0
+    sov_bcp: r.estado !== 'ok' ? '' : menciona ? (sov[config.marca.nombre] || 0) : 0,
+    // Cada URL citada (con título y lugar) y las consultas que hizo el motor al buscar.
+    fuentes_detalle: (r.citas || []).length ? JSON.stringify(r.citas.slice(0, 40)) : '',
+    consultas_busqueda: (r.consultas || []).length ? JSON.stringify(r.consultas) : ''
   };
 }
 
@@ -178,10 +199,18 @@ function detalleCanonico(texto, config) {
     if (!marca) continue;
     const pos = Math.round(Number(d.posicion));
     const s = Number(d.sentimiento);
-    const actual = porMarca.get(marca) || { marca, posicion: 0, menciones: 0, sentimiento: 0 };
+    const actual = porMarca.get(marca) || { marca, posicion: 0, menciones: 0, sentimiento: 0, recomendada: false, atributos: [] };
     if (pos > 0 && (!actual.posicion || pos < actual.posicion)) actual.posicion = pos;
     actual.menciones += Math.max(1, entero(d.menciones));
     if (isFinite(s)) actual.sentimiento = Math.max(-1, Math.min(1, Math.round(s * 100) / 100));
+    // recomendada: la respuesta la propone como opción a elegir (probabilidad de compra).
+    if (d.recomendada === true || String(d.recomendada).toLowerCase() === 'true') actual.recomendada = true;
+    // atributos: solo los del vocabulario de config.js (perfil de marca).
+    const vocab = (config.atributos || []).map(a => a.toLowerCase());
+    for (const at of Array.isArray(d.atributos) ? d.atributos : []) {
+      const k = String(at || '').toLowerCase().trim();
+      if (vocab.includes(k) && !actual.atributos.includes(k)) actual.atributos.push(k);
+    }
     porMarca.set(marca, actual);
   }
   // Posiciones 1..n en el orden que dio la IA, sin huecos.
