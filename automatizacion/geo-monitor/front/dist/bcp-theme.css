@@ -1,0 +1,316 @@
+/* =====================================================================
+   BCP GEO Monitor · Tema BCP Design System
+   Capa de estilo independiente: cárgala DESPUÉS de style.css y monitor.css
+     <link rel="stylesheet" href="bcp-theme.css">
+   Requiere la carpeta fonts/ con Flexo junto a este archivo.
+   No cambia estructura ni lógica: solo tokens, tipografía y superficies.
+   ===================================================================== */
+
+/* ---------- Flexo · tipografía corporativa BCP ---------- */
+@font-face{font-family:"Flexo";src:url("fonts/flexo-light.ttf") format("truetype");font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:"Flexo";src:url("fonts/flexo-regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Flexo";src:url("fonts/flexo-medium.ttf") format("truetype");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Flexo";src:url("fonts/flexo-demibold.ttf") format("truetype");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"Flexo";src:url("fonts/flexo-bold.ttf") format("truetype");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Flexo";src:url("fonts/flexo-bold-italic.ttf") format("truetype");font-weight:700;font-style:italic;font-display:swap}
+
+/* ---------- Tokens BCP (sobrescriben los de style.css y monitor.css) ---------- */
+:root{
+  --bcp-navy-deep:#001B44;--bcp-blue:#002B7F;--bcp-blue-royal:#003A8C;--bcp-blue-mid:#0052CC;--bcp-blue-bright:#1E66E0;
+  --bcp-orange:#F36F21;--bcp-orange-hot:#FF6B1A;--bcp-orange-light:#FF8A3D;
+  --bcp-bg-soft:#F7F9FC;--bcp-bg-cool:#E8EDF5;--bcp-line:#D5DDEA;--bcp-line-strong:#B3BFD3;
+  --bcp-text:#102B5C;--bcp-text-muted:#5F6F8F;--bcp-text-soft:#8A99B5;
+  --bcp-success:#1E9E6A;--bcp-warning:#E8A23B;--bcp-danger:#D3492A;
+  --bcp-radius-sm:8px;--bcp-radius-md:12px;--bcp-radius-lg:18px;
+  --bcp-shadow-card:0 12px 28px -10px rgba(16,43,92,.18),0 2px 4px rgba(16,43,92,.06);
+  --bcp-shadow-kpi:0 6px 16px -6px rgba(0,43,127,.18);
+  --bcp-ring:0 0 0 3px rgba(0,82,204,.28);
+  --bcp-font:"Flexo",Arial,sans-serif;
+
+  /* alias que usan los CSS originales */
+  --bg:var(--bcp-bg-soft);--ink:var(--bcp-text);--dark:var(--bcp-navy-deep);--muted:var(--bcp-text-muted);
+  --line:var(--bcp-line);--navy:var(--bcp-blue);--orange:var(--bcp-orange);
+  --green:var(--bcp-success);--red:var(--bcp-danger);--amber:var(--bcp-warning);
+}
+
+/* ---------- Base tipográfica ---------- */
+html,body,button,input,select,textarea{font-family:var(--bcp-font)}
+body{background:var(--bcp-bg-soft);color:var(--bcp-text);-webkit-font-smoothing:antialiased}
+h1,h2,h3,.section-label{font-family:var(--bcp-font);color:var(--bcp-blue)}
+h1{font-weight:700;letter-spacing:-.02em}
+h2,h3{font-weight:700;letter-spacing:-.005em}
+svg text{font-family:var(--bcp-font)}
+.metric-number,.kpi-value,.summary-value,.bi-value,.rank-value,.rank-som,.bar-value,td{font-variant-numeric:tabular-nums}
+a{color:var(--bcp-blue-mid)}a:hover{color:var(--bcp-orange)}
+::selection{background:rgba(243,111,33,.22)}
+
+/* ---------- Sidebar · navy BCP ---------- */
+#sidebar{background:linear-gradient(180deg,var(--bcp-navy-deep) 0%,var(--bcp-blue) 100%);border-right:0;color:#fff}
+.bcp-logo{color:#fff;font-weight:700;letter-spacing:-.04em}
+.bcp-logo i{color:var(--bcp-orange)}
+.side-brand p{color:rgba(255,255,255,.62)}
+.workspace-label{color:rgba(255,255,255,.42);font-weight:700;letter-spacing:.16em}
+.side-link{color:rgba(255,255,255,.74);font-weight:500;border-radius:var(--bcp-radius-sm);transition:background .16s,color .16s}
+.side-link svg{stroke:currentColor}
+.side-link:hover{background:rgba(255,255,255,.08);color:#fff}
+.side-link.active{background:rgba(243,111,33,.16);color:#fff;font-weight:700;box-shadow:inset 3px 0 var(--bcp-orange)}
+.side-footer{border-top-color:rgba(255,255,255,.14);color:rgba(255,255,255,.5)}
+.side-footer b{color:#fff}
+
+/* ---------- Header ---------- */
+#appHeader{background:#fff;border-bottom:1px solid var(--bcp-line)}
+.app-title{color:var(--bcp-blue);font-weight:600}
+.app-title .brand-abbr{color:var(--bcp-orange);font-weight:700}
+.breadcrumb,.breadcrumb button{color:var(--bcp-text-soft)}
+.breadcrumb button:hover{color:var(--bcp-blue-mid)}
+.avatar{background:var(--bcp-blue);color:#fff;font-weight:700}
+.status-dot{background:var(--bcp-orange);box-shadow:0 0 0 3px rgba(243,111,33,.18)}
+
+/* ---------- Filtros globales ---------- */
+.filter-control{border:1px solid var(--bcp-line);border-radius:var(--bcp-radius-md);background:#fff;transition:border-color .16s,box-shadow .16s}
+.filter-control:hover{border-color:var(--bcp-line-strong)}
+.filter-control:focus-within{border-color:var(--bcp-blue-mid);box-shadow:var(--bcp-ring)}
+.filter-control label,.filter-caption{color:var(--bcp-text-soft);font-weight:600;letter-spacing:.04em}
+.filter-control select,.engine-trigger{color:var(--bcp-text);font-weight:600}
+.filter-control select:focus{outline:none}
+.engine-menu{border-radius:var(--bcp-radius-md);box-shadow:var(--bcp-shadow-card)}
+.engine-menu input{accent-color:var(--bcp-blue)}
+.filter-asof{color:var(--bcp-text-soft)}
+
+/* ---------- Aviso de datos ---------- */
+.demo-notice{background:rgba(243,111,33,.07);border:1px solid rgba(243,111,33,.24);border-left:4px solid var(--bcp-orange);border-radius:var(--bcp-radius-sm);color:var(--bcp-text-muted)}
+.demo-notice .dot{background:var(--bcp-orange)}
+
+/* ---------- Cabecera de página · hero BCP ---------- */
+.page-intro{position:relative;overflow:hidden;padding:26px 30px;border-radius:var(--bcp-radius-lg);background:linear-gradient(135deg,var(--bcp-navy-deep) 0%,var(--bcp-blue) 62%,var(--bcp-blue-royal) 100%);box-shadow:0 30px 70px -36px rgba(0,27,68,.6)}
+.page-intro::after{content:"";position:absolute;right:-90px;bottom:-130px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(243,111,33,.38) 0%,transparent 68%);pointer-events:none}
+.page-intro>*{position:relative;z-index:1}
+.page-intro h1{color:#fff;text-transform:uppercase;letter-spacing:-.015em;line-height:1.05}
+.page-intro p{color:rgba(255,255,255,.76)}
+.orange-label{color:var(--bcp-orange-light);font-weight:700;letter-spacing:.2em}
+.live-badge{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.24);color:#fff;font-weight:600}
+
+/* ---------- Tarjetas ---------- */
+.card,.home-kpi,.dashboard-card,.chart-card,.settings-card,.summary-card,.bi-card,.kpi,.project-tile,.overview-panel{border:1px solid var(--bcp-line);border-radius:var(--bcp-radius-lg);background:#fff;box-shadow:var(--bcp-shadow-card)}
+.dash-card-header h2,.table-header h2{color:var(--bcp-blue);font-weight:700}
+.dashboard-card .sub,.chart-caption{color:var(--bcp-text-soft)}
+
+/* ---------- KPIs ---------- */
+.home-kpi{--kpi-accent:var(--bcp-blue);background:linear-gradient(var(--kpi-accent),var(--kpi-accent)) top/100% 4px no-repeat,#fff;box-shadow:var(--bcp-shadow-kpi);transition:transform .2s,box-shadow .2s}
+.home-kpi:first-child{--kpi-accent:var(--bcp-orange)}
+.home-kpi:hover{transform:translateY(-2px);box-shadow:var(--bcp-shadow-card)}
+.home-kpi .metric-title{color:var(--bcp-text-muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.metric-number{color:var(--bcp-blue);font-weight:700;letter-spacing:-.03em}
+.home-kpi:first-child .metric-number{color:var(--bcp-orange)}
+.metric-number small,.metric-change{color:var(--bcp-text-soft)}
+.metric-change.good,.good{color:var(--bcp-success)}
+.metric-change.bad,.bad{color:var(--bcp-danger)}
+.kpi-label{color:var(--bcp-text-muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.kpi-value,.summary-value,.bi-value{color:var(--bcp-blue);font-weight:700;letter-spacing:-.02em}
+
+/* ---------- Barras y rankings ---------- */
+.bar-track{background:var(--bcp-bg-cool);border-radius:999px}
+.bar-fill{border-radius:999px}
+.monitor-ranking-row{border-color:var(--bcp-line)}
+.monitor-ranking-row.leader{background:rgba(243,111,33,.06)}
+.rank-som,.rank-value{color:var(--bcp-blue);font-weight:700}
+.ranking-head{color:var(--bcp-text-soft);font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+
+/* ---------- Tablas ---------- */
+.table-header{border-bottom:1px solid var(--bcp-line)}
+.projects-table th,.monitor-prompt-table th,.prompt-table th,.history-table th,.monitor-subtable th,.monitor-source-table th{background:var(--bcp-bg-soft);color:var(--bcp-text-muted);font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--bcp-line)}
+.projects-table td,.monitor-prompt-table td,.prompt-table td,.history-table td,.monitor-subtable td,.monitor-source-table td{border-bottom:1px solid var(--bcp-bg-cool);color:var(--bcp-text)}
+.projects-table tbody tr:hover,.monitor-prompt-table tbody tr:hover,.prompt-table tbody tr:hover,.history-table tbody tr:hover{background:rgba(0,82,204,.04)}
+.project-name-cell,.project-name-cell b{color:var(--bcp-blue);font-weight:700}
+.project-square{border-radius:var(--bcp-radius-sm)}
+
+/* ---------- Tabs ---------- */
+.tabs{border-bottom:1px solid var(--bcp-line)}
+.tab{color:var(--bcp-text-muted);font-weight:600}
+.tab:hover{color:var(--bcp-blue)}
+.tab.active{color:var(--bcp-blue);font-weight:700;box-shadow:inset 0 -3px var(--bcp-orange)}
+
+/* ---------- Botones ---------- */
+.button{border-radius:999px;border:1px solid var(--bcp-line);color:var(--bcp-blue);font-weight:600;transition:background .16s,border-color .16s,color .16s}
+.button:hover{border-color:var(--bcp-blue-mid);color:var(--bcp-blue-mid)}
+.button.primary{background:var(--bcp-blue);border-color:var(--bcp-blue);color:#fff}
+.button.primary:hover{background:var(--bcp-blue-royal);color:#fff}
+.text-button{color:var(--bcp-blue-mid);font-weight:600}
+.text-button:hover{color:var(--bcp-orange)}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:none;box-shadow:var(--bcp-ring)}
+
+/* ---------- Chips, etiquetas y estados ---------- */
+.tag,.chip,.llm-chip,.demo-tag,.engine-badge.compact{border-radius:999px;font-weight:600}
+.chip.active,.segment .active{background:var(--bcp-blue);color:#fff;border-color:var(--bcp-blue)}
+.sentiment.positivo{color:var(--bcp-success)}
+.sentiment.neutral{color:var(--bcp-text-muted)}
+.sentiment.negativo{color:var(--bcp-danger)}
+.trend.down{color:var(--bcp-danger)}
+.trend.flat{color:var(--bcp-text-soft)}
+.priority.Alta{color:var(--bcp-danger)}
+.priority.Media{color:#8C5910}
+.priority.Baja{color:var(--bcp-success)}
+
+/* ---------- Modales y tooltips ---------- */
+.modal-head h2{color:var(--bcp-blue);font-weight:700}
+.tooltip-chart,.info:after{background:var(--bcp-navy-deep);color:#fff;border-radius:var(--bcp-radius-sm);box-shadow:var(--bcp-shadow-card)}
+#toast{background:var(--bcp-navy-deep);color:#fff;border-radius:999px}
+
+
+/* =====================================================================
+   v2 · estilo tomado del dashboard Workvivo (status-report kit)
+   Solo superficies y tamaños; no cambia layout.
+   ===================================================================== */
+
+/* ---- tipografía un punto más grande ---- */
+body{font-size:15px}
+.side-link{font-size:15px}
+.workspace-label{font-size:11.5px}
+.app-title{font-size:20px}
+.breadcrumb,.breadcrumb button{font-size:14px}
+.filter-control label,.filter-caption{font-size:12.5px}
+.filter-control select,.engine-trigger{font-size:15px}
+.demo-notice{font-size:14px;line-height:1.5}
+.page-intro h1{font-size:44px}
+.page-intro p{font-size:17px;line-height:1.5}
+.orange-label{font-size:12.5px}
+.home-kpi .metric-title,.kpi-label{font-size:13px}
+.metric-number{font-size:44px}
+.metric-number small,.metric-change{font-size:13.5px}
+.dash-card-header h2,.table-header h2{font-size:19px}
+.dashboard-card .sub,.chart-caption{font-size:13.5px}
+.projects-table th,.monitor-prompt-table th,.prompt-table th,.history-table th,.monitor-subtable th,.monitor-source-table th{font-size:12px}
+.projects-table td,.monitor-prompt-table td,.prompt-table td,.history-table td,.monitor-subtable td,.monitor-source-table td{font-size:14.5px}
+.tab{font-size:15px}
+.button,.text-button{font-size:14px}
+.ranking-head{font-size:12px}
+svg text{font-size:12.5px}
+
+/* ---- sidebar: navy profundo + glow naranja abajo ---- */
+#sidebar{background:var(--bcp-navy-deep)}
+#sidebar{background-image:radial-gradient(60% 30% at 100% 100%,rgba(243,111,33,.22) 0%,transparent 60%)}
+#sidebar::before{content:none;background:radial-gradient(60% 30% at 100% 100%,rgba(243,111,33,.22) 0%,transparent 60%);pointer-events:none}
+.side-link{border-radius:10px;position:relative}
+.side-link.active{background:linear-gradient(90deg,rgba(243,111,33,.18) 0%,rgba(243,111,33,.02) 100%);box-shadow:none}
+.side-link.active::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:22px;background:var(--bcp-orange-hot);border-radius:0 3px 3px 0}
+.avatar{background:linear-gradient(135deg,#FF8A3D 0%,#F36F21 100%)}
+
+/* ---- header y filtros en píldora ---- */
+#appHeader{box-shadow:0 1px 0 var(--bcp-line)}
+.filter-control{border-radius:999px;background:var(--bcp-bg-cool);border-color:transparent}
+.filter-control:hover{background:#DFE6F1;border-color:transparent}
+.filter-control:focus-within{background:#fff;border-color:var(--bcp-blue-mid)}
+
+/* ---- hero: gradiente BCP + iso curves ---- */
+.page-intro{background:radial-gradient(120% 80% at 90% 110%,#FF8A3D 0%,#F36F21 12%,#002B7F 45%,#001B44 100%);border-radius:24px;padding:36px 40px 32px;box-shadow:0 30px 70px -30px rgba(0,27,68,.55)}
+.page-intro::after{right:-60px;bottom:-100px;width:360px;height:360px;border-radius:0;background:url("iso-curves.png") center/contain no-repeat;opacity:.55}
+.orange-label{color:var(--bcp-orange-light);letter-spacing:.18em}
+.live-badge{border-radius:999px;text-transform:uppercase;letter-spacing:.06em;font-size:12px;padding:6px 14px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(12px)}
+
+/* ---- KPI tiles estilo Workvivo ---- */
+.home-kpi{border:0;border-radius:18px;box-shadow:0 12px 28px -10px rgba(16,43,92,.18),0 2px 4px rgba(16,43,92,.06);padding:20px 22px 22px}
+.home-kpi:hover{transform:translateY(-3px);box-shadow:0 22px 44px -14px rgba(16,43,92,.26)}
+.metric-change{display:inline-flex;align-items:center;padding:3px 10px;border-radius:999px;background:var(--bcp-bg-cool);font-weight:700}
+.metric-change.good{background:rgba(30,158,106,.12)}
+.metric-change.bad{background:rgba(211,73,42,.12)}
+
+/* ---- tarjetas ---- */
+.card,.dashboard-card,.chart-card,.settings-card,.summary-card,.bi-card,.kpi,.project-tile,.overview-panel{border:0;border-radius:18px}
+.dash-card-header,.table-header{padding-bottom:12px}
+
+/* ---- tabs y tablas ---- */
+.tab{letter-spacing:.02em}
+.tab.active{box-shadow:inset 0 -2px var(--bcp-orange-hot)}
+.projects-table tbody tr,.monitor-prompt-table tbody tr,.prompt-table tbody tr,.history-table tbody tr{transition:background .15s}
+.button{padding-left:18px;padding-right:18px}
+
+/* Adaptación de los nuevos tamaños del kit a pantallas pequeñas. */
+@media(max-width:767px){
+  .app-title{font-size:13px}
+  .breadcrumb,.breadcrumb button{font-size:11px}
+  .page-intro{flex-wrap:wrap;padding:26px 22px;border-radius:20px}
+  .page-intro>div{min-width:0;max-width:100%}
+  .page-intro h1{font-size:clamp(26px,6.5vw,36px);overflow-wrap:anywhere}
+  .page-intro p{font-size:15px}
+  .page-intro::after{right:-90px;bottom:-110px;width:280px;height:280px;opacity:.35}
+  .live-badge{font-size:10px;padding:6px 10px}
+  .home-kpi{padding:18px 15px}
+  .home-kpi .metric-title{font-size:11px}
+  .metric-number{font-size:34px}
+  .metric-number small,.metric-change{font-size:12px}
+  .filter-control select,.engine-trigger{font-size:14px}
+  .dash-card-header h2,.table-header h2{font-size:17px}
+}
+
+/* ===== v3 · UX fixes ===== */
+/* logo duplicado: el header ya no repite BCP */
+.app-title .brand-abbr{display:none}
+/* textos que se rompen */
+.side-link{white-space:normal;line-height:1.2;align-items:center}
+.workspace-label{white-space:normal;line-height:1.35}
+.filter-control,.filter-control select,.engine-trigger,.live-badge,.tag,.chip,.llm-chip,.status-chip,.button{white-space:nowrap}
+.project-name-cell,.rank-name,.bar-label,.monitor-ranking-row .name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dash-card-header h2,.table-header h2,.metric-title,.kpi-label{text-wrap:balance;overflow-wrap:anywhere}
+.page-intro h1{text-wrap:balance}
+td{overflow-wrap:anywhere}
+/* animaciones de entrada */
+@keyframes bcpUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes bcpFade{from{opacity:0}to{opacity:1}}
+.page-intro{animation:bcpUp .5s cubic-bezier(.2,.7,.2,1) both}
+.home-kpi,.dashboard-card,.chart-card,.card,.summary-card,.bi-card,.project-tile{animation:bcpUp .55s cubic-bezier(.2,.7,.2,1) both}
+.home-kpi:nth-child(2){animation-delay:.06s}.home-kpi:nth-child(3){animation-delay:.12s}.home-kpi:nth-child(4){animation-delay:.18s}.home-kpi:nth-child(5){animation-delay:.24s}
+.bar-fill{transition:width .8s cubic-bezier(.2,.7,.2,1)}
+tbody tr{animation:bcpFade .35s ease both}
+.side-link,.button,.filter-control,.home-kpi,.tab{transition:all .18s ease}
+.button:active{transform:scale(.97)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* indicador de carga no bloqueante */
+#bcpLoader{position:fixed;top:0;left:0;right:0;z-index:9999;pointer-events:none;opacity:0;transition:opacity .2s}
+#bcpLoader.on{opacity:1}
+#bcpLoader .bar{height:3px;background:linear-gradient(90deg,transparent,var(--bcp-orange),var(--bcp-blue-mid),transparent);background-size:50% 100%;background-repeat:no-repeat;animation:bcpBar 1.1s ease-in-out infinite}
+#bcpLoader .pill{position:fixed;right:24px;bottom:24px;display:flex;align-items:center;gap:10px;padding:10px 16px 10px 12px;border-radius:999px;background:var(--bcp-navy-deep);color:#fff;font-family:var(--bcp-font);font-size:13.5px;font-weight:600;box-shadow:0 12px 28px -10px rgba(0,27,68,.5)}
+#bcpLoader .sp{width:18px;height:18px;border-radius:50%;border:2.5px solid rgba(255,255,255,.2);border-top-color:var(--bcp-orange);animation:bcpSpin .7s linear infinite}
+@keyframes bcpSpin{to{transform:rotate(360deg)}}
+@keyframes bcpBar{0%{background-position:-50% 0}100%{background-position:150% 0}}
+
+/* Un solo wordmark por pantalla: lateral en escritorio y cabecera en móvil. */
+@media(min-width:768px){
+  .app-title .header-logo{display:none}
+  .app-product-name{padding-left:0;border-left:0}
+}
+@media(max-width:767px){
+  .side-link{white-space:nowrap;flex-shrink:0}
+  .side-link.active::before{left:10px;right:10px;top:auto;bottom:0;width:auto;height:3px;transform:none;border-radius:3px 3px 0 0}
+  #bcpLoader .pill{right:16px;bottom:16px;max-width:calc(100vw - 32px);font-size:13px}
+}
+
+/* Indicadores estratégicos, ranking y segmentación por motor. */
+.home-kpis{grid-template-columns:repeat(12,minmax(0,1fr))}
+.home-kpi{grid-column:span 3}
+.home-kpi:nth-child(-n+3){grid-column:span 4}
+.kpi-comparison{margin-top:12px;font-size:12px;line-height:1.5}
+.competitor-table,.segment-table{width:100%;border-collapse:collapse}
+.competitor-table{min-width:480px}
+.competitor-table th,.competitor-table td,.segment-table th,.segment-table td{padding:13px 12px;border-bottom:1px solid var(--bcp-bg-cool);font-size:14px;vertical-align:middle}
+.competitor-table thead th,.segment-table thead th{background:var(--bcp-bg-soft);color:var(--bcp-text-muted);font-size:11px;font-weight:700;line-height:1.5;letter-spacing:.03em}
+.competitor-table td,.competitor-table thead th:nth-child(n+3){text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.competitor-table th:nth-child(2){text-align:left}
+.competitor-table .leader{background:rgba(0,43,127,.05);color:var(--bcp-blue)}
+.competitor-table .leader th{box-shadow:inset 3px 0 var(--bcp-orange)}
+.bcp-brand-tag{display:block;font-size:10px;color:var(--bcp-orange);font-weight:600;margin-top:3px}
+.source-filter,.segment-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin:0 0 20px;font-size:13px;color:var(--bcp-text-muted)}
+.source-filter{padding:14px 17px;background:#fff;border:1px solid var(--bcp-line);border-radius:12px}
+.source-filter label{display:flex;align-items:center;gap:9px;font-weight:600;color:var(--bcp-blue);cursor:pointer}
+.source-filter input{width:17px;height:17px;accent-color:var(--bcp-blue)}
+.source-filter span{margin-left:auto;font-size:12px}
+.segment-toolbar .filter-control{gap:12px;font-weight:600;max-width:100%}
+.segment-table{min-width:740px}
+.segment-table th:first-child{position:sticky;left:0;min-width:210px;max-width:260px;background:#fff;z-index:1;line-height:1.5;text-align:left}
+.segment-table thead th:first-child{background:var(--bcp-bg-soft);z-index:2}
+.segment-table thead th[colspan]{text-align:center;border-left:1px solid var(--bcp-line)}
+.segment-table tbody td{min-width:94px;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.segment-table .segment-sov{color:var(--bcp-blue);font-weight:700;border-right:1px solid var(--bcp-line)}
+.segment-table .engine-badge{justify-content:center}
+@media(min-width:1201px){.competitive{grid-template-columns:minmax(0,1.4fr) minmax(400px,1fr)}}
+@media(max-width:1200px){.competitive{grid-template-columns:1fr}.home-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.home-kpi,.home-kpi:nth-child(-n+3){grid-column:auto}.home-kpi:last-child{grid-column:1/-1}}
+@media(max-width:767px){.source-filter span{margin-left:0;width:100%;line-height:1.5}.segment-table th:first-child{min-width:150px;max-width:175px}.segment-table th,.segment-table td{padding:12px 10px;font-size:13px}.segment-toolbar .filter-control{flex-wrap:wrap}.segment-toolbar select{max-width:100%}.kpi-comparison{font-size:11px}.chart-tools{flex-wrap:wrap}}
