@@ -1,0 +1,1303 @@
+{
+  "name": "GEO Monitor — Share of Model BCP",
+  "nodes": [
+    {
+      "id": "2d0d27e6-dc6a-4943-a6ce-84a999dd6fc5",
+      "name": "Webhook geo-dashboard",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "geo-dashboard",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "webhookId": "ce22ac6e-c60c-46c0-a7e5-1ccb6f28b47a"
+    },
+    {
+      "id": "82baa605-d667-4c80-a29c-15e642f07d70",
+      "name": "Webhook geo-prompts",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        200
+      ],
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "geo-prompts",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "webhookId": "7637025f-e5c6-4a91-a9e3-71270ac8f209"
+    },
+    {
+      "id": "0b727134-2162-4bb7-a393-3a5d1fe61ab8",
+      "name": "Webhook geo-prompts-save",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        400
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "geo-prompts-save",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "webhookId": "034d8e73-a9b5-4b38-a20e-c271d9c2f57b"
+    },
+    {
+      "id": "4b2b9449-42b3-42fa-a636-bbbfc1db711e",
+      "name": "Webhook geo-run",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        600
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "geo-run",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "webhookId": "ef5669e2-ba3b-40ff-aa26-a0bf7a0e8c0e"
+    },
+    {
+      "id": "6eaa6849-e40e-41b3-a13d-9da4d652aba1",
+      "name": "Diario 7:00 Lima",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        800
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 7 * * *"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "cb8e9cb0-9be7-47a6-a1e5-0351a76ac827",
+      "name": "Config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        260,
+        400
+      ],
+      "parameters": {
+        "jsCode": "// ═══════════════════════════════════════════════════════════════════════════\n//  CONFIGURACIÓN — lo único que deberías tocar en este nodo es este bloque.\n// ═══════════════════════════════════════════════════════════════════════════\nconst CONFIG = {\n  marca: {\n    nombre: 'BCP',\n    alias: ['BCP', 'Banco de Crédito del Perú', 'Banco de Crédito', 'Banco de Credito', 'ViaBCP', 'Via BCP'],\n    dominios: ['viabcp.com', 'bcp.com.pe']\n  },\n  competidores: [\n    { nombre: 'Interbank', alias: ['Interbank'], dominios: ['interbank.pe'] },\n    { nombre: 'BBVA', alias: ['BBVA', 'BBVA Perú', 'BBVA Continental', 'Banco Continental'], dominios: ['bbva.pe'] },\n    { nombre: 'Scotiabank', alias: ['Scotiabank', 'Scotia'], dominios: ['scotiabank.com.pe'] },\n    { nombre: 'BanBif', alias: ['BanBif', 'Banbif', 'Banco Interamericano de Finanzas'], dominios: ['banbif.com.pe'] },\n    { nombre: 'Pichincha', alias: ['Pichincha', 'Banco Pichincha'], dominios: ['pichincha.pe'] },\n    { nombre: 'Banco de la Nación', alias: ['Banco de la Nación', 'Banco de la Nacion', 'BN'], dominios: ['bn.com.pe'] }\n  ],\n  // Si un motor da error de modelo, cambia el nombre aquí.\n  modelos: {\n    chatgpt: 'gpt-4o-search-preview',\n    claude: 'claude-sonnet-4-5',\n    gemini: 'gemini-2.5-flash',\n    perplexity: 'sonar'\n  },\n  // Palabras a cada lado de una mención de la marca que cuentan para el sentimiento.\n  ventana_sentimiento: 12,\n  zona_horaria: 'America/Lima'\n};\n// ═══════════════════════════════════════════════════════════════════════════\n\nconst MOTORES = [\n  { key: 'chatgpt', label: 'ChatGPT', color: '#10A37F' },\n  { key: 'claude', label: 'Claude', color: '#D97757' },\n  { key: 'gemini', label: 'Gemini', color: '#4285F4' },\n  { key: 'perplexity', label: 'Perplexity', color: '#20808D' },\n  { key: 'ai_overview', label: 'AI Overview', color: '#FBBC04' }\n];\n\n// Qué disparador arrancó esta ejecución decide la ruta del nodo «Ruta».\nfunction rutaDeEjecucion(ejecutado, leer) {\n  if (ejecutado('Webhook geo-dashboard')) return { ruta: 'dashboard', peticion: leer('Webhook geo-dashboard').query || {} };\n  if (ejecutado('Webhook geo-prompts')) return { ruta: 'prompts', peticion: leer('Webhook geo-prompts').query || {} };\n  if (ejecutado('Webhook geo-prompts-save')) return { ruta: 'guardar', peticion: leer('Webhook geo-prompts-save').body || {} };\n  if (ejecutado('Webhook geo-run')) return { ruta: 'ejecutar_webhook', peticion: leer('Webhook geo-run').body || {} };\n  return { ruta: 'ejecutar_diario', peticion: {} };\n}\n\nfunction fechaLocal(d, zona) {\n  // en-CA da AAAA-MM-DD.\n  return d.toLocaleDateString('en-CA', { timeZone: zona });\n}\n\nconst ejecutado = n => { try { return $(n).isExecuted; } catch (e) { return false; } };\nconst leer = n => $(n).first().json;\nconst r = rutaDeEjecucion(ejecutado, leer);\nlet peticion = r.peticion;\nif (typeof peticion === 'string') { try { peticion = JSON.parse(peticion); } catch (e) { peticion = {}; } }\nconst ahora = new Date();\nreturn [{ json: Object.assign({}, CONFIG, {\n  motores: MOTORES,\n  ruta: r.ruta,\n  peticion: peticion || {},\n  ahora: ahora.toISOString(),\n  fecha: fechaLocal(ahora, CONFIG.zona_horaria)\n}) }];\n"
+      }
+    },
+    {
+      "id": "70cdcab7-1281-41c3-a95c-740e829b4bd0",
+      "name": "Ruta",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        480,
+        400
+      ],
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "b2dd14bf-db65-46d3-aabe-6d60005064b9",
+                    "leftValue": "={{ $json.ruta }}",
+                    "rightValue": "dashboard",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "dashboard"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "6f7ebc02-1d57-4254-a2a4-69eda8367b8a",
+                    "leftValue": "={{ $json.ruta }}",
+                    "rightValue": "prompts",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "prompts"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "0ec49b87-fcc1-4af2-ae27-937b754ef69c",
+                    "leftValue": "={{ $json.ruta }}",
+                    "rightValue": "guardar",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "guardar"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "4a9f7f6f-47a3-49e3-a92e-e8fbfa43e6fc",
+                    "leftValue": "={{ $json.ruta }}",
+                    "rightValue": "ejecutar_webhook",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "ejecutar_webhook"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "a58c81ff-7c56-4963-acaf-1559cb40b498",
+                    "leftValue": "={{ $json.ruta }}",
+                    "rightValue": "ejecutar_diario",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "ejecutar_diario"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "de04ca36-7c1a-4914-a65f-ace8961413b4",
+      "name": "Leer Resultados",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        740,
+        0
+      ],
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Resultados",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "1abe0892-a2fa-4b3d-a8e4-cd9990fb453f",
+      "name": "Dashboard",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        960,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// Arma la respuesta de /geo-dashboard a partir de las filas de la hoja\n// Resultados. Sin dependencias: build.mjs lo pega en el nodo Code «Dashboard».\n//\n// Las filas llegan de Google Sheets como texto: «TRUE», «0,25», «3». Por eso\n// todo pasa por aBool y aNum antes de sumar.\n\nfunction aBool(v) {\n  if (typeof v === 'boolean') return v;\n  return ['true', 'verdadero', '1', 'si', 'sí', 'x'].includes(String(v || '').trim().toLowerCase());\n}\n\nfunction aNum(v) {\n  if (typeof v === 'number') return isFinite(v) ? v : null;\n  const s = String(v == null ? '' : v).trim().replace(',', '.');\n  if (s === '') return null;\n  const n = Number(s);\n  return isFinite(n) ? n : null;\n}\n\nfunction aLista(v) {\n  if (Array.isArray(v)) return v;\n  return String(v || '').split(/[,;|]/).map(s => s.trim()).filter(Boolean);\n}\n\nfunction pct(a, b) {\n  return b ? Math.round((a / b) * 1000) / 10 : 0;\n}\n\nfunction promedio(xs) {\n  const v = xs.filter(x => x !== null && x !== undefined);\n  return v.length ? Math.round((v.reduce((s, x) => s + x, 0) / v.length) * 100) / 100 : null;\n}\n\nfunction normalizarFila(f) {\n  return {\n    run_id: String(f.run_id || ''),\n    fecha: String(f.fecha || '').slice(0, 10),\n    timestamp: String(f.timestamp || ''),\n    prompt_id: String(f.prompt_id || ''),\n    proyecto: String(f.proyecto || '').trim() || 'Sin proyecto',\n    prompt: String(f.prompt || ''),\n    motor: String(f.motor || ''),\n    disponible: aBool(f.disponible),\n    menciona: aBool(f.menciona),\n    posicion: aNum(f.posicion),\n    sentimiento: aNum(f.sentimiento),\n    citado: aBool(f.citado),\n    marcas: aLista(f.marcas),\n    fuentes: aLista(f.fuentes),\n    respuesta: String(f.respuesta || ''),\n    error: String(f.error || '')\n  };\n}\n\n// Las métricas de un grupo de filas. Las filas con error no cuentan: si a un\n// motor se le acabó el saldo, no es que no nos mencione.\nfunction metricas(filas) {\n  const validas = filas.filter(f => !f.error);\n  const menc = validas.filter(f => f.menciona);\n  return {\n    total_respuestas: validas.length,\n    menciones: menc.length,\n    share_of_model: pct(menc.length, validas.length),\n    citaciones: validas.filter(f => f.citado).length,\n    tasa_citacion: pct(validas.filter(f => f.citado).length, validas.length),\n    sentimiento_promedio: promedio(menc.map(f => f.sentimiento)),\n    posicion_promedio: promedio(menc.map(f => f.posicion))\n  };\n}\n\n// Variación en puntos porcentuales: el último día con datos contra el anterior.\nfunction variacion(filas) {\n  const fechas = [...new Set(filas.filter(f => !f.error).map(f => f.fecha))].sort();\n  if (fechas.length < 2) return null;\n  const ult = metricas(filas.filter(f => f.fecha === fechas[fechas.length - 1])).share_of_model;\n  const ant = metricas(filas.filter(f => f.fecha === fechas[fechas.length - 2])).share_of_model;\n  return Math.round((ult - ant) * 10) / 10;\n}\n\nfunction construirDashboard(filasCrudas, filtros, config) {\n  filtros = filtros || {};\n  const motores = config.motores;\n  const marcaPropia = config.marca.nombre;\n  const dominiosPropios = (config.marca.dominios || []).map(d => d.toLowerCase());\n  const esPropio = d => dominiosPropios.some(p => d === p || d.endsWith('.' + p));\n\n  const todas = filasCrudas\n    .filter(f => f && (f.motor || f.prompt_id))\n    .map(normalizarFila)\n    .filter(f => motores.some(m => m.key === f.motor));\n\n  const filas = todas.filter(f =>\n    (!filtros.proyecto || f.proyecto === filtros.proyecto) &&\n    (!filtros.motor || f.motor === filtros.motor) &&\n    (!filtros.prompt_id || f.prompt_id === filtros.prompt_id) &&\n    (!filtros.desde || f.fecha >= filtros.desde) &&\n    (!filtros.hasta || f.fecha <= filtros.hasta)\n  );\n\n  const base = { motores, filtros };\n  if (!filas.length) {\n    return Object.assign(base, {\n      vacio: !todas.length,\n      kpis: Object.assign(metricas([]), {\n        var_share_of_model: null, presencia_ai_overview: null,\n        ultima_corrida: todas.length ? todas.map(f => f.timestamp || f.fecha).sort().pop() : null\n      }),\n      por_motor: [], tendencia: [], competidores: [], fuentes: [], proyectos: [], prompts: [], respuestas: []\n    });\n  }\n\n  const validas = filas.filter(f => !f.error);\n  const aio = validas.filter(f => f.motor === 'ai_overview');\n\n  const kpis = Object.assign(metricas(filas), {\n    var_share_of_model: variacion(filas),\n    presencia_ai_overview: aio.length ? pct(aio.filter(f => f.disponible).length, aio.length) : null,\n    ultima_corrida: filas.map(f => f.timestamp || f.fecha).sort().pop()\n  });\n\n  const por_motor = motores.map(m => {\n    const fm = filas.filter(f => f.motor === m.key);\n    const x = metricas(fm);\n    return {\n      motor: m.key, label: m.label,\n      share_of_model: x.share_of_model, var_share_of_model: variacion(fm),\n      menciones: x.menciones, total_respuestas: x.total_respuestas, citaciones: x.citaciones,\n      sentimiento_promedio: x.sentimiento_promedio, posicion_promedio: x.posicion_promedio\n    };\n  });\n\n  const fechas = [...new Set(validas.map(f => f.fecha))].sort();\n  const tendencia = fechas.map(fecha => {\n    const fd = validas.filter(f => f.fecha === fecha);\n    const punto = { fecha };\n    for (const m of motores) {\n      const fm = fd.filter(f => f.motor === m.key);\n      punto[m.key] = fm.length ? metricas(fm).share_of_model : null;\n    }\n    punto.total = metricas(fd).share_of_model;\n    return punto;\n  });\n\n  const nombres = [marcaPropia].concat((config.competidores || []).map(c => c.nombre));\n  const competidores = nombres\n    .map(marca => {\n      const n = validas.filter(f => f.marcas.includes(marca)).length;\n      return { marca, menciones: n, share_of_model: pct(n, validas.length), es_bcp: marca === marcaPropia };\n    })\n    .sort((a, b) => b.menciones - a.menciones || (b.es_bcp ? 1 : 0) - (a.es_bcp ? 1 : 0))\n    .map((c, i) => Object.assign({ ranking: i + 1 }, c));\n\n  const conteo = {};\n  for (const f of validas) for (const d of f.fuentes) conteo[d] = (conteo[d] || 0) + 1;\n  const fuentes = Object.keys(conteo)\n    .map(dominio => ({ dominio, citas: conteo[dominio], es_bcp: esPropio(dominio) }))\n    .sort((a, b) => b.citas - a.citas)\n    .slice(0, 30);\n\n  const nombresProyectos = [...new Set(filas.map(f => f.proyecto))].sort();\n  const proyectos = nombresProyectos.map(proyecto => {\n    const fp = filas.filter(f => f.proyecto === proyecto);\n    const x = metricas(fp);\n    return {\n      proyecto, prompts: new Set(fp.map(f => f.prompt_id)).size,\n      share_of_model: x.share_of_model, var_share_of_model: variacion(fp), menciones: x.menciones\n    };\n  });\n\n  // La matriz prompt × motor muestra la última respuesta válida de cada motor.\n  const idsPrompts = [...new Set(filas.map(f => f.prompt_id))];\n  const prompts = idsPrompts.map(id => {\n    const fp = filas.filter(f => f.prompt_id === id);\n    const ultima = fp.map(f => f.fecha).sort().pop();\n    const mot = {};\n    for (const m of motores) {\n      const r = fp.filter(f => f.motor === m.key && !f.error)\n        .sort((a, b) => (a.timestamp || a.fecha).localeCompare(b.timestamp || b.fecha)).pop();\n      mot[m.key] = r\n        ? { menciona: r.menciona, posicion: r.posicion, sentimiento: r.sentimiento, citado: r.citado, marcas: r.marcas, fecha: r.fecha, disponible: r.disponible }\n        : null;\n    }\n    const recientes = fp.filter(f => f.fecha === ultima);\n    return {\n      prompt_id: id, prompt: fp[fp.length - 1].prompt, proyecto: fp[fp.length - 1].proyecto,\n      share_of_model: metricas(recientes).share_of_model, ultima_fecha: ultima, motores: mot\n    };\n  });\n\n  let respuestas = [];\n  if (filtros.proyecto || filtros.prompt_id) {\n    respuestas = filas\n      .slice()\n      .sort((a, b) => (b.timestamp || b.fecha).localeCompare(a.timestamp || a.fecha))\n      .slice(0, 300)\n      .map(f => ({\n        fecha: f.fecha, timestamp: f.timestamp, motor: f.motor, prompt_id: f.prompt_id, prompt: f.prompt,\n        menciona: f.menciona, posicion: f.posicion, sentimiento: f.sentimiento, citado: f.citado,\n        disponible: f.disponible, marcas: f.marcas, fuentes: f.fuentes, respuesta: f.respuesta, error: f.error\n      }));\n  }\n\n  return Object.assign(base, { vacio: false, kpis, por_motor, tendencia, competidores, fuentes, proyectos, prompts, respuestas });\n}\n\nconst cfg = $('Config').first().json;\nconst q = cfg.peticion || {};\nconst filtros = {};\nfor (const k of ['proyecto', 'motor', 'desde', 'hasta', 'prompt_id']) if (q[k]) filtros[k] = String(q[k]);\nreturn [{ json: construirDashboard($input.all().map(i => i.json), filtros, cfg) }];\n"
+      }
+    },
+    {
+      "id": "29f85c14-8e94-488a-af87-a78d1390c607",
+      "name": "Responder dashboard",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1180,
+        0
+      ],
+      "parameters": {
+        "respondWith": "firstIncomingItem",
+        "options": {}
+      }
+    },
+    {
+      "id": "25e9ecd8-5510-452f-a9d8-b66110527cfd",
+      "name": "Leer Prompts",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        740,
+        200
+      ],
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Prompts",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "4fe67ebe-8708-4903-a66d-f0201b578c08",
+      "name": "Listar prompts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        960,
+        200
+      ],
+      "parameters": {
+        "jsCode": "// Prompts: listar (/geo-prompts), validar lo que llega a /geo-prompts-save y\n// elegir cuáles entran en una corrida. Sin dependencias, como los otros dos.\n\nconst CATEGORIAS = ['Reputación', 'Producto', 'Digital', 'Otra'];\n\nfunction activoDe(v) {\n  if (typeof v === 'boolean') return v;\n  const s = String(v == null ? '' : v).trim().toLowerCase();\n  if (s === '') return true;\n  return ['true', 'verdadero', '1', 'si', 'sí', 'x'].includes(s);\n}\n\nfunction normalizarPrompt(f) {\n  return {\n    id: String(f.id || '').trim(),\n    proyecto: String(f.proyecto || '').trim() || 'Sin proyecto',\n    prompt: String(f.prompt || '').trim(),\n    categoria: String(f.categoria || '').trim() || 'Otra',\n    activo: activoDe(f.activo),\n    creado: String(f.creado || ''),\n    actualizado: String(f.actualizado || '')\n  };\n}\n\nfunction listarPrompts(filas) {\n  const prompts = filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .sort((a, b) => b.creado.localeCompare(a.creado));\n  const proyectos = [...new Set(prompts.map(p => p.proyecto))].sort();\n  return { prompts, proyectos, categorias: CATEGORIAS, total: prompts.length, activos: prompts.filter(p => p.activo).length };\n}\n\n// Devuelve la fila que hay que escribir (solo con las columnas que cambian,\n// para que «Agregar o actualizar» no pise creado al editar) o un error.\nfunction prepararGuardado(body, ahora, idNuevo) {\n  body = body || {};\n  const id = String(body.id || '').trim();\n  if (body.accion === 'eliminar') {\n    if (!id) return { ok: false, error: 'Falta el id del prompt a eliminar.' };\n    return { ok: true, accion: 'eliminar', fila: { id, activo: false, actualizado: ahora } };\n  }\n  const prompt = String(body.prompt || '').trim();\n  const fila = { id: id || idNuevo, actualizado: ahora };\n  if (!id || body.prompt !== undefined) {\n    if (!prompt) return { ok: false, error: 'El prompt no puede estar vacío.' };\n    if (prompt.length > 2000) return { ok: false, error: 'El prompt pasa de 2.000 caracteres.' };\n    fila.prompt = prompt;\n  }\n  if (!id || body.proyecto !== undefined) fila.proyecto = String(body.proyecto || '').trim() || 'Sin proyecto';\n  if (!id || body.categoria !== undefined) {\n    const c = String(body.categoria || '').trim() || 'Otra';\n    fila.categoria = CATEGORIAS.includes(c) ? c : 'Otra';\n  }\n  if (!id || body.activo !== undefined) fila.activo = activoDe(body.activo);\n  if (!id) fila.creado = ahora;\n  return { ok: true, accion: id ? 'editar' : 'crear', fila };\n}\n\n// Qué prompts entran en la corrida: los activos, y si llegan prompt_ids o\n// proyecto, solo esos. Un prompt_id pedido a mano corre aunque esté inactivo.\nfunction elegirPrompts(filas, peticion) {\n  peticion = peticion || {};\n  const ids = Array.isArray(peticion.prompt_ids) ? peticion.prompt_ids.map(String) : [];\n  return filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .filter(p => (ids.length ? ids.includes(p.id) : p.activo))\n    .filter(p => !peticion.proyecto || p.proyecto === peticion.proyecto);\n}\n\nreturn [{ json: listarPrompts($input.all().map(i => i.json)) }];\n"
+      }
+    },
+    {
+      "id": "c4afbf58-2df4-4e85-aeb9-0e9afb62002a",
+      "name": "Responder prompts",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1180,
+        200
+      ],
+      "parameters": {
+        "respondWith": "firstIncomingItem",
+        "options": {}
+      }
+    },
+    {
+      "id": "9fc20e5a-1654-40e0-ac0d-92b8e0bf48ba",
+      "name": "Validar prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        740,
+        400
+      ],
+      "parameters": {
+        "jsCode": "// Prompts: listar (/geo-prompts), validar lo que llega a /geo-prompts-save y\n// elegir cuáles entran en una corrida. Sin dependencias, como los otros dos.\n\nconst CATEGORIAS = ['Reputación', 'Producto', 'Digital', 'Otra'];\n\nfunction activoDe(v) {\n  if (typeof v === 'boolean') return v;\n  const s = String(v == null ? '' : v).trim().toLowerCase();\n  if (s === '') return true;\n  return ['true', 'verdadero', '1', 'si', 'sí', 'x'].includes(s);\n}\n\nfunction normalizarPrompt(f) {\n  return {\n    id: String(f.id || '').trim(),\n    proyecto: String(f.proyecto || '').trim() || 'Sin proyecto',\n    prompt: String(f.prompt || '').trim(),\n    categoria: String(f.categoria || '').trim() || 'Otra',\n    activo: activoDe(f.activo),\n    creado: String(f.creado || ''),\n    actualizado: String(f.actualizado || '')\n  };\n}\n\nfunction listarPrompts(filas) {\n  const prompts = filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .sort((a, b) => b.creado.localeCompare(a.creado));\n  const proyectos = [...new Set(prompts.map(p => p.proyecto))].sort();\n  return { prompts, proyectos, categorias: CATEGORIAS, total: prompts.length, activos: prompts.filter(p => p.activo).length };\n}\n\n// Devuelve la fila que hay que escribir (solo con las columnas que cambian,\n// para que «Agregar o actualizar» no pise creado al editar) o un error.\nfunction prepararGuardado(body, ahora, idNuevo) {\n  body = body || {};\n  const id = String(body.id || '').trim();\n  if (body.accion === 'eliminar') {\n    if (!id) return { ok: false, error: 'Falta el id del prompt a eliminar.' };\n    return { ok: true, accion: 'eliminar', fila: { id, activo: false, actualizado: ahora } };\n  }\n  const prompt = String(body.prompt || '').trim();\n  const fila = { id: id || idNuevo, actualizado: ahora };\n  if (!id || body.prompt !== undefined) {\n    if (!prompt) return { ok: false, error: 'El prompt no puede estar vacío.' };\n    if (prompt.length > 2000) return { ok: false, error: 'El prompt pasa de 2.000 caracteres.' };\n    fila.prompt = prompt;\n  }\n  if (!id || body.proyecto !== undefined) fila.proyecto = String(body.proyecto || '').trim() || 'Sin proyecto';\n  if (!id || body.categoria !== undefined) {\n    const c = String(body.categoria || '').trim() || 'Otra';\n    fila.categoria = CATEGORIAS.includes(c) ? c : 'Otra';\n  }\n  if (!id || body.activo !== undefined) fila.activo = activoDe(body.activo);\n  if (!id) fila.creado = ahora;\n  return { ok: true, accion: id ? 'editar' : 'crear', fila };\n}\n\n// Qué prompts entran en la corrida: los activos, y si llegan prompt_ids o\n// proyecto, solo esos. Un prompt_id pedido a mano corre aunque esté inactivo.\nfunction elegirPrompts(filas, peticion) {\n  peticion = peticion || {};\n  const ids = Array.isArray(peticion.prompt_ids) ? peticion.prompt_ids.map(String) : [];\n  return filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .filter(p => (ids.length ? ids.includes(p.id) : p.activo))\n    .filter(p => !peticion.proyecto || p.proyecto === peticion.proyecto);\n}\n\nconst cfg = $('Config').first().json;\nconst idNuevo = 'p_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);\nreturn [{ json: prepararGuardado(cfg.peticion, cfg.ahora, idNuevo) }];\n"
+      }
+    },
+    {
+      "id": "d2e02f3a-508f-498e-a4e5-db4e1d41b740",
+      "name": "¿Válido?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        960,
+        400
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "a3d5bd71-f03c-432b-abfb-7e87bf23c18b",
+              "leftValue": "={{ $json.ok }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "50578c1d-500b-4212-a62f-2bbfc349b89f",
+      "name": "Fila a guardar",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1180,
+        340
+      ],
+      "parameters": {
+        "jsCode": "return [{ json: $input.first().json.fila }];"
+      }
+    },
+    {
+      "id": "8bed5d72-3996-4657-a9a1-7af3458b6b64",
+      "name": "Guardar prompt",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1400,
+        340
+      ],
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Prompts",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": []
+        },
+        "options": {
+          "cellFormat": "RAW"
+        }
+      }
+    },
+    {
+      "id": "8b3c80b9-2d8d-4e17-a583-baf93b2a71b4",
+      "name": "Responder guardado",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1620,
+        340
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ ok: true, accion: $('Validar prompt').first().json.accion, prompt: $('Validar prompt').first().json.fila }) }}",
+        "options": {
+          "responseCode": 200
+        }
+      }
+    },
+    {
+      "id": "f4691490-c2c6-47e4-ab37-4f2c0ecb597f",
+      "name": "Responder error",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1180,
+        480
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ ok: false, error: $json.error }) }}",
+        "options": {
+          "responseCode": 400
+        }
+      }
+    },
+    {
+      "id": "f89851a9-3d2a-430f-ac0a-3be9a3d50916",
+      "name": "Responder corrida iniciada",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        740,
+        620
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ ok: true, mensaje: 'Corrida iniciada; los resultados aparecerán en unos minutos', iniciada: $json.ahora }) }}",
+        "options": {
+          "responseCode": 200
+        }
+      }
+    },
+    {
+      "id": "45746fc2-d52b-4674-abef-3d9ffb804647",
+      "name": "Leer Prompts corrida",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        960,
+        760
+      ],
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Prompts",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "18c2ec6a-4dbb-408f-a9dc-1901172358c7",
+      "name": "Elegir prompts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1180,
+        760
+      ],
+      "parameters": {
+        "jsCode": "// Prompts: listar (/geo-prompts), validar lo que llega a /geo-prompts-save y\n// elegir cuáles entran en una corrida. Sin dependencias, como los otros dos.\n\nconst CATEGORIAS = ['Reputación', 'Producto', 'Digital', 'Otra'];\n\nfunction activoDe(v) {\n  if (typeof v === 'boolean') return v;\n  const s = String(v == null ? '' : v).trim().toLowerCase();\n  if (s === '') return true;\n  return ['true', 'verdadero', '1', 'si', 'sí', 'x'].includes(s);\n}\n\nfunction normalizarPrompt(f) {\n  return {\n    id: String(f.id || '').trim(),\n    proyecto: String(f.proyecto || '').trim() || 'Sin proyecto',\n    prompt: String(f.prompt || '').trim(),\n    categoria: String(f.categoria || '').trim() || 'Otra',\n    activo: activoDe(f.activo),\n    creado: String(f.creado || ''),\n    actualizado: String(f.actualizado || '')\n  };\n}\n\nfunction listarPrompts(filas) {\n  const prompts = filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .sort((a, b) => b.creado.localeCompare(a.creado));\n  const proyectos = [...new Set(prompts.map(p => p.proyecto))].sort();\n  return { prompts, proyectos, categorias: CATEGORIAS, total: prompts.length, activos: prompts.filter(p => p.activo).length };\n}\n\n// Devuelve la fila que hay que escribir (solo con las columnas que cambian,\n// para que «Agregar o actualizar» no pise creado al editar) o un error.\nfunction prepararGuardado(body, ahora, idNuevo) {\n  body = body || {};\n  const id = String(body.id || '').trim();\n  if (body.accion === 'eliminar') {\n    if (!id) return { ok: false, error: 'Falta el id del prompt a eliminar.' };\n    return { ok: true, accion: 'eliminar', fila: { id, activo: false, actualizado: ahora } };\n  }\n  const prompt = String(body.prompt || '').trim();\n  const fila = { id: id || idNuevo, actualizado: ahora };\n  if (!id || body.prompt !== undefined) {\n    if (!prompt) return { ok: false, error: 'El prompt no puede estar vacío.' };\n    if (prompt.length > 2000) return { ok: false, error: 'El prompt pasa de 2.000 caracteres.' };\n    fila.prompt = prompt;\n  }\n  if (!id || body.proyecto !== undefined) fila.proyecto = String(body.proyecto || '').trim() || 'Sin proyecto';\n  if (!id || body.categoria !== undefined) {\n    const c = String(body.categoria || '').trim() || 'Otra';\n    fila.categoria = CATEGORIAS.includes(c) ? c : 'Otra';\n  }\n  if (!id || body.activo !== undefined) fila.activo = activoDe(body.activo);\n  if (!id) fila.creado = ahora;\n  return { ok: true, accion: id ? 'editar' : 'crear', fila };\n}\n\n// Qué prompts entran en la corrida: los activos, y si llegan prompt_ids o\n// proyecto, solo esos. Un prompt_id pedido a mano corre aunque esté inactivo.\nfunction elegirPrompts(filas, peticion) {\n  peticion = peticion || {};\n  const ids = Array.isArray(peticion.prompt_ids) ? peticion.prompt_ids.map(String) : [];\n  return filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .filter(p => (ids.length ? ids.includes(p.id) : p.activo))\n    .filter(p => !peticion.proyecto || p.proyecto === peticion.proyecto);\n}\n\nconst cfg = $('Config').first().json;\nconst runId = 'r_' + cfg.ahora.replace(/\\D/g, '').slice(0, 14);\nreturn elegirPrompts($input.all().map(i => i.json), cfg.peticion).map(p => ({\n  json: Object.assign(p, { run_id: runId, fecha: cfg.fecha, timestamp: cfg.ahora })\n}));\n"
+      }
+    },
+    {
+      "id": "17dcc0ac-8cd6-436d-a739-751153ed8158",
+      "name": "ChatGPT",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1440,
+        560
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: $('Config').first().json.modelos.chatgpt, web_search_options: { user_location: { type: 'approximate', approximate: { country: 'PE', city: 'Lima', timezone: 'America/Lima' } } }, messages: [{ role: 'user', content: $json.prompt }] }) }}",
+        "options": {
+          "timeout": 180000,
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 1500
+            }
+          }
+        }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "5cd1fd8a-7798-487f-a734-63306f7382b7",
+      "name": "Claude",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1440,
+        700
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: $('Config').first().json.modelos.claude, max_tokens: 2000, messages: [{ role: 'user', content: $json.prompt }] }) }}",
+        "options": {
+          "timeout": 180000,
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 1500
+            }
+          }
+        }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "a60bd0a1-91fa-4d56-a456-52d107bf49c4",
+      "name": "Gemini",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1440,
+        840
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://generativelanguage.googleapis.com/v1beta/models/{{ $('Config').first().json.modelos.gemini }}:generateContent",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ contents: [{ role: 'user', parts: [{ text: $json.prompt }] }], tools: [{ google_search: {} }] }) }}",
+        "options": {
+          "timeout": 180000,
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 1500
+            }
+          }
+        }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "d743e7f6-da74-445f-a213-6446372117b4",
+      "name": "Perplexity",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1440,
+        980
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.perplexity.ai/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: $('Config').first().json.modelos.perplexity, web_search_options: { user_location: { country: 'PE' } }, messages: [{ role: 'user', content: $json.prompt }] }) }}",
+        "options": {
+          "timeout": 180000,
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 1500
+            }
+          }
+        }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "454770ed-af1a-4ae6-a5ac-f47183a4a05b",
+      "name": "AI Overview (búsqueda)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1440,
+        1120
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://serpapi.com/search.json",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "engine",
+              "value": "google"
+            },
+            {
+              "name": "q",
+              "value": "={{ $json.prompt }}"
+            },
+            {
+              "name": "google_domain",
+              "value": "google.com.pe"
+            },
+            {
+              "name": "gl",
+              "value": "pe"
+            },
+            {
+              "name": "hl",
+              "value": "es"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 180000,
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 1500
+            }
+          }
+        }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "d8aeed1f-c340-4212-a6e3-cb35f4a8c4af",
+      "name": "¿Pide segunda llamada?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1660,
+        1120
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "7cfc20cd-99c2-430a-a053-86361ca8a443",
+              "leftValue": "={{ !!($json.ai_overview && $json.ai_overview.page_token && !($json.ai_overview.text_blocks || []).length) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "6d963c5d-92d6-40e2-a2fc-ee0532ba2b47",
+      "name": "AI Overview (página)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1880,
+        1060
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "https://serpapi.com/search.json",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "engine",
+              "value": "google_ai_overview"
+            },
+            {
+              "name": "page_token",
+              "value": "={{ $json.ai_overview.page_token }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 180000,
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 1500
+            }
+          }
+        }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "72ef68fb-baa2-4d0b-afef-aec0cb424966",
+      "name": "Guardar resultados",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2340,
+        840
+      ],
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Resultados",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {
+          "cellFormat": "RAW"
+        }
+      }
+    },
+    {
+      "id": "f1d6501a-be85-425a-a0b0-9e12e788ab29",
+      "name": "Resultado ChatGPT",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1660,
+        560
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Análisis de una respuesta de un motor de IA. Sin dependencias: build.mjs pega\n// este archivo tal cual dentro del nodo Code «Analizar respuesta» de n8n, y\n// test.mjs lo carga igual para probarlo con respuestas de ejemplo.\n\nfunction normalizarTexto(s) {\n  return String(s || '')\n    .normalize('NFD')\n    .replace(/[̀-ͯ]/g, '')\n    .toLowerCase();\n}\n\nfunction escaparRegex(s) {\n  return s.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&');\n}\n\n// Posiciones (en el texto normalizado) donde aparece cualquiera de los alias.\n// Límite de palabra hecho a mano porque \\b no entiende de letras con tilde.\nfunction buscarAlias(textoNorm, alias) {\n  const posiciones = [];\n  for (const a of alias) {\n    const re = new RegExp('(^|[^a-z0-9])(' + escaparRegex(normalizarTexto(a)) + ')(?=$|[^a-z0-9])', 'g');\n    let m;\n    while ((m = re.exec(textoNorm))) {\n      posiciones.push({ inicio: m.index + m[1].length, fin: m.index + m[1].length + m[2].length });\n      re.lastIndex = m.index + m[0].length;\n    }\n  }\n  return posiciones.sort((x, y) => x.inicio - y.inicio);\n}\n\nfunction dominioDe(url) {\n  const s = String(url || '').trim();\n  if (!s) return '';\n  try {\n    const u = new URL(/^https?:\\/\\//i.test(s) ? s : 'https://' + s);\n    return u.hostname.toLowerCase().replace(/^www\\./, '');\n  } catch (e) {\n    return '';\n  }\n}\n\nfunction esDominioPropio(dominio, dominios) {\n  return dominios.some(d => dominio === d || dominio.endsWith('.' + d));\n}\n\nconst PALABRAS_POSITIVAS = [\n  'mejor', 'mejores', 'lider', 'lideres', 'liderazgo', 'confiable', 'confiables', 'confianza',\n  'seguro', 'segura', 'seguridad', 'solido', 'solida', 'solidez', 'recomendado', 'recomendable',\n  'recomiendo', 'destaca', 'destacado', 'destacan', 'excelente', 'buena', 'bueno', 'buenas',\n  'buenos', 'facil', 'faciles', 'rapido', 'rapida', 'agil', 'innovador', 'innovadora',\n  'innovacion', 'popular', 'preferido', 'ventaja', 'ventajas', 'beneficio', 'beneficios',\n  'amplia', 'amplio', 'completo', 'completa', 'conveniente', 'competitivo', 'competitivas',\n  'atractivo', 'atractivas', 'eficiente', 'premiado', 'reconocido', 'robusto', 'comodo',\n  'gratis', 'gratuito', 'gratuita', 'favorito', 'satisfaccion', 'moderno', 'moderna'\n];\n\nconst PALABRAS_NEGATIVAS = [\n  'peor', 'malo', 'mala', 'malos', 'malas', 'problema', 'problemas', 'queja', 'quejas',\n  'reclamo', 'reclamos', 'caro', 'cara', 'caros', 'costoso', 'costosa', 'costosas',\n  'lento', 'lenta', 'fraude', 'fraudes', 'estafa', 'estafas', 'falla', 'fallas', 'caida',\n  'caidas', 'inseguro', 'deficiente', 'critica', 'criticas', 'criticado', 'denuncia',\n  'denuncias', 'multa', 'multas', 'sancion', 'sancionado', 'riesgo', 'complicado',\n  'complicada', 'dificil', 'demora', 'demoras', 'cobros', 'comisiones', 'insatisfaccion',\n  'desventaja', 'desventajas', 'limitado', 'limitada', 'engorroso', 'burocratico'\n];\n\nconst NEGADORES = ['no', 'nunca', 'sin', 'tampoco', 'ni'];\n\n// Ventana de palabras alrededor de cada mención. Un negador en las dos palabras\n// previas le da la vuelta («sin comisiones» suma, «no es seguro» resta). Cada\n// palabra cuenta una vez aunque caiga en la ventana de dos menciones.\nfunction sentimientoAlrededor(textoNorm, menciones, ventana) {\n  if (!menciones.length) return null;\n  const pos = new Set(PALABRAS_POSITIVAS);\n  const neg = new Set(PALABRAS_NEGATIVAS);\n  const tokens = [];\n  const re = /[a-z0-9ñ]+/g;\n  let t;\n  while ((t = re.exec(textoNorm))) tokens.push({ w: t[0], inicio: t.index });\n  const contadas = new Set();\n  let p = 0, n = 0;\n  for (const m of menciones) {\n    let i0 = tokens.findIndex(x => x.inicio >= m.inicio);\n    if (i0 < 0) i0 = tokens.length;\n    let i1 = i0;\n    while (i1 < tokens.length && tokens[i1].inicio < m.fin) i1++;\n    for (let j = Math.max(0, i0 - ventana); j < Math.min(tokens.length, i1 + ventana); j++) {\n      if (j >= i0 && j < i1) continue;\n      if (contadas.has(j)) continue;\n      let signo = pos.has(tokens[j].w) ? 1 : neg.has(tokens[j].w) ? -1 : 0;\n      if (!signo) continue;\n      contadas.add(j);\n      const previas = [tokens[j - 1], tokens[j - 2]].filter(Boolean).map(x => x.w);\n      if (previas.some(x => NEGADORES.includes(x))) signo = -signo;\n      if (signo > 0) p++; else n++;\n    }\n  }\n  if (p + n === 0) return 0;\n  return Math.round(((p - n) / (p + n)) * 100) / 100;\n}\n\n// config: { marca: {nombre, alias, dominios}, competidores: [{nombre, alias, dominios}], ventana_sentimiento }\n// entrada: { texto, fuentes: [url|dominio] }\nfunction analizarRespuesta(entrada, config) {\n  const texto = String(entrada.texto || '');\n  const norm = normalizarTexto(texto);\n  const marcas = [config.marca].concat(config.competidores || []);\n\n  const encontradas = [];\n  for (const m of marcas) {\n    const pos = buscarAlias(norm, m.alias && m.alias.length ? m.alias : [m.nombre]);\n    if (pos.length) encontradas.push({ nombre: m.nombre, primera: pos[0].inicio, menciones: pos });\n  }\n  encontradas.sort((a, b) => a.primera - b.primera);\n\n  const propia = encontradas.find(e => e.nombre === config.marca.nombre);\n  const fuentes = [];\n  for (const f of entrada.fuentes || []) {\n    const d = dominioDe(f);\n    if (d && !fuentes.includes(d)) fuentes.push(d);\n  }\n  const dominiosPropios = (config.marca.dominios || []).map(d => d.toLowerCase());\n\n  return {\n    menciona: Boolean(propia),\n    posicion: propia ? encontradas.indexOf(propia) + 1 : '',\n    sentimiento: propia ? sentimientoAlrededor(norm, propia.menciones, config.ventana_sentimiento || 12) : '',\n    citado: fuentes.some(d => esDominioPropio(d, dominiosPropios)),\n    marcas: encontradas.map(e => e.nombre),\n    fuentes\n  };\n}\n\n// Saca el texto y las fuentes de lo que devuelve cada API. Si la llamada falló\n// (el nodo HTTP sigue con {error}), lo deja anotado en vez de parar la corrida.\nfunction extraerRespuesta(motor, r) {\n  r = r || {};\n  if (r.error) {\n    const e = r.error;\n    const msg = typeof e === 'string' ? e : (e.message || (e.error && e.error.message) || JSON.stringify(e));\n    return { disponible: false, texto: '', fuentes: [], error: String(msg).slice(0, 500) };\n  }\n  if (motor === 'chatgpt') {\n    const msg = (r.choices && r.choices[0] && r.choices[0].message) || {};\n    const fuentes = (msg.annotations || [])\n      .filter(a => a.type === 'url_citation' && a.url_citation)\n      .map(a => a.url_citation.url);\n    return { disponible: true, texto: msg.content || '', fuentes, error: '' };\n  }\n  if (motor === 'claude') {\n    const texto = (r.content || []).filter(c => c.type === 'text').map(c => c.text).join('\\n');\n    const fuentes = [];\n    for (const c of r.content || []) for (const cit of c.citations || []) if (cit.url) fuentes.push(cit.url);\n    return { disponible: true, texto, fuentes, error: '' };\n  }\n  if (motor === 'gemini') {\n    const cand = (r.candidates && r.candidates[0]) || {};\n    const texto = ((cand.content && cand.content.parts) || []).map(p => p.text || '').join('');\n    // Gemini devuelve enlaces de redirección (vertexaisearch…); el dominio real viene en title.\n    const chunks = (cand.groundingMetadata && cand.groundingMetadata.groundingChunks) || [];\n    const fuentes = chunks.map(c => c.web && (/\\./.test(c.web.title || '') ? c.web.title : c.web.uri)).filter(Boolean);\n    return { disponible: true, texto, fuentes, error: '' };\n  }\n  if (motor === 'perplexity') {\n    const msg = (r.choices && r.choices[0] && r.choices[0].message) || {};\n    const fuentes = (r.search_results || []).map(s => s.url).concat(r.citations || []);\n    return { disponible: true, texto: msg.content || '', fuentes, error: '' };\n  }\n  if (motor === 'ai_overview') {\n    const aio = r.ai_overview;\n    if (!aio || aio.error || !(aio.text_blocks || []).length) {\n      return { disponible: false, texto: '', fuentes: [], error: '' };\n    }\n    const partes = [];\n    const recorrer = bloques => {\n      for (const b of bloques || []) {\n        if (b.title) partes.push(b.title);\n        if (b.snippet) partes.push(b.snippet);\n        if (b.list) recorrer(b.list);\n        if (b.text_blocks) recorrer(b.text_blocks);\n      }\n    };\n    recorrer(aio.text_blocks);\n    const fuentes = (aio.references || []).map(x => x.link || x.source).filter(Boolean);\n    return { disponible: true, texto: partes.join('\\n'), fuentes, error: '' };\n  }\n  return { disponible: false, texto: '', fuentes: [], error: 'Motor desconocido: ' + motor };\n}\n\n// La fila que se escribe en la hoja Resultados para un prompt y un motor.\nfunction filaResultado(motor, respuestaApi, prompt, config) {\n  const e = extraerRespuesta(motor, respuestaApi);\n  const a = e.disponible\n    ? analizarRespuesta(e, config)\n    : { menciona: false, posicion: '', sentimiento: '', citado: false, marcas: [], fuentes: [] };\n  return {\n    run_id: prompt.run_id,\n    fecha: prompt.fecha,\n    timestamp: prompt.timestamp,\n    prompt_id: prompt.id,\n    proyecto: prompt.proyecto,\n    prompt: prompt.prompt,\n    categoria: prompt.categoria,\n    motor,\n    disponible: e.disponible,\n    menciona: a.menciona,\n    posicion: a.posicion,\n    sentimiento: a.sentimiento === null ? '' : a.sentimiento,\n    citado: a.citado,\n    marcas: a.marcas.join(', '),\n    fuentes: a.fuentes.join(', '),\n    // Google Sheets no admite más de 50.000 caracteres por celda.\n    respuesta: e.texto.slice(0, 20000),\n    error: e.error\n  };\n}\n\nconst cfg = $('Config').first().json;\nreturn { json: filaResultado('chatgpt', $json, $('Elegir prompts').item.json, cfg) };\n"
+      }
+    },
+    {
+      "id": "56ae0132-87e6-41a3-a64f-ed1c96bfce51",
+      "name": "Resultado Claude",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1660,
+        700
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Análisis de una respuesta de un motor de IA. Sin dependencias: build.mjs pega\n// este archivo tal cual dentro del nodo Code «Analizar respuesta» de n8n, y\n// test.mjs lo carga igual para probarlo con respuestas de ejemplo.\n\nfunction normalizarTexto(s) {\n  return String(s || '')\n    .normalize('NFD')\n    .replace(/[̀-ͯ]/g, '')\n    .toLowerCase();\n}\n\nfunction escaparRegex(s) {\n  return s.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&');\n}\n\n// Posiciones (en el texto normalizado) donde aparece cualquiera de los alias.\n// Límite de palabra hecho a mano porque \\b no entiende de letras con tilde.\nfunction buscarAlias(textoNorm, alias) {\n  const posiciones = [];\n  for (const a of alias) {\n    const re = new RegExp('(^|[^a-z0-9])(' + escaparRegex(normalizarTexto(a)) + ')(?=$|[^a-z0-9])', 'g');\n    let m;\n    while ((m = re.exec(textoNorm))) {\n      posiciones.push({ inicio: m.index + m[1].length, fin: m.index + m[1].length + m[2].length });\n      re.lastIndex = m.index + m[0].length;\n    }\n  }\n  return posiciones.sort((x, y) => x.inicio - y.inicio);\n}\n\nfunction dominioDe(url) {\n  const s = String(url || '').trim();\n  if (!s) return '';\n  try {\n    const u = new URL(/^https?:\\/\\//i.test(s) ? s : 'https://' + s);\n    return u.hostname.toLowerCase().replace(/^www\\./, '');\n  } catch (e) {\n    return '';\n  }\n}\n\nfunction esDominioPropio(dominio, dominios) {\n  return dominios.some(d => dominio === d || dominio.endsWith('.' + d));\n}\n\nconst PALABRAS_POSITIVAS = [\n  'mejor', 'mejores', 'lider', 'lideres', 'liderazgo', 'confiable', 'confiables', 'confianza',\n  'seguro', 'segura', 'seguridad', 'solido', 'solida', 'solidez', 'recomendado', 'recomendable',\n  'recomiendo', 'destaca', 'destacado', 'destacan', 'excelente', 'buena', 'bueno', 'buenas',\n  'buenos', 'facil', 'faciles', 'rapido', 'rapida', 'agil', 'innovador', 'innovadora',\n  'innovacion', 'popular', 'preferido', 'ventaja', 'ventajas', 'beneficio', 'beneficios',\n  'amplia', 'amplio', 'completo', 'completa', 'conveniente', 'competitivo', 'competitivas',\n  'atractivo', 'atractivas', 'eficiente', 'premiado', 'reconocido', 'robusto', 'comodo',\n  'gratis', 'gratuito', 'gratuita', 'favorito', 'satisfaccion', 'moderno', 'moderna'\n];\n\nconst PALABRAS_NEGATIVAS = [\n  'peor', 'malo', 'mala', 'malos', 'malas', 'problema', 'problemas', 'queja', 'quejas',\n  'reclamo', 'reclamos', 'caro', 'cara', 'caros', 'costoso', 'costosa', 'costosas',\n  'lento', 'lenta', 'fraude', 'fraudes', 'estafa', 'estafas', 'falla', 'fallas', 'caida',\n  'caidas', 'inseguro', 'deficiente', 'critica', 'criticas', 'criticado', 'denuncia',\n  'denuncias', 'multa', 'multas', 'sancion', 'sancionado', 'riesgo', 'complicado',\n  'complicada', 'dificil', 'demora', 'demoras', 'cobros', 'comisiones', 'insatisfaccion',\n  'desventaja', 'desventajas', 'limitado', 'limitada', 'engorroso', 'burocratico'\n];\n\nconst NEGADORES = ['no', 'nunca', 'sin', 'tampoco', 'ni'];\n\n// Ventana de palabras alrededor de cada mención. Un negador en las dos palabras\n// previas le da la vuelta («sin comisiones» suma, «no es seguro» resta). Cada\n// palabra cuenta una vez aunque caiga en la ventana de dos menciones.\nfunction sentimientoAlrededor(textoNorm, menciones, ventana) {\n  if (!menciones.length) return null;\n  const pos = new Set(PALABRAS_POSITIVAS);\n  const neg = new Set(PALABRAS_NEGATIVAS);\n  const tokens = [];\n  const re = /[a-z0-9ñ]+/g;\n  let t;\n  while ((t = re.exec(textoNorm))) tokens.push({ w: t[0], inicio: t.index });\n  const contadas = new Set();\n  let p = 0, n = 0;\n  for (const m of menciones) {\n    let i0 = tokens.findIndex(x => x.inicio >= m.inicio);\n    if (i0 < 0) i0 = tokens.length;\n    let i1 = i0;\n    while (i1 < tokens.length && tokens[i1].inicio < m.fin) i1++;\n    for (let j = Math.max(0, i0 - ventana); j < Math.min(tokens.length, i1 + ventana); j++) {\n      if (j >= i0 && j < i1) continue;\n      if (contadas.has(j)) continue;\n      let signo = pos.has(tokens[j].w) ? 1 : neg.has(tokens[j].w) ? -1 : 0;\n      if (!signo) continue;\n      contadas.add(j);\n      const previas = [tokens[j - 1], tokens[j - 2]].filter(Boolean).map(x => x.w);\n      if (previas.some(x => NEGADORES.includes(x))) signo = -signo;\n      if (signo > 0) p++; else n++;\n    }\n  }\n  if (p + n === 0) return 0;\n  return Math.round(((p - n) / (p + n)) * 100) / 100;\n}\n\n// config: { marca: {nombre, alias, dominios}, competidores: [{nombre, alias, dominios}], ventana_sentimiento }\n// entrada: { texto, fuentes: [url|dominio] }\nfunction analizarRespuesta(entrada, config) {\n  const texto = String(entrada.texto || '');\n  const norm = normalizarTexto(texto);\n  const marcas = [config.marca].concat(config.competidores || []);\n\n  const encontradas = [];\n  for (const m of marcas) {\n    const pos = buscarAlias(norm, m.alias && m.alias.length ? m.alias : [m.nombre]);\n    if (pos.length) encontradas.push({ nombre: m.nombre, primera: pos[0].inicio, menciones: pos });\n  }\n  encontradas.sort((a, b) => a.primera - b.primera);\n\n  const propia = encontradas.find(e => e.nombre === config.marca.nombre);\n  const fuentes = [];\n  for (const f of entrada.fuentes || []) {\n    const d = dominioDe(f);\n    if (d && !fuentes.includes(d)) fuentes.push(d);\n  }\n  const dominiosPropios = (config.marca.dominios || []).map(d => d.toLowerCase());\n\n  return {\n    menciona: Boolean(propia),\n    posicion: propia ? encontradas.indexOf(propia) + 1 : '',\n    sentimiento: propia ? sentimientoAlrededor(norm, propia.menciones, config.ventana_sentimiento || 12) : '',\n    citado: fuentes.some(d => esDominioPropio(d, dominiosPropios)),\n    marcas: encontradas.map(e => e.nombre),\n    fuentes\n  };\n}\n\n// Saca el texto y las fuentes de lo que devuelve cada API. Si la llamada falló\n// (el nodo HTTP sigue con {error}), lo deja anotado en vez de parar la corrida.\nfunction extraerRespuesta(motor, r) {\n  r = r || {};\n  if (r.error) {\n    const e = r.error;\n    const msg = typeof e === 'string' ? e : (e.message || (e.error && e.error.message) || JSON.stringify(e));\n    return { disponible: false, texto: '', fuentes: [], error: String(msg).slice(0, 500) };\n  }\n  if (motor === 'chatgpt') {\n    const msg = (r.choices && r.choices[0] && r.choices[0].message) || {};\n    const fuentes = (msg.annotations || [])\n      .filter(a => a.type === 'url_citation' && a.url_citation)\n      .map(a => a.url_citation.url);\n    return { disponible: true, texto: msg.content || '', fuentes, error: '' };\n  }\n  if (motor === 'claude') {\n    const texto = (r.content || []).filter(c => c.type === 'text').map(c => c.text).join('\\n');\n    const fuentes = [];\n    for (const c of r.content || []) for (const cit of c.citations || []) if (cit.url) fuentes.push(cit.url);\n    return { disponible: true, texto, fuentes, error: '' };\n  }\n  if (motor === 'gemini') {\n    const cand = (r.candidates && r.candidates[0]) || {};\n    const texto = ((cand.content && cand.content.parts) || []).map(p => p.text || '').join('');\n    // Gemini devuelve enlaces de redirección (vertexaisearch…); el dominio real viene en title.\n    const chunks = (cand.groundingMetadata && cand.groundingMetadata.groundingChunks) || [];\n    const fuentes = chunks.map(c => c.web && (/\\./.test(c.web.title || '') ? c.web.title : c.web.uri)).filter(Boolean);\n    return { disponible: true, texto, fuentes, error: '' };\n  }\n  if (motor === 'perplexity') {\n    const msg = (r.choices && r.choices[0] && r.choices[0].message) || {};\n    const fuentes = (r.search_results || []).map(s => s.url).concat(r.citations || []);\n    return { disponible: true, texto: msg.content || '', fuentes, error: '' };\n  }\n  if (motor === 'ai_overview') {\n    const aio = r.ai_overview;\n    if (!aio || aio.error || !(aio.text_blocks || []).length) {\n      return { disponible: false, texto: '', fuentes: [], error: '' };\n    }\n    const partes = [];\n    const recorrer = bloques => {\n      for (const b of bloques || []) {\n        if (b.title) partes.push(b.title);\n        if (b.snippet) partes.push(b.snippet);\n        if (b.list) recorrer(b.list);\n        if (b.text_blocks) recorrer(b.text_blocks);\n      }\n    };\n    recorrer(aio.text_blocks);\n    const fuentes = (aio.references || []).map(x => x.link || x.source).filter(Boolean);\n    return { disponible: true, texto: partes.join('\\n'), fuentes, error: '' };\n  }\n  return { disponible: false, texto: '', fuentes: [], error: 'Motor desconocido: ' + motor };\n}\n\n// La fila que se escribe en la hoja Resultados para un prompt y un motor.\nfunction filaResultado(motor, respuestaApi, prompt, config) {\n  const e = extraerRespuesta(motor, respuestaApi);\n  const a = e.disponible\n    ? analizarRespuesta(e, config)\n    : { menciona: false, posicion: '', sentimiento: '', citado: false, marcas: [], fuentes: [] };\n  return {\n    run_id: prompt.run_id,\n    fecha: prompt.fecha,\n    timestamp: prompt.timestamp,\n    prompt_id: prompt.id,\n    proyecto: prompt.proyecto,\n    prompt: prompt.prompt,\n    categoria: prompt.categoria,\n    motor,\n    disponible: e.disponible,\n    menciona: a.menciona,\n    posicion: a.posicion,\n    sentimiento: a.sentimiento === null ? '' : a.sentimiento,\n    citado: a.citado,\n    marcas: a.marcas.join(', '),\n    fuentes: a.fuentes.join(', '),\n    // Google Sheets no admite más de 50.000 caracteres por celda.\n    respuesta: e.texto.slice(0, 20000),\n    error: e.error\n  };\n}\n\nconst cfg = $('Config').first().json;\nreturn { json: filaResultado('claude', $json, $('Elegir prompts').item.json, cfg) };\n"
+      }
+    },
+    {
+      "id": "afe49eea-4111-428c-aec5-6d63ba5bcc39",
+      "name": "Resultado Gemini",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1660,
+        840
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Análisis de una respuesta de un motor de IA. Sin dependencias: build.mjs pega\n// este archivo tal cual dentro del nodo Code «Analizar respuesta» de n8n, y\n// test.mjs lo carga igual para probarlo con respuestas de ejemplo.\n\nfunction normalizarTexto(s) {\n  return String(s || '')\n    .normalize('NFD')\n    .replace(/[̀-ͯ]/g, '')\n    .toLowerCase();\n}\n\nfunction escaparRegex(s) {\n  return s.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&');\n}\n\n// Posiciones (en el texto normalizado) donde aparece cualquiera de los alias.\n// Límite de palabra hecho a mano porque \\b no entiende de letras con tilde.\nfunction buscarAlias(textoNorm, alias) {\n  const posiciones = [];\n  for (const a of alias) {\n    const re = new RegExp('(^|[^a-z0-9])(' + escaparRegex(normalizarTexto(a)) + ')(?=$|[^a-z0-9])', 'g');\n    let m;\n    while ((m = re.exec(textoNorm))) {\n      posiciones.push({ inicio: m.index + m[1].length, fin: m.index + m[1].length + m[2].length });\n      re.lastIndex = m.index + m[0].length;\n    }\n  }\n  return posiciones.sort((x, y) => x.inicio - y.inicio);\n}\n\nfunction dominioDe(url) {\n  const s = String(url || '').trim();\n  if (!s) return '';\n  try {\n    const u = new URL(/^https?:\\/\\//i.test(s) ? s : 'https://' + s);\n    return u.hostname.toLowerCase().replace(/^www\\./, '');\n  } catch (e) {\n    return '';\n  }\n}\n\nfunction esDominioPropio(dominio, dominios) {\n  return dominios.some(d => dominio === d || dominio.endsWith('.' + d));\n}\n\nconst PALABRAS_POSITIVAS = [\n  'mejor', 'mejores', 'lider', 'lideres', 'liderazgo', 'confiable', 'confiables', 'confianza',\n  'seguro', 'segura', 'seguridad', 'solido', 'solida', 'solidez', 'recomendado', 'recomendable',\n  'recomiendo', 'destaca', 'destacado', 'destacan', 'excelente', 'buena', 'bueno', 'buenas',\n  'buenos', 'facil', 'faciles', 'rapido', 'rapida', 'agil', 'innovador', 'innovadora',\n  'innovacion', 'popular', 'preferido', 'ventaja', 'ventajas', 'beneficio', 'beneficios',\n  'amplia', 'amplio', 'completo', 'completa', 'conveniente', 'competitivo', 'competitivas',\n  'atractivo', 'atractivas', 'eficiente', 'premiado', 'reconocido', 'robusto', 'comodo',\n  'gratis', 'gratuito', 'gratuita', 'favorito', 'satisfaccion', 'moderno', 'moderna'\n];\n\nconst PALABRAS_NEGATIVAS = [\n  'peor', 'malo', 'mala', 'malos', 'malas', 'problema', 'problemas', 'queja', 'quejas',\n  'reclamo', 'reclamos', 'caro', 'cara', 'caros', 'costoso', 'costosa', 'costosas',\n  'lento', 'lenta', 'fraude', 'fraudes', 'estafa', 'estafas', 'falla', 'fallas', 'caida',\n  'caidas', 'inseguro', 'deficiente', 'critica', 'criticas', 'criticado', 'denuncia',\n  'denuncias', 'multa', 'multas', 'sancion', 'sancionado', 'riesgo', 'complicado',\n  'complicada', 'dificil', 'demora', 'demoras', 'cobros', 'comisiones', 'insatisfaccion',\n  'desventaja', 'desventajas', 'limitado', 'limitada', 'engorroso', 'burocratico'\n];\n\nconst NEGADORES = ['no', 'nunca', 'sin', 'tampoco', 'ni'];\n\n// Ventana de palabras alrededor de cada mención. Un negador en las dos palabras\n// previas le da la vuelta («sin comisiones» suma, «no es seguro» resta). Cada\n// palabra cuenta una vez aunque caiga en la ventana de dos menciones.\nfunction sentimientoAlrededor(textoNorm, menciones, ventana) {\n  if (!menciones.length) return null;\n  const pos = new Set(PALABRAS_POSITIVAS);\n  const neg = new Set(PALABRAS_NEGATIVAS);\n  const tokens = [];\n  const re = /[a-z0-9ñ]+/g;\n  let t;\n  while ((t = re.exec(textoNorm))) tokens.push({ w: t[0], inicio: t.index });\n  const contadas = new Set();\n  let p = 0, n = 0;\n  for (const m of menciones) {\n    let i0 = tokens.findIndex(x => x.inicio >= m.inicio);\n    if (i0 < 0) i0 = tokens.length;\n    let i1 = i0;\n    while (i1 < tokens.length && tokens[i1].inicio < m.fin) i1++;\n    for (let j = Math.max(0, i0 - ventana); j < Math.min(tokens.length, i1 + ventana); j++) {\n      if (j >= i0 && j < i1) continue;\n      if (contadas.has(j)) continue;\n      let signo = pos.has(tokens[j].w) ? 1 : neg.has(tokens[j].w) ? -1 : 0;\n      if (!signo) continue;\n      contadas.add(j);\n      const previas = [tokens[j - 1], tokens[j - 2]].filter(Boolean).map(x => x.w);\n      if (previas.some(x => NEGADORES.includes(x))) signo = -signo;\n      if (signo > 0) p++; else n++;\n    }\n  }\n  if (p + n === 0) return 0;\n  return Math.round(((p - n) / (p + n)) * 100) / 100;\n}\n\n// config: { marca: {nombre, alias, dominios}, competidores: [{nombre, alias, dominios}], ventana_sentimiento }\n// entrada: { texto, fuentes: [url|dominio] }\nfunction analizarRespuesta(entrada, config) {\n  const texto = String(entrada.texto || '');\n  const norm = normalizarTexto(texto);\n  const marcas = [config.marca].concat(config.competidores || []);\n\n  const encontradas = [];\n  for (const m of marcas) {\n    const pos = buscarAlias(norm, m.alias && m.alias.length ? m.alias : [m.nombre]);\n    if (pos.length) encontradas.push({ nombre: m.nombre, primera: pos[0].inicio, menciones: pos });\n  }\n  encontradas.sort((a, b) => a.primera - b.primera);\n\n  const propia = encontradas.find(e => e.nombre === config.marca.nombre);\n  const fuentes = [];\n  for (const f of entrada.fuentes || []) {\n    const d = dominioDe(f);\n    if (d && !fuentes.includes(d)) fuentes.push(d);\n  }\n  const dominiosPropios = (config.marca.dominios || []).map(d => d.toLowerCase());\n\n  return {\n    menciona: Boolean(propia),\n    posicion: propia ? encontradas.indexOf(propia) + 1 : '',\n    sentimiento: propia ? sentimientoAlrededor(norm, propia.menciones, config.ventana_sentimiento || 12) : '',\n    citado: fuentes.some(d => esDominioPropio(d, dominiosPropios)),\n    marcas: encontradas.map(e => e.nombre),\n    fuentes\n  };\n}\n\n// Saca el texto y las fuentes de lo que devuelve cada API. Si la llamada falló\n// (el nodo HTTP sigue con {error}), lo deja anotado en vez de parar la corrida.\nfunction extraerRespuesta(motor, r) {\n  r = r || {};\n  if (r.error) {\n    const e = r.error;\n    const msg = typeof e === 'string' ? e : (e.message || (e.error && e.error.message) || JSON.stringify(e));\n    return { disponible: false, texto: '', fuentes: [], error: String(msg).slice(0, 500) };\n  }\n  if (motor === 'chatgpt') {\n    const msg = (r.choices && r.choices[0] && r.choices[0].message) || {};\n    const fuentes = (msg.annotations || [])\n      .filter(a => a.type === 'url_citation' && a.url_citation)\n      .map(a => a.url_citation.url);\n    return { disponible: true, texto: msg.content || '', fuentes, error: '' };\n  }\n  if (motor === 'claude') {\n    const texto = (r.content || []).filter(c => c.type === 'text').map(c => c.text).join('\\n');\n    const fuentes = [];\n    for (const c of r.content || []) for (const cit of c.citations || []) if (cit.url) fuentes.push(cit.url);\n    return { disponible: true, texto, fuentes, error: '' };\n  }\n  if (motor === 'gemini') {\n    const cand = (r.candidates && r.candidates[0]) || {};\n    const texto = ((cand.content && cand.content.parts) || []).map(p => p.text || '').join('');\n    // Gemini devuelve enlaces de redirección (vertexaisearch…); el dominio real viene en title.\n    const chunks = (cand.groundingMetadata && cand.groundingMetadata.groundingChunks) || [];\n    const fuentes = chunks.map(c => c.web && (/\\./.test(c.web.title || '') ? c.web.title : c.web.uri)).filter(Boolean);\n    return { disponible: true, texto, fuentes, error: '' };\n  }\n  if (motor === 'perplexity') {\n    const msg = (r.choices && r.choices[0] && r.choices[0].message) || {};\n    const fuentes = (r.search_results || []).map(s => s.url).concat(r.citations || []);\n    return { disponible: true, texto: msg.content || '', fuentes, error: '' };\n  }\n  if (motor === 'ai_overview') {\n    const aio = r.ai_overview;\n    if (!aio || aio.error || !(aio.text_blocks || []).length) {\n      return { disponible: false, texto: '', fuentes: [], error: '' };\n    }\n    const partes = [];\n    const recorrer = bloques => {\n      for (const b of bloques || []) {\n        if (b.title) partes.push(b.title);\n        if (b.snippet) partes.push(b.snippet);\n        if (b.list) recorrer(b.list);\n        if (b.text_blocks) recorrer(b.text_blocks);\n      }\n    };\n    recorrer(aio.text_blocks);\n    const fuentes = (aio.references || []).map(x => x.link || x.source).filter(Boolean);\n    return { disponible: true, texto: partes.join('\\n'), fuentes, error: '' };\n  }\n  return { disponible: false, texto: '', fuentes: [], error: 'Motor desconocido: ' + motor };\n}\n\n// La fila que se escribe en la hoja Resultados para un prompt y un motor.\nfunction filaResultado(motor, respuestaApi, prompt, config) {\n  const e = extraerRespuesta(motor, respuestaApi);\n  const a = e.disponible\n    ? analizarRespuesta(e, config)\n    : { menciona: false, posicion: '', sentimiento: '', citado: false, marcas: [], fuentes: [] };\n  return {\n    run_id: prompt.run_id,\n    fecha: prompt.fecha,\n    timestamp: prompt.timestamp,\n    prompt_id: prompt.id,\n    proyecto: prompt.proyecto,\n    prompt: prompt.prompt,\n    categoria: prompt.categoria,\n    motor,\n    disponible: e.disponible,\n    menciona: a.menciona,\n    posicion: a.posicion,\n    sentimiento: a.sentimiento === null ? '' : a.sentimiento,\n    citado: a.citado,\n    marcas: a.marcas.join(', '),\n    fuentes: a.fuentes.join(', '),\n    // Google Sheets no admite más de 50.000 caracteres por celda.\n    respuesta: e.texto.slice(0, 20000),\n    error: e.error\n  };\n}\n\nconst cfg = $('Config').first().json;\nreturn { json: filaResultado('gemini', $json, $('Elegir prompts').item.json, cfg) };\n"
+      }
+    },
+    {
+      "id": "08b604a7-d9e9-4edc-a84a-2fdf701ee735",
+      "name": "Resultado Perplexity",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1660,
+        980
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Análisis de una respuesta de un motor de IA. Sin dependencias: build.mjs pega\n// este archivo tal cual dentro del nodo Code «Analizar respuesta» de n8n, y\n// test.mjs lo carga igual para probarlo con respuestas de ejemplo.\n\nfunction normalizarTexto(s) {\n  return String(s || '')\n    .normalize('NFD')\n    .replace(/[̀-ͯ]/g, '')\n    .toLowerCase();\n}\n\nfunction escaparRegex(s) {\n  return s.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&');\n}\n\n// Posiciones (en el texto normalizado) donde aparece cualquiera de los alias.\n// Límite de palabra hecho a mano porque \\b no entiende de letras con tilde.\nfunction buscarAlias(textoNorm, alias) {\n  const posiciones = [];\n  for (const a of alias) {\n    const re = new RegExp('(^|[^a-z0-9])(' + escaparRegex(normalizarTexto(a)) + ')(?=$|[^a-z0-9])', 'g');\n    let m;\n    while ((m = re.exec(textoNorm))) {\n      posiciones.push({ inicio: m.index + m[1].length, fin: m.index + m[1].length + m[2].length });\n      re.lastIndex = m.index + m[0].length;\n    }\n  }\n  return posiciones.sort((x, y) => x.inicio - y.inicio);\n}\n\nfunction dominioDe(url) {\n  const s = String(url || '').trim();\n  if (!s) return '';\n  try {\n    const u = new URL(/^https?:\\/\\//i.test(s) ? s : 'https://' + s);\n    return u.hostname.toLowerCase().replace(/^www\\./, '');\n  } catch (e) {\n    return '';\n  }\n}\n\nfunction esDominioPropio(dominio, dominios) {\n  return dominios.some(d => dominio === d || dominio.endsWith('.' + d));\n}\n\nconst PALABRAS_POSITIVAS = [\n  'mejor', 'mejores', 'lider', 'lideres', 'liderazgo', 'confiable', 'confiables', 'confianza',\n  'seguro', 'segura', 'seguridad', 'solido', 'solida', 'solidez', 'recomendado', 'recomendable',\n  'recomiendo', 'destaca', 'destacado', 'destacan', 'excelente', 'buena', 'bueno', 'buenas',\n  'buenos', 'facil', 'faciles', 'rapido', 'rapida', 'agil', 'innovador', 'innovadora',\n  'innovacion', 'popular', 'preferido', 'ventaja', 'ventajas', 'beneficio', 'beneficios',\n  'amplia', 'amplio', 'completo', 'completa', 'conveniente', 'competitivo', 'competitivas',\n  'atractivo', 'atractivas', 'eficiente', 'premiado', 'reconocido', 'robusto', 'comodo',\n  'gratis', 'gratuito', 'gratuita', 'favorito', 'satisfaccion', 'moderno', 'moderna'\n];\n\nconst PALABRAS_NEGATIVAS = [\n  'peor', 'malo', 'mala', 'malos', 'malas', 'problema', 'problemas', 'queja', 'quejas',\n  'reclamo', 'reclamos', 'caro', 'cara', 'caros', 'costoso', 'costosa', 'costosas',\n  'lento', 'lenta', 'fraude', 'fraudes', 'estafa', 'estafas', 'falla', 'fallas', 'caida',\n  'caidas', 'inseguro', 'deficiente', 'critica', 'criticas', 'criticado', 'denuncia',\n  'denuncias', 'multa', 'multas', 'sancion', 'sancionado', 'riesgo', 'complicado',\n  'complicada', 'dificil', 'demora', 'demoras', 'cobros', 'comisiones', 'insatisfaccion',\n  'desventaja', 'desventajas', 'limitado', 'limitada', 'engorroso', 'burocratico'\n];\n\nconst NEGADORES = ['no', 'nunca', 'sin', 'tampoco', 'ni'];\n\n// Ventana de palabras alrededor de cada mención. Un negador en las dos palabras\n// previas le da la vuelta («sin comisiones» suma, «no es seguro» resta). Cada\n// palabra cuenta una vez aunque caiga en la ventana de dos menciones.\nfunction sentimientoAlrededor(textoNorm, menciones, ventana) {\n  if (!menciones.length) return null;\n  const pos = new Set(PALABRAS_POSITIVAS);\n  const neg = new Set(PALABRAS_NEGATIVAS);\n  const tokens = [];\n  const re = /[a-z0-9ñ]+/g;\n  let t;\n  while ((t = re.exec(textoNorm))) tokens.push({ w: t[0], inicio: t.index });\n  const contadas = new Set();\n  let p = 0, n = 0;\n  for (const m of menciones) {\n    let i0 = tokens.findIndex(x => x.inicio >= m.inicio);\n    if (i0 < 0) i0 = tokens.length;\n    let i1 = i0;\n    while (i1 < tokens.length && tokens[i1].inicio < m.fin) i1++;\n    for (let j = Math.max(0, i0 - ventana); j < Math.min(tokens.length, i1 + ventana); j++) {\n      if (j >= i0 && j < i1) continue;\n      if (contadas.has(j)) continue;\n      let signo = pos.has(tokens[j].w) ? 1 : neg.has(tokens[j].w) ? -1 : 0;\n      if (!signo) continue;\n      contadas.add(j);\n      const previas = [tokens[j - 1], tokens[j - 2]].filter(Boolean).map(x => x.w);\n      if (previas.some(x => NEGADORES.includes(x))) signo = -signo;\n      if (signo > 0) p++; else n++;\n    }\n  }\n  if (p + n === 0) return 0;\n  return Math.round(((p - n) / (p + n)) * 100) / 100;\n}\n\n// config: { marca: {nombre, alias, dominios}, competidores: [{nombre, alias, dominios}], ventana_sentimiento }\n// entrada: { texto, fuentes: [url|dominio] }\nfunction analizarRespuesta(entrada, config) {\n  const texto = String(entrada.texto || '');\n  const norm = normalizarTexto(texto);\n  const marcas = [config.marca].concat(config.competidores || []);\n\n  const encontradas = [];\n  for (const m of marcas) {\n    const pos = buscarAlias(norm, m.alias && m.alias.length ? m.alias : [m.nombre]);\n    if (pos.length) encontradas.push({ nombre: m.nombre, primera: pos[0].inicio, menciones: pos });\n  }\n  encontradas.sort((a, b) => a.primera - b.primera);\n\n  const propia = encontradas.find(e => e.nombre === config.marca.nombre);\n  const fuentes = [];\n  for (const f of entrada.fuentes || []) {\n    const d = dominioDe(f);\n    if (d && !fuentes.includes(d)) fuentes.push(d);\n  }\n  const dominiosPropios = (config.marca.dominios || []).map(d => d.toLowerCase());\n\n  return {\n    menciona: Boolean(propia),\n    posicion: propia ? encontradas.indexOf(propia) + 1 : '',\n    sentimiento: propia ? sentimientoAlrededor(norm, propia.menciones, config.ventana_sentimiento || 12) : '',\n    citado: fuentes.some(d => esDominioPropio(d, dominiosPropios)),\n    marcas: encontradas.map(e => e.nombre),\n    fuentes\n  };\n}\n\n// Saca el texto y las fuentes de lo que devuelve cada API. Si la llamada falló\n// (el nodo HTTP sigue con {error}), lo deja anotado en vez de parar la corrida.\nfunction extraerRespuesta(motor, r) {\n  r = r || {};\n  if (r.error) {\n    const e = r.error;\n    const msg = typeof e === 'string' ? e : (e.message || (e.error && e.error.message) || JSON.stringify(e));\n    return { disponible: false, texto: '', fuentes: [], error: String(msg).slice(0, 500) };\n  }\n  if (motor === 'chatgpt') {\n    const msg = (r.choices && r.choices[0] && r.choices[0].message) || {};\n    const fuentes = (msg.annotations || [])\n      .filter(a => a.type === 'url_citation' && a.url_citation)\n      .map(a => a.url_citation.url);\n    return { disponible: true, texto: msg.content || '', fuentes, error: '' };\n  }\n  if (motor === 'claude') {\n    const texto = (r.content || []).filter(c => c.type === 'text').map(c => c.text).join('\\n');\n    const fuentes = [];\n    for (const c of r.content || []) for (const cit of c.citations || []) if (cit.url) fuentes.push(cit.url);\n    return { disponible: true, texto, fuentes, error: '' };\n  }\n  if (motor === 'gemini') {\n    const cand = (r.candidates && r.candidates[0]) || {};\n    const texto = ((cand.content && cand.content.parts) || []).map(p => p.text || '').join('');\n    // Gemini devuelve enlaces de redirección (vertexaisearch…); el dominio real viene en title.\n    const chunks = (cand.groundingMetadata && cand.groundingMetadata.groundingChunks) || [];\n    const fuentes = chunks.map(c => c.web && (/\\./.test(c.web.title || '') ? c.web.title : c.web.uri)).filter(Boolean);\n    return { disponible: true, texto, fuentes, error: '' };\n  }\n  if (motor === 'perplexity') {\n    const msg = (r.choices && r.choices[0] && r.choices[0].message) || {};\n    const fuentes = (r.search_results || []).map(s => s.url).concat(r.citations || []);\n    return { disponible: true, texto: msg.content || '', fuentes, error: '' };\n  }\n  if (motor === 'ai_overview') {\n    const aio = r.ai_overview;\n    if (!aio || aio.error || !(aio.text_blocks || []).length) {\n      return { disponible: false, texto: '', fuentes: [], error: '' };\n    }\n    const partes = [];\n    const recorrer = bloques => {\n      for (const b of bloques || []) {\n        if (b.title) partes.push(b.title);\n        if (b.snippet) partes.push(b.snippet);\n        if (b.list) recorrer(b.list);\n        if (b.text_blocks) recorrer(b.text_blocks);\n      }\n    };\n    recorrer(aio.text_blocks);\n    const fuentes = (aio.references || []).map(x => x.link || x.source).filter(Boolean);\n    return { disponible: true, texto: partes.join('\\n'), fuentes, error: '' };\n  }\n  return { disponible: false, texto: '', fuentes: [], error: 'Motor desconocido: ' + motor };\n}\n\n// La fila que se escribe en la hoja Resultados para un prompt y un motor.\nfunction filaResultado(motor, respuestaApi, prompt, config) {\n  const e = extraerRespuesta(motor, respuestaApi);\n  const a = e.disponible\n    ? analizarRespuesta(e, config)\n    : { menciona: false, posicion: '', sentimiento: '', citado: false, marcas: [], fuentes: [] };\n  return {\n    run_id: prompt.run_id,\n    fecha: prompt.fecha,\n    timestamp: prompt.timestamp,\n    prompt_id: prompt.id,\n    proyecto: prompt.proyecto,\n    prompt: prompt.prompt,\n    categoria: prompt.categoria,\n    motor,\n    disponible: e.disponible,\n    menciona: a.menciona,\n    posicion: a.posicion,\n    sentimiento: a.sentimiento === null ? '' : a.sentimiento,\n    citado: a.citado,\n    marcas: a.marcas.join(', '),\n    fuentes: a.fuentes.join(', '),\n    // Google Sheets no admite más de 50.000 caracteres por celda.\n    respuesta: e.texto.slice(0, 20000),\n    error: e.error\n  };\n}\n\nconst cfg = $('Config').first().json;\nreturn { json: filaResultado('perplexity', $json, $('Elegir prompts').item.json, cfg) };\n"
+      }
+    },
+    {
+      "id": "f3bb4d82-ca16-429b-aec7-b76f174d7ef1",
+      "name": "Resultado AI Overview",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2100,
+        1120
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Análisis de una respuesta de un motor de IA. Sin dependencias: build.mjs pega\n// este archivo tal cual dentro del nodo Code «Analizar respuesta» de n8n, y\n// test.mjs lo carga igual para probarlo con respuestas de ejemplo.\n\nfunction normalizarTexto(s) {\n  return String(s || '')\n    .normalize('NFD')\n    .replace(/[̀-ͯ]/g, '')\n    .toLowerCase();\n}\n\nfunction escaparRegex(s) {\n  return s.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&');\n}\n\n// Posiciones (en el texto normalizado) donde aparece cualquiera de los alias.\n// Límite de palabra hecho a mano porque \\b no entiende de letras con tilde.\nfunction buscarAlias(textoNorm, alias) {\n  const posiciones = [];\n  for (const a of alias) {\n    const re = new RegExp('(^|[^a-z0-9])(' + escaparRegex(normalizarTexto(a)) + ')(?=$|[^a-z0-9])', 'g');\n    let m;\n    while ((m = re.exec(textoNorm))) {\n      posiciones.push({ inicio: m.index + m[1].length, fin: m.index + m[1].length + m[2].length });\n      re.lastIndex = m.index + m[0].length;\n    }\n  }\n  return posiciones.sort((x, y) => x.inicio - y.inicio);\n}\n\nfunction dominioDe(url) {\n  const s = String(url || '').trim();\n  if (!s) return '';\n  try {\n    const u = new URL(/^https?:\\/\\//i.test(s) ? s : 'https://' + s);\n    return u.hostname.toLowerCase().replace(/^www\\./, '');\n  } catch (e) {\n    return '';\n  }\n}\n\nfunction esDominioPropio(dominio, dominios) {\n  return dominios.some(d => dominio === d || dominio.endsWith('.' + d));\n}\n\nconst PALABRAS_POSITIVAS = [\n  'mejor', 'mejores', 'lider', 'lideres', 'liderazgo', 'confiable', 'confiables', 'confianza',\n  'seguro', 'segura', 'seguridad', 'solido', 'solida', 'solidez', 'recomendado', 'recomendable',\n  'recomiendo', 'destaca', 'destacado', 'destacan', 'excelente', 'buena', 'bueno', 'buenas',\n  'buenos', 'facil', 'faciles', 'rapido', 'rapida', 'agil', 'innovador', 'innovadora',\n  'innovacion', 'popular', 'preferido', 'ventaja', 'ventajas', 'beneficio', 'beneficios',\n  'amplia', 'amplio', 'completo', 'completa', 'conveniente', 'competitivo', 'competitivas',\n  'atractivo', 'atractivas', 'eficiente', 'premiado', 'reconocido', 'robusto', 'comodo',\n  'gratis', 'gratuito', 'gratuita', 'favorito', 'satisfaccion', 'moderno', 'moderna'\n];\n\nconst PALABRAS_NEGATIVAS = [\n  'peor', 'malo', 'mala', 'malos', 'malas', 'problema', 'problemas', 'queja', 'quejas',\n  'reclamo', 'reclamos', 'caro', 'cara', 'caros', 'costoso', 'costosa', 'costosas',\n  'lento', 'lenta', 'fraude', 'fraudes', 'estafa', 'estafas', 'falla', 'fallas', 'caida',\n  'caidas', 'inseguro', 'deficiente', 'critica', 'criticas', 'criticado', 'denuncia',\n  'denuncias', 'multa', 'multas', 'sancion', 'sancionado', 'riesgo', 'complicado',\n  'complicada', 'dificil', 'demora', 'demoras', 'cobros', 'comisiones', 'insatisfaccion',\n  'desventaja', 'desventajas', 'limitado', 'limitada', 'engorroso', 'burocratico'\n];\n\nconst NEGADORES = ['no', 'nunca', 'sin', 'tampoco', 'ni'];\n\n// Ventana de palabras alrededor de cada mención. Un negador en las dos palabras\n// previas le da la vuelta («sin comisiones» suma, «no es seguro» resta). Cada\n// palabra cuenta una vez aunque caiga en la ventana de dos menciones.\nfunction sentimientoAlrededor(textoNorm, menciones, ventana) {\n  if (!menciones.length) return null;\n  const pos = new Set(PALABRAS_POSITIVAS);\n  const neg = new Set(PALABRAS_NEGATIVAS);\n  const tokens = [];\n  const re = /[a-z0-9ñ]+/g;\n  let t;\n  while ((t = re.exec(textoNorm))) tokens.push({ w: t[0], inicio: t.index });\n  const contadas = new Set();\n  let p = 0, n = 0;\n  for (const m of menciones) {\n    let i0 = tokens.findIndex(x => x.inicio >= m.inicio);\n    if (i0 < 0) i0 = tokens.length;\n    let i1 = i0;\n    while (i1 < tokens.length && tokens[i1].inicio < m.fin) i1++;\n    for (let j = Math.max(0, i0 - ventana); j < Math.min(tokens.length, i1 + ventana); j++) {\n      if (j >= i0 && j < i1) continue;\n      if (contadas.has(j)) continue;\n      let signo = pos.has(tokens[j].w) ? 1 : neg.has(tokens[j].w) ? -1 : 0;\n      if (!signo) continue;\n      contadas.add(j);\n      const previas = [tokens[j - 1], tokens[j - 2]].filter(Boolean).map(x => x.w);\n      if (previas.some(x => NEGADORES.includes(x))) signo = -signo;\n      if (signo > 0) p++; else n++;\n    }\n  }\n  if (p + n === 0) return 0;\n  return Math.round(((p - n) / (p + n)) * 100) / 100;\n}\n\n// config: { marca: {nombre, alias, dominios}, competidores: [{nombre, alias, dominios}], ventana_sentimiento }\n// entrada: { texto, fuentes: [url|dominio] }\nfunction analizarRespuesta(entrada, config) {\n  const texto = String(entrada.texto || '');\n  const norm = normalizarTexto(texto);\n  const marcas = [config.marca].concat(config.competidores || []);\n\n  const encontradas = [];\n  for (const m of marcas) {\n    const pos = buscarAlias(norm, m.alias && m.alias.length ? m.alias : [m.nombre]);\n    if (pos.length) encontradas.push({ nombre: m.nombre, primera: pos[0].inicio, menciones: pos });\n  }\n  encontradas.sort((a, b) => a.primera - b.primera);\n\n  const propia = encontradas.find(e => e.nombre === config.marca.nombre);\n  const fuentes = [];\n  for (const f of entrada.fuentes || []) {\n    const d = dominioDe(f);\n    if (d && !fuentes.includes(d)) fuentes.push(d);\n  }\n  const dominiosPropios = (config.marca.dominios || []).map(d => d.toLowerCase());\n\n  return {\n    menciona: Boolean(propia),\n    posicion: propia ? encontradas.indexOf(propia) + 1 : '',\n    sentimiento: propia ? sentimientoAlrededor(norm, propia.menciones, config.ventana_sentimiento || 12) : '',\n    citado: fuentes.some(d => esDominioPropio(d, dominiosPropios)),\n    marcas: encontradas.map(e => e.nombre),\n    fuentes\n  };\n}\n\n// Saca el texto y las fuentes de lo que devuelve cada API. Si la llamada falló\n// (el nodo HTTP sigue con {error}), lo deja anotado en vez de parar la corrida.\nfunction extraerRespuesta(motor, r) {\n  r = r || {};\n  if (r.error) {\n    const e = r.error;\n    const msg = typeof e === 'string' ? e : (e.message || (e.error && e.error.message) || JSON.stringify(e));\n    return { disponible: false, texto: '', fuentes: [], error: String(msg).slice(0, 500) };\n  }\n  if (motor === 'chatgpt') {\n    const msg = (r.choices && r.choices[0] && r.choices[0].message) || {};\n    const fuentes = (msg.annotations || [])\n      .filter(a => a.type === 'url_citation' && a.url_citation)\n      .map(a => a.url_citation.url);\n    return { disponible: true, texto: msg.content || '', fuentes, error: '' };\n  }\n  if (motor === 'claude') {\n    const texto = (r.content || []).filter(c => c.type === 'text').map(c => c.text).join('\\n');\n    const fuentes = [];\n    for (const c of r.content || []) for (const cit of c.citations || []) if (cit.url) fuentes.push(cit.url);\n    return { disponible: true, texto, fuentes, error: '' };\n  }\n  if (motor === 'gemini') {\n    const cand = (r.candidates && r.candidates[0]) || {};\n    const texto = ((cand.content && cand.content.parts) || []).map(p => p.text || '').join('');\n    // Gemini devuelve enlaces de redirección (vertexaisearch…); el dominio real viene en title.\n    const chunks = (cand.groundingMetadata && cand.groundingMetadata.groundingChunks) || [];\n    const fuentes = chunks.map(c => c.web && (/\\./.test(c.web.title || '') ? c.web.title : c.web.uri)).filter(Boolean);\n    return { disponible: true, texto, fuentes, error: '' };\n  }\n  if (motor === 'perplexity') {\n    const msg = (r.choices && r.choices[0] && r.choices[0].message) || {};\n    const fuentes = (r.search_results || []).map(s => s.url).concat(r.citations || []);\n    return { disponible: true, texto: msg.content || '', fuentes, error: '' };\n  }\n  if (motor === 'ai_overview') {\n    const aio = r.ai_overview;\n    if (!aio || aio.error || !(aio.text_blocks || []).length) {\n      return { disponible: false, texto: '', fuentes: [], error: '' };\n    }\n    const partes = [];\n    const recorrer = bloques => {\n      for (const b of bloques || []) {\n        if (b.title) partes.push(b.title);\n        if (b.snippet) partes.push(b.snippet);\n        if (b.list) recorrer(b.list);\n        if (b.text_blocks) recorrer(b.text_blocks);\n      }\n    };\n    recorrer(aio.text_blocks);\n    const fuentes = (aio.references || []).map(x => x.link || x.source).filter(Boolean);\n    return { disponible: true, texto: partes.join('\\n'), fuentes, error: '' };\n  }\n  return { disponible: false, texto: '', fuentes: [], error: 'Motor desconocido: ' + motor };\n}\n\n// La fila que se escribe en la hoja Resultados para un prompt y un motor.\nfunction filaResultado(motor, respuestaApi, prompt, config) {\n  const e = extraerRespuesta(motor, respuestaApi);\n  const a = e.disponible\n    ? analizarRespuesta(e, config)\n    : { menciona: false, posicion: '', sentimiento: '', citado: false, marcas: [], fuentes: [] };\n  return {\n    run_id: prompt.run_id,\n    fecha: prompt.fecha,\n    timestamp: prompt.timestamp,\n    prompt_id: prompt.id,\n    proyecto: prompt.proyecto,\n    prompt: prompt.prompt,\n    categoria: prompt.categoria,\n    motor,\n    disponible: e.disponible,\n    menciona: a.menciona,\n    posicion: a.posicion,\n    sentimiento: a.sentimiento === null ? '' : a.sentimiento,\n    citado: a.citado,\n    marcas: a.marcas.join(', '),\n    fuentes: a.fuentes.join(', '),\n    // Google Sheets no admite más de 50.000 caracteres por celda.\n    respuesta: e.texto.slice(0, 20000),\n    error: e.error\n  };\n}\n\nconst cfg = $('Config').first().json;\nreturn { json: filaResultado('ai_overview', $json, $('Elegir prompts').item.json, cfg) };\n"
+      }
+    }
+  ],
+  "connections": {
+    "Webhook geo-dashboard": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook geo-prompts": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook geo-prompts-save": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook geo-run": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Diario 7:00 Lima": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Ruta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ruta": {
+      "main": [
+        [
+          {
+            "node": "Leer Resultados",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Leer Prompts",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Validar prompt",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Responder corrida iniciada",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Leer Prompts corrida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer Resultados": {
+      "main": [
+        [
+          {
+            "node": "Dashboard",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dashboard": {
+      "main": [
+        [
+          {
+            "node": "Responder dashboard",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer Prompts": {
+      "main": [
+        [
+          {
+            "node": "Listar prompts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Listar prompts": {
+      "main": [
+        [
+          {
+            "node": "Responder prompts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validar prompt": {
+      "main": [
+        [
+          {
+            "node": "¿Válido?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Válido?": {
+      "main": [
+        [
+          {
+            "node": "Fila a guardar",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Responder error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fila a guardar": {
+      "main": [
+        [
+          {
+            "node": "Guardar prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar prompt": {
+      "main": [
+        [
+          {
+            "node": "Responder guardado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Responder corrida iniciada": {
+      "main": [
+        [
+          {
+            "node": "Leer Prompts corrida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer Prompts corrida": {
+      "main": [
+        [
+          {
+            "node": "Elegir prompts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Elegir prompts": {
+      "main": [
+        [
+          {
+            "node": "ChatGPT",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Claude",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Gemini",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Perplexity",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Overview (búsqueda)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ChatGPT": {
+      "main": [
+        [
+          {
+            "node": "Resultado ChatGPT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resultado ChatGPT": {
+      "main": [
+        [
+          {
+            "node": "Guardar resultados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude": {
+      "main": [
+        [
+          {
+            "node": "Resultado Claude",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resultado Claude": {
+      "main": [
+        [
+          {
+            "node": "Guardar resultados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini": {
+      "main": [
+        [
+          {
+            "node": "Resultado Gemini",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resultado Gemini": {
+      "main": [
+        [
+          {
+            "node": "Guardar resultados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Perplexity": {
+      "main": [
+        [
+          {
+            "node": "Resultado Perplexity",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resultado Perplexity": {
+      "main": [
+        [
+          {
+            "node": "Guardar resultados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resultado AI Overview": {
+      "main": [
+        [
+          {
+            "node": "Guardar resultados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Overview (búsqueda)": {
+      "main": [
+        [
+          {
+            "node": "¿Pide segunda llamada?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Pide segunda llamada?": {
+      "main": [
+        [
+          {
+            "node": "AI Overview (página)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Resultado AI Overview",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Overview (página)": {
+      "main": [
+        [
+          {
+            "node": "Resultado AI Overview",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Lima",
+    "saveManualExecutions": true
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}
