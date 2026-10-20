@@ -6,20 +6,28 @@ citan sus dominios. Son dos workflows de n8n y un Google Sheet.
 
 ## El recorrido
 
-**[GEO TRACKER BCP · Corrida](https://n8n.srv836595.hstgr.cloud/workflow/dS2FTRZuU8eNPTL5)**
-es un solo recorrido de izquierda a derecha:
+**[GEO TRACKER BCP · Corrida](https://n8n.srv836595.hstgr.cloud/workflow/dS2FTRZuU8eNPTL5)**:
 
 ```
-Cada día 7:00 ─┐
-Webhook geo-run┴→ Leer prompts → Elegir prompts
-  → ChatGPT → Claude → Gemini → Perplexity → Google (SerpAPI) → AI Overview (página)
-  → Juntar respuestas → Analista IA (+ Gemini · analista) → Armar fila → Guardar resultados
+Cada día 7:00 ─┐                    ┌→ ChatGPT ─────────────────────────┐
+Webhook geo-run┴→ Leer prompts      ├→ Claude ──────────────────────────┤
+                  → Elegir prompts ─┼→ Gemini ──────────────────────────┼→ Esperar a los 5 motores (Merge)
+                                    ├→ Perplexity ──────────────────────┤   → Juntar respuestas
+                                    └→ Google (SerpAPI) → AI Overview ──┘   → Analista IA (+ Gemini · analista)
+                                                                            → Armar fila → Guardar resultados
 ```
 
-- **Los motores** son un nodo HTTP cada uno, con su credencial y el modelo en
-  el body. Cada uno recibe el prompt original, tal cual, sin intermediarios. Por
-  eso no hay un Agent: un Agent reescribiría la pregunta, resumiría las
-  respuestas y perdería las fuentes citadas.
+- **Los motores** van en paralelo, un nodo HTTP cada uno, con su credencial y
+  el modelo en el body. Cada uno recibe solo el prompt, tal cual; ninguno
+  recibe la respuesta de otro, así que no se gastan tokens de más. n8n
+  ejecuta las ramas una tras otra, aunque en el lienzo estén en paralelo, y
+  el Merge espera a que terminen las 5. No hay un Agent porque reescribiría
+  la pregunta, resumiría las respuestas y perdería las fuentes citadas.
+- **POST y GET:** las APIs de los modelos piden POST, con el mensaje en el
+  cuerpo. La de SerpAPI es una búsqueda por GET, con la consulta en la URL.
+- **AI Overview** a veces necesita una segunda llamada (`page_token`). Si no
+  hace falta, el nodo consulta `account.json` de SerpAPI, que no gasta
+  búsquedas.
 - **Juntar respuestas** saca de cada API el texto y los dominios citados, y deja
   5 items por prompt, uno por motor.
 - **Analista IA** es un Information Extractor con Gemini 2.5 Flash. Lee cada

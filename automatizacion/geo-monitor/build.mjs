@@ -1,5 +1,5 @@
 // Genera los dos workflows a partir de src/:
-//   geo-corrida.n8n.json  prompts → 5 motores → Analista IA → hoja resultados
+//   geo-corrida.n8n.json  prompts → 5 motores en paralelo → Analista IA → hoja resultados
 //   geo-api.n8n.json      los endpoints que usa el front
 // No se editan a mano: se cambia src/ y se corre `node automatizacion/geo-monitor/build.mjs`.
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -28,11 +28,11 @@ function workflow(nombre) {
     chain(...nombres) {
       for (let i = 0; i < nombres.length - 1; i++) w.link(nombres[i], nombres[i + 1]);
     },
-    link(from, to, output = 0, tipo = 'main') {
+    link(from, to, output = 0, tipo = 'main', entrada = 0) {
       connections[from] ??= {};
       connections[from][tipo] ??= [];
       while (connections[from][tipo].length <= output) connections[from][tipo].push([]);
-      connections[from][tipo][output].push({ node: to, type: tipo, index: 0 });
+      connections[from][tipo][output].push({ node: to, type: tipo, index: entrada });
     },
     json: () => ({
       name: nombre,
@@ -87,9 +87,9 @@ return elegirPrompts($input.all().map(i => i.json), peticion).map(p => ({
 }));
 `);
 
-// Los motores van en cadena: cada uno pregunta el prompt original, tal cual,
-// y el siguiente lo vuelve a tomar de «Elegir prompts».
-const PROMPT = `$('Elegir prompts').item.json.prompt`;
+// Cada prompt sale en paralelo a los 5 motores. Cada motor recibe solo el
+// prompt, tal cual, sin la respuesta de ningún otro.
+const PROMPT = `$json.prompt`;
 const http = (name, position, params) =>
   corrida.node(name, 'n8n-nodes-base.httpRequest', 4.2, position, {
     ...params,
@@ -99,26 +99,26 @@ const body = obj => ({ sendBody: true, specifyBody: 'json', jsonBody: `={{ JSON.
 const headerAuth = { authentication: 'genericCredentialType', genericAuthType: 'httpHeaderAuth' };
 const serpApi = { authentication: 'predefinedCredentialType', nodeCredentialType: 'serpApi' };
 
-http('ChatGPT', [700, 100], {
+http('ChatGPT', [700, -200], {
   method: 'POST', url: 'https://api.openai.com/v1/chat/completions', ...headerAuth,
   ...body(`{ model: 'gpt-4o-search-preview', web_search_options: { user_location: { type: 'approximate', approximate: { country: 'PE', city: 'Lima', timezone: 'America/Lima' } } }, messages: [{ role: 'user', content: ${PROMPT} }] }`)
 });
-http('Claude', [920, 100], {
+http('Claude', [700, 0], {
   method: 'POST', url: 'https://api.anthropic.com/v1/messages',
   authentication: 'predefinedCredentialType', nodeCredentialType: 'anthropicApi',
   sendHeaders: true, headerParameters: { parameters: [{ name: 'anthropic-version', value: '2023-06-01' }] },
   ...body(`{ model: 'claude-sonnet-4-5', max_tokens: 2000, messages: [{ role: 'user', content: ${PROMPT} }] }`)
 });
-http('Gemini', [1140, 100], {
+http('Gemini', [700, 200], {
   method: 'POST', url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
   authentication: 'predefinedCredentialType', nodeCredentialType: 'googlePalmApi',
   ...body(`{ contents: [{ role: 'user', parts: [{ text: ${PROMPT} }] }], tools: [{ google_search: {} }] }`)
 });
-http('Perplexity', [1360, 100], {
+http('Perplexity', [700, 400], {
   method: 'POST', url: 'https://api.perplexity.ai/chat/completions', ...headerAuth,
   ...body(`{ model: 'sonar', web_search_options: { user_location: { country: 'PE' } }, messages: [{ role: 'user', content: ${PROMPT} }] }`)
 });
-http('Google (SerpAPI)', [1580, 100], {
+http('Google (SerpAPI)', [700, 600], {
   method: 'GET', url: 'https://serpapi.com/search.json', ...serpApi,
   sendQuery: true, queryParameters: { parameters: [
     { name: 'engine', value: 'google' },
@@ -131,7 +131,7 @@ http('Google (SerpAPI)', [1580, 100], {
 // A veces Google carga el AI Overview aparte y SerpAPI devuelve un page_token.
 // Si no hay token, se consulta account.json, que es gratis y no gasta búsquedas.
 const PIDE_PAGINA = `($json.ai_overview && $json.ai_overview.page_token && !($json.ai_overview.text_blocks || []).length)`;
-http('AI Overview (página)', [1800, 100], {
+http('AI Overview (página)', [920, 600], {
   method: 'GET', url: `={{ ${PIDE_PAGINA} ? 'https://serpapi.com/search.json' : 'https://serpapi.com/account.json' }}`, ...serpApi,
   sendQuery: true, queryParameters: { parameters: [
     { name: 'engine', value: 'google_ai_overview' },
@@ -139,23 +139,28 @@ http('AI Overview (página)', [1800, 100], {
   ] }
 });
 
-code(corrida, 'Juntar respuestas', [2020, 100], src('analisis.js') + `
-// Un item por prompt y motor (5 por prompt).
+// Espera a que terminen las 5 ramas.
+corrida.node('Esperar a los 5 motores', 'n8n-nodes-base.merge', 3, [1160, 100], { numberInputs: 5 });
+
+code(corrida, 'Juntar respuestas', [1380, 100], src('analisis.js') + `
+// Un item por prompt y motor (5 por prompt). Cada nodo HTTP devuelve una
+// respuesta por prompt y en el mismo orden, así que el índice los empareja.
+const prompts = $('Elegir prompts').all();
 const salida = [];
-$input.all().forEach((_, i) => {
-  const de = n => { try { return $(n).itemMatching(i).json; } catch (e) { return { error: 'Sin respuesta de ' + n }; } };
+prompts.forEach((p, i) => {
+  const de = n => { const r = $(n).all()[i]; return r ? r.json : { error: 'Sin respuesta de ' + n }; };
   const apis = {
     chatgpt: de('ChatGPT'), claude: de('Claude'), gemini: de('Gemini'), perplexity: de('Perplexity'),
     google: de('Google (SerpAPI)'), ai_overview_pagina: de('AI Overview (página)')
   };
-  for (const r of juntarRespuestas(de('Elegir prompts'), apis)) salida.push({ json: r });
+  for (const r of juntarRespuestas(p.json, apis)) salida.push({ json: r });
 });
 return salida;
 `);
 
 const marcas = [CONFIG.marca].concat(CONFIG.competidores);
 const listaMarcas = marcas.map(m => `${m.nombre} (${m.alias.filter(a => a !== m.nombre).join(', ') || 'sin alias'})`).join('; ');
-corrida.node('Analista IA', '@n8n/n8n-nodes-langchain.informationExtractor', 1.2, [2240, 100], {
+corrida.node('Analista IA', '@n8n/n8n-nodes-langchain.informationExtractor', 1.2, [1600, 100], {
   text: `={{ 'Pregunta que se le hizo a ' + $json.motor + ':\\n' + $json.prompt + '\\n\\nRespuesta de ' + $json.motor + ':\\n' + ($json.texto || '(sin respuesta)') }}`,
   attributes: { attributes: [
     { name: 'menciona_bcp', type: 'boolean', required: true,
@@ -171,23 +176,28 @@ corrida.node('Analista IA', '@n8n/n8n-nodes-langchain.informationExtractor', 1.2
     systemPromptTemplate: 'Analizas respuestas de asistentes de IA a preguntas sobre bancos en Perú, para medir la visibilidad de ' + CONFIG.marca.nombre + '. Te basas solo en el texto de la respuesta: no supongas ni completes nada que no esté escrito. Si la respuesta está vacía, ningún banco aparece.'
   }
 }, { onError: 'continueRegularOutput' });
-corrida.node('Gemini · analista', '@n8n/n8n-nodes-langchain.lmChatGoogleGemini', 1, [2240, 320], {
+corrida.node('Gemini · analista', '@n8n/n8n-nodes-langchain.lmChatGoogleGemini', 1, [1600, 320], {
   modelName: 'models/gemini-2.5-flash', options: { temperature: 0 }
 });
 corrida.link('Gemini · analista', 'Analista IA', 0, 'ai_languageModel');
 
-code(corrida, 'Armar fila', [2460, 100], src('config.js') + '\n' + src('analisis.js') + `
-const r = $('Juntar respuestas').item.json;
+code(corrida, 'Armar fila', [1820, 100], src('config.js') + '\n' + src('analisis.js') + `
+// El Analista devuelve un item por respuesta y en el mismo orden.
+const r = $('Juntar respuestas').all()[$itemIndex].json;
 return { json: armarFila(r, $json.output, CONFIG) };
 `, 'runOnceForEachItem');
-sheet(corrida, 'Guardar resultados', [2680, 100], 'append', 'resultados', {
+sheet(corrida, 'Guardar resultados', [2040, 100], 'append', 'resultados', {
   columns: { mappingMode: 'autoMapInputData', value: {}, matchingColumns: [], schema: [] }
 });
 
 corrida.link('Cada día 7:00 (Lima)', 'Leer prompts');
 corrida.link('Webhook geo-run', 'Leer prompts');
-corrida.chain('Leer prompts', 'Elegir prompts', 'ChatGPT', 'Claude', 'Gemini', 'Perplexity', 'Google (SerpAPI)',
-  'AI Overview (página)', 'Juntar respuestas', 'Analista IA', 'Armar fila', 'Guardar resultados');
+corrida.chain('Leer prompts', 'Elegir prompts');
+for (const m of ['ChatGPT', 'Claude', 'Gemini', 'Perplexity', 'Google (SerpAPI)']) corrida.link('Elegir prompts', m);
+corrida.link('Google (SerpAPI)', 'AI Overview (página)');
+['ChatGPT', 'Claude', 'Gemini', 'Perplexity', 'AI Overview (página)']
+  .forEach((m, i) => corrida.link(m, 'Esperar a los 5 motores', 0, 'main', i));
+corrida.chain('Esperar a los 5 motores', 'Juntar respuestas', 'Analista IA', 'Armar fila', 'Guardar resultados');
 
 // ═══ GEO · API ═════════════════════════════════════════════════════════════
 const api = workflow('GEO TRACKER BCP · API');

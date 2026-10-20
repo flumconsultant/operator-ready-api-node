@@ -27,11 +27,11 @@ function correr(wf, nombre, entrada, salidas = {}) {
       get item() { return { json: exigir()[actual] }; }
     };
   };
-  const fn = new Function('$', '$input', '$json', n.parameters.jsCode);
+  const fn = new Function('$', '$input', '$json', '$itemIndex', n.parameters.jsCode);
   if (n.parameters.mode === 'runOnceForEachItem') {
-    return entrada.map((json, i) => { actual = i; return fn($, { item: { json } }, json).json; });
+    return entrada.map((json, i) => { actual = i; return fn($, { item: { json } }, json, i).json; });
   }
-  return fn($, { all: () => entrada.map(json => ({ json })), first: () => ({ json: entrada[0] }) }, entrada[0]).map(i => i.json);
+  return fn($, { all: () => entrada.map(json => ({ json })), first: () => ({ json: entrada[0] }) }, entrada[0], 0).map(i => i.json);
 }
 
 let ok = 0;
@@ -152,18 +152,26 @@ prueba('Armar fila: si el motor no respondió, no cuenta lo que diga la IA', () 
   assert.deepEqual([fila.estado, fila.menciona_bcp, fila.marcas_mencionadas], ['error', false, '']);
 });
 
-prueba('Corrida: un solo recorrido de izquierda a derecha', () => {
-  const orden = ['Leer prompts', 'Elegir prompts', 'ChatGPT', 'Claude', 'Gemini', 'Perplexity', 'Google (SerpAPI)',
-    'AI Overview (página)', 'Juntar respuestas', 'Analista IA', 'Armar fila', 'Guardar resultados'];
-  for (let i = 0; i < orden.length - 1; i++) {
-    assert.deepEqual(corrida.connections[orden[i]].main[0].map(l => l.node), [orden[i + 1]], orden[i]);
-  }
+prueba('Corrida: los 5 motores en paralelo, un Merge y luego en línea hasta el Sheet', () => {
+  const sale = n => corrida.connections[n].main[0].map(l => l.node);
+  assert.deepEqual(sale('Leer prompts'), ['Elegir prompts']);
+  assert.deepEqual(sale('Elegir prompts').sort(), ['ChatGPT', 'Claude', 'Gemini', 'Google (SerpAPI)', 'Perplexity']);
+  assert.deepEqual(sale('Google (SerpAPI)'), ['AI Overview (página)']);
+  const merge = 'Esperar a los 5 motores';
+  const entradas = ['ChatGPT', 'Claude', 'Gemini', 'Perplexity', 'AI Overview (página)']
+    .map(m => corrida.connections[m].main[0].find(l => l.node === merge).index);
+  assert.deepEqual(entradas, [0, 1, 2, 3, 4], 'cada motor entra por su propia entrada del Merge');
+  assert.equal(corrida.nodes.find(n => n.name === merge).parameters.numberInputs, 5);
+  const resto = [merge, 'Juntar respuestas', 'Analista IA', 'Armar fila', 'Guardar resultados'];
+  for (let i = 0; i < resto.length - 1; i++) assert.deepEqual(sale(resto[i]), [resto[i + 1]], resto[i]);
   assert.equal(corrida.connections['Gemini · analista'].ai_languageModel[0][0].node, 'Analista IA');
   assert.equal(corrida.nodes.find(n => n.name === 'Webhook geo-run').parameters.responseMode, 'onReceived');
+  // Cada modelo recibe solo el prompt: ni la respuesta de otro motor ni nada más.
   for (const n of corrida.nodes.filter(n => n.type === 'n8n-nodes-base.httpRequest')) {
     assert.equal(n.onError, 'continueRegularOutput', n.name);
-    if (n.name !== 'ChatGPT' && n.name !== 'AI Overview (página)' && !n.name.startsWith('Google')) {
-      assert.match(n.parameters.jsonBody, /\$\('Elegir prompts'\)\.item\.json\.prompt/, n.name + ' pregunta el prompt original');
+    if (n.parameters.method === 'POST') {
+      const usa = n.parameters.jsonBody.match(/\$json\.\w+|\$\('[^']+'\)/g);
+      assert.deepEqual([...new Set(usa)], ['$json.prompt'], n.name);
     }
   }
 });
