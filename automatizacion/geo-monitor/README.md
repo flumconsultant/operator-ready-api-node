@@ -2,7 +2,8 @@
 
 Le hace las mismas preguntas a ChatGPT, Claude, Gemini, Perplexity y al AI
 Overview de Google. Mide si mencionan a BCP, en qué posición, con qué tono y si
-citan sus dominios. Son dos workflows de n8n y un Google Sheet.
+citan sus dominios. Son dos workflows de n8n, un Google Sheet y el front
+«BCP · Monitor de Visibilidad en IA» (`front/`), que ya lee los datos en vivo.
 
 ## El recorrido
 
@@ -13,7 +14,7 @@ Cada día 7:00 ─┐                    ┌→ ChatGPT ────────
 Webhook geo-run┴→ Leer prompts      ├→ Claude ──────────────────────────┤
                   → Elegir prompts ─┼→ Gemini ──────────────────────────┼→ Esperar a los 5 motores (Merge)
                                     ├→ Perplexity ──────────────────────┤   → Juntar respuestas
-                                    └→ Google (SerpAPI) → AI Overview ──┘   → Analista IA (+ Gemini · analista)
+                                    └→ Google (SerpAPI) → AI Overview ──┘   → Analista IA (+ Claude · analista)
                                                                             → Armar fila → Guardar resultados
 ```
 
@@ -26,21 +27,32 @@ Webhook geo-run┴→ Leer prompts      ├→ Claude ────────�
 - **POST y GET:** las APIs de los modelos piden POST, con el mensaje en el
   cuerpo. La de SerpAPI es una búsqueda por GET, con la consulta en la URL.
 - **AI Overview** a veces necesita una segunda llamada (`page_token`). Si no
-  hace falta, el nodo consulta `account.json` de SerpAPI, que no gasta
-  búsquedas.
+  hace falta, el nodo consulta `locations.json` de SerpAPI, que no gasta
+  búsquedas y no devuelve datos de la cuenta.
 - **Juntar respuestas** saca de cada API el texto y los dominios citados, y deja
   5 items por prompt, uno por motor.
-- **Analista IA** es un Information Extractor con Gemini 2.5 Flash. Lee cada
-  respuesta y devuelve `menciona_bcp`, `posicion_bcp`, `sentimiento` (-1 a 1)
-  y `marcas_mencionadas`.
+- **Analista IA** es un Information Extractor con Claude Haiku 4.5 (credencial
+  LLM BCP). Lee cada respuesta y devuelve `menciona_bcp`, `posicion_bcp`,
+  `sentimiento` (-1 a 1), `marcas_mencionadas` y dos conteos para el SOV:
+  `n_menciones_bcp` y `n_menciones_bancos`.
 - **Armar fila** agrega `citado_bcp`, que sale de los dominios y no necesita IA,
-  y escribe la fila con las columnas de la hoja `resultados`.
-- Si un motor falla (saldo, modelo, límite), su fila queda con
-  `estado = error` y la corrida sigue. El dashboard no cuenta esas filas.
+  pasa los bancos a sus nombres canónicos («Banco Pichincha» → «Pichincha») y
+  escribe la fila con las columnas de la hoja `resultados`.
+- Si un motor o el Analista fallan (saldo, modelo, límite), la fila queda con
+  `estado = error` y la corrida sigue. El dashboard y el front no cuentan esas
+  filas.
 
 **[GEO TRACKER BCP · API](https://n8n.srv836595.hstgr.cloud/workflow/AxHUZMTaaBAsnO3l)**
-tiene los tres endpoints que usa el front, cada uno en su fila:
-`geo-dashboard`, `geo-prompts` y `geo-prompts-save`.
+tiene un endpoint por fila:
+
+- `geo-monitor-data`: **el que usa el front.** Devuelve las hojas con la forma
+  `DATA.monitor` y `DATA.prompts`, con una observación por proyecto, motor,
+  prompt y día. El SOV de cada respuesta es `n_menciones_bcp ÷
+  n_menciones_bancos × 100`.
+- `geo-dashboard`: los KPIs ya calculados. Sirve para otro front o para
+  consultarlos a mano.
+- `geo-prompts` y `geo-prompts-save`: listar y editar prompts. El front actual
+  no tiene esa pantalla; se editan en el Sheet.
 
 ## Archivos
 
@@ -48,31 +60,33 @@ tiene los tres endpoints que usa el front, cada uno en su fila:
 |---|---|
 | `geo-corrida.n8n.json`, `geo-api.n8n.json` | Los workflows. **Se generan, no se editan a mano.** |
 | `plantilla-geo-monitor.xlsx` | La plantilla del Sheet: pestañas `prompts` y `resultados`. |
-| `src/` | El código de los nodos Code: `analisis.js` (respuestas → filas), `dashboard.js`, `prompts.js`, `config.js` (marca y competidores). |
+| `front/` | El front «BCP · Monitor de Visibilidad en IA», con `dist/loader.js`, que lee `geo-monitor-data`. Ver `front/README.md`. |
+| `src/` | El código de los nodos Code: `analisis.js` (respuestas → filas), `monitor.js` (filas → datos del front), `dashboard.js`, `prompts.js`, `config.js` (marca y competidores). |
 | `build.mjs` | Arma los JSON a partir de `src/`: `node automatizacion/geo-monitor/build.mjs` |
 | `test.mjs` | Corre el código real de los nodos con respuestas de ejemplo: `node automatizacion/geo-monitor/test.mjs` |
 | `publicar.mjs` | Sube los dos workflows a n8n con el Sheet y las credenciales: `N8N_API_KEY=… node automatizacion/geo-monitor/publicar.mjs` |
 
-## Estado en n8n
+## Estado en n8n (20/10)
 
+- **Los dos workflows están activos.** La Corrida se ejecuta todos los días a
+  las 7:00 a.m. (Lima) con los prompts activos del Sheet.
 - **Sheet:** [BCP GEO Monitor](https://docs.google.com/spreadsheets/d/12JvqnIyNiUbS9o4HlrJrcSKGi9gNyL57ahepsZE8XY0/edit),
   con la credencial **Google Sheets account**.
-- **Credenciales asignadas:** **LLM BCP** (Claude), **GEMINI BCP** (Gemini y
-  Gemini · analista) y **SerpAPI account** (los 2 nodos de Google).
-- **Probado el 20/10:** `geo-prompts` devuelve los 6 prompts del Sheet,
-  `geo-dashboard` responde `vacio: true` y `geo-prompts-save` rechaza un prompt
-  vacío con 400. Todavía no se ha hecho ninguna corrida.
-- **Falta:**
-  1. Crear las credenciales de **ChatGPT** y **Perplexity** (Header Auth,
-     `Authorization: Bearer …`) y asignarlas en sus nodos.
-  2. Hacer una corrida de prueba.
-  3. Activar los dos workflows.
+- **Corrida real probada con `p001`:** Claude, Google (SerpAPI) y AI Overview
+  responden. El Analista y el guardado en el Sheet funcionan, y el front
+  muestra los datos.
+- **Motores que todavía devuelven `error`:**
+  - **ChatGPT y Perplexity:** falta crear sus credenciales (Header Auth,
+    `Authorization: Bearer …`) y asignarlas en sus nodos.
+  - **Gemini:** la credencial **GEMINI BCP** no tiene saldo («prepayment credits
+    are depleted»). Hay que recargarla en AI Studio o asignar otra credencial
+    al nodo Gemini.
 
 ## Cambiar algo
 
 - **Modelos de los motores:** en el body de cada nodo HTTP. Son
   `gpt-4o-search-preview`, `claude-sonnet-4-5`, `gemini-2.5-flash` y `sonar`.
-- **Modelo del analista:** en el nodo **Gemini · analista**.
+- **Modelo del analista:** en el nodo **Claude · analista**.
 - **Marca, alias, dominios propios y competidores:** en `src/config.js`. Después
   se corren `build.mjs` y `publicar.mjs`. Si se cambian a mano en n8n, hay que
   tocar «Armar fila», «Dashboard» y las descripciones del Analista IA.
@@ -81,15 +95,17 @@ tiene los tres endpoints que usa el front, cada uno en su fila:
 
 - **Claude** responde sin búsqueda web. ChatGPT y Perplexity usan ubicación
   Perú, y Gemini usa Google Search.
-- **Share of Model:** el % de respuestas válidas que mencionan a BCP. En AI
-  Overview, una búsqueda sin overview cuenta como respuesta sin mención. Aparte
-  se informa `presencia_ai_overview`.
+- **Share of Model en el front:** el promedio del SOV de cada respuesta válida
+  (`n_menciones_bcp ÷ n_menciones_bancos × 100`).
+- **Share of Model en `geo-dashboard`:** el % de respuestas válidas que
+  mencionan a BCP. En AI Overview, una búsqueda sin overview cuenta como
+  respuesta sin mención. Aparte se informa `presencia_ai_overview`.
 - **Variación:** puntos porcentuales del último día con datos frente al día con
   datos anterior.
 - **«Eliminar» un prompt** solo lo desactiva. Un `prompt_id` pedido a mano en
   `/geo-run` corre aunque esté inactivo.
 - **Costo:** por prompt son 4 llamadas a modelos, 1 o 2 búsquedas en SerpAPI y
-  5 análisis con Gemini Flash. Con 6 prompts al día son unas 30 consultas
+  5 análisis con Claude Haiku. Con 6 prompts al día son unas 30 consultas
   pagadas más 30 análisis baratos.
 - **Seguridad:** los webhooks quedan abiertos, sin autenticación y con CORS `*`.
   Está bien para un prototipo. Si va a salir del equipo, conviene ponerles

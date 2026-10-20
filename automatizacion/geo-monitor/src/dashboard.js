@@ -40,6 +40,7 @@ function normalizarFila(f) {
     proyecto: String(f.proyecto || '').trim() || 'Sin proyecto',
     prompt: String(f.prompt || ''),
     motor: String(f.motor || ''),
+    estado: String(f.estado || '').trim(),
     disponible: f.estado !== undefined ? String(f.estado).trim() === 'ok' : aBool(f.disponible),
     menciona: aBool(f.menciona_bcp !== undefined ? f.menciona_bcp : f.menciona),
     posicion: aNum(f.posicion_bcp !== undefined ? f.posicion_bcp : f.posicion),
@@ -48,7 +49,9 @@ function normalizarFila(f) {
     marcas: aLista(f.marcas_mencionadas !== undefined ? f.marcas_mencionadas : f.marcas),
     fuentes: aLista(f.fuentes),
     respuesta: String(f.respuesta || ''),
-    error: String(f.error || '')
+    error: String(f.error || ''),
+    n_menciones_bcp: aNum(f.n_menciones_bcp),
+    n_menciones_bancos: aNum(f.n_menciones_bancos)
   };
 }
 

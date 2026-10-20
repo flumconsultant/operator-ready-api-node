@@ -22,7 +22,7 @@ const SERPAPI = { serpApi: 'SerpAPI account' };
 const CREDENCIALES = {
   Claude: { anthropicApi: 'LLM BCP' },
   Gemini: GEMINI,
-  'Gemini · analista': GEMINI,
+  'Claude · analista': { anthropicApi: 'LLM BCP' },
   'Google (SerpAPI)': SERPAPI,
   'AI Overview (página)': SERPAPI
   // ChatGPT y Perplexity: sin credencial BCP en la instancia; se asignan a mano

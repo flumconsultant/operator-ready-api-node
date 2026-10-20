@@ -47,14 +47,14 @@ function workflow(nombre) {
 const code = (w, name, position, jsCode, mode) =>
   w.node(name, 'n8n-nodes-base.code', 2, position, mode ? { mode, jsCode } : { jsCode });
 
-const sheet = (w, name, position, operation, hoja, extra = {}) =>
+const sheet = (w, name, position, operation, hoja, extra = {}, nodo = {}) =>
   w.node(name, 'n8n-nodes-base.googleSheets', 4.5, position, {
     operation,
     documentId: { __rl: true, value: SHEET_ID, mode: 'id' },
     sheetName: { __rl: true, value: hoja, mode: 'name' },
     ...extra,
     options: operation === 'read' ? {} : { cellFormat: 'RAW' }
-  }, operation === 'read' ? { alwaysOutputData: true } : {});
+  }, { ...(operation === 'read' ? { alwaysOutputData: true } : {}), ...nodo });
 
 const webhook = (w, name, method, path, position, responseMode = 'responseNode') =>
   w.node(name, 'n8n-nodes-base.webhook', 2, position,
@@ -129,10 +129,11 @@ http('Google (SerpAPI)', [700, 600], {
   ] }
 });
 // A veces Google carga el AI Overview aparte y SerpAPI devuelve un page_token.
-// Si no hay token, se consulta account.json, que es gratis y no gasta búsquedas.
+// Si no hay token, se consulta locations.json: es gratis, no gasta búsquedas y,
+// a diferencia de account.json, no devuelve la API key ni el email de la cuenta.
 const PIDE_PAGINA = `($json.ai_overview && $json.ai_overview.page_token && !($json.ai_overview.text_blocks || []).length)`;
 http('AI Overview (página)', [920, 600], {
-  method: 'GET', url: `={{ ${PIDE_PAGINA} ? 'https://serpapi.com/search.json' : 'https://serpapi.com/account.json' }}`, ...serpApi,
+  method: 'GET', url: `={{ ${PIDE_PAGINA} ? 'https://serpapi.com/search.json' : 'https://serpapi.com/locations.json?q=Lima&limit=1' }}`, ...serpApi,
   sendQuery: true, queryParameters: { parameters: [
     { name: 'engine', value: 'google_ai_overview' },
     { name: 'page_token', value: `={{ ($json.ai_overview || {}).page_token || '' }}` }
@@ -169,6 +170,10 @@ corrida.node('Analista IA', '@n8n/n8n-nodes-langchain.informationExtractor', 1.2
       description: `Lugar de ${CONFIG.marca.nombre} entre los bancos nombrados, por orden de aparición (1 = el primero). 0 si no aparece.` },
     { name: 'sentimiento', type: 'number', required: true,
       description: `Tono de la respuesta hacia ${CONFIG.marca.nombre}, de -1 (muy negativo) a 1 (muy positivo). 0 si es neutral o no aparece. Solo lo que dice de ${CONFIG.marca.nombre}, no de otros bancos.` },
+    { name: 'n_menciones_bcp', type: 'number', required: true,
+      description: `Cuántas veces se nombra a ${CONFIG.marca.nombre} (con cualquiera de sus nombres) en la respuesta. 0 si no aparece.` },
+    { name: 'n_menciones_bancos', type: 'number', required: true,
+      description: `Cuántas veces se nombra a cualquier banco en total, ${CONFIG.marca.nombre} incluido. Cada aparición cuenta. 0 si no se nombra ninguno.` },
     { name: 'marcas_mencionadas', type: 'string', required: true,
       description: 'Bancos nombrados en la respuesta, en orden de aparición y separados por coma. Usa el nombre canónico de esta lista: ' + listaMarcas + '. Otros bancos, con su nombre tal cual. Vacío si no nombra ninguno.' }
   ] },
@@ -176,10 +181,12 @@ corrida.node('Analista IA', '@n8n/n8n-nodes-langchain.informationExtractor', 1.2
     systemPromptTemplate: 'Analizas respuestas de asistentes de IA a preguntas sobre bancos en Perú, para medir la visibilidad de ' + CONFIG.marca.nombre + '. Te basas solo en el texto de la respuesta: no supongas ni completes nada que no esté escrito. Si la respuesta está vacía, ningún banco aparece.'
   }
 }, { onError: 'continueRegularOutput' });
-corrida.node('Gemini · analista', '@n8n/n8n-nodes-langchain.lmChatGoogleGemini', 1, [1600, 320], {
-  modelName: 'models/gemini-2.5-flash', options: { temperature: 0 }
+// Claude Haiku: barato y rápido. (La credencial GEMINI BCP se quedó sin saldo el 20/10.)
+corrida.node('Claude · analista', '@n8n/n8n-nodes-langchain.lmChatAnthropic', 1.3, [1600, 320], {
+  model: { __rl: true, mode: 'list', value: 'claude-haiku-4-5-20251001', cachedResultName: 'Claude Haiku 4.5' },
+  options: { temperature: 0 }
 });
-corrida.link('Gemini · analista', 'Analista IA', 0, 'ai_languageModel');
+corrida.link('Claude · analista', 'Analista IA', 0, 'ai_languageModel');
 
 code(corrida, 'Armar fila', [1820, 100], src('config.js') + '\n' + src('analisis.js') + `
 // El Analista devuelve un item por respuesta y en el mismo orden.
@@ -249,6 +256,20 @@ responderJson(api, 'Responder guardado', [900, 380], `={{ JSON.stringify({ ok: t
 responderJson(api, 'Responder error', [680, 520], `={{ JSON.stringify({ ok: false, error: $json._error }) }}`, 400);
 api.chain('Webhook geo-prompts-save', 'Validar prompt', '¿Válido?', 'Guardar prompt', 'Responder guardado');
 api.link('¿Válido?', 'Responder error', 1);
+
+// GET /geo-monitor-data: lo que lee el front «BCP · Monitor de Visibilidad en IA»
+webhook(api, 'Webhook geo-monitor-data', 'GET', 'geo-monitor-data', [0, 700]);
+sheet(api, 'Leer resultados (monitor)', [240, 700], 'read', 'resultados');
+// executeOnce: llegan tantos items como filas de resultados, pero la hoja se lee una vez.
+sheet(api, 'Leer prompts (monitor)', [460, 700], 'read', 'prompts', {}, { executeOnce: true });
+code(api, 'Datos del monitor', [680, 700], src('config.js') + '\n' + src('dashboard.js') + '\n' + src('prompts.js') + '\n' + src('monitor.js') + `
+const hoy = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Lima' });
+const resultados = $('Leer resultados (monitor)').all().map(i => i.json);
+const prompts = $('Leer prompts (monitor)').all().map(i => i.json);
+return [{ json: construirMonitor(resultados, prompts, CONFIG, hoy) }];
+`);
+api.node('Responder monitor', 'n8n-nodes-base.respondToWebhook', 1.1, [900, 700], { respondWith: 'firstIncomingItem', options: {} });
+api.chain('Webhook geo-monitor-data', 'Leer resultados (monitor)', 'Leer prompts (monitor)', 'Datos del monitor', 'Responder monitor');
 
 for (const [archivo, w] of [['geo-corrida.n8n.json', corrida], ['geo-api.n8n.json', api]]) {
   const j = w.json();

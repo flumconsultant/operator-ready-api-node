@@ -6,15 +6,11 @@
 // (Information Extractor). Aqui solo se saca el texto y las fuentes de cada
 // API, y se calcula citado_bcp, que sale de los dominios y no necesita IA.
 
+// Sin `new URL`: el sandbox de los nodos Code de n8n no siempre lo trae.
 function dominioDe(url) {
-  const s = String(url || '').trim();
-  if (!s) return '';
-  try {
-    const u = new URL(/^https?:\/\//i.test(s) ? s : 'https://' + s);
-    return u.hostname.toLowerCase().replace(/^www\./, '');
-  } catch (e) {
-    return '';
-  }
+  const m = String(url || '').trim().toLowerCase().match(/^(?:[a-z][a-z0-9+.-]*:\/\/)?(?:[^@\/?#]*@)?([^\/?#:]+)/);
+  const host = m ? m[1].replace(/^www\./, '').replace(/\.$/, '') : '';
+  return /^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(host) ? host : '';
 }
 
 function esDominioPropio(dominio, dominios) {
@@ -108,9 +104,33 @@ function juntarRespuestas(prompt, apis) {
   });
 }
 
+// «Banco Pichincha» → «Pichincha»: los nombres que devuelve el Analista pasan a
+// los canónicos de config.js. Los bancos que no están en la lista quedan igual.
+function marcasCanonicas(texto, config) {
+  const clave = x => String(x || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  const marcas = [config.marca].concat(config.competidores || []);
+  const salida = [];
+  for (const nombre of String(texto || '').split(',').map(x => x.trim()).filter(Boolean)) {
+    const m = marcas.find(b => [b.nombre].concat(b.alias || []).some(a => clave(a) === clave(nombre)));
+    const final = m ? m.nombre : nombre;
+    if (!salida.includes(final)) salida.push(final);
+  }
+  return salida.join(', ');
+}
+
+function entero(v) {
+  const n = Math.round(Number(v));
+  return isFinite(n) && n > 0 ? n : 0;
+}
+
 // La fila de la hoja resultados: la respuesta más lo que dijo el Analista IA.
 // Si el motor no respondió, no hay nada que analizar y la fila va sin mención.
 function armarFila(r, analisis, config) {
+  // Si el motor respondió pero el Analista falló, la fila no se puede contar:
+  // va como error, no como «no menciona a BCP».
+  if (r.estado === 'ok' && !analisis) {
+    r = Object.assign({}, r, { estado: 'error', error: 'El Analista IA no devolvió resultado' });
+  }
   const a = (r.estado === 'ok' && analisis) || {};
   const menciona = r.estado === 'ok' && (a.menciona_bcp === true || String(a.menciona_bcp).toLowerCase() === 'true');
   const posicion = Number(a.posicion_bcp);
@@ -123,11 +143,14 @@ function armarFila(r, analisis, config) {
     menciona_bcp: menciona,
     posicion_bcp: menciona && posicion > 0 ? posicion : '',
     sentimiento: menciona && isFinite(sentimiento) ? Math.max(-1, Math.min(1, Math.round(sentimiento * 100) / 100)) : '',
-    marcas_mencionadas: r.estado === 'ok' ? String(a.marcas_mencionadas || '') : '',
+    marcas_mencionadas: r.estado === 'ok' ? marcasCanonicas(a.marcas_mencionadas, config) : '',
     fuentes: r.fuentes.join(', '),
     citado_bcp: r.fuentes.some(d => esDominioPropio(d, dominios)),
-    error: r.error || (r.estado === 'ok' && !analisis ? 'El Analista IA no devolvió resultado' : ''),
+    error: r.error || '',
     // Google Sheets no admite más de 50.000 caracteres por celda.
-    respuesta: String(r.texto || '').slice(0, 20000)
+    respuesta: String(r.texto || '').slice(0, 20000),
+    // Para el SOV por respuesta: veces que se nombra a BCP ÷ veces que se nombra a cualquier banco.
+    n_menciones_bcp: menciona ? entero(a.n_menciones_bcp) : 0,
+    n_menciones_bancos: r.estado === 'ok' ? entero(a.n_menciones_bancos) : 0
   };
 }

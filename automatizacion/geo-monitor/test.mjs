@@ -27,11 +27,12 @@ function correr(wf, nombre, entrada, salidas = {}) {
       get item() { return { json: exigir()[actual] }; }
     };
   };
-  const fn = new Function('$', '$input', '$json', '$itemIndex', n.parameters.jsCode);
+  // URL va como undefined: el sandbox de los nodos Code de n8n no lo trae.
+  const fn = new Function('$', '$input', '$json', '$itemIndex', 'URL', n.parameters.jsCode);
   if (n.parameters.mode === 'runOnceForEachItem') {
-    return entrada.map((json, i) => { actual = i; return fn($, { item: { json } }, json, i).json; });
+    return entrada.map((json, i) => { actual = i; return fn($, { item: { json } }, json, i, undefined).json; });
   }
-  return fn($, { all: () => entrada.map(json => ({ json })), first: () => ({ json: entrada[0] }) }, entrada[0], 0).map(i => i.json);
+  return fn($, { all: () => entrada.map(json => ({ json })), first: () => ({ json: entrada[0] }) }, entrada[0], 0, undefined).map(i => i.json);
 }
 
 let ok = 0;
@@ -122,7 +123,8 @@ prueba('Juntar respuestas: sin AI Overview no es error; un motor caído sí', ()
 });
 
 const COLUMNAS = ['run_id', 'fecha', 'timestamp', 'prompt_id', 'proyecto', 'categoria', 'prompt', 'motor', 'estado',
-  'menciona_bcp', 'posicion_bcp', 'sentimiento', 'marcas_mencionadas', 'fuentes', 'citado_bcp', 'error', 'respuesta'];
+  'menciona_bcp', 'posicion_bcp', 'sentimiento', 'marcas_mencionadas', 'fuentes', 'citado_bcp', 'error', 'respuesta',
+  'n_menciones_bcp', 'n_menciones_bancos'];
 
 const armar = (respuestas, analisis) => correr(corrida, 'Armar fila',
   analisis.map(a => (a === null ? { error: 'falló' } : { output: a })), { 'Juntar respuestas': respuestas });
@@ -130,10 +132,10 @@ const armar = (respuestas, analisis) => correr(corrida, 'Armar fila',
 prueba('Armar fila: columnas de la plantilla, análisis de la IA y citado por dominio', () => {
   const r = juntar().slice(0, 5);
   const filas = armar(r, [
-    { menciona_bcp: true, posicion_bcp: 1, sentimiento: 0.8, marcas_mencionadas: 'BCP, Interbank, BBVA' },
-    { menciona_bcp: false, posicion_bcp: 0, sentimiento: 0, marcas_mencionadas: 'Interbank, BBVA' },
+    { menciona_bcp: true, posicion_bcp: 1, sentimiento: 0.8, marcas_mencionadas: 'BCP, Interbank, BBVA', n_menciones_bcp: 2, n_menciones_bancos: 4 },
+    { menciona_bcp: false, posicion_bcp: 0, sentimiento: 0, marcas_mencionadas: 'Interbank, BBVA', n_menciones_bcp: 3, n_menciones_bancos: 2 },
     { menciona_bcp: 'false', posicion_bcp: 0, sentimiento: 0, marcas_mencionadas: 'Scotiabank' },
-    { menciona_bcp: 'true', posicion_bcp: 1, sentimiento: 3, marcas_mencionadas: 'BCP' },
+    { menciona_bcp: 'true', posicion_bcp: 1, sentimiento: 3, marcas_mencionadas: 'Banco de Crédito del Perú, banco pichincha, BCP, Banco Falabella' },
     null
   ]);
   for (const f of filas) assert.deepEqual(Object.keys(f).sort(), COLUMNAS.slice().sort());
@@ -142,8 +144,13 @@ prueba('Armar fila: columnas de la plantilla, análisis de la IA y citado por do
   assert.equal(filas[2].menciona_bcp, false, '«false» como texto');
   assert.equal(filas[3].sentimiento, 1, 'sentimiento acotado a [-1, 1]');
   assert.equal(filas[3].citado_bcp, true, 'bcp.com.pe cuenta como propio');
+  assert.equal(filas[3].marcas_mencionadas, 'BCP, Pichincha, Banco Falabella', 'nombres canónicos y sin repetir');
   assert.match(filas[4].error, /Analista IA/, 'si el Analista falla, la fila lo dice');
+  assert.deepEqual([filas[4].estado, filas[4].menciona_bcp], ['error', false], 'y no cuenta como «no menciona»');
+  assert.ok(filas[4].respuesta, 'pero conserva la respuesta del motor');
   assert.equal(filas[0].fuentes, 'viabcp.com, comparabien.com.pe');
+  assert.deepEqual([filas[0].n_menciones_bcp, filas[0].n_menciones_bancos], [2, 4]);
+  assert.deepEqual([filas[1].n_menciones_bcp, filas[1].n_menciones_bancos], [0, 2], 'sin mención, BCP cuenta 0 aunque la IA diga otra cosa');
 });
 
 prueba('Armar fila: si el motor no respondió, no cuenta lo que diga la IA', () => {
@@ -164,7 +171,7 @@ prueba('Corrida: los 5 motores en paralelo, un Merge y luego en línea hasta el 
   assert.equal(corrida.nodes.find(n => n.name === merge).parameters.numberInputs, 5);
   const resto = [merge, 'Juntar respuestas', 'Analista IA', 'Armar fila', 'Guardar resultados'];
   for (let i = 0; i < resto.length - 1; i++) assert.deepEqual(sale(resto[i]), [resto[i + 1]], resto[i]);
-  assert.equal(corrida.connections['Gemini · analista'].ai_languageModel[0][0].node, 'Analista IA');
+  assert.equal(corrida.connections['Claude · analista'].ai_languageModel[0][0].node, 'Analista IA');
   assert.equal(corrida.nodes.find(n => n.name === 'Webhook geo-run').parameters.responseMode, 'onReceived');
   // Cada modelo recibe solo el prompt: ni la respuesta de otro motor ni nada más.
   for (const n of corrida.nodes.filter(n => n.type === 'n8n-nodes-base.httpRequest')) {
@@ -247,6 +254,65 @@ prueba('Dashboard con filtros, y vacío sin corridas', () => {
   assert.equal(dashboard({}, [{}]).vacio, true, 'hoja vacía devuelve un item {}');
 });
 
+// ─── /geo-monitor-data (lo que lee el front) ───────────────────────────────
+const monitor = (resultados, hojaP = hojaPrompts) => correr(api, 'Datos del monitor', resultados,
+  { 'Leer resultados (monitor)': resultados, 'Leer prompts (monitor)': hojaP })[0];
+
+prueba('/geo-monitor-data: observaciones con la forma de DATA.monitor del front', () => {
+  const r = juntar();
+  const filas = armar(r, r.map((_, i) => ({ ...analisisDia[i % 5], n_menciones_bcp: 2, n_menciones_bancos: 5 })))
+    .map(f => aHoja({ ...f, timestamp: '2026-10-20T12:00:00Z' }, '2026-10-20'));
+  const d = monitor(filas);
+  const o = d.monitor.observations;
+  assert.equal(o.length, 10, '2 prompts × 5 motores');
+  const campos = ['id', 'projectId', 'modelId', 'promptId', 'date', 'status', 'som', 'position', 'linkPosition', 'mentions',
+    'citations', 'sentiment', 'sentimentLabel', 'blockAppeared', 'brandMentioned', 'brandCited', 'sources', 'ranking', 'isExample', 'source'];
+  for (const k of campos) assert.ok(k in o[0], 'falta ' + k);
+  assert.deepEqual([...new Set(o.map(x => x.modelId))].sort(), ['chatgpt', 'claude', 'gemini', 'overview', 'perplexity']);
+  const gpt = o.find(x => x.modelId === 'chatgpt' && x.promptId === 'p001');
+  assert.equal(gpt.id, 'tarjetas:chatgpt:p001:2026-10-20');
+  assert.deepEqual([gpt.status, gpt.som, gpt.position, gpt.mentions, gpt.linkPosition, gpt.citations], ['ok', 40, 1, 2, 1, 1]);
+  assert.deepEqual([gpt.sentiment, gpt.sentimentLabel, gpt.brandCited, gpt.isExample], [0.6, 'positivo', true, false]);
+  assert.deepEqual(gpt.sources[0], { domain: 'viabcp.com', url: 'https://viabcp.com/' });
+  assert.deepEqual(gpt.ranking, ['BCP', 'Interbank', 'BBVA']);
+  assert.ok(gpt.response.includes('El BCP destaca'), 'la respuesta va en la observación');
+  const claude = o.find(x => x.modelId === 'claude' && x.promptId === 'p001');
+  assert.deepEqual([claude.status, claude.som, claude.position, claude.sentiment, claude.mentions], ['not_mentioned', 0, null, null, 0]);
+  const aio = o.find(x => x.modelId === 'overview' && x.promptId === 'p001');
+  assert.equal(aio.blockAppeared, true);
+  assert.equal(o.find(x => x.modelId === 'gemini').blockAppeared, null);
+  assert.deepEqual(d.monitor.dates, ['2026-10-20']);
+  assert.match(d.monitor.referenceDate, /^\d{4}-\d{2}-\d{2}$/);
+  assert.ok(d.monitor.domains.some(([dom]) => dom === 'viabcp.com'));
+});
+
+prueba('/geo-monitor-data: proyectos y prompts desde la hoja, errores y corridas repetidas', () => {
+  const r = juntar({ claude: { error: { message: 'saldo' } }, google: { organic_results: [] }, pagina: { account_id: 'x' } });
+  const base = armar(r, r.map((_, i) => analisisDia[i % 5]));
+  const temprano = base.map(f => aHoja({ ...f, timestamp: '2026-10-20T08:00:00Z' }, '2026-10-20'));
+  const tarde = base.map(f => aHoja({ ...f, timestamp: '2026-10-20T15:00:00Z', posicion_bcp: f.posicion_bcp === '' ? '' : 3 }, '2026-10-20'));
+  const d = monitor([...temprano, ...tarde, {}]);
+  const o = d.monitor.observations;
+  assert.equal(o.length, 10, 'la corrida repetida del mismo día no duplica');
+  assert.equal(o.find(x => x.modelId === 'chatgpt' && x.promptId === 'p001').position, 3, 'gana la última corrida del día');
+  const c = o.find(x => x.modelId === 'claude');
+  assert.deepEqual([c.status, c.som, c.brandMentioned], ['error', null, false]);
+  const aio = o.find(x => x.modelId === 'overview');
+  assert.deepEqual([aio.status, aio.blockAppeared], ['not_mentioned', false], 'sin AI Overview no es error');
+  // Sin conteos (filas antiguas), el SOV es 1 ÷ bancos nombrados.
+  assert.equal(o.find(x => x.modelId === 'perplexity').som, 100);
+  assert.deepEqual(d.monitor.projects.map(p => [p.id, p.name, p.promptIds]), [['tarjetas', 'Tarjetas', ['p001']], ['reputacion', 'Reputación', ['p003']]],
+    'el prompt inactivo sin datos no entra');
+  assert.deepEqual(d.prompts.map(p => [p.id, p.text.slice(0, 10), p.project]).slice(0, 1), [['p001', '¿Cuál es l', 'tarjetas']]);
+  // Un prompt que ya no está en la hoja, o que cambió de proyecto, sigue apareciendo.
+  const huerfano = monitor(temprano, hojaPrompts.filter(p => p.id !== 'p003').map(p => (p.id === 'p001' ? { ...p, proyecto: 'Nuevo' } : p)));
+  const ids = huerfano.monitor.projects.map(p => p.id);
+  for (const o of huerfano.monitor.observations) assert.ok(ids.includes(o.projectId), 'falta el proyecto ' + o.projectId);
+  assert.ok(huerfano.prompts.some(p => p.id === 'p003' && p.text.startsWith('¿Qué banco')), 'el prompt borrado se rescata de resultados');
+  const vacio = monitor([{}]);
+  assert.deepEqual([vacio.monitor.observations.length, vacio.monitor.dates.length], [0, 0]);
+});
+
 prueba('Ambos workflows: conexiones válidas, ids únicos, pestañas de la plantilla', () => {
   for (const wf of [corrida, api]) {
     const nombres = new Set(wf.nodes.map(n => n.name));
@@ -261,7 +327,7 @@ prueba('Ambos workflows: conexiones válidas, ids únicos, pestañas de la plant
   }
   const rutas = wf => wf.nodes.filter(n => n.type === 'n8n-nodes-base.webhook').map(n => n.parameters.path);
   assert.deepEqual(rutas(corrida), ['geo-run']);
-  assert.deepEqual(rutas(api).sort(), ['geo-dashboard', 'geo-prompts', 'geo-prompts-save']);
+  assert.deepEqual(rutas(api).sort(), ['geo-dashboard', 'geo-monitor-data', 'geo-prompts', 'geo-prompts-save']);
 });
 
 console.log(`\n${ok} pruebas pasan`);
