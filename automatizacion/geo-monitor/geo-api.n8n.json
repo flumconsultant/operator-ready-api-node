@@ -172,38 +172,94 @@
         440
       ],
       "parameters": {
-        "jsCode": "// Prompts: listar (/geo-prompts), validar lo que llega a /geo-prompts-save y\n// elegir cuáles entran en una corrida. Sin dependencias, como los otros dos.\n\n// Categoría e intención son texto libre (vienen del universo de prompts de BCP).\n// Estas listas solo son sugerencias para un formulario.\nconst CATEGORIAS = ['Reputación', 'Producto', 'Digital', 'Otra'];\nconst INTENCIONES = ['Informacional', 'Comparativa', 'Transaccional', 'Reputacional', 'Navegacional'];\n\nfunction activoDe(v) {\n  if (typeof v === 'boolean') return v;\n  const s = String(v == null ? '' : v).trim().toLowerCase();\n  if (s === '') return true;\n  return ['true', 'verdadero', '1', 'si', 'sí', 'x'].includes(s);\n}\n\nfunction normalizarPrompt(f) {\n  return {\n    id: String(f.id || '').trim(),\n    proyecto: String(f.proyecto || '').trim() || 'Sin proyecto',\n    prompt: String(f.prompt || '').trim(),\n    categoria: String(f.categoria || '').trim() || 'Otra',\n    intencion: String(f.intencion || '').trim(),\n    activo: activoDe(f.activo),\n    fecha_creacion: String(f.fecha_creacion || f.creado || '')\n  };\n}\n\nfunction listarPrompts(filas) {\n  const prompts = filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .sort((a, b) => b.fecha_creacion.localeCompare(a.fecha_creacion) || b.id.localeCompare(a.id));\n  const proyectos = [...new Set(prompts.map(p => p.proyecto))].sort();\n  const unicos = (base, campo) => [...new Set(base.concat(prompts.map(p => p[campo]).filter(Boolean)))].sort();\n  return {\n    prompts, proyectos,\n    categorias: unicos(CATEGORIAS, 'categoria'), intenciones: unicos(INTENCIONES, 'intencion'),\n    total: prompts.length, activos: prompts.filter(p => p.activo).length\n  };\n}\n\n// Devuelve la fila que hay que escribir (solo con las columnas que cambian,\n// para que «Agregar o actualizar» no pise fecha_creacion al editar) o un error.\n// hoy: AAAA-MM-DD en Lima.\nfunction prepararGuardado(body, hoy, idNuevo) {\n  body = body || {};\n  const id = String(body.id || '').trim();\n  if (body.accion === 'eliminar') {\n    if (!id) return { ok: false, error: 'Falta el id del prompt a eliminar.' };\n    return { ok: true, accion: 'eliminar', fila: { id, activo: false } };\n  }\n  const prompt = String(body.prompt || '').trim();\n  const fila = { id: id || idNuevo };\n  if (!id || body.prompt !== undefined) {\n    if (!prompt) return { ok: false, error: 'El prompt no puede estar vacío.' };\n    if (prompt.length > 2000) return { ok: false, error: 'El prompt pasa de 2.000 caracteres.' };\n    fila.prompt = prompt;\n  }\n  if (!id || body.proyecto !== undefined) fila.proyecto = String(body.proyecto || '').trim() || 'Sin proyecto';\n  if (!id || body.categoria !== undefined) {\n    fila.categoria = String(body.categoria || '').trim().slice(0, 80) || 'Otra';\n  }\n  if (body.intencion !== undefined) fila.intencion = String(body.intencion || '').trim().slice(0, 40);\n  if (!id || body.activo !== undefined) fila.activo = activoDe(body.activo);\n  if (!id) fila.fecha_creacion = hoy;\n  return { ok: true, accion: id ? 'editar' : 'crear', fila };\n}\n\n// Qué prompts entran en la corrida: los activos, y si llegan prompt_ids o\n// proyecto, solo esos. Un prompt_id pedido a mano corre aunque esté inactivo.\nfunction elegirPrompts(filas, peticion) {\n  peticion = peticion || {};\n  const ids = Array.isArray(peticion.prompt_ids) ? peticion.prompt_ids.map(String) : [];\n  return filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .filter(p => (ids.length ? ids.includes(p.id) : p.activo))\n    .filter(p => !peticion.proyecto || p.proyecto === peticion.proyecto);\n}\n\nlet body = $('Webhook geo-prompts-save').first().json.body || {};\nif (typeof body === 'string') { try { body = JSON.parse(body); } catch (e) { body = {}; } }\nconst hoy = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Lima' });\nconst idNuevo = 'p_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);\nconst r = prepararGuardado(body, hoy, idNuevo);\n// Si es válido sale solo la fila a escribir; si no, el error.\nreturn [{ json: r.ok ? r.fila : { _error: r.error } }];\n"
+        "jsCode": "// Prompts: listar (/geo-prompts), validar lo que llega a /geo-prompts-save y\n// elegir cuáles entran en una corrida. Sin dependencias, como los otros dos.\n\n// Categoría e intención son texto libre (vienen del universo de prompts de BCP).\n// Estas listas solo son sugerencias para un formulario.\nconst CATEGORIAS = ['Reputación', 'Producto', 'Digital', 'Otra'];\nconst INTENCIONES = ['Informacional', 'Comparativa', 'Transaccional', 'Reputacional', 'Navegacional'];\n\nfunction activoDe(v) {\n  if (typeof v === 'boolean') return v;\n  const s = String(v == null ? '' : v).trim().toLowerCase();\n  if (s === '') return true;\n  return ['true', 'verdadero', '1', 'si', 'sí', 'x'].includes(s);\n}\n\nfunction normalizarPrompt(f) {\n  return {\n    id: String(f.id || '').trim(),\n    proyecto: String(f.proyecto || '').trim() || 'Sin proyecto',\n    prompt: String(f.prompt || '').trim(),\n    categoria: String(f.categoria || '').trim() || 'Otra',\n    intencion: String(f.intencion || '').trim(),\n    activo: activoDe(f.activo),\n    fecha_creacion: String(f.fecha_creacion || f.creado || '')\n  };\n}\n\nfunction listarPrompts(filas) {\n  const prompts = filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .sort((a, b) => b.fecha_creacion.localeCompare(a.fecha_creacion) || b.id.localeCompare(a.id));\n  const proyectos = [...new Set(prompts.map(p => p.proyecto))].sort();\n  const unicos = (base, campo) => [...new Set(base.concat(prompts.map(p => p[campo]).filter(Boolean)))].sort();\n  return {\n    prompts, proyectos,\n    categorias: unicos(CATEGORIAS, 'categoria'), intenciones: unicos(INTENCIONES, 'intencion'),\n    total: prompts.length, activos: prompts.filter(p => p.activo).length\n  };\n}\n\n// Devuelve la fila que hay que escribir (solo con las columnas que cambian,\n// para que «Agregar o actualizar» no pise fecha_creacion al editar) o un error.\n// hoy: AAAA-MM-DD en Lima.\nfunction prepararGuardado(body, hoy, idNuevo) {\n  body = body || {};\n  const id = String(body.id || '').trim();\n  if (body.accion === 'eliminar') {\n    if (!id) return { ok: false, error: 'Falta el id del prompt a eliminar.' };\n    return { ok: true, accion: 'eliminar', fila: { id, activo: false } };\n  }\n  const prompt = String(body.prompt || '').trim();\n  const fila = { id: id || idNuevo };\n  if (!id || body.prompt !== undefined) {\n    if (!prompt) return { ok: false, error: 'El prompt no puede estar vacío.' };\n    if (prompt.length > 2000) return { ok: false, error: 'El prompt pasa de 2.000 caracteres.' };\n    fila.prompt = prompt;\n  }\n  if (!id || body.proyecto !== undefined) fila.proyecto = String(body.proyecto || '').trim() || 'Sin proyecto';\n  if (!id || body.categoria !== undefined) {\n    fila.categoria = String(body.categoria || '').trim().slice(0, 80) || 'Otra';\n  }\n  if (body.intencion !== undefined) fila.intencion = String(body.intencion || '').trim().slice(0, 40);\n  if (!id || body.activo !== undefined) fila.activo = activoDe(body.activo);\n  if (!id) fila.fecha_creacion = hoy;\n  return { ok: true, accion: id ? 'editar' : 'crear', fila };\n}\n\n// Qué prompts entran en la corrida: los activos, y si llegan prompt_ids o\n// proyecto, solo esos. Un prompt_id pedido a mano corre aunque esté inactivo.\nfunction elegirPrompts(filas, peticion) {\n  peticion = peticion || {};\n  const ids = Array.isArray(peticion.prompt_ids) ? peticion.prompt_ids.map(String) : [];\n  return filas\n    .filter(f => f && f.id && String(f.prompt || '').trim())\n    .map(normalizarPrompt)\n    .filter(p => (ids.length ? ids.includes(p.id) : p.activo))\n    .filter(p => !peticion.proyecto || p.proyecto === peticion.proyecto);\n}\n\nlet body = $('Webhook geo-prompts-save').first().json.body || {};\nif (typeof body === 'string') { try { body = JSON.parse(body); } catch (e) { body = {}; } }\nconst hoy = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Lima' });\nconst idNuevo = 'p_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);\nconst r = prepararGuardado(body, hoy, idNuevo);\n// Sale solo la fila a escribir, o {_borrar: id}, o {_error}.\nif (!r.ok) return [{ json: { _error: r.error } }];\nreturn [{ json: r.accion === 'eliminar' ? { _borrar: r.fila.id } : r.fila }];\n"
       }
     },
     {
-      "id": "a6e3a93a-3120-4720-a85c-de8d0c03aee8",
-      "name": "¿Válido?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2,
+      "id": "3522130e-4e9e-4fcc-a8a2-5c697e5b5e2d",
+      "name": "¿Qué hacer?",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
       "position": [
         460,
         440
       ],
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "loose"
-          },
-          "conditions": [
+        "rules": {
+          "values": [
             {
-              "id": "4f9fc316-fa83-48f4-ad66-6dea0cdd8695",
-              "leftValue": "={{ !$json._error }}",
-              "rightValue": "",
-              "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
-              }
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose"
+                },
+                "conditions": [
+                  {
+                    "id": "5dd645ea-cb35-43d7-a82f-e3686eb71c2b",
+                    "leftValue": "={{ !$json._error && !$json._borrar }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "guardar"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose"
+                },
+                "conditions": [
+                  {
+                    "id": "ed1e1321-9029-4a75-a35d-bc70227f0554",
+                    "leftValue": "={{ !!$json._borrar }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "borrar"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose"
+                },
+                "conditions": [
+                  {
+                    "id": "4878fdaf-9494-4815-a309-e2dc66a54360",
+                    "leftValue": "={{ !!$json._error }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "error"
             }
-          ],
-          "combinator": "and"
+          ]
         },
         "options": {}
       }
@@ -266,13 +322,145 @@
       "typeVersion": 1.1,
       "position": [
         680,
-        520
+        800
       ],
       "parameters": {
         "respondWith": "json",
         "responseBody": "={{ JSON.stringify({ ok: false, error: $json._error }) }}",
         "options": {
           "responseCode": 400
+        }
+      }
+    },
+    {
+      "id": "03395ca8-25c3-43d1-a118-0e22a4d54cf1",
+      "name": "Leer prompts (borrar)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        680,
+        620
+      ],
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "prompts",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "alwaysOutputData": true,
+      "executeOnce": true
+    },
+    {
+      "id": "6e83cbfb-fec7-4604-a695-b6e53342c14c",
+      "name": "Fila a borrar",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        900,
+        620
+      ],
+      "parameters": {
+        "jsCode": "\nconst id = $('Validar prompt').first().json._borrar;\nconst fila = $input.all().map(i => i.json).find(f => String(f.id || '').trim() === id);\nreturn [{ json: fila ? { id, row_number: fila.row_number } : { id, _error: 'No existe el prompt ' + id } }];\n"
+      }
+    },
+    {
+      "id": "bf7b3bd5-dc54-45b5-a097-de43dd3a74ae",
+      "name": "¿Existe?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        620
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "3478b385-d874-4b33-a7d8-83745dd23312",
+              "leftValue": "={{ !$json._error && $json.row_number > 1 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "bcab11df-42a7-45b2-a274-8b196c4005bc",
+      "name": "Borrar fila",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1340,
+        560
+      ],
+      "parameters": {
+        "operation": "delete",
+        "documentId": {
+          "__rl": true,
+          "value": "PEGA_AQUI_EL_ID_DE_TU_GOOGLE_SHEET",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "prompts",
+          "mode": "name"
+        },
+        "toDelete": "rows",
+        "startIndex": "={{ $json.row_number }}",
+        "numberToDelete": 1
+      }
+    },
+    {
+      "id": "5895afa1-747b-4633-a3e7-080bf0a6c65d",
+      "name": "Responder borrado",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1560,
+        560
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ ok: true, accion: 'eliminar', id: $('Fila a borrar').first().json.id }) }}",
+        "options": {
+          "responseCode": 200
+        }
+      }
+    },
+    {
+      "id": "d1f5e604-96f9-4fb0-af4d-022e2ef54cf3",
+      "name": "Responder no existe",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1340,
+        700
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ ok: false, error: $json._error || 'No se encontró la fila' }) }}",
+        "options": {
+          "responseCode": 404
         }
       }
     },
@@ -456,18 +644,25 @@
       "main": [
         [
           {
-            "node": "¿Válido?",
+            "node": "¿Qué hacer?",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "¿Válido?": {
+    "¿Qué hacer?": {
       "main": [
         [
           {
             "node": "Guardar prompt",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Leer prompts (borrar)",
             "type": "main",
             "index": 0
           }
@@ -486,6 +681,57 @@
         [
           {
             "node": "Responder guardado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer prompts (borrar)": {
+      "main": [
+        [
+          {
+            "node": "Fila a borrar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fila a borrar": {
+      "main": [
+        [
+          {
+            "node": "¿Existe?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Existe?": {
+      "main": [
+        [
+          {
+            "node": "Borrar fila",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Responder no existe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Borrar fila": {
+      "main": [
+        [
+          {
+            "node": "Responder borrado",
             "type": "main",
             "index": 0
           }

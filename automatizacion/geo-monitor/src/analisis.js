@@ -84,7 +84,8 @@ function juntarRespuestas(prompt, apis) {
     chatgpt: apis.chatgpt, claude: apis.claude, gemini: apis.gemini,
     perplexity: apis.perplexity, ai_overview: aio
   };
-  return Object.keys(crudas).map(motor => {
+  // Un motor apagado (por ejemplo SerpAPI) no viene en `apis`: no genera fila.
+  return Object.keys(crudas).filter(motor => crudas[motor] !== undefined).map(motor => {
     const e = extraerRespuesta(motor, crudas[motor]);
     const fuentes = [];
     for (const f of e.fuentes) {

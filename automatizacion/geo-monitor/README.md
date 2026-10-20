@@ -29,9 +29,13 @@ Webhook geo-run┴→ Leer prompts      ├→ Claude ────────�
 - **AI Overview** a veces necesita una segunda llamada (`page_token`). Si no
   hace falta, el nodo consulta `locations.json` de SerpAPI, que no gasta
   búsquedas y no devuelve datos de la cuenta.
+- **SerpAPI (AI Overview) está apagado** desde el 20/10. Lo controla
+  `SERPAPI_ACTIVO` en `build.mjs`: apagado, los nodos de Google no existen, el
+  Merge espera 4 ramas y no se escriben filas de `ai_overview`. Para
+  encenderlo, ponerlo en `true` y correr `build.mjs` y `publicar.mjs`.
 - **Juntar respuestas** saca de cada API el texto y los dominios citados, y deja
-  5 items por prompt, uno por motor.
-- **Analista IA** es un Information Extractor con Claude Haiku 4.5 (credencial
+  un item por prompt y motor encendido.
+- **Analista IA** es un Information Extractor con Claude Haiku 5.5 (credencial
   LLM BCP). Lee cada respuesta y devuelve `menciona_bcp`, `posicion_bcp`,
   `sentimiento` (-1 a 1), `marcas_mencionadas` y dos conteos para el SOV:
   `n_menciones_bcp` y `n_menciones_bancos`.
@@ -51,8 +55,10 @@ tiene un endpoint por fila:
   n_menciones_bancos × 100`.
 - `geo-dashboard`: los KPIs ya calculados. Sirve para otro front o para
   consultarlos a mano.
-- `geo-prompts` y `geo-prompts-save`: listar y editar prompts. El front actual
-  no tiene esa pantalla; se editan en el Sheet.
+- `geo-prompts` y `geo-prompts-save`: listar, crear, editar, activar o
+  desactivar y **eliminar** prompts (eliminar borra la fila del Sheet; sus
+  mediciones anteriores se conservan). La pantalla del front se pide con
+  `front/INSTRUCCIONES-CHATGPT.md`.
 
 ## Archivos
 
@@ -84,8 +90,10 @@ tiene un endpoint por fila:
 
 ## Cambiar algo
 
-- **Modelos de los motores:** en el body de cada nodo HTTP. Son
-  `gpt-4o-search-preview`, `claude-sonnet-4-5`, `gemini-2.5-flash` y `sonar`.
+- **Modelos de los motores:** en el body de cada nodo HTTP. Desde el 20/10, los
+  más baratos: `gpt-4o-mini-search-preview` (búsqueda `low`),
+  `claude-sonnet-5-5` (esfuerzo `low`), `gemini-2.5-flash-lite` y `sonar`
+  (búsqueda `low`).
 - **Modelo del analista:** en el nodo **Claude · analista**.
 - **Marca, alias, dominios propios y competidores:** en `src/config.js`. Después
   se corren `build.mjs` y `publicar.mjs`. Si se cambian a mano en n8n, hay que
@@ -102,11 +110,12 @@ tiene un endpoint por fila:
   respuesta sin mención. Aparte se informa `presencia_ai_overview`.
 - **Variación:** puntos porcentuales del último día con datos frente al día con
   datos anterior.
-- **«Eliminar» un prompt** solo lo desactiva. Un `prompt_id` pedido a mano en
-  `/geo-run` corre aunque esté inactivo.
-- **Costo:** por prompt son 4 llamadas a modelos, 1 o 2 búsquedas en SerpAPI y
-  5 análisis con Claude Haiku. Con 6 prompts al día son unas 30 consultas
-  pagadas más 30 análisis baratos.
+- **«Eliminar» un prompt** borra su fila del Sheet; para pausarlo sin
+  borrarlo, se desactiva. Un `prompt_id` pedido a mano en `/geo-run` corre
+  aunque esté inactivo.
+- **Costo:** por prompt son 4 llamadas a modelos y hasta 5 análisis con Claude
+  Haiku 5.5 (más 1 o 2 búsquedas en SerpAPI si se enciende). Con 150 prompts,
+  cada medición ronda los US$ 5–10 con los modelos baratos.
 - **Seguridad:** los webhooks quedan abiertos, sin autenticación y con CORS `*`.
   Está bien para un prototipo. Si va a salir del equipo, conviene ponerles
   Header Auth.

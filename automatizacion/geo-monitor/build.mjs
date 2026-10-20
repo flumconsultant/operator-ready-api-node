@@ -90,6 +90,11 @@ return elegirPrompts($input.all().map(i => i.json), peticion).map(p => ({
 // Cada prompt sale en paralelo a los 5 motores. Cada motor recibe solo el
 // prompt, tal cual, sin la respuesta de ningún otro.
 const PROMPT = `$json.prompt`;
+
+// AI Overview (SerpAPI) apagado el 20/10 a pedido: se vuelve a encender
+// poniendo true, y corriendo build.mjs y publicar.mjs. Apagado, la corrida no
+// llama a SerpAPI y no escribe filas de ai_overview (no cuentan como error).
+const SERPAPI_ACTIVO = process.env.GEO_SERPAPI ? process.env.GEO_SERPAPI === '1' : false;
 const http = (name, position, params) =>
   corrida.node(name, 'n8n-nodes-base.httpRequest', 4.2, position, {
     ...params,
@@ -101,58 +106,61 @@ const serpApi = { authentication: 'predefinedCredentialType', nodeCredentialType
 
 http('ChatGPT', [700, -200], {
   method: 'POST', url: 'https://api.openai.com/v1/chat/completions', ...headerAuth,
-  ...body(`{ model: 'gpt-4o-search-preview', web_search_options: { user_location: { type: 'approximate', approximate: { country: 'PE', city: 'Lima', timezone: 'America/Lima' } } }, messages: [{ role: 'user', content: ${PROMPT} }] }`)
+  ...body(`{ model: 'gpt-4o-mini-search-preview', web_search_options: { search_context_size: 'low', user_location: { type: 'approximate', approximate: { country: 'PE', city: 'Lima', timezone: 'America/Lima' } } }, messages: [{ role: 'user', content: ${PROMPT} }] }`)
 });
 http('Claude', [700, 0], {
   method: 'POST', url: 'https://api.anthropic.com/v1/messages',
   authentication: 'predefinedCredentialType', nodeCredentialType: 'anthropicApi',
   sendHeaders: true, headerParameters: { parameters: [{ name: 'anthropic-version', value: '2023-06-01' }] },
-  ...body(`{ model: 'claude-sonnet-4-5', max_tokens: 2000, messages: [{ role: 'user', content: ${PROMPT} }] }`)
+  ...body(`{ model: 'claude-sonnet-5-5', max_tokens: 2000, output_config: { effort: 'low' }, messages: [{ role: 'user', content: ${PROMPT} }] }`)
 });
 http('Gemini', [700, 200], {
-  method: 'POST', url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
+  method: 'POST', url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent',
   authentication: 'predefinedCredentialType', nodeCredentialType: 'googlePalmApi',
   ...body(`{ contents: [{ role: 'user', parts: [{ text: ${PROMPT} }] }], tools: [{ google_search: {} }] }`)
 });
 http('Perplexity', [700, 400], {
   method: 'POST', url: 'https://api.perplexity.ai/chat/completions', ...headerAuth,
-  ...body(`{ model: 'sonar', web_search_options: { user_location: { country: 'PE' } }, messages: [{ role: 'user', content: ${PROMPT} }] }`)
+  ...body(`{ model: 'sonar', web_search_options: { search_context_size: 'low', user_location: { country: 'PE' } }, messages: [{ role: 'user', content: ${PROMPT} }] }`)
 });
-http('Google (SerpAPI)', [700, 600], {
-  method: 'GET', url: 'https://serpapi.com/search.json', ...serpApi,
-  sendQuery: true, queryParameters: { parameters: [
-    { name: 'engine', value: 'google' },
-    { name: 'q', value: `={{ ${PROMPT} }}` },
-    { name: 'google_domain', value: 'google.com.pe' },
-    { name: 'gl', value: 'pe' },
-    { name: 'hl', value: 'es' }
-  ] }
-});
-// A veces Google carga el AI Overview aparte y SerpAPI devuelve un page_token.
-// Si no hay token, se consulta locations.json: es gratis, no gasta búsquedas y,
-// a diferencia de account.json, no devuelve la API key ni el email de la cuenta.
-const PIDE_PAGINA = `($json.ai_overview && $json.ai_overview.page_token && !($json.ai_overview.text_blocks || []).length)`;
-http('AI Overview (página)', [920, 600], {
-  method: 'GET', url: `={{ ${PIDE_PAGINA} ? 'https://serpapi.com/search.json' : 'https://serpapi.com/locations.json?q=Lima&limit=1' }}`, ...serpApi,
-  sendQuery: true, queryParameters: { parameters: [
-    { name: 'engine', value: 'google_ai_overview' },
-    { name: 'page_token', value: `={{ ($json.ai_overview || {}).page_token || '' }}` }
-  ] }
-});
+if (SERPAPI_ACTIVO) {
+  http('Google (SerpAPI)', [700, 600], {
+    method: 'GET', url: 'https://serpapi.com/search.json', ...serpApi,
+    sendQuery: true, queryParameters: { parameters: [
+      { name: 'engine', value: 'google' },
+      { name: 'q', value: `={{ ${PROMPT} }}` },
+      { name: 'google_domain', value: 'google.com.pe' },
+      { name: 'gl', value: 'pe' },
+      { name: 'hl', value: 'es' }
+    ] }
+  });
+  // A veces Google carga el AI Overview aparte y SerpAPI devuelve un page_token.
+  // Si no hay token, se consulta locations.json: es gratis, no gasta búsquedas y,
+  // a diferencia de account.json, no devuelve la API key ni el email de la cuenta.
+  const PIDE_PAGINA = `($json.ai_overview && $json.ai_overview.page_token && !($json.ai_overview.text_blocks || []).length)`;
+  http('AI Overview (página)', [920, 600], {
+    method: 'GET', url: `={{ ${PIDE_PAGINA} ? 'https://serpapi.com/search.json' : 'https://serpapi.com/locations.json?q=Lima&limit=1' }}`, ...serpApi,
+    sendQuery: true, queryParameters: { parameters: [
+      { name: 'engine', value: 'google_ai_overview' },
+      { name: 'page_token', value: `={{ ($json.ai_overview || {}).page_token || '' }}` }
+    ] }
+  });
+}
 
-// Espera a que terminen las 5 ramas.
-corrida.node('Esperar a los 5 motores', 'n8n-nodes-base.merge', 3, [1160, 100], { numberInputs: 5 });
+// Espera a que terminen todas las ramas.
+const RAMAS = ['ChatGPT', 'Claude', 'Gemini', 'Perplexity'].concat(SERPAPI_ACTIVO ? ['AI Overview (página)'] : []);
+corrida.node('Esperar a los motores', 'n8n-nodes-base.merge', 3, [1160, 100], { numberInputs: RAMAS.length });
 
 code(corrida, 'Juntar respuestas', [1380, 100], src('analisis.js') + `
-// Un item por prompt y motor (5 por prompt). Cada nodo HTTP devuelve una
+// Un item por prompt y motor encendido. Cada nodo HTTP devuelve una
 // respuesta por prompt y en el mismo orden, así que el índice los empareja.
 const prompts = $('Elegir prompts').all();
 const salida = [];
 prompts.forEach((p, i) => {
   const de = n => { const r = $(n).all()[i]; return r ? r.json : { error: 'Sin respuesta de ' + n }; };
   const apis = {
-    chatgpt: de('ChatGPT'), claude: de('Claude'), gemini: de('Gemini'), perplexity: de('Perplexity'),
-    google: de('Google (SerpAPI)'), ai_overview_pagina: de('AI Overview (página)')
+    chatgpt: de('ChatGPT'), claude: de('Claude'), gemini: de('Gemini'), perplexity: de('Perplexity')${SERPAPI_ACTIVO ? `,
+    google: de('Google (SerpAPI)'), ai_overview_pagina: de('AI Overview (página)')` : ''}
   };
   for (const r of juntarRespuestas(p.json, apis)) salida.push({ json: r });
 });
@@ -181,10 +189,11 @@ corrida.node('Analista IA', '@n8n/n8n-nodes-langchain.informationExtractor', 1.2
     systemPromptTemplate: 'Analizas respuestas de asistentes de IA a preguntas sobre bancos en Perú, para medir la visibilidad de ' + CONFIG.marca.nombre + '. Te basas solo en el texto de la respuesta: no supongas ni completes nada que no esté escrito. Si la respuesta está vacía, ningún banco aparece.'
   }
 }, { onError: 'continueRegularOutput' });
-// Claude Haiku: barato y rápido. (La credencial GEMINI BCP se quedó sin saldo el 20/10.)
+// Claude Haiku 5.5: el más barato (US$ 0,10 / 0,50 por millón de tokens).
+// Sin temperature: Haiku 5.5 rechaza valores de muestreo distintos al de fábrica.
 corrida.node('Claude · analista', '@n8n/n8n-nodes-langchain.lmChatAnthropic', 1.3, [1600, 320], {
-  model: { __rl: true, mode: 'list', value: 'claude-haiku-4-5-20251001', cachedResultName: 'Claude Haiku 4.5' },
-  options: { temperature: 0 }
+  model: { __rl: true, mode: 'id', value: 'claude-haiku-5-5' },
+  options: {}
 });
 corrida.link('Claude · analista', 'Analista IA', 0, 'ai_languageModel');
 
@@ -200,11 +209,10 @@ sheet(corrida, 'Guardar resultados', [2040, 100], 'append', 'resultados', {
 corrida.link('Cada día 7:00 (Lima)', 'Leer prompts');
 corrida.link('Webhook geo-run', 'Leer prompts');
 corrida.chain('Leer prompts', 'Elegir prompts');
-for (const m of ['ChatGPT', 'Claude', 'Gemini', 'Perplexity', 'Google (SerpAPI)']) corrida.link('Elegir prompts', m);
-corrida.link('Google (SerpAPI)', 'AI Overview (página)');
-['ChatGPT', 'Claude', 'Gemini', 'Perplexity', 'AI Overview (página)']
-  .forEach((m, i) => corrida.link(m, 'Esperar a los 5 motores', 0, 'main', i));
-corrida.chain('Esperar a los 5 motores', 'Juntar respuestas', 'Analista IA', 'Armar fila', 'Guardar resultados');
+for (const m of ['ChatGPT', 'Claude', 'Gemini', 'Perplexity'].concat(SERPAPI_ACTIVO ? ['Google (SerpAPI)'] : [])) corrida.link('Elegir prompts', m);
+if (SERPAPI_ACTIVO) corrida.link('Google (SerpAPI)', 'AI Overview (página)');
+RAMAS.forEach((m, i) => corrida.link(m, 'Esperar a los motores', 0, 'main', i));
+corrida.chain('Esperar a los motores', 'Juntar respuestas', 'Analista IA', 'Armar fila', 'Guardar resultados');
 
 // ═══ GEO · API ═════════════════════════════════════════════════════════════
 const api = workflow('GEO TRACKER BCP · API');
@@ -238,24 +246,64 @@ if (typeof body === 'string') { try { body = JSON.parse(body); } catch (e) { bod
 const hoy = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Lima' });
 const idNuevo = 'p_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 const r = prepararGuardado(body, hoy, idNuevo);
-// Si es válido sale solo la fila a escribir; si no, el error.
-return [{ json: r.ok ? r.fila : { _error: r.error } }];
+// Sale solo la fila a escribir, o {_borrar: id}, o {_error}.
+if (!r.ok) return [{ json: { _error: r.error } }];
+return [{ json: r.accion === 'eliminar' ? { _borrar: r.fila.id } : r.fila }];
 `);
-api.node('¿Válido?', 'n8n-nodes-base.if', 2, [460, 440], {
+const regla = (clave, expr) => ({
   conditions: {
     options: { caseSensitive: true, leftValue: '', typeValidation: 'loose' },
-    conditions: [{ id: uuid('valido'), leftValue: '={{ !$json._error }}', rightValue: '', operator: { type: 'boolean', operation: 'true', singleValue: true } }],
+    conditions: [{ id: uuid('accion:' + clave), leftValue: expr, rightValue: '', operator: { type: 'boolean', operation: 'true', singleValue: true } }],
     combinator: 'and'
   },
+  renameOutput: true,
+  outputKey: clave
+});
+api.node('¿Qué hacer?', 'n8n-nodes-base.switch', 3, [460, 440], {
+  rules: { values: [
+    regla('guardar', '={{ !$json._error && !$json._borrar }}'),
+    regla('borrar', '={{ !!$json._borrar }}'),
+    regla('error', '={{ !!$json._error }}')
+  ] },
   options: {}
 });
 sheet(api, 'Guardar prompt', [680, 380], 'appendOrUpdate', 'prompts', {
   columns: { mappingMode: 'autoMapInputData', value: {}, matchingColumns: ['id'], schema: [] }
 });
 responderJson(api, 'Responder guardado', [900, 380], `={{ JSON.stringify({ ok: true, prompt: $('Validar prompt').first().json }) }}`);
-responderJson(api, 'Responder error', [680, 520], `={{ JSON.stringify({ ok: false, error: $json._error }) }}`, 400);
-api.chain('Webhook geo-prompts-save', 'Validar prompt', '¿Válido?', 'Guardar prompt', 'Responder guardado');
-api.link('¿Válido?', 'Responder error', 1);
+responderJson(api, 'Responder error', [680, 800], `={{ JSON.stringify({ ok: false, error: $json._error }) }}`, 400);
+api.chain('Webhook geo-prompts-save', 'Validar prompt', '¿Qué hacer?', 'Guardar prompt', 'Responder guardado');
+api.link('¿Qué hacer?', 'Responder error', 2);
+
+// Eliminar borra la fila de la hoja prompts. Sus resultados se quedan en la
+// hoja resultados y el monitor los sigue mostrando.
+sheet(api, 'Leer prompts (borrar)', [680, 620], 'read', 'prompts', {}, { executeOnce: true });
+code(api, 'Fila a borrar', [900, 620], `
+const id = $('Validar prompt').first().json._borrar;
+const fila = $input.all().map(i => i.json).find(f => String(f.id || '').trim() === id);
+return [{ json: fila ? { id, row_number: fila.row_number } : { id, _error: 'No existe el prompt ' + id } }];
+`);
+api.node('¿Existe?', 'n8n-nodes-base.if', 2, [1120, 620], {
+  conditions: {
+    options: { caseSensitive: true, leftValue: '', typeValidation: 'loose' },
+    conditions: [{ id: uuid('existe'), leftValue: '={{ !$json._error && $json.row_number > 1 }}', rightValue: '', operator: { type: 'boolean', operation: 'true', singleValue: true } }],
+    combinator: 'and'
+  },
+  options: {}
+});
+api.node('Borrar fila', 'n8n-nodes-base.googleSheets', 4.5, [1340, 560], {
+  operation: 'delete',
+  documentId: { __rl: true, value: SHEET_ID, mode: 'id' },
+  sheetName: { __rl: true, value: 'prompts', mode: 'name' },
+  toDelete: 'rows',
+  startIndex: '={{ $json.row_number }}',
+  numberToDelete: 1
+});
+responderJson(api, 'Responder borrado', [1560, 560], `={{ JSON.stringify({ ok: true, accion: 'eliminar', id: $('Fila a borrar').first().json.id }) }}`);
+responderJson(api, 'Responder no existe', [1340, 700], `={{ JSON.stringify({ ok: false, error: $json._error || 'No se encontró la fila' }) }}`, 404);
+api.link('¿Qué hacer?', 'Leer prompts (borrar)', 1);
+api.chain('Leer prompts (borrar)', 'Fila a borrar', '¿Existe?', 'Borrar fila', 'Responder borrado');
+api.link('¿Existe?', 'Responder no existe', 1);
 
 // GET /geo-monitor-data: lo que lee el front «BCP · Monitor de Visibilidad en IA»
 webhook(api, 'Webhook geo-monitor-data', 'GET', 'geo-monitor-data', [0, 700]);
@@ -271,8 +319,10 @@ return [{ json: construirMonitor(resultados, prompts, CONFIG, hoy) }];
 api.node('Responder monitor', 'n8n-nodes-base.respondToWebhook', 1.1, [900, 700], { respondWith: 'firstIncomingItem', options: {} });
 api.chain('Webhook geo-monitor-data', 'Leer resultados (monitor)', 'Leer prompts (monitor)', 'Datos del monitor', 'Responder monitor');
 
+// GEO_BUILD_OUT: carpeta de salida alternativa (test.mjs arma ahí la versión con SerpAPI).
+const salida = process.env.GEO_BUILD_OUT ? new URL('file://' + process.env.GEO_BUILD_OUT.replace(/\/?$/, '/')) : dir;
 for (const [archivo, w] of [['geo-corrida.n8n.json', corrida], ['geo-api.n8n.json', api]]) {
   const j = w.json();
-  writeFileSync(new URL(archivo, dir), JSON.stringify(j, null, 2) + '\n');
-  console.log(`${archivo}: ${j.nodes.length} nodos`);
+  writeFileSync(new URL(archivo, salida), JSON.stringify(j, null, 2) + '\n');
+  if (!process.env.GEO_BUILD_OUT) console.log(`${archivo}: ${j.nodes.length} nodos`);
 }

@@ -3,12 +3,21 @@
 // cada motor. El Analista IA se simula con lo que devolvería el Information
 // Extractor ({output: {...}}).
 //   node automatizacion/geo-monitor/test.mjs
-import { readFileSync } from 'node:fs';
+import { readFileSync, mkdtempSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 
+// Lo publicado (SerpAPI apagado) y una versión con SerpAPI encendido, armada
+// aparte, para seguir probando AI Overview.
 const cargar = f => JSON.parse(readFileSync(new URL(f, import.meta.url), 'utf8'));
-const corrida = cargar('geo-corrida.n8n.json');
+const publicado = cargar('geo-corrida.n8n.json');
 const api = cargar('geo-api.n8n.json');
+const tmp = mkdtempSync(join(tmpdir(), 'geo-'));
+execFileSync(process.execPath, [fileURLToPath(new URL('build.mjs', import.meta.url))], { env: { ...process.env, GEO_SERPAPI: '1', GEO_BUILD_OUT: tmp } });
+const corrida = JSON.parse(readFileSync(join(tmp, 'geo-corrida.n8n.json'), 'utf8'));
 
 // Ejecuta un nodo Code. `salidas`: datos de nodos ya ejecutados ({nombre: [json]}),
 // alineados por índice con `entrada`, como los deja n8n con pairedItem.
@@ -159,12 +168,12 @@ prueba('Armar fila: si el motor no respondió, no cuenta lo que diga la IA', () 
   assert.deepEqual([fila.estado, fila.menciona_bcp, fila.marcas_mencionadas], ['error', false, '']);
 });
 
-prueba('Corrida: los 5 motores en paralelo, un Merge y luego en línea hasta el Sheet', () => {
+prueba('Corrida con SerpAPI: los 5 motores en paralelo, un Merge y luego en línea hasta el Sheet', () => {
   const sale = n => corrida.connections[n].main[0].map(l => l.node);
   assert.deepEqual(sale('Leer prompts'), ['Elegir prompts']);
   assert.deepEqual(sale('Elegir prompts').sort(), ['ChatGPT', 'Claude', 'Gemini', 'Google (SerpAPI)', 'Perplexity']);
   assert.deepEqual(sale('Google (SerpAPI)'), ['AI Overview (página)']);
-  const merge = 'Esperar a los 5 motores';
+  const merge = 'Esperar a los motores';
   const entradas = ['ChatGPT', 'Claude', 'Gemini', 'Perplexity', 'AI Overview (página)']
     .map(m => corrida.connections[m].main[0].find(l => l.node === merge).index);
   assert.deepEqual(entradas, [0, 1, 2, 3, 4], 'cada motor entra por su propia entrada del Merge');
@@ -181,6 +190,26 @@ prueba('Corrida: los 5 motores en paralelo, un Merge y luego en línea hasta el 
       assert.deepEqual([...new Set(usa)], ['$json.prompt'], n.name);
     }
   }
+});
+
+prueba('Corrida publicada: SerpAPI apagado, 4 motores y sin filas de AI Overview', () => {
+  const nombres = publicado.nodes.map(n => n.name);
+  assert.ok(!nombres.includes('Google (SerpAPI)') && !nombres.includes('AI Overview (página)'), 'no llama a SerpAPI');
+  assert.equal(publicado.nodes.find(n => n.name === 'Esperar a los motores').parameters.numberInputs, 4);
+  assert.deepEqual(publicado.connections['Elegir prompts'].main[0].map(l => l.node).sort(), ['ChatGPT', 'Claude', 'Gemini', 'Perplexity']);
+  const r = correr(publicado, 'Juntar respuestas', prompts.map(() => ({})), {
+    'Elegir prompts': prompts, ChatGPT: repetir(apis.chatgpt), Claude: repetir(apis.claude),
+    Gemini: repetir(apis.gemini), Perplexity: repetir(apis.perplexity)
+  });
+  assert.equal(r.length, prompts.length * 4);
+  assert.ok(!r.some(x => x.motor === 'ai_overview'), 'apagado no es error: simplemente no hay fila');
+  const cuerpo = n => publicado.nodes.find(x => x.name === n).parameters;
+  assert.match(cuerpo('ChatGPT').jsonBody, /gpt-4o-mini-search-preview/);
+  assert.match(cuerpo('Claude').jsonBody, /claude-sonnet-5-5/);
+  assert.match(cuerpo('Gemini').url, /gemini-2\.5-flash-lite/);
+  const analista = publicado.nodes.find(n => n.name === 'Claude · analista').parameters;
+  assert.equal(analista.model.value, 'claude-haiku-5-5');
+  assert.deepEqual(analista.options, {}, 'sin temperature: Haiku 5.5 la rechaza');
 });
 
 // ─── GEO · API ─────────────────────────────────────────────────────────────
@@ -206,7 +235,16 @@ prueba('/geo-prompts-save crea, edita sin pisar fecha_creacion, elimina y rechaz
   const editar = guardar({ id: 'p001', prompt: 'nuevo', categoria: 'Requisitos y apertura', intencion: 'Transaccional' });
   assert.deepEqual([editar.categoria, editar.intencion, editar.fecha_creacion], ['Requisitos y apertura', 'Transaccional', undefined]);
   assert.equal(guardar({ id: 'p001', categoria: '  ' }).categoria, 'Otra');
-  assert.deepEqual(guardar({ id: 'p001', accion: 'eliminar' }), { id: 'p001', activo: false });
+  assert.deepEqual(guardar({ id: 'p001', accion: 'eliminar' }), { _borrar: 'p001' }, 'eliminar borra la fila');
+  // Fila a borrar: busca el row_number que devuelve Google Sheets.
+  const fila = (id, hoja) => correr(api, 'Fila a borrar', hoja, { 'Validar prompt': [{ _borrar: id }] })[0];
+  const hoja = hojaPrompts.map((p, i) => ({ ...p, row_number: i + 2 }));
+  assert.deepEqual(fila('p002', hoja), { id: 'p002', row_number: 3 });
+  assert.match(fila('nada', hoja)._error, /No existe/);
+  const ruta = api.connections['¿Qué hacer?'].main.map(o => o.map(l => l.node));
+  assert.deepEqual(ruta, [['Guardar prompt'], ['Leer prompts (borrar)'], ['Responder error']]);
+  const borrar = api.nodes.find(n => n.name === 'Borrar fila').parameters;
+  assert.deepEqual([borrar.operation, borrar.toDelete, borrar.startIndex, borrar.numberToDelete], ['delete', 'rows', '={{ $json.row_number }}', 1]);
   assert.match(guardar({ prompt: '   ' })._error, /vacío/);
   assert.match(guardar({ accion: 'eliminar' })._error, /id/);
 });
