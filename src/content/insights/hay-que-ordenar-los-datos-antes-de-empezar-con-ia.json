@@ -1,0 +1,249 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-10-20",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "ai-native",
+  "formato": "perspective",
+  "es": {
+    "slug": "hay-que-ordenar-los-datos-antes-de-empezar-con-ia",
+    "titulo": "¿Hay que ordenar los datos antes de empezar con IA?",
+    "entradilla": "No todos, y no antes. Los datos se ordenan para un proceso concreto, y se empieza por el que ya tiene datos suficientes para probar si la IA aporta algo. Esperar a tener la casa en orden es la forma más cara de no empezar.",
+    "descripcion": "No hace falta ordenar todos los datos antes de empezar con IA. Se ordenan los de un proceso, con una regla para decidir cuándo bastan y cuándo esperar.",
+    "linkedin": {
+      "texto": "«Primero hay que ordenar los datos» es la frase que más proyectos de IA ha detenido, y casi nunca la dice quien tiene que entregar resultados.\n\nUn programa de datos para toda la empresa no termina nunca. Un proceso concreto sí tiene un punto en el que los datos bastan.\n\nUna regla de tres preguntas para decidir si se empieza ya o se espera.",
+      "hashtags": [
+        "IA",
+        "Datos",
+        "Estrategia"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "No todos, y no antes. Los datos se ordenan para un proceso concreto, y se empieza por el que ya tiene datos suficientes para probar si la IA aporta algo. Esperar a tener la casa en orden es la forma más cara de no empezar."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por cómo suele sonar esta conversación en un comité. Alguien propone un caso de uso de IA y otra persona, con buena intención, responde que antes hay que ordenar los datos. Nadie lo discute, porque es verdad en abstracto: los datos de casi toda empresa están repartidos entre sistemas, con definiciones distintas y campos que nadie completa. El resultado es un programa de calidad de datos de dieciocho meses del que el caso de uso espera, parado, a que termine."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Mi posición es que «ordenar los datos» es una frase demasiado grande para decidir nada. Lo que se puede decidir es si los datos de un proceso concreto bastan para probar una hipótesis concreta. Esa pregunta tiene respuesta en semanas y deja como subproducto justo los datos ordenados que de verdad se van a usar, que son una fracción de los que la empresa tiene."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El error de partida",
+        "texto": "Un programa de datos para toda la empresa no tiene fin, y un proceso concreto sí"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en el cierre contable de una empresa con varias filiales. Ordenar «los datos financieros» es un horizonte que se aleja cada vez que se acerca: aparece otro sistema, otra definición de cliente, otra excepción. Ordenar los datos de conciliación de facturas de una sola filial tiene un final visible, porque alguien puede decir cuándo una conciliación se hace bien y cuándo no. El primer plan depende del tamaño de la empresa. El segundo depende del tamaño del proceso."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay además una razón práctica para no esperar. Nadie sabe qué datos hacen falta hasta que algo intenta usarlos. Un piloto pequeño descubre en dos semanas qué campo viene vacío, qué catálogo está duplicado y qué sistema manda cuando dos se contradicen. Un programa de datos lo descubre en el mes catorce, o no lo descubre, y entonces se ordena lo que parecía importante en vez de lo que lo era."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La regla de decisión",
+        "texto": "¿Cuándo bastan los datos de un proceso? Cuando respondes tres preguntas con un sí"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La mayoría de las guías dicen que no hace falta tener datos perfectos y se detienen ahí, que es justo donde el directivo necesita la regla. Esta es la que yo usaría. Si las tres respuestas son afirmativas, se empieza; si falla una, se sabe cuál es el trabajo previo y es mucho más pequeño que «ordenar los datos»."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. ¿Existe una fuente que alguien reconoce como la correcta?",
+            "definicion": "No hace falta que sea perfecta, hace falta que una persona de la operación pueda decir «si hay duda, vale lo que dice este sistema». Cuando dos sistemas se contradicen y nadie sabe cuál manda, la IA heredará la discusión y la presentará con aplomo."
+          },
+          {
+            "termino": "2. ¿Se puede comprobar el resultado contra algo?",
+            "definicion": "Un historial de casos ya resueltos, una muestra revisada a mano, un estándar de calidad. Sin algo con lo que comparar, no hay manera de saber si la IA acierta, y la calidad de los datos deja de ser el problema: el problema es que no sabrás si funciona."
+          },
+          {
+            "termino": "3. ¿Hay alguien que arregle un error cuando aparezca?",
+            "definicion": "Los datos de un proceso vivo se degradan cada semana. Si cuando un campo viene mal no hay un dueño que lo corrija en la fuente, el piloto funcionará el primer mes y se deteriorará el tercero sin que nadie entienda por qué."
+          }
+        ]
+      },
+      {
+        "tipo": "cita",
+        "texto": "Los datos están listos para la IA cuando una persona de la operación puede decir cuál es la fuente correcta, cómo se comprueba un resultado y quién corrige un error.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Cuándo sí hay que esperar",
+        "texto": "Hay casos en los que ordenar primero es lo correcto, y se reconocen rápido"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Sería cómodo decir que siempre se puede empezar ya, y no es cierto. Hay que esperar cuando el proceso toma decisiones con consecuencias para clientes o empleados y la fuente de datos no es fiable, porque ahí un error ya no cuesta una conversación incómoda sino una reclamación. Y hay que esperar cuando falla la primera pregunta: si nadie sabe qué sistema manda, la IA no resuelve esa discusión, la oculta."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Pero incluso en esos casos, el trabajo previo es acotado. No se le pide a la empresa que ordene todo, se le pide que decida qué fuente manda para ese proceso y que designe a un responsable. Es una decisión de gobierno de dos o tres reuniones, no un programa de dieciocho meses, y suele ser el trabajo más útil que se hace antes de cualquier proyecto de IA."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Qué hacer esta semana",
+        "texto": "Elige el proceso con mejores datos, no el de mayor impacto, para el primer intento"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Para el primer caso conviene elegir el proceso que pasa las tres preguntas, aunque no sea el más vistoso. Un primer resultado bueno en un proceso modesto da algo que un programa de datos no da nunca: evidencia propia sobre qué aporta la IA en esa operación, y una lista real de lo que habría que arreglar para el siguiente. Con esa lista, el presupuesto de datos deja de ser un acto de fe y pasa a justificarse proceso por proceso."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Toma el caso de uso que más se ha pospuesto por falta de datos y haz las tres preguntas a la persona que opera ese proceso. Lo que responda te dirá si hay que esperar o si ya llevas meses esperando sin motivo."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Hay que ordenar los datos de la empresa antes de empezar con IA?",
+            "respuesta": "No todos. Hay que ordenar los datos del proceso concreto donde se va a probar la IA, y solo hasta que se pueda responder a tres preguntas: qué fuente es la correcta, cómo se comprueba un resultado y quién corrige un error. Un programa de datos para toda la empresa no tiene un final claro y detiene proyectos que podrían haber empezado."
+          },
+          {
+            "pregunta": "¿Cómo sé si mis datos son suficientes para empezar?",
+            "respuesta": "Son suficientes cuando una persona de la operación puede señalar cuál es la fuente correcta si dos sistemas se contradicen, existe un historial o una muestra revisada con la que comparar los resultados, y hay un responsable que corrige los errores en la fuente. No exigen perfección, exigen que esas tres cosas existan."
+          },
+          {
+            "pregunta": "¿Cuándo sí conviene esperar y ordenar primero?",
+            "respuesta": "Cuando el proceso toma decisiones con consecuencias para clientes o empleados y la fuente de datos no es fiable, o cuando nadie sabe qué sistema manda. En esos casos el trabajo previo es acotado: decidir qué fuente manda para ese proceso y nombrar a un responsable, no reordenar toda la empresa."
+          },
+          {
+            "pregunta": "¿Qué proceso conviene elegir para el primer intento con IA?",
+            "respuesta": "El que mejor responde a las tres preguntas sobre los datos, aunque no sea el de mayor impacto. Un resultado sólido en un proceso modesto da evidencia propia sobre lo que la IA aporta y una lista real de lo que habría que arreglar para el siguiente caso."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos si los datos de tu primer proceso están listos",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "do-you-have-to-sort-your-data-before-starting-with-ai",
+    "titulo": "Fix Your Data Before Starting With AI?",
+    "entradilla": "Not all of it, and not first. Data gets sorted for one specific process, and you start with the process whose data is already good enough to test whether AI adds anything. Waiting until the house is in order is the most expensive way not to start.",
+    "descripcion": "You do not need to fix all your data before starting with AI. Fix one process's data, with a rule for when it is good enough and when to wait.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Not all of it, and not first. Data gets sorted for one specific process, and you start with the process whose data is already good enough to test whether AI adds anything. Waiting until the house is in order is the most expensive way not to start."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Start with how this conversation usually sounds in a steering committee. Someone proposes an AI use case and someone else, with good intentions, answers that the data has to be sorted out first. Nobody argues, because in the abstract it is true: the data in almost every company is spread across systems, with different definitions and fields nobody fills in. The result is an eighteen-month data quality programme, with the use case parked until it finishes."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "My position is that \"sorting out the data\" is too big a phrase to decide anything with. What can be decided is whether the data for one specific process is good enough to test one specific hypothesis. That question has an answer within weeks, and it leaves behind, as a by-product, the very data that will actually be used, which is a fraction of what the company holds."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The starting mistake",
+        "texto": "A company-wide data programme never ends, and a single process does"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Think of the financial close in a company with several subsidiaries. Sorting out \"the financial data\" is a horizon that recedes each time you approach it: another system appears, another definition of customer, another exception. Sorting out the invoice reconciliation data of a single subsidiary has a visible end, because someone can say when a reconciliation is done well and when it is not. The first plan depends on the size of the company. The second depends on the size of the process."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "There is also a practical reason not to wait. Nobody knows which data is needed until something tries to use it. A small pilot finds out in two weeks which field arrives empty, which catalogue is duplicated and which system wins when two disagree. A data programme finds out in month fourteen, or never, and ends up fixing what looked important rather than what was."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The decision rule",
+        "texto": "When is one process's data enough? When you can answer yes to three questions"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Most guides say you do not need perfect data and stop there, which is exactly where an executive needs the rule. This is the one I would use. If all three answers are yes, you start; if one fails, you know what the preparatory work is, and it is far smaller than \"sort out the data\"."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Is there a source someone recognises as the right one?",
+            "definicion": "It does not have to be perfect. It has to be a source where someone in the operation can say \"if in doubt, this system wins\". When two systems contradict each other and nobody knows which one rules, the AI inherits the argument and delivers it with confidence."
+          },
+          {
+            "termino": "2. Can the result be checked against something?",
+            "definicion": "A history of cases already resolved, a sample reviewed by hand, a quality standard. Without something to compare against there is no way to know whether the AI is right, and data quality stops being the problem: the problem is that you will not know whether it works."
+          },
+          {
+            "termino": "3. Is someone there to fix an error when it appears?",
+            "definicion": "The data of a live process degrades every week. If, when a field comes through wrong, there is no owner who corrects it at the source, the pilot will work in the first month and deteriorate in the third without anyone understanding why."
+          }
+        ]
+      },
+      {
+        "tipo": "cita",
+        "texto": "Data is ready for AI when someone in the operation can say which source is right, how a result is checked and who fixes an error.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "When you should wait",
+        "texto": "In some cases sorting first is the right call, and they are quick to recognise"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "It would be comfortable to say you can always start now, and it is not true. You should wait when the process makes decisions with consequences for customers or employees and the data source is unreliable, because there a mistake no longer costs an awkward conversation but a complaint. And you should wait when the first question fails: if nobody knows which system rules, AI does not settle that argument, it hides it."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Even in those cases the preparatory work is bounded. The company is not asked to sort everything out. It is asked to decide which source rules for that process and to name an owner. That is a governance decision of two or three meetings, not an eighteen-month programme, and it is usually the most useful work done before any AI project."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "What to do this week",
+        "texto": "For the first attempt, choose the process with the best data, not the biggest impact"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "For the first case it pays to choose the process that passes the three questions, even if it is not the most eye-catching. A good first result in a modest process gives something a data programme never does: your own evidence on what AI adds in that operation, and a real list of what would need fixing for the next one. With that list, the data budget stops being an act of faith and is justified process by process."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take the use case most often postponed for lack of data and put the three questions to the person who runs that process. Their answers will tell you whether you need to wait or whether you have been waiting for months without a reason."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Do you have to sort out company data before starting with AI?",
+            "respuesta": "Not all of it. You need to sort the data for the specific process where AI will be tested, and only until three questions can be answered: which source is right, how a result is checked and who fixes an error. A company-wide data programme has no clear end and stops projects that could have started."
+          },
+          {
+            "pregunta": "How do I know if my data is good enough to start?",
+            "respuesta": "It is good enough when someone in the operation can point to the right source if two systems disagree, there is a history or a hand-reviewed sample to compare results against, and an owner fixes errors at the source. It does not demand perfection. It demands that those three things exist."
+          },
+          {
+            "pregunta": "When is it better to wait and sort the data first?",
+            "respuesta": "When the process makes decisions with consequences for customers or employees and the data source is unreliable, or when nobody knows which system rules. Even then the preparatory work is bounded: decide which source rules for that process and name an owner, not reorganise the whole company."
+          },
+          {
+            "pregunta": "Which process should I pick for a first attempt with AI?",
+            "respuesta": "The one that best answers the three data questions, even if it is not the one with the biggest impact. A solid result in a modest process gives you your own evidence of what AI adds and a real list of what to fix for the next case."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let us check whether your first process has the data it needs",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
