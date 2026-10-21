@@ -1,5 +1,15 @@
 # BCP · Monitor de Visibilidad en IA
 
+## Versión 16 · Histórico completo de Trinity
+
+- Las 13 corridas de Pymes (07-ago a 19-oct-2026, 780 respuestas) con texto completo y fuentes reales (5.775 fuentes y 3.109 links del export de Trinity, sin URLs repetidas por respuesta). Ahora entran en el explorador de citas, el mix de fuentes y la cobertura de dominio.
+- Cruce con el PDF: citas a viabcp.com y «pidió más datos» coinciden en las 780; una sola mención corregida (05-oct, ChatGPT, prompt 3: «Banco de Credito del Peru» sin tilde, que Trinity no detectó).
+- 07 y 10-ago: Gob.pe, SBS y Gestión no cuentan como marcas; la posición de BCP es solo entre bancos.
+- AI Overview sin bloque (prompt 1 en 7 fechas) queda como «sin AI Overview»; el 24-ago, prompt 7, como sin respuesta.
+- El visor de respuestas limpia los marcadores de imagen y escapes que traen las copias de las apps.
+- El front espera hasta 30 s la carga de datos (el histórico pesa ~1 MB comprimido).
+
+
 ## Versión 15 · Histórico de Trinity (Pymes)
 
 - Importadas al Sheet las 10 corridas de Trinity del PDF «Histórico 19-oct a 17-ago» (17-ago a 19-oct-2026): proyecto «Pymes» (20 prompts, inactivos) × ChatGPT, Gemini y Google AI Overview = 600 respuestas en las pestañas de fecha. Validadas contra el resumen del PDF: menciones por motor, citas a viabcp.com, 1.ª posición y posición promedio coinciden en las 10 fechas.

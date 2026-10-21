@@ -4,7 +4,7 @@
 (function () {
   'use strict';
   var API_URL = 'https://n8n.srv836595.hstgr.cloud/webhook/geo-monitor-data';
-  var ESPERA_MS = 15000;
+  var ESPERA_MS = 30000;
   function cargarScript(src) {
     return new Promise(function (ok, mal) {
       var s = document.createElement('script');
@@ -80,8 +80,8 @@
     })
     .then(function () { return cargarScript('monitor.js?v=v13'); })
     .then(function () { return cargarScript('prompts-admin.js?v=prompts-admin-1'); })
-    .then(function () { return cargarScript('geo-metrics.js?v=v15'); })
-    .then(function () { return cargarScript('geo-v2.js?v=v15'); })
+    .then(function () { return cargarScript('geo-metrics.js?v=v16'); })
+    .then(function () { return cargarScript('geo-v2.js?v=v16'); })
     .catch(function (e) {
       console.error('[GEO]', e);
       var vista = document.querySelector('#generalView');

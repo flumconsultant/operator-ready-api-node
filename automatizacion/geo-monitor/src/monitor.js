@@ -73,12 +73,14 @@ function observacion(f, config, meta) {
   const sources = Array.isArray(detalleFuentes) && detalleFuentes.length
     ? detalleFuentes.filter(c => c && c.domain).map((c, i) => ({ domain: c.domain, url: c.url || 'https://' + c.domain + '/', title: c.title || '', position: c.position || i + 1 }))
     : f.fuentes.map((d, i) => ({ domain: d, url: 'https://' + d + '/', title: '', position: i + 1 }));
-  // Histórico de Trinity: solo se sabe si citó viabcp.com (y cuántas veces), no
-  // qué otras fuentes usó. Esas filas no entran en el mix de fuentes ni en el
-  // explorador de URLs; cuentan en «citas de dominio propio».
+  // Histórico de Trinity: con el export de respuestas trae sus fuentes reales.
+  // Si una fila solo tiene el aviso «cita registrada por Trinity» (importada del
+  // PDF, sin lista de fuentes), no entra en el mix de fuentes ni en el explorador
+  // de URLs; cuenta en «citas de dominio propio».
   const trinity = String(f.run_id || '').startsWith('trinity_');
+  const sinLista = trinity && sources.length > 0 && sources.every(c => /cita registrada por Trinity/.test(c.title || ''));
   const citasPropias = sources.filter(c => esPropio(c.domain)).length;
-  if (trinity) sources.length = 0;
+  if (sinLista) sources.length = 0;
   const idxPropio = sources.findIndex(c => esPropio(c.domain));
   const sentimiento = menciona && f.sentimiento !== null ? f.sentimiento : null;
   return {
@@ -107,7 +109,7 @@ function observacion(f, config, meta) {
     brandMentioned: menciona,
     brandCited: !error && f.citado,
     sources,
-    sourcesComplete: !trinity,
+    sourcesComplete: !sinLista,
     searchQueries: leerJson(f.consultas_busqueda, []),
     country: (meta && meta.pais) || 'PE',
     tags: (meta && meta.tags) || [],

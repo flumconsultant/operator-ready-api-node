@@ -777,11 +777,15 @@ prueba('/geo-monitor-data: marca y competidores editados y ajustes vigentes', ()
 });
 
 prueba('/geo-monitor-data: las filas del histórico de Trinity se identifican por su run_id', () => {
-  const t = { ...hojaResultados[0], run_id: 'trinity_20261019', fecha: '2026-10-19', timestamp: '2026-10-19T12:00:00Z', respuesta: '' };
+  const t = { ...hojaResultados[0], run_id: 'trinity_20261019', fecha: '2026-10-19', timestamp: '2026-10-19T12:00:00Z', respuesta: '',
+    fuentes_detalle: JSON.stringify([{ url: 'https://www.viabcp.com/', title: 'viabcp.com (cita registrada por Trinity)', domain: 'viabcp.com', position: 1 }]) };
   const d = correr(api, 'Datos del monitor', [comoSheets({ prompts: hojaPrompts, resultados: [t, hojaResultados[1]] })], { 'Pestañas del Sheet (monitor)': [metaSheets(['Tarjetas', 'Reputación'])] })[0];
   assert.deepEqual(d.monitor.observations.map(o => o.source).sort(), ['Trinity · histórico importado', 'n8n · GEO Tracker']);
   const tr = d.monitor.observations.find(o => o.source.startsWith('Trinity'));
-  assert.deepEqual([tr.sources, tr.sourcesComplete], [[], false], 'sin lista de fuentes: fuera del mix de fuentes');
+  assert.deepEqual([tr.sources, tr.sourcesComplete, tr.citations], [[], false, 1], 'sin lista de fuentes: fuera del mix de fuentes, pero cuenta la cita propia');
+  const conTexto = { ...t, prompt_id: 'p003', fuentes_detalle: JSON.stringify([{ url: 'https://sbs.gob.pe/x', title: 'SBS', domain: 'sbs.gob.pe', position: 1 }]) };
+  const d2 = correr(api, 'Datos del monitor', [comoSheets({ prompts: hojaPrompts, resultados: [conTexto] })], { 'Pestañas del Sheet (monitor)': [metaSheets(['Tarjetas', 'Reputación'])] })[0];
+  assert.deepEqual([d2.monitor.observations[0].sources.length, d2.monitor.observations[0].sourcesComplete], [1, true], 'con el export de Trinity: fuentes reales');
 });
 
 console.log(`\n${ok} pruebas pasan`);

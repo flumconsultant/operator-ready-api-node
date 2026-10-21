@@ -505,7 +505,8 @@
   }
   // Markdown mínimo: títulos, negritas, listas, tablas con |, enlaces y [n].
   function markdown(texto) {
-    const lineas = String(texto || '').split(/\r?\n/);
+    // Copias de las apps (Trinity) traen marcadores de imagen sin URL («![Banco BBVA]») y escapes de markdown («1\\.»).
+    const lineas = String(texto || '').replace(/!\[[^\]]*\](\([^)]*\))?/g, '').replace(/\\([.\-:*_#!()[\]>])/g, '$1').split(/\r?\n/);
     const inline = s => esc(s).replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>').replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>').replace(/\[(\d{1,2})\]/g, '<sup>[$1]</sup>');
     let html = '', lista = null, tabla = [];
     const cerrar = () => {
