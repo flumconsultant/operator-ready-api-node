@@ -97,28 +97,42 @@ const responderJson = (w, name, position, body, status = 200) =>
 // ═══ GEO · Corrida ═════════════════════════════════════════════════════════
 const corrida = workflow('GEO TRACKER BCP · Corrida');
 
-corrida.node('Cada día 7:00 (Lima)', 'n8n-nodes-base.scheduleTrigger', 1.2, [0, 0], {
-  rule: { interval: [{ field: 'cronExpression', expression: '0 7 * * *' }] }
+// Cada hora revisa la programación de Configuración (pestaña _config): si
+// está encendida y es la hora y el día elegidos, corre; si no, termina ahí.
+corrida.node('Cada hora (revisa la programación)', 'n8n-nodes-base.scheduleTrigger', 1.2, [0, 0], {
+  rule: { interval: [{ field: 'cronExpression', expression: '0 * * * *' }] }
 });
 // Responde al instante («Workflow was started») y la corrida sigue sola.
 webhook(corrida, 'Webhook geo-run', 'POST', 'geo-run', [0, 200], 'onReceived');
-const [pestanasCorrida, , leerCorrida] = lecturaHoja(corrida, '', 100, '{ prompts: true }');
-code(corrida, 'Elegir prompts', [900, 100], HOJA() + '\n' + src('prompts.js') + `
-// Del front llega {prompt_ids?, proyecto?}; la corrida diaria toma todos los activos.
+const [pestanasCorrida, , leerCorrida] = lecturaHoja(corrida, '', 100, '{ prompts: true, sistema: true }');
+code(corrida, 'Elegir prompts', [900, 100], HOJA() + '\n' + src('config.js') + '\n' + src('prompts.js') + '\n' + src('ajustes.js') + `
+const hoja = leerHojas($input.first().json);
+const ajustes = leerAjustes(hoja.sistema._config);
+// Disparo por hora: solo sigue si la programación de Configuración lo dice.
+if ($('Cada hora (revisa la programación)').isExecuted && !tocaCorrer(ajustes.automatizacion, new Date())) return [];
+const cfg = configEfectiva(CONFIG, ajustes);
+const marcasLista = marcasParaAnalista(cfg);
+// Del front llega {prompt_ids?, proyecto?}; la corrida programada toma todos los activos.
 let peticion = {};
 try { if ($('Webhook geo-run').isExecuted) peticion = $('Webhook geo-run').first().json.body || {}; } catch (e) {}
 if (typeof peticion === 'string') { try { peticion = JSON.parse(peticion); } catch (e) { peticion = {}; } }
 const ahora = new Date();
 const runId = 'r_' + ahora.toISOString().replace(/\\D/g, '').slice(0, 14);
 const fecha = ahora.toLocaleDateString('en-CA', { timeZone: 'America/Lima' });
-return elegirPrompts(leerHojas($input.first().json).prompts, peticion).map(p => ({
-  json: Object.assign(p, { run_id: runId, fecha, timestamp: ahora.toISOString() })
+return elegirPrompts(hoja.prompts, peticion).map((p, i) => ({
+  json: Object.assign(p, { run_id: runId, fecha, timestamp: ahora.toISOString(), contexto: contextoPais(p.pais), marcas_lista: marcasLista,
+    buscar_siempre: !(ajustes.captura && ajustes.captura.buscar_siempre === false) },
+    i === 0 ? { _cfg: { marca: cfg.marca, competidores: cfg.competidores } } : {})
 }));
 `);
 
 // Cada prompt sale en paralelo a los 5 motores. Cada motor recibe solo el
 // prompt, tal cual, sin la respuesta de ningún otro.
 const PROMPT = `$json.prompt`;
+// El país del usuario va como línea de sistema, no dentro del prompt: así se
+// mide la pregunta tal cual la escribiría alguien en Perú (las APIs no
+// geolocalizan como las apps; sin esto Claude preguntaba «¿en qué país estás?»).
+const CONTEXTO = `($json.contexto || 'El usuario está en Lima, Perú.')`;
 
 // AI Overview (SerpAPI) apagado el 20/10 a pedido: se vuelve a encender
 // poniendo true, y corriendo build.mjs y publicar.mjs. Apagado, la corrida no
@@ -135,7 +149,7 @@ const serpApi = { authentication: 'predefinedCredentialType', nodeCredentialType
 
 http('ChatGPT', [1140, -200], {
   method: 'POST', url: 'https://api.openai.com/v1/chat/completions', ...headerAuth,
-  ...body(`{ model: 'gpt-4o-mini-search-preview', web_search_options: { search_context_size: 'low', user_location: { type: 'approximate', approximate: { country: 'PE', city: 'Lima', timezone: 'America/Lima' } } }, messages: [{ role: 'user', content: ${PROMPT} }] }`)
+  ...body(`{ model: 'gpt-4o-mini-search-preview', web_search_options: { search_context_size: 'low', user_location: { type: 'approximate', approximate: { country: 'PE', city: 'Lima', timezone: 'America/Lima' } } }, messages: [{ role: 'system', content: ${CONTEXTO} }, { role: 'user', content: ${PROMPT} }] }`)
 });
 // La búsqueda web de Claude no acepta country: 'PE' (400 «Country code PE is not
 // supported»): la ubicación va por zona horaria y una línea de sistema.
@@ -143,16 +157,20 @@ http('Claude', [1140, 0], {
   method: 'POST', url: 'https://api.anthropic.com/v1/messages',
   authentication: 'predefinedCredentialType', nodeCredentialType: 'anthropicApi',
   sendHeaders: true, headerParameters: { parameters: [{ name: 'anthropic-version', value: '2023-06-01' }] },
-  ...body(`{ model: 'claude-sonnet-5-5', max_tokens: 4000, output_config: { effort: 'low' }, system: 'El usuario está en Lima, Perú.', tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 3, user_location: { type: 'approximate', timezone: 'America/Lima' } }], messages: [{ role: 'user', content: ${PROMPT} }] }`)
+  // Busca en la web antes de responder, como las apps que mide OtterlyAI: sin
+  // esto, 127 de 150 respuestas del 21/10 salieron de memoria y sin fuentes.
+  // (Sonnet 5.5 no acepta tool_choice «any»: va como instrucción de sistema.)
+  // Se apaga en Configuración (captura.buscar_siempre).
+  ...body(`{ model: 'claude-sonnet-5-5', max_tokens: 4000, output_config: { effort: 'low' }, system: ${CONTEXTO} + ($json.buscar_siempre === false ? '' : ' Busca en la web antes de responder.'), tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 3, user_location: { type: 'approximate', timezone: 'America/Lima' } }], messages: [{ role: 'user', content: ${PROMPT} }] }`)
 });
 http('Gemini', [1140, 200], {
   method: 'POST', url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent',
   authentication: 'predefinedCredentialType', nodeCredentialType: 'googlePalmApi',
-  ...body(`{ contents: [{ role: 'user', parts: [{ text: ${PROMPT} }] }], tools: [{ google_search: {} }] }`)
+  ...body(`{ systemInstruction: { parts: [{ text: ${CONTEXTO} }] }, contents: [{ role: 'user', parts: [{ text: ${PROMPT} }] }], tools: [{ google_search: {} }] }`)
 });
 http('Perplexity', [1140, 400], {
   method: 'POST', url: 'https://api.perplexity.ai/chat/completions', ...headerAuth,
-  ...body(`{ model: 'sonar', web_search_options: { search_context_size: 'low', user_location: { country: 'PE' } }, messages: [{ role: 'user', content: ${PROMPT} }] }`)
+  ...body(`{ model: 'sonar', web_search_options: { search_context_size: 'low', user_location: { country: 'PE' } }, messages: [{ role: 'system', content: ${CONTEXTO} }, { role: 'user', content: ${PROMPT} }] }`)
 });
 if (SERPAPI_ACTIVO) {
   http('Google (SerpAPI)', [1140, 600], {
@@ -193,7 +211,7 @@ prompts.forEach((p, i) => {
     chatgpt: de('ChatGPT'), claude: de('Claude'), gemini: de('Gemini'), perplexity: de('Perplexity')${SERPAPI_ACTIVO ? `,
     google: de('Google (SerpAPI)'), ai_overview_pagina: de('AI Overview (página)')` : ''}
   };
-  for (const r of juntarRespuestas(p.json, apis)) salida.push({ json: r });
+  for (const r of juntarRespuestas(p.json, apis)) salida.push({ json: Object.assign(r, { marcas_lista: p.json.marcas_lista }) });
 });
 return salida;
 `);
@@ -201,7 +219,7 @@ return salida;
 const marcas = [CONFIG.marca].concat(CONFIG.competidores);
 const listaMarcas = marcas.map(m => `${m.nombre} (${m.alias.filter(a => a !== m.nombre).join(', ') || 'sin alias'})`).join('; ');
 corrida.node('Analista IA', '@n8n/n8n-nodes-langchain.informationExtractor', 1.2, [2040, 100], {
-  text: `={{ 'Pregunta que se le hizo a ' + $json.motor + ':\\n' + $json.prompt + '\\n\\nRespuesta de ' + $json.motor + ':\\n' + ($json.texto || '(sin respuesta)') }}`,
+  text: `={{ 'Bancos seguidos (nombre canónico y alias): ' + ($json.marcas_lista || ${JSON.stringify(listaMarcas)}) + '\\n\\nPregunta que se le hizo a ' + $json.motor + ':\\n' + $json.prompt + '\\n\\nRespuesta de ' + $json.motor + ':\\n' + ($json.texto || '(sin respuesta)') }}`,
   attributes: { attributes: [
     { name: 'menciona_bcp', type: 'boolean', required: true,
       description: `true si la respuesta nombra a ${CONFIG.marca.nombre} (o ${CONFIG.marca.alias.slice(1).join(', ')}).` },
@@ -216,7 +234,7 @@ corrida.node('Analista IA', '@n8n/n8n-nodes-langchain.informationExtractor', 1.2
     { name: 'detalle_marcas', type: 'string', required: true,
       description: 'Lista JSON con un objeto por banco nombrado, en orden de aparición: [{"marca": "BCP", "posicion": 1, "menciones": 2, "sentimiento": 0.6, "recomendada": true, "atributos": ["seguridad", "tasas"]}]. posicion = orden de aparición (1 = primero); menciones = veces que se nombra ese banco; sentimiento de -1 a 1 sobre lo que la respuesta dice de ese banco (0 si es neutral); recomendada = true si la respuesta lo propone como una opción a elegir o contratar, false si solo lo menciona; atributos = cuáles de estos se le asocian en la respuesta: ' + CONFIG.atributos.join(', ') + ' ([] si ninguno). Usa los nombres canónicos de la lista de bancos. [] si no nombra ninguno. Solo el JSON, sin texto alrededor.' },
     { name: 'marcas_mencionadas', type: 'string', required: true,
-      description: 'Bancos nombrados en la respuesta, en orden de aparición y separados por coma. Usa el nombre canónico de esta lista: ' + listaMarcas + '. Otros bancos, con su nombre tal cual. Vacío si no nombra ninguno.' }
+      description: 'Bancos nombrados en la respuesta, en orden de aparición y separados por coma. Usa el nombre canónico de la lista «Bancos seguidos» que viene antes de la pregunta. Otros bancos, con su nombre tal cual. Vacío si no nombra ninguno.' }
   ] },
   options: {
     systemPromptTemplate: 'Analizas respuestas de asistentes de IA a preguntas sobre bancos en Perú, para medir la visibilidad de ' + CONFIG.marca.nombre + '. Te basas solo en el texto de la respuesta: no supongas ni completes nada que no esté escrito. Si la respuesta está vacía, ningún banco aparece.'
@@ -233,7 +251,11 @@ corrida.link('Claude · analista', 'Analista IA', 0, 'ai_languageModel');
 code(corrida, 'Armar fila', [2260, 100], src('config.js') + '\n' + src('sov.js') + '\n' + src('analisis.js') + `
 // El Analista devuelve un item por respuesta y en el mismo orden.
 const r = $('Juntar respuestas').all()[$itemIndex].json;
-return { json: armarFila(r, $json.output, CONFIG) };
+// Marca y competidores editados en Configuración (si los hay).
+let editado = {};
+try { editado = $('Elegir prompts').first().json._cfg || {}; } catch (e) { /* sin ajustes */ }
+const cfg = Object.assign({}, CONFIG, editado);
+return { json: armarFila(r, $json.output, cfg) };
 `, 'runOnceForEachItem');
 // Los resultados van a la pestaña del día (se crea en la primera corrida del día).
 code(corrida, 'Plan de guardado', [2480, 100], HOJA() + `
@@ -242,7 +264,7 @@ return planGuardarResultados($input.all().map(i => i.json), meta).map(p => ({ js
 `);
 ejecutarPeticiones(corrida, 'Guardar en la pestaña del día', [2700, 100]);
 
-corrida.link('Cada día 7:00 (Lima)', pestanasCorrida);
+corrida.link('Cada hora (revisa la programación)', pestanasCorrida);
 corrida.link('Webhook geo-run', pestanasCorrida);
 corrida.chain(leerCorrida, 'Elegir prompts');
 for (const m of ['ChatGPT', 'Claude', 'Gemini', 'Perplexity'].concat(SERPAPI_ACTIVO ? ['Google (SerpAPI)'] : [])) corrida.link('Elegir prompts', m);
@@ -312,10 +334,13 @@ api.link('¿Hay cambios?', 'Responder error', 1);
 // GET /geo-monitor-data: lo que lee el front «BCP · Monitor de Visibilidad en IA»
 webhook(api, 'Webhook geo-monitor-data', 'GET', 'geo-monitor-data', [0, 700]);
 const lectMon = lecturaHoja(api, 'monitor', 700, `{ prompts: true, sistema: true, resultadosDesde: ${hace(190)} }`);
-code(api, 'Datos del monitor', [900, 700], HOJA() + '\n' + src('config.js') + '\n' + src('sov.js') + '\n' + src('dashboard.js') + '\n' + src('prompts.js') + '\n' + src('monitor.js') + `
+code(api, 'Datos del monitor', [900, 700], HOJA() + '\n' + src('config.js') + '\n' + src('sov.js') + '\n' + src('dashboard.js') + '\n' + src('prompts.js') + '\n' + src('monitor.js') + '\n' + src('ajustes.js') + `
 const hoy = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Lima' });
 const { prompts, resultados, sistema } = leerHojas($input.first().json);
-const datos = construirMonitor(resultados, prompts, CONFIG, hoy, sistema);
+const ajustes = leerAjustes(sistema._config);
+const datos = construirMonitor(resultados, prompts, configEfectiva(CONFIG, ajustes), hoy, sistema);
+// Lo que se edita en Configuración del front.
+datos.ajustes = ajustesVigentes(ajustes, CONFIG);
 // Los proyectos, en el orden de sus pestañas en el Sheet.
 const orden = pestanas($('Pestañas del Sheet (monitor)').first().json).map(p => p.titulo);
 const lugar = n => { const i = orden.indexOf(n); return i < 0 ? 999 : i; };
@@ -341,12 +366,12 @@ const siHayPeticiones = (w, name, position) => w.node(name, 'n8n-nodes-base.if',
 });
 const PLAN_A_ITEMS = `if (!plan.ok) return [{ json: { _status: plan.status, _respuesta: plan.respuesta } }];
 return plan.peticiones.map(p => ({ json: Object.assign(p, { _respuesta: plan.respuesta }) }));`;
-function endpointSistema(w, { ruta, sufijo, y, planear }) {
+function endpointSistema(w, { ruta, sufijo, y, planear, extra }) {
   const hook = `Webhook ${ruta}`;
   webhook(w, hook, 'POST', ruta, [0, y]);
   const lect = lecturaHoja(w, sufijo, y, '{ sistema: true }');
   const plan = `Planear (${sufijo})`, si = `¿Hay cambios? (${sufijo})`, escr = `Escribir (${sufijo})`;
-  code(w, plan, [900, y], HOJA() + '\n' + src('monitor.js') + '\n' + bodyDe(hook) + `
+  code(w, plan, [900, y], HOJA() + '\n' + src('monitor.js') + '\n' + (extra || '') + '\n' + bodyDe(hook) + `
 const sistema = leerHojas($input.first().json).sistema;
 const meta = $('${lect[0]}').first().json;
 const plan = ${planear};
@@ -366,6 +391,9 @@ endpointSistema(api, { ruta: 'geo-recs-save', sufijo: 'recomendación', y: 960,
   planear: `planGuardarRecomendacion(body, sistema._recomendaciones, meta, ahora)` });
 endpointSistema(api, { ruta: 'geo-domain-save', sufijo: 'dominio', y: 1220,
   planear: `planGuardarDominio(body, sistema._dominios, meta, ahora, CATEGORIAS_DOMINIO)` });
+// POST /geo-config-save {clave: 'monitor'|'automatizacion'|'marca'|'competidores', valor}
+endpointSistema(api, { ruta: 'geo-config-save', sufijo: 'ajuste', y: 1480, extra: src('config.js') + '\n' + src('ajustes.js'),
+  planear: `planGuardarAjuste(body, sistema._config, meta, ahora, CONFIG)` });
 
 // ═══ GEO · Herramientas ════════════════════════════════════════════════════
 // Auditoría GEO (crawlability y contenido), query fan-out e investigación de

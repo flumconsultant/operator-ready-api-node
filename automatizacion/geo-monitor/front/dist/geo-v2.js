@@ -37,7 +37,7 @@
     'gestion-prompts': ['Gestión de prompts', 'config'], tags: ['Prompts y tags', 'config'], investigacion: ['Investigación de prompts', 'config'], settings: ['Configuración', 'config'],
     'audit-crawl': ['Crawlability', 'audit'], 'audit-content': ['Contenido', 'audit'], 'audit-fanout': ['Query fan-out', 'audit']
   };
-  const MIAS = new Set(['resumen', 'prompts', 'citas', 'visibilidad', 'recomendaciones', 'bots', 'perfil', 'tags', 'investigacion', 'audit-crawl', 'audit-content', 'audit-fanout']);
+  const MIAS = new Set(['settings', 'resumen', 'prompts', 'citas', 'visibilidad', 'recomendaciones', 'bots', 'perfil', 'tags', 'investigacion', 'audit-crawl', 'audit-content', 'audit-fanout']);
   const SIN_FILTROS = new Set(['gestion-prompts', 'tags', 'investigacion', 'settings', 'audit-crawl', 'audit-content', 'audit-fanout', 'bots']);
 
   function promptMeta(id) {
@@ -149,7 +149,7 @@
     coverage: 'Cobertura de marca = respuestas donde la marca aparece ÷ respuestas válidas. Las respuestas con error no cuentan.',
     position: 'Posición = promedio del rank de la marca entre las marcas mencionadas, solo donde aparece (1 = primera). Menor es mejor.',
     sentiment: 'Sentimiento = promedio del score por respuesta en escala −100…+100, solo donde la marca aparece. Entre −10 y +10 es neutral: la marca se menciona sin juicio.',
-    sov: 'Share of Voice (menciones) = menciones de la marca ÷ menciones de todas las marcas seguidas. La suma de todas es 100%.',
+    sov: 'Share of Voice = respuestas que mencionan la marca ÷ suma de las respuestas que mencionan a cada banco seguido (1 por respuesta, como OtterlyAI). La suma de todos es 100%.',
     sovWeighted: 'SoV ponderado = promedio por respuesta del score de n8n: posición, prominencia y contexto.',
     probability: 'Probabilidad de compra = respuestas donde el motor recomienda la marca como opción ÷ respuestas donde aparece.',
     domainCoverage: 'Cobertura de dominio = respuestas que citan el dominio ÷ respuestas válidas.'
@@ -276,7 +276,7 @@
     V.exportar = null;
     if (MIAS.has(M.route)) {
       byId('detailView').hidden = true; byId('generalView').hidden = false;
-      ({ resumen: renderResumen, prompts: renderPromptsV2, citas: renderCitas, visibilidad: renderVisibilidad, recomendaciones: renderRecsV2, bots: renderBots, perfil: renderPerfil,
+      ({ settings: renderAjustes, resumen: renderResumen, prompts: renderPromptsV2, citas: renderCitas, visibilidad: renderVisibilidad, recomendaciones: renderRecsV2, bots: renderBots, perfil: renderPerfil,
         tags: renderTags, investigacion: renderInvestigacion, 'audit-crawl': renderAuditCrawl, 'audit-content': renderAuditContent, 'audit-fanout': renderFanout })[M.route]();
     } else prev.route();
     if(M.route==='settings')document.getElementById('generalView').insertAdjacentHTML('beforeend','<section class="card dashboard-card ux-project-settings"><div><h2>Organización de proyectos</h2><p>Agrupa las consultas según los productos y temas del banco.</p></div><button class="button" type="button" data-nav="projects">Ver proyectos</button></section>');
@@ -322,13 +322,13 @@
     const sov = G.sovMenciones(r, BRANDS())[own.id], sovP = G.sovMenciones(pr, BRANDS())[own.id];
     const w = G.sovPonderado(r), wP = G.sovPonderado(pr);
     const defs = [
-      ['Cobertura de marca', pctTxt(a.coverage), dlt(G.delta(a.coverage, b.coverage)), FORMULAS.coverage],
-      ['Posición de marca', posTxt(a.position), dlt(G.delta(a.position, b.position), '', true, 2), FORMULAS.position],
-      ['Sentimiento', sentBar(a.sentiment), dlt(G.delta(a.sentiment, b.sentiment), 'pts', false, 0), FORMULAS.sentiment],
-      ['Share of Voice', pctTxt(sov), dlt(G.delta(sov, sovP)), FORMULAS.sov],
-      ['SoV ponderado', pctTxt(w), dlt(G.delta(w, wP)), FORMULAS.sovWeighted]
+      ['Cobertura de marca', pctTxt(a.coverage), dlt(G.delta(a.coverage, b.coverage)), 'coverage'],
+      ['Posición de marca', posTxt(a.position), dlt(G.delta(a.position, b.position), '', true, 2), 'position'],
+      ['Sentimiento', sentBar(a.sentiment), dlt(G.delta(a.sentiment, b.sentiment), 'pts', false, 0), 'sentiment'],
+      ['Share of Voice', pctTxt(sov), dlt(G.delta(sov, sovP)), 'sov'],
+      ['SoV ponderado', pctTxt(w), dlt(G.delta(w, wP)), 'sovWeighted']
     ];
-    return `<div class="home-kpis v2-kpis">${defs.map(([l, v, d, t]) => `<article class="card home-kpi"><div class="metric-title">${l}${tip(t)}</div><div class="metric-number">${v}</div><div class="metric-change">${d} <span class="muted">vs. periodo anterior</span></div></article>`).join('')}</div>`;
+    return `<div class="home-kpis v2-kpis">${defs.map(([l, v, d, k]) => `<article class="card home-kpi"><div class="metric-title">${l}${infoKpi(k)}</div><div class="metric-number">${v}</div><div class="metric-change">${d} <span class="muted">vs. periodo anterior</span></div></article>`).join('')}</div>`;
   }
   function topMarcas(r, n = 6) {
     const rk = G.ranking(r, [], BRANDS());
@@ -911,6 +911,164 @@
     const rs = filas().filter(o => G.menciones(o, marcas).some(m => m.brandId === brandId && (m.attributes || []).includes(attr)));
     abrirDrawer(`<div class="v2-drawer-head"><div><div class="orange-label">Perfil de marca</div><h2>${esc(b.name)} · ${esc(attr)}</h2></div><button type="button" class="close-x" data-v2close aria-label="Cerrar">×</button></div><div class="v2-drawer-body"><ul class="v2-list">${rs.map(o => `<li><button type="button" class="v2-link" data-v2openresp="${esc(o.id)}">${engineBadge(o.modelId, true)} ${esc(promptMeta(o.promptId).text)}</button><span>${esc(dateLabel(o.date, true))}</span></li>`).join('')}</ul></div>`);
   }
+
+
+  // ─── Glosario de KPIs (Configuración y botón ⓘ de cada tarjeta) ───────────
+  const GLOSARIO = {
+    coverage: { nombre: 'Cobertura de marca', que: 'En cuántas respuestas aparece la marca.', formula: 'Respuestas donde la marca aparece ÷ respuestas válidas × 100.', lectura: 'Más alto es mejor. Las respuestas con error no cuentan.', otterly: 'Brand coverage' },
+    position: { nombre: 'Posición de marca', que: 'En qué lugar aparece la marca entre los bancos que nombra la respuesta.', formula: 'Promedio del lugar de la marca (1 = la primera nombrada), solo en las respuestas donde aparece.', lectura: 'Más bajo es mejor: 1,0 es aparecer siempre primero.', otterly: 'Brand position' },
+    sentiment: { nombre: 'Sentimiento', que: 'Cómo habla la respuesta de la marca.', formula: 'Promedio del score por respuesta, de −100 (muy negativo) a +100 (muy positivo), solo donde la marca aparece.', lectura: 'Entre −10 y +10 es neutral: la marca se nombra sin juicio. Más de +10, positivo.', otterly: 'Net sentiment score (NSS)' },
+    sov: { nombre: 'Share of Voice', que: 'Qué parte de la conversación sobre bancos se lleva la marca.', formula: 'Respuestas que mencionan la marca ÷ suma de las respuestas que mencionan a cada banco seguido × 100. Una respuesta cuenta una vez por banco, aunque lo nombre varias veces.', lectura: 'Entre todos los bancos suma 100%. Es la misma definición de OtterlyAI.', otterly: 'Share of voice' },
+    sovWeighted: { nombre: 'SoV ponderado', que: 'La métrica de la estrategia SEO/GEO de BCP: además de aparecer, pesa dónde y cómo.', formula: 'Por respuesta: (1/posición + menciones/total de menciones) ÷ 2 × contexto (positivo 1 · neutral 0,75 · negativo 0,25), repartido entre los bancos. Luego, promedio de todas las respuestas válidas (si la marca no aparece, aporta 0).', lectura: 'Sale más bajo que el Share of Voice porque las respuestas sin la marca cuentan como 0.', otterly: '— (propia de BCP)' },
+    probability: { nombre: 'Probabilidad de compra', que: 'Si el motor propone la marca como opción a elegir, no solo la nombra.', formula: 'Respuestas donde la marca sale recomendada ÷ respuestas donde aparece × 100.', lectura: 'Más alto es mejor. Lo marca el Analista IA en cada respuesta.', otterly: 'Likelihood to buy' },
+    mentions: { nombre: 'Menciones de marca', que: 'Cuántas respuestas nombran a la marca.', formula: 'Conteo de respuestas válidas con la marca.', lectura: 'Es el numerador de la cobertura.', otterly: 'Brand mentions' },
+    ownCitations: { nombre: 'Citas de dominio propio', que: 'Cuántas veces los motores usan una página de la marca como fuente.', formula: 'Conteo de URLs citadas de viabcp.com y sus subdominios (abretucuenta.viabcp.com incluido).', lectura: 'Más alto es mejor: el motor confía en el sitio.', otterly: 'Domain citations' },
+    domainCoverage: { nombre: 'Cobertura de dominio', que: 'En cuántas respuestas aparece un dominio como fuente.', formula: 'Respuestas que citan el dominio ÷ respuestas válidas × 100.', lectura: 'Sirve para ver qué fuentes (SBS, comparadores, medios) pesan en cada tema.', otterly: 'Domain coverage' },
+    intentVolume: { nombre: 'Volumen de intención', que: 'Demanda estimada del prompt.', formula: 'Escala de 1 a 5 según la búsqueda de las keywords asociadas.', lectura: 'Prioriza los prompts con más volumen.', otterly: 'Intent volume' }
+  };
+  const infoKpi = clave => `<button type="button" class="info" data-kpi="${clave}" aria-label="Cómo se mide: ${esc(GLOSARIO[clave].nombre)}"></button>`;
+  const pop = document.createElement('div');
+  pop.className = 'v2-pop'; pop.hidden = true; pop.setAttribute('role', 'dialog');
+  document.body.appendChild(pop);
+  function abrirPop(btn) {
+    const g = GLOSARIO[btn.dataset.kpi];
+    pop.innerHTML = g
+      ? `<b>${esc(g.nombre)}</b><p>${esc(g.que)}</p><dl><dt>Cómo se calcula</dt><dd>${esc(g.formula)}</dd><dt>Cómo se lee</dt><dd>${esc(g.lectura)}</dd><dt>En OtterlyAI</dt><dd>${esc(g.otterly)}</dd></dl><button type="button" class="text-button" data-nav="settings" data-v2glosario>Ver glosario completo →</button>`
+      : `<p>${esc(btn.dataset.tip || btn.getAttribute('aria-label') || '')}</p>`;
+    pop.hidden = false;
+    const r = btn.getBoundingClientRect(), w = Math.min(320, window.innerWidth - 24);
+    pop.style.width = w + 'px';
+    pop.style.left = Math.max(12, Math.min(window.innerWidth - w - 12, r.left + r.width / 2 - w / 2)) + window.scrollX + 'px';
+    const abajo = r.bottom + 8 + pop.offsetHeight < window.innerHeight;
+    pop.style.top = (abajo ? r.bottom + 8 : r.top - pop.offsetHeight - 8) + window.scrollY + 'px';
+    pop.dataset.para = btn.dataset.kpi || btn.dataset.tip || '';
+    btn.setAttribute('aria-expanded', 'true');
+  }
+  const cerrarPop = () => { pop.hidden = true; document.querySelectorAll('.info[aria-expanded="true"]').forEach(b => b.setAttribute('aria-expanded', 'false')); };
+  document.addEventListener('click', e => {
+    const b = e.target.closest('.info');
+    if (b) {
+      e.preventDefault(); e.stopPropagation();
+      if (!pop.hidden && pop.dataset.para === (b.dataset.kpi || b.dataset.tip || '')) return cerrarPop();
+      return abrirPop(b);
+    }
+    if (!e.target.closest('.v2-pop')) cerrarPop();
+    else if (e.target.closest('[data-v2glosario]')) { cerrarPop(); setTimeout(() => byId('v2Glosario')?.scrollIntoView({ behavior: 'smooth' }), 120); }
+  }, true);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !pop.hidden) cerrarPop(); });
+  window.addEventListener('resize', cerrarPop);
+
+  // ─── Configuración editable (pestaña _config del Sheet) ───────────────────
+  const DIAS = [['lun', 'Lun'], ['mar', 'Mar'], ['mie', 'Mié'], ['jue', 'Jue'], ['vie', 'Vie'], ['sab', 'Sáb'], ['dom', 'Dom']];
+  function ajustes() {
+    const a = (DATA.meta && DATA.meta.ajustes) || {};
+    const own = OWN();
+    return {
+      monitor: a.monitor || { nombre: 'BCP · Monitor de Visibilidad en IA', organizacion: 'BCP · Marketing y Comunicaciones', pais: 'PE' },
+      automatizacion: a.automatizacion || { activa: true, hora: 7, dias: DIAS.map(d => d[0]) },
+      captura: a.captura || { buscar_siempre: true },
+      marca: a.marca || { nombre: own.name, alias: own.aliases || [own.name], dominios: own.domains || [] },
+      competidores: a.competidores || BRANDS().filter(b => !b.isOwn).map(b => ({ nombre: b.name, alias: b.aliases || [b.name], dominios: b.domains || [], color: b.color }))
+    };
+  }
+  function proximaCorrida(auto) {
+    if (!auto.activa || !auto.dias.length) return 'Corrida automática apagada';
+    const ahora = new Date();
+    for (let i = 0; i < 8 * 24; i++) {
+      const t = new Date(ahora.getTime() + i * 3600e3);
+      const p = new Intl.DateTimeFormat('es-PE', { timeZone: 'America/Lima', hour: 'numeric', hourCycle: 'h23', weekday: 'short', day: 'numeric', month: 'short' }).formatToParts(t);
+      const h = Number(p.find(x => x.type === 'hour').value);
+      const dia = { lun: 'lun', mar: 'mar', mié: 'mie', jue: 'jue', vie: 'vie', sáb: 'sab', dom: 'dom' }[p.find(x => x.type === 'weekday').value.replace('.', '')];
+      if (h === Number(auto.hora) && auto.dias.includes(dia) && (i > 0 || ahora.getMinutes() === 0)) {
+        return 'Próxima corrida: ' + p.find(x => x.type === 'weekday').value + ' ' + p.find(x => x.type === 'day').value + ' ' + p.find(x => x.type === 'month').value + ', ' + String(h).padStart(2, '0') + ':00 (Lima)';
+      }
+    }
+    return 'Sin próxima corrida';
+  }
+  const hora2 = h => String(h).padStart(2, '0') + ':00';
+  function renderAjustes() {
+    const A = ajustes();
+    if (!V.comp) V.comp = A.competidores.map(c => Object.assign({}, c));
+    const ro = LIVE ? '' : 'disabled';
+    const activos = promptsReales().filter(p => p.active !== false).length;
+    $('#generalView').innerHTML = pageIntro('Configuración', 'Datos del monitor, programación de la corrida, marca y competidores, y cómo se mide cada KPI.', 'Gestión') +
+      (LIVE ? '' : '<div class="v2-alert amber">Modo demostración: los cambios no se pueden guardar sin conexión con n8n.</div>') +
+      `<div class="v2-settings">
+      <section class="card dashboard-card"><h2>Corrida automática</h2><p class="v2-help">n8n revisa la programación cada hora y corre todos los prompts activos (${activos}) cuando coincide la hora y el día.</p>
+        <form class="v2-form" data-v2cfg="automatizacion">
+          <label class="v2-switch"><input type="checkbox" name="activa" ${A.automatizacion.activa ? 'checked' : ''} ${ro}><span aria-hidden="true"></span><b>${A.automatizacion.activa ? 'Encendida' : 'Apagada'}</b></label>
+          <div class="v2-row"><label>Hora (Lima)<select name="hora" ${ro}>${Array.from({ length: 24 }, (_, h) => `<option value="${h}" ${Number(A.automatizacion.hora) === h ? 'selected' : ''}>${hora2(h)}</option>`).join('')}</select></label></div>
+          <fieldset class="v2-days"><legend>Días</legend>${DIAS.map(([k, l]) => `<label><input type="checkbox" name="dias" value="${k}" ${A.automatizacion.dias.includes(k) ? 'checked' : ''} ${ro}><span>${l}</span></label>`).join('')}</fieldset>
+          <p class="v2-next">${esc(proximaCorrida(A.automatizacion))}</p>
+          <div class="v2-row"><button type="submit" class="button primary" ${ro}>Guardar programación</button><button type="button" class="button" id="v2RunNow" ${ro}>Ejecutar ahora</button></div>
+        </form></section>
+      <section class="card dashboard-card"><h2>Captura de respuestas</h2>
+        <form class="v2-form" data-v2cfg="captura">
+          <label class="v2-switch"><input type="checkbox" name="buscar_siempre" ${A.captura.buscar_siempre ? 'checked' : ''} ${ro}><span aria-hidden="true"></span><b>Claude busca en la web antes de responder</b></label>
+          <p class="v2-help">Así responden las apps que mide OtterlyAI (ChatGPT, AI Overview, Perplexity, Copilot): con fuentes actuales. Sin búsqueda, Claude contesta de memoria y casi no cita páginas. Cuesta más: unos 20.000 tokens de entrada por respuesta en vez de ~2.000.</p>
+          <p class="v2-help"><b>País:</b> cada motor recibe, como línea de sistema, «El usuario está en Lima, Perú». El prompt se envía tal cual, sin agregarle «Perú».</p>
+          <button type="submit" class="button primary" ${ro}>Guardar</button>
+        </form></section>
+      <section class="card dashboard-card"><h2>Información del monitor</h2>
+        <form class="v2-form" data-v2cfg="monitor">
+          <label>Nombre<input name="nombre" maxlength="80" required value="${esc(A.monitor.nombre)}" ${ro}></label>
+          <label>Organización<input name="organizacion" maxlength="80" value="${esc(A.monitor.organizacion)}" ${ro}></label>
+          <label>País<select name="pais" ${ro}><option value="PE">Perú</option></select></label>
+          <button type="submit" class="button primary" ${ro}>Guardar</button>
+        </form></section>
+      <section class="card dashboard-card"><h2>Marca: ${esc(A.marca.nombre)}</h2>
+        <form class="v2-form" data-v2cfg="marca">
+          <label>Otros nombres (separados por coma)<textarea name="alias" rows="2" ${ro}>${esc(A.marca.alias.filter(a => a !== A.marca.nombre).join(', '))}</textarea></label>
+          <label>Dominios propios (cuentan sus subdominios)<textarea name="dominios" rows="2" ${ro}>${esc(A.marca.dominios.join(', '))}</textarea></label>
+          <p class="v2-help">¿Sumar marcas del grupo, como Yape? Agrégalas aquí como otro nombre si quieres que cuenten como BCP, o como competidor para verlas aparte.</p>
+          <button type="submit" class="button primary" ${ro}>Guardar</button>
+        </form></section>
+      <section class="card dashboard-card v2-wide"><h2>Competidores</h2><p class="v2-help">Cada banco con sus nombres alternativos (unifican «Banco Falabella» y «Falabella») y sus dominios (cuentan como citas del competidor). Se aplica desde la próxima corrida.</p>
+        <form class="v2-form" data-v2cfg="competidores"><div class="table-scroll"><table class="v2-table v2-comp"><thead><tr><th>Color</th><th>Banco</th><th>Otros nombres</th><th>Dominios</th><th></th></tr></thead><tbody>
+          ${V.comp.map((c, i) => `<tr><td><input type="color" data-ci="${i}" data-cf="color" value="${esc(c.color || '#94a3b8')}" aria-label="Color" ${ro}></td><td><input data-ci="${i}" data-cf="nombre" value="${esc(c.nombre)}" aria-label="Banco" ${ro}></td><td><input data-ci="${i}" data-cf="alias" value="${esc((c.alias || []).filter(a => a !== c.nombre).join(', '))}" aria-label="Otros nombres" ${ro}></td><td><input data-ci="${i}" data-cf="dominios" value="${esc((c.dominios || []).join(', '))}" aria-label="Dominios" ${ro}></td><td><button type="button" class="text-button v2-danger" data-v2comprm="${i}" ${ro}>Quitar</button></td></tr>`).join('')}
+        </tbody></table></div><div class="v2-row"><button type="button" class="button" data-v2compadd ${ro}>＋ Agregar competidor</button><button type="submit" class="button primary" ${ro}>Guardar competidores</button></div></form></section>
+      <section class="card dashboard-card v2-wide" id="v2Glosario"><h2>Glosario de KPIs</h2><p class="v2-help">Cómo se mide cada indicador. El botón ⓘ de cada tarjeta muestra lo mismo.</p>
+        <div class="v2-glossary">${Object.values(GLOSARIO).map(g => `<article><h3>${esc(g.nombre)}</h3><p>${esc(g.que)}</p><dl><dt>Cómo se calcula</dt><dd>${esc(g.formula)}</dd><dt>Cómo se lee</dt><dd>${esc(g.lectura)}</dd><dt>En OtterlyAI</dt><dd>${esc(g.otterly)}</dd></dl></article>`).join('')}</div></section>
+      <section class="card dashboard-card"><h2>Motores</h2>${MON.models.map(m => `<div class="settings-line">${engineBadge(m.id)}<b>${esc(m.vendor)}<br><small class="muted">${MON.observations.some(o => o.modelId === m.id && G.esValida(o)) ? 'Respuestas recibidas' : MON.observations.some(o => o.modelId === m.id) ? 'Con error: falta credencial o saldo' : 'Sin corridas'}</small></b></div>`).join('')}</section>
+      </div>`;
+  }
+  function valorAjuste(form) {
+    const fd = new FormData(form), clave = form.dataset.v2cfg;
+    if (clave === 'automatizacion') return { activa: fd.get('activa') === 'on', hora: Number(fd.get('hora')), dias: fd.getAll('dias') };
+    if (clave === 'captura') return { buscar_siempre: fd.get('buscar_siempre') === 'on' };
+    if (clave === 'monitor') return { nombre: fd.get('nombre'), organizacion: fd.get('organizacion'), pais: fd.get('pais') };
+    if (clave === 'marca') return { alias: fd.get('alias'), dominios: fd.get('dominios') };
+    return V.comp.filter(c => String(c.nombre || '').trim());
+  }
+  async function guardarAjuste(form) {
+    const btn = form.querySelector('[type="submit"]');
+    const clave = form.dataset.v2cfg;
+    btn.disabled = true; const txt = btn.textContent; btn.textContent = 'Guardando…';
+    try {
+      const d = await api('/geo-config-save', { clave, valor: valorAjuste(form) });
+      DATA.meta.ajustes = Object.assign({}, ajustes(), { [clave]: d.valor });
+      if (clave === 'competidores') V.comp = d.valor.map(c => Object.assign({}, c));
+      toast(clave === 'automatizacion' ? 'Programación guardada · ' + proximaCorrida(d.valor) : clave === 'marca' || clave === 'competidores' ? 'Guardado · se aplica desde la próxima corrida' : 'Guardado en el Sheet');
+      renderAjustes();
+    } catch (e) { toast('No se guardó: ' + e.message); btn.disabled = false; btn.textContent = txt; }
+  }
+  async function ejecutarAhora(btn) {
+    const n = promptsReales().filter(p => p.active !== false).length;
+    if (!window.confirm(`Se medirán ahora los ${n} prompts activos en todos los motores. Tarda entre ${Math.ceil(n * 3 / 60)} y ${Math.ceil(n * 6 / 60)} minutos y consume créditos de las APIs. ¿Continuar?`)) return;
+    btn.disabled = true;
+    try { await api('/geo-run', {}); toast('Corrida iniciada en n8n · los resultados aparecen al recargar cuando termine'); }
+    catch (e) { toast('No se pudo iniciar: ' + e.message); }
+    btn.disabled = false;
+  }
+  document.addEventListener('submit', e => { const f = e.target.closest('[data-v2cfg]'); if (f) { e.preventDefault(); void guardarAjuste(f); } });
+  document.addEventListener('input', e => { const t = e.target; if (t.dataset.ci !== undefined && V.comp) { const c = V.comp[Number(t.dataset.ci)]; const f = t.dataset.cf; c[f] = f === 'alias' || f === 'dominios' ? t.value.split(',').map(x => x.trim()).filter(Boolean) : t.value; } });
+  document.addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    if (b.id === 'v2RunNow') return void ejecutarAhora(b);
+    if (b.dataset.v2compadd !== undefined) { V.comp.push({ nombre: '', alias: [], dominios: [], color: '#64748b' }); renderAjustes(); return; }
+    if (b.dataset.v2comprm !== undefined) { V.comp.splice(Number(b.dataset.v2comprm), 1); renderAjustes(); }
+  });
 
   // ─── Eventos ──────────────────────────────────────────────────────────────
   document.addEventListener('click', e => {

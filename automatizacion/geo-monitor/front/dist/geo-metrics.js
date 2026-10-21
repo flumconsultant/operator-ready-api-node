@@ -101,12 +101,13 @@
     };
   }
 
-  // Share of Voice de menciones: menciones de la marca ÷ menciones de todas las
-  // marcas seguidas × 100. Entre todas suman 100.
+  // Share of Voice, como OtterlyAI: respuestas que mencionan la marca (1 por
+  // respuesta, aunque la nombre varias veces) ÷ suma de ese conteo para todas
+  // las marcas seguidas × 100. Entre todas suman 100.
   function sovMenciones(rows, marcas) {
     const total = {};
     for (const m of marcas) total[m.id] = 0;
-    for (const o of validas(rows)) for (const x of menciones(o, marcas)) total[x.brandId] += x.count;
+    for (const o of validas(rows)) for (const x of menciones(o, marcas)) total[x.brandId] += 1;
     const suma = Object.values(total).reduce((a, b) => a + b, 0);
     const sov = {};
     for (const id of Object.keys(total)) sov[id] = suma > 0 ? (total[id] / suma) * 100 : null;

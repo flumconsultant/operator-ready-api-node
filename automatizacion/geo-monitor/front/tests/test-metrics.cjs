@@ -42,9 +42,10 @@ prueba('SOV de menciones: suma 100% entre marcas y excluye errores', () => {
   const sov = G.sovMenciones(filas, M);
   const suma = Object.values(sov).filter(v => v !== null).reduce((a, b) => a + b, 0);
   cerca(suma, 100, 'suma');
-  cerca(sov.bcp, 4 / 10 * 100, 'BCP 3 + 1 de 10 menciones');
-  cerca(sov.interbank, 30);
-  cerca(sov.bbva, 30, 'BBVA Perú y BBVA son la misma marca');
+  // Como Otterly: 1 por respuesta. BCP 2, Interbank 2, BBVA 2 (BBVA Perú = BBVA) → 6.
+  cerca(sov.bcp, 2 / 6 * 100, 'BCP aparece en 2 respuestas (aunque la nombren 3 veces en una)');
+  cerca(sov.interbank, 2 / 6 * 100);
+  cerca(sov.bbva, 2 / 6 * 100, 'BBVA Perú y BBVA son la misma marca');
   assert.equal(sov.scotiabank, 0);
   const vacio = G.sovMenciones([filas[4]], M);
   assert.equal(vacio.bcp, null, 'solo errores: sin dato');

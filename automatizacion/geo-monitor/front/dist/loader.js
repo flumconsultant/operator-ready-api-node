@@ -62,6 +62,8 @@
     ['domainCategories', 'recStates'].forEach(function (k) { if (monitor[k] && typeof monitor[k] === 'object') DATA.monitor[k] = monitor[k]; });
     DATA.monitor.metricDefinitions.som = 'Promedio del SOV de cada respuesta válida: veces que se nombra a BCP ÷ veces que se nombra a cualquier banco × 100.';
     DATA.prompts = Array.from(prompts.values());
+    // Lo que se edita en Configuración (pestaña _config del Sheet).
+    if (d.ajustes && typeof d.ajustes === 'object') DATA.meta.ajustes = d.ajustes;
     DATA.meta.live = { generado: d.generado, respuestas: obs.length, validas: obs.filter(function (o) { return o.status !== 'error'; }).length };
     return 'ok';
   }
@@ -78,8 +80,8 @@
     })
     .then(function () { return cargarScript('monitor.js?v=v13'); })
     .then(function () { return cargarScript('prompts-admin.js?v=prompts-admin-1'); })
-    .then(function () { return cargarScript('geo-metrics.js?v=v13'); })
-    .then(function () { return cargarScript('geo-v2.js?v=v13'); })
+    .then(function () { return cargarScript('geo-metrics.js?v=v14'); })
+    .then(function () { return cargarScript('geo-v2.js?v=v14'); })
     .catch(function (e) {
       console.error('[GEO]', e);
       var vista = document.querySelector('#generalView');

@@ -286,14 +286,16 @@ prueba('Corrida con SerpAPI: los 5 motores en paralelo, un Merge y luego en lín
   for (let i = 0; i < resto.length - 1; i++) assert.deepEqual(sale(resto[i]), [resto[i + 1]], resto[i]);
   assert.equal(corrida.connections['Claude · analista'].ai_languageModel[0][0].node, 'Analista IA');
   assert.equal(corrida.nodes.find(n => n.name === 'Webhook geo-run').parameters.responseMode, 'onReceived');
-  // Cada modelo recibe solo el prompt: ni la respuesta de otro motor ni nada más.
+  // Cada modelo recibe solo el prompt y, como línea de sistema, el país del
+  // usuario: ni la respuesta de otro motor ni nada más.
   const motores = corrida.nodes.filter(n => n.type === 'n8n-nodes-base.httpRequest' && n.parameters.nodeCredentialType !== 'googleSheetsOAuth2Api');
   assert.equal(motores.length, 6);
   for (const n of motores) {
     assert.equal(n.onError, 'continueRegularOutput', n.name);
     if (n.parameters.method === 'POST') {
       const usa = n.parameters.jsonBody.match(/\$json\.\w+|\$\('[^']+'\)/g);
-      assert.deepEqual([...new Set(usa)], ['$json.prompt'], n.name);
+      const permitidos = ['$json.buscar_siempre', '$json.contexto', '$json.prompt'];
+      assert.ok([...new Set(usa)].every(x => permitidos.includes(x)) && usa.includes('$json.prompt'), n.name + ': ' + usa);
     }
   }
 });
@@ -600,7 +602,7 @@ prueba('Los tres workflows: conexiones válidas, ids únicos, pestañas de la pl
   }
   const rutas = wf => wf.nodes.filter(n => n.type === 'n8n-nodes-base.webhook').map(n => n.parameters.path);
   assert.deepEqual(rutas(corrida), ['geo-run']);
-  assert.deepEqual(rutas(api).sort(), ['geo-dashboard', 'geo-domain-save', 'geo-monitor-data', 'geo-prompts', 'geo-prompts-save', 'geo-recs-save']);
+  assert.deepEqual(rutas(api).sort(), ['geo-config-save', 'geo-dashboard', 'geo-domain-save', 'geo-monitor-data', 'geo-prompts', 'geo-prompts-save', 'geo-recs-save']);
   assert.deepEqual(rutas(her).sort(), ['geo-audit', 'geo-fanout', 'geo-prompt-research']);
 });
 
@@ -729,6 +731,49 @@ prueba('/geo-prompt-research: pedido por modo y candidatos normalizados', () => 
   assert.deepEqual(r.candidatos.map(c => [c.etapa, c.volumen]), [['mofu', 5], ['tofu', 1]]);
   const e = correr(her, 'Leer candidatos', [{ error: { message: 'overloaded' } }], { 'Armar investigación': [k] })[0];
   assert.deepEqual([e.ok, e.error], [false, 'overloaded']);
+});
+
+// ─── Configuración editable (_config) y programación de la corrida ────────
+const conConfig = (clave, valor) => ({ valueRanges: [{ valueRange: { range: "'_config'!A1:C9", values: [['clave', 'valor', 'actualizado']].concat(Object.entries(clave).map(([k, v]) => [k, JSON.stringify(v), ''])) } }] });
+
+prueba('Corrida programada: solo corre a la hora y en los días de Configuración', () => {
+  const hojas = (aj) => ({ valueRanges: comoSheets({ prompts: hojaPrompts }).valueRanges.concat(conConfig(aj).valueRanges) });
+  const elegir = (aj, programada) => correr(publicado, 'Elegir prompts', [hojas(aj)], programada ? { 'Cada hora (revisa la programación)': [{}] } : {});
+  const horaLima = Number(new Intl.DateTimeFormat('en-US', { timeZone: 'America/Lima', hour: 'numeric', hourCycle: 'h23' }).format(new Date()));
+  const todos = ['lun', 'mar', 'mie', 'jue', 'vie', 'sab', 'dom'];
+  assert.equal(elegir({ automatizacion: { activa: true, hora: horaLima, dias: todos } }, true).length, 2, 'es la hora: corre los activos');
+  assert.equal(elegir({ automatizacion: { activa: true, hora: (horaLima + 1) % 24, dias: todos } }, true).length, 0, 'otra hora: no corre');
+  assert.equal(elegir({ automatizacion: { activa: false, hora: horaLima, dias: todos } }, true).length, 0, 'apagada: no corre');
+  assert.equal(elegir({ automatizacion: { activa: false, hora: horaLima, dias: todos } }, false).length, 2, '«Ejecutar ahora» corre aunque esté apagada');
+  const [p] = elegir({ competidores: [{ nombre: 'Yape', alias: 'Yape, Yape BCP', dominios: 'yape.com.pe' }] }, false);
+  assert.equal(p.contexto, 'El usuario está en Lima, Perú.');
+  assert.match(p.marcas_lista, /^BCP \(.*\); Yape \(Yape BCP\)$/);
+  assert.deepEqual(p._cfg.competidores.map(c => c.nombre), ['Yape']);
+});
+
+prueba('/geo-config-save: valida y guarda cada ajuste en _config', () => {
+  const g = (body, hoja = {}, titulos = ['Marca']) =>
+    guardarSistema('Planear (ajuste)', 'Webhook geo-config-save', 'Pestañas del Sheet (ajuste)', body, hoja, titulos);
+  const nueva = g({ clave: 'automatizacion', valor: { activa: false, hora: 9, dias: ['lun', 'vie', 'xx'] } });
+  assert.equal(nueva[0].body.requests[0].addSheet.properties.title, '_config');
+  const fila = celdasDe(nueva[0])[1];
+  assert.equal(fila[0], 'automatizacion');
+  assert.deepEqual(JSON.parse(fila[1]), { activa: false, hora: 9, dias: ['lun', 'vie'] });
+  assert.equal(g({ clave: 'automatizacion', valor: { hora: 25 } })[0]._status, 400);
+  const marca = g({ clave: 'marca', valor: { alias: 'Banco de Crédito, ViaBCP', dominios: 'https://www.viabcp.com/, bcp.com.pe' } }, { _config: [['clave', 'valor', 'actualizado'], ['marca', '{}', '']] }, ['_config']);
+  assert.match(ruta(marca[0].url), /'_config'!A2:C2/);
+  assert.deepEqual(JSON.parse(marca[0].body.values[0][1]), { alias: ['BCP', 'Banco de Crédito', 'ViaBCP'], dominios: ['viabcp.com', 'bcp.com.pe'] });
+  assert.equal(g({ clave: 'competidores', valor: [] })[0]._status, 400);
+  assert.equal(g({ clave: 'otra', valor: 1 })[0]._status, 400);
+});
+
+prueba('/geo-monitor-data: marca y competidores editados y ajustes vigentes', () => {
+  const base = comoSheets({ prompts: hojaPrompts, resultados: hojaResultados });
+  const aj = conConfig({ competidores: [{ nombre: 'Interbank', alias: 'Interbank', dominios: 'interbank.pe' }, { nombre: 'Yape', dominios: 'yape.com.pe' }], automatizacion: { activa: false, hora: 8, dias: ['lun'] } });
+  const d = correr(api, 'Datos del monitor', [{ valueRanges: base.valueRanges.concat(aj.valueRanges) }], { 'Pestañas del Sheet (monitor)': [metaSheets(['Tarjetas', 'Reputación', '_config'])] })[0];
+  assert.deepEqual(d.monitor.brands.map(b => b.name), ['BCP', 'Interbank', 'Yape']);
+  assert.deepEqual(d.ajustes.automatizacion, { activa: false, hora: 8, dias: ['lun'] });
+  assert.equal(d.ajustes.monitor.nombre, 'BCP · Monitor de Visibilidad en IA', 'sin ajuste: el valor por defecto');
 });
 
 console.log(`\n${ok} pruebas pasan`);

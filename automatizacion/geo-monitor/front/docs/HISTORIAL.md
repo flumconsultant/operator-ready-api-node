@@ -1,5 +1,14 @@
 # BCP · Monitor de Visibilidad en IA
 
+## Versión 14 · Configuración editable y conciliación con OtterlyAI
+
+- Configuración editable (se guarda en la pestaña `_config` del Sheet con `POST /geo-config-save`): datos del monitor, marca (otros nombres y dominios), competidores (nombres, alias, dominios y color), corrida automática (encendida/apagada, hora y días) y búsqueda web de Claude. Botón «Ejecutar ahora».
+- n8n revisa la programación cada hora; por defecto corre todos los días a las 07:00 (Lima), como antes.
+- Botón ⓘ con clic en cada KPI: qué mide, cómo se calcula, cómo se lee y su equivalente en OtterlyAI. Glosario completo en Configuración.
+- Share of Voice con la definición de OtterlyAI: una mención por respuesta y banco.
+- Captura: cada motor recibe «El usuario está en Lima, Perú» como línea de sistema, y Claude busca en la web antes de responder (127 de 150 respuestas del 21/10 habían salido de memoria, sin fuentes).
+
+
 ## Versión 13 · Datos verificados y revisión de diseño
 
 Datos (backend n8n y Google Sheet):

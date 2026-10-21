@@ -34,7 +34,7 @@ function rango(titulo, celdas) {
 // desde (AAAA-MM-DD): solo las pestañas de resultados desde esa fecha.
 // Pestañas de sistema que lee el monitor: correcciones de categoría de dominio,
 // estado de las recomendaciones y auditorías GEO.
-const SISTEMA = ['_dominios', '_recomendaciones', '_auditorias'];
+const SISTEMA = ['_dominios', '_recomendaciones', '_auditorias', '_config'];
 
 function cuerpoLectura(meta, { prompts = false, resultadosDesde = null, sistema = false } = {}) {
   const filtros = [];
@@ -225,7 +225,8 @@ function planGuardarResultados(filas, meta) {
 const COLUMNAS_SISTEMA = {
   _recomendaciones: ['id', 'estado', 'responsable', 'fecha_objetivo', 'fecha_hecha', 'actualizado'],
   _dominios: ['dominio', 'categoria', 'actualizado'],
-  _auditorias: ['id', 'tipo', 'url', 'fecha', 'resultado']
+  _auditorias: ['id', 'tipo', 'url', 'fecha', 'resultado'],
+  _config: ['clave', 'valor', 'actualizado']
 };
 
 // Agrega o actualiza el registro cuya columna `clave` coincide. Crea la pestaña
