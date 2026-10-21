@@ -133,8 +133,19 @@ function valoresResultado(f) {
 
 // ─── Peticiones a la API de Sheets ─────────────────────────────────────────
 const pedidoSheets = (method, ruta, body) => ({ method, url: SHEETS_API + ruta, body });
-const crearPestana = (titulo, indice) =>
-  pedidoSheets('POST', ':batchUpdate', { requests: [{ addSheet: { properties: Object.assign({ title: titulo }, indice === undefined ? {} : { index: indice }) } }] });
+// Crea la pestaña y escribe sus filas en UNA sola petición (addSheet + appendCells
+// con un sheetId elegido aquí). Con dos peticiones separadas, n8n las lanza con
+// 300 ms de diferencia sin esperar la primera y la escritura puede llegar antes
+// que la pestaña («Unable to parse range»): pasó en la corrida del 21/10.
+function crearPestana(titulo, indice, filas, meta) {
+  const usados = pestanas(meta).map(t => Number(t.id) || 0);
+  let id = (Math.max(0, ...usados) % 2000000000) + 1;
+  while (usados.includes(id)) id++;
+  const celda = v => ({ userEnteredValue: typeof v === 'number' ? { numberValue: v } : typeof v === 'boolean' ? { boolValue: v } : { stringValue: v === null || v === undefined ? '' : String(v) } });
+  const requests = [{ addSheet: { properties: Object.assign({ sheetId: id, title: titulo }, indice === undefined ? {} : { index: indice }) } }];
+  if (filas && filas.length) requests.push({ appendCells: { sheetId: id, rows: filas.map(f => ({ values: f.map(celda) })), fields: 'userEnteredValue' } });
+  return pedidoSheets('POST', ':batchUpdate', { requests });
+}
 const escribir = (titulo, desde, valores) =>
   pedidoSheets('PUT', '/values/' + encodeURIComponent(rango(titulo, desde)) + '?valueInputOption=RAW', { values: valores });
 const agregar = (titulo, valores) =>
@@ -152,11 +163,9 @@ function planGuardarPrompt(guardado, prompts, meta) {
   const fila = guardado.fila;
   const actual = prompts.find(p => String(p.id).trim() === fila.id);
   const proyectosAlFinal = tabs.filter(t => esPestanaProyecto(t.titulo)).length;
-  const asegurarPestana = (titulo, pet) => {
-    if (!tab(titulo)) {
-      pet.push(crearPestana(titulo, proyectosAlFinal));
-      pet.push(escribir(titulo, 'A1', [COLUMNAS_PROMPTS]));
-    }
+  // Agrega filas a la pestaña del proyecto; si no existe, la crea con encabezados y filas a la vez.
+  const agregarEn = (titulo, valores, pet) => {
+    pet.push(tab(titulo) ? agregar(titulo, valores) : crearPestana(titulo, proyectosAlFinal, [COLUMNAS_PROMPTS].concat(valores), meta));
   };
 
   if (guardado.accion === 'eliminar') {
@@ -173,8 +182,7 @@ function planGuardarPrompt(guardado, prompts, meta) {
       pet.push(escribir(actual.proyecto, 'A' + actual._fila + ':J' + actual._fila, [valoresPrompt(nuevo)]));
     } else {
       // Cambio de proyecto: se agrega en la pestaña nueva y se borra de la vieja.
-      asegurarPestana(nuevo.proyecto, pet);
-      pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));
+      agregarEn(nuevo.proyecto, [valoresPrompt(nuevo)], pet);
       pet.push(borrarFila(tab(actual.proyecto).id, actual._fila));
     }
     return { ok: true, status: 200, respuesta: { ok: true, accion: 'editar', prompt: limpio(nuevo) }, peticiones: pet };
@@ -183,8 +191,7 @@ function planGuardarPrompt(guardado, prompts, meta) {
   // Crear: un proyecto nuevo crea su pestaña.
   const nuevo = normalizarPrompt(fila);
   const pet = [];
-  asegurarPestana(nuevo.proyecto, pet);
-  pet.push(agregar(nuevo.proyecto, [valoresPrompt(nuevo)]));
+  agregarEn(nuevo.proyecto, [valoresPrompt(nuevo)], pet);
   return { ok: true, status: 200, respuesta: { ok: true, accion: 'crear', prompt: limpio(nuevo) }, peticiones: pet };
 }
 
@@ -208,8 +215,7 @@ function planGuardarResultados(filas, meta) {
   for (const [fecha, valores] of porFecha) {
     if (tabs.some(t => t.titulo === fecha)) pet.push(agregar(fecha, valores));
     else {
-      pet.push(crearPestana(fecha, proyectos));
-      pet.push(escribir(fecha, 'A1', [COLUMNAS_RESULTADOS].concat(valores)));
+      pet.push(crearPestana(fecha, proyectos, [COLUMNAS_RESULTADOS].concat(valores), meta));
     }
   }
   return pet;
@@ -228,7 +234,7 @@ function planUpsertSistema(titulo, registro, clave, filas, meta) {
   const columnas = COLUMNAS_SISTEMA[titulo];
   const valores = columnas.map(c => registro[c] === undefined || registro[c] === null ? '' : registro[c]);
   const existe = pestanas(meta).some(t => t.titulo === titulo);
-  if (!existe) return [crearPestana(titulo), escribir(titulo, 'A1', [columnas, valores])];
+  if (!existe) return [crearPestana(titulo, undefined, [columnas, valores], meta)];
   const actual = (filas || []).find(f => String(f[clave]).trim() === String(registro[clave]).trim());
   if (!actual) return [agregar(titulo, [valores])];
   const fin = String.fromCharCode(64 + columnas.length);

@@ -355,10 +355,14 @@ prueba('/geo-prompts-save: crear en su pestaña; un proyecto nuevo crea la pesta
   assert.equal(p._respuesta.prompt.proyecto, 'Tarjetas');
 
   const nuevo = planear({ proyecto: 'Hipotecario', prompt: '¿Qué banco da el mejor crédito hipotecario?' });
-  assert.deepEqual(nuevo.map(x => x.method), ['POST', 'PUT', 'POST']);
-  assert.deepEqual(nuevo[0].body.requests[0].addSheet.properties, { title: 'Hipotecario', index: 2 }, 'va después de las pestañas de proyecto');
-  assert.deepEqual(nuevo[1].body.values, [COLS_PROMPTS], 'con los encabezados del Excel');
-  assert.equal(ruta(nuevo[2].url).split(':append')[0], "/values/'Hipotecario'!A1");
+  // Una sola petición: crear la pestaña y escribir encabezados + fila (sin carrera entre las dos).
+  assert.deepEqual(nuevo.map(x => x.method), ['POST']);
+  const [crear, celdas] = nuevo[0].body.requests;
+  assert.equal(crear.addSheet.properties.title, 'Hipotecario');
+  assert.equal(crear.addSheet.properties.index, 2, 'va después de las pestañas de proyecto');
+  assert.equal(celdas.appendCells.sheetId, crear.addSheet.properties.sheetId, 'escribe en la pestaña que crea');
+  assert.deepEqual(celdas.appendCells.rows[0].values.map(c => c.userEnteredValue.stringValue), COLS_PROMPTS, 'con los encabezados del Excel');
+  assert.equal(celdas.appendCells.rows[1].values[3].userEnteredValue.stringValue, '¿Qué banco da el mejor crédito hipotecario?');
 });
 
 prueba('/geo-prompts-save: editar, activar/desactivar, mover de proyecto y eliminar', () => {
@@ -551,11 +555,16 @@ prueba('Plan de guardado: los resultados van a la pestaña del día', () => {
   const plan = meta => correr(corrida, 'Plan de guardado', filas, { 'Pestañas del Sheet': [meta] });
   const fecha = filas[0].fecha;
   const nueva = plan(metaSheets(['Marca', 'Ahorros', '2026-10-01']));
-  assert.deepEqual(nueva.map(p => p.method), ['POST', 'PUT']);
-  assert.deepEqual(nueva[0].body.requests[0].addSheet.properties, { title: fecha, index: 2 }, 'la más reciente, primera después de los proyectos');
-  assert.deepEqual(nueva[1].body.values[0], COLS_RESULTADOS);
-  assert.equal(nueva[1].body.values.length, 3);
-  const fila = Object.fromEntries(COLS_RESULTADOS.map((c, i) => [c, nueva[1].body.values[1][i]]));
+  assert.deepEqual(nueva.map(p => p.method), ['POST'], 'pestaña y filas en una sola petición');
+  const [crear, celdas] = nueva[0].body.requests;
+  assert.equal(crear.addSheet.properties.title, fecha);
+  assert.equal(crear.addSheet.properties.index, 2, 'la más reciente, primera después de los proyectos');
+  assert.ok(![1000, 1001, 1002].includes(crear.addSheet.properties.sheetId), 'un sheetId que no está en uso');
+  assert.equal(celdas.appendCells.sheetId, crear.addSheet.properties.sheetId);
+  const valores = celdas.appendCells.rows.map(r => r.values.map(c => Object.values(c.userEnteredValue)[0]));
+  assert.deepEqual(valores[0], COLS_RESULTADOS);
+  assert.equal(valores.length, 3);
+  const fila = Object.fromEntries(COLS_RESULTADOS.map((c, i) => [c, valores[1][i]]));
   assert.deepEqual([fila.motor, fila.menciona_bcp, fila.prompt_id], [filas[0].motor, filas[0].menciona_bcp ? 'TRUE' : 'FALSE', filas[0].prompt_id]);
   const existe = plan(metaSheets(['Marca', fecha]));
   assert.deepEqual(existe.map(p => p.method), ['POST']);
@@ -583,6 +592,8 @@ prueba('Los tres workflows: conexiones válidas, ids únicos, pestañas de la pl
 
 // ─── Pestañas de sistema: recomendaciones y dominios ──────────────────────
 const sistemaSheets = tabs => ({ valueRanges: Object.entries(tabs).map(([t, filas]) => ({ valueRange: { range: `'${t}'!A1:F9`, values: filas } })) });
+// Filas que escribe un addSheet + appendCells.
+const celdasDe = pet => pet.body.requests[1].appendCells.rows.map(r => r.values.map(c => Object.values(c.userEnteredValue)[0]));
 const CAB_RECS = ['id', 'estado', 'responsable', 'fecha_objetivo', 'fecha_hecha', 'actualizado'];
 const guardarSistema = (nodo, hook, lect, body, hoja, titulos) =>
   correr(api, nodo, [sistemaSheets(hoja)], { [hook]: [{ body }], [lect]: [metaSheets(titulos)] });
@@ -591,10 +602,10 @@ const guardarRec = (body, hoja = {}, titulos = ['Marca']) =>
 
 prueba('/geo-recs-save: crea la pestaña, agrega, actualiza y marca la fecha de hecha', () => {
   const nueva = guardarRec({ id: 'r1', estado: 'todo', responsable: 'Ana' });
-  assert.deepEqual(nueva.map(p => p.method), ['POST', 'PUT']);
+  assert.deepEqual(nueva.map(p => p.method), ['POST']);
   assert.equal(nueva[0].body.requests[0].addSheet.properties.title, '_recomendaciones');
-  assert.deepEqual(nueva[1].body.values[0], CAB_RECS);
-  assert.deepEqual(nueva[1].body.values[1].slice(0, 3), ['r1', 'todo', 'Ana']);
+  assert.deepEqual(celdasDe(nueva[0])[0], CAB_RECS);
+  assert.deepEqual(celdasDe(nueva[0])[1].slice(0, 3), ['r1', 'todo', 'Ana']);
   const hoja = { _recomendaciones: [CAB_RECS, ['r0', 'todo', '', '', '', ''], [], ['r1', 'in_progress', 'Ana', '2026-11-01', '', '']] };
   const otra = guardarRec({ id: 'r2', estado: 'todo' }, hoja, ['Marca', '_recomendaciones']);
   assert.deepEqual(otra.map(p => p.method), ['POST']);
@@ -613,7 +624,7 @@ prueba('/geo-domain-save: corrige la categoría de un dominio', () => {
   const g = (body, hoja = {}, titulos = ['Marca']) =>
     guardarSistema('Planear (dominio)', 'Webhook geo-domain-save', 'Pestañas del Sheet (dominio)', body, hoja, titulos);
   const nueva = g({ dominio: 'https://www.Rankia.pe/foros', categoria: 'community_forum' });
-  assert.deepEqual(nueva[1].body.values.slice(0, 2).map(f => f.slice(0, 2)), [['dominio', 'categoria'], ['rankia.pe', 'community_forum']]);
+  assert.deepEqual(celdasDe(nueva[0]).slice(0, 2).map(f => f.slice(0, 2)), [['dominio', 'categoria'], ['rankia.pe', 'community_forum']]);
   const hoja = { _dominios: [['dominio', 'categoria', 'actualizado'], ['rankia.pe', 'news_media', '']] };
   const cambio = g({ dominio: 'rankia.pe', categoria: 'community_forum' }, hoja, ['_dominios']);
   assert.match(ruta(cambio[0].url), /'_dominios'!A2:C2/);
@@ -674,8 +685,8 @@ prueba('/geo-audit contenido: texto sin JavaScript, encabezados, FAQ y datos est
 prueba('Auditoría guardada en _auditorias y fan-out con las búsquedas de Claude', () => {
   const a = { ok: true, auditoria: { id: 'a_1', type: 'crawl', url: 'https://x.pe/', executedAt: '2026-10-20 10:00', result: { resumen: {} } } };
   const pet = correr(her, 'Guardar auditoría', [metaSheets(['Marca'])], { 'Resultado de la auditoría': [a] });
-  assert.deepEqual(pet.map(p => p.method), ['POST', 'PUT']);
-  assert.deepEqual(pet[1].body.values[1].slice(0, 3), ['a_1', 'crawl', 'https://x.pe/']);
+  assert.deepEqual(pet.map(p => p.method), ['POST']);
+  assert.deepEqual(celdasDe(pet[0])[1].slice(0, 3), ['a_1', 'crawl', 'https://x.pe/']);
   const armado = correr(her, 'Armar fan-out', [{}], { 'Webhook geo-fanout': [{ body: { query: '¿Mejor cuenta de ahorros?' } }] })[0];
   assert.equal(armado.cuerpo.tools[0].type, 'web_search_20260209');
   assert.deepEqual(correr(her, 'Armar fan-out', [{}], { 'Webhook geo-fanout': [{ body: {} }] })[0], { error: 'Escribe un prompt.' });
