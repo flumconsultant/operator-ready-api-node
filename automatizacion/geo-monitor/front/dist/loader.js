@@ -76,10 +76,10 @@
       DATA.meta.liveStatus = estado; avisoPie(estado);
       return cargarScript('app.js?v=bcp-20261020-4');
     })
-    .then(function () { return cargarScript('monitor.js?v=bcp-20261020-4'); })
+    .then(function () { return cargarScript('monitor.js?v=v13'); })
     .then(function () { return cargarScript('prompts-admin.js?v=prompts-admin-1'); })
-    .then(function () { return cargarScript('geo-metrics.js?v=geo-v2-1'); })
-    .then(function () { return cargarScript('geo-v2.js?v=geo-v2-1'); })
+    .then(function () { return cargarScript('geo-metrics.js?v=v13'); })
+    .then(function () { return cargarScript('geo-v2.js?v=v13'); })
     .catch(function (e) {
       console.error('[GEO]', e);
       var vista = document.querySelector('#generalView');

@@ -96,7 +96,8 @@
       sentiment: promedio(sentimientos),          // −100…+100, solo donde aparece
       responsesMentioning: aparece,               // menciones de marca
       totalMentions: conteo,                      // menciones totales
-      purchaseProbability: conDato ? pct(recomendada, conDato) : null
+      purchaseProbability: conDato ? pct(recomendada, conDato) : null,
+      probabilitySample: conDato                  // respuestas con dato de «recomendada»
     };
   }
 
@@ -124,7 +125,7 @@
       const a = metricasMarca(rows, m.id, marcas), b = metricasMarca(previas || [], m.id, marcas);
       return {
         brand: m, coverage: a.coverage, position: a.position, sentiment: a.sentiment, sov: sov[m.id],
-        purchaseProbability: a.purchaseProbability, responsesMentioning: a.responsesMentioning, totalMentions: a.totalMentions,
+        purchaseProbability: a.purchaseProbability, probabilitySample: a.probabilitySample, responsesMentioning: a.responsesMentioning, totalMentions: a.totalMentions,
         delta: { coverage: delta(a.coverage, b.coverage), position: delta(a.position, b.position), sentiment: delta(a.sentiment, b.sentiment), sov: delta(sov[m.id], sovP[m.id]), purchaseProbability: delta(a.purchaseProbability, b.purchaseProbability) }
       };
     }).sort((x, y) => (y.coverage ?? -1) - (x.coverage ?? -1) || (x.position ?? 99) - (y.position ?? 99));
@@ -263,6 +264,19 @@
 
   // ─── Índice de visibilidad (V4) ───────────────────────────────────────────
   const CUADRANTES = { leaders: 'Líderes', niche: 'Nicho', low_conversion: 'Baja conversión', underperformers: 'Bajo desempeño' };
+  // Muestra mínima para ubicar una marca en el cuadrante: con 1 o 2 respuestas
+  // la probabilidad sale 0% o 100% y no dice nada.
+  const MUESTRA_MINIMA = 5;
+  // Umbrales «promedio del mercado»: media de cobertura de las marcas con muestra
+  // suficiente y probabilidad de todas sus respuestas juntas.
+  function umbralesMercado(filasRanking) {
+    const ok = (filasRanking || []).filter(x => (x.probabilitySample || 0) >= MUESTRA_MINIMA && finito(x.coverage) && finito(x.purchaseProbability));
+    if (!ok.length) return null;
+    // Probabilidad ponderada por respuestas: si no, un banco chico que casi
+    // siempre sale recomendado (pocas menciones) sube el corte de todos.
+    const n = ok.reduce((a, x) => a + x.probabilitySample, 0);
+    return { coverage: promedio(ok.map(x => x.coverage)), probability: ok.reduce((a, x) => a + x.purchaseProbability * x.probabilitySample, 0) / n };
+  }
   function cuadrante(cobertura, probabilidad, umbrales) {
     const u = Object.assign({ coverage: 30, probability: 50 }, umbrales || {});
     if (!finito(cobertura) || !finito(probabilidad)) return null;
@@ -387,7 +401,7 @@
 
   const API = {
     MARCAS_BASE, CUADRANTES, PRESETS, norm, promedio, redondear, esValida, validas, marcaDe, menciones, metricasMarca, sovMenciones, sovPonderado,
-    delta, ranking, periodo, enPeriodo, sumarDias, diasEntre, semana, serie, dominioDe, urls, estadoCita, cambiosCitas, mixCategorias,
+    MUESTRA_MINIMA, umbralesMercado, delta, ranking, periodo, enPeriodo, sumarDias, diasEntre, semana, serie, dominioDe, urls, estadoCita, cambiosCitas, mixCategorias,
     coberturaDominio, dominios, citasMarca, cuadrante, porPrompt, recomendaciones, titular, salud
   };
   if (typeof module === 'object' && module.exports) module.exports = API;

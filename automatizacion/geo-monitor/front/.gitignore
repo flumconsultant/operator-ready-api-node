@@ -1,0 +1,4 @@
+
+# Artifact del Worker; las fuentes web permanecen en dist/.
+dist/server/
+dist/.openai/

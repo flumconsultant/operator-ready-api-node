@@ -199,7 +199,7 @@ prueba('Share of Voice: posición, prominencia y contexto, como en la estrategia
   const d = JSON.parse(f.detalle_marcas);
   assert.deepEqual(d.map(x => x.marca), ['BCP', 'Interbank', 'BBVA'], 'nombres canónicos');
   // Sin mención de BCP, su SoV es 0 aunque haya detalle; con error, vacío.
-  const [sin] = armar(r, [{ menciona_bcp: false, detalle_marcas: '[{"marca":"Interbank","posicion":1,"menciones":1,"sentimiento":0}]' }]);
+  const [sin] = armar([{ ...r[0], texto: 'Interbank es una opción.' }], [{ menciona_bcp: false, detalle_marcas: '[{"marca":"Interbank","posicion":1,"menciones":1,"sentimiento":0}]' }]);
   assert.deepEqual([sin.sov_bcp, JSON.parse(sin.detalle_marcas)[0].marca], [0, 'Interbank']);
   const [err] = armar(r, [null]);
   assert.deepEqual([err.sov_bcp, err.detalle_marcas], ['', '']);
@@ -249,6 +249,20 @@ prueba('Citas con URL y título, y consultas de búsqueda (fan-out) por motor', 
   assert.equal(JSON.parse(fila.fuentes_detalle)[0].title, 'BCP oficial');
   const d = JSON.parse(fila.detalle_marcas)[0];
   assert.deepEqual([d.recomendada, d.atributos], [true, ['seguridad', 'tasas']], 'atributos solo del vocabulario');
+});
+
+prueba('Armar fila: si el texto nombra a BCP y el Analista dijo que no, cuenta en su lugar del texto', () => {
+  const [r] = juntar().slice(1, 2);
+  const texto = 'Te recomiendo Interbank o BBVA. Si me dices con qué banco (BCP, Scotiabank) quieres, te ayudo. Banco de Crédito del Perú también.';
+  const [f] = armar([{ ...r, texto }], [{ menciona_bcp: false, posicion_bcp: 0, sentimiento: 0, marcas_mencionadas: 'Interbank, BBVA, Scotiabank',
+    detalle_marcas: '[{"marca":"Interbank","posicion":1,"menciones":1,"sentimiento":0.4},{"marca":"BBVA","posicion":2,"menciones":1,"sentimiento":0.3},{"marca":"Scotiabank","posicion":3,"menciones":1,"sentimiento":0}]' }]);
+  assert.equal(f.menciona_bcp, true);
+  assert.equal(f.posicion_bcp, 3, 'después de Interbank y BBVA, antes de Scotiabank');
+  assert.equal(f.n_menciones_bcp, 2, '«BCP» y «Banco de Crédito del Perú»; «Banco de Crédito» no se cuenta dos veces');
+  assert.deepEqual(JSON.parse(f.detalle_marcas).map(d => [d.marca, d.posicion]), [['Interbank', 1], ['BBVA', 2], ['BCP', 3], ['Scotiabank', 4]]);
+  assert.equal(f.marcas_mencionadas, 'Interbank, BBVA, BCP, Scotiabank');
+  const [g] = armar([{ ...r, texto: 'Interbank es buena. El BCPX no existe.' }], [{ menciona_bcp: false, marcas_mencionadas: 'Interbank' }]);
+  assert.equal(g.menciona_bcp, false, 'BCPX no es BCP');
 });
 
 prueba('Armar fila: si el motor no respondió, no cuenta lo que diga la IA', () => {

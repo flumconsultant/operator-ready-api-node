@@ -40,7 +40,8 @@ function detalleDesdeRanking(marcas, marcaPropia, sentimientoPropio, mencionesPr
     marca: m,
     posicion: i + 1,
     menciones: m === marcaPropia && mencionesPropias > 0 ? mencionesPropias : 1,
-    sentimiento: m === marcaPropia ? sentimientoPropio : 0
+    // Sin desglose no hay sentimiento de los competidores: null (desconocido), no 0.
+    sentimiento: m === marcaPropia ? sentimientoPropio : null
   }));
 }
 

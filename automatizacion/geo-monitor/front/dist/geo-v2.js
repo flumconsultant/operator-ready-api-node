@@ -10,7 +10,11 @@
   const byId = id => document.getElementById(id);
 
   // ─── Catálogos ────────────────────────────────────────────────────────────
-  const BRANDS = () => (Array.isArray(MON.brands) && MON.brands.length ? MON.brands : G.MARCAS_BASE);
+  const BRANDS = () => (Array.isArray(MON.brands) && MON.brands.length ? MON.brands : G.MARCAS_BASE).filter(b => isPeruvianBank(b.name));
+  const AUDIT_ROUTES = new Set(['audit-crawl', 'audit-content', 'audit-fanout']);
+  const GEO_AUDIT_ENABLED = false;
+  let profile = { displayName: 'Carlos Andrés Ramírez', photoUrl: 'assets/carlos-andres-ramirez.jpg?v=ux-11' };
+  try { const session = JSON.parse(document.getElementById('bcp-session')?.textContent || 'null'); if (session?.displayName) profile = session; } catch (_) {}
   const OWN = () => BRANDS().find(b => b.isOwn) || BRANDS()[0];
   const brandById = id => BRANDS().find(b => b.id === id) || { id, name: id, color: '#94a3b8' };
   const CATEGORIAS = {
@@ -19,6 +23,9 @@
     community_forum: ['Comunidad / foro', '#ea580c'], education: ['Educación', '#16a34a'], video: ['Video', '#dc2626'],
     encyclopedia: ['Enciclopedia', '#475569'], blog_personal: ['Blog', '#a16207'], other: ['Otros', '#94a3b8'], unclassified: ['Sin clasificar', '#7b8aa6']
   };
+  // Título legible de una cita: el título, o la URL sin esquema, sin %C3%A9.
+  const decodificar = t => { try { return decodeURIComponent(String(t)); } catch (e) { return String(t); } };
+  const tituloUrl = u => decodificar(u.title || String(u.url || '').replace(/^https?:\/\/(www\.)?/, '')).replace(/_/g, ' ');
   const catChip = c => { const [n, col] = CATEGORIAS[c] || CATEGORIAS.unclassified; return `<span class="v2-chip" style="--chip:${col}">${esc(n)}</span>`; };
   const ETAPA_POR_INTENCION = { informacional: 'tofu', navegacional: 'mofu', comparativa: 'mofu', comercial: 'mofu', transaccional: 'bofu' };
   const ETAPAS = { tofu: 'TOFU · descubrimiento', mofu: 'MOFU · comparación', bofu: 'BOFU · decisión' };
@@ -55,24 +62,20 @@
   const V = { preset: 'last14', start: '', end: '', tags: new Set(), country: 'PE', exportar: null, period: null,
     chartMetric: 'coverage', gran: 'day', hidden: new Set(), rankSort: ['coverage', -1], promptTab: 'top', citeTab: 'top',
     pq: '', psort: ['coverage', -1], ppage: 1, psize: 20, pcols: new Set(), uq: '', utab: 'top', upage: 1, dpage: 1,
-    thr: { coverage: 30, probability: 50 }, lapse: null, lapseIdx: null, recTab: 'suggested', recF: { category: '', scope: '', impact: '' }, recQ: '', recSort: 'impact',
+    thr: { coverage: 30, probability: 50 }, thrMode: 'market', lapse: null, lapseIdx: null, recTab: 'suggested', recF: { category: '', scope: '', impact: '' }, recQ: '', recSort: 'impact',
     sel: new Set(), research: { modo: 'keywords', loading: false, error: '', items: [], pick: new Set() }, audit: { loading: false, error: '', last: null }, fan: { loading: false, error: '', last: null },
     bots: null, tagColors: leerLocal('v2TagColors', {}), favs: new Set(leerLocal('v2Favs', [])) };
   function leerLocal(k, def) { try { const v = JSON.parse(localStorage.getItem(k)); return v === null ? def : v; } catch (e) { return def; } }
   function guardarLocal(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* sin almacenamiento */ } }
 
   function leerQuery() {
-    const q = new URLSearchParams(location.search);
-    if (q.get('preset') && (G.PRESETS[q.get('preset')] || ['custom', 'all'].includes(q.get('preset')))) V.preset = q.get('preset');
-    if (q.get('start')) V.start = q.get('start');
-    if (q.get('end')) V.end = q.get('end');
-    if (q.get('tags')) V.tags = new Set(q.get('tags').split(',').filter(Boolean));
-    if (q.get('country')) V.country = q.get('country').toUpperCase() === 'ALL' ? 'all' : q.get('country').toUpperCase();
-    if (q.get('engine')) {
-      const ids = q.get('engine').split(',').map(x => x === 'google_aio' ? 'overview' : x).filter(x => MODEL.has(x));
-      if (ids.length) M.models = new Set(ids);
-    }
-    if (q.get('project') && (q.get('project') === 'all' || PROJECT.has(q.get('project')))) M.project = q.get('project');
+    const q = new URLSearchParams(location.search), preset = q.get('preset');
+    V.preset = preset && (G.PRESETS[preset] || ['custom', 'all'].includes(preset)) ? preset : 'last14';
+    V.start = q.get('start') || ''; V.end = q.get('end') || '';
+    V.tags = new Set((q.get('tags') || '').split(',').filter(Boolean));
+    V.country = String(q.get('country') || 'PE').toUpperCase() === 'ALL' ? 'all' : 'PE';
+    M.models = q.has('engine') ? new Set(q.get('engine').split(',').map(x => x === 'google_aio' ? 'overview' : x).filter(x => MODEL.has(x))) : new Set(MON.models.map(m => m.id));
+    M.project = q.get('project') && PROJECT.has(q.get('project')) ? q.get('project') : 'all';
   }
   function escribirQuery() {
     const q = new URLSearchParams();
@@ -112,6 +115,8 @@
   };
   const filas = () => observations();
   const previas = () => observations({ previous: true });
+  // ¿El periodo anterior tiene respuestas válidas? Si no, no hay contra qué comparar.
+  const hayPrevio = pr => (pr || previas()).some(G.esValida);
 
   // ─── Pequeños componentes ─────────────────────────────────────────────────
   const n1 = v => (v === null || v === undefined ? '—' : fmt(v, Math.abs(v) < 10 && v % 1 !== 0 ? 1 : 0));
@@ -125,9 +130,12 @@
   }
   function sentBar(v) {
     if (v === null || v === undefined) return '<span class="muted">—</span>';
-    const col = v <= -20 ? '#d02c2a' : v < 20 ? '#cc7800' : '#1d8b3d';
+    // −100…−10 negativo (rojo) · −10…+10 neutral (gris) · +10…+100 positivo (verde).
+    // Una mención neutral no es mala: antes salía en ámbar y todo parecía «regular».
+    const tono = v <= -10 ? 'negativo' : v < 10 ? 'neutral' : 'positivo';
+    const col = { negativo: '#c0392b', neutral: '#5f6f8f', positivo: '#1d8b3d' }[tono];
     const seg = Math.round((v + 100) / 40);
-    return `<span class="v2-sent" title="Sentimiento ${sentTxt(v)} (−100 a +100)"><span class="v2-sent-bar">${[0, 1, 2, 3, 4].map(i => `<i style="${i < Math.max(1, seg) ? 'background:' + col : ''}"></i>`).join('')}</span><b style="color:${col}">${sentTxt(v)}</b></span>`;
+    return `<span class="v2-sent" title="Sentimiento ${tono}: ${sentTxt(v)} (escala −100 a +100)" aria-label="Sentimiento ${tono} ${sentTxt(v)}"><span class="v2-sent-bar">${[0, 1, 2, 3, 4].map(i => `<i style="${i < Math.max(1, seg) ? 'background:' + col : ''}"></i>`).join('')}</span><b style="color:${col}">${sentTxt(v)}</b></span>`;
   }
   const logo = b => `<span class="v2-logo" style="background:${b.color || '#94a3b8'}" aria-hidden="true">${esc((b.name || '?').charAt(0))}</span>`;
   const brandCell = b => `<span class="v2-brand ${b.isOwn ? 'own' : ''}">${logo(b)}${esc(b.name)}</span>`;
@@ -140,14 +148,14 @@
   const FORMULAS = {
     coverage: 'Cobertura de marca = respuestas donde la marca aparece ÷ respuestas válidas. Las respuestas con error no cuentan.',
     position: 'Posición = promedio del rank de la marca entre las marcas mencionadas, solo donde aparece (1 = primera). Menor es mejor.',
-    sentiment: 'Sentimiento = promedio del score por respuesta en escala −100…+100, solo donde la marca aparece.',
+    sentiment: 'Sentimiento = promedio del score por respuesta en escala −100…+100, solo donde la marca aparece. Entre −10 y +10 es neutral: la marca se menciona sin juicio.',
     sov: 'Share of Voice (menciones) = menciones de la marca ÷ menciones de todas las marcas seguidas. La suma de todas es 100%.',
-    sovWeighted: 'SOV ponderado (legado) = promedio por respuesta del score de n8n: posición, prominencia y contexto.',
+    sovWeighted: 'SoV ponderado = promedio por respuesta del score de n8n: posición, prominencia y contexto.',
     probability: 'Probabilidad de compra = respuestas donde el motor recomienda la marca como opción ÷ respuestas donde aparece.',
     domainCoverage: 'Cobertura de dominio = respuestas que citan el dominio ÷ respuestas válidas.'
   };
   function csv(rows) {
-    const cel = v => { const s = v === null || v === undefined ? '' : String(v); return /[",;\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+    const cel = v => { const raw = v === null || v === undefined ? '' : String(v), s = /^[=+@\-]/.test(raw) ? "'" + raw : raw; return /[",;\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
     return new Blob(['﻿' + rows.map(r => r.map(cel).join(',')).join('\n')], { type: 'text/csv;charset=utf-8' });
   }
   function exportarVista() {
@@ -175,7 +183,9 @@
     const vis = series.filter(s => !s.hidden);
     const vals = vis.flatMap(s => s.values).filter(v => v !== null && Number.isFinite(v));
     if (!dates.length || !vals.length) return vacio('Sin datos para graficar', 'No hay respuestas válidas con estos filtros.');
-    const W = 760, H = height, L = 44, R = 12, T = 12, B = 28;
+    // En pantallas angostas el SVG se dibuja más chico para que el texto no quede en 4 px.
+    const angosto = window.innerWidth < 640;
+    const W = angosto ? 360 : 760, H = angosto ? Math.round(height * 0.9) : height, L = angosto ? 36 : 44, R = 12, T = 12, B = 28;
     let lo = Math.min(0, ...vals), hi = max !== undefined ? max : Math.max(...vals);
     if (unit === 'pos') { lo = 1; hi = Math.max(2, Math.ceil(Math.max(...vals))); }
     if (unit === 'sent') { lo = -100; hi = 100; }
@@ -184,7 +194,7 @@
     const y = v => { const r = (v - lo) / (hi - lo); return invert ? T + r * (H - T - B) : H - B - r * (H - T - B); };
     const ticks = [0, 0.25, 0.5, 0.75, 1].map(f => lo + f * (hi - lo));
     const etiqueta = v => (unit === 'pos' ? fmt(v, 1) : unit === 'sent' ? sentTxt(v) : fmt(v, 0) + '%');
-    const marcasX = dates.length <= 8 ? dates.map((d, i) => i) : [0, Math.floor(dates.length / 2), dates.length - 1];
+    const marcasX = angosto && dates.length > 2 ? [0, dates.length - 1] : dates.length <= 8 ? dates.map((d, i) => i) : [0, Math.floor(dates.length / 2), dates.length - 1];
     return `<svg class="v2-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Gráfico de líneas">
       ${ticks.map(v => `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" class="grid"/><text x="${L - 6}" y="${y(v) + 4}" text-anchor="end">${etiqueta(v)}</text>`).join('')}
       ${marcasX.map(i => `<text x="${x(i)}" y="${H - 8}" text-anchor="middle">${esc(dateLabel(dates[i]))}</text>`).join('')}
@@ -214,26 +224,26 @@
     const titulo = masReciente ? 'Última corrida: ' + hace(masReciente.daysAgo) : 'Sin corridas';
     return `<details class="v2-health ${s.level}"><summary><i class="status-dot"></i>${esc(titulo)}</summary><div class="v2-health-pop"><b>Última corrida válida por motor</b>${s.engines.map(e => `<div class="v2-health-row ${e.level}">${engineBadge(e.engine, true)}<span>${e.lastRun ? esc(dateLabel(e.lastRun, true)) + ' · ' + hace(e.daysAgo) : 'No activo'}</span>${e.errorsLastRun ? `<small>${e.errorsLastRun} con error</small>` : ''}</div>`).join('')}<p class="muted">Ámbar: más de 8 días · rojo: más de 14. Las respuestas con error no cuentan en ninguna métrica.</p></div></details>`;
   }
+  const menuIcon = name => {
+    const paths = { chart:'<path d="M4 19V5m0 14h16M8 15l4-5 4 3 4-7"/>', search:'<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/>', people:'<circle cx="9" cy="8" r="3"/><path d="M3 20v-3a6 6 0 0 1 12 0v3m2-15a3 3 0 0 1 0 6m3 9v-3a5 5 0 0 0-2-4"/>', link:'<path d="m10 13 4-4m-6 7-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0m2 4 1-1a4 4 0 0 0-6-6" transform="translate(4 2)"/>', spark:'<path d="m12 3 2.3 6.7L21 12l-6.7 2.3L12 21l-2.3-6.7L3 12l6.7-2.3Z"/>', tag:'<path d="M3 3h8l10 10-8 8L3 11Z"/><circle cx="7.5" cy="7.5" r="1"/>', settings:'<path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3"/><circle cx="15" cy="17" r="3"/>', list:'<path d="M8 5h12M8 12h12M8 19h12M3 5h.1M3 12h.1M3 19h.1"/>', grid:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>', clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>' };
+    return `<svg viewBox="0 0 24 24" aria-hidden="true">${paths[name] || paths.chart}</svg>`;
+  };
   function nav() {
-    const item = (k, ic) => `<button type="button" class="side-link ${M.route === k || (k === 'projects' && M.route === 'detail') ? 'active' : ''}" data-nav="${k}" ${M.route === k ? 'aria-current="page"' : ''}>${navIcon(ic)}${esc(ROUTES[k][0])}</button>`;
-    return `<div class="v2-nav-group">Reporte de marca · ${esc(OWN().name)}</div>${item('resumen', 'chart')}${item('prompts', 'search')}${item('projects', 'folder')}${item('competitors', 'people')}${item('citas', 'external')}${item('visibilidad', 'chart')}${item('recomendaciones', 'check')}${item('bots', 'clock')}${item('perfil', 'people')}
-      <div class="v2-nav-group">Configuración</div>${item('tags', 'settings')}${item('gestion-prompts', 'search')}${item('investigacion', 'search')}${item('settings', 'settings')}
-      <div class="v2-nav-group">Auditoría GEO</div>${item('audit-crawl', 'external')}${item('audit-content', 'external')}${item('audit-fanout', 'search')}
-      <div class="v2-nav-group">Vistas v1</div>${item('dashboard', 'chart')}${item('sources', 'external')}`;
+    const labels={resumen:'Resumen',prompts:'Consultas',competitors:'Competencia',citas:'Citas y fuentes',recomendaciones:'Recomendaciones',visibilidad:'Índice de visibilidad',perfil:'Perfil de marca',bots:'Tráfico de bots IA',investigacion:'Investigar consultas','gestion-prompts':'Catálogo de prompts',tags:'Etiquetas',settings:'Configuración'};
+    const item=(key,ic)=>`<button type="button" class="side-link ${M.route===key?'active':''}" data-nav="${key}" ${M.route===key?'aria-current="page"':''}>${menuIcon(ic)}<span>${labels[key]}</span>${key==='recomendaciones'?'<small class="ux-ai-pill">IA</small>':''}</button>`;
+    const advanced=['visibilidad','perfil','bots'].includes(M.route);
+    return `<div class="ux-nav-caption">Análisis</div>${item('resumen','grid')}${item('prompts','search')}${item('competitors','people')}${item('citas','link')}<div class="ux-nav-caption">Acciones</div>${item('recomendaciones','spark')}${item('investigacion','search')}<details class="ux-nav-advanced" ${advanced?'open':''}><summary>${menuIcon('chart')}<span>Análisis avanzado</span><span class="ux-chevron">⌄</span></summary><div>${item('visibilidad','chart')}${item('perfil','people')}${item('bots','clock')}</div></details><div class="ux-nav-caption">Gestión</div>${item('gestion-prompts','list')}${item('tags','tag')}${item('settings','settings')}`;
   }
   const prev = { shell: renderShell, route: renderRoute, read: readRoute, refresh, filters: renderFilters, showResponse: typeof showResponse === 'function' ? showResponse : null };
   renderShell = function () {
     prev.shell();
-    const navEl = document.querySelector('#sidebar .side-nav');
-    if (navEl) navEl.innerHTML = nav();
-    document.querySelectorAll('#sidebar .bcp-brand-home, #appHeader .header-logo').forEach(b => { b.dataset.nav = 'resumen'; });
-    const crumb = document.querySelector('#appHeader .breadcrumb');
-    const label = M.route === 'detail' ? esc(PROJECT.get(M.project)?.name || '') : esc((ROUTES[M.route] || ['Resumen'])[0]);
-    if (crumb) crumb.innerHTML = `<button type="button" data-nav="resumen">Reporte de marca · ${esc(OWN().name)}</button><span>›</span>${M.route === 'detail' ? '<button type="button" data-nav="projects">Proyectos</button><span>›</span>' : ''}<span>${label}</span>`;
-    const derecha = document.querySelector('#appHeader .header-right');
-    if (derecha && !derecha.querySelector('.v2-health')) derecha.insertAdjacentHTML('afterbegin', saludBadge());
-    const gf = byId('globalFilters');
-    if (gf) gf.hidden = SIN_FILTROS.has(M.route);
+    const side = document.getElementById('sidebar');
+    side.innerHTML = `<div class="side-brand"><button class="bcp-brand-home" type="button" data-nav="resumen" aria-label="BCP · Ir al resumen"><img class="bcp-wordmark" src="assets/logo-bcp.svg?v=ux-11" width="138" height="36" alt="BCP"></button><span class="ux-brand-product">GEO Monitor</span><p>Marketing y Comunicaciones</p></div><nav class="side-nav" aria-label="Navegación principal">${nav()}</nav><div class="side-footer"><span class="ux-workspace-dot"></span><span>BCP · Perú<small>Monitor de Visibilidad en IA</small></span></div>`;
+    const label=M.route==='detail'?PROJECT.get(M.project)?.name||'Proyecto':({projects:'Proyectos',dashboard:'Resumen',sources:'Citas y fuentes'}[M.route]||(ROUTES[M.route]||['Resumen'])[0]);
+    const avatar=profile.photoUrl?`<span class="ux-profile-photo"><img src="${esc(profile.photoUrl)}" width="36" height="36" alt="${esc(profile.displayName)}"></span>`:`<span class="ux-profile-initials">${esc(profile.displayName.charAt(0))}</span>`;
+    document.getElementById('appHeader').innerHTML=`<div class="ux-header-left"><button class="ux-menu-button" type="button" id="uxMenuToggle" aria-label="Abrir menú" aria-controls="sidebar" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><div class="ux-header-context"><span class="ux-product-title">Monitor de Visibilidad en IA</span><nav class="breadcrumb" aria-label="Ubicación"><button type="button" data-nav="resumen">BCP</button><span>›</span>${M.route==='detail'?'<button type="button" data-nav="projects">Proyectos</button><span>›</span>':''}<span>${esc(label)}</span></nav></div></div><div class="header-right">${saludBadge()}<details class="ux-account"><summary>${avatar}<span class="ux-account-name">${esc(profile.displayName)}<small>Cuenta ChatGPT</small></span><span class="ux-chevron">⌄</span></summary><div class="ux-account-pop"><span class="ux-account-heading">Sesión conectada</span><b>${esc(profile.displayName)}</b><button class="text-button" type="button" data-nav="settings">Configuración</button><a href="/signout-with-chatgpt?return_to=%2Flogin" target="_top">Cerrar sesión</a></div></details></div>`;
+    document.body.classList.remove('ux-menu-open');
+    const gf=byId('globalFilters');if(gf)gf.hidden=SIN_FILTROS.has(M.route);
   };
 
   renderFilters = function () {
@@ -261,6 +271,7 @@
     escribirQuery();
   };
   renderRoute = function () {
+    if (!GEO_AUDIT_ENABLED && AUDIT_ROUTES.has(M.route)) { M.route='resumen'; history.replaceState(null,'',location.pathname+location.search+'#resumen'); renderShell(); }
     cerrarDrawer(true);
     V.exportar = null;
     if (MIAS.has(M.route)) {
@@ -268,16 +279,28 @@
       ({ resumen: renderResumen, prompts: renderPromptsV2, citas: renderCitas, visibilidad: renderVisibilidad, recomendaciones: renderRecsV2, bots: renderBots, perfil: renderPerfil,
         tags: renderTags, investigacion: renderInvestigacion, 'audit-crawl': renderAuditCrawl, 'audit-content': renderAuditContent, 'audit-fanout': renderFanout })[M.route]();
     } else prev.route();
+    if(M.route==='settings')document.getElementById('generalView').insertAdjacentHTML('beforeend','<section class="card dashboard-card ux-project-settings"><div><h2>Organización de proyectos</h2><p>Agrupa las consultas según los productos y temas del banco.</p></div><button class="button" type="button" data-nav="projects">Ver proyectos</button></section>');
     escribirQuery();
   };
   readRoute = function () {
-    const raw = location.hash.slice(1);
+    leerQuery();
+    const project = M.project, raw = location.hash.slice(1);
     if (MIAS.has(raw)) { M.route = raw; renderShell(); renderRoute(); }
     else if (!raw) { M.route = 'resumen'; renderShell(); renderRoute(); }
-    else prev.read();
+    else {
+      prev.read();
+      if (M.route !== 'detail' && M.project !== project) { M.project = project; renderShell(); renderRoute(); }
+    }
   };
   window.removeEventListener('popstate', prev.read);
   window.addEventListener('popstate', readRoute);
+
+  // La vista Competencia (monitor.js) unifica nombres con los alias de las marcas
+  // seguidas: «Banco Falabella» y «Falabella» son el mismo banco.
+  canonicalBrand = function (valor) {
+    const id = G.marcaDe(valor, BRANDS());
+    return id ? brandById(id).name : String(valor || '').trim();
+  };
 
   // ─── V1 · Resumen ─────────────────────────────────────────────────────────
   function alertas(r) {
@@ -290,7 +313,7 @@
     const porDia = new Map();
     for (const o of r.filter(G.esValida)) { if (!porDia.has(o.date)) porDia.set(o.date, []); porDia.get(o.date).push(o); }
     for (const [d, g] of porDia) if (g.length >= 10 && g.every(o => !(o.ranking || []).length && !(o.brandDetail || []).length)) out.push(['red', `La corrida del ${esc(dateLabel(d, true))} no encontró ninguna marca en ${g.length} respuestas: posible corrida fallida.`]);
-    const crawl = (MON.audits || []).find(a => a.type === 'crawl' && a.result && (a.result.critico || (a.result.resumen && a.result.resumen.ok <= 3)));
+    const crawl = GEO_AUDIT_ENABLED && (MON.audits || []).find(a => a.type === 'crawl' && a.result && (a.result.critico || (a.result.resumen && a.result.resumen.ok <= 3)));
     if (crawl) out.push(['red', `Auditoría GEO: ${crawl.result.resumen.ok} de ${crawl.result.bots.length} bots de IA acceden a ${esc(G.dominioDe(crawl.url))}. <button type="button" class="text-button" data-nav="audit-crawl">Ver auditoría</button>`]);
     return out.map(([n, t]) => `<div class="v2-alert ${n}" role="status">${t}</div>`).join('');
   }
@@ -303,7 +326,7 @@
       ['Posición de marca', posTxt(a.position), dlt(G.delta(a.position, b.position), '', true, 2), FORMULAS.position],
       ['Sentimiento', sentBar(a.sentiment), dlt(G.delta(a.sentiment, b.sentiment), 'pts', false, 0), FORMULAS.sentiment],
       ['Share of Voice', pctTxt(sov), dlt(G.delta(sov, sovP)), FORMULAS.sov],
-      ['SOV ponderado (legado)', pctTxt(w), dlt(G.delta(w, wP)), FORMULAS.sovWeighted]
+      ['SoV ponderado', pctTxt(w), dlt(G.delta(w, wP)), FORMULAS.sovWeighted]
     ];
     return `<div class="home-kpis v2-kpis">${defs.map(([l, v, d, t]) => `<article class="card home-kpi"><div class="metric-title">${l}${tip(t)}</div><div class="metric-number">${v}</div><div class="metric-change">${d} <span class="muted">vs. periodo anterior</span></div></article>`).join('')}</div>`;
   }
@@ -317,7 +340,7 @@
     const series = s.series.map(x => ({ key: x.brand.id, name: x.brand.name, color: x.brand.color, own: x.brand.isOwn, values: x.values, hidden: V.hidden.has(x.brand.id) }));
     const unit = V.chartMetric === 'position' ? 'pos' : V.chartMetric === 'sentiment' ? 'sent' : '%';
     return `<section class="card dashboard-card"><div class="dash-card-header"><div><h2>Desempeño de marca en el tiempo</h2><p class="sub">${esc(OWN().name)} y sus 5 competidores con más presencia</p></div><div class="v2-row">${seg('v2metric', V.chartMetric, [['coverage', 'Cobertura'], ['position', 'Posición'], ['sentiment', 'Sentimiento'], ['sov', 'SOV']])}${seg('v2gran', V.gran, [['day', 'Día'], ['week', 'Semana']])}</div></div>
-      ${lineChart({ dates: s.dates, series, unit, invert: V.chartMetric === 'position' })}${leyenda(series, 'v2serie')}</section>`;
+      ${lineChart({ dates: s.dates, series, unit, invert: V.chartMetric === 'position' })}${leyenda(series, 'v2serie')}${s.dates.length === 1 ? '<p class="v2-help">Hay una sola corrida en el periodo: la tendencia se dibuja desde la siguiente.</p>' : ''}</section>`;
   }
   function tablaRanking(r, pr, id = 'v2Ranking') {
     const rk = G.ranking(r, pr, BRANDS()).filter(x => x.responsesMentioning > 0 || x.brand.isOwn);
@@ -344,10 +367,12 @@
   }
   function citasResumen(r, pr) {
     const tabs = [['top', 'Top'], ['new', 'Nuevas'], ['increased', 'Subiendo'], ['stable', 'Estables'], ['decreased', 'Bajando'], ['lost', 'Perdidas']];
-    const c = G.cambiosCitas(r, pr, BRANDS(), MON.domainCategories || {});
+    const previo = hayPrevio(pr);
+    if (!previo) V.citeTab = 'top';
+    const c = G.cambiosCitas(r, previo ? pr : [], BRANDS(), MON.domainCategories || {});
     const items = (V.citeTab === 'top' ? c.filter(x => x.citations > 0) : c.filter(x => x.status === V.citeTab)).sort((a, b) => b.citations - a.citations || Math.abs(b.change) - Math.abs(a.change)).slice(0, 5);
-    return `<section class="card dashboard-card"><div class="dash-card-header"><div><h2>Cambios en citas</h2><p class="sub">URLs citadas vs periodo anterior</p></div><button type="button" class="text-button" data-nav="citas">Ver citas →</button></div>${seg('v2ctab', V.citeTab, tabs)}
-      ${items.length ? `<ul class="v2-list">${items.map(u => `<li><a href="${esc(u.url)}" target="_blank" rel="noopener" class="v2-url" title="${esc(u.url)}">${esc(u.title || u.url.replace(/^https?:\/\/(www\.)?/, ''))}</a><span>${catChip(u.category)} <b>${u.citations}</b> ${u.status === 'top' ? '' : dlt(u.change, '', false, 0)}</span></li>`).join('')}</ul>` : vacio('Sin URLs en este estado', 'Prueba otra pestaña o amplía el rango.')}</section>`;
+    return `<section class="card dashboard-card"><div class="dash-card-header"><div><h2>Cambios en citas</h2><p class="sub">URLs citadas vs periodo anterior</p></div><button type="button" class="text-button" data-nav="citas">Ver citas →</button></div>${previo ? seg('v2ctab', V.citeTab, tabs) : '<p class="v2-help">Sin datos en el periodo anterior: se muestran las más citadas, sin comparación.</p>'}
+      ${items.length ? `<ul class="v2-list">${items.map(u => `<li><a href="${esc(u.url)}" target="_blank" rel="noopener" class="v2-url" title="${esc(u.url)}">${esc(tituloUrl(u))}</a><span>${catChip(u.category)} <b>${u.citations}</b> ${previo ? dlt(u.change, '', false, 0) : ''}</span></li>`).join('')}</ul>` : vacio('Sin URLs en este estado', 'Prueba otra pestaña o amplía el rango.')}</section>`;
   }
   function fuentesResumen(r) {
     const mix = G.mixCategorias(r, BRANDS(), MON.domainCategories || {});
@@ -419,6 +444,7 @@
 
   // Drawer
   const drawer = document.createElement('aside');
+  drawer.tabIndex=-1; drawer.setAttribute('aria-label','Detalle del monitor');
   drawer.className = 'v2-drawer'; drawer.id = 'v2Drawer'; drawer.hidden = true; drawer.setAttribute('role', 'dialog'); drawer.setAttribute('aria-modal', 'true');
   const velo = document.createElement('div');
   velo.className = 'v2-veil'; velo.hidden = true;
@@ -435,7 +461,17 @@
     if (!silencio && foco) foco.focus();
   }
   velo.addEventListener('click', () => cerrarDrawer());
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !drawer.hidden) cerrarDrawer(); });
+  document.addEventListener('keydown', e => {
+    if(drawer.hidden)return;
+    if(e.key==='Escape'){e.preventDefault();cerrarDrawer();return;}
+    if(e.key==='Tab'){
+      const controls=[...drawer.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex="0"]')].filter(n=>!n.hidden&&n.getClientRects().length);
+      const first=controls[0],last=controls[controls.length-1];
+      if(!first){e.preventDefault();drawer.focus();return;}
+      if(e.shiftKey&&(document.activeElement===first||document.activeElement===drawer)){e.preventDefault();last.focus();}
+      else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+    }
+  });
   const cabDrawer = titulo => `<div class="v2-drawer-head"><div><div class="orange-label">${esc(V.preset === 'all' ? 'Todo el historial' : dateLabel(periodoActual().start, true) + ' – ' + dateLabel(periodoActual().end, true))} · ${M.models.size === MON.models.length ? 'todos los motores' : [...M.models].map(id => MODEL.get(id).short || MODEL.get(id).name).join(', ')}${V.tags.size ? ' · ' + esc([...V.tags].join(', ')) : ''}</div><h2>${titulo}</h2></div><button type="button" class="close-x" data-v2close aria-label="Cerrar">×</button></div>`;
 
   function abrirPrompt(promptId, tab = 'resumen', respuestaId = null) {
@@ -463,7 +499,7 @@
       }).join('')}</tbody></table></div>` : vacio('Sin respuestas en el periodo', 'Amplía el rango o activa más motores.');
     } else {
       const c = G.urls(r, marcas, MON.domainCategories || {});
-      cuerpo = c.length ? `<div class="table-scroll"><table class="v2-table"><thead><tr><th>URL</th><th>¿Menciona a ${esc(own.name)}?</th><th>Veces citada</th><th>Categoría</th><th>Dominio</th><th>Competidores</th></tr></thead><tbody>${c.map(u => `<tr><td><a href="${esc(u.url)}" target="_blank" rel="noopener" class="v2-url">${esc(u.title || u.url)}</a></td><td>${{ yes: 'Sí', no: 'No', na: 'N/A (propia)' }[u.mentionsOwnBrand]}</td><td>${u.citations}</td><td>${catChip(u.category)}</td><td>${esc(u.domain)}</td><td><span class="v2-logos">${u.competitorsMentioned.map(id => logo(brandById(id))).join('')}</span></td></tr>`).join('')}</tbody></table></div>` : vacio('Sin citas', 'Ninguna respuesta del periodo citó fuentes para este prompt.');
+      cuerpo = c.length ? `<div class="table-scroll"><table class="v2-table"><thead><tr><th>URL</th><th>¿Menciona a ${esc(own.name)}?</th><th>Veces citada</th><th>Categoría</th><th>Dominio</th><th>Competidores</th></tr></thead><tbody>${c.map(u => `<tr><td><a href="${esc(u.url)}" target="_blank" rel="noopener" class="v2-url">${esc(tituloUrl(u))}</a></td><td>${{ yes: 'Sí', no: 'No', na: 'N/A (propia)' }[u.mentionsOwnBrand]}</td><td>${u.citations}</td><td>${catChip(u.category)}</td><td>${esc(u.domain)}</td><td><span class="v2-logos">${u.competitorsMentioned.map(id => logo(brandById(id))).join('')}</span></td></tr>`).join('')}</tbody></table></div>` : vacio('Sin citas', 'Ninguna respuesta del periodo citó fuentes para este prompt.');
     }
     abrirDrawer(cabDrawer(esc(p.text)) + `<div class="v2-tabs" role="tablist">${[['resumen', 'Resumen'], ['respuestas', `Respuestas (${r.length})`], ['citas', 'Citas']].map(([k, l]) => `<button type="button" role="tab" aria-selected="${tab === k}" class="${tab === k ? 'active' : ''}" data-v2dtab="${k}">${l}</button>`).join('')}</div><div class="v2-drawer-body">${cuerpo}</div>`);
   }
@@ -520,11 +556,14 @@
   // ─── V3 · Citas y fuentes ─────────────────────────────────────────────────
   function renderCitas() {
     const r = filas(), pr = previas(), cats = MON.domainCategories || {};
-    const c = G.cambiosCitas(r, pr, BRANDS(), cats);
+    const previo = hayPrevio(pr);
+    if (!previo && V.utab !== 'fav') V.utab = 'top';
+    const c = G.cambiosCitas(r, previo ? pr : [], BRANDS(), cats);
     const gan = c.filter(u => u.change > 0).sort((a, b) => b.change - a.change).slice(0, 5);
     const per = c.filter(u => u.change < 0).sort((a, b) => a.change - b.change).slice(0, 5);
-    const sinAnterior = !periodoActual().previous;
-    const tarjeta = (titulo, xs, vacioTxt) => `<section class="card dashboard-card"><h2>${titulo}</h2>${xs.length ? `<ul class="v2-list">${xs.map(u => `<li><a class="v2-url" href="${esc(u.url)}" target="_blank" rel="noopener">${esc(u.title || u.url.replace(/^https?:\/\/(www\.)?/, ''))}</a><span>${u.previous} → <b>${u.citations}</b> ${dlt(u.change, '', false, 0)}</span></li>`).join('')}</ul>` : vacio('Sin datos', vacioTxt)}</section>`;
+    const sinAnterior = !previo;
+    const msgPrevio = periodoActual().previous ? 'No hay corridas en el periodo anterior: los cambios aparecerán cuando haya dos periodos con datos.' : 'Elige un rango con periodo anterior para comparar.';
+    const tarjeta = (titulo, xs, vacioTxt) => `<section class="card dashboard-card"><h2>${titulo}</h2>${xs.length ? `<ul class="v2-list">${xs.map(u => `<li><a class="v2-url" href="${esc(u.url)}" target="_blank" rel="noopener">${esc(tituloUrl(u))}</a><span>${u.previous} → <b>${u.citations}</b> ${dlt(u.change, '', false, 0)}</span></li>`).join('')}</ul>` : vacio('Sin datos', vacioTxt)}</section>`;
     const tabs = [['top', 'Top'], ['new', 'Nuevas'], ['increased', 'Subiendo'], ['stable', 'Estables'], ['decreased', 'Bajando'], ['lost', 'Perdidas'], ['fav', '★ Favoritas']];
     const q = G.norm(V.uq);
     let lista = (V.utab === 'top' ? c.filter(u => u.citations > 0) : V.utab === 'fav' ? c.filter(u => V.favs.has(u.url)) : c.filter(u => u.status === V.utab)).filter(u => !q || G.norm(u.url).includes(q) || G.norm(u.title).includes(q));
@@ -540,9 +579,9 @@
     const serieDom = seguidos.map(b => ({ key: b.id, name: (b.domains || [])[0] || b.name, color: b.color, own: b.isOwn, values: fechas.map(f => { const g = r.filter(o => o.date === f); return G.promedio([...(b.domains || [])].map(d => G.coberturaDominio(g, d))) === null ? null : Math.max(...(b.domains || []).map(d => G.coberturaDominio(g, d) || 0)); }) }));
     V.exportar = () => ['citas', [['URL', 'Título', 'Veces citada', 'Periodo anterior', 'Estado', `¿Menciona a ${own.name}?`, 'Dominio', 'Categoría', 'Competidores']].concat(lista.map(u => [u.url, u.title, u.citations, u.previous, u.status, u.mentionsOwnBrand, u.domain, (CATEGORIAS[u.category] || [u.category])[0], u.competitorsMentioned.map(id => brandById(id).name).join(' ')]))];
     $('#generalView').innerHTML = pageIntro('Citas y fuentes', 'Qué URLs y dominios usan los motores, de qué tipo son y cómo cambian.', 'Reporte de marca') +
-      `<div class="dashboard-grid">${tarjeta('Ganadores', sinAnterior ? [] : gan, sinAnterior ? 'Elige un rango con periodo anterior para comparar.' : 'Ninguna URL sube vs el periodo anterior.')}${tarjeta('Perdedores', sinAnterior ? [] : per, sinAnterior ? 'Elige un rango con periodo anterior para comparar.' : 'Ninguna URL baja vs el periodo anterior.')}</div>
-      <section class="card dashboard-card"><div class="dash-card-header"><div><h2>Explorador de URLs</h2><p class="sub">${lista.length} URLs · estado vs periodo anterior</p></div><label class="v2-search">${icon('search')}<input type="search" id="v2UrlQ" placeholder="Buscar dominio o URL…" value="${esc(V.uq)}"></label></div>${seg('v2utab', V.utab, tabs)}
-        ${lista.length ? `<div class="table-scroll"><table class="v2-table"><thead><tr><th>★</th><th>URL</th><th>Veces citada</th><th>¿Menciona a ${esc(own.name)}?</th><th>Dominio</th><th>Categoría</th><th>Competidores en la página</th></tr></thead><tbody>${lista.slice((V.upage - 1) * 20, V.upage * 20).map(u => `<tr><td><button type="button" class="v2-star ${V.favs.has(u.url) ? 'on' : ''}" data-v2fav="${esc(u.url)}" aria-label="Favorita">★</button></td><td><a class="v2-url" href="${esc(u.url)}" target="_blank" rel="noopener" title="${esc(u.url)}">${esc(u.title || u.url.replace(/^https?:\/\/(www\.)?/, ''))}</a></td><td>${u.citations} ${u.status !== 'stable' ? dlt(u.change, '', false, 0) : ''}</td><td>${{ yes: 'Sí', no: '<b class="v2-err">No</b>', na: 'N/A' }[u.mentionsOwnBrand]}</td><td>${esc(u.domain)}</td><td>${catChip(u.category)}</td><td><span class="v2-logos">${u.competitorsMentioned.slice(0, 5).map(id => logo(brandById(id))).join('')}</span></td></tr>`).join('')}</tbody></table></div>
+      `<div class="dashboard-grid">${tarjeta('Ganadores', sinAnterior ? [] : gan, sinAnterior ? msgPrevio : 'Ninguna URL sube vs el periodo anterior.')}${tarjeta('Perdedores', sinAnterior ? [] : per, sinAnterior ? msgPrevio : 'Ninguna URL baja vs el periodo anterior.')}</div>
+      <section class="card dashboard-card"><div class="dash-card-header"><div><h2>Explorador de URLs</h2><p class="sub">${lista.length} URLs${previo ? ' · estado vs periodo anterior' : ' · sin periodo anterior para comparar'}</p></div><label class="v2-search">${icon('search')}<input type="search" id="v2UrlQ" placeholder="Buscar dominio o URL…" value="${esc(V.uq)}"></label></div>${seg('v2utab', V.utab, previo ? tabs : tabs.filter(t => t[0] === 'top' || t[0] === 'fav'))}
+        ${lista.length ? `<div class="table-scroll"><table class="v2-table"><thead><tr><th>★</th><th>URL</th><th>Veces citada</th><th>¿Menciona a ${esc(own.name)}?</th><th>Dominio</th><th>Categoría</th><th>Competidores en la página</th></tr></thead><tbody>${lista.slice((V.upage - 1) * 20, V.upage * 20).map(u => `<tr><td><button type="button" class="v2-star ${V.favs.has(u.url) ? 'on' : ''}" data-v2fav="${esc(u.url)}" aria-label="Favorita">★</button></td><td><a class="v2-url" href="${esc(u.url)}" target="_blank" rel="noopener" title="${esc(u.url)}">${esc(tituloUrl(u))}</a></td><td>${u.citations} ${previo && u.status !== 'stable' ? dlt(u.change, '', false, 0) : ''}</td><td>${{ yes: 'Sí', no: '<b class="v2-err">No</b>', na: 'N/A' }[u.mentionsOwnBrand]}</td><td>${esc(u.domain)}</td><td>${catChip(u.category)}</td><td><span class="v2-logos">${u.competitorsMentioned.slice(0, 5).map(id => logo(brandById(id))).join('')}</span></td></tr>`).join('')}</tbody></table></div>
         <div class="pagination"><span>Página ${V.upage} de ${pages}</span><div class="pages"><button type="button" class="page-btn" data-v2upage="-1" ${V.upage === 1 ? 'disabled' : ''}>‹</button><button type="button" class="page-btn" data-v2upage="1" ${V.upage === pages ? 'disabled' : ''}>›</button></div></div>` : vacio('Sin URLs', 'No hay URLs en este estado con los filtros actuales.')}</section>
       <div class="dashboard-grid"><section class="card dashboard-card"><h2>Fuentes por categoría</h2>${mix.length ? barras(mix, { valor: x => x.share, etiqueta: x => catChip(x.category), color: x => (CATEGORIAS[x.category] || CATEGORIAS.unclassified)[1] }) : vacio('Sin citas', 'No hay citas en el periodo.')}</section>
         <section class="card dashboard-card"><h2>Cobertura de dominio en el tiempo ${tip(FORMULAS.domainCoverage)}</h2>${lineChart({ dates: fechas, series: serieDom, height: 200 })}${leyenda(serieDom, 'v2noop')}</section></div>
@@ -562,14 +601,23 @@
 
   // ─── V4 · Índice de visibilidad ───────────────────────────────────────────
   const COLOR_CUADRANTE = { leaders: '#1d8b3d', niche: '#2563eb', low_conversion: '#cc7800', underperformers: '#94a3b8' };
-  function puntos(r) {
-    return G.ranking(r, [], BRANDS()).filter(x => x.responsesMentioning > 0 && x.purchaseProbability !== null)
-      .map(x => ({ brand: x.brand, x: x.coverage, y: x.purchaseProbability, q: G.cuadrante(x.coverage, x.purchaseProbability, V.thr) }));
+  // Umbrales: «mercado» (media de las marcas con muestra suficiente) o fijos (30 % / 50 %).
+  function umbrales(rk) {
+    if (V.thrMode === 'fixed') return V.thr;
+    const u = G.umbralesMercado(rk);
+    return u ? { coverage: Math.round(u.coverage), probability: Math.round(u.probability) } : V.thr;
+  }
+  const conMuestra = x => x.responsesMentioning > 0 && x.purchaseProbability !== null && (x.probabilitySample || 0) >= G.MUESTRA_MINIMA;
+  function puntos(r, thr) {
+    const rk = G.ranking(r, [], BRANDS());
+    thr = thr || umbrales(rk);
+    return rk.filter(conMuestra).map(x => ({ brand: x.brand, x: x.coverage, y: x.purchaseProbability, q: G.cuadrante(x.coverage, x.purchaseProbability, thr), thr }));
   }
   function scatter(pts, { small = false } = {}) {
     const W = small ? 360 : 640, H = small ? 240 : 400, L = 40, B = 30, T = 12, R = 12;
     const x = v => L + (v / 100) * (W - L - R), y = v => H - B - (v / 100) * (H - T - B);
-    const tx = x(V.thr.coverage), ty = y(V.thr.probability);
+    const thr = (pts[0] && pts[0].thr) || V.thr;
+    const tx = x(thr.coverage), ty = y(thr.probability);
     const zonas = [['Líderes', 'leaders', tx, T, W - R - tx, ty - T, 'end', 'top'], ['Nicho', 'niche', L, T, tx - L, ty - T, 'start', 'top'], ['Baja conversión', 'low_conversion', tx, ty, W - R - tx, H - B - ty, 'end', 'bottom'], ['Bajo desempeño', 'underperformers', L, ty, tx - L, H - B - ty, 'start', 'bottom']];
     return `<svg class="v2-scatter" viewBox="0 0 ${W} ${H}" role="img" aria-label="Índice de visibilidad">${zonas.map(([n, k, zx, zy, w, h, al, va]) => `<rect x="${zx}" y="${zy}" width="${Math.max(0, w)}" height="${Math.max(0, h)}" fill="${COLOR_CUADRANTE[k]}" opacity=".07"/>${w > 60 && h > 22 ? `<text x="${al === 'end' ? zx + w - 6 : zx + 6}" y="${va === 'top' ? zy + 14 : zy + h - 6}" text-anchor="${al}" class="q" fill="${COLOR_CUADRANTE[k]}">${n}</text>` : ''}`).join('')}
       <line x1="${tx}" x2="${tx}" y1="${T}" y2="${H - B}" class="thr"/><line x1="${L}" x2="${W - R}" y1="${ty}" y2="${ty}" class="thr"/>
@@ -587,15 +635,18 @@
     const idx = V.lapseIdx === null ? fechas.length - 1 : Math.min(V.lapseIdx, fechas.length - 1);
     // Time-lapse: a cada fecha, lo acumulado del periodo hasta ese día.
     const hasta = fechas[idx];
-    const pts = puntos(hasta ? r.filter(o => o.date <= hasta) : r);
     const rk = G.ranking(r, pr, BRANDS()).filter(x => x.responsesMentioning > 0);
-    V.exportar = () => ['indice_visibilidad', [['Marca', 'Cuadrante', 'Cobertura %', 'Δ cobertura', 'Probabilidad de compra %', 'Δ probabilidad']].concat(rk.map(x => [x.brand.name, G.CUADRANTES[G.cuadrante(x.coverage, x.purchaseProbability, V.thr)] || '', G.redondear(x.coverage), G.redondear(x.delta.coverage), G.redondear(x.purchaseProbability), G.redondear(x.delta.purchaseProbability)]))];
+    const thr = umbrales(rk);
+    const pts = puntos(hasta ? r.filter(o => o.date <= hasta) : r, thr);
+    const cuad = x => (conMuestra(x) ? G.cuadrante(x.coverage, x.purchaseProbability, thr) : null);
+    V.exportar = () => ['indice_visibilidad', [['Marca', 'Cuadrante', 'Cobertura %', 'Δ cobertura', 'Probabilidad de compra %', 'Δ probabilidad']].concat(rk.map(x => [x.brand.name, G.CUADRANTES[cuad(x)] || 'Muestra insuficiente', G.redondear(x.coverage), G.redondear(x.delta.coverage), G.redondear(x.purchaseProbability), G.redondear(x.delta.purchaseProbability)]))];
     $('#generalView').innerHTML = pageIntro('Índice de visibilidad', 'Cada marca según su cobertura y la probabilidad de que el motor la recomiende.', 'Reporte de marca') +
       `<section class="card dashboard-card"><div class="dash-card-header"><div><h2>Cuadrante</h2><p class="sub">${tip(FORMULAS.coverage + ' ' + FORMULAS.probability)} Umbrales configurables</p></div>
-        <div class="v2-row"><label>Cobertura ≥ <input type="number" min="0" max="100" id="v2ThrC" value="${V.thr.coverage}">%</label><label>Probabilidad ≥ <input type="number" min="0" max="100" id="v2ThrP" value="${V.thr.probability}">%</label></div></div>
+        <div class="v2-row v2-thr">${seg('v2thr', V.thrMode, [['market', 'Promedio del mercado'], ['fixed', 'Umbral fijo']])}${V.thrMode === 'fixed' ? `<label for="v2ThrC">Cobertura ≥ <span class="v2-num"><input type="number" min="0" max="100" id="v2ThrC" value="${V.thr.coverage}"><span>%</span></span></label><label for="v2ThrP">Probabilidad ≥ <span class="v2-num"><input type="number" min="0" max="100" id="v2ThrP" value="${V.thr.probability}"><span>%</span></span></label>` : `<span class="v2-thr-note">Cortes: cobertura ${fmt(thr.coverage, 0)}% · probabilidad ${fmt(thr.probability, 0)}%</span>`}</div></div>
+        <p class="v2-help">${V.thrMode === 'fixed' ? 'Umbrales absolutos del benchmark (30% / 50%).' : 'Los cortes son el promedio del mercado: cobertura media de los bancos con muestra suficiente y probabilidad de compra de todas sus respuestas. El cuadrante muestra quién está por encima o por debajo.'} Solo se ubican marcas con al menos ${G.MUESTRA_MINIMA} respuestas que permitan medir si el motor las recomienda.</p>
         ${pts.length ? scatter(pts) : vacio('Aún sin probabilidad de compra', sinProbabilidad)}
         ${fechas.length > 1 ? `<div class="v2-lapse"><button type="button" class="button" id="v2Play">${V.lapse ? '❚❚ Pausar' : '▶ Reproducir time-lapse'}</button><input type="range" id="v2Lapse" min="0" max="${fechas.length - 1}" value="${idx}" aria-label="Fecha"><span>Hasta ${esc(dateLabel(hasta, true))}</span></div>` : ''}</section>
-      <section class="card dashboard-card"><h2>Marcas por cuadrante</h2>${rk.length ? `<div class="table-scroll"><table class="v2-table"><thead><tr><th>Marca</th><th>Cuadrante</th><th>Cobertura</th><th>Probabilidad de compra</th></tr></thead><tbody>${rk.map(x => { const q = G.cuadrante(x.coverage, x.purchaseProbability, V.thr); return `<tr class="${x.brand.isOwn ? 'v2-own' : ''}"><td>${brandCell(x.brand)}</td><td>${q ? `<span class="v2-chip" style="--chip:${COLOR_CUADRANTE[q]}">${G.CUADRANTES[q]}</span>` : '<span class="muted">Sin dato</span>'}</td><td>${pctTxt(x.coverage)} ${dlt(x.delta.coverage)}</td><td>${pctTxt(x.purchaseProbability)} ${dlt(x.delta.purchaseProbability)}</td></tr>`; }).join('')}</tbody></table></div>` : vacio('Sin marcas', 'No hay respuestas válidas con estos filtros.')}</section>`;
+      <section class="card dashboard-card"><h2>Marcas por cuadrante</h2>${rk.length ? `<div class="table-scroll"><table class="v2-table"><thead><tr><th>Marca</th><th>Cuadrante</th><th>Cobertura</th><th>Probabilidad de compra</th></tr></thead><tbody>${rk.map(x => { const q = cuad(x); return `<tr class="${x.brand.isOwn ? 'v2-own' : ''}"><td>${brandCell(x.brand)}</td><td>${q ? `<span class="v2-chip" style="--chip:${COLOR_CUADRANTE[q]}">${G.CUADRANTES[q]}</span>` : `<span class="muted" title="Menos de ${G.MUESTRA_MINIMA} respuestas con dato de recomendación">Muestra insuficiente (n=${x.probabilitySample || 0})</span>`}</td><td>${pctTxt(x.coverage)} ${dlt(x.delta.coverage)}</td><td>${conMuestra(x) ? pctTxt(x.purchaseProbability) + ' ' + dlt(x.delta.purchaseProbability) : '<span class="muted">—</span>'}</td></tr>`; }).join('')}</tbody></table></div>` : vacio('Sin marcas', 'No hay respuestas válidas con estos filtros.')}</section>`;
   }
   function timeLapse() {
     if (V.lapse) { clearInterval(V.lapse); V.lapse = null; renderVisibilidad(); return; }
@@ -614,7 +665,7 @@
   const CAT_REC = { content: 'Contenido', prompts: 'Prompts', technical: 'Técnica', offpage: 'Off-page' };
   const ALCANCE = { on_page: 'On-page', off_page: 'Off-page', general: 'General' };
   function recs() {
-    return G.recomendaciones({ rows: filas(), prompts: promptsReales(), marcas: BRANDS(), categorias: MON.domainCategories || {}, audits: MON.audits || [], estados: MON.recStates || {} });
+    return G.recomendaciones({ rows: filas(), prompts: promptsReales(), marcas: BRANDS(), categorias: MON.domainCategories || {}, audits: GEO_AUDIT_ENABLED ? MON.audits || [] : [], estados: MON.recStates || {} });
   }
   function renderRecsV2() {
     const todas = recs();
@@ -623,8 +674,8 @@
     if (V.recSort === 'date') lista.sort((a, b) => String(b.doneAt || '').localeCompare(String(a.doneAt || '')));
     const sel = (id, actual, opciones, todasTxt) => `<select id="${id}"><option value="">${todasTxt}</option>${Object.entries(opciones).map(([k, v]) => `<option value="${k}" ${actual === k ? 'selected' : ''}>${Array.isArray(v) ? v[0] : v}</option>`).join('')}</select>`;
     V.exportar = () => ['recomendaciones', [['Título', 'Tipo', 'Categoría', 'Alcance', 'Impacto', 'Estado', 'Responsable', 'Fecha objetivo', 'Razonamiento', 'Prompt origen', 'URLs de referencia']].concat(lista.map(r => [r.title, r.type, CAT_REC[r.category], ALCANCE[r.scope], IMPACTO[r.impact][0], r.status, r.owner, r.dueDate, r.reasoning, r.evidence.promptId ? promptMeta(r.evidence.promptId).text : '', (r.evidence.competitorUrls || []).join(' ')]))];
-    $('#generalView').innerHTML = pageIntro('Recomendaciones', 'Generadas por reglas con los datos del periodo. Cada una trae su evidencia.', 'Reporte de marca') +
-      `<div class="v2-alert amber">Las recomendaciones pueden no ser exactas: valídalas antes de ejecutar.</div>
+    $('#generalView').innerHTML = pageIntro('Recomendaciones', 'Recomendaciones para mejorar la visibilidad, a partir de los datos del periodo.', 'Reporte de marca') +
+      `<div class="ux-ai-notice">${menuIcon('spark')}<span><b>Redactado por IA</b> · Plantillas asistidas por IA, completadas con reglas y evidencias del monitor. Revisa cada propuesta antes de ejecutarla.</span></div>
       <div class="v2-tabs" role="tablist">${ESTADOS.map(([k, l]) => `<button type="button" role="tab" aria-selected="${V.recTab === k}" class="${V.recTab === k ? 'active' : ''}" data-v2rtab="${k}">${l} (${todas.filter(r => r.status === k).length})</button>`).join('')}</div>
       <div class="card v2-toolbar"><label class="v2-search">${icon('search')}<input type="search" id="v2RecQ" placeholder="Buscar…" value="${esc(V.recQ)}"></label>${sel('v2RecCat', f.category, CAT_REC, 'Todas las categorías')}${sel('v2RecScope', f.scope, ALCANCE, 'Todo alcance')}${sel('v2RecImp', f.impact, IMPACTO, 'Todo impacto')}<select id="v2RecSort"><option value="impact" ${V.recSort === 'impact' ? 'selected' : ''}>Orden: impacto</option><option value="date" ${V.recSort === 'date' ? 'selected' : ''}>Orden: fecha</option></select></div>
       <div class="card">${lista.length ? `<ul class="v2-recs">${lista.map(r => `<li><span class="v2-impact" style="--chip:${IMPACTO[r.impact][1]}" title="Impacto ${IMPACTO[r.impact][0]}">●</span><button type="button" class="v2-link" data-v2rec="${esc(r.id)}">${esc(r.title)}</button><span class="v2-chip" style="--chip:#475569">${CAT_REC[r.category]}</span><span class="v2-chip" style="--chip:#64748b">${ALCANCE[r.scope]}</span><span class="muted">${r.engine ? esc((MODEL.get(r.engine) || {}).name) : 'Todos los motores'}</span>
@@ -635,9 +686,9 @@
     if (!r) return;
     V.drawer = { rec: id };
     const p = r.evidence.promptId ? promptMeta(r.evidence.promptId) : null;
-    abrirDrawer(`<div class="v2-drawer-head"><div><div class="orange-label">Recomendación</div><h2>${esc(r.title)}</h2></div><button type="button" class="close-x" data-v2close aria-label="Cerrar">×</button></div><div class="v2-drawer-body">
+    abrirDrawer(`<div class="v2-drawer-head"><div><div class="orange-label">Recomendación · Redactado por IA</div><h2>${esc(r.title)}</h2></div><button type="button" class="close-x" data-v2close aria-label="Cerrar">×</button></div><div class="v2-drawer-body">
       <div class="v2-row"><span class="v2-chip" style="--chip:${IMPACTO[r.impact][1]}">Impacto ${IMPACTO[r.impact][0]}</span><span class="v2-chip" style="--chip:#475569">${CAT_REC[r.category]}</span><span class="v2-chip" style="--chip:#64748b">${ALCANCE[r.scope]}</span><span class="v2-chip" style="--chip:#64748b">${r.engine ? esc(MODEL.get(r.engine).name) : 'Todos los motores'}</span></div>
-      <h3>Razonamiento</h3><p>${esc(r.reasoning)}</p><h3>Sugerencias</h3><ol>${r.suggestions.map(s => `<li>${esc(s)}</li>`).join('')}</ol>
+      <p class="ux-ai-byline">Redactado por IA · Validación humana requerida</p><h3>Razonamiento</h3><p>${esc(r.reasoning)}</p><h3>Sugerencias</h3><ol>${r.suggestions.map(s => `<li>${esc(s)}</li>`).join('')}</ol>
       ${p || r.evidence.suggestedHeadline || (r.evidence.competitorUrls || []).length || r.evidence.ownUrl ? `<h3>Contenido a crear</h3><dl class="v2-dl">${p ? `<dt>Prompt origen</dt><dd><button type="button" class="v2-link" data-v2prompt="${esc(p.id)}">${esc(p.text)}</button></dd>` : ''}${r.evidence.suggestedHeadline ? `<dt>Titular sugerido</dt><dd><b>${esc(r.evidence.suggestedHeadline)}</b></dd>` : ''}${(r.evidence.competitorUrls || []).length ? `<dt>URLs citadas de referencia</dt><dd><ul>${r.evidence.competitorUrls.map(u => `<li><a href="${esc(u)}" target="_blank" rel="noopener">${esc(u)}</a></li>`).join('')}</ul></dd>` : ''}${r.evidence.ownUrl ? `<dt>URL propia</dt><dd>${esc(r.evidence.ownUrl)}</dd>` : ''}</dl>` : ''}
       <h3>Flujo de trabajo</h3><form class="v2-form" id="v2RecForm" data-id="${esc(r.id)}"><label>Estado<select name="estado">${ESTADOS.map(([k, l]) => `<option value="${k}" ${r.status === k ? 'selected' : ''}>${l}</option>`).join('')}</select></label><label>Responsable<input name="responsable" value="${esc(r.owner)}" maxlength="80"></label><label>Fecha objetivo<input type="date" name="fecha_objetivo" value="${esc(r.dueDate)}"></label>${r.doneAt ? `<p class="muted">Hecha el ${esc(dateLabel(r.doneAt, true))}: compara la cobertura del prompt 14 y 30 días después.</p>` : ''}
         <div class="v2-row"><button type="submit" class="button primary">Guardar</button><button type="button" class="button" data-v2recmove="${esc(r.id)}" data-to="todo">Agregar a Por hacer</button><button type="button" class="button" data-v2recmove="${esc(r.id)}" data-to="archived">Descartar</button></div></form>
@@ -765,6 +816,7 @@
       (hist.length ? `<section class="card dashboard-card"><h2>Historial</h2><div class="table-scroll"><table class="v2-table"><thead><tr><th>Fecha</th><th>URL</th><th>Crawler</th><th>Estático</th><th>Contenido</th><th>Schema</th></tr></thead><tbody>${hist.map(h => `<tr><td>${esc(h.executedAt)}</td><td>${esc(h.url)}</td><td>${esc(h.result.crawlerIdentity)}</td><td>${VERED[h.result.staticVsDynamic.verdict][0]}</td><td>${h.result.contentAnalysis.score}/100</td><td>${h.result.structuredData.types.length ? esc(h.result.structuredData.types.join(', ')) : 'No'}</td></tr>`).join('')}</tbody></table></div></section>` : '');
   }
   async function auditar(form) {
+    if (!GEO_AUDIT_ENABLED) return;
     const fd = new FormData(form), A = V.audit;
     A.loading = true; A.error = ''; (form.dataset.tipo === 'crawl' ? renderAuditCrawl : renderAuditContent)();
     try {
@@ -786,6 +838,7 @@
       ${porMotor.size ? [...porMotor.entries()].map(([m, qs]) => `<section class="card dashboard-card"><h2>${MODEL.has(m) ? engineBadge(m) : esc(m)}</h2><ul class="v2-list">${[...qs].map(q => `<li><span>${esc(q)}</span><button type="button" class="text-button" data-v2fanprompt="${esc(q)}">＋ Convertir en prompt a seguir</button></li>`).join('')}</ul></section>`).join('') : F.last ? `<div class="card">${vacio('El motor respondió sin buscar', 'Para este prompt no desplegó búsquedas web.')}</div>` : ''}`;
   }
   async function fanout(form) {
+    if (!GEO_AUDIT_ENABLED) return;
     const F = V.fan;
     F.loading = true; F.error = ''; renderFanout();
     try { const d = await api('/geo-fanout', { query: new FormData(form).get('query') }, 120000); F.last = d; } catch (e) { F.error = e.message; }
@@ -887,6 +940,7 @@
     if (d.v2dpage) { V.dpage += Number(d.v2dpage); return renderCitas(); }
     if (d.v2fav) { V.favs.has(d.v2fav) ? V.favs.delete(d.v2fav) : V.favs.add(d.v2fav); guardarLocal('v2Favs', [...V.favs]); return renderCitas(); }
     if (el.id === 'v2Play') return timeLapse();
+    if (d.v2thr) { V.thrMode = d.v2thr; return M.route === 'visibilidad' ? renderVisibilidad() : renderResumen(); }
     if (d.v2rtab) { V.recTab = d.v2rtab; return renderRecsV2(); }
     if (d.v2rec) return abrirRec(d.v2rec);
     if (d.v2recmove) {

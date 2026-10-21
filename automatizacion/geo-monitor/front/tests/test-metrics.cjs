@@ -121,6 +121,19 @@ prueba('Cuadrantes del índice de visibilidad (umbrales 30 / 50)', () => {
   assert.equal(G.cuadrante(25, 40, { coverage: 20, probability: 40 }), 'leaders', 'umbrales configurables');
 });
 
+prueba('Índice de visibilidad: muestra mínima y umbrales del promedio del mercado', () => {
+  const m = G.metricasMarca(filas, 'bcp', M);
+  assert.equal(m.probabilitySample, 2, 'respuestas con dato de «recomendada»');
+  const rk = [
+    { coverage: 60, purchaseProbability: 50, probabilitySample: 30 },
+    { coverage: 40, purchaseProbability: 30, probabilitySample: 20 },
+    { coverage: 2, purchaseProbability: 0, probabilitySample: 1 }
+  ];
+  assert.deepEqual(G.umbralesMercado(rk), { coverage: 50, probability: 42 }, 'probabilidad ponderada: (50×30 + 30×20) / 50; la marca con n=1 no cuenta');
+  assert.equal(G.umbralesMercado([{ coverage: 5, purchaseProbability: 100, probabilitySample: 2 }]), null);
+  assert.equal(G.cuadrante(60, 50, G.umbralesMercado(rk)), 'leaders');
+});
+
 prueba('Recomendaciones por reglas, con evidencia e impacto calculado', () => {
   const prompts = [
     { id: 'p1', text: '¿Cuál es la mejor cuenta de ahorros?', funnelStage: 'tofu', intentVolume: 4, active: true },

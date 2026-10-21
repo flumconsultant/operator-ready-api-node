@@ -145,6 +145,20 @@ function marcasCanonicas(texto, config) {
   return salida.join(', ');
 }
 
+// Veces que el texto nombra alguno de los alias y dónde aparece el primero.
+function apariciones(texto, alias) {
+  const t = String(texto || '');
+  const inicios = new Set();
+  let primera = Infinity;
+  for (const al of alias || []) {
+    const re = new RegExp('(^|[^\\p{L}\\p{N}])' + String(al).replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?=$|[^\\p{L}\\p{N}])', 'giu');
+    let m;
+    // «Banco de Crédito» y «Banco de Crédito del Perú» empiezan en el mismo lugar: una sola vez.
+    while ((m = re.exec(t))) { const i = m.index + m[1].length; inicios.add(i); primera = Math.min(primera, i); }
+  }
+  return { veces: inicios.size, primera };
+}
+
 function entero(v) {
   const n = Math.round(Number(v));
   return isFinite(n) && n > 0 ? n : 0;
@@ -159,11 +173,29 @@ function armarFila(r, analisis, config) {
     r = Object.assign({}, r, { estado: 'error', error: 'El Analista IA no devolvió resultado' });
   }
   const a = (r.estado === 'ok' && analisis) || {};
-  const menciona = r.estado === 'ok' && (a.menciona_bcp === true || String(a.menciona_bcp).toLowerCase() === 'true');
-  const posicion = Number(a.posicion_bcp);
+  let menciona = r.estado === 'ok' && (a.menciona_bcp === true || String(a.menciona_bcp).toLowerCase() === 'true');
+  let posicion = Number(a.posicion_bcp);
   const sentimiento = Number(a.sentimiento);
   const dominios = (config.marca.dominios || []).map(d => d.toLowerCase());
-  const detalle = r.estado === 'ok' ? detalleCanonico(a.detalle_marcas, config) : [];
+  let detalle = r.estado === 'ok' ? detalleCanonico(a.detalle_marcas, config) : [];
+  // Control: si el texto nombra a la marca y el Analista dijo que no (pasó
+  // en 7 de 302 respuestas: «Interbank, BBVA, Scotiabank» contados y BCP no),
+  // cuenta como mención, en el lugar en que aparece en el texto.
+  const nombrada = r.estado === 'ok' && !menciona ? apariciones(r.texto, config.marca.alias) : null;
+  if (nombrada && nombrada.veces) {
+    menciona = true;
+    const otras = detalle.filter(d => d.marca !== config.marca.nombre);
+    const antes = otras.filter(d => {
+      const m = [config.marca].concat(config.competidores || []).find(b => b.nombre === d.marca);
+      const ap = apariciones(r.texto, m ? [m.nombre].concat(m.alias || []) : [d.marca]);
+      return ap.veces && ap.primera < nombrada.primera;
+    }).length;
+    posicion = antes + 1;
+    detalle = otras.slice(0, antes).concat([{ marca: config.marca.nombre, posicion, menciones: nombrada.veces, sentimiento: null, recomendada: false, atributos: [] }], otras.slice(antes))
+      .map((d, i) => Object.assign(d, { posicion: i + 1 }));
+    a.n_menciones_bcp = nombrada.veces;
+    a.marcas_mencionadas = detalle.map(d => d.marca).join(', ');
+  }
   const sov = sovPorMarca(detalle);
   return {
     run_id: r.run_id, fecha: r.fecha, timestamp: r.timestamp, prompt_id: r.prompt_id,
