@@ -1,5 +1,13 @@
 # BCP · Monitor de Visibilidad en IA
 
+## Versión 15 · Histórico de Trinity (Pymes)
+
+- Importadas al Sheet las 10 corridas de Trinity del PDF «Histórico 19-oct a 17-ago» (17-ago a 19-oct-2026): proyecto «Pymes» (20 prompts, inactivos) × ChatGPT, Gemini y Google AI Overview = 600 respuestas en las pestañas de fecha. Validadas contra el resumen del PDF: menciones por motor, citas a viabcp.com, 1.ª posición y posición promedio coinciden en las 10 fechas.
+- Las filas importadas llevan run_id «trinity_AAAAMMDD» y se ven como «Histórico Trinity». No traen texto ni lista de fuentes (están en el export HTML/JSON de Trinity): cuentan en citas de dominio propio, no en el mix de fuentes ni en el explorador de URLs.
+- Caja Arequipa pasa a ser competidor seguido (2.ª marca del histórico de Pymes).
+- Pendiente: corridas 07, 10 y 11-ago (segundo documento de Trinity) y los textos completos.
+
+
 ## Versión 14 · Configuración editable y conciliación con OtterlyAI
 
 - Configuración editable (se guarda en la pestaña `_config` del Sheet con `POST /geo-config-save`): datos del monitor, marca (otros nombres y dominios), competidores (nombres, alias, dominios y color), corrida automática (encendida/apagada, hora y días) y búsqueda web de Claude. Botón «Ejecutar ahora».

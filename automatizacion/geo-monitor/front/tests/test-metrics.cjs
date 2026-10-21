@@ -97,6 +97,10 @@ prueba('Citas: URLs, ¿menciona a BCP?, competidores y categoría', () => {
   assert.equal(u.find(x => x.domain === 'sbs.gob.pe').category, 'government_ngo');
   assert.equal(u.some(x => x.citations > 2), false, 'la respuesta con error no suma citas');
   assert.deepEqual(G.citasMarca(filas, M), { own: 1, total: 4 });
+  // Histórico sin lista de fuentes: suma sus citas propias, no entra en el total ni en la cobertura de dominio.
+  const hist = { id: 'h', status: 'ok', brandMentioned: true, sources: [], sourcesComplete: false, citations: 3 };
+  assert.deepEqual(G.citasMarca(filas.concat([hist]), M), { own: 4, total: 4 });
+  assert.equal(G.coberturaDominio(filas.concat([hist]), 'mifinguia.com'), 50, 'el histórico no diluye la cobertura de dominio');
 });
 
 prueba('Estados de citas vs periodo anterior', () => {

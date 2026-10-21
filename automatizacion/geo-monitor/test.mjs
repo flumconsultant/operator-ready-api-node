@@ -776,4 +776,12 @@ prueba('/geo-monitor-data: marca y competidores editados y ajustes vigentes', ()
   assert.equal(d.ajustes.monitor.nombre, 'BCP · Monitor de Visibilidad en IA', 'sin ajuste: el valor por defecto');
 });
 
+prueba('/geo-monitor-data: las filas del histórico de Trinity se identifican por su run_id', () => {
+  const t = { ...hojaResultados[0], run_id: 'trinity_20261019', fecha: '2026-10-19', timestamp: '2026-10-19T12:00:00Z', respuesta: '' };
+  const d = correr(api, 'Datos del monitor', [comoSheets({ prompts: hojaPrompts, resultados: [t, hojaResultados[1]] })], { 'Pestañas del Sheet (monitor)': [metaSheets(['Tarjetas', 'Reputación'])] })[0];
+  assert.deepEqual(d.monitor.observations.map(o => o.source).sort(), ['Trinity · histórico importado', 'n8n · GEO Tracker']);
+  const tr = d.monitor.observations.find(o => o.source.startsWith('Trinity'));
+  assert.deepEqual([tr.sources, tr.sourcesComplete], [[], false], 'sin lista de fuentes: fuera del mix de fuentes');
+});
+
 console.log(`\n${ok} pruebas pasan`);

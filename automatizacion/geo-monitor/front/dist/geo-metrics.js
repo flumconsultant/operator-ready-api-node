@@ -243,7 +243,7 @@
 
   // Cobertura de dominio: respuestas válidas que citan el dominio ÷ respuestas válidas.
   function coberturaDominio(rows, dominio) {
-    const ok = validas(rows);
+    const ok = validas(rows).filter(o => o.sourcesComplete !== false);
     return pct(ok.filter(o => (o.sources || []).some(s => { const d = s.domain || dominioDe(s.url); return d === dominio || d.endsWith('.' + dominio); })).length, ok.length);
   }
   function dominios(rows, marcas, categorias) {
@@ -259,7 +259,11 @@
   function citasMarca(rows, marcas) {
     const propia = marcas.find(m => m.isOwn) || marcas[0];
     let propias = 0, total = 0;
-    for (const o of validas(rows)) for (const s of o.sources || []) { total++; if (esDe(s.domain || dominioDe(s.url), propia.domains)) propias++; }
+    for (const o of validas(rows)) {
+      // Histórico importado sin lista de fuentes: solo trae cuántas veces citó el dominio propio.
+      if (o.sourcesComplete === false) { propias += Number(o.citations) || 0; continue; }
+      for (const s of o.sources || []) { total++; if (esDe(s.domain || dominioDe(s.url), propia.domains)) propias++; }
+    }
     return { own: propias, total };
   }
 

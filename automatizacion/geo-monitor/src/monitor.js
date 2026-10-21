@@ -73,6 +73,12 @@ function observacion(f, config, meta) {
   const sources = Array.isArray(detalleFuentes) && detalleFuentes.length
     ? detalleFuentes.filter(c => c && c.domain).map((c, i) => ({ domain: c.domain, url: c.url || 'https://' + c.domain + '/', title: c.title || '', position: c.position || i + 1 }))
     : f.fuentes.map((d, i) => ({ domain: d, url: 'https://' + d + '/', title: '', position: i + 1 }));
+  // Histórico de Trinity: solo se sabe si citó viabcp.com (y cuántas veces), no
+  // qué otras fuentes usó. Esas filas no entran en el mix de fuentes ni en el
+  // explorador de URLs; cuentan en «citas de dominio propio».
+  const trinity = String(f.run_id || '').startsWith('trinity_');
+  const citasPropias = sources.filter(c => esPropio(c.domain)).length;
+  if (trinity) sources.length = 0;
   const idxPropio = sources.findIndex(c => esPropio(c.domain));
   const sentimiento = menciona && f.sentimiento !== null ? f.sentimiento : null;
   return {
@@ -94,13 +100,14 @@ function observacion(f, config, meta) {
     position: menciona ? f.posicion : null,
     linkPosition: idxPropio >= 0 ? idxPropio + 1 : null,
     mentions: menciona ? (f.n_menciones_bcp || 1) : 0,
-    citations: sources.filter(c => esPropio(c.domain)).length,
+    citations: citasPropias,
     sentiment: sentimiento,
     sentimentLabel: etiquetaSentimiento(sentimiento),
     blockAppeared: modelId === 'overview' ? (!error && f.estado !== 'sin_overview') : null,
     brandMentioned: menciona,
     brandCited: !error && f.citado,
     sources,
+    sourcesComplete: !trinity,
     searchQueries: leerJson(f.consultas_busqueda, []),
     country: (meta && meta.pais) || 'PE',
     tags: (meta && meta.tags) || [],
@@ -108,7 +115,8 @@ function observacion(f, config, meta) {
     response: f.respuesta.length > MAX_RESPUESTA ? f.respuesta.slice(0, MAX_RESPUESTA) + '…' : f.respuesta,
     error: f.error,
     isExample: false,
-    source: 'n8n · GEO Tracker'
+    // Las filas importadas del histórico de Trinity (Pymes) llevan run_id «trinity_…».
+    source: trinity ? 'Trinity · histórico importado' : 'n8n · GEO Tracker'
   };
 }
 

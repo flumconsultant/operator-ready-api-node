@@ -80,8 +80,8 @@
     })
     .then(function () { return cargarScript('monitor.js?v=v13'); })
     .then(function () { return cargarScript('prompts-admin.js?v=prompts-admin-1'); })
-    .then(function () { return cargarScript('geo-metrics.js?v=v14'); })
-    .then(function () { return cargarScript('geo-v2.js?v=v14'); })
+    .then(function () { return cargarScript('geo-metrics.js?v=v15'); })
+    .then(function () { return cargarScript('geo-v2.js?v=v15'); })
     .catch(function (e) {
       console.error('[GEO]', e);
       var vista = document.querySelector('#generalView');

@@ -26,7 +26,9 @@ const CONFIG = {
     { nombre: 'Compartamos Banco', alias: ['Compartamos', 'Banco Compartamos', 'Compartamos Financiera'], dominios: ['compartamos.com.pe'], color: '#c026d3' },
     { nombre: 'Alfin Banco', alias: ['Alfin', 'Banco Alfin', 'Banco Azteca'], dominios: ['alfinbanco.pe'], color: '#f97316' },
     { nombre: 'Banco GNB', alias: ['GNB', 'GNB Perú', 'Banco GNB Perú'], dominios: ['bancognb.com.pe'], color: '#0f766e' },
-    { nombre: 'Banco Efectiva', alias: ['Efectiva', 'Financiera Efectiva'], dominios: ['efectiva.com.pe'], color: '#be123c' }
+    { nombre: 'Banco Efectiva', alias: ['Efectiva', 'Financiera Efectiva'], dominios: ['efectiva.com.pe'], color: '#be123c' },
+    // Caja municipal: la sigue Trinity en Pymes (2.ª marca más nombrada del histórico).
+    { nombre: 'Caja Arequipa', alias: ['Caja Arequipa', 'Caja Municipal de Arequipa', 'CMAC Arequipa'], dominios: ['cajaarequipa.pe'], color: '#dc2626' }
   ],
   // Clasificación semilla de dominios (SPEC v2, anexo A). Se corrige o amplía
   // en la pestaña «_dominios» del Sheet; lo que no está aquí ni allí se
