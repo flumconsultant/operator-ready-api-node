@@ -1,0 +1,263 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-10-21",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "responsible-scale",
+  "formato": "framework",
+  "es": {
+    "slug": "que-clausulas-importan-al-firmar-con-un-proveedor-de-ia",
+    "titulo": "Qué cláusulas importan con un proveedor de IA",
+    "entradilla": "Un contrato con un proveedor de IA trae treinta páginas y solo cinco cláusulas que cambian lo que le pasa a la empresa. Las demás se parecen a las de cualquier software. Quien negocia suele pelear las que ya conoce y firmar las que no.",
+    "descripcion": "De un contrato con un proveedor de IA importan cinco cláusulas: uso de datos, cambios del modelo, salida, responsabilidad y subencargados.",
+    "linkedin": {
+      "texto": "Un contrato de IA se negocia como uno de software, y ahí empieza el error. El software se compra una vez y se comporta igual todos los días. Un modelo cambia sin avisar, aprende de lo que le das y depende de terceros que nunca verás.\n\nPor eso cinco cláusulas pesan más que las otras veinticinco. Las que casi nadie lee son justo las que deciden quién paga cuando algo se mueve.\n\nEn este análisis de BECOME las ordenamos con la pregunta que hay que hacerle al proveedor en cada una.",
+      "hashtags": ["IA", "Contratos", "Gobernanza"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Un contrato con un proveedor de IA trae treinta páginas y solo cinco cláusulas que cambian lo que le pasa a la empresa. Las demás se parecen a las de cualquier software. Quien negocia suele pelear las que ya conoce y firmar las que no."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La idea es sencilla: un contrato de IA no se negocia como uno de software, porque lo que se compra no se comporta como software. Una licencia tradicional hace mañana lo mismo que hace hoy. Un modelo puede cambiar de versión, mejorar en una tarea y empeorar en otra, aprender de lo que se le entrega y apoyarse en terceros que la empresa no ve. Las cláusulas que importan son las que cubren esas cuatro diferencias, más la salida."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en el comité de compras que recibe el borrador de un proveedor de atención al cliente con IA. Pasa dos semanas discutiendo el precio por usuario, el plazo de renovación y el soporte. Esas tres cosas se parecen a las de cualquier herramienta y se negocian bien porque todos las entienden. Nadie pregunta qué pasa cuando el proveedor cambia el modelo que sostiene el servicio, y esa respuesta suele valer más que el descuento que se consiguió."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Qué cláusulas importan al firmar un contrato con un proveedor de IA?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cinco: qué hace el proveedor con tus datos, qué ocurre cuando el modelo cambia, cómo te llevas lo tuyo si te vas, quién responde cuando la salida del modelo causa un daño y quiénes son los terceros que tocan tu información. Si un borrador no resuelve las cinco con claridad, el contrato está incompleto aunque esté bien redactado, porque cada una cubre un riesgo que el software tradicional no tenía."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El comité compara tres ofertas por precio y soporte, y ninguna fila de la comparación habla del uso de los datos para entrenar.",
+          "El anexo técnico da el nombre del modelo, pero no dice si el proveedor puede sustituirlo por otro y con cuánto aviso.",
+          "Nadie ha preguntado en qué formato se devolverían los datos, los prompts y los ajustes si el contrato termina.",
+          "La cláusula de responsabilidad limita la indemnización a la cuota anual, sin distinguir un error de servicio de un daño causado por una salida errónea.",
+          "Los subencargados aparecen como un enlace a una página web que el proveedor puede actualizar cuando quiera."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema de fondo",
+        "texto": "El contrato de IA reparte riesgos que el de software nunca tuvo"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Un contrato de software reparte un riesgo conocido: que el servicio caiga o que el proveedor no cumpla. Uno de IA reparte además riesgos que nacen de cómo funciona el producto. El modelo es una dependencia que el proveedor controla y que cambia fuera del calendario del cliente. Sus errores no son fallos de servicio, son respuestas plausibles pero equivocadas que alguien de la empresa acaba usando. Y el valor que el cliente acumula, en forma de instrucciones afinadas, ejemplos y ajustes, vive dentro del sistema del proveedor."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Aquí lo que importa es quién tiene el control de cada pieza el día que algo se mueve. Si el proveedor cambia el modelo y el proceso de aprobación de créditos de la empresa empieza a rechazar casos que antes aprobaba, el contrato decide si eso es un incidente con derecho a reclamar o simplemente el producto funcionando como se pactó. Esa diferencia se escribe antes de firmar o no se escribe nunca."
+      },
+      {
+        "tipo": "cita",
+        "texto": "En un contrato de IA no se negocia lo que el producto hace hoy. Se negocia quién decide cuando deje de hacerlo.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Cinco cláusulas, y la pregunta que hay que hacerle al proveedor en cada una"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Uso de los datos",
+            "definicion": "Qué puede hacer el proveedor con lo que recibe: solo prestar el servicio, o también entrenar y mejorar sus modelos. La pregunta es si el uso para entrenar está apagado por defecto y por escrito, y si cubre también los datos derivados, como resúmenes y registros."
+          },
+          {
+            "termino": "2. Cambios del modelo",
+            "definicion": "Qué ocurre cuando el proveedor sustituye o actualiza el modelo. La pregunta es con cuánto tiempo avisa, si puede el cliente fijar una versión durante un plazo y qué derecho tiene a salir sin penalización si el cambio rompe un proceso."
+          },
+          {
+            "termino": "3. Salida y portabilidad",
+            "definicion": "Qué se lleva la empresa si termina el contrato y en qué formato: datos, instrucciones, ajustes, registros de uso. La pregunta es qué parte de lo construido se puede reutilizar con otro proveedor y qué parte queda atrapada."
+          },
+          {
+            "termino": "4. Responsabilidad por la salida",
+            "definicion": "Quién responde si la respuesta del modelo causa un daño a un cliente o a un tercero. La pregunta es si el tope de indemnización distingue una caída del servicio de un daño causado por contenido erróneo, y si existe alguna cobertura para infracciones de propiedad intelectual en lo generado."
+          },
+          {
+            "termino": "5. Subencargados",
+            "definicion": "Qué terceros tocan los datos: el proveedor del modelo base, la nube, los servicios de revisión humana. La pregunta es si la lista está en el contrato, si se avisa antes de añadir uno y si el cliente puede objetar."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Las cinco comparten una propiedad útil para quien negocia: se pueden convertir en una pregunta de sí o no que el proveedor contesta en una llamada. Si dudan, si remiten a una política general o si la respuesta depende de quién la dé, eso también es información. Un proveedor que conoce su producto responde esto sin consultar a legal."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay un orden que ayuda. La primera y la tercera definen cuánto cuesta irse, así que pesan más cuanto más tiempo se vaya a usar el servicio. La segunda y la cuarta definen cuánto cuesta quedarse cuando algo cambia o falla. La quinta es la que más rápido se queda desactualizada, y por eso conviene pedir el derecho a ser avisado y no solo una lista inicial."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Toma el contrato del proveedor de IA más importante que ya tienes firmado y busca en él las cinco respuestas. Marca las que no encuentres. Esa lista es la agenda de la próxima renovación, y es más útil que cualquier descuento que puedas pedir hoy."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Qué cláusulas hay que revisar antes de firmar con un proveedor de IA?",
+            "respuesta": "Cinco: el uso de los datos para entrenar modelos, los cambios de versión del modelo, la salida y portabilidad al terminar el contrato, la responsabilidad por errores en lo que genera el modelo y la lista de subencargados que acceden a la información. Son las que cubren riesgos propios de la IA. El precio, el soporte y la renovación importan, pero se parecen a los de cualquier software y casi todos los compradores ya saben negociarlos."
+          },
+          {
+            "pregunta": "¿Cómo se evita que el proveedor entrene con los datos de la empresa?",
+            "respuesta": "Hay que pedir que el contrato diga por escrito que los datos del cliente no se usan para entrenar ni mejorar modelos, y que esa exclusión cubra también los datos derivados, como registros, resúmenes y valoraciones de calidad. Si el proveedor ofrece esa opción solo como un ajuste dentro del panel, conviene que el contrato la haga obligatoria, porque un ajuste de producto puede cambiar sin que nadie firme nada."
+          },
+          {
+            "pregunta": "¿Qué pasa si el proveedor cambia el modelo y rompe un proceso?",
+            "respuesta": "Depende de lo que diga el contrato. Sin una cláusula de cambios, el proveedor suele poder actualizar el modelo cuando quiera y la empresa no tiene derecho a reclamar, porque el producto sigue funcionando como se pactó. Con ella, se acuerda un plazo de aviso, la posibilidad de mantener una versión durante un tiempo y un derecho a terminar el contrato sin penalización si el cambio afecta a un proceso crítico."
+          },
+          {
+            "pregunta": "¿Quién responde si la IA del proveedor genera un resultado erróneo que causa un daño?",
+            "respuesta": "Frente al cliente final y frente al regulador, casi siempre responde la empresa que usó el resultado. Lo que el contrato define es si luego puede recuperar parte del coste frente al proveedor. Para eso hay que revisar si el tope de indemnización distingue una caída del servicio de un daño causado por contenido erróneo, y si hay alguna cobertura para reclamaciones de propiedad intelectual sobre lo generado."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos juntos el contrato con tu proveedor de IA",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "which-clauses-matter-in-an-ai-vendor-contract",
+    "titulo": "Which clauses matter in an AI vendor contract",
+    "entradilla": "An AI vendor contract runs thirty pages, and only five clauses change what happens to the company. The rest look like any software agreement. Negotiators tend to fight over the ones they know and sign the ones they don't.",
+    "descripcion": "Five clauses matter in an AI vendor contract: data use, model changes, exit, liability for outputs and subprocessors. Ask the vendor a question for each.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "An AI vendor contract runs thirty pages, and only five clauses change what happens to the company. The rest look like any software agreement. Negotiators tend to fight over the ones they know and sign the ones they don't."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The idea is simple: an AI contract should not be negotiated like a software contract, because what you are buying doesn't behave like software. A traditional license does tomorrow what it does today. A model can change versions, improve at one task and get worse at another, learn from what it is given, and lean on third parties the company never sees. The clauses that matter are the ones covering those four differences, plus the exit."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture a procurement committee reviewing the draft from a customer service AI vendor. It spends two weeks on price per seat, renewal terms and support. Those three look like they would for any tool, and they get negotiated well because everyone understands them. Nobody asks what happens when the vendor swaps the model underneath the service, and that answer is usually worth more than the discount that was won."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "Which clauses matter when you sign with an AI vendor?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Five: what the vendor does with your data, what happens when the model changes, how you take your work with you if you leave, who answers when the model's output causes harm, and which third parties touch your information. If a draft doesn't settle all five clearly, the contract is incomplete however well it is written, because each one covers a risk traditional software never carried."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The committee compares three offers on price and support, and no row in the comparison mentions whether the data is used for training.",
+          "The technical annex names the model, but doesn't say whether the vendor can replace it with another one, or with how much notice.",
+          "Nobody has asked in what format the data, the prompts and the tuning would come back if the contract ended.",
+          "The liability clause caps damages at the annual fee, without separating a service failure from harm caused by a wrong output.",
+          "Subprocessors appear as a link to a web page the vendor can update whenever it likes."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "An AI contract allocates risks that software contracts never had"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A software contract allocates a known risk: the service goes down or the vendor fails to deliver. An AI contract also allocates risks that come from how the product works. The model is a dependency the vendor controls and changes outside the customer's calendar. Its mistakes are not service failures, they are plausible wrong answers that someone in the company ends up using. And the value the customer builds up, in tuned instructions, examples and settings, lives inside the vendor's system."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "What matters here is who controls each piece the day something moves. If the vendor changes the model and the company's credit approval process starts rejecting cases it used to approve, the contract decides whether that is an incident with a right to claim or simply the product working as agreed. That difference gets written before signing, or it doesn't get written."
+      },
+      {
+        "tipo": "cita",
+        "texto": "In an AI contract you don't negotiate what the product does today. You negotiate who decides when it stops doing it.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "Five clauses, and the question to put to the vendor on each"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Data use",
+            "definicion": "What the vendor may do with what it receives: only deliver the service, or also train and improve its models. Ask whether training is off by default and in writing, and whether that covers derived data such as summaries and logs."
+          },
+          {
+            "termino": "2. Model changes",
+            "definicion": "What happens when the vendor replaces or updates the model. Ask how much notice it gives, whether the customer can pin a version for a set period, and what right to leave without penalty exists if the change breaks a process."
+          },
+          {
+            "termino": "3. Exit and portability",
+            "definicion": "What the company takes with it when the contract ends, and in what format: data, instructions, tuning, usage logs. Ask which part of what was built can be reused with another vendor and which part stays trapped."
+          },
+          {
+            "termino": "4. Liability for outputs",
+            "definicion": "Who answers if the model's response harms a customer or a third party. Ask whether the liability cap separates an outage from harm caused by wrong content, and whether any cover exists for intellectual property claims over what is generated."
+          },
+          {
+            "termino": "5. Subprocessors",
+            "definicion": "Which third parties touch the data: the base model provider, the cloud, human review services. Ask whether the list is in the contract, whether notice comes before a new one is added, and whether the customer can object."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The five share a useful property for whoever negotiates: each can be turned into a yes-or-no question the vendor answers on a call. If they hesitate, point to a general policy, or the answer depends on who is asked, that is information too. A vendor that knows its product answers these without checking with legal."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "There is an order that helps. The first and the third set what it costs to leave, so they weigh more the longer the service will be used. The second and the fourth set what it costs to stay when something changes or fails. The fifth goes stale fastest, which is why it pays to ask for the right to be notified and not just an initial list."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take the contract of the most important AI vendor you have already signed and look for the five answers in it. Mark the ones you can't find. That list is the agenda for the next renewal, and it is more useful than any discount you could ask for today."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Which clauses should you review before signing with an AI vendor?",
+            "respuesta": "Five: use of data for training, model version changes, exit and portability when the contract ends, liability for errors in what the model generates, and the list of subprocessors with access to the information. They cover risks specific to AI. Price, support and renewal matter, but they look like any software deal and most buyers already know how to negotiate them."
+          },
+          {
+            "pregunta": "How do you stop an AI vendor from training on company data?",
+            "respuesta": "Ask for the contract to state in writing that customer data is not used to train or improve models, and that the exclusion also covers derived data such as logs, summaries and quality ratings. If the vendor offers this only as a setting in the dashboard, make it a contractual obligation, because a product setting can change without anyone signing anything."
+          },
+          {
+            "pregunta": "What happens if the vendor changes the model and breaks a process?",
+            "respuesta": "It depends on what the contract says. Without a change clause, the vendor can usually update the model whenever it wants and the company has no right to claim, because the product still works as agreed. With one, you agree a notice period, the option to keep a version for a time, and a right to terminate without penalty if the change affects a critical process."
+          },
+          {
+            "pregunta": "Who is responsible if the vendor's AI produces a wrong result that causes harm?",
+            "respuesta": "In front of the end customer and the regulator, it is almost always the company that used the result. What the contract defines is whether it can later recover part of the cost from the vendor. For that, check whether the liability cap separates an outage from harm caused by wrong content, and whether there is any cover for intellectual property claims over what is generated."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's review your AI vendor contract together",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
