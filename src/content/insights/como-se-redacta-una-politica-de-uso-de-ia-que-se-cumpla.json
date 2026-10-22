@@ -1,0 +1,247 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-10-22",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "responsible-scale",
+  "formato": "field-note",
+  "es": {
+    "slug": "como-se-redacta-una-politica-de-uso-de-ia-que-se-cumpla",
+    "titulo": "Cómo redactar una política de IA que se cumpla",
+    "entradilla": "Casi todas las empresas ya tienen una política de uso de IA y casi ninguna cambia lo que hace un empleado un martes a las cuatro de la tarde. El documento está bien escrito. Se incumple porque responde a la pregunta del comité y no a la de quien tiene un informe que entregar.",
+    "descripcion": "Una política de IA se cumple si dice qué dato puede ir a qué herramienta, ofrece una ruta aprobada más fácil que la prohibida y tiene un dueño.",
+    "linkedin": {
+      "texto": "Una política de IA que nadie consulta no es una política, es un archivo. Se escribe para el comité y se aplica a una persona con un informe que entregar en una hora.\n\nPor eso la que funciona describe decisiones: qué dato puede ir a qué herramienta y quién responde dudas el mismo día.\n\nTres piezas para que la política cambie lo que ocurre en la operación.",
+      "hashtags": ["IA", "Gobierno", "Personas"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Casi todas las empresas ya tienen una política de uso de IA y casi ninguna cambia lo que hace un empleado un martes a las cuatro de la tarde. El documento está bien escrito. Se incumple porque responde a la pregunta del comité y no a la de quien tiene un informe que entregar."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La idea es esta: una política de IA se cumple cuando resuelve una decisión concreta en el momento en que la persona la toma, y se incumple cuando solo declara principios. Tres cosas la hacen cumplible. Fija reglas por tipo de dato y no por herramienta. Ofrece una ruta aprobada que es más fácil que la no aprobada. Y tiene un dueño con un sitio donde se le puede preguntar el mismo día."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en una analista de finanzas que tiene que resumir un contrato de cuarenta páginas antes de una reunión. La política dice «usa la IA de forma responsable y protege la información confidencial». Ella no sabe si ese contrato es confidencial, no sabe cuál de las herramientas disponibles está permitida y no tiene a quién preguntar antes de las cinco. Hace lo más rápido, que es pegarlo donde ya tenía abierta una sesión. Nadie decidió incumplir nada. La política no le ofreció una decisión que tomar."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Cómo se redacta una política de uso de IA para empleados que de verdad se cumpla?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Se redacta como una guía para decidir, no como un reglamento. La política que se cumple cabe en dos páginas, está escrita en el idioma de quien trabaja y contesta tres preguntas sin remitir a otro documento: qué información puedo usar, en qué herramienta y a quién pregunto si dudo. Lo demás, la historia de la iniciativa, los valores y las definiciones, va en un anexo que casi nadie abrirá, y está bien que sea así."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "La política habla de «información sensible» sin decir cuál es, y cada persona la interpreta como le conviene.",
+          "Enumera herramientas prohibidas y la lista queda vieja a las pocas semanas, cuando aparece otra que hace lo mismo.",
+          "La herramienta aprobada pide un acceso que tarda días, mientras la no aprobada se abre en el navegador en diez segundos.",
+          "No hay un nombre ni un canal para consultar dudas, así que la duda se resuelve sola y casi siempre en la dirección cómoda.",
+          "Se firmó en la formación inicial y no se ha vuelto a mencionar, de modo que nadie recuerda qué decía."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema de fondo",
+        "texto": "Una política se incumple cuando cumplirla cuesta más que saltársela"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Pocos incumplen por mala fe. Incumplen porque comparan dos caminos y uno es claramente más corto. Si la herramienta aprobada exige una solicitud, una espera y una aprobación del jefe, y la otra no exige nada, la política está pidiendo a cada empleado que pague un coste personal para proteger a la empresa. Algunos lo pagarán el primer mes. Casi nadie lo seguirá pagando cuando el plazo apriete."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Por eso conviene revisar la política con la misma pregunta que se le hace a cualquier proceso: cuántos pasos tiene el camino correcto frente al incorrecto. En un cierre contable, nadie espera que el equipo cumpla un control que le añade tres días. Se rediseña el control. Con la IA ocurre igual, y la política es el control más barato de rediseñar, porque es texto."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Una política de IA no mide su calidad por lo que prohíbe, sino por lo fácil que deja hacer lo permitido.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Tres piezas hacen que una política de IA cambie lo que pasa en la operación"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Reglas por tipo de dato",
+            "definicion": "Una tabla corta con tres o cuatro categorías de información de la empresa y, para cada una, qué herramientas pueden recibirla y cuáles no. Un empleado no sabe si una herramienta es segura, pero sí sabe si lo que tiene delante es un dato de cliente, un documento interno o un texto público. Si la regla se ancla en el dato, sigue valiendo cuando aparece una herramienta nueva."
+          },
+          {
+            "termino": "2. Una ruta aprobada más fácil que la alternativa",
+            "definicion": "Al menos una herramienta autorizada para cada uso frecuente, con acceso el mismo día y sin pedir justificación. Esto vale más que cualquier cláusula del documento, porque cambia el coste relativo de los dos caminos. Si la empresa no puede ofrecer esa herramienta todavía, la política debería decirlo y explicar qué hacer mientras tanto, en lugar de prohibir sin alternativa."
+          },
+          {
+            "termino": "3. Un dueño y un sitio donde preguntar",
+            "definicion": "Una persona o un pequeño grupo con nombre, que responda en un día las dudas y que revise la política cada trimestre con los casos reales que llegaron. Una política sin dueño envejece, y una que se actualiza con las preguntas que la gente hizo se parece cada vez más a lo que la gente necesita."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Las tres piezas se sostienen entre sí. Las reglas por dato sin una ruta aprobada empujan a la gente a esquivarlas. La ruta aprobada sin reglas deja a cada uno decidiendo qué es confidencial. Y las dos sin un dueño se desactualizan en cuanto cambia el mercado de herramientas, que cambia deprisa."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Un último detalle de redacción. Cada regla debería poder leerse como una instrucción que alguien ejecuta sin interpretarla: «los datos personales de clientes no se pegan en ninguna herramienta que no figure en esta lista». Si una frase necesita un criterio para aplicarse, todavía no es una regla, es una intención."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Toma tu política actual y aplícala a tres tareas reales del equipo que más usa IA: resumir un contrato, preparar una respuesta a un cliente y analizar una hoja de cálculo. Si en alguna de las tres no se puede saber, en menos de un minuto, qué herramienta y qué datos están permitidos, ahí está lo que hay que reescribir primero."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cómo se redacta una política de uso de IA para empleados?",
+            "respuesta": "Se escribe como una guía de decisión de dos páginas que contesta tres cosas: qué tipos de información se pueden usar con IA, en qué herramientas y a quién se pregunta ante una duda. Conviene ordenar las reglas por tipo de dato y no por herramienta, porque las herramientas cambian más rápido que la política. Los principios y las definiciones van en un anexo, no en el cuerpo."
+          },
+          {
+            "pregunta": "¿Por qué los empleados no cumplen la política de IA de su empresa?",
+            "respuesta": "Casi siempre porque el camino aprobado es más lento o más difícil que el no aprobado, o porque la política no les dice qué hacer en el caso concreto que tienen delante. Cuando cumplir exige esperar días por un acceso, la persona con un plazo cercano elige lo rápido. La solución rara vez es más control. Suele ser una herramienta autorizada con acceso inmediato."
+          },
+          {
+            "pregunta": "¿Qué debe incluir una política de uso de IA?",
+            "respuesta": "Una clasificación breve de los datos de la empresa con la regla de uso de cada categoría, la lista de herramientas aprobadas para los usos más frecuentes, el nombre de quien responde las dudas y el plazo en que responde, y la fecha de la próxima revisión. Una vez que eso está, pueden añadirse las consecuencias de incumplir, pero deben ir después de la ayuda y no en lugar de ella."
+          },
+          {
+            "pregunta": "¿Cada cuánto hay que actualizar la política de uso de IA?",
+            "respuesta": "Como mínimo cada trimestre, y antes si cambia algo importante, como una herramienta nueva muy extendida o un incidente. La revisión útil parte de las preguntas reales que llegaron al dueño de la política y de los casos en que la gente la esquivó. Esos datos señalan qué reglas no funcionan mejor que cualquier comparación con las políticas de otras empresas."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos juntos la política de IA de tu empresa",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-to-write-an-ai-use-policy-people-follow",
+    "titulo": "How to write an AI use policy people follow",
+    "entradilla": "Most companies already have an AI use policy, and almost none changes what an employee does on a Tuesday at four in the afternoon. The document is well written. It gets ignored because it answers the committee's question, not the question of the person with a report due.",
+    "descripcion": "An AI policy gets followed when it says which data can go to which tool, offers an approved route easier than the banned one, and has an owner.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Most companies already have an AI use policy, and almost none changes what an employee does on a Tuesday at four in the afternoon. The document is well written. It gets ignored because it answers the committee's question, not the question of the person with a report due."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Here is the idea: an AI policy gets followed when it settles a concrete decision at the moment someone makes it, and gets ignored when it only states principles. Three things make a policy followable. It sets rules by type of data rather than by tool. It offers an approved route that is easier than the unapproved one. And it has an owner, with a place to ask questions the same day."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture a finance analyst who has to summarize a forty-page contract before a meeting. The policy says \"use AI responsibly and protect confidential information.\" She doesn't know whether that contract counts as confidential, doesn't know which of the available tools is allowed, and has no one to ask before five. She does the fastest thing, which is to paste it into the session she already had open. Nobody decided to break a rule. The policy never gave her a decision to make."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "How do you write an AI use policy for employees that people actually follow?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "You write it as a decision guide, not a rulebook. A policy that gets followed fits on two pages, is written in the language of the people doing the work, and answers three questions without pointing to another document: what information can I use, in which tool, and who do I ask if I'm unsure. Everything else, the background of the initiative, the values, the definitions, goes in an appendix few people will open, and that is fine."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The policy talks about \"sensitive information\" without saying which, so everyone reads it the way that suits them.",
+          "It lists banned tools, and the list is stale within weeks, when another tool appears that does the same thing.",
+          "The approved tool needs an access request that takes days, while the unapproved one opens in a browser in ten seconds.",
+          "There is no name or channel for questions, so doubts settle themselves, almost always in the convenient direction.",
+          "It was signed during onboarding and never mentioned again, so nobody remembers what it said."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "A policy gets broken when following it costs more than skipping it"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Few people break a policy in bad faith. They compare two paths and one is clearly shorter. If the approved tool requires a request, a wait and a manager's sign-off, and the other requires nothing, the policy is asking each employee to pay a personal cost to protect the company. Some will pay it in the first month. Almost nobody keeps paying it when a deadline closes in."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "So review the policy with the question you would ask of any process: how many steps does the right path take compared with the wrong one? Nobody expects a finance team to follow a month-end control that adds three days. The control gets redesigned. AI is the same, and the policy is the cheapest control to redesign, because it is only text."
+      },
+      {
+        "tipo": "cita",
+        "texto": "An AI policy is not measured by what it forbids, but by how easy it makes the permitted thing.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "Three pieces make an AI policy change what happens in operations"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Rules by type of data",
+            "definicion": "A short table with three or four categories of company information and, for each, which tools may receive it and which may not. An employee can't tell whether a tool is safe, but can tell whether the thing in front of them is customer data, an internal document or public text. A rule anchored in the data keeps working when a new tool appears."
+          },
+          {
+            "termino": "2. An approved route easier than the alternative",
+            "definicion": "At least one authorized tool for each frequent use, with same-day access and no need to justify the request. This is worth more than any clause in the document, because it changes the relative cost of the two paths. If the company can't offer that tool yet, the policy should say so and explain what to do in the meantime, rather than banning with no alternative."
+          },
+          {
+            "termino": "3. An owner and a place to ask",
+            "definicion": "A named person or small group who answers questions within a day and reviews the policy every quarter against the real cases that came in. A policy with no owner ages, and one that is updated with the questions people actually asked looks more and more like what people need."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The three pieces hold each other up. Rules by data without an approved route push people to work around them. An approved route without rules leaves everyone deciding what counts as confidential. And both without an owner go stale as soon as the tool market moves, which it does quickly."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "One last point on drafting. Each rule should read as an instruction someone can carry out without interpreting it: \"customers' personal data is not pasted into any tool that isn't on this list.\" If a sentence needs judgment to apply, it is still an intention, not a rule."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take your current policy and apply it to three real tasks from the team that uses AI the most: summarizing a contract, drafting a reply to a customer and analyzing a spreadsheet. If for any of the three you can't tell in under a minute which tool and which data are allowed, that is the first thing to rewrite."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How do you write an AI use policy for employees?",
+            "respuesta": "Write it as a two-page decision guide that answers three things: which types of information can be used with AI, in which tools, and whom to ask when in doubt. Organize the rules by type of data rather than by tool, because tools change faster than the policy does. Principles and definitions belong in an appendix, not in the body."
+          },
+          {
+            "pregunta": "Why don't employees follow their company's AI policy?",
+            "respuesta": "Usually because the approved path is slower or harder than the unapproved one, or because the policy doesn't say what to do in the specific case in front of them. When compliance means waiting days for access, the person with a close deadline picks the fast option. The fix is rarely more control. It is usually an authorized tool with immediate access."
+          },
+          {
+            "pregunta": "What should an AI use policy include?",
+            "respuesta": "A short classification of company data with the usage rule for each category, a list of approved tools for the most frequent uses, the name of the person who answers questions and how fast they answer, and the date of the next review. Once that is in place, consequences for breaking the rules can be added, but they should come after the help and not instead of it."
+          },
+          {
+            "pregunta": "How often should an AI use policy be updated?",
+            "respuesta": "At least every quarter, and sooner if something significant changes, such as a widely adopted new tool or an incident. A useful review starts from the real questions that reached the policy's owner and from the cases where people worked around it. Those signals show which rules don't work better than any comparison with other companies' policies."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's review your company's AI policy together",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
