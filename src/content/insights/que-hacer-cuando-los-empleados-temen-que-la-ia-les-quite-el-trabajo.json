@@ -1,0 +1,251 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-10-23",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "value-adoption",
+  "formato": "perspective",
+  "es": {
+    "slug": "que-hacer-cuando-los-empleados-temen-que-la-ia-les-quite-el-trabajo",
+    "titulo": "Cuando el equipo teme que la IA le quite el trabajo",
+    "entradilla": "Las empresas responden al miedo a perder el empleo con una frase tranquilizadora, y el equipo la compara con el caso de negocio que aprobó el comité. Casi siempre gana el caso de negocio. El miedo no baja con comunicación; baja cuando la empresa decide por adelantado qué hará con el tiempo que libera la IA.",
+    "descripcion": "El miedo a perder el empleo con la IA baja si la empresa decide por escrito qué hará con la capacidad que libera y pone fecha y alcance a su promesa.",
+    "linkedin": {
+      "texto": "Prometer que la IA no costará empleos no calma a nadie mientras el caso de negocio cuente el ahorro en plantilla.\n\nEl equipo no lee la promesa, lee los números. El miedo baja cuando la empresa decide por escrito qué hará con la capacidad que libera y por cuánto tiempo se compromete.\n\nTres compromisos para que esa conversación con el equipo sea creíble.",
+      "hashtags": [
+        "IA",
+        "Personas",
+        "Adopción"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Las empresas responden al miedo a perder el empleo con una frase tranquilizadora, y el equipo la compara con el caso de negocio que aprobó el comité. Casi siempre gana el caso de negocio. El miedo no baja con comunicación; baja cuando la empresa decide por adelantado qué hará con el tiempo que libera la IA."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La idea es esta: el temor de los empleados a que la IA les quite el trabajo es una lectura razonable de los incentivos de la empresa, y solo se resuelve cambiando lo que la empresa decide, no lo que dice. Tres compromisos lo hacen creíble. Se anuncia, antes del despliegue, a dónde va la capacidad que se libera. Se promete algo con fecha y alcance, en lugar de una garantía general que nadie puede sostener. Y se deja que quien hace el trabajo diseñe el traspaso al agente, con un camino visible hacia los puestos que aparecen."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Imagina un director de operaciones que presenta al equipo de devoluciones un agente que resuelve los casos simples. Dice, con total sinceridad, que nadie perderá su puesto. Esa misma semana, una analista del equipo ve en el comité financiero una diapositiva donde el ahorro del proyecto se calcula como horas liberadas multiplicadas por el coste de una hora. Nadie le explicó qué ocurre con esas horas, y ella sabe hacer la cuenta. La frase del director y la diapositiva dicen cosas distintas, y las personas creen lo que está escrito en un número."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La pregunta",
+        "texto": "¿Qué hacer cuando los empleados temen que la IA les quite el trabajo?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hacer dos cosas antes de seguir explicando el proyecto. Primero, decidir y escribir qué pasa con la capacidad que libera cada proceso automatizado: se reasigna a otro trabajo, se usa para absorber crecimiento sin contratar, o se reduce por rotación natural. Segundo, decir a las personas afectadas cuál de las tres es, para qué procesos y durante cuánto tiempo. Un equipo que sabe el destino de sus horas deja de adivinarlo, y adivinar es lo que alimenta el miedo."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El uso de la herramienta es formal: se abre cuando alguien mira, y el trabajo real sigue haciéndose a mano en paralelo.",
+          "Los procesos que mejor conoce el equipo dejan de documentarse, porque documentar es entregar el conocimiento que justifica el puesto.",
+          "Las pruebas del piloto salen peor de lo que deberían, porque los errores del agente se señalan con entusiasmo y sus aciertos pasan sin comentario.",
+          "Las preguntas sobre el futuro del puesto no llegan a la reunión: se hacen en el pasillo, y quien dirige solo oye silencio.",
+          "Las personas más solicitadas por el mercado empiezan a mirar ofertas, y se van antes los que más cuesta reemplazar."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema de fondo",
+        "texto": "El miedo a la IA es una lectura razonable de los incentivos, no un fallo de comunicación"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Casi todos los casos de negocio de IA se justifican con horas ahorradas. Es lo más fácil de calcular y lo que entiende el comité. El problema es que una hora ahorrada solo se convierte en dinero de dos maneras: se usa en algo que genera ingresos, o se deja de pagar. Si el caso de negocio no dice cuál de las dos, el equipo asume la segunda, y tiene razones: es la única que se puede verificar en el siguiente cierre trimestral."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cada ola de automatización llegó con la misma frase, que la tecnología liberaría a las personas para un trabajo de más valor. En algunas empresas se cumplió y en otras no, y los empleados lo saben por su propia experiencia o por la de conocidos. Por eso una promesa genérica no tiene crédito. Lo que sí tiene crédito es una decisión concreta con nombre y fecha, porque puede comprobarse y porque a la empresa le cuesta retirarla."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Una promesa sobre el empleo no se mide por lo tranquilizadora que suena, sino por lo fácil que es comprobar si se cumplió.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Tres compromisos hacen creíble lo que la empresa dice sobre el empleo"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Un destino escrito para la capacidad liberada",
+            "definicion": "Para cada proceso, una línea que diga a dónde van las horas que libera: a qué trabajo concreto, o a qué crecimiento que hoy no se puede atender. Si el caso de negocio cuenta el ahorro como reducción de coste, esa línea debe estar en el mismo documento, para que equipo y comité lean lo mismo. Una devolución más rápida que no cambia nada en el trabajo de nadie tiene un valor que el equipo no ve, y por eso desconfía de él."
+          },
+          {
+            "termino": "2. Una promesa con fecha y alcance",
+            "definicion": "En lugar de «nadie perderá su puesto», algo que se pueda cumplir: «durante este despliegue y los doce meses siguientes, ningún puesto de este equipo se elimina como consecuencia directa de la automatización». Y, a su lado, lo que no se promete: que las tareas cambiarán, que algunos perfiles se transformarán, que en cada revisión se explicarán las decisiones. Una promesa limitada y cumplida genera más confianza que una promesa total que se rompe en el primer ajuste de presupuesto."
+          },
+          {
+            "termino": "3. El traspaso lo diseña quien hace el trabajo",
+            "definicion": "Las personas que conocen el proceso deciden qué tareas pasan al agente, cuáles se quedan y cómo se revisan las excepciones. Además de mejorar el diseño, cambia su posición: dejan de ser el recurso que se sustituye y pasan a ser quienes dirigen el cambio. Si a ese rol se le suma un camino visible, con formación ligada a puestos que existen, como supervisar el agente o gestionar sus excepciones, el equipo ve un lugar para sí mismo."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Los tres compromisos se sostienen entre sí. El destino de la capacidad sin una promesa acotada suena a intención. La promesa sin destino deja a la gente preguntándose qué pasará pasados los doce meses. Y los dos sin participación del equipo producen un traspaso mal diseñado, que es justo el que acaba fallando y le da la razón a quien temía."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay un momento en que todo esto se pone a prueba, y conviene prepararlo con tiempo: el trimestre en que los números aprietan. Una empresa que ha escrito antes en qué condiciones revisaría su compromiso, y cómo se lo comunicaría al equipo, llega a ese momento con criterio. La que no lo ha hecho decide con prisa, y las decisiones con prisa casi siempre rompen lo prometido."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Toma el próximo proceso que vayas a automatizar y escribe una página para el equipo que lo ejecuta: cuántas horas se estima que libera, a dónde van, quién decide el reparto, durante cuánto tiempo no se elimina ningún puesto de ese equipo por esta causa y qué haría que la empresa revisara el compromiso. Compártela antes del piloto, no después. Si no puedes escribir alguna de esas líneas, todavía no hay una decisión, y el equipo lo notará."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Qué hacer cuando los empleados temen que la IA les quite el trabajo?",
+            "respuesta": "Decidir y comunicar antes del despliegue qué pasará con la capacidad que libera cada proceso automatizado, y acompañarlo de una promesa con fecha y alcance en lugar de una garantía general. Después, dejar que las personas que hacen el trabajo diseñen el traspaso. Las frases tranquilizadoras sin una decisión detrás pierden valor cuando el caso de negocio cuenta el ahorro en plantilla."
+          },
+          {
+            "pregunta": "¿Se debe prometer a los empleados que no habrá despidos por la IA?",
+            "respuesta": "Solo si la empresa puede cumplirlo. Una promesa total que se rompe en el primer ajuste de presupuesto destruye más confianza que no haber prometido nada. Es más sólido comprometer algo concreto, como no eliminar puestos de un equipo por la automatización durante un plazo definido, y explicar qué sí cambiará: tareas, perfiles y formas de trabajar."
+          },
+          {
+            "pregunta": "¿Por qué los empleados desconfían cuando la empresa dice que la IA no sustituirá a nadie?",
+            "respuesta": "Porque comparan esa frase con los documentos que ven o intuyen, como un caso de negocio que mide el ahorro en horas y las compara con el coste de una hora de trabajo. Si ese cálculo no dice a dónde irán las horas, el equipo supone que se dejarán de pagar. Desconfiar es una conclusión lógica con la información que tienen."
+          },
+          {
+            "pregunta": "¿Cómo se ve que el equipo teme a la IA aunque no lo diga?",
+            "respuesta": "Se nota en que usan la herramienta solo cuando alguien mira, en que dejan de documentar lo que saben, en que los errores del agente se señalan más que sus aciertos y en que las dudas sobre el puesto se comentan fuera de las reuniones. También en que las personas más solicitadas por el mercado empiezan a buscar otras ofertas antes que el resto."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos juntos qué le dice hoy tu empresa a su equipo sobre la IA",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "what-to-do-when-employees-fear-ai-will-take-their-jobs",
+    "titulo": "When employees fear AI will take their jobs",
+    "entradilla": "Companies answer the fear of job loss with a reassuring sentence, and the team compares it with the business case the committee approved. The business case usually wins. Fear doesn't fall because of communication; it falls when the company decides in advance what it will do with the time AI frees up.",
+    "descripcion": "Fear of losing a job to AI falls when the company writes down what it will do with the capacity AI frees up and puts a date and a scope on its promise.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Companies answer the fear of job loss with a reassuring sentence, and the team compares it with the business case the committee approved. The business case usually wins. Fear doesn't fall because of communication; it falls when the company decides in advance what it will do with the time AI frees up."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The idea is this: employees' fear that AI will take their jobs is a reasonable reading of the company's incentives, and it is only resolved by changing what the company decides, not what it says. Three commitments make that change credible. Before the rollout, the company announces where the freed capacity goes. It promises something with a date and a scope instead of a general guarantee nobody can sustain. And it lets the people who do the work design the handover to the agent, with a visible path toward the roles that emerge."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Imagine an operations director who introduces the returns team to an agent that handles the simple cases. She says, with complete sincerity, that nobody will lose their job. That same week, an analyst on the team sees a slide in the finance committee where the project's savings are calculated as hours freed multiplied by the cost of an hour. Nobody has explained what happens to those hours, and she can do the math. The director's sentence and the slide say different things, and people believe what is written in a number."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The question",
+        "texto": "What should you do when employees fear AI will take their jobs?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Do two things before explaining the project any further. First, decide and write down what happens to the capacity each automated process frees up: it is reassigned to other work, used to absorb growth without hiring, or reduced through natural attrition. Second, tell the affected people which of the three it is, for which processes and for how long. A team that knows where its hours go stops guessing, and guessing is what feeds the fear."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The tool is used for show: it is opened when someone is watching, while the real work carries on by hand in parallel.",
+          "The processes the team knows best stop being documented, because documenting means handing over the knowledge that justifies the role.",
+          "Pilot results come out worse than they should, because the agent's errors are pointed out eagerly and its successes pass without comment.",
+          "Questions about the future of the role never reach the meeting. They are asked in the corridor, and management hears only silence.",
+          "The people the market wants most start looking at offers, and the ones who are hardest to replace leave first."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The underlying problem",
+        "texto": "Fear of AI is a reasonable reading of incentives, not a communication failure"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Almost every AI business case is justified with hours saved. It is the easiest thing to calculate and the one the committee understands. The trouble is that a saved hour turns into money in only two ways: it is spent on something that generates revenue, or it stops being paid for. If the business case doesn't say which, the team assumes the second, and has reason to: it is the only one that can be verified at the next quarterly close."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Every wave of automation arrived with the same sentence, that the technology would free people for higher-value work. In some companies that came true and in others it didn't, and employees know it from their own experience or from people they know. That is why a generic promise has no credit. What does have credit is a concrete decision with a name and a date, because it can be checked and because it costs the company something to withdraw it."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A promise about jobs is measured not by how reassuring it sounds, but by how easy it is to check whether it was kept.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "Three commitments make what a company says about jobs believable"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. A written destination for the freed capacity",
+            "definicion": "For each process, one line saying where the hours it frees up go: to which specific work, or to which growth the company can't serve today. If the business case counts the saving as cost reduction, that line belongs in the same document, so the team and the committee read the same thing. A faster return that changes nothing in anyone's work has a value the team can't see, and so they distrust it."
+          },
+          {
+            "termino": "2. A promise with a date and a scope",
+            "definicion": "Instead of \"nobody will lose their job,\" something that can be kept: \"during this rollout and the twelve months after it, no role on this team is eliminated as a direct result of automation.\" Next to it, what is not promised: that tasks will change, that some profiles will be transformed, that every review will explain the decisions taken. A limited promise that is kept builds more trust than a total promise that breaks at the first budget adjustment."
+          },
+          {
+            "termino": "3. The people doing the work design the handover",
+            "definicion": "The people who know the process decide which tasks go to the agent, which stay with them and how exceptions are reviewed. Besides improving the design, this changes their position: they stop being the resource that gets replaced and become the ones leading the change. Add a visible path, with training tied to roles that exist, such as supervising the agent or handling its exceptions, and the team can see a place for itself."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The three commitments hold each other up. A destination for the capacity without a bounded promise sounds like an intention. A promise without a destination leaves people wondering what happens after the twelve months. And both without the team's participation produce a badly designed handover, which is exactly the one that ends up failing and proves the doubters right."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "There is a moment when all of this is tested, and it pays to prepare for it early: the quarter when the numbers tighten. A company that has already written down the conditions under which it would revisit its commitment, and how it would tell the team, reaches that moment with judgment. One that hasn't decides in a hurry, and decisions made in a hurry almost always break what was promised."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take the next process you plan to automate and write one page for the team that runs it: how many hours it is expected to free up, where they go, who decides the split, for how long no role on that team is eliminated because of this, and what would make the company revisit the commitment. Share it before the pilot, not after. If you can't write one of those lines, there is no decision yet, and the team will notice."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "What should you do when employees fear AI will take their jobs?",
+            "respuesta": "Decide and communicate before the rollout what will happen to the capacity each automated process frees up, and pair it with a promise that has a date and a scope instead of a general guarantee. Then let the people who do the work design the handover. Reassuring sentences with no decision behind them lose value when the business case counts the saving as headcount."
+          },
+          {
+            "pregunta": "Should you promise employees there will be no layoffs because of AI?",
+            "respuesta": "Only if the company can keep the promise. A total promise that breaks at the first budget adjustment destroys more trust than making none. It is sturdier to commit to something specific, such as not eliminating a team's roles because of automation for a defined period, and to explain what will change: tasks, profiles and ways of working."
+          },
+          {
+            "pregunta": "Why do employees distrust a company that says AI won't replace anyone?",
+            "respuesta": "Because they compare that sentence with the documents they see or suspect, such as a business case that measures savings in hours and prices them at the cost of an hour of work. If that calculation doesn't say where the hours go, the team assumes they will stop being paid for. Distrust is a logical conclusion from the information they have."
+          },
+          {
+            "pregunta": "How can you tell a team fears AI even if nobody says so?",
+            "respuesta": "The tool gets used only when someone is watching, people stop documenting what they know, the agent's errors are flagged more than its successes, and doubts about the role are discussed outside meetings. Another sign is that the people the market wants most start looking at other offers before everyone else does."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's review what your company is telling its team about AI today",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
