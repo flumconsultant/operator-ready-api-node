@@ -1,0 +1,263 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-10-24",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "agentic-work",
+  "formato": "framework",
+  "es": {
+    "slug": "como-se-prueba-un-agente-de-ia-antes-de-ponerlo-en-produccion",
+    "titulo": "¿Cómo se prueba un agente de IA antes de usarlo?",
+    "entradilla": "Un agente que funciona en la demostración ha demostrado que puede funcionar. Estar listo es otra cosa: es haber acertado, con casos reales y bajo un criterio escrito antes, lo bastante como para que su dueño firme que el error restante es tolerable.",
+    "descripcion": "Un agente está listo cuando acierta con casos reales bajo un umbral que firma el dueño del proceso. Tres pruebas para decidirlo antes de producción.",
+    "linkedin": {
+      "texto": "Una demostración muestra el mejor día de un agente de IA. Producción exige saber cómo se comporta el peor.\n\nPor eso estar listo no es una sensación del equipo técnico, es un umbral que firma el dueño del proceso antes de empezar a probar.\n\nTres pruebas que lo hacen medible, y la razón por la que la tercera suele faltar.",
+      "hashtags": ["IA", "Agentes", "Operaciones"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Un agente que funciona en la demostración ha demostrado que puede funcionar. Estar listo es otra cosa: es haber acertado, con casos reales y bajo un criterio escrito antes, lo bastante como para que su dueño firme que el error restante es tolerable."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en un agente que clasifica las facturas de proveedores y propone a qué centro de coste se imputan. En la presentación lo hace bien con diez facturas elegidas por el equipo que lo construyó. Dos semanas después, en producción, se encuentra con una factura en dos monedas, otra con una nota de crédito y una tercera de un proveedor que cambió de formato en octubre. Ninguno de esos casos estaba en la demostración, y son justo los que importan en un cierre contable."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La idea que ordena este artículo es sencilla: un agente se prueba contra la operación y no contra el prototipo, y el momento de decir «está listo» le corresponde a quien responde por el proceso, no a quien lo construyó. Para llegar ahí hacen falta tres pruebas distintas, cada una con un dueño y un resultado que se puede leer."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La respuesta corta",
+        "texto": "¿Cómo se prueba un agente de IA antes de ponerlo en producción?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Se prueba en tres pasos y en este orden: primero contra un conjunto de casos reales cuya respuesta correcta ya se conoce, después en paralelo con las personas que hoy hacen el trabajo, y por último contra un umbral de salida que el dueño del proceso firmó antes de empezar. Si falta alguno de los tres, lo que se tiene es una impresión, no una prueba. La impresión suele ser favorable, porque el agente casi siempre acierta en los casos normales, y por eso las equivocaciones aparecen con el primer cliente real."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Primera prueba",
+        "texto": "Un agente se prueba con los casos que la operación ya resolvió, incluidos los feos"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El punto de partida es un conjunto de referencia: casos reales de los últimos meses con la solución que dio una persona y que alguien con criterio confirmó. En el ejemplo de las facturas serían unos cientos de facturas ya imputadas y revisadas por contabilidad. Con el agente se corre todo el conjunto y se compara su propuesta con la respuesta conocida."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Aquí lo que importa es la composición. Si el conjunto lo arma el equipo técnico, tenderá a ser el conjunto que el agente supera. Hay que construirlo con quien opera el proceso y obligarse a incluir las excepciones: los casos ambiguos, los que cambian de formato, los que se resuelven con una llamada a otro departamento. Un conjunto en el que el agente saca una nota alta sin esfuerzo es una señal de que le faltan casos difíciles, no de que el agente sea excelente."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Segunda prueba",
+        "texto": "Un agente se prueba en paralelo con la persona, antes de actuar en lugar de ella"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El conjunto de referencia mira al pasado. Producción trae casos que todavía no han ocurrido, y la forma de verlos sin riesgo es el modo sombra: durante un periodo el agente recibe cada caso nuevo y propone su resolución, pero quien decide sigue siendo la persona. Al final de cada semana se comparan las dos respuestas y, donde difieren, alguien revisa cuál tenía razón."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Esta prueba descubre dos cosas que la primera no puede. La primera es el deterioro: el proveedor que cambia de formato, la política que se actualiza, el dato que empieza a llegar vacío. La segunda es la diferencia entre errores. Que el agente y la persona discrepen en una factura de poco valor tiene un coste pequeño; que discrepen en una nota de crédito con impacto fiscal, uno grande. Un porcentaje global de acierto esconde esa diferencia, y el modo sombra es donde se ve."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un porcentaje de acierto sin el coste de cada error describe al agente, pero no dice si se puede poner a trabajar.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Tercera prueba",
+        "texto": "Un agente está listo cuando el dueño del proceso firma un umbral que se escribió antes de medir"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Esta es la que suele faltar, y es la que convierte las otras dos en una decisión. Antes de la primera ejecución, el responsable del proceso escribe qué resultado acepta: qué tipos de caso puede resolver el agente solo, en cuáles propone y una persona confirma, y en cuáles no interviene. Para cada tipo fija un nivel de error tolerable, medido en función de lo que cuesta equivocarse y no de lo que el agente logra."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Escribirlo antes cambia la conversación. Con el umbral fijado de antemano, un 94 por ciento de acierto deja de ser un dato que cada cual interpreta a su manera y pasa a ser sí o no. Sin él, el criterio se ajusta a los resultados: si el agente rinde bien, se celebra, y si rinde regular, se descubre de pronto que «lo importante es que ahorra tiempo». Una prueba cuyo criterio se mueve después de ver la nota no prueba nada, y el único que puede fijarlo es quien asumirá el error cuando ocurra."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Las tres pruebas se reparten el riesgo, y ninguna sustituye a otra"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Conjunto de referencia",
+            "definicion": "Responde si el agente sabe resolver lo que la operación ya resolvió. Lo arma quien opera el proceso, con las excepciones incluidas. Por sí sola sobreestima al agente, porque solo mira casos conocidos."
+          },
+          {
+            "termino": "2. Modo sombra",
+            "definicion": "Responde si el agente sigue acertando con casos nuevos y cómo discrepa de las personas. Lo lee el responsable del proceso cada semana. Por sí sola no basta, porque no dice cuánto error es aceptable."
+          },
+          {
+            "termino": "3. Umbral firmado",
+            "definicion": "Responde cuándo se puede ceder trabajo al agente y con qué límite por tipo de caso. Lo escribe y lo firma el dueño del proceso antes de medir. Sin las otras dos, es una cifra sin evidencia."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Elige el agente que pronto entrará en producción y pide al responsable del proceso que escriba, en media página, qué tipos de caso podría resolver sin revisión y cuánto error toleraría en cada uno. Si no puede escribirlo, ese es el trabajo que falta antes de cualquier prueba técnica."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cómo se prueba un agente de IA antes de producción?",
+            "respuesta": "Con tres pruebas en orden: un conjunto de casos reales con respuesta conocida, que incluya las excepciones; un periodo en modo sombra, en el que el agente propone y la persona decide; y un umbral de salida que firma el dueño del proceso antes de medir. Cada una cubre un riesgo distinto, y ninguna sustituye a las demás."
+          },
+          {
+            "pregunta": "¿Qué es el modo sombra de un agente de IA?",
+            "respuesta": "Es un periodo en el que el agente recibe los casos reales y propone una resolución, pero no actúa: la decisión sigue siendo de la persona. Se comparan ambas respuestas y se revisan las diferencias. Sirve para ver cómo se comporta el agente con casos nuevos, sin que un error llegue al cliente."
+          },
+          {
+            "pregunta": "¿Qué porcentaje de acierto necesita un agente para salir a producción?",
+            "respuesta": "No existe una cifra válida para todos los casos. Depende de lo que cuesta equivocarse en cada tipo de decisión: un error en una clasificación interna tolera mucho más que uno en un pago o en una comunicación a un cliente. Por eso el umbral se fija por tipo de caso y lo decide el responsable del proceso."
+          },
+          {
+            "pregunta": "¿Quién debe aprobar que un agente de IA pase a producción?",
+            "respuesta": "Quien responde por el proceso que el agente va a ejecutar, no el equipo que lo construyó. El equipo técnico informa de cómo se comporta el agente, pero la decisión de aceptar un nivel de error es de negocio. Conviene que quede escrita antes de empezar a probar, para que el criterio no se ajuste a los resultados."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Definamos el umbral de salida de tu primer agente",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-to-test-an-ai-agent-before-production",
+    "titulo": "How to Test an AI Agent Before It Goes Live",
+    "entradilla": "An agent that works in the demo has shown it can work. Being ready is something else: it means getting real cases right, against a criterion written down beforehand, well enough for the process owner to sign off on the error that remains.",
+    "descripcion": "An agent is ready when it gets real cases right under a threshold the process owner signs. Three tests to run before it goes into production.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "An agent that works in the demo has shown it can work. Being ready is something else: it means getting real cases right, against a criterion written down beforehand, well enough for the process owner to sign off on the error that remains."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture an agent that classifies supplier invoices and proposes which cost centre each one is charged to. In the presentation it does well with ten invoices chosen by the team that built it. Two weeks into production it meets an invoice in two currencies, another with a credit note attached and a third from a supplier that changed its format in October. None of those were in the demo, and they are exactly the ones that matter at a month-end close."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The idea behind this article is simple: an agent is tested against the operation, not against the prototype, and the call that it is ready belongs to whoever answers for the process, not to whoever built it. Getting there takes three separate tests, each with an owner and a result you can read."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The short answer",
+        "texto": "How do you test an AI agent before putting it into production?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "You test it in three steps, in this order: first against a set of real cases whose correct answer is already known, then in parallel with the people who do the work today, and finally against an exit threshold the process owner signed before testing began. If any of the three is missing, what you have is an impression, not a test. The impression tends to be favourable, because the agent almost always gets the ordinary cases right, which is why the mistakes show up with the first real customer."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "First test",
+        "texto": "An agent is tested on the cases the operation already solved, the ugly ones included"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The starting point is a reference set: real cases from recent months, each with the solution a person gave and someone with judgement confirmed. In the invoice example, that would be a few hundred invoices already coded and reviewed by accounting. You run the whole set through the agent and compare its proposal with the known answer."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "What matters here is how the set is made up. If the technical team builds it, it will tend to be a set the agent passes. It has to be built with whoever runs the process, and it has to include the exceptions: the ambiguous cases, the ones that change format, the ones settled with a call to another department. A set on which the agent scores high without effort is a sign that hard cases are missing, not that the agent is excellent."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Second test",
+        "texto": "An agent is tested alongside the person, before it acts in their place"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The reference set looks backwards. Production brings cases that have not happened yet, and the way to see them without risk is shadow mode: for a period the agent receives every new case and proposes its resolution, but the person is still the one who decides. At the end of each week the two answers are compared and, where they differ, someone reviews which one was right."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "This test finds two things the first cannot. One is drift: the supplier that changes format, the policy that gets updated, the field that starts arriving empty. The other is the difference between errors. If the agent and the person disagree on a low-value invoice, the cost is small; if they disagree on a credit note with tax impact, it is large. An overall accuracy figure hides that difference, and shadow mode is where you see it."
+      },
+      {
+        "tipo": "cita",
+        "texto": "An accuracy rate without the cost of each error describes the agent, but it does not say whether it can be put to work.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Third test",
+        "texto": "An agent is ready when the process owner signs a threshold that was written before anything was measured"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "This is the one that usually goes missing, and it is what turns the other two into a decision. Before the first run, the person responsible for the process writes down what result they accept: which kinds of case the agent may resolve alone, which it only proposes and a person confirms, and which it stays out of. For each kind they set a tolerable level of error, based on what a mistake costs and not on what the agent happens to achieve."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Writing it down first changes the conversation. With the threshold fixed in advance, 94 per cent accuracy stops being a number everyone reads their own way and becomes a yes or a no. Without it, the criterion bends to the results: if the agent does well, it is celebrated, and if it does so-so, it turns out that \"what matters is that it saves time\". A test whose criterion moves after the score is seen proves nothing, and the only person who can set it is the one who will carry the error when it happens."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "The three tests share the risk between them, and none replaces another"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Reference set",
+            "definicion": "It answers whether the agent can solve what the operation already solved. It is built by whoever runs the process, exceptions included. On its own it overrates the agent, because it only looks at known cases."
+          },
+          {
+            "termino": "2. Shadow mode",
+            "definicion": "It answers whether the agent keeps getting new cases right and how it differs from the people. The process owner reads it every week. On its own it is not enough, because it does not say how much error is acceptable."
+          },
+          {
+            "termino": "3. Signed threshold",
+            "definicion": "It answers when work can be handed to the agent and within what limit per kind of case. The process owner writes and signs it before measuring. Without the other two it is a number with no evidence behind it."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take the agent that will soon go into production and ask the process owner to write, in half a page, which kinds of case it could resolve without review and how much error they would tolerate in each. If they cannot write it, that is the work still missing before any technical test."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How do you test an AI agent before production?",
+            "respuesta": "With three tests in order: a set of real cases with known answers, exceptions included; a period in shadow mode, where the agent proposes and the person decides; and an exit threshold the process owner signs before measuring. Each covers a different risk, and none replaces the others."
+          },
+          {
+            "pregunta": "What is shadow mode for an AI agent?",
+            "respuesta": "It is a period in which the agent receives real cases and proposes a resolution but does not act: the decision stays with the person. Both answers are compared and the differences are reviewed. It shows how the agent behaves with new cases without letting an error reach a customer."
+          },
+          {
+            "pregunta": "What accuracy does an AI agent need before going to production?",
+            "respuesta": "There is no single figure that fits every case. It depends on what a mistake costs in each kind of decision: an error in an internal classification tolerates far more than one in a payment or a message to a customer. That is why the threshold is set per kind of case, by the person responsible for the process."
+          },
+          {
+            "pregunta": "Who should approve an AI agent going into production?",
+            "respuesta": "Whoever answers for the process the agent will run, not the team that built it. The technical team reports how the agent behaves, but accepting a level of error is a business decision. It helps to write it down before testing starts, so the criterion does not bend to the results."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's define the exit threshold for your first agent",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
