@@ -44,9 +44,9 @@ El observatorio las revisa cada domingo, una por una, y hace lo que corresponda:
 - ¿Quién debe liderar la IA en una empresa: TI, negocio o un rol nuevo?
 - ¿Qué talento hay que contratar para que una empresa se vuelva AI-native?
 - ¿En qué etapa de madurez de IA está realmente mi empresa, más allá de lo que decimos en las reuniones?
-- [sin verificar] ¿Hay que ordenar los datos de la empresa antes de empezar con IA, o se puede empezar ya?
-- [sin verificar] ¿Cómo empieza con IA una pyme que no tiene equipo técnico?
-- [sin verificar] ¿Cómo se forma a los directivos en IA sin convertirlos en técnicos?
+- ¿Hay que ordenar los datos de la empresa antes de empezar con IA, o se puede empezar ya?
+- ¿Cómo empieza con IA una pyme que no tiene equipo técnico?
+- ¿Cómo se forma a los directivos en IA sin convertirlos en técnicos?
 
 ## Agentic work
 
@@ -59,8 +59,8 @@ El observatorio las revisa cada domingo, una por una, y hace lo que corresponda:
 - ¿Por qué fallan los sistemas multiagente en producción aunque cada agente funcione bien por separado?
 - ¿Cuántos agentes de IA puede supervisar de verdad una persona?
 - ¿Necesitan los agentes de IA una identidad y credenciales propias, distintas a las de un empleado?
-- [sin verificar] ¿Cuándo debe un agente de IA pasar el caso a una persona?
-- [sin verificar] ¿Cómo se prueba un agente de IA antes de ponerlo en producción?
+- ¿Cuándo debe un agente de IA pasar el caso a una persona?
+- ¿Cómo se prueba un agente de IA antes de ponerlo en producción?
 
 ## Operating-model reinvention
 
@@ -74,8 +74,7 @@ El observatorio las revisa cada domingo, una por una, y hace lo que corresponda:
 - Si la IA hace el trabajo de los junior, ¿de dónde van a salir los senior del futuro?
 - ¿Qué proceso automatizamos primero con IA, y cómo lo decidimos sin quemarnos en el primer intento?
 - ¿Nos conviene montar un centro de excelencia de IA o es una capa burocrática más?
-- [sin verificar] ¿Cómo se redefinen los puestos y las descripciones de cargo cuando parte del trabajo lo hace un agente?
-- [sin verificar] ¿Cómo se planifica la plantilla del año que viene sabiendo que la IA cambia cuánta gente hace falta?
+- ¿Cómo se redefinen los puestos y las descripciones de cargo cuando parte del trabajo lo hace un agente?
 
 ## Value and adoption
 
@@ -95,9 +94,10 @@ El observatorio las revisa cada domingo, una por una, y hace lo que corresponda:
 - ¿Por qué los equipos vuelven al proceso manual después de que la empresa implementa IA?
 - ¿Cómo evitamos pagar por licencias de IA que nadie usa?
 - ¿Por qué mi equipo sigue las recomendaciones de la IA aunque no confíe en ellas, en lugar de dejar de usarla sin más?
-- [sin verificar] ¿Qué hacer cuando los empleados temen que la IA les quite el trabajo?
-- [sin verificar] ¿Cómo se decide apagar un proyecto de IA que no está funcionando?
-- [sin verificar] ¿Cómo se priorizan las iniciativas de IA cuando cada área pide la suya?
+- ¿Qué hacer cuando los empleados temen que la IA les quite el trabajo?
+- ¿Cómo se decide apagar un proyecto de IA que no está funcionando?
+- ¿Cómo se priorizan las iniciativas de IA cuando cada área pide la suya?
+- [sin verificar] ¿Por qué se dispara el coste de una solución de IA al pasar del piloto a producción?
 
 ## Responsible scale
 
@@ -114,7 +114,7 @@ El observatorio las revisa cada domingo, una por una, y hace lo que corresponda:
 - ¿Tiene mi consejo de administración el conocimiento de IA suficiente para supervisarla, o solo la aprueba sin entenderla?
 - ¿Hay que decirle al cliente que quien lo está atendiendo es un agente de IA, y no una persona?
 - ¿Puede el proveedor de IA entrenar su modelo con nuestros datos y usarlos para mejorar el producto que le vende a mi competencia?
-- [sin verificar] ¿Cómo se redacta una política de uso de IA para empleados que de verdad se cumpla?
-- [sin verificar] ¿Qué se hace con las alucinaciones de la IA cuando el proceso es crítico?
-- [sin verificar] ¿Qué cláusulas importan al firmar un contrato con un proveedor de IA?
-- [sin verificar] ¿Cómo se prepara una empresa para una crisis de reputación causada por su IA?
+- ¿Cómo se redacta una política de uso de IA para empleados que de verdad se cumpla?
+- ¿Qué se hace con las alucinaciones de la IA cuando el proceso es crítico?
+- ¿Qué cláusulas importan al firmar un contrato con un proveedor de IA?
+- ¿Cómo se prepara una empresa para una crisis de reputación causada por su IA?
