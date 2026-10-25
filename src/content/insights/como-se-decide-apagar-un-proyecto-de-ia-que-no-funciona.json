@@ -1,0 +1,279 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-10-25",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "value-adoption",
+  "formato": "framework",
+  "es": {
+    "slug": "como-se-decide-apagar-un-proyecto-de-ia-que-no-funciona",
+    "titulo": "¿Cómo se apaga un proyecto de IA que no funciona?",
+    "entradilla": "Un proyecto de IA casi nunca se apaga porque falle un día concreto. Sigue vivo porque siempre parece estar a un trimestre de funcionar, y nadie escribió al aprobarlo qué tendría que demostrar y para cuándo.",
+    "descripcion": "Un proyecto de IA se apaga con un criterio de salida escrito antes y un dueño que decide. Tres diagnósticos para seguir, corregir o cerrar.",
+    "linkedin": {
+      "texto": "Un proyecto de IA no se cancela cuando falla. Se cancela cuando alguien por fin decide mirarlo.\n\nMientras tanto sigue vivo porque siempre está a un trimestre de funcionar, y nadie escribió al aprobarlo cuándo se apagaría.\n\nTres diagnósticos para saber si un proyecto debe seguir, corregirse o cerrarse.",
+      "hashtags": ["IA", "Estrategia", "Inversión"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Un proyecto de IA casi nunca se apaga porque falle un día concreto. Sigue vivo porque siempre parece estar a un trimestre de funcionar, y nadie escribió al aprobarlo qué tendría que demostrar y para cuándo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en un asistente para el área de atención al cliente que se aprobó hace ocho meses. Las primeras semanas hubo una demostración buena, después un ajuste de datos, después una segunda versión. Cada mes el equipo trae una mejora real y una razón razonable para esperar un mes más. Nadie ha decidido que el proyecto siga: simplemente nadie ha decidido que termine, y el presupuesto se renueva solo con el calendario."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La idea que ordena este artículo es que apagar un proyecto de IA es una decisión de dirección y no un veredicto técnico, y que solo se toma bien si el criterio de salida se escribió el día que se aprobó. Hace falta distinguir tres situaciones que por fuera se parecen y piden cosas opuestas, y poner a alguien con nombre a decidir."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La respuesta corta",
+        "texto": "¿Cómo se decide apagar un proyecto de IA que no está funcionando?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Se compara lo que el proyecto ha demostrado con el criterio de salida que se fijó al aprobarlo, en la fecha de revisión que se fijó entonces. Si el proyecto se queda por debajo, el dueño del negocio decide entre tres caminos: corregir lo que falla, reducir el alcance o cerrar. Si nunca existió ese criterio, lo primero que hay que hacer es escribirlo hoy, con la información de hoy, y dar una fecha corta de revisión. Sin criterio y sin fecha, un proyecto no se apaga: se agota."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Primer apoyo",
+        "texto": "Un proyecto de IA se apaga con la regla que se escribió antes, no con la que se improvisa después"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cuando se aprueba un proyecto, el entusiasmo es máximo y la información es mínima. Cuando hay que apagarlo ocurre al revés: hay mucha información y todo el mundo está comprometido con el trabajo hecho. Por eso el criterio de salida se escribe al principio, aunque sea incómodo, con tres elementos: qué número tiene que moverse, cuánto, y para qué fecha."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Un ejemplo de una operación de devoluciones: «para el 31 de marzo, la mitad de las solicitudes se resuelve sin intervención y el tiempo medio de respuesta baja de dos días a uno». Con esa frase, la revisión de marzo es una lectura. Sin ella es una negociación, y en una negociación gana el argumento más reciente, que casi siempre es «ya casi está». El criterio no tiene que ser perfecto. Tiene que existir antes de ver los resultados, porque un criterio que se ajusta después de ver la nota no mide nada."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Segundo apoyo",
+        "texto": "Que un proyecto no funcione puede querer decir tres cosas distintas, y cada una pide una decisión opuesta"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La mayoría de las conversaciones sobre cancelar un proyecto mezclan situaciones diferentes bajo la palabra «no funciona». Separarlas es lo que evita cerrar algo que tenía arreglo y mantener algo que no lo tenía."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "No funciona técnicamente: el agente se equivoca con una frecuencia que la operación no tolera, y tras varios ciclos de ajuste el error baja poco. Aquí lo habitual es cerrar o rebajar el alcance a los casos donde sí acierta.",
+          "Funciona, pero nadie lo usa: el agente resuelve bien los casos, pero el equipo lo esquiva porque no cabe en su forma de trabajar o porque nadie rediseñó el proceso alrededor. Aquí no se apaga la tecnología: se arregla la adopción o se cierra el proyecto por falta de dueño.",
+          "Funciona y se usa, pero no mueve el número: se ahorran minutos que no se convierten en menos costes ni en más capacidad vendida. Aquí el problema es el caso de negocio, y corregirlo suele implicar decidir qué se hace con el tiempo liberado."
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La razón de separar los tres es el coste de equivocarse de diagnóstico. Si se trata como técnico un problema de adopción, se invierte otro semestre en mejorar un modelo que ya era suficiente. Si se trata como de adopción un problema técnico, se organiza formación para convencer a un equipo de que use algo que, con razón, no se fía de usar."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un proyecto de IA que nadie se atreve a apagar no está siendo prudente, está pagando por no decidir.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Tercer apoyo",
+        "texto": "Apagar un proyecto bien deja algo en pie y lo decide una sola persona"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay dos razones por las que cerrar se pospone. La primera es que nadie tiene autoridad para hacerlo: el equipo técnico no quiere declarar el fracaso, el patrocinador de negocio depende de él, y el comité lo ve cada tres meses con otras prioridades. La decisión necesita un dueño: quien responde por el resultado de negocio que el proyecto prometía, no quien lo construyó."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La segunda razón es que cerrar parece perderlo todo. No es así si se hace con método. Antes de apagar se anota qué se aprendió, qué datos quedaron ordenados, qué parte del trabajo sirve para otro caso y qué personas del equipo pasan a qué proyecto. Un cierre con esa lista cuesta una reunión. Un proyecto zombi cuesta cada mes lo que cuesta el equipo, la infraestructura y la atención de quien dirige."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Tres preguntas ordenan la decisión, y las dos primeras se responden con datos que el proyecto ya tiene"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. ¿Qué dice el criterio de salida?",
+            "definicion": "Se compara el resultado con el número, el umbral y la fecha que se fijaron al aprobar. Lo lee el dueño del negocio, no el equipo del proyecto. Si no existe, se escribe hoy y se fija una revisión en seis u ocho semanas."
+          },
+          {
+            "termino": "2. ¿Cuál de los tres diagnósticos es?",
+            "definicion": "Técnico, de adopción o de caso de negocio. Se responde con el porcentaje de error por tipo de caso, el uso real por parte del equipo y el efecto sobre el P&L del área. Cada diagnóstico lleva a una decisión distinta."
+          },
+          {
+            "termino": "3. ¿Qué se conserva y quién decide?",
+            "definicion": "Una sola persona firma seguir, reducir o cerrar, y deja escrito qué se reutiliza: datos, aprendizajes, personas. Sin esta pregunta, cerrar parece perderlo todo y por eso se pospone."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Toma el proyecto de IA que lleva más tiempo en marcha sin un resultado claro y pide a su patrocinador de negocio que escriba, en tres líneas, qué número tendría que haber movido, cuánto y para cuándo. Si no puede escribirlo, ese es el primer hallazgo. Si puede y el número no se ha movido, la decisión ya tiene fecha."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cuándo se debe cancelar un proyecto de IA?",
+            "respuesta": "Cuando, en la fecha de revisión acordada, el resultado queda por debajo del criterio de salida y el diagnóstico indica que el problema no se corrige con un cambio razonable de alcance, de adopción o de caso de negocio. La decisión la toma el dueño del resultado de negocio, no el equipo técnico, y conviene dejar por escrito qué se reutiliza."
+          },
+          {
+            "pregunta": "¿Cómo saber si un piloto de IA está fracasando?",
+            "respuesta": "Se mira contra tres cosas: el número que tenía que mover y la fecha comprometida, el error por tipo de caso y el uso real del equipo. Un piloto fracasa de formas distintas. Puede equivocarse demasiado, puede funcionar y no usarse, o puede usarse sin cambiar ningún resultado. Cada una pide una decisión diferente, por eso conviene separarlas."
+          },
+          {
+            "pregunta": "¿Quién decide cerrar un proyecto de IA en una empresa?",
+            "respuesta": "Quien responde por el resultado de negocio que el proyecto prometía, normalmente el responsable del área o de la unidad de negocio. El equipo técnico informa de qué ha demostrado el sistema, pero no es quien debe decidir, porque está demasiado cerca del trabajo hecho. Debe ser una sola persona con nombre, no un comité."
+          },
+          {
+            "pregunta": "¿Qué hacer si un proyecto de IA no tiene un criterio de salida definido?",
+            "respuesta": "Escribirlo ahora. El dueño del negocio fija qué número debe moverse, cuánto y en qué fecha, usando la información que ya existe, y se programa una revisión corta, de seis a ocho semanas. Un criterio tardío es peor que uno inicial, pero mejor que ninguno, y evita que el proyecto siga renovándose por inercia."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos juntos el criterio de salida de tu proyecto de IA más antiguo",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-to-decide-to-shut-down-an-ai-project-that-is-not-working",
+    "titulo": "How to Shut Down an AI Project That Isn't Working",
+    "entradilla": "An AI project is rarely shut down because it fails on a given day. It stays alive because it always seems a quarter away from working, and nobody wrote down at approval what it had to show and by when.",
+    "descripcion": "An AI project is shut down with an exit criterion written beforehand and an owner who decides. Three diagnoses: continue, change or close.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "An AI project is rarely shut down because it fails on a given day. It stays alive because it always seems a quarter away from working, and nobody wrote down at approval what it had to show and by when."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture an assistant for the customer service team that was approved eight months ago. The first weeks brought a good demo, then a data fix, then a second version. Every month the team brings a real improvement and a reasonable case for waiting one more month. Nobody has decided the project should continue: nobody has simply decided it should end, and the budget renews itself with the calendar."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The idea behind this article is that shutting down an AI project is a management decision and not a technical verdict, and that it is only made well if the exit criterion was written the day the project was approved. You need to tell apart three situations that look alike from the outside and call for opposite actions, and put someone with a name in charge of deciding."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The short answer",
+        "texto": "How do you decide to shut down an AI project that isn't working?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "You compare what the project has shown against the exit criterion set at approval, on the review date set at that time. If the project falls short, the business owner chooses between three paths: fix what is failing, narrow the scope or close it. If that criterion never existed, the first job is to write it today, with today's information, and set a short review date. Without a criterion and a date, a project is not shut down: it wears out."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "First support",
+        "texto": "An AI project is shut down by the rule written beforehand, not the one improvised afterwards"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "When a project is approved, enthusiasm is at its highest and information at its lowest. When it has to be shut down, it is the other way round: there is plenty of information and everyone is invested in the work done. That is why the exit criterion is written at the start, however uncomfortable, with three elements: which number has to move, by how much and by what date."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Take a returns operation: \"by 31 March, half of all requests are resolved without human intervention and average response time falls from two days to one.\" With that sentence, the March review is a reading. Without it, it is a negotiation, and in a negotiation the most recent argument wins, which is almost always \"it's nearly there\". The criterion does not have to be perfect. It has to exist before the results are seen, because a criterion adjusted after the score is known measures nothing."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Second support",
+        "texto": "\"Not working\" can mean three different things, and each calls for the opposite decision"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Most conversations about cancelling a project lump different situations under the words \"it doesn't work\". Separating them is what stops you closing something that could be fixed and keeping something that cannot."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "It does not work technically: the agent makes mistakes at a rate the operation cannot tolerate, and after several rounds of tuning the error barely falls. The usual answer here is to close it or narrow the scope to the cases where it does get things right.",
+          "It works, but nobody uses it: the agent handles the cases well, but the team works around it because it does not fit how they work or because nobody redesigned the process around it. The technology is not what gets switched off here: either adoption is fixed or the project closes for lack of an owner.",
+          "It works and it is used, but the number does not move: minutes are saved that never turn into lower costs or more capacity sold. The problem here is the business case, and fixing it usually means deciding what happens with the time that was freed."
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The reason to separate the three is the cost of misdiagnosis. If an adoption problem is treated as a technical one, another half year goes into improving a model that was already good enough. If a technical problem is treated as an adoption one, training is organised to convince a team to use something it rightly does not trust."
+      },
+      {
+        "tipo": "cita",
+        "texto": "An AI project nobody dares to switch off is not being prudent, it is paying for the right not to decide.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Third support",
+        "texto": "Shutting a project down well leaves something standing, and one person decides it"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "There are two reasons closing gets postponed. The first is that nobody has the authority to do it: the technical team does not want to declare failure, the business sponsor depends on it, and the steering committee sees it every three months among other priorities. The decision needs an owner: whoever answers for the business result the project promised, not whoever built it."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The second reason is that closing looks like losing everything. It does not, if it is done with method. Before switching off, you note what was learned, which data is now in order, which part of the work serves another case and which people on the team move to which project. A closure with that list costs one meeting. A zombie project costs, every month, the team, the infrastructure and the attention of whoever runs the area."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "Three questions order the decision, and the first two are answered with data the project already has"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. What does the exit criterion say?",
+            "definicion": "The result is compared with the number, threshold and date fixed at approval. It is read by the business owner, not the project team. If it does not exist, it is written today and a review is set for six to eight weeks out."
+          },
+          {
+            "termino": "2. Which of the three diagnoses is it?",
+            "definicion": "Technical, adoption or business case. It is answered with the error rate by kind of case, the team's actual usage and the effect on the area's P&L. Each diagnosis leads to a different decision."
+          },
+          {
+            "termino": "3. What is kept, and who decides?",
+            "definicion": "One person signs off on continuing, narrowing or closing, and writes down what is reused: data, lessons, people. Without this question, closing looks like losing everything, which is why it gets postponed."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take the AI project that has been running longest without a clear result and ask its business sponsor to write, in three lines, which number it should have moved, by how much and by when. If they cannot write it, that is the first finding. If they can and the number has not moved, the decision already has a date."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "When should you cancel an AI project?",
+            "respuesta": "When, on the agreed review date, the result is below the exit criterion and the diagnosis shows the problem cannot be fixed by a reasonable change of scope, adoption or business case. The decision belongs to the owner of the business result, not the technical team, and it helps to write down what gets reused."
+          },
+          {
+            "pregunta": "How do you know if an AI pilot is failing?",
+            "respuesta": "You check it against three things: the number it was meant to move and the committed date, the error rate by kind of case, and actual usage by the team. A pilot can fail in different ways. It can make too many mistakes, it can work and go unused, or it can be used without changing any result. Each calls for a different decision, which is why it pays to separate them."
+          },
+          {
+            "pregunta": "Who decides to close an AI project in a company?",
+            "respuesta": "Whoever answers for the business result the project promised, usually the head of the area or business unit. The technical team reports what the system has shown, but should not be the one to decide, because it is too close to the work done. It should be one person with a name, not a committee."
+          },
+          {
+            "pregunta": "What if an AI project has no exit criterion?",
+            "respuesta": "Write one now. The business owner sets which number should move, by how much and by what date, using the information that already exists, and schedules a short review six to eight weeks out. A late criterion is worse than an initial one, but better than none, and it stops the project from renewing itself out of habit."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's review the exit criterion for your oldest AI project",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
