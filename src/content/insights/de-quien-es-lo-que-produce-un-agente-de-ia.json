@@ -6,7 +6,7 @@
   "formato": "framework",
   "es": {
     "slug": "de-quien-es-lo-que-produce-un-agente-de-ia",
-    "titulo": "¿Quién es dueño de lo que produce un agente de IA?",
+    "titulo": "Propiedad intelectual de lo que crea un agente",
     "entradilla": "Un despacho de abogados mandó a un cliente una propuesta que había escrito, en su mayor parte, un agente interno entrenado con expedientes propios. Antes de firmarla, un socio preguntó de quién era ese documento. Nadie en la sala supo contestar. Llevaban dos años usando la herramienta y nunca se habían hecho esa pregunta en voz alta.",
     "descripcion": "La propiedad de lo que produce un agente de IA depende del contrato del proveedor, el aporte humano y si alguno quedó registrado.",
     "linkedin": {
@@ -17,6 +17,10 @@
       {
         "tipo": "entradilla",
         "texto": "Un despacho de abogados mandó a un cliente una propuesta que había escrito, en su mayor parte, un agente interno entrenado con expedientes propios. Antes de firmarla, un socio preguntó de quién era ese documento. Nadie en la sala supo contestar. Llevaban dos años usando la herramienta y nunca se habían hecho esa pregunta en voz alta."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La propiedad intelectual de lo que produce un agente de IA en nombre de una empresa no se da por hecha: depende de que el contrato del proveedor no se reserve derechos sobre el resultado, de que el material con que se alimentó al agente fuera legítimo y de que una persona haya aportado un criterio propio, registrado en el momento. Si falta alguna de las tres cosas, el documento puede salir con el membrete de la empresa y aun así no tener un dueño que pueda defenderlo."
       },
       {
         "tipo": "parrafo",
