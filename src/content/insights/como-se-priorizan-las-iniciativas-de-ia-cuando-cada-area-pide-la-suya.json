@@ -1,0 +1,289 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-10-27",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "value-adoption",
+  "formato": "perspective",
+  "es": {
+    "slug": "como-se-priorizan-las-iniciativas-de-ia-cuando-cada-area-pide-la-suya",
+    "titulo": "¿Cómo se priorizan las iniciativas de IA?",
+    "entradilla": "Cuando cada área llega con su propia iniciativa de IA, el comité de dirección no está comparando proyectos: está comparando presentaciones. Priorizar bien empieza por obligar a todas a hablar el mismo idioma.",
+    "descripcion": "Las iniciativas de IA se priorizan con una ficha común por proceso, una lectura de lo que comparten y un tope de proyectos a la vez. Tres criterios.",
+    "linkedin": {
+      "texto": "Cuando cada área presenta su iniciativa de IA, el comité no compara proyectos. Compara presentaciones.\n\nGana la mejor contada o la del director con más peso, y los recursos compartidos de datos e integración se reparten sin criterio.\n\nTres decisiones para priorizar iniciativas de IA con un solo idioma.",
+      "hashtags": ["IA", "Estrategia", "Inversión"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Cuando cada área llega con su propia iniciativa de IA, el comité de dirección no está comparando proyectos: está comparando presentaciones. Priorizar bien empieza por obligar a todas a hablar el mismo idioma."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en un comité de dirección un jueves por la tarde. Comercial pide un asistente para preparar propuestas, finanzas quiere automatizar la conciliación, atención al cliente necesita un agente de primera respuesta y recursos humanos propone un buscador de políticas internas. Las cuatro presentaciones son razonables y las cuatro traen una demostración que funciona. El comité tiene presupuesto para dos, y la decisión se toma por quién habló mejor o por quién tiene más peso en la sala."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La idea que ordena este artículo es que las iniciativas de IA se priorizan mal porque se comparan por lo que cada área pide, y deberían compararse por lo que cada una cambia en un proceso concreto, con un número y un dueño. Eso se logra con tres decisiones: una ficha común para todas, una lectura de lo que comparten y un tope de proyectos simultáneos que se respeta."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La respuesta corta",
+        "texto": "¿Cómo se priorizan las iniciativas de IA cuando cada área pide la suya?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Se priorizan pidiendo a cada área la misma ficha de una página: qué proceso cambia, qué número se mueve y cuánto, quién es el dueño de ese número y qué necesita de otros equipos. Después se leen juntas para ver qué recursos se disputan, sobre todo datos e integración. Por último se fija cuántas iniciativas pueden avanzar a la vez y se dice no, por escrito, a las que quedan fuera. Sin una ficha común no hay prioridad: hay negociación."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Primer apoyo",
+        "texto": "Las iniciativas solo se comparan si todas se describen como un cambio en un proceso, no como una herramienta"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Un área suele presentar la solución: «queremos un agente de atención». Otra presenta el problema: «perdemos días en la conciliación». Una tercera presenta una tecnología: «quisiéramos probar un modelo con nuestros documentos». Esas tres frases no se pueden poner en la misma fila de una tabla, y por eso el comité acaba decidiendo por intuición."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La solución es que todas lleguen con la misma ficha y que la ficha obligue a bajar al proceso. Si finanzas dice que quiere automatizar la conciliación, tiene que escribir cuántas horas al mes consume hoy, cuántos errores genera, qué parte del cierre contable depende de ella y quién responde por que esté lista el día cinco. Al escribirlo, a veces la iniciativa se cae sola, porque el dolor era menor de lo que parecía. Otras veces aparece un dato que cambia el orden: una conciliación que retrasa el cierre de toda la compañía pesa más que un asistente que ahorra minutos a un equipo de seis personas."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Proceso: cuál cambia, cómo se hace hoy y qué parte pasaría a hacer el sistema.",
+          "Número: qué indicador se mueve, cuánto y para qué fecha, medido en lo que ya mide el área.",
+          "Dueño: la persona que responde por ese número, no la que construye la solución.",
+          "Dependencias: qué datos, integraciones o decisiones necesita de otros equipos."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Segundo apoyo",
+        "texto": "El orden lo marca lo que las iniciativas comparten, porque el cuello de botella casi nunca es el presupuesto"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Al leer las fichas juntas aparece algo que ninguna área ve por separado. Tres de las cuatro iniciativas necesitan los mismos datos de clientes, y esos datos viven en dos sistemas que nadie ha integrado. Dos necesitan al mismo equipo de tecnología, que tiene capacidad para una. Una depende de una decisión de seguridad que lleva meses pendiente."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Aquí lo que importa es que ordenar por valor esperado, sin mirar esas dependencias, produce un portafolio que nadie puede ejecutar. Se aprueban las tres iniciativas más valiosas y las tres esperan al mismo equipo. En cambio, una iniciativa algo menos vistosa, pero que no depende de nadie, puede estar funcionando en seis semanas y, además, dejar resuelta una parte de la integración que luego usan las demás. La pregunta que ordena la lista no es solo cuánto vale, sino qué desbloquea y qué puede avanzar sin esperar."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Una iniciativa de IA no compite por presupuesto. Compite por el mismo equipo, los mismos datos y la misma atención de quien dirige.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Tercer apoyo",
+        "texto": "Priorizar es poder decir no por escrito, y eso exige un tope de proyectos y una sola mesa que decida"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay un patrón que se repite cuando no existe tope. Cada área recibe un sí parcial, cada iniciativa avanza despacio y ninguna llega a producción antes de que llegue la siguiente petición. El comité cree que está siendo generoso y en realidad está repartiendo el mismo equipo en rebanadas cada vez más finas."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Funciona mejor fijar un número: cuántas iniciativas pueden avanzar a la vez con el equipo y los datos que existen hoy. Si son dos, hay dos. Las demás quedan en una lista con la fecha en que se vuelven a mirar y la razón por la que no entraron, escrita de forma que el área pueda entenderla. Eso cambia la conversación. El área que quedó fuera ya no siente que perdió una discusión de poder, porque sabe qué tendría que cambiar en su ficha para entrar en la siguiente revisión."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hace falta también una sola mesa. Si cada dirección decide su propia IA con su propio presupuesto, no hay prioridad sino suma de decisiones locales, y los recursos compartidos se disputan en los pasillos. La mesa no necesita ser grande: quien responde por el resultado, quien responde por los datos y quien responde por la operación tecnológica, con una revisión a fecha fija."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Tres preguntas ordenan la lista, y las tres se pueden responder en una reunión"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. ¿Qué proceso cambia y quién responde por el número?",
+            "definicion": "Cada iniciativa se describe con la misma ficha. Si el área no puede escribir el proceso, el número y el dueño, la iniciativa todavía no está lista para competir."
+          },
+          {
+            "termino": "2. ¿Qué comparte con las demás?",
+            "definicion": "Se leen las fichas juntas para ver qué datos, integraciones y equipos se disputan. Se ordena por valor, pero también por lo que desbloquea y por lo que puede avanzar sin esperar a otros."
+          },
+          {
+            "termino": "3. ¿Cuántas caben a la vez y quién dice no?",
+            "definicion": "Se fija un tope según la capacidad real y una mesa única decide. Cada iniciativa que queda fuera recibe una razón escrita y una fecha de revisión."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Pide a las tres áreas que más insisten que escriban su iniciativa en la ficha de una página antes del próximo comité. Léelas en voz alta una detrás de otra. Lo más probable es que una se aclare, otra se deshaga y la tercera descubra que depende de las otras dos."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cómo se priorizan los proyectos de IA en una empresa?",
+            "respuesta": "Se priorizan con una ficha común para todas las iniciativas: qué proceso cambia, qué número se mueve, quién responde por él y qué necesita de otros equipos. Con las fichas a la vista se ordena por valor, por lo que cada iniciativa desbloquea y por la capacidad real de ejecución. Después se fija un tope de proyectos simultáneos."
+          },
+          {
+            "pregunta": "¿Qué criterios se usan para elegir iniciativas de IA?",
+            "respuesta": "Tres son los que más ayudan: el efecto sobre un número de negocio con dueño, las dependencias de datos, integración y equipos, y la facilidad de llegar a producción con la capacidad que hay hoy. El valor esperado cuenta, pero una iniciativa muy valiosa que depende de un recurso saturado no se puede ejecutar."
+          },
+          {
+            "pregunta": "¿Quién debe decidir qué iniciativas de IA se hacen primero?",
+            "respuesta": "Una mesa pequeña y única, con quien responde por el resultado de negocio, quien responde por los datos y quien responde por la operación tecnológica. Si cada dirección decide por separado, los recursos compartidos se reparten sin criterio. La mesa se reúne a fecha fija y deja por escrito por qué cada iniciativa entra o espera."
+          },
+          {
+            "pregunta": "¿Cuántas iniciativas de IA puede llevar una empresa a la vez?",
+            "respuesta": "Tantas como permitan el equipo, los datos y la atención directiva que existen hoy, y suele ser menos de lo que el comité desea. Conviene fijar el número de forma explícita y respetarlo. Cada iniciativa adicional repartida sobre el mismo equipo retrasa a todas las demás y rara vez llega a producción más rápido."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Ordenemos juntos las iniciativas de IA que hoy compiten en tu comité",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-to-prioritise-ai-initiatives-when-every-department-wants-its-own",
+    "titulo": "How to Prioritise AI Initiatives Across Teams",
+    "entradilla": "When every department arrives with its own AI initiative, the executive committee is not comparing projects. It is comparing presentations. Prioritising well starts by making every initiative speak the same language.",
+    "descripcion": "AI initiatives are prioritised with one common sheet per process, a read of what they share and a cap on parallel projects. Three criteria.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "When every department arrives with its own AI initiative, the executive committee is not comparing projects. It is comparing presentations. Prioritising well starts by making every initiative speak the same language."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture an executive committee on a Thursday afternoon. Sales wants an assistant to draft proposals, finance wants to automate reconciliation, customer service needs a first-response agent and HR proposes a search tool for internal policies. All four presentations are reasonable and all four come with a demo that works. The committee has budget for two, and the decision goes to whoever spoke best or carries the most weight in the room."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The idea behind this article is that AI initiatives get prioritised badly because they are compared by what each department asks for, when they should be compared by what each one changes in a specific process, with a number and an owner. Three decisions make that possible: one common sheet for all of them, a read of what they share, and a cap on parallel projects that is actually respected."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The short answer",
+        "texto": "How do you prioritise AI initiatives when every department wants its own?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "You ask each department for the same one-page sheet: which process changes, which number moves and by how much, who owns that number and what it needs from other teams. Then you read them side by side to see which resources are contested, above all data and integration. Finally you set how many initiatives can move at once and say no, in writing, to those left out. Without a common sheet there is no priority, only negotiation."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "First support",
+        "texto": "Initiatives can only be compared if each is described as a change to a process, not as a tool"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "One department typically presents the solution: \"we want a service agent\". Another presents the problem: \"we lose days on reconciliation\". A third presents a technology: \"we'd like to try a model on our documents\". Those three sentences cannot sit in the same row of a table, which is why the committee ends up deciding on instinct."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The fix is for everyone to arrive with the same sheet, and for the sheet to force a descent into the process. If finance says it wants to automate reconciliation, it has to write down how many hours a month it takes today, how many errors it produces, which part of the close depends on it and who answers for it being ready by day five. Sometimes writing it down makes the initiative collapse on its own, because the pain was smaller than it looked. Other times a fact surfaces that changes the order: a reconciliation that delays the whole company's close weighs more than an assistant that saves minutes for a team of six."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Process: which one changes, how it is done today and what part the system would take over.",
+          "Number: which indicator moves, by how much and by what date, measured with what the department already tracks.",
+          "Owner: the person who answers for that number, not the one building the solution.",
+          "Dependencies: which data, integrations or decisions it needs from other teams."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Second support",
+        "texto": "What the initiatives share sets the order, because the bottleneck is rarely the budget"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Reading the sheets together shows something no department sees alone. Three of the four initiatives need the same customer data, and that data lives in two systems nobody has integrated. Two need the same technology team, which has capacity for one. One depends on a security decision that has been pending for months."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "What matters here is that ranking by expected value, without looking at those dependencies, produces a portfolio nobody can execute. The three most valuable initiatives get approved and all three wait for the same team. A slightly less glamorous initiative that depends on nobody can be running in six weeks and, as a bonus, settle part of the integration the others will use later. The question that orders the list is not only how much it is worth, but what it unlocks and what can move without waiting."
+      },
+      {
+        "tipo": "cita",
+        "texto": "An AI initiative does not compete for budget. It competes for the same team, the same data and the same attention from whoever runs the company.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Third support",
+        "texto": "Prioritising means being able to say no in writing, which takes a cap on projects and a single table that decides"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A pattern repeats when there is no cap. Each department gets a partial yes, each initiative moves slowly and none reaches production before the next request arrives. The committee believes it is being generous when it is actually slicing the same team into ever thinner pieces."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "It works better to fix a number: how many initiatives can move at once with the team and data that exist today. If it is two, it is two. The rest go on a list with the date they will be looked at again and the reason they did not make it, written so the department can understand it. That changes the conversation. The department left out no longer feels it lost a power struggle, because it knows what would have to change in its sheet to get in at the next review."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "You also need a single table. If every division decides its own AI with its own budget, there is no priority, only a sum of local decisions, and shared resources get fought over in the corridors. The table does not need to be large: whoever answers for the business result, whoever answers for the data and whoever answers for technology operations, meeting on a fixed date."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "Three questions order the list, and all three can be answered in one meeting"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Which process changes, and who answers for the number?",
+            "definicion": "Every initiative is described with the same sheet. If the department cannot write down the process, the number and the owner, the initiative is not yet ready to compete."
+          },
+          {
+            "termino": "2. What does it share with the others?",
+            "definicion": "The sheets are read together to see which data, integrations and teams are contested. The order reflects value, but also what an initiative unlocks and what can move without waiting on others."
+          },
+          {
+            "termino": "3. How many fit at once, and who says no?",
+            "definicion": "A cap is set from real capacity and a single table decides. Each initiative left out gets a written reason and a review date."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Ask the three departments that push hardest to write their initiative on the one-page sheet before the next committee. Read them aloud one after another. Chances are one gets clearer, one falls apart and the third discovers it depends on the other two."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How do you prioritise AI projects in a company?",
+            "respuesta": "You use a common sheet for every initiative: which process changes, which number moves, who answers for it and what it needs from other teams. With the sheets side by side you rank by value, by what each initiative unlocks and by real capacity to execute. Then you set a cap on simultaneous projects."
+          },
+          {
+            "pregunta": "What criteria should you use to choose AI initiatives?",
+            "respuesta": "Three help most: the effect on a business number that has an owner, the dependencies on data, integration and teams, and how easily it can reach production with the capacity available today. Expected value counts, but a highly valuable initiative that depends on a saturated resource cannot be executed."
+          },
+          {
+            "pregunta": "Who should decide which AI initiatives go first?",
+            "respuesta": "A small, single table, with whoever answers for the business result, whoever answers for the data and whoever answers for technology operations. If every division decides separately, shared resources get split without a rule. The table meets on a fixed date and records in writing why each initiative goes ahead or waits."
+          },
+          {
+            "pregunta": "How many AI initiatives can a company run at once?",
+            "respuesta": "As many as the team, the data and the executive attention available today allow, which is usually fewer than the committee would like. It pays to set the number explicitly and hold to it. Each extra initiative spread over the same team slows down all the others and rarely reaches production faster."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's put order into the AI initiatives competing in your committee",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
