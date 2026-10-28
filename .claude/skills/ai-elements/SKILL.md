@@ -1,3 +1,8 @@
+---
+name: ai-elements
+description: Building AI-powered UI components with ai-elements.
+---
+
 # AI Elements Skill
 
 Building AI-powered UI components with ai-elements.

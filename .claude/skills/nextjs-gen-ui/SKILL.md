@@ -1,3 +1,8 @@
+---
+name: nextjs-gen-ui
+description: Patterns and best practices for building generative UI with Next.js.
+---
+
 # Next.js Generative UI Skill
 
 Patterns and best practices for building generative UI with Next.js.

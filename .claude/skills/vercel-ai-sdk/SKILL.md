@@ -1,3 +1,8 @@
+---
+name: vercel-ai-sdk
+description: Implementation patterns for Vercel AI SDK in generative UI applications.
+---
+
 # Vercel AI SDK Skill
 
 Implementation patterns for Vercel AI SDK in generative UI applications.

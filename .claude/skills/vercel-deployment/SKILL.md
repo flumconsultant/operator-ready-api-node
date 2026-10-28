@@ -1,3 +1,8 @@
+---
+name: vercel-deployment
+description: Expert knowledge for deploying generative UI applications to Vercel.
+---
+
 # Vercel Deployment Skill
 
 Expert knowledge for deploying generative UI applications to Vercel.
