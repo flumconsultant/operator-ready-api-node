@@ -6,9 +6,9 @@
   "formato": "perspective",
   "es": {
     "slug": "que-le-pasa-al-mando-medio-cuando-manda-un-agente",
-    "titulo": "Qué le pasa al mando medio cuando manda un agente",
-    "entradilla": "A un gerente de operaciones le dieron un agente que resuelve la mitad de los casos de su equipo. Nadie le achicó el equipo, nadie le cambió el título, y nadie se sentó con él a decidir qué hacer cuando el agente falla en un caso que él nunca llegó a ver.",
-    "descripcion": "El puesto del mando medio no desaparece con un agente en el equipo. Se vacía de la visibilidad que antes lo sostenía, y nadie lo ha rediseñado.",
+    "titulo": "Qué pasa con los mandos medios si manda un agente",
+    "entradilla": "Cuando un agente ejecuta parte del trabajo de un equipo, los mandos medios conservan el título, el equipo y la responsabilidad por el proceso completo, pero pierden lo que les daba control: ver el trabajo pasar por sus manos. Nadie ha rediseñado su puesto para esa pérdida.",
+    "descripcion": "Cuando un agente ejecuta parte del trabajo, los mandos medios conservan la responsabilidad y pierden la visibilidad. Qué redefinir en su puesto.",
     "linkedin": {
       "texto": "Un gerente de operaciones se quedó con el mismo equipo, el mismo título y la mitad del trabajo ejecutada por un agente. Nadie rediseñó su puesto.\n\nEl discurso circula alrededor de un rol nuevo, pensado desde cero, para gestionar agentes. Mientras tanto, el mando medio que ya existe sigue firmando por procesos que ya no puede ver ejecutarse completos, sin que nadie haya dicho quién responde cuando el agente se equivoca.\n\nEn el análisis completo de BECOME desarrollamos qué hay que redefinir en ese puesto antes de sumarle un segundo agente.",
       "hashtags": ["IA", "Liderazgo", "Operaciones"]
@@ -16,7 +16,7 @@
     "bloques": [
       {
         "tipo": "entradilla",
-        "texto": "A un gerente de operaciones le dieron un agente que resuelve la mitad de los casos de su equipo. Nadie le achicó el equipo, nadie le cambió el título, y nadie se sentó con él a decidir qué hacer cuando el agente falla en un caso que él nunca llegó a ver."
+        "texto": "Cuando un agente ejecuta parte del trabajo de un equipo, los mandos medios conservan el título, el equipo y la responsabilidad por el proceso completo, pero pierden lo que les daba control: ver el trabajo pasar por sus manos. Nadie ha rediseñado su puesto para esa pérdida."
       },
       {
         "tipo": "parrafo",
@@ -115,8 +115,8 @@
         "tipo": "faq",
         "items": [
           {
-            "pregunta": "¿Qué le pasa a un mando medio cuando un agente ejecuta parte del trabajo de su equipo?",
-            "respuesta": "Pierde la visibilidad diaria que antes tenía sobre el trabajo, porque ya no lo reparte ni lo revisa entrega por entrega, y solo ve lo que el agente decide marcar como excepción. Al mismo tiempo conserva la responsabilidad completa sobre el proceso, incluida la parte que ejecuta el agente. Esa combinación, misma responsabilidad y menos visibilidad, es el cambio real, no una reducción de trabajo."
+            "pregunta": "¿Qué les pasa a los mandos medios cuando los agentes ejecutan parte del trabajo de su equipo?",
+            "respuesta": "Los mandos medios pierden la visibilidad diaria que antes tenían sobre el trabajo, porque ya no lo reparten ni lo revisan entrega por entrega, y solo ven lo que el agente decide marcar como excepción. Al mismo tiempo conservan la responsabilidad completa sobre el proceso, incluida la parte que ejecuta el agente. Esa combinación, misma responsabilidad y menos visibilidad, es el cambio real, no una reducción de trabajo."
           },
           {
             "pregunta": "¿Un mando medio tiene que convertirse en un 'agent manager'?",
@@ -141,13 +141,13 @@
   },
   "en": {
     "slug": "what-happens-to-managers-when-agents-do-the-work",
-    "titulo": "What happens to managers when agents do the work",
-    "entradilla": "An operations manager kept the same team, the same title, and half the caseload moved to an agent. Nobody shrank the team, nobody changed the title, and nobody sat down with him to decide what happens when the agent gets a case wrong that he never saw.",
-    "descripcion": "A manager's job does not vanish once an agent joins the team. It empties out of the visibility that used to hold it up, and nobody has redesigned it.",
+    "titulo": "What happens to middle managers when agents work",
+    "entradilla": "When an agent takes over part of a team's work, middle managers keep the title, the team and accountability for the whole process, but lose what gave them control: watching the work pass through their hands. Nobody has redesigned the job for that loss.",
+    "descripcion": "When an agent runs part of the work, middle managers keep the accountability and lose the visibility. What to redefine in their job.",
     "bloques": [
       {
         "tipo": "entradilla",
-        "texto": "An operations manager kept the same team, the same title, and half the caseload moved to an agent. Nobody shrank the team, nobody changed the title, and nobody sat down with him to decide what happens when the agent gets a case wrong that he never saw."
+        "texto": "When an agent takes over part of a team's work, middle managers keep the title, the team and accountability for the whole process, but lose what gave them control: watching the work pass through their hands. Nobody has redesigned the job for that loss."
       },
       {
         "tipo": "parrafo",
