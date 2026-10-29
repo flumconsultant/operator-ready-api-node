@@ -1,0 +1,263 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-10-29",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "responsible-scale",
+  "formato": "framework",
+  "es": {
+    "slug": "que-hacer-con-las-alucinaciones-de-la-ia-en-un-proceso-critico",
+    "titulo": "¿Qué hacer con las alucinaciones de la IA?",
+    "entradilla": "Las alucinaciones de un modelo no se eliminan, se contienen. En un proceso crítico, la pregunta útil no es cuánto alucina el modelo, sino qué le pasa a la empresa cuando una respuesta inventada llega hasta el final sin que nadie la pare.",
+    "descripcion": "Una alucinación no se elimina, se contiene. Tres decisiones para que una respuesta inventada no llegue al cliente ni al libro contable.",
+    "linkedin": {
+      "texto": "Ningún modelo de IA deja de equivocarse con seguridad. Esperar a que ocurra es la decisión más cara.\n\nEn un proceso crítico el reto no es que alucine menos, sino que su error no pueda actuar sin que algo ajeno al modelo lo compruebe.\n\nTres decisiones para contener una respuesta inventada antes de que llegue al cliente.",
+      "hashtags": ["IA", "Riesgo", "Operaciones"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Las alucinaciones de un modelo no se eliminan, se contienen. En un proceso crítico, la pregunta útil no es cuánto alucina el modelo, sino qué le pasa a la empresa cuando una respuesta inventada llega hasta el final sin que nadie la pare."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en un asistente que redacta la respuesta a una reclamación de seguro. Lee el expediente, resume la cobertura y cita la cláusula que justifica el rechazo. Un día cita una cláusula que no existe, con un número verosímil y un lenguaje impecable. Nadie lo nota porque el texto suena exactamente como suenan los textos correctos, y la carta sale firmada por la aseguradora."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Esa es la razón por la que la alucinación preocupa más en los procesos críticos que en cualquier otro uso. El error no se anuncia: llega con la misma seguridad que el acierto. La idea que ordena este artículo es que no se gestiona esperando un modelo que no se equivoque, sino diseñando el proceso para que una respuesta inventada no pueda actuar sola. Para eso hacen falta tres decisiones, y las tres son de operación, no de tecnología."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La respuesta corta",
+        "texto": "¿Qué se hace con las alucinaciones de la IA cuando el proceso es crítico?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Se contienen con tres decisiones: decidir paso a paso cuánto cuesta equivocarse, hacer que toda afirmación del modelo se compruebe contra una fuente que el modelo no controla, y poner a una persona donde el coste del error lo justifica, con la facultad real de parar el proceso. Ninguna reduce la frecuencia con la que el modelo se equivoca. Las tres reducen la frecuencia con la que ese error llega al cliente, al pago o al registro oficial, que es lo que le importa a quien responde por el proceso."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Primera decisión",
+        "texto": "El riesgo de una alucinación depende de dónde cae en el proceso, no de qué modelo se usa"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Un proceso crítico no lo es en todos sus pasos. En el caso de la reclamación, resumir el expediente para uso interno tolera un error ocasional, porque quien lo lee puede abrir el original. Citar la cláusula en la carta al asegurado no lo tolera, porque el destinatario no puede comprobarla y actuará según lo que lea. El mismo modelo, con la misma tasa de error, produce un coste pequeño en un paso y uno enorme en el otro."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Por eso el primer trabajo es hacer un mapa del proceso con una pregunta por paso: si aquí la IA afirma algo falso con seguridad, ¿quién lo detecta y cuánto cuesta si nadie lo hace? Los pasos donde la respuesta es «nadie» y «mucho» son los que no se dejan en manos del modelo sin más. Hacer este mapa antes de comprar herramientas evita el error más habitual, que es aplicar el mismo nivel de control a todo el proceso: demasiado en lo trivial y demasiado poco en lo que importa."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Segunda decisión",
+        "texto": "Lo que el modelo afirma se comprueba contra una fuente que el modelo no controla"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Pedirle al modelo que se revise a sí mismo ayuda poco, porque el mismo mecanismo que generó el error valida la corrección. La comprobación útil usa algo externo: el sistema donde vive el dato, el texto original de la póliza, la tabla de precios vigente. En el ejemplo, la carta puede salir solo si cada cláusula que cita existe en el contrato del cliente, y esa comparación la hace un programa sencillo que busca el texto, no el modelo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay dos formas de montarlo. La primera es obligar al modelo a trabajar solo con documentos que se le entregan y a devolver, junto a cada afirmación, el fragmento del que la sacó. La segunda es verificar después: extraer las cifras, fechas y referencias del texto y contrastarlas con el registro. Funcionan mejor juntas, y ambas tienen un efecto secundario valioso: cuando la comprobación falla, el sistema sabe que debe frenar, en lugar de depender de que alguien repare en una frase rara."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Una respuesta que el modelo no puede respaldar con una fuente no es una respuesta, es una hipótesis que alguien tiene que verificar.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Tercera decisión",
+        "texto": "Una persona en el circuito solo contiene el error si puede pararlo y tiene tiempo de mirar"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La respuesta habitual es «que lo revise una persona», y casi siempre falla por el mismo motivo. Si el revisor tiene sesenta cartas al día y el modelo acierta en cincuenta y nueve, pronto deja de leer y firma. La supervisión humana se degrada con el volumen y con el acierto del propio modelo: cuanto mejor funciona, menos atención recibe."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay que diseñarla como se diseña cualquier control. La persona revisa solo los casos que el mapa del primer paso marcó como caros, con la fuente a la vista y sin tener que ir a buscarla. Tiene la facultad escrita de detener el caso y devolverlo sin que nadie le pida explicaciones. Y se mide cuántos casos corrige: si durante semanas no corrige ninguno, o el modelo es excelente o el revisor ya no está mirando, y conviene averiguar cuál de las dos antes de que lo haga un cliente."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Las tres decisiones se apoyan unas en otras, y ninguna funciona sola"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Mapa del coste del error",
+            "definicion": "Responde en qué pasos una afirmación falsa causa daño real. Lo hace el dueño del proceso, paso por paso. Sin él, el control se reparte parejo y falla donde más duele."
+          },
+          {
+            "termino": "2. Comprobación externa",
+            "definicion": "Responde si lo que el modelo afirma existe en la fuente de verdad. Se automatiza con el registro, el contrato o la tabla vigente. Sin ella, la revisión humana carga con todo el trabajo."
+          },
+          {
+            "termino": "3. Revisión con facultad de parar",
+            "definicion": "Responde quién decide cuando la comprobación falla o el paso es caro. Una persona con la fuente delante, tiempo para mirar y autoridad para detener. Sin las otras dos, se convierte en una firma por inercia."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Elige un proceso donde la IA ya redacta o resume algo que sale de la empresa, y pregunta en cada paso quién notaría una afirmación falsa y qué costaría. El primer paso en el que la respuesta sea «nadie» y «mucho» es donde falta el control."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Se pueden eliminar las alucinaciones de la IA?",
+            "respuesta": "No del todo. Un modelo genera texto probable, no verificado, así que siempre puede afirmar algo falso con seguridad. Se reducen dándole documentos fiables de los que partir, y se contienen comprobando lo que afirma contra una fuente externa. Lo que sí se puede es evitar que ese error llegue al cliente o al registro oficial."
+          },
+          {
+            "pregunta": "¿Qué es una alucinación de la IA en una empresa?",
+            "respuesta": "Es una respuesta que suena correcta y es falsa: una cláusula que no existe, una cifra inventada, una referencia a un documento que nadie ha escrito. Es peligrosa porque no se distingue por el tono de una respuesta acertada. En un proceso crítico, el daño depende del paso donde aparece y de si algo la detecta."
+          },
+          {
+            "pregunta": "¿Basta con que una persona revise lo que genera la IA?",
+            "respuesta": "No siempre. Si la persona revisa un volumen alto de casos que casi siempre son correctos, tiende a firmar sin leer. La revisión funciona cuando se limita a los pasos de mayor coste, tiene la fuente a la vista, incluye la facultad de detener el caso y se mide cuántos errores corrige realmente."
+          },
+          {
+            "pregunta": "¿Cómo se verifica automáticamente lo que dice un modelo de IA?",
+            "respuesta": "Obligando al modelo a devolver, junto a cada afirmación, el fragmento del que la sacó, y contrastando después cifras, fechas y referencias con el sistema donde vive el dato. Esa comparación la hace un programa que busca el texto, no el propio modelo. Si no coincide, el caso se detiene y pasa a una persona."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos dónde puede fallar la IA en tu proceso más crítico",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "what-to-do-about-ai-hallucinations-in-a-critical-process",
+    "titulo": "What to Do About AI Hallucinations",
+    "entradilla": "A model's hallucinations are not eliminated, they are contained. In a critical process the useful question is not how often the model hallucinates, but what happens to the company when an invented answer travels all the way to the end and nobody stops it.",
+    "descripcion": "A hallucination is contained, not eliminated. Three decisions so an invented answer never reaches the customer or the books.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "A model's hallucinations are not eliminated, they are contained. In a critical process the useful question is not how often the model hallucinates, but what happens to the company when an invented answer travels all the way to the end and nobody stops it."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture an assistant that drafts the reply to an insurance claim. It reads the file, summarises the cover and cites the clause that justifies the refusal. One day it cites a clause that does not exist, with a plausible number and flawless wording. Nobody notices, because the text sounds exactly the way correct texts sound, and the letter goes out under the insurer's signature."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That is why hallucination worries people more in critical processes than anywhere else. The error does not announce itself: it arrives with the same confidence as a correct answer. The idea behind this article is that it is not managed by waiting for a model that never gets it wrong, but by designing the process so that an invented answer cannot act on its own. That takes three decisions, and all three are about operations, not technology."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The short answer",
+        "texto": "What do you do about AI hallucinations when the process is critical?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "You contain them with three decisions: work out, step by step, what a mistake costs; make every claim the model produces get checked against a source the model does not control; and put a person where the cost of error justifies it, with the real power to stop the process. None of them lowers how often the model is wrong. All three lower how often that error reaches the customer, the payment or the official record, which is what matters to whoever answers for the process."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "First decision",
+        "texto": "The risk of a hallucination depends on where it lands in the process, not on which model you use"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A critical process is not critical at every step. In the claim example, summarising the file for internal use tolerates an occasional error, because whoever reads it can open the original. Citing the clause in the letter to the policyholder does not, because the recipient cannot check it and will act on what they read. The same model, with the same error rate, produces a small cost at one step and an enormous one at the other."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "So the first job is to map the process with one question per step: if the AI states something false with confidence here, who catches it, and what does it cost if nobody does? The steps where the answer is \"nobody\" and \"a lot\" are the ones you do not leave to the model unchecked. Drawing this map before buying tools avoids the commonest mistake, which is applying the same level of control across the whole process: too much on the trivial and too little on what matters."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Second decision",
+        "texto": "What the model claims is checked against a source the model does not control"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Asking the model to review itself helps little, because the same mechanism that produced the error is validating the correction. A useful check uses something external: the system where the data lives, the original text of the policy, the current price table. In the example, the letter can go out only if every clause it cites exists in the customer's contract, and that comparison is done by a simple program that looks the text up, not by the model."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "There are two ways to build it. The first is to make the model work only from documents it is handed and to return, next to each claim, the passage it drew it from. The second is to verify afterwards: pull the figures, dates and references out of the text and match them to the record. They work better together, and both have a valuable side effect: when the check fails, the system knows it has to stop, instead of depending on someone noticing a strange sentence."
+      },
+      {
+        "tipo": "cita",
+        "texto": "An answer the model cannot back with a source is not an answer, it is a hypothesis someone has to verify.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Third decision",
+        "texto": "A person in the loop only contains the error if they can stop it and have time to look"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The usual answer is \"have a person review it\", and it almost always fails for the same reason. If the reviewer has sixty letters a day and the model is right on fifty-nine, they soon stop reading and just sign. Human oversight degrades with volume and with the model's own accuracy: the better it performs, the less attention it gets."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "It has to be designed like any other control. The person reviews only the cases the map from the first step flagged as expensive, with the source in view and no need to go looking for it. They have the written authority to halt a case and send it back without anyone asking them to explain. And you measure how many cases they correct: if for weeks they correct none, either the model is excellent or the reviewer is no longer looking, and it is worth finding out which before a customer does."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "The three decisions lean on one another, and none works alone"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Map of the cost of error",
+            "definicion": "It answers at which steps a false claim does real damage. The process owner draws it, step by step. Without it, control is spread evenly and fails where it hurts most."
+          },
+          {
+            "termino": "2. External check",
+            "definicion": "It answers whether what the model claims exists in the source of truth. It is automated against the record, the contract or the current table. Without it, human review carries all the work."
+          },
+          {
+            "termino": "3. Review with the power to stop",
+            "definicion": "It answers who decides when the check fails or the step is expensive. A person with the source in front of them, time to look and authority to halt. Without the other two, it turns into a signature given out of habit."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Pick a process where AI already drafts or summarises something that leaves the company, and ask at each step who would notice a false claim and what it would cost. The first step where the answer is \"nobody\" and \"a lot\" is where the control is missing."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Can AI hallucinations be eliminated?",
+            "respuesta": "Not entirely. A model generates probable text, not verified text, so it can always state something false with confidence. You reduce them by giving it reliable documents to work from, and you contain them by checking what it claims against an external source. What you can do is stop that error from reaching the customer or the official record."
+          },
+          {
+            "pregunta": "What is an AI hallucination in a business?",
+            "respuesta": "It is an answer that sounds right and is false: a clause that does not exist, an invented figure, a reference to a document nobody wrote. It is dangerous because its tone does not set it apart from a correct answer. In a critical process, the damage depends on the step where it appears and on whether anything catches it."
+          },
+          {
+            "pregunta": "Is it enough for a person to review what the AI produces?",
+            "respuesta": "Not always. If the person reviews a high volume of cases that are almost always right, they tend to sign without reading. Review works when it is limited to the highest-cost steps, has the source in view, includes the power to halt a case, and you measure how many errors it actually corrects."
+          },
+          {
+            "pregunta": "How do you automatically verify what an AI model says?",
+            "respuesta": "By making the model return, next to each claim, the passage it drew it from, and then matching figures, dates and references against the system where the data lives. That comparison is done by a program that looks the text up, not by the model itself. If it does not match, the case stops and goes to a person."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's review where AI can fail in your most critical process",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
