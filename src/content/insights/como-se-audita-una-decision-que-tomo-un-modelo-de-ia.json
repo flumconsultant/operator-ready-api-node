@@ -24,12 +24,16 @@
       },
       {
         "tipo": "parrafo",
-        "texto": "Ese hueco no es un detalle técnico. Es la diferencia entre poder responder a un auditor y no poder. Cuando el modelo es tuyo, puedes bajar hasta el dato, la versión y el criterio. Cuando lo compraste, lo único que tienes es lo que el proveedor decidió entregarte en el contrato, y casi ningún contrato de compra de IA que he revisado menciona la palabra auditoría."
+        "texto": "Ese hueco no es un detalle técnico. Es la diferencia entre poder responder a un auditor y no poder. Cuando el modelo es tuyo, puedes bajar hasta el dato, la versión y el criterio. Cuando lo compraste, lo único que tienes es lo que el proveedor decidió entregarte en el contrato, y si el contrato de compra no menciona la palabra auditoría, la empresa no tiene derecho a recibir nada de eso."
       },
       {
         "tipo": "subtitulo",
         "antetitulo": "El síntoma",
         "texto": "¿Cómo se audita una decisión que tomó un modelo de IA?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Una decisión de IA se audita en cuatro pasos, siempre sobre un caso concreto. Primero, se localiza el caso y se recupera el dato exacto que entró en el sistema. Segundo, se identifica la versión del modelo que lo procesó ese día. Tercero, se compara la decisión que salió con lo que el proceso esperaba que saliera. Cuarto, se establece si una persona pudo revisar o revertir el resultado antes de que produjera efecto, y qué hizo. Si falta cualquiera de los cuatro, no hay auditoría: hay una opinión sobre el modelo."
       },
       {
         "tipo": "parrafo",
@@ -115,7 +119,7 @@
           },
           {
             "pregunta": "¿Se puede auditar una decisión de un modelo de IA que la empresa compró y no construyó?",
-            "respuesta": "Solo si el contrato con el proveedor lo obligó por escrito antes de firmarlo. La trazabilidad de un modelo comprado depende de lo que el proveedor decida guardar y entregar, y la mayoría de contratos de compra de IA no mencionan la palabra auditoría. Negociar esa cláusula después de un incidente ya es tarde: los datos del caso que hace falta reconstruir puede que el proveedor nunca los haya guardado."
+            "respuesta": "Solo si el contrato con el proveedor lo obligó por escrito antes de firmarlo. La trazabilidad de un modelo comprado depende de lo que el proveedor decida guardar y entregar, y un contrato que no menciona la palabra auditoría no la garantiza. Negociar esa cláusula después de un incidente ya es tarde: los datos del caso que hace falta reconstruir puede que el proveedor nunca los haya guardado."
           },
           {
             "pregunta": "¿Qué diferencia hay entre explicabilidad técnica y trazabilidad de una decisión?",
@@ -150,12 +154,16 @@
       },
       {
         "tipo": "parrafo",
-        "texto": "That gap is not a technical footnote. It is the difference between being able to answer an auditor and not. When the model is yours, you can trace the data, the version, the criterion. When you bought it, you have exactly what the vendor agreed to hand over in the contract, and almost no AI purchase contract I have reviewed mentions the word audit."
+        "texto": "That gap is not a technical footnote. It is the difference between being able to answer an auditor and not. When the model is yours, you can trace the data, the version, the criterion. When you bought it, you have exactly what the vendor agreed to hand over in the contract, and if the purchase contract does not mention the word audit, the company has no right to receive any of it."
       },
       {
         "tipo": "subtitulo",
         "antetitulo": "The symptom",
         "texto": "How do you audit a decision made by an AI model?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "An AI decision is audited in four steps, always on one specific case. First, locate the case and retrieve the exact input the system received. Second, identify the model version that processed it that day. Third, compare the decision that came out with what the process expected to come out. Fourth, establish whether a person could review or reverse the result before it took effect, and what they did. If any of the four is missing, there is no audit, only an opinion about the model."
       },
       {
         "tipo": "parrafo",
@@ -241,7 +249,7 @@
           },
           {
             "pregunta": "Can you audit a decision made by an AI model the company bought rather than built?",
-            "respuesta": "Only if the vendor contract required it in writing before it was signed. The trail behind a purchased model depends entirely on what the vendor chooses to keep and hand over, and most AI purchase contracts never mention the word audit. Negotiating that clause after an incident is already too late, because the case data that needs reconstructing may never have been kept in the first place."
+            "respuesta": "Only if the vendor contract required it in writing before it was signed. The trail behind a purchased model depends entirely on what the vendor chooses to keep and hand over, and a contract that never mentions the word audit does not guarantee it. Negotiating that clause after an incident is already too late, because the case data that needs reconstructing may never have been kept in the first place."
           },
           {
             "pregunta": "What is the difference between technical explainability and decision traceability?",
