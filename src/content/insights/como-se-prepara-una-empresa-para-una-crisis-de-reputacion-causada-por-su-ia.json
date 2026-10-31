@@ -1,0 +1,263 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-10-31",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "responsible-scale",
+  "formato": "field-note",
+  "es": {
+    "slug": "como-se-prepara-una-empresa-para-una-crisis-de-reputacion-causada-por-su-ia",
+    "titulo": "¿Cómo se prepara una crisis de reputación por IA?",
+    "entradilla": "Cuando un agente propio dice algo falso o injusto a un cliente, la reputación no se decide por el error, sino por lo que la empresa dice en las primeras horas. Y eso se prepara antes: quién habla, qué reconoce y qué repara.",
+    "descripcion": "Si tu IA falla en público, la reputación se juega en las primeras horas. Tres decisiones tomadas antes: quién habla, qué se reconoce y qué se repara.",
+    "linkedin": {
+      "texto": "Cuando falla una IA propia, muchas empresas creen que el daño de reputación lo causa el error.\n\nLo causa la primera explicación. Decir que fue el sistema suena a hablar de un tercero sobre algo que es de la casa.\n\nTres decisiones que conviene tomar antes de que un cliente haga la captura de pantalla.",
+      "hashtags": ["IA", "Reputación", "Riesgo"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Cuando un agente propio dice algo falso o injusto a un cliente, la reputación no se decide por el error, sino por lo que la empresa dice en las primeras horas. Y eso se prepara antes: quién habla, qué reconoce y qué repara."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en el asistente de atención al cliente de una aerolínea, un banco o una tienda en línea. Un cliente le pregunta por una condición y recibe una respuesta clara, amable y equivocada. Actúa según esa respuesta, la empresa le dice después que no vale, y el cliente publica la conversación completa. En una tarde, miles de personas han leído que la empresa le niega a un cliente lo que su propia IA le prometió."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El error técnico tiene arreglo y casi siempre es pequeño. Lo que hace daño es cómo se responde. Una empresa que contesta «fue un fallo del sistema» o «el modelo se equivocó» queda peor que la que reconoce el error en una frase, porque habla de su propia herramienta como si fuera de otro. Esa respuesta se escribe en diez minutos, bajo presión, o se decide con calma antes. Casi siempre se improvisa."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La respuesta corta",
+        "texto": "¿Cómo se prepara una empresa para una crisis de reputación causada por su propia IA?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Se prepara tomando tres decisiones antes del incidente: quién habla en nombre de la empresa y con qué hechos, qué postura de responsabilidad se adopta si el error es nuestro, y qué se repara sin esperar a que lo exija nadie. Con esas tres decididas, el primer comunicado se escribe en una hora. Sin ellas, se convierte en una negociación interna entre legal, comunicación y tecnología mientras la captura de pantalla sigue circulando."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Primer apoyo",
+        "texto": "Nadie acepta «fue la IA», porque para el cliente el agente es la empresa"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Para quien recibe la respuesta no hay un modelo y una empresa. Hay una empresa que le ha dicho algo. En 2024, un tribunal de Columbia Británica resolvió una reclamación contra Air Canada por la información errónea que dio su chatbot sobre una tarifa de duelo, y rechazó el argumento de que el chatbot era una entidad aparte responsable de sus propias palabras. La lección sirve más allá de lo jurídico: la defensa «lo dijo el sistema» ya fracasó en un tribunal y fracasa más rápido en una red social."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Por eso la primera decisión es de postura. La empresa decide de antemano que habla de su IA en primera persona del plural: «nuestro asistente se equivocó y nosotros lo corregimos». Parece un matiz de redacción, y es el que separa una crisis de un día de una de una semana."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Segundo apoyo",
+        "texto": "Reconocer rápido solo es posible si hay hechos, y los hechos salen del rastro del agente"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Una crisis se enfría cuando la empresa dice tres cosas con exactitud: qué pasó, a cuántas personas afectó y qué hace ahora. La segunda es la que casi nadie puede contestar. Si el agente no deja registro de lo que dijo y a quién, la empresa sale a decir «estamos investigando» durante días, y ese silencio lo llenan otros: el cliente afectado, la prensa o un competidor."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Aquí se une con el plan de respuesta operativo del agente, que es un tema distinto: quién lo apaga, cómo se reconstruye lo que hizo. La parte de reputación necesita de ese rastro un solo dato, el alcance, y necesita a una persona con autoridad para afirmarlo en público sin pasar por tres revisiones. Un portavoz que no puede confirmar cuántos casos hay no tranquiliza a nadie."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Una crisis de IA se resuelve con la frase que la empresa pueda sostener con hechos en la primera hora, no con la mejor redactada.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Tercer apoyo",
+        "texto": "La reparación voluntaria cierra la crisis; la que se exige la alarga"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en dos empresas con el mismo error. La primera, al detectarlo, anuncia que honrará lo que el agente dijo a los clientes afectados y los contacta uno a uno. La segunda espera a que los clientes reclamen, y cada reclamación llega a las redes con su propia historia. La primera paga un coste previsible y acotado. La segunda paga ese mismo coste más una narrativa de empresa que se esconde, que dura mucho más."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Decidir de antemano qué se repara sin discusión es una decisión de dirección, no de comunicación: implica dinero y precedente. Por eso conviene tenerla acordada con finanzas y legal antes de que haya un caso concreto que condicione la conversación."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Tres decisiones tomadas en frío bastan para tener preparada la primera hora"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Quién habla y con qué datos",
+            "definicion": "Una persona nombrada, con un suplente, autorizada para publicar sin pasar por un comité, y con acceso al dato de alcance del agente. Importa porque el portavoz que necesita permiso para confirmar un número llega tarde a su propia crisis."
+          },
+          {
+            "termino": "2. Una postura de responsabilidad escrita",
+            "definicion": "Una página que fija cuándo la empresa asume el error como propio, con qué palabras y qué no dirá nunca, como culpar al proveedor del modelo. Importa porque legal, comunicación y dirección deben discutirla una vez, tranquilos, y no cada vez que ocurra algo."
+          },
+          {
+            "termino": "3. Un umbral de reparación automática",
+            "definicion": "Qué se compensa sin que el cliente lo pida, hasta qué importe y quién lo aprueba. Importa porque convierte el error en un coste conocido y evita que cada caso se negocie mientras el relato se escribe fuera."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Escribe, para el agente que más habla con clientes, el primer comunicado de un incidente inventado: qué pasó, a cuántos afectó, qué hacemos. Cada hueco que no puedas rellenar sin consultar a alguien es una decisión pendiente."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Quién es responsable ante el cliente si el chatbot de la empresa le da información falsa?",
+            "respuesta": "La empresa. Para el cliente, el chatbot habla en nombre de la compañía, y los tribunales que han tratado el asunto, como el de Columbia Británica en el caso de Air Canada en 2024, han rechazado que la empresa pueda tratar a su chatbot como un tercero independiente. Conviene asumir esa responsabilidad en la comunicación desde el primer mensaje."
+          },
+          {
+            "pregunta": "¿Qué se debe decir en las primeras horas de una crisis causada por una IA?",
+            "respuesta": "Tres cosas, con hechos: qué ocurrió, a cuántas personas afectó y qué se está haciendo para corregirlo y repararlo. Se evita culpar al sistema o al proveedor, y se evita prometer lo que aún no se ha verificado. Si el alcance no se conoce todavía, se dice con claridad que se está calculando y cuándo se informará."
+          },
+          {
+            "pregunta": "¿Quién debe ser el portavoz cuando falla una IA?",
+            "respuesta": "Una persona de dirección con autoridad para hablar sin pasar por un comité, y con acceso directo a quien pueda confirmar el alcance del problema. Habitualmente es el responsable del negocio al que sirve el agente, apoyado por comunicación, y no el equipo técnico, que aporta los datos pero no suele ser quien habla ante clientes."
+          },
+          {
+            "pregunta": "¿Hay que compensar a los clientes afectados por el error de una IA?",
+            "respuesta": "En la práctica, casi siempre conviene. Honrar lo que el agente prometió o corregir el perjuicio sin que el cliente tenga que reclamar acota el coste y evita que cada reclamación se haga pública. Lo que importa es decidir de antemano hasta qué importe se compensa y quién lo aprueba, para no negociarlo caso por caso en plena crisis."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Preparemos juntos el primer comunicado de tu agente",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-to-prepare-for-a-reputation-crisis-caused-by-your-own-ai",
+    "titulo": "Preparing for a Reputation Crisis Caused by AI",
+    "entradilla": "When your own agent tells a customer something false or unfair, reputation is decided less by the error than by what the company says in the first hours. That is prepared in advance: who speaks, what is admitted and what is put right.",
+    "descripcion": "If your AI fails in public, reputation is won or lost in the first hours. Three decisions made beforehand: who speaks, what is admitted, what is repaired.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "When your own agent tells a customer something false or unfair, reputation is decided less by the error than by what the company says in the first hours. That is prepared in advance: who speaks, what is admitted and what is put right."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Think of the customer assistant at an airline, a bank or an online shop. A customer asks about a condition and gets an answer that is clear, polite and wrong. They act on it, the company later says it does not apply, and the customer posts the full conversation. Within an afternoon, thousands of people have read that the company is denying a customer what its own AI promised."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The technical error can be fixed and is usually small. What does the damage is how the company answers. A company that says \"it was a system fault\" or \"the model got it wrong\" ends up worse off than one that admits the mistake in a sentence, because it talks about its own tool as if it belonged to someone else. That answer gets written in ten minutes under pressure, or decided calmly beforehand. Usually it is improvised."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The short answer",
+        "texto": "How does a company prepare for a reputation crisis caused by its own AI?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "By taking three decisions before the incident: who speaks for the company and with what facts, what position on responsibility is adopted if the error is ours, and what is put right without waiting for anyone to demand it. With those three settled, the first statement takes an hour to write. Without them it becomes an internal negotiation between legal, communications and technology while the screenshot keeps circulating."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "First support",
+        "texto": "Nobody accepts \"the AI did it\", because to the customer the agent is the company"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "For the person who receives the answer, there is no model and a company. There is a company that told them something. In 2024, a tribunal in British Columbia ruled on a claim against Air Canada over wrong information its chatbot gave about a bereavement fare, and rejected the argument that the chatbot was a separate entity responsible for its own words. The lesson reaches beyond the legal point: the defence \"the system said it\" has already failed in a tribunal and fails faster on social media."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That is why the first decision is about stance. The company decides in advance to speak about its AI in the first person plural: \"our assistant got it wrong and we are correcting it\". It looks like a point of wording, and it is what separates a one-day crisis from a one-week crisis."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Second support",
+        "texto": "Admitting fast is only possible with facts, and the facts come from the agent's trail"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A crisis cools when the company says three things accurately: what happened, how many people it affected and what it is doing now. The second is the one almost nobody can answer. If the agent leaves no record of what it said and to whom, the company goes out saying \"we are investigating\" for days, and others fill that silence: the affected customer, the press or a competitor."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "This connects to the agent's operational response plan, which is a separate subject: who switches it off, how its actions are reconstructed. The reputation side needs just one piece of that trail, the scope, and it needs a person with the authority to state it publicly without going through three reviews. A spokesperson who cannot confirm how many cases there are reassures nobody."
+      },
+      {
+        "tipo": "cita",
+        "texto": "An AI crisis is settled by the sentence the company can back with facts in the first hour, not by the best-written one.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Third support",
+        "texto": "Voluntary repair closes a crisis; repair that is demanded prolongs it"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture two companies with the same error. The first, on spotting it, announces it will honour what the agent told the affected customers and contacts them one by one. The second waits for customers to complain, and each complaint reaches social media with its own story. The first pays a predictable, bounded cost. The second pays the same cost plus a story about a company in hiding, which lasts far longer."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Deciding in advance what gets repaired without argument is a leadership decision, not a communications one: it involves money and precedent. That is why it should be agreed with finance and legal before there is a specific case shaping the conversation."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "Three decisions taken in cold blood are enough to have the first hour ready"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Who speaks, and with what data",
+            "definicion": "A named person, with a deputy, authorised to publish without going through a committee and with access to the agent's scope figure. It matters because a spokesperson who needs permission to confirm a number arrives late to their own crisis."
+          },
+          {
+            "termino": "2. A written position on responsibility",
+            "definicion": "One page that sets when the company owns the error, in what words, and what it will never say, such as blaming the model vendor. It matters because legal, communications and leadership should argue it once, calmly, and not each time something happens."
+          },
+          {
+            "termino": "3. A threshold for automatic repair",
+            "definicion": "What is compensated without the customer asking, up to what amount and who approves it. It matters because it turns the error into a known cost and stops every case being negotiated while the story is written elsewhere."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "For the agent that talks to the most customers, write the first statement for an invented incident: what happened, how many were affected, what we are doing. Every gap you cannot fill without asking someone is a pending decision."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Who is responsible to the customer if a company's chatbot gives false information?",
+            "respuesta": "The company. To the customer, the chatbot speaks for the business, and tribunals that have looked at the question, such as the British Columbia ruling in the Air Canada case in 2024, have rejected the idea that a company can treat its chatbot as an independent third party. It is wise to accept that responsibility in the communication from the first message."
+          },
+          {
+            "pregunta": "What should a company say in the first hours of an AI-caused crisis?",
+            "respuesta": "Three things, backed by facts: what happened, how many people it affected and what is being done to correct and repair it. Avoid blaming the system or the vendor, and avoid promising what has not yet been verified. If the scope is not known yet, say plainly that it is being calculated and when the company will report back."
+          },
+          {
+            "pregunta": "Who should be the spokesperson when an AI fails?",
+            "respuesta": "A senior person with the authority to speak without a committee, and with direct access to whoever can confirm the scope of the problem. Usually it is the head of the business the agent serves, supported by communications, rather than the technical team, which supplies the data but is rarely the one speaking to customers."
+          },
+          {
+            "pregunta": "Should customers affected by an AI error be compensated?",
+            "respuesta": "In practice, almost always. Honouring what the agent promised, or correcting the harm without making the customer claim, bounds the cost and stops each complaint going public. What matters is deciding in advance up to what amount to compensate and who approves it, so it is not negotiated case by case in the middle of a crisis."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's prepare your agent's first statement together",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
