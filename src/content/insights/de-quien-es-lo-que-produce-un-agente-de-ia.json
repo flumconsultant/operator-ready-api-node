@@ -6,21 +6,21 @@
   "formato": "framework",
   "es": {
     "slug": "de-quien-es-lo-que-produce-un-agente-de-ia",
-    "titulo": "Propiedad intelectual de lo que crea un agente",
-    "entradilla": "Un despacho de abogados mandó a un cliente una propuesta que había escrito, en su mayor parte, un agente interno entrenado con expedientes propios. Antes de firmarla, un socio preguntó de quién era ese documento. Nadie en la sala supo contestar. Llevaban dos años usando la herramienta y nunca se habían hecho esa pregunta en voz alta.",
+    "titulo": "¿De quién es lo que produce un agente de IA?",
+    "entradilla": "Imagina un despacho de abogados que va a enviar a un cliente una propuesta escrita, en su mayor parte, por un agente interno entrenado con expedientes propios. Antes de firmarla, un socio pregunta de quién es ese documento. Nadie en la sala sabe contestar, y llevan dos años usando la herramienta sin haberse hecho esa pregunta en voz alta.",
     "descripcion": "La propiedad de lo que produce un agente de IA depende del contrato del proveedor, el aporte humano y si alguno quedó registrado.",
     "linkedin": {
-      "texto": "Un despacho firmó una propuesta que había escrito, en su mayor parte, un agente interno. Nadie en la sala supo decir de quién era el documento.\n\nCasi todo lo que existe sobre propiedad intelectual e IA habla del creador individual, no de la empresa que produce contratos e informes con un agente y los publica a su nombre. La ley protege la autoría humana, y un documento sin un aporte humano identificable puede terminar sin dueño reconocido.\n\nEn este análisis de BECOME desarrollamos las cinco piezas que hay que tener antes de que alguien dispute un documento, no después.",
+      "texto": "Imagina un despacho que firma una propuesta escrita, en su mayor parte, por un agente interno. Nadie en la sala sabe decir de quién es el documento.\n\nCasi todo lo que existe sobre propiedad intelectual e IA habla del creador individual, no de la empresa que produce contratos e informes con un agente y los publica a su nombre. La ley protege la autoría humana, y un documento sin un aporte humano identificable puede terminar sin dueño reconocido.\n\nEn este análisis de BECOME desarrollamos las cinco piezas que hay que tener antes de que alguien dispute un documento, no después.",
       "hashtags": ["IA", "PropiedadIntelectual", "Legal"]
     },
     "bloques": [
       {
         "tipo": "entradilla",
-        "texto": "Un despacho de abogados mandó a un cliente una propuesta que había escrito, en su mayor parte, un agente interno entrenado con expedientes propios. Antes de firmarla, un socio preguntó de quién era ese documento. Nadie en la sala supo contestar. Llevaban dos años usando la herramienta y nunca se habían hecho esa pregunta en voz alta."
+        "texto": "Imagina un despacho de abogados que va a enviar a un cliente una propuesta escrita, en su mayor parte, por un agente interno entrenado con expedientes propios. Antes de firmarla, un socio pregunta de quién es ese documento. Nadie en la sala sabe contestar, y llevan dos años usando la herramienta sin haberse hecho esa pregunta en voz alta."
       },
       {
         "tipo": "parrafo",
-        "texto": "La propiedad intelectual de lo que produce un agente de IA en nombre de una empresa no se da por hecha: depende de que el contrato del proveedor no se reserve derechos sobre el resultado, de que el material con que se alimentó al agente fuera legítimo y de que una persona haya aportado un criterio propio, registrado en el momento. Si falta alguna de las tres cosas, el documento puede salir con el membrete de la empresa y aun así no tener un dueño que pueda defenderlo."
+        "texto": "¿De quién es lo que produce un agente de IA dentro de una empresa? La propiedad intelectual de ese resultado no se da por hecha: depende de que el contrato del proveedor no se reserve derechos sobre el resultado, de que el material con que se alimentó al agente fuera legítimo y de que una persona haya aportado un criterio propio, registrado en el momento. Si falta alguna de las tres cosas, el documento puede salir con el membrete de la empresa y aun así no tener un dueño que pueda defenderlo."
       },
       {
         "tipo": "parrafo",
@@ -126,6 +126,10 @@
             "respuesta": "La mayoría no lo dice, y ese silencio no se traduce en que la empresa sea dueña por defecto. Algunos contratos reservan al proveedor un derecho amplio de uso sobre lo que su herramienta genera, incluso cuando la empresa paga la licencia, y esa cláusula suele estar redactada para leerse rápido y entenderse tarde."
           },
           {
+            "pregunta": "¿Pagar la licencia de la herramienta de IA me hace dueño de lo que produce?",
+            "respuesta": "No automáticamente. La licencia define qué puede hacer la empresa con la herramienta, y la titularidad del resultado es otra pregunta que el contrato puede responder, dejar en silencio o reservar en parte al proveedor. Conviene leer esa cláusula antes de que el agente produzca documentos que salgan a nombre de la empresa, y pedirle por escrito al proveedor lo que el contrato no diga."
+          },
+          {
             "pregunta": "¿Qué debe registrar una empresa para poder defender la autoría de un documento que produjo un agente de IA?",
             "respuesta": "El expediente de cada documento importante: la versión del agente que lo generó, qué parte cambió o decidió una persona y en qué momento, y la fecha. Sin ese registro guardado desde que se produjo el documento, reconstruirlo después de una disputa suele ser imposible, porque nadie anotó en su momento qué fue del agente y qué fue de la persona."
           }
@@ -141,12 +145,12 @@
   "en": {
     "slug": "who-owns-what-an-ai-agent-creates",
     "titulo": "Who Owns What an AI Agent Creates for a Company?",
-    "entradilla": "A law firm sent a client a proposal drafted mostly by an internal agent trained on the firm's own past files. Before signing it, a partner asked who owned the document. Nobody in the room had an answer. The firm had run the tool for two years and never once asked out loud.",
+    "entradilla": "Picture a law firm about to send a client a proposal drafted mostly by an internal agent trained on the firm's own past files. Before signing it, a partner asks who owns the document. Nobody in the room has an answer, and the firm has run the tool for two years without once asking out loud.",
     "descripcion": "Owning what an AI agent produces depends on the vendor contract, the human contribution, and whether either was ever recorded.",
     "bloques": [
       {
         "tipo": "entradilla",
-        "texto": "A law firm sent a client a proposal drafted mostly by an internal agent trained on the firm's own past files. Before signing it, a partner asked who owned the document. Nobody in the room had an answer. The firm had run the tool for two years and never once asked out loud."
+        "texto": "Picture a law firm about to send a client a proposal drafted mostly by an internal agent trained on the firm's own past files. Before signing it, a partner asks who owns the document. Nobody in the room has an answer, and the firm has run the tool for two years without once asking out loud."
       },
       {
         "tipo": "parrafo",
@@ -250,6 +254,10 @@
           {
             "pregunta": "What do AI vendor contracts say about who owns what the agent produces?",
             "respuesta": "Most say nothing, and that silence does not mean the company owns the result by default. Some vendor contracts reserve the vendor a broad usage right over what their tool generates even when the company pays for the license, and that clause is usually written to be read fast and understood late."
+          },
+          {
+            "pregunta": "Does paying for an AI tool's license make me the owner of what it produces?",
+            "respuesta": "Not automatically. The license defines what the company may do with the tool, while ownership of the output is a separate question that the contract may answer, leave silent or partly reserve to the vendor. Read that clause before the agent starts producing documents that go out under the company's name, and ask the vendor in writing for whatever the contract leaves unsaid."
           },
           {
             "pregunta": "What should a company log to defend authorship of a document an AI agent produced?",
