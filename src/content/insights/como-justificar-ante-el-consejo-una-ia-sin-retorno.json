@@ -20,7 +20,7 @@
       },
       {
         "tipo": "parrafo",
-        "texto": "He estado en la sala donde alguien defiende una inversión en IA que todavía no da nada, y el patrón se repite casi siempre igual. El responsable llega con una diapositiva de indicadores futuros, una narrativa de transformación y un caso de uso bien elegido. Habla quince minutos. Y entonces alguien al fondo de la mesa, el mismo que aprobó dos pilotos que terminaron en nada, pregunta una sola cosa: ¿y esta vez por qué va a ser distinto? Ahí se acaba la diapositiva de indicadores y empieza la conversación real."
+        "texto": "Imagina la sala donde alguien defiende una inversión en IA que todavía no da nada. El patrón es fácil de reconocer. El responsable llega con una diapositiva de indicadores futuros, una narrativa de transformación y un caso de uso bien elegido. Habla quince minutos. Y entonces alguien al fondo de la mesa, el mismo que aprobó dos pilotos que terminaron en nada, pregunta una sola cosa: ¿y esta vez por qué va a ser distinto? Ahí se acaba la diapositiva de indicadores y empieza la conversación real."
       },
       {
         "tipo": "parrafo",
@@ -124,6 +124,10 @@
           {
             "pregunta": "¿Qué pasa si el consejo aprueba la inversión igual, aunque nadie resolvió la pregunta política?",
             "respuesta": "Se aprueba con menos presupuesto, más condiciones y una revisión más frecuente que la vez anterior, aunque nadie lo nombre así en la reunión. Es la forma en que un consejo expresa desconfianza sin decir la palabra: no rechaza el proyecto, lo aprueba a medias, y esa aprobación a medias suele costarle al proyecto más tiempo del que le habría costado esperar y presentar el caso completo."
+          },
+          {
+            "pregunta": "¿Qué se le dice al consejo cuando una inversión en IA no puede mostrar retorno todavía?",
+            "respuesta": "Se le dice en qué etapa está (infraestructura, piloto o escalamiento), qué evidencia intermedia existe hoy, en qué fecha tiene que empezar a dar un resultado medible o cerrarse, y quién responde si no lo da. Lo que no se le dice es una proyección de retorno sin respaldo, porque un consejo que ya vio fallar un piloto la descuenta entera."
           }
         ]
       },
@@ -146,7 +150,7 @@
       },
       {
         "tipo": "parrafo",
-        "texto": "Sit in the room where someone defends an AI investment that isn't producing anything yet, and the pattern repeats almost every time. The sponsor arrives with a slide of future indicators, a transformation narrative, and a well-chosen use case. Fifteen minutes in. Then someone at the far end of the table, the same person who signed off on two pilots that went nowhere, asks one thing: why would this time be different? That is where the indicator deck ends and the real conversation starts."
+        "texto": "Picture the room where someone defends an AI investment that isn't producing anything yet. The pattern is easy to recognise. The sponsor arrives with a slide of future indicators, a transformation narrative, and a well-chosen use case. Fifteen minutes in. Then someone at the far end of the table, the same person who signed off on two pilots that went nowhere, asks one thing: why would this time be different? That is where the indicator deck ends and the real conversation starts."
       },
       {
         "tipo": "parrafo",
@@ -250,6 +254,10 @@
           {
             "pregunta": "What happens if the board approves the investment anyway, without anyone resolving the political question?",
             "respuesta": "It gets approved with less budget, more conditions, and more frequent review than last time, even if nobody names it that way in the meeting. That is how a board expresses distrust without saying the word: it does not reject the project, it half-approves it, and that half-approval usually costs the project more time than waiting and presenting the full case would have."
+          },
+          {
+            "pregunta": "What do you tell the board when an AI investment cannot show a return yet?",
+            "respuesta": "You tell it which stage the investment is at (infrastructure, pilot or scaling), what intermediate evidence exists today, the date by which it must start producing a measurable result or be closed, and who answers if it does not. What you do not offer is an unsupported return projection, because a board that has already watched a pilot fail will discount all of it."
           }
         ]
       },
