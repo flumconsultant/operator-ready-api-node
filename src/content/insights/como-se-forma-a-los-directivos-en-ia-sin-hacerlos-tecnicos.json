@@ -1,0 +1,271 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-11-04",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "ai-native",
+  "formato": "perspective",
+  "es": {
+    "slug": "como-se-forma-a-los-directivos-en-ia-sin-hacerlos-tecnicos",
+    "titulo": "¿Cómo se forma en IA a un directivo sin hacerlo técnico?",
+    "entradilla": "A un directivo no hay que explicarle cómo funciona un modelo. Hay que entrenarle cuatro preguntas que le sirvan el martes, en el comité donde alguien le pide aprobar un caso de IA. Decide mejor quien sabe qué preguntar y qué revisar que quien sabe qué es una red neuronal.",
+    "descripcion": "Se forma a un directivo en IA entrenándole el criterio: qué preguntar, qué revisar y qué no delegar, con casos reales de su propia operación.",
+    "linkedin": {
+      "texto": "Formar a la dirección en IA suele significar explicarle cómo funciona un modelo.\n\nEl directivo no necesita entender el modelo. Necesita un criterio para leer un caso: qué preguntar, qué revisar y qué no delegar.\n\nCuatro preguntas que cambian cómo se aprueba una iniciativa de IA.",
+      "hashtags": ["IA", "Liderazgo", "Estrategia"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "A un directivo no hay que explicarle cómo funciona un modelo. Hay que entrenarle cuatro preguntas que le sirvan el martes, en el comité donde alguien le pide aprobar un caso de IA. Decide mejor quien sabe qué preguntar y qué revisar que quien sabe qué es una red neuronal."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cuando una empresa decide formar a su dirección en IA, casi siempre compra lo mismo: un curso de varias sesiones que empieza por la historia de la disciplina, sigue con los tipos de modelo y termina con una demostración de un asistente de chat. Los directivos salen sabiendo más vocabulario y deciden igual que antes, porque el conocimiento que recibieron no es el que usan cuando tienen delante una propuesta con presupuesto y fecha."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Lo que un directivo necesita no es parecerse a un técnico. Necesita un criterio para leer un caso de IA y encontrar rápido dónde puede estar roto. Ese criterio se puede enseñar en pocas semanas, y se enseña mejor con las decisiones que la propia empresa tiene pendientes que con ejemplos de otras industrias."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La respuesta corta",
+        "texto": "¿Qué necesita saber un directivo de IA para decidir bien?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Necesita saber hacer cuatro preguntas ante cualquier propuesta: con qué datos funciona, cómo se sabe que acierta, qué pasa cuando se equivoca y quién responde por el resultado. Si el equipo que presenta el caso puede contestarlas con claridad, el caso se sostiene. Si no puede, el directivo ha descubierto el problema antes de firmar, que es todo lo que se le pide a una buena formación."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Primer apoyo",
+        "texto": "El directivo tiene que aprender a leer un caso de IA, no a construir un modelo"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en un comité de crédito que recibe una propuesta para automatizar la preaprobación de solicitudes. El modelo acierta en la mayoría de los casos, dice la diapositiva. Un directivo con el criterio adecuado pregunta cuántas de las solicitudes que el modelo aprueba terminan en mora y cuántas de las que rechaza habrían pagado, y en qué tipo de cliente se concentra el error. No necesita saber cómo se entrena el modelo para hacer esa pregunta. Necesita saber que el acierto medio esconde dónde se equivoca y a quién le cuesta."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ese es el patrón de las cuatro preguntas. Los datos revelan si el modelo ha visto casos parecidos a los de la operación real. La medición revela si alguien comprobó el resultado contra lo que de verdad ocurrió. El error revela quién carga con el coste cuando falla, y si existe un camino para que una persona lo corrija. El responsable revela si hay alguien con nombre que firma lo que el sistema decide. Cada pregunta se aprende con un solo ejemplo bien trabajado, y ninguna exige una línea de código."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Segundo apoyo",
+        "texto": "La formación funciona cuando se hace sobre decisiones que la empresa tiene pendientes"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Un curso genérico enseña conceptos que el directivo no sabe dónde aplicar, y por eso se olvidan en un mes. Una sesión de trabajo sobre el backlog de iniciativas de IA de la propia empresa enseña lo mismo con una ventaja: cada pregunta se practica sobre un caso que ese directivo tendrá que aprobar o rechazar de verdad. La diferencia es la que hay entre estudiar el código de comercio y revisar un contrato propio con un abogado al lado."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Un formato que se puede probar: cuatro sesiones de dos horas, una por pregunta. En cada una, el comité toma una iniciativa real, la dirección de esa iniciativa la presenta como siempre y el resto aplica la pregunta de la sesión. Al terminar, se anota qué respondió el equipo, qué no supo responder y qué cambiaría en la decisión. Es formación y es gobierno a la vez, y deja un registro de criterios que el comité puede reutilizar."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A un directivo no se le forma en IA para que entienda el modelo, sino para que sepa qué preguntar antes de firmar lo que el modelo hace.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Tercer apoyo",
+        "texto": "La formación se mide por las preguntas que cambian en el comité, no por las horas cursadas"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Las horas de curso son lo único que casi todas las empresas registran, y es lo que menos dice. Un indicador mejor es observable en el siguiente comité: qué preguntas se hacen ahora que antes no se hacían. Si hace tres meses nadie preguntaba por el coste del error y ahora es lo primero que se pregunta, la formación funcionó, con independencia de cuántas sesiones se hayan dado."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay un segundo indicador, más incómodo: cuántas propuestas vuelven al equipo con una petición concreta antes de aprobarse. Un comité que aprueba todo a la primera no está supervisando, aunque haya completado el programa. Conviene también que el directivo pueda decir, para cada iniciativa que aprueba, qué parte delega en el sistema y qué parte conserva una persona. Esa frase, escrita en el acta, es la prueba de que entendió lo que firmó."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Cuatro preguntas ordenan el criterio de un directivo ante la IA"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. ¿Con qué datos funciona esto?",
+            "definicion": "Si los datos con los que se probó se parecen a los de la operación real: mismos clientes, mismos casos raros, mismo período. Importa porque un modelo que acierta en la demostración puede fallar justo donde la operación es más difícil."
+          },
+          {
+            "termino": "2. ¿Cómo sabemos que acierta?",
+            "definicion": "Qué se midió, contra qué referencia y en qué tipo de caso se equivoca más. Importa porque el promedio de aciertos esconde dónde se concentra el error."
+          },
+          {
+            "termino": "3. ¿Qué pasa cuando se equivoca?",
+            "definicion": "Quién lo nota, en cuánto tiempo y cómo se corrige. Importa porque el coste de un error depende menos de su frecuencia que de cuánto tarda alguien en verlo."
+          },
+          {
+            "termino": "4. ¿Quién responde por el resultado?",
+            "definicion": "Una persona con nombre que firma lo que el sistema decide. Importa porque sin dueño nadie revisa, y sin revisión el error se vuelve costumbre."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "En el próximo comité, elige una iniciativa de IA que ya esté en la mesa y haz las cuatro preguntas en voz alta. Anota cuáles no pudo responder el equipo. Esa lista es tu primera sesión de formación, y no ha costado un curso."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cómo se forma a los directivos en IA sin convertirlos en técnicos?",
+            "respuesta": "Se les enseña a leer un caso de IA y no a construir un modelo. Eso significa entrenar cuatro preguntas: con qué datos funciona, cómo se sabe que acierta, qué pasa cuando se equivoca y quién responde por el resultado. Se practican sobre iniciativas reales de la propia empresa, en sesiones cortas con el comité de dirección."
+          },
+          {
+            "pregunta": "¿Cuánto tiempo hace falta para formar a un comité de dirección en IA?",
+            "respuesta": "Cuatro sesiones de unas dos horas, una por pregunta, suelen bastar para fijar el criterio si cada una se hace sobre una iniciativa real. Lo que lleva más tiempo es repetirlo hasta que las preguntas se vuelvan costumbre del comité. Por eso conviene mantenerlas como parte de cada aprobación y no como un programa aparte."
+          },
+          {
+            "pregunta": "¿Un directivo necesita saber programar para supervisar la IA?",
+            "respuesta": "No. Necesita saber qué información pedir y cómo interpretarla: qué datos se usaron, cómo se midió el acierto, dónde se equivoca el sistema y quién responde. Esas preguntas se contestan con la operación a la vista, no con código. La capacidad técnica la pone el equipo que presenta el caso, y el directivo comprueba que la sepa explicar."
+          },
+          {
+            "pregunta": "¿Cómo se sabe si la formación en IA de la dirección funcionó?",
+            "respuesta": "Se nota en el comité. Si hay preguntas que antes no se hacían, si algunas propuestas vuelven al equipo con peticiones concretas y si el directivo puede decir qué parte de una decisión delega en el sistema y cuál conserva una persona, la formación funcionó. Las horas de curso registradas no demuestran nada de eso."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Diseñemos juntos la primera sesión de tu comité",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-to-train-executives-in-ai-without-making-them-technical",
+    "titulo": "How to train executives in AI without making them engineers",
+    "entradilla": "An executive does not need to learn how a model works. They need four questions that hold up on Tuesday, in the meeting where someone asks them to approve an AI case. The person who knows what to ask and what to check decides better than the one who can define a neural network.",
+    "descripcion": "Train executives in AI by building their judgement: what to ask, what to check and what never to delegate, using real decisions from their own operation.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "An executive does not need to learn how a model works. They need four questions that hold up on Tuesday, in the meeting where someone asks them to approve an AI case. The person who knows what to ask and what to check decides better than the one who can define a neural network."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "When a company decides to train its leadership in AI, it almost always buys the same thing: a multi-session course that opens with the history of the field, moves on to types of model and ends with a demo of a chat assistant. The executives leave with a larger vocabulary and decide exactly as before, because what they were taught is not what they use when a proposal with a budget and a deadline lands on the table."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "What an executive needs is not to resemble an engineer. It is a way of reading an AI case and finding quickly where it may be broken. That judgement can be taught in a few weeks, and it is taught best on the decisions the company actually has pending rather than on examples from other industries."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The short answer",
+        "texto": "What does an executive need to know about AI to decide well?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Four questions to put to any proposal: what data does it work on, how do we know it is right, what happens when it is wrong, and who answers for the result. If the team presenting the case can answer them plainly, the case holds. If it cannot, the executive has found the problem before signing, which is all anyone should ask of good training."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "First support",
+        "texto": "The executive has to learn to read an AI case, not to build a model"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture a credit committee receiving a proposal to automate the pre-approval of loan applications. The model is right most of the time, says the slide. An executive with the right judgement asks how many of the applications the model approves end up in default, how many of those it rejects would have paid, and which type of customer the errors cluster in. Asking that takes no knowledge of how the model is trained. It takes knowing that an average hit rate hides where the model fails and who pays for it."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That is the pattern behind the four questions. The data shows whether the model has seen cases like those of the real operation. The measurement shows whether anyone checked the output against what actually happened. The error shows who bears the cost when it fails, and whether a person has a way to correct it. The owner shows whether someone with a name signs for what the system decides. Each question is learned with a single well-worked example, and none requires a line of code."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Second support",
+        "texto": "Training works when it is done on decisions the company has pending"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A generic course teaches concepts the executive does not know where to apply, so they fade within a month. A working session on the company's own backlog of AI initiatives teaches the same thing with one advantage: each question is practised on a case that executive will have to approve or reject for real. It is the difference between studying commercial law and going through your own contract with a lawyer beside you."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "One format worth testing: four two-hour sessions, one per question. In each, the committee takes a real initiative, its owner presents it as usual and everyone else applies that session's question. At the end, the group notes what the team answered, what it could not answer and what would change in the decision. It is training and governance at once, and it leaves a record of criteria the committee can reuse."
+      },
+      {
+        "tipo": "cita",
+        "texto": "You do not train an executive in AI so they understand the model, but so they know what to ask before signing what the model does.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Third support",
+        "texto": "Training is measured by the questions that change in the room, not by hours completed"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Course hours are the one thing almost every company records, and the least informative. A better indicator shows up in the next committee meeting: which questions are asked now that were not asked before. If three months ago nobody asked about the cost of an error and now it is the first thing asked, the training worked, however many sessions were held."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "There is a second, more uncomfortable indicator: how many proposals go back to the team with a specific request before approval. A committee that approves everything at first pass is not overseeing anything, even if it completed the programme. It also helps if the executive can say, for each initiative approved, which part is delegated to the system and which stays with a person. That sentence, written in the minutes, is the proof they understood what they signed."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "Four questions organise an executive's judgement on AI"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. What data does this run on?",
+            "definicion": "Whether the data it was tested on resembles the real operation: same customers, same odd cases, same period. It matters because a model that is right in the demo can fail exactly where the operation is hardest."
+          },
+          {
+            "termino": "2. How do we know it is right?",
+            "definicion": "What was measured, against what reference, and in which kind of case it errs most. It matters because an average hit rate hides where the errors concentrate."
+          },
+          {
+            "termino": "3. What happens when it is wrong?",
+            "definicion": "Who notices, how soon and how it is corrected. It matters because the cost of an error depends less on how often it happens than on how long it takes someone to see it."
+          },
+          {
+            "termino": "4. Who answers for the result?",
+            "definicion": "A named person who signs for what the system decides. It matters because without an owner nobody reviews, and without review the error becomes routine."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "At the next committee, pick an AI initiative already on the table and ask the four questions out loud. Write down which ones the team could not answer. That list is your first training session, and it did not cost a course."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How do you train executives in AI without making them technical?",
+            "respuesta": "Teach them to read an AI case rather than build a model. That means practising four questions: what data it works on, how we know it is right, what happens when it is wrong and who answers for the result. They are practised on the company's own initiatives, in short sessions with the leadership committee."
+          },
+          {
+            "pregunta": "How long does it take to train a leadership team in AI?",
+            "respuesta": "Four sessions of about two hours, one per question, are usually enough to set the habit if each is run on a real initiative. What takes longer is repeating it until the questions become the committee's routine. That is why they work best as part of every approval and not as a separate programme."
+          },
+          {
+            "pregunta": "Does an executive need to know how to code to oversee AI?",
+            "respuesta": "No. They need to know what information to ask for and how to read it: which data was used, how accuracy was measured, where the system fails and who is accountable. Those questions are answered with the operation in view, not with code. The technical capability sits with the team presenting the case, and the executive checks that the team can explain it."
+          },
+          {
+            "pregunta": "How do you know whether AI training for leadership worked?",
+            "respuesta": "You see it in the committee. If questions are asked that were not asked before, if some proposals go back to the team with specific requests, and if the executive can say which part of a decision is delegated to the system and which stays with a person, the training worked. Recorded course hours prove none of that."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's design your committee's first session together",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
