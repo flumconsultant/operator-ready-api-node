@@ -1,0 +1,265 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-11-05",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "operating-model",
+  "formato": "framework",
+  "es": {
+    "slug": "como-se-redefine-un-puesto-cuando-un-agente-hace-parte-del-trabajo",
+    "titulo": "Cómo redefinir un puesto con un agente al lado",
+    "entradilla": "La descripción de cargo de casi todos los puestos es una lista de tareas. Cuando un agente se lleva la mitad de la lista, el puesto no queda a medias: cambia de naturaleza. Lo que lo define pasa a ser qué decide la persona y de qué responde, y eso casi nunca está escrito.",
+    "descripcion": "Si un agente ejecuta parte de un puesto, la descripción de cargo deja de servir. Qué sale, qué se queda y qué se añade, con un caso de cuentas por pagar.",
+    "linkedin": {
+      "texto": "Cuando un agente ejecuta la mitad de las tareas de un puesto, la descripción de cargo sigue diciendo lo mismo que hace un año.\n\nEl puesto no queda reducido a la mitad. Cambia de naturaleza: ya no se define por lo que la persona hace, sino por lo que decide y por lo que responde.\n\nTres cosas que reescribir antes de que el agente cumpla su primer trimestre.",
+      "hashtags": ["IA", "Talento", "ModeloOperativo"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "La descripción de cargo de casi todos los puestos es una lista de tareas. Cuando un agente se lleva la mitad de la lista, el puesto no queda a medias: cambia de naturaleza. Lo que lo define pasa a ser qué decide la persona y de qué responde, y eso casi nunca está escrito."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en un analista de cuentas por pagar. Su descripción de cargo dice que registra facturas, las concilia con las órdenes de compra, resuelve las diferencias y prepara el reporte para el cierre. Son cuatro verbos y cada uno cabe en una línea. Un día la empresa pone un agente a registrar y conciliar. Las dos primeras líneas dejan de ser trabajo de la persona, las otras dos siguen siéndolo, y el documento sigue diciendo exactamente lo mismo que antes."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La reacción habitual es tachar lo que el agente hace y dejar lo que sobra, como si el puesto fuera ahora la mitad del anterior. La idea que sostiene este artículo es otra: un puesto con un agente al lado se redefine por las decisiones que conserva la persona y por la responsabilidad que asume sobre el trabajo del agente, no por las tareas que le quedan. Quien reescribe la lista de tareas obtiene un puesto de relleno. Quien reescribe las decisiones obtiene un puesto que se puede evaluar, contratar y desarrollar."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Por qué deja de servir la descripción de cargo cuando entra un agente?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Porque una lista de tareas describe una operación donde cada paso lo daba una persona. Con un agente, parte de esos pasos los ejecuta un sistema, y la lista no distingue entre lo que se hace y lo que se vigila. El analista del ejemplo ya no concilia, pero sigue respondiendo de que las conciliaciones estén bien hechas, y eso no aparece en ninguna de las cuatro líneas."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "La descripción menciona tareas que ya no hace nadie, así que las evaluaciones de desempeño miden un trabajo que no existe.",
+          "Lo que sí ocupa su semana, revisar excepciones y corregir al agente, no figura en ninguna parte.",
+          "Nadie sabe qué conocimiento hay que pedir al seleccionar a la próxima persona para ese puesto.",
+          "La persona más experimental del equipo termina configurando el agente por iniciativa propia, sin que eso cuente en su carga ni en su carrera.",
+          "El puesto sigue clasificado en el mismo nivel y la misma banda salarial aunque exige otro tipo de juicio."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El problema detrás",
+        "texto": "Una lista de tareas se queda vieja cada vez que el agente aprende algo nuevo"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay una razón estructural por la que redactar de nuevo la lista no funciona. Las tareas que un agente puede ejecutar cambian cada pocos meses, a medida que mejora el modelo o que se amplía lo que se le permite hacer. Si el puesto se define por tareas, hay que reescribirlo cada vez que eso ocurre, y en la práctica nadie lo hace. El documento envejece mientras el agente avanza, y la distancia entre lo que dice el papel y lo que ocurre en la operación crece sin que nadie lo decida."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Las decisiones y las responsabilidades cambian mucho más despacio. Decidir si se paga una factura con una diferencia dudosa o si se retiene, y responder por el cierre aunque lo haya preparado un sistema, es lo mismo con el agente de hoy y con el de dentro de un año. Por eso un puesto escrito alrededor de ellas aguanta mejor el paso del tiempo."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un puesto que se define por tareas se queda corto cada vez que el agente aprende algo. Uno que se define por decisiones y responsabilidad se mantiene.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Un puesto con agente se reescribe en tres partes: lo que sale, lo que se queda y lo que se añade"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empezamos por lo más simple. En cada puesto afectado conviene hacer tres listas separadas y no una sola, porque cada una responde a una pregunta distinta y se dirige a una persona distinta dentro de la empresa."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Lo que sale",
+            "definicion": "Las tareas que pasan al agente, cada una con un nombre propio responsable de configurarlas. En el caso de cuentas por pagar: registrar y conciliar facturas, con un dueño del agente que decide cuándo se amplía o se restringe lo que hace. Sin dueño, la tarea no se ha delegado, se ha abandonado."
+          },
+          {
+            "termino": "Lo que se queda",
+            "definicion": "Las decisiones que la persona sigue tomando y los criterios con los que las toma: qué diferencia se acepta, qué proveedor se escala, cuándo se detiene un pago. Aquí se escribe qué conocimiento exige el puesto, porque es lo que se evalúa y lo que se pide al contratar."
+          },
+          {
+            "termino": "Lo que se añade",
+            "definicion": "El trabajo nuevo que el agente genera: revisar una muestra de lo que resolvió, corregir sus instrucciones cuando se equivoca de forma repetida y avisar cuando algo cambia en el entorno que el agente no conoce. Es tiempo real de la semana y debe contar como carga formal, no como favor."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Las tres piezas se apoyan una en otra y se pueden comprobar entre sí. Si «lo que sale» no tiene dueño, «lo que se añade» queda sin sentido. Si «lo que se queda» no tiene criterios escritos, la persona decide por costumbre y nadie puede evaluarla. Y si «lo que se añade» no figura en la carga, el puesto absorbe trabajo sin reconocimiento, que es la forma más rápida de perder a la gente que mejor entiende al agente."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La consecuencia",
+        "texto": "Redefinir el puesto cambia también cómo se contrata, se evalúa y se asciende"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cuando el puesto se describe por decisiones, el proceso de selección pregunta por juicio y no por rapidez ejecutando. La evaluación mide la calidad de las decisiones y la calidad con la que la persona supervisa al agente, no el volumen que procesa. Y la carrera deja de ser una escalera de tareas más complejas para convertirse en una de decisiones con más consecuencias. Es un cambio más grande que la descripción de cargo, pero empieza ahí."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Elige un puesto donde un agente ya ejecute parte del trabajo y pide a quien lo ocupa que escriba, en media página, qué decide y de qué responde esta semana que no estuviera en su descripción de cargo hace un año. Esa media página es el primer borrador de «lo que se queda» y «lo que se añade»."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cómo se redefine un puesto de trabajo cuando parte del trabajo lo hace un agente de IA?",
+            "respuesta": "Se separa en tres partes: las tareas que salen hacia el agente, las decisiones que la persona conserva y el trabajo nuevo que aparece al supervisar al agente. Cada tarea que sale lleva un responsable de configurarla, y cada decisión que se queda lleva sus criterios por escrito. La descripción deja de ser una lista de verbos y pasa a ser una lista de decisiones y responsabilidades, que cambia mucho menos cuando el agente mejora."
+          },
+          {
+            "pregunta": "¿Una descripción de cargo debe listar las tareas que hace el agente?",
+            "respuesta": "No en la descripción del puesto de la persona, pero sí en algún sitio. Las tareas del agente se documentan en una ficha propia con su dueño, su alcance y sus límites. En el puesto de la persona solo aparece lo que ella decide, lo que revisa y lo que responde, porque esas son las cosas que se le pueden evaluar, y se evita así reescribir el cargo cada vez que el agente asume una tarea nueva."
+          },
+          {
+            "pregunta": "¿Hay que cambiar el salario de un puesto cuando entra un agente?",
+            "respuesta": "No hay una regla automática, pero conviene revisarlo con una pregunta concreta: si el puesto exige ahora más criterio y más responsabilidad que antes. Si la persona decide cosas de mayor consecuencia y supervisa un sistema que afecta al resultado de toda el área, mantener la banda anterior es pagar por el puesto que existía. Si el puesto solo perdió tareas sin ganar decisiones, la conversación es otra y conviene tenerla abiertamente."
+          },
+          {
+            "pregunta": "¿Quién debe rediseñar los puestos afectados por la IA, recursos humanos o el área de negocio?",
+            "respuesta": "Los dos, con un reparto claro. El área de negocio sabe qué decisiones importan y de qué se responde en la práctica. Recursos humanos aporta la estructura de niveles, la evaluación y la selección. Si lo hace solo recursos humanos, el documento queda correcto en el papel y lejos de la operación. Si lo hace solo el área de negocio, el cambio no llega a la contratación ni a la evaluación, que es donde se consolida."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Redefinamos juntos los puestos afectados por los agentes",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-to-redefine-a-job-when-an-agent-does-part-of-it",
+    "titulo": "How to redefine a job when an agent does part of it",
+    "entradilla": "Most job descriptions are a list of tasks. When an agent takes half the list, the job does not shrink by half: it changes in kind. What defines it becomes what the person decides and what they answer for, and that is almost never written down.",
+    "descripcion": "When an agent runs part of a role, the job description stops working. What leaves, what stays and what gets added, with an accounts payable example.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Most job descriptions are a list of tasks. When an agent takes half the list, the job does not shrink by half: it changes in kind. What defines it becomes what the person decides and what they answer for, and that is almost never written down."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture an accounts payable analyst. Their job description says they log invoices, match them against purchase orders, resolve discrepancies and prepare the report for the close. Four verbs, each fitting on one line. One day the company puts an agent on logging and matching. The first two lines stop being the person's work, the other two remain theirs, and the document still says exactly what it said before."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The usual reaction is to strike out what the agent does and keep what is left, as if the job were now half of the old one. The argument of this piece is different: a job with an agent beside it is defined by the decisions the person keeps and the responsibility they take for the agent's work, not by the tasks that remain. Rewrite the task list and you get a filler role. Rewrite the decisions and you get a role you can assess, hire for and develop."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "Why does the job description stop working once an agent arrives?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Because a task list describes an operation where a person took every step. With an agent, some of those steps are run by a system, and the list does not tell what is done apart from what is overseen. The analyst in the example no longer does the matching, but still answers for the matching being right, and that appears on none of the four lines."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The description names tasks nobody performs anymore, so performance reviews measure work that does not exist.",
+          "What actually fills the week, reviewing exceptions and correcting the agent, appears nowhere.",
+          "Nobody knows what expertise to ask for when selecting the next person for the role.",
+          "The most experimental person on the team ends up configuring the agent on their own initiative, with no credit in their workload or their career.",
+          "The job stays in the same grade and salary band even though it demands a different kind of judgment."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The problem underneath",
+        "texto": "A task list goes stale every time the agent learns something new"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "There is a structural reason why rewriting the list does not hold. The tasks an agent can run change every few months, as the model improves or as its permissions grow. If the job is defined by tasks, it has to be rewritten each time, and in practice nobody does it. The document ages while the agent moves on, and the gap between the page and the operation widens without anyone deciding it should."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Decisions and responsibilities change far more slowly. Deciding whether to pay an invoice with a doubtful discrepancy or hold it, and answering for the close even though a system prepared it, is the same with today's agent and next year's. That is why a job written around them lasts longer."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A job defined by tasks falls short every time the agent learns something. One defined by decisions and responsibility holds.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "A job with an agent is rewritten in three parts: what leaves, what stays and what gets added"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Start simple. For each affected job, make three separate lists rather than one, because each answers a different question and goes to a different person in the company."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "What leaves",
+            "definicion": "The tasks that move to the agent, each with a named owner responsible for configuring it. In the accounts payable case: logging and matching invoices, with an agent owner who decides when its scope widens or narrows. Without an owner, the task has not been delegated, it has been abandoned."
+          },
+          {
+            "termino": "What stays",
+            "definicion": "The decisions the person keeps making and the criteria behind them: which discrepancy is accepted, which supplier is escalated, when a payment is stopped. This is where the expertise the job requires gets written down, because it is what gets assessed and what gets asked for when hiring."
+          },
+          {
+            "termino": "What gets added",
+            "definicion": "The new work the agent creates: reviewing a sample of what it resolved, correcting its instructions when it repeats a mistake and flagging when something changes in the environment that the agent does not know about. It is real time in the week and has to count as formal workload, not as a favour."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The three parts lean on one another and can be checked against each other. If \"what leaves\" has no owner, \"what gets added\" makes no sense. If \"what stays\" has no written criteria, the person decides by habit and nobody can assess them. And if \"what gets added\" is missing from the workload, the job absorbs work without recognition, which is the fastest way to lose the people who understand the agent best."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The consequence",
+        "texto": "Redefining the job also changes how people are hired, assessed and promoted"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "When the job is described by decisions, selection asks about judgment rather than speed of execution. Assessment looks at the quality of decisions and at how well the person oversees the agent, not at the volume they process. And the career stops being a ladder of more complex tasks and becomes one of decisions with greater consequences. That is a bigger change than the job description, but it starts there."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Pick one job where an agent already runs part of the work and ask the person in it to write half a page: what they decide and what they answer for this week that was not in their job description a year ago. That half page is the first draft of \"what stays\" and \"what gets added\"."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How do you redefine a job when an AI agent does part of the work?",
+            "respuesta": "Split it in three: the tasks that move to the agent, the decisions the person keeps and the new work that appears from overseeing the agent. Each task that leaves gets an owner responsible for configuring it, and each decision that stays gets its criteria in writing. The description stops being a list of verbs and becomes a list of decisions and responsibilities, which changes much less as the agent improves."
+          },
+          {
+            "pregunta": "Should a job description list the tasks the agent performs?",
+            "respuesta": "Not in the person's job description, but somewhere. The agent's tasks belong in a record of their own, with an owner, a scope and limits. The person's job lists only what they decide, review and answer for, because those are the things they can be assessed on. It also avoids rewriting the job each time the agent takes on a new task."
+          },
+          {
+            "pregunta": "Should a job's pay change when an agent arrives?",
+            "respuesta": "There is no automatic rule, but one question helps: does the job now demand more judgment and more responsibility than before? If the person decides things with greater consequences and oversees a system that affects the result of a whole function, keeping the old pay band means paying for a job that no longer exists. If the job only lost tasks without gaining decisions, it is a different conversation and worth having openly."
+          },
+          {
+            "pregunta": "Who should redesign the jobs AI affects, HR or the business function?",
+            "respuesta": "Both, with a clear split. The business function knows which decisions matter and what people actually answer for. HR brings the grade structure, assessment and selection. If HR does it alone, the document looks right on paper and sits far from the operation. If the business does it alone, the change never reaches hiring or assessment, which is where it sticks."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's redefine the jobs agents are changing",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
