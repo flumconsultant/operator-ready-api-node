@@ -16,11 +16,11 @@
     "bloques": [
       {
         "tipo": "entradilla",
-        "texto": "Un director de tecnología me contó hace poco que había comparado tres propuestas para automatizar la revisión de contratos en su área legal. Los tres precios se parecían bastante. Ninguna de las tres explicaba qué se quedaba la empresa el día que quisiera cambiarse de proveedor. Firmó con la que mejor habló en la demo."
+        "texto": "Imagina un comité que compara tres propuestas para automatizar la revisión de contratos del área legal. Los tres precios se parecen bastante. Ninguna de las tres explica qué se queda la empresa el día que quiera cambiarse de proveedor. Gana la que mejor habló en la demo."
       },
       {
         "tipo": "parrafo",
-        "texto": "Ese patrón se repite en casi cualquier comité que decide entre comprar y construir IA: el eje que decide es el precio, y el precio es la pregunta más fácil de responder y la menos importante. Dice qué es más barato firmar este trimestre. No dice qué va a pasar con esa ventaja dentro de tres años, cuando la misma plataforma se la venden también a tu competidor directo."
+        "texto": "Ese patrón es el habitual cuando un comité decide entre comprar y construir IA: el eje que decide es el precio, y el precio es la pregunta más fácil de responder y la menos importante. Dice qué es más barato firmar este trimestre. No dice qué va a pasar con esa ventaja dentro de tres años, cuando la misma plataforma se la venden también a tu competidor directo."
       },
       {
         "tipo": "parrafo",
@@ -143,11 +143,11 @@
     "bloques": [
       {
         "tipo": "entradilla",
-        "texto": "A CTO told me recently he had compared three proposals to automate contract review for his legal team. The three price tags were close enough not to matter. None of the three proposals said what the company would keep if it ever wanted to switch vendors. He signed with the one that gave the best demo."
+        "texto": "Picture a committee comparing three proposals to automate contract review for the legal team. The three price tags are close enough not to matter. None of the three says what the company keeps if it ever wants to switch vendors. The one with the best demo wins."
       },
       {
         "tipo": "parrafo",
-        "texto": "That pattern repeats in almost every committee that decides between buying and building AI: the axis that decides is price, and price is the easiest question to answer and the least important one. It tells you what is cheapest to sign this quarter. It says nothing about what happens to that edge in three years, once the same platform gets sold to your closest competitor too."
+        "texto": "That is the usual pattern when a committee decides between buying and building AI: the axis that decides is price, and price is the easiest question to answer and the least important one. It tells you what is cheapest to sign this quarter. It says nothing about what happens to that edge in three years, once the same platform gets sold to your closest competitor too."
       },
       {
         "tipo": "parrafo",
