@@ -1,0 +1,265 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-11-07",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "ai-native",
+  "formato": "perspective",
+  "es": {
+    "slug": "cuando-no-conviene-usar-ia-en-una-decision-o-un-proceso",
+    "titulo": "¿Cuándo no conviene usar IA en un proceso?",
+    "entradilla": "Casi todas las empresas deciden dónde usar IA mirando lo que el modelo sabe hacer. Conviene mirar al revés: hay procesos y decisiones donde la IA no aporta, o aporta menos de lo que cuesta. Se reconocen con tres pruebas que no dependen del modelo.",
+    "descripcion": "Cuándo no usar IA: tres pruebas sobre volumen, error y responsabilidad para descartar a tiempo el proceso o la decisión que no la necesita.",
+    "linkedin": {
+      "texto": "Muchas empresas deciden dónde usar IA mirando qué puede hacer el modelo.\n\nLa pregunta que ahorra errores va en la otra dirección: qué proceso no tiene volumen para enseñarle nada, qué error no se puede deshacer y qué decisión tiene que explicarse a una persona.\n\nTres pruebas para saber dónde no conviene empezar.",
+      "hashtags": ["IA", "Estrategia", "Operaciones"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Casi todas las empresas deciden dónde usar IA mirando lo que el modelo sabe hacer. Conviene mirar al revés: hay procesos y decisiones donde la IA no aporta, o aporta menos de lo que cuesta. Se reconocen con tres pruebas que no dependen del modelo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Imagina un comité que revisa cada mes veinte propuestas de IA, una por área. Todas llegan con la misma pregunta de partida: qué se puede automatizar. Es una pregunta cómoda porque la respuesta siempre es «bastante», ya que los modelos escriben, resumen y clasifican casi cualquier cosa. El comité aprueba las que tienen mejor presentación y, seis meses después, la mitad no ha cambiado nada en la operación."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La idea que sostiene este artículo es que la IA no conviene donde el proceso carece de repetición, donde el error no se puede deshacer o donde la decisión debe poder explicarse con nombre y apellido. Esas tres condiciones dependen de la operación y no del modelo, así que se pueden revisar antes de gastar un euro, un dólar o un mes de equipo. Una empresa que sabe decir que no a tiempo llega más lejos que la que dice que sí a todo."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Por qué fracasan tantos proyectos de IA en procesos que nunca debieron tenerla?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Porque la selección empieza por la tecnología. Cuando la pregunta es qué puede hacer el modelo, cualquier proceso califica, y el filtro que debería separar los buenos candidatos de los malos no existe. Lo que queda es un portafolio de iniciativas donde conviven tareas muy adecuadas con otras que solo parecen serlo."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Se automatiza un proceso que ocurre pocas veces al año, y nadie tiene ejemplos suficientes para comprobar si el sistema acierta.",
+          "Se delega una decisión cuyo error cuesta mucho más que todo el ahorro del año.",
+          "Se pone un modelo en una decisión que afecta a una persona, y nadie sabe explicarle por qué se le dijo que no.",
+          "Se usa IA donde bastaba una regla escrita en una hoja de cálculo, con el coste de mantenimiento de un sistema que nadie necesitaba.",
+          "El proyecto termina cuando el entusiasmo se acaba, no cuando se mide que funcione."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La causa",
+        "texto": "La IA conviene donde el trabajo se repite, y la mayoría de las decisiones raras no se repiten lo bastante"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Un modelo es útil cuando hay muchos casos parecidos y se puede comprobar si acertó. Piensa en la conciliación de facturas: miles al mes, casi todas iguales, y cada una termina en un sí o un no que alguien puede verificar. Ahora piensa en la decisión de cerrar una planta o renegociar un contrato con el mayor cliente. Ocurre una vez cada varios años, cada caso es distinto y no hay un historial con el que comparar. El modelo puede redactar un análisis muy bien escrito, pero nadie puede saber si es bueno, y un análisis que no se puede contrastar solo da apariencia de rigor."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Aquí lo que importa es la segunda parte de la frase: se puede comprobar si acertó. Sin volumen no hay forma de medirlo, y sin medirlo no hay forma de mejorar ni de apagar el sistema cuando empeora. Para esas decisiones raras, la IA sirve como apoyo, por ejemplo para reunir información o para plantear el caso contrario, pero la decisión se queda donde estaba."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un análisis que nadie puede contrastar no es una respuesta mejor. Es una respuesta con mejor redacción.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Tres pruebas sirven para descartar un proceso antes de empezar: repetición, reversibilidad y responsabilidad"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Las tres preguntas se hacen por separado y en este orden. Basta con que una falle claramente para que el proceso se quede fuera, o para que entre solo con la IA como apoyo y no como quien decide."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Repetición",
+            "definicion": "¿Hay suficientes casos parecidos para saber si el sistema acierta? Si el proceso ocurre unas pocas veces al año, o cada caso es distinto del anterior, no hay muestra con la que medir. La prueba práctica es preguntar cuántos casos pasaron el mes pasado y si alguien guarda cómo terminó cada uno."
+          },
+          {
+            "termino": "2. Reversibilidad",
+            "definicion": "¿Se puede deshacer un error a un coste razonable? Un pedido mal clasificado se corrige en minutos. Un despido, un diagnóstico o un pago irrecuperable no se corrigen. Cuanto más cuesta equivocarse y menos se puede revertir, más cerca debe estar una persona de la decisión, y a veces la respuesta correcta es que ahí no entre la IA."
+          },
+          {
+            "termino": "3. Responsabilidad",
+            "definicion": "¿Alguien tendrá que explicar esta decisión a la persona afectada, a un regulador o a un juez? Si la respuesta es sí y el modelo no puede mostrar por qué decidió lo que decidió, la empresa queda sin defensa. La prueba es sencilla: si un cliente pregunta por qué, ¿quién contesta y con qué?"
+          }
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El caso que se confunde",
+        "texto": "Que un proceso no pase las tres pruebas no significa que no se pueda mejorar, solo que la IA no es la herramienta"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay un error de lectura frecuente: si descartamos la IA, descartamos mejorar el proceso. No es así. Muchos procesos que fallan las pruebas se arreglan mejor con algo más simple. Una regla de negocio escrita, una lista de verificación, un formulario que obligue a completar los campos o un cambio en quién aprueba qué. Una automatización tradicional resuelve bien un proceso estable con reglas claras, y es más barata de mantener porque se comporta siempre igual."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Por eso conviene que el comité de las veinte propuestas añada una columna: qué alternativa sin IA se descartó y por qué. Si la columna está vacía, la propuesta no se ha pensado, se ha admirado. Un portafolio de IA sano tiene menos proyectos de los que pide la presión del momento, y cada uno puede explicar qué problema resuelve que otra herramienta no resolvería."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Toma las tres iniciativas de IA más grandes que tu empresa tenga en marcha y pasa cada una por las tres pruebas con quien opera el proceso, no con quien lo presentó. Si alguna falla claramente la primera o la segunda, pregunta qué se perdería de verdad si hoy se parara."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cuándo no conviene usar IA en una empresa?",
+            "respuesta": "No conviene cuando el proceso ocurre tan pocas veces que no se puede medir si el sistema acierta, cuando un error cuesta mucho y no se puede deshacer, o cuando la decisión afecta a una persona y la empresa debe poder explicarle por qué. En esos casos la IA puede ayudar a preparar la información, pero no debería decidir. Si basta una regla escrita o una automatización tradicional, también es mejor no usarla."
+          },
+          {
+            "pregunta": "¿Qué procesos no se deben automatizar con inteligencia artificial?",
+            "respuesta": "Los que tienen pocos casos, los que son distintos cada vez y los que tienen consecuencias graves e irreversibles para una persona, como contrataciones, despidos, diagnósticos o concesiones de crédito sin revisión. Tampoco los que ya funcionan con una regla simple y estable. Automatizar un proceso así añade coste de mantenimiento y riesgo sin mejorar el resultado."
+          },
+          {
+            "pregunta": "¿Cómo saber si un proceso necesita IA o basta con una regla?",
+            "respuesta": "Escribe las reglas que sigue hoy quien lo hace. Si caben en una hoja y casi nunca hay excepciones, bastará una automatización tradicional. La IA tiene sentido cuando las entradas son variables, como texto libre, documentos distintos o lenguaje natural, y las reglas no se pueden escribir completas. En ese caso se añade además la prueba de repetición para comprobar que se podrá medir."
+          },
+          {
+            "pregunta": "¿Hay decisiones que la IA nunca debería tomar sola?",
+            "respuesta": "Sí, las que afectan de forma importante a una persona y no se pueden revertir, y las que la empresa debe justificar ante un regulador o un tribunal. La IA puede preparar el caso, reunir la información y señalar excepciones, pero la decisión debe tener un responsable con nombre. Dónde se traza esa línea depende del sector y de la regulación aplicable, y conviene revisarlo con asesoría jurídica."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos juntos qué procesos de tu empresa no necesitan IA",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "when-not-to-use-ai-in-a-decision-or-process",
+    "titulo": "When should a company not use AI in a process?",
+    "entradilla": "Most companies decide where to use AI by looking at what the model can do. It helps to look the other way: some processes and decisions gain nothing from AI, or gain less than it costs. Three tests that do not depend on the model can tell them apart.",
+    "descripcion": "When not to use AI: three tests on volume, error and accountability to rule out the process or decision that does not need it, before spending on it.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Most companies decide where to use AI by looking at what the model can do. It helps to look the other way: some processes and decisions gain nothing from AI, or gain less than it costs. Three tests that do not depend on the model can tell them apart."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Imagine a committee that reviews twenty AI proposals every month, one per department. Each starts from the same question: what can we automate? It is a comfortable question because the answer is always \"quite a lot\", since models write, summarise and classify almost anything. The committee approves the best-presented proposals and six months later half of them have changed nothing in the operation."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The argument of this piece is that AI does not belong where a process has no repetition, where an error cannot be undone, or where a decision must be explained to a named person. Those three conditions belong to the operation, not to the model, so they can be checked before any money or team time is spent. A company that can say no early gets further than one that says yes to everything."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "Why do so many AI projects fail in processes that never should have had one?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Because selection starts with the technology. When the question is what the model can do, every process qualifies, and the filter that should separate good candidates from bad ones does not exist. What remains is a portfolio where well-suited tasks sit next to others that only look suited."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "A process that happens a few times a year gets automated, and nobody has enough examples to check whether the system is right.",
+          "A decision is delegated whose error costs more than the entire year's savings.",
+          "A model is placed in a decision that affects a person, and nobody can tell them why they were refused.",
+          "AI is used where a rule in a spreadsheet would have done, with the upkeep cost of a system nobody needed.",
+          "The project ends when enthusiasm runs out, not when someone measures that it works."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The cause",
+        "texto": "AI fits work that repeats, and most rare decisions do not repeat enough"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A model is useful when there are many similar cases and you can check whether it got them right. Think of invoice matching: thousands a month, nearly identical, each ending in a yes or a no that someone can verify. Now think of closing a plant or renegotiating with your largest customer. It happens once every few years, each case is different and there is no history to compare against. The model can write a very well-composed analysis, but nobody can tell whether it is good, and an analysis that cannot be tested only gives the appearance of rigour."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "What matters here is the second half of that sentence: you can check whether it was right. Without volume there is no way to measure, and without measuring there is no way to improve the system or switch it off when it gets worse. For those rare decisions AI works as support, for example gathering information or arguing the opposite case, but the decision stays where it was."
+      },
+      {
+        "tipo": "cita",
+        "texto": "An analysis nobody can test is not a better answer. It is a better-written one.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "Three tests rule a process out before you start: repetition, reversibility and accountability"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ask the three questions separately and in this order. One clear failure is enough to keep a process out, or to let it in only with AI as support and not as the one deciding."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Repetition",
+            "definicion": "Are there enough similar cases to know whether the system is right? If the process happens a handful of times a year, or every case differs from the last, there is no sample to measure against. The practical test is to ask how many cases came through last month and whether anyone kept how each one ended."
+          },
+          {
+            "termino": "2. Reversibility",
+            "definicion": "Can a mistake be undone at a reasonable cost? A misclassified order is fixed in minutes. A dismissal, a diagnosis or an unrecoverable payment cannot be fixed. The more a mistake costs and the less it can be reversed, the closer a person has to be to the decision, and sometimes the right answer is that AI stays out."
+          },
+          {
+            "termino": "3. Accountability",
+            "definicion": "Will someone have to explain this decision to the person affected, to a regulator or to a court? If so, and the model cannot show why it decided what it decided, the company is left without a defence. The test is simple: if a customer asks why, who answers and with what?"
+          }
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The case that gets confused",
+        "texto": "A process failing the three tests does not mean it cannot be improved, only that AI is the wrong tool"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A common misreading says that if we rule out AI we rule out improving the process. That is not so. Many processes that fail the tests are better fixed with something simpler: a written business rule, a checklist, a form that forces fields to be completed, or a change in who approves what. Traditional automation handles a stable process with clear rules well, and it is cheaper to maintain because it always behaves the same way."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That is why the committee with its twenty proposals should add a column: which non-AI alternative was considered and why it was dropped. If the column is empty, the proposal has been admired, not thought through. A healthy AI portfolio holds fewer projects than the pressure of the moment asks for, and each one can say what problem it solves that another tool would not."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take the three largest AI initiatives your company has running and put each through the three tests with the person who operates the process, not the one who pitched it. If any clearly fails the first or second, ask what would actually be lost if it stopped today."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "When should a company not use AI?",
+            "respuesta": "When the process happens so rarely that you cannot measure whether the system is right, when a mistake is costly and cannot be undone, or when the decision affects a person and the company must be able to explain why. In those cases AI can help prepare the information but should not decide. If a written rule or traditional automation is enough, it is also better not to use it."
+          },
+          {
+            "pregunta": "Which processes should not be automated with artificial intelligence?",
+            "respuesta": "Those with few cases, those that differ every time and those with serious, irreversible consequences for a person, such as hiring, dismissals, diagnoses or credit decisions without review. Also those that already work with a simple, stable rule. Automating a process like that adds upkeep cost and risk without improving the result."
+          },
+          {
+            "pregunta": "How do you know whether a process needs AI or just a rule?",
+            "respuesta": "Write down the rules the person doing it follows today. If they fit on one page and exceptions are rare, traditional automation will do. AI makes sense when the inputs vary, such as free text, differing documents or natural language, and the rules cannot be written out in full. Then add the repetition test to confirm you will be able to measure it."
+          },
+          {
+            "pregunta": "Are there decisions AI should never make alone?",
+            "respuesta": "Yes: those that significantly affect a person and cannot be reversed, and those the company must justify to a regulator or a court. AI can prepare the case, gather information and flag exceptions, but the decision needs a named owner. Where that line sits depends on the sector and the applicable regulation, and is worth checking with legal advice."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let us review together which of your processes do not need AI",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
