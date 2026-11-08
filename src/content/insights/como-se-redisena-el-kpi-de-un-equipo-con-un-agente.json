@@ -102,6 +102,19 @@
         "texto": "Ninguna de las cuatro piezas exige un sistema de medición nuevo. Exige que alguien con autoridad sobre el KPI se siente a mirar el número actual y decida, con esas cuatro preguntas delante, qué parte hay que separar antes de fijar la meta del próximo trimestre."
       },
       {
+        "tipo": "subtitulo",
+        "antetitulo": "Un ejemplo con números",
+        "texto": "Un equipo que parece resolver 300 casos por persona y resuelve unos 280."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Imagina un equipo de soporte de ocho personas que antes de tener agente cerraba 1.600 casos al mes, 200 por persona. Con el agente cierra 2.400, y el tablero dice 300 por persona. Todo el mundo lo celebra. Es un ejemplo inventado para mostrar la aritmética, no un caso real."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ahora se parte el número. Del total, el agente cerró 1.100 casos y las personas 1.300. De los 1.100 del agente, 150 vuelven en las dos semanas siguientes porque el cliente los reabre, así que solo 950 estaban resueltos de verdad. El conteo honesto es 950 más 1.300, es decir 2.250 casos, unos 280 por persona. Además, esas ocho personas ya no cierran 200 casos cada una, sino unos 160, porque los casos simples se fueron al agente y los que les quedan son los difíciles. La meta del trimestre siguiente no puede ser 300 ni 320: tiene que calcularse sobre esa mezcla, y revisarse cuando el agente asuma más casos."
+      },
+      {
         "tipo": "destacado",
         "antetitulo": "Por dónde empezar",
         "texto": "Toma el KPI de un equipo que ya trabaja con un agente y pregúntale a quien lo dirige qué parte del número la produjo el agente. Si la respuesta es «no lo sé», o llega después de armar una hoja de cálculo improvisada, ahí está la primera pieza que falta separar."
@@ -226,6 +239,19 @@
       {
         "tipo": "parrafo",
         "texto": "None of the four requires a new measurement system. It requires whoever owns the KPI to sit down with the current number and decide, with these four questions in front of them, what to separate before setting next quarter's target."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "A worked example",
+        "texto": "A team that appears to resolve 300 cases per person and really resolves about 280."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture a support team of eight people that, before any agent, closed 1,600 cases a month, 200 per person. With the agent it closes 2,400, and the dashboard says 300 per person. Everyone celebrates. The example is invented to show the arithmetic, not a real case."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Now split the number. Of the total, the agent closed 1,100 cases and the people closed 1,300. Of the agent's 1,100, 150 come back within two weeks because the customer reopens them, so only 950 were actually resolved. The honest count is 950 plus 1,300, which is 2,250 cases, about 280 per person. On top of that, those eight people no longer close 200 cases each but about 160, because the simple cases went to the agent and what remains is the hard work. Next quarter's target cannot be 300 or 320: it has to be calculated on that mix, and revisited whenever the agent takes on more cases."
       },
       {
         "tipo": "destacado",
