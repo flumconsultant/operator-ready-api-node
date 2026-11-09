@@ -1,0 +1,275 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-11-09",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "value-adoption",
+  "formato": "framework",
+  "es": {
+    "slug": "por-que-se-dispara-el-coste-de-la-ia-al-pasar-del-piloto-a-produccion",
+    "titulo": "Por qué se dispara el coste de la IA en producción",
+    "entradilla": "El piloto salió barato porque contaba con ayudas que nadie anotó como coste. Producción las retira una a una, y la factura aparece cuando el proyecto ya está aprobado.",
+    "descripcion": "El coste de una solución de IA se dispara al pasar a producción porque el piloto vivía de ayudas invisibles. Cuáles son y cómo presupuestarlas antes.",
+    "linkedin": {
+      "texto": "Un piloto de IA suele costar poco porque alguien limpia los datos a mano, un equipo pequeño revisa cada resultado y el volumen es una fracción del real.\n\nProducción retira esas tres ayudas a la vez. Lo que antes era buena voluntad pasa a ser integración, soporte y control, y entra en el presupuesto de otra área que no fue consultada.\n\nPor eso la cifra del piloto sirve para decidir si la idea funciona, y casi nunca para decidir cuánto va a costar. Desglosamos de dónde sale la diferencia y qué conviene pedir antes de aprobar el paso.",
+      "hashtags": ["IA", "Presupuesto", "Operaciones"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Piensa en un piloto de IA para clasificar solicitudes de clientes. Durante ocho semanas funciona bien, cuesta poco y el comité aprueba el paso a producción con el mismo presupuesto en la cabeza. Tres meses después, la cifra es varias veces mayor y nadie recuerda haber aprobado nada que lo explique."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La razón no es que el proveedor haya subido el precio ni que el proyecto se haya hecho mal. El piloto costaba poco porque se apoyaba en ayudas que no figuran en ninguna partida: alguien preparaba los datos a mano, un equipo pequeño y atento revisaba cada resultado, y el volumen era una fracción del real. Producción retira esas tres ayudas a la vez."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Por eso la cifra del piloto responde bien a una pregunta, si la idea funciona, y mal a otra, cuánto va a costar operarla. Confundirlas es lo que hace que el sobrecoste parezca una sorpresa cuando en realidad era previsible."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Por qué una solución de IA cuesta mucho más en producción que en el piloto?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Porque el piloto se mide en una situación protegida y producción en una real. En la protegida, los casos son los típicos, los datos están ordenados y hay personas dedicadas a que salga bien. En la real, llegan los casos raros, los datos vienen como vienen y esas personas vuelven a su trabajo. Lo que ellas hacían por voluntad hay que convertirlo en sistema, y un sistema se paga."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "La factura de uso crece más que el volumen, porque los casos difíciles consumen más cómputo y más intentos que los típicos con los que se probó.",
+          "Aparece un equipo de integración que el piloto no necesitó, porque la herramienta pasa a leer y escribir en los sistemas donde vive la operación.",
+          "Los datos que alguien limpiaba a mano pasan a necesitar un proceso permanente, con dueño y con coste propio.",
+          "Las excepciones dejan de resolverse en un chat y necesitan una cola, un responsable y un criterio de escalamiento.",
+          "Seguridad, jurídico y auditoría entran por primera vez, y sus requisitos no se pidieron al principio porque nadie los había invitado."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Primer apoyo",
+        "texto": "El volumen real no escala en línea recta, escala hacia los casos difíciles"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "En el piloto se prueba con una muestra, y una muestra se compone sobre todo de casos corrientes. En producción llega todo: el cliente que escribe en tres idiomas, el documento escaneado torcido, la petición que mezcla dos temas. Esos casos son pocos en número y caros en consumo, porque el modelo necesita más contexto, más pasos o más reintentos para resolverlos. Si el presupuesto se calcula multiplicando el coste medio del piloto por el volumen anual, se subestima justo la parte que más crece."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Segundo apoyo",
+        "texto": "Lo que el piloto hacía a mano pasa a ser un sistema con dueño"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Un piloto casi siempre se alimenta de un archivo que alguien preparó, con las columnas bien nombradas y los duplicados quitados. Esa persona no figura en el coste del proyecto porque lo hizo entre otras tareas. En producción, el mismo trabajo tiene que ocurrir cada día, sobre datos que cambian, y alguien debe responder cuando falla. Lo mismo pasa con la integración: conectar la herramienta con el sistema de gestión, con los permisos correctos y con un plan para cuando ese sistema cambie, es trabajo de ingeniería que el piloto esquivó."
+      },
+      {
+        "tipo": "cita",
+        "texto": "El piloto demuestra que la idea funciona. El coste de producción es lo que cuesta que siga funcionando sin las personas que lo sostenían por voluntad.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Tercer apoyo",
+        "texto": "Producción obliga a pagar los controles que el piloto aplazó"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Un piloto con datos de prueba y diez usuarios puede saltarse conversaciones que producción no permite: dónde se guardan los datos de clientes, quién puede ver las respuestas, qué se registra para poder revisar una decisión, qué ocurre si el servicio se cae un lunes por la mañana. Cada una de esas preguntas tiene un coste, y llega tarde, cuando el cronograma ya está comprometido y cualquier retraso se paga también."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "¿Qué conviene estimar antes de aprobar el paso a producción?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Estas cuatro estimaciones se piden antes de aprobar el paso, no después de la primera factura. Si falta alguna, la cifra del piloto sigue siendo un dato sobre la idea y todavía no es un presupuesto."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Coste por caso difícil",
+            "definicion": "Cuánto consume un caso complejo frente a uno típico. Se mide en el piloto separando los casos por dificultad, y se proyecta con la mezcla real de la operación, no con la media."
+          },
+          {
+            "termino": "Trabajo manual del piloto",
+            "definicion": "Qué tareas hicieron personas sin que figuraran como coste: preparar datos, revisar resultados, resolver excepciones. Cada una se convierte en una partida con dueño."
+          },
+          {
+            "termino": "Integración y soporte",
+            "definicion": "Con qué sistemas se conecta, quién lo mantiene cuando cambian y quién atiende una incidencia fuera del horario del proyecto."
+          },
+          {
+            "termino": "Controles exigibles",
+            "definicion": "Qué piden seguridad, jurídico y auditoría antes de operar con datos reales, y cuánto cuesta cumplirlo antes de la fecha de lanzamiento."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Antes de la próxima aprobación, pide que el equipo anote todo lo que una persona hizo en el piloto sin que nadie se lo encargara formalmente. Esa lista es el primer borrador del coste de producción que todavía no tiene dueño."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Por qué se dispara el coste de una solución de IA al pasar del piloto a producción?",
+            "respuesta": "Porque el piloto se apoya en ayudas que no figuran como coste: datos preparados a mano, un equipo pequeño revisando cada resultado y un volumen reducido. En producción esas ayudas desaparecen y se convierten en integración, soporte, controles y consumo de cómputo. Ninguna estaba en el presupuesto del piloto, y por eso la diferencia parece una sorpresa."
+          },
+          {
+            "pregunta": "¿Sirve el coste del piloto para estimar el coste de producción?",
+            "respuesta": "Solo en parte. El piloto sirve para decidir si la idea funciona, pero su coste por caso suele ser menor que el real, porque se prueba con casos típicos y con personas dedicadas. Para estimar producción hay que separar los casos por dificultad, listar el trabajo manual que hubo y sumar integración y controles."
+          },
+          {
+            "pregunta": "¿Quién debería presupuestar el paso del piloto a producción?",
+            "respuesta": "El área de negocio que va a operar la solución, junto con tecnología, seguridad y jurídico. Si lo presupuesta solo el equipo del piloto, quedan fuera las partidas que pagan otras áreas, y esas aparecen más tarde como gasto sin dueño."
+          },
+          {
+            "pregunta": "¿Cómo se evita que el coste de producción sorprenda al comité?",
+            "respuesta": "Pidiendo cuatro estimaciones antes de aprobar el paso: coste por caso difícil, trabajo manual que hizo el piloto, integración con soporte y controles exigibles. Si nadie puede poner una cifra a alguna de ellas, el comité todavía no tiene un presupuesto sino una hipótesis."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Estimemos el coste real de llevar tu piloto a producción",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "why-ai-costs-jump-when-a-pilot-goes-into-production",
+    "titulo": "Why AI Costs Jump When a Pilot Goes Live",
+    "entradilla": "The pilot was cheap because it leaned on help nobody booked as a cost. Production takes that help away one piece at a time, and the bill arrives after the project is approved.",
+    "descripcion": "AI costs jump in production because the pilot ran on invisible help. Which parts they are, and how to budget for them before you approve the move.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Picture an AI pilot that sorts customer requests. For eight weeks it works well and costs little, and the committee approves the move to production with the same budget in mind. Three months later the figure is several times higher, and nobody remembers approving anything that explains it."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The reason is not that the vendor raised its price or that the project was badly run. The pilot was cheap because it leaned on help that appears in no budget line: someone prepared the data by hand, a small and attentive team reviewed every result, and volume was a fraction of the real thing. Production removes all three at once."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That is why the pilot figure answers one question well, does the idea work, and another badly, what will it cost to run. Mixing them up is what makes an overrun look like a surprise when it was predictable all along."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "Why does an AI solution cost so much more in production than in the pilot?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Because the pilot is measured in a protected setting and production in a real one. In the protected one the cases are typical, the data is tidy, and people are dedicated to making it work. In the real one the odd cases arrive, the data comes as it comes, and those people go back to their jobs. What they did out of goodwill has to become a system, and a system has to be paid for."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The usage bill grows faster than volume, because hard cases consume more compute and more attempts than the typical ones the pilot was tested on.",
+          "An integration team appears that the pilot never needed, because the tool now reads from and writes to the systems where the operation lives.",
+          "The data someone cleaned by hand now needs a permanent process, with an owner and a cost of its own.",
+          "Exceptions stop being settled in a chat and need a queue, an owner and an escalation rule.",
+          "Security, legal and audit show up for the first time, and their requirements were never raised at the start because nobody had invited them."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "First support",
+        "texto": "Real volume does not scale in a straight line, it scales toward the hard cases"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A pilot is tested on a sample, and a sample is mostly ordinary cases. Production gets everything: the customer who writes in three languages, the scanned document that came in crooked, the request that mixes two topics. Those cases are few in number and expensive in consumption, because the model needs more context, more steps or more retries to resolve them. If the budget multiplies the pilot's average cost by annual volume, it underestimates exactly the part that grows the most."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Second support",
+        "texto": "What the pilot did by hand becomes a system with an owner"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A pilot is almost always fed by a file somebody prepared, with columns properly named and duplicates removed. That person is not in the project cost because they did it between other tasks. In production the same work has to happen every day, on data that keeps changing, and someone must answer when it breaks. Integration works the same way: connecting the tool to the management system, with the right permissions and a plan for when that system changes, is engineering work the pilot sidestepped."
+      },
+      {
+        "tipo": "cita",
+        "texto": "The pilot shows the idea works. The cost of production is what it takes for it to keep working without the people who were holding it up out of goodwill.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Third support",
+        "texto": "Production forces you to pay for the controls the pilot postponed"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A pilot with test data and ten users can skip conversations production will not allow: where customer data is stored, who can see the answers, what gets logged so a decision can be reviewed, what happens if the service goes down on a Monday morning. Each of those questions carries a cost, and it arrives late, when the schedule is already committed and every delay costs money too."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "What should you estimate before approving the move to production?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "These four estimates are requested before approving the move, not after the first invoice. If one is missing, the pilot figure is still a fact about the idea and not yet a budget."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Cost per hard case",
+            "definicion": "How much a complex case consumes compared with a typical one. It is measured in the pilot by splitting cases by difficulty, and projected with the real mix of the operation, not the average."
+          },
+          {
+            "termino": "The pilot's manual work",
+            "definicion": "Which tasks people did without them showing up as cost: preparing data, reviewing results, settling exceptions. Each becomes a line item with an owner."
+          },
+          {
+            "termino": "Integration and support",
+            "definicion": "Which systems it connects to, who maintains it when they change, and who handles an incident outside the project's working hours."
+          },
+          {
+            "termino": "Required controls",
+            "definicion": "What security, legal and audit ask for before operating on real data, and what it costs to comply before the launch date."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Before the next approval, ask the team to list everything a person did in the pilot without anyone formally assigning it. That list is the first draft of the production cost that has no owner yet."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Why does the cost of an AI solution jump when it moves from pilot to production?",
+            "respuesta": "Because the pilot leans on help that never shows up as cost: hand-prepared data, a small team reviewing every result, and limited volume. In production that help disappears and turns into integration, support, controls and compute usage. None of it was in the pilot budget, which is why the gap feels like a surprise."
+          },
+          {
+            "pregunta": "Can the pilot's cost be used to estimate the cost of production?",
+            "respuesta": "Only in part. The pilot tells you whether the idea works, but its cost per case is usually lower than the real one, since it is tested on typical cases with dedicated people. To estimate production, split cases by difficulty, list the manual work involved and add integration and controls."
+          },
+          {
+            "pregunta": "Who should budget for the move from pilot to production?",
+            "respuesta": "The business area that will run the solution, together with technology, security and legal. If only the pilot team does it, the line items paid by other functions are left out, and they surface later as spending with no owner."
+          },
+          {
+            "pregunta": "How do you stop production costs from surprising the committee?",
+            "respuesta": "Ask for four estimates before approving the move: cost per hard case, the manual work the pilot relied on, integration with support, and required controls. If nobody can put a figure on one of them, the committee has a hypothesis, not a budget."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's estimate what it will really cost to take your pilot live",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
