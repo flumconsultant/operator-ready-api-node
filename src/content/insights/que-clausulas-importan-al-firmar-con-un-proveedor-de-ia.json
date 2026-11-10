@@ -102,6 +102,25 @@
         "texto": "Hay un orden que ayuda. La primera y la tercera definen cuánto cuesta irse, así que pesan más cuanto más tiempo se vaya a usar el servicio. La segunda y la cuarta definen cuánto cuesta quedarse cuando algo cambia o falla. La quinta es la que más rápido se queda desactualizada, y por eso conviene pedir el derecho a ser avisado y no solo una lista inicial."
       },
       {
+        "tipo": "subtitulo",
+        "antetitulo": "En palabras de compras",
+        "texto": "Cada cláusula se convierte en una frase que el proveedor tiene que aceptar por escrito"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Quien compra no necesita leer el contrato como un abogado. Necesita saber qué frase buscar en él y qué pedir cuando no está. Estas son las cinco, tal como se plantean en una llamada con el proveedor."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Datos: «Nada de lo que enviamos, ni lo que se deriva de ello, se usa para entrenar o mejorar sus modelos». Si la respuesta es «depende del plan», pide que el plan quede escrito en el contrato.",
+          "Cambios del modelo: «Nos avisan con tiempo antes de sustituir el modelo, podemos mantener la versión actual durante un plazo y, si el cambio rompe un proceso, salimos sin penalización». Tres compromisos en una sola frase, y los tres se pueden negociar por separado.",
+          "Salida: «Al terminar, nos entregan datos, instrucciones, ajustes y registros de uso en un formato que otro sistema pueda leer». Pregunta también cuánto tardan y si tiene coste.",
+          "Responsabilidad: «El tope de indemnización no es el mismo para una caída del servicio que para un daño causado por una respuesta errónea del modelo». Si el tope es único, pregunta por qué.",
+          "Subencargados: «La lista está dentro del contrato, nos avisan antes de añadir a alguien y podemos objetar». Una URL que el proveedor edita cuando quiere no cuenta como lista."
+        ]
+      },
+      {
         "tipo": "destacado",
         "antetitulo": "Por dónde empezar",
         "texto": "Toma el contrato del proveedor de IA más importante que ya tienes firmado y busca en él las cinco respuestas. Marca las que no encuentres. Esa lista es la agenda de la próxima renovación, y es más útil que cualquier descuento que puedas pedir hoy."
@@ -124,6 +143,10 @@
           {
             "pregunta": "¿Quién responde si la IA del proveedor genera un resultado erróneo que causa un daño?",
             "respuesta": "Frente al cliente final y frente al regulador, casi siempre responde la empresa que usó el resultado. Lo que el contrato define es si luego puede recuperar parte del coste frente al proveedor. Para eso hay que revisar si el tope de indemnización distingue una caída del servicio de un daño causado por contenido erróneo, y si hay alguna cobertura para reclamaciones de propiedad intelectual sobre lo generado."
+          },
+          {
+            "pregunta": "¿Qué es un subencargado y por qué importa en un contrato de IA?",
+            "respuesta": "Un subencargado es cualquier tercero que el proveedor usa para prestar el servicio y que puede acceder a los datos de la empresa: el proveedor del modelo base, la nube o un servicio de revisión humana. Importa porque la empresa firma con el proveedor, pero sus datos pasan por esos terceros. Conviene que el contrato incluya la lista, que obligue a avisar antes de añadir uno y que dé al cliente derecho a objetar."
           }
         ]
       },
@@ -228,6 +251,25 @@
         "texto": "There is an order that helps. The first and the third set what it costs to leave, so they weigh more the longer the service will be used. The second and the fourth set what it costs to stay when something changes or fails. The fifth goes stale fastest, which is why it pays to ask for the right to be notified and not just an initial list."
       },
       {
+        "tipo": "subtitulo",
+        "antetitulo": "In procurement terms",
+        "texto": "Each clause becomes one sentence the vendor has to accept in writing"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A buyer does not need to read the contract like a lawyer. A buyer needs to know which sentence to look for and what to ask for when it is missing. Here are the five, phrased the way they come up on a call with the vendor."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Data: «Nothing we send, and nothing derived from it, is used to train or improve your models». If the answer is «it depends on the plan», ask for the plan to be written into the contract.",
+          "Model changes: «You give us notice before replacing the model, we can keep the current version for a set period, and if the change breaks a process we leave without penalty». Three commitments in one sentence, and each can be negotiated on its own.",
+          "Exit: «When we finish, you hand over our data, instructions, settings and usage logs in a format another system can read». Ask how long it takes and whether it costs anything.",
+          "Liability: «The indemnity cap is not the same for a service outage as for harm caused by a wrong answer from the model». If there is a single cap, ask why.",
+          "Subprocessors: «The list sits inside the contract, you tell us before adding anyone, and we can object». A URL the vendor edits whenever it likes is not a list."
+        ]
+      },
+      {
         "tipo": "destacado",
         "antetitulo": "Where to start",
         "texto": "Take the contract of the most important AI vendor you have already signed and look for the five answers in it. Mark the ones you can't find. That list is the agenda for the next renewal, and it is more useful than any discount you could ask for today."
@@ -250,6 +292,10 @@
           {
             "pregunta": "Who is responsible if the vendor's AI produces a wrong result that causes harm?",
             "respuesta": "In front of the end customer and the regulator, it is almost always the company that used the result. What the contract defines is whether it can later recover part of the cost from the vendor. For that, check whether the liability cap separates an outage from harm caused by wrong content, and whether there is any cover for intellectual property claims over what is generated."
+          },
+          {
+            "pregunta": "What is a subprocessor and why does it matter in an AI contract?",
+            "respuesta": "A subprocessor is any third party the vendor uses to deliver the service and that can reach the company's data: the base model provider, the cloud, or a human review service. It matters because the company signs with the vendor, but its data passes through those third parties. The contract should include the list, require notice before one is added, and give the customer a right to object."
           }
         ]
       },
