@@ -1,0 +1,283 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-11-11",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "agentic-work",
+  "formato": "framework",
+  "es": {
+    "slug": "cuando-basta-rpa-y-cuando-hace-falta-un-agente-de-ia",
+    "titulo": "¿Basta con RPA o hace falta un agente de IA?",
+    "entradilla": "Basta RPA cuando la regla se puede escribir antes de que llegue el caso. Hace falta un agente cuando cada caso hay que leerlo para saber qué es. La mayoría de los procesos tiene las dos partes, y el error está en usar una sola herramienta para todo.",
+    "descripcion": "Basta RPA si la regla puede escribirse antes del caso; hace falta un agente de IA si hay que interpretar la entrada. Cómo decidirlo proceso a proceso.",
+    "linkedin": {
+      "texto": "Muchas empresas están sustituyendo bots de RPA que funcionaban por agentes de IA que cuestan más por transacción y explican peor lo que hicieron.\n\nOtras siguen escribiendo reglas para casos que no admiten reglas, y una persona resuelve a mano la cola de excepciones que el bot no entiende.\n\nLas dos se equivocan en lo mismo: eligen la tecnología antes de mirar el caso. Proponemos cuatro preguntas para decidir, tramo por tramo, dónde va cada una.",
+      "hashtags": ["IA", "Automatización", "Operaciones"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Piensa en el área de cuentas por pagar de una empresa mediana. Los proveedores grandes envían factura electrónica, con campos fijos y un número de orden de compra. Los pequeños mandan un PDF escaneado, una foto tomada con el celular o un correo que dice «adjunto lo del mes pasado, con el descuento que acordamos». Las dos llegan al mismo buzón y terminan en el mismo pago."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Para la primera, un bot de RPA es la herramienta correcta: lee campos que siempre están en el mismo sitio, cruza la factura con la orden de compra y la registra. Hace lo mismo cada vez, cuesta poco por transacción y deja un rastro que cualquier auditor puede seguir. Para la segunda, ese mismo bot se detiene en el primer documento que no reconoce, y el caso cae en una cola que alguien revisa a mano."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La respuesta corta a la pregunta es esta: basta RPA cuando la regla se puede escribir antes de que llegue el caso, y hace falta un agente de IA cuando cada caso hay que leerlo para saber qué es. Casi ningún proceso real es de un solo tipo. Por eso la decisión útil no es RPA o agente para todo el proceso, sino cuál de los dos en cada tramo."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El síntoma",
+        "texto": "¿Cuándo basta una automatización tradicional (RPA) y cuándo hace falta un agente de IA?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por cómo se nota que se eligió mal. La conversación sobre agentes ha llevado a muchas empresas a dos errores opuestos: sustituir bots que funcionaban por algo más caro y menos predecible, o seguir escribiendo reglas para casos que nunca las van a admitir. Los dos dejan señales visibles en la operación antes de llegar a ningún informe."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "La cola de excepciones del bot crece cada mes y la resuelve una persona a mano, que en la práctica es quien hace el proceso.",
+          "El bot se rompe cada vez que un proveedor cambia el formato de su documento o un sistema cambia una pantalla.",
+          "Un agente resuelve un trabajo que siempre tiene la misma respuesta, y se paga interpretación donde no hay nada que interpretar.",
+          "Auditoría pide reconstruir por qué se aprobó un pago concreto y la única explicación disponible es lo que el modelo consideró en ese momento.",
+          "Nadie sabe decir cuánto cuesta procesar un caso, porque el consumo del agente varía con cada entrada."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Primer apoyo",
+        "texto": "RPA gana donde la regla existe antes que el caso"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Un bot de RPA ejecuta pasos que alguien escribió: abrir esta pantalla, copiar este campo, comparar con este otro, registrar. Su valor está en que no decide nada. Si la entrada tiene siempre la misma forma y la decisión se puede expresar como una condición, la regla escrita es más barata, más rápida y más fácil de auditar que cualquier modelo. Una conciliación bancaria con formatos estables, el alta de un empleado en cinco sistemas o la carga diaria de pedidos desde un portal son buenos ejemplos. Meter un agente ahí añade coste variable y una pequeña probabilidad de error donde antes había cero."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Segundo apoyo",
+        "texto": "El agente gana donde la entrada no tiene forma fija"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Un agente de IA sirve cuando el primer paso del proceso es entender qué llegó. El correo del proveedor pequeño no tiene campos: hay que deducir a qué orden de compra se refiere, qué descuento menciona y si el importe cuadra con lo acordado. Ninguna regla escrita de antemano cubre todas las formas en que alguien puede redactar eso. Aquí RPA no falla por mala configuración, falla por diseño: está hecho para no interpretar. Lo que el agente aporta es justo esa lectura, y su coste solo se justifica cuando la variedad de la entrada es real y frecuente."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Basta RPA cuando la regla se puede escribir antes de que llegue el caso. Hace falta un agente cuando cada caso hay que leerlo para saber qué es.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Tercer apoyo",
+        "texto": "La frontera la marcan el coste del error y la trazabilidad, no la tecnología"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Aun cuando la entrada sea variable, hay decisiones que deben poder reproducirse idénticas ante un auditor o un regulador: aprobar un pago, conceder un crédito, aplicar una penalización. En esos tramos lo sensato es repartir el trabajo. El agente lee e interpreta, y entrega datos estructurados. La regla escrita valida y decide. En el ejemplo de cuentas por pagar, el agente extrae del correo la orden de compra y el descuento, y el mismo bot que procesa las facturas electrónicas comprueba que el importe cuadra y registra el pago. Si no cuadra, el caso va a una persona con todo el contexto ya preparado. Así el proceso gana la flexibilidad del agente sin perder la trazabilidad de la regla."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Aquí lo que importa es que la pregunta se hace tramo por tramo. Un proceso de punta a punta suele tener una entrada desordenada, un núcleo de reglas estables y una salida que debe quedar registrada. Elegir una sola herramienta para las tres partes obliga a pagar de más en una o a romper otra."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "¿Qué preguntas deciden entre RPA y un agente en cada tramo?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Estas cuatro preguntas se responden por tramo, no por proceso, y con alguien de la operación en la mesa. Si la respuesta a las dos primeras es sí, el tramo es de RPA. Si alguna de ellas es no, el agente tiene sentido, y las dos últimas dicen cuánto control hay que ponerle alrededor."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "¿Se puede escribir la regla antes del caso?",
+            "definicion": "Si quien hace hoy el trabajo puede explicar la decisión como una condición, sin decir «depende», el tramo admite una regla. Si cada explicación termina en un ejemplo distinto, no la admite."
+          },
+          {
+            "termino": "¿La entrada llega siempre con la misma forma?",
+            "definicion": "Campos fijos, pantallas estables y formatos acordados favorecen a RPA. Texto libre, documentos de muchos orígenes y formatos que cambian sin aviso favorecen a un agente."
+          },
+          {
+            "termino": "¿Cuánto cuesta un error y quién lo detecta?",
+            "definicion": "Si un error es barato y se detecta en el paso siguiente, el agente puede actuar solo. Si es caro o nadie lo vería hasta el cierre, el agente propone y una regla o una persona confirma."
+          },
+          {
+            "termino": "¿Hay que reproducir la decisión idéntica?",
+            "definicion": "Cuando un auditor o un regulador puede pedir por qué se decidió algo, la decisión final la toma una regla escrita. El agente puede preparar los datos, pero no debe ser el único registro de la razón."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Pide la cola de excepciones de tus bots de RPA del último trimestre y clasifícala por motivo. Las excepciones que vienen de entradas que el bot no supo leer son los primeros candidatos para un agente. Las que vienen de reglas mal escritas se arreglan corrigiendo la regla, sin cambiar de tecnología."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cuándo basta una automatización tradicional (RPA) y cuándo hace falta un agente de IA?",
+            "respuesta": "Basta RPA cuando la decisión se puede escribir como una regla antes de que llegue el caso y la entrada tiene siempre la misma forma. Hace falta un agente de IA cuando cada caso hay que leerlo e interpretarlo para saber qué es, como un correo de texto libre o un documento distinto cada vez. En la mayoría de los procesos conviven los dos tipos de tramo, así que la decisión se toma tramo por tramo."
+          },
+          {
+            "pregunta": "¿Conviene sustituir los bots de RPA por agentes de IA?",
+            "respuesta": "Solo en los tramos donde el bot falla porque la entrada es variable. Donde el bot funciona, un agente añade coste variable por transacción y una probabilidad de error que antes no existía, sin aportar nada. La mejor señal de dónde sustituir es la cola de excepciones del bot: lo que se acumula ahí por entradas que no supo leer es lo que un agente puede resolver."
+          },
+          {
+            "pregunta": "¿Se pueden combinar RPA y agentes de IA en un mismo proceso?",
+            "respuesta": "Sí, y suele ser la mejor opción. El agente se encarga de leer e interpretar la entrada desordenada y la convierte en datos estructurados. Después, una regla escrita valida esos datos y toma la decisión final, con el mismo rastro auditable de siempre. Los casos que no cuadran pasan a una persona con el contexto ya preparado."
+          },
+          {
+            "pregunta": "¿Es más caro un agente de IA que un bot de RPA?",
+            "respuesta": "Por transacción, normalmente sí, y además su coste varía según lo complejo que sea cada caso, mientras que el de un bot es casi fijo. La comparación justa no es solo de tecnología: hay que sumar al bot el tiempo de las personas que resuelven a mano sus excepciones. Si esa cola es grande, el agente puede salir más barato en ese tramo concreto."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos qué tramos de tus procesos son de RPA y cuáles de un agente",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "when-is-rpa-enough-and-when-do-you-need-an-ai-agent",
+    "titulo": "Is RPA Enough, or Do You Need an AI Agent?",
+    "entradilla": "RPA is enough when the rule can be written before the case arrives. You need an agent when each case has to be read to know what it is. Most processes contain both, and the mistake is using one tool for all of it.",
+    "descripcion": "RPA is enough when the rule can be written before the case arrives; an AI agent is needed when the input must be interpreted. How to decide step by step.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Picture the accounts payable team at a mid-sized company. Large suppliers send e-invoices with fixed fields and a purchase order number. Small ones send a scanned PDF, a phone photo, or an email that says \"attached is last month's, with the discount we agreed\". Both land in the same inbox and end up as the same payment."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "For the first kind, an RPA bot is the right tool. It reads fields that are always in the same place, matches the invoice to the purchase order and books it. It does the same thing every time, costs little per transaction and leaves a trail any auditor can follow. For the second kind, that same bot stops at the first document it does not recognise, and the case drops into a queue someone works through by hand."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "So the short answer is this: RPA is enough when the rule can be written before the case arrives, and you need an AI agent when each case has to be read to know what it is. Hardly any real process is purely one or the other. The useful decision is not RPA or agent for the whole process, but which one for each step."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The symptom",
+        "texto": "When is traditional automation (RPA) enough, and when do you need an AI agent?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Start with how you can tell the wrong choice was made. The excitement around agents has pushed many companies into two opposite mistakes: replacing bots that worked with something more expensive and less predictable, or writing ever more rules for cases that will never fit a rule. Both leave visible marks on the operation long before they show up in a report."
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The bot's exception queue grows every month and one person clears it by hand, which in practice means that person is running the process.",
+          "The bot breaks every time a supplier changes its document layout or a system changes a screen.",
+          "An agent handles work that always has the same answer, so you are paying for interpretation where there is nothing to interpret.",
+          "Audit asks why a specific payment was approved and the only explanation on file is what the model weighed at the time.",
+          "Nobody can say what it costs to process one case, because the agent's consumption changes with every input."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "First support",
+        "texto": "RPA wins where the rule exists before the case does"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "An RPA bot carries out steps someone wrote down: open this screen, copy this field, compare it with that one, book it. Its value is that it decides nothing. If the input always has the same shape and the decision can be expressed as a condition, a written rule is cheaper, faster and easier to audit than any model. Bank reconciliation with stable formats, setting up a new hire across five systems, or loading daily orders from a portal are good examples. Putting an agent there adds a variable cost and a small chance of error where there used to be none."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Second support",
+        "texto": "The agent wins where the input has no fixed shape"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "An AI agent earns its place when the first step of the process is working out what just arrived. The small supplier's email has no fields. Someone has to infer which purchase order it refers to, what discount it mentions and whether the amount matches what was agreed. No rule written in advance covers every way a person might phrase that. RPA does not fail here because it was set up badly. It fails by design, because it was built not to interpret. What the agent brings is exactly that reading, and its cost is only justified when the variety in the input is real and frequent."
+      },
+      {
+        "tipo": "cita",
+        "texto": "RPA is enough when the rule can be written before the case arrives. You need an agent when each case has to be read to know what it is.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Third support",
+        "texto": "The cost of an error and the need for an audit trail set the boundary, not the technology"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Even when the input varies, some decisions have to be reproducible exactly for an auditor or a regulator: approving a payment, granting credit, applying a penalty. In those steps the sensible move is to split the work. The agent reads, interprets and hands over structured data. A written rule checks it and decides. In the accounts payable example, the agent pulls the purchase order and the discount out of the email, and the same bot that handles e-invoices checks that the amount matches and books the payment. If it does not match, the case goes to a person with all the context already laid out. The process gets the agent's flexibility without giving up the rule's audit trail."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "What matters is that the question gets asked step by step. An end-to-end process usually has a messy intake, a core of stable rules and an output that has to be recorded. Picking a single tool for all three means overpaying in one place or breaking something in another."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "Which questions decide between RPA and an agent at each step?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Answer these four questions for each step, not for the whole process, and with someone from the operation in the room. If the first two are yes, the step belongs to RPA. If either is no, an agent makes sense, and the last two tell you how much control to put around it."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "Can the rule be written before the case?",
+            "definicion": "If the person doing the work today can explain the decision as a condition, without saying \"it depends\", the step takes a rule. If every explanation ends in a different example, it does not."
+          },
+          {
+            "termino": "Does the input always arrive in the same shape?",
+            "definicion": "Fixed fields, stable screens and agreed formats favour RPA. Free text, documents from many sources and formats that change without notice favour an agent."
+          },
+          {
+            "termino": "What does an error cost, and who catches it?",
+            "definicion": "If an error is cheap and gets caught at the next step, the agent can act alone. If it is expensive or nobody would see it until month-end close, the agent proposes and a rule or a person confirms."
+          },
+          {
+            "termino": "Does the decision need to be reproduced exactly?",
+            "definicion": "When an auditor or regulator can ask why something was decided, a written rule makes the final call. The agent can prepare the data, but it should not be the only record of the reason."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Pull last quarter's exception queue from your RPA bots and sort it by cause. Exceptions caused by inputs the bot could not read are your first candidates for an agent. Those caused by badly written rules are fixed by correcting the rule, with no change of technology."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "When is traditional automation (RPA) enough, and when do you need an AI agent?",
+            "respuesta": "RPA is enough when the decision can be written as a rule before the case arrives and the input always has the same shape. You need an AI agent when each case has to be read and interpreted to know what it is, such as a free-text email or a document that differs every time. Most processes contain both kinds of step, so the decision is made step by step."
+          },
+          {
+            "pregunta": "Should RPA bots be replaced with AI agents?",
+            "respuesta": "Only in the steps where the bot fails because the input varies. Where the bot works, an agent adds a variable cost per transaction and a chance of error that did not exist before, with nothing gained. The best guide to where to replace is the bot's exception queue: whatever piles up there because the bot could not read the input is what an agent can handle."
+          },
+          {
+            "pregunta": "Can RPA and AI agents be combined in the same process?",
+            "respuesta": "Yes, and it is often the best option. The agent reads and interprets the messy input and turns it into structured data. A written rule then checks that data and makes the final decision, with the same audit trail as before. Cases that do not match go to a person with the context already prepared."
+          },
+          {
+            "pregunta": "Is an AI agent more expensive than an RPA bot?",
+            "respuesta": "Per transaction it usually is, and its cost also varies with how complex each case is, while a bot's cost is close to fixed. A fair comparison goes beyond the technology: add to the bot the time people spend clearing its exceptions by hand. If that queue is large, the agent can come out cheaper for that particular step."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's map which steps of your processes belong to RPA and which to an agent",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
