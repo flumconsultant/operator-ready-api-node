@@ -1,0 +1,299 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-11-13",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "value-adoption",
+  "formato": "framework",
+  "es": {
+    "slug": "como-se-negocia-un-contrato-de-ia-que-cobra-por-uso",
+    "titulo": "¿Cómo negociar un contrato de IA que cobra por uso?",
+    "entradilla": "Un contrato de IA que cobra por uso no se gana bajando el precio por unidad. Se gana decidiendo quién absorbe la variación del consumo: qué cuenta como unidad, cuánto se compromete, dónde está el techo y quién ve la factura antes de que llegue.",
+    "descripcion": "Un contrato de IA por uso se negocia fijando quién absorbe la variación: qué cuenta como unidad, cuánto se compromete, el techo y la visibilidad del gasto.",
+    "linkedin": {
+      "texto": "Compras sabe negociar una licencia: se cuentan personas, se pide descuento por volumen y se firma por tres años.\n\nUn contrato de IA que cobra por uso cambia la variable. El precio por unidad importa menos que quién absorbe la variación del consumo, y esa parte casi nunca se discute en la mesa.\n\nCuatro términos que deciden la factura antes de firmar.",
+      "hashtags": ["IA", "Compras", "Finanzas"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Un contrato de IA que cobra por uso no se gana bajando el precio por unidad. Se gana decidiendo quién absorbe la variación del consumo: qué cuenta como unidad, cuánto se compromete, dónde está el techo y quién ve la factura antes de que llegue."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Durante veinte años, comprar software empresarial fue una negociación conocida. Se contaban personas, se pedía descuento por volumen, se firmaba por tres años y el presupuesto quedaba cerrado. Compras y finanzas aprendieron a hacerlo bien porque la variable era estable: el número de usuarios cambia poco de un trimestre a otro."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Con la IA, cada vez más proveedores cobran por lo que se consume: créditos, tokens, conversaciones atendidas, documentos procesados, acciones de un agente. La mesa de negociación sigue haciendo lo de siempre, que es pelear el precio unitario. Pero en un contrato por uso la factura depende sobre todo de cuántas unidades se consumen y de cómo se definen, y ninguna de esas dos cosas la controla quien negoció el precio. Por eso la pregunta útil es otra: si el consumo sale el doble de lo previsto, ¿quién paga la diferencia y cuándo se entera?"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La pregunta",
+        "texto": "¿Qué cambia al negociar un contrato de IA que cobra por uso y no por licencia?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cambia quién tiene el riesgo. En una licencia, el proveedor asume que algunos usuarios usarán poco y otros mucho, y lo promedia en el precio. En un contrato por uso ese riesgo pasa a la empresa, y llega por tres vías que el precio unitario no recoge. Estas son las señales de que un contrato se está negociando con la lógica de la licencia:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "La comparación de ofertas tiene una fila de precio por unidad y ninguna que diga qué es exactamente una unidad en cada proveedor.",
+          "El presupuesto anual se calculó multiplicando el consumo del piloto por el número de áreas que lo van a usar.",
+          "El contrato incluye un compromiso de consumo mínimo con descuento, y nadie ha preguntado qué pasa con los créditos que no se usen.",
+          "La factura llega como una sola cifra mensual y no permite saber qué proceso, equipo o agente la generó.",
+          "No hay ningún límite que detenga el gasto: si un proceso se dispara un fin de semana, la primera noticia es la factura."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Primer apoyo",
+        "texto": "La unidad de cobro es una definición del proveedor, y puede cambiar sin que cambie el precio"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Un crédito o un token parecen unidades objetivas, pero lo que cuesta una tarea depende de cuántas de ellas consume, y eso lo decide el proveedor. Si actualiza el modelo y el nuevo razona en más pasos, la misma tarea consume más unidades al mismo precio. Si redefine qué cuenta como «conversación resuelta», el volumen facturable cambia sin que el cliente haga nada distinto. Piensa en un área de atención al cliente que firma un agente cobrado por conversación. A los seis meses el proveedor decide que una conversación que se retoma al día siguiente cuenta como dos. Nadie ha subido el precio y la factura crece."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Por eso lo primero que se negocia es la definición, por escrito, y una equivalencia fija entre unidad y tarea durante un plazo. Si el proveedor no puede comprometer eso, al menos debe comprometer un aviso previo y el derecho a salir sin penalización si la conversión cambia."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Segundo apoyo",
+        "texto": "El volumen lo decide la operación, y crece justo en lo que funciona"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "En una licencia, que una herramienta tenga éxito no cambia la factura. En un contrato por uso, sí: el proceso que mejor funciona es el que más se usa, y por tanto el que más cuesta. Esto pone a finanzas en una posición incómoda, porque el éxito llega como sobrecoste. Los proveedores lo saben y ofrecen la salida habitual, un compromiso de consumo anual con descuento. Funciona si el consumo es predecible. Si no lo es, la empresa paga por créditos que caducan en los meses flojos y por excedentes caros en los meses buenos."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Aquí lo que importa es la forma del compromiso, no su tamaño. Un compromiso escalonado, que empieza bajo y sube por tramos a medida que el uso se confirma, protege mejor que uno grande desde el primer día. Y dos cláusulas valen más que cualquier descuento: que el saldo no usado pase al periodo siguiente, y que el precio del excedente sea el mismo que el del compromiso y no una tarifa de castigo."
+      },
+      {
+        "tipo": "cita",
+        "texto": "En un contrato por uso, el precio unitario es lo que se negocia y la variación del consumo es lo que se paga.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Tercer apoyo",
+        "texto": "Lo que no se ve por proceso no se puede frenar sin apagar algo que funciona"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Una factura agregada dice cuánto se gastó, pero no dónde. Cuando el gasto se dispara, la única medida disponible es recortar a ciegas, y suele recortarse lo que más se usa, que con frecuencia es lo que más valor da. Imagina un comité que ve que el gasto de IA del trimestre duplicó el previsto. Sin datos por proceso, no sabe si fue el asistente interno que alguien conectó a un archivo enorme o el agente de cobranza que está recuperando más deuda que nunca. Son dos decisiones opuestas y la factura no permite distinguirlas."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Por eso la visibilidad se negocia como parte del contrato y no se deja como función del panel. El proveedor debe entregar el consumo desglosado por proyecto o por credencial, con la frecuencia que la empresa necesite para decidir, y permitir topes que detengan el gasto en vez de solo avisar. Un aviso que llega un lunes no sirve para un consumo que se disparó el sábado."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Los cuatro términos que deciden la factura de un contrato por uso"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Estos cuatro términos se negocian antes del precio unitario. Si están bien resueltos, una diferencia de precio entre proveedores importa menos de lo que parece en la comparación de ofertas."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. La unidad",
+            "definicion": "Qué cuenta exactamente como unidad facturable y cuántas consume una tarea típica. Importa porque es la variable que el proveedor puede mover sin tocar el precio. Se pide la definición por escrito, una equivalencia fija durante un plazo y salida sin penalización si cambia."
+          },
+          {
+            "termino": "2. El compromiso",
+            "definicion": "Cuánto consumo se garantiza y con qué forma. Importa porque decide quién paga los meses flojos. Se pide un compromiso escalonado, traslado del saldo no usado al periodo siguiente y el mismo precio para el excedente."
+          },
+          {
+            "termino": "3. El techo",
+            "definicion": "Qué detiene el gasto cuando se dispara. Importa porque un error de configuración puede consumir en un fin de semana lo de un mes. Se piden topes por proyecto que corten el consumo, no solo alertas, y un responsable interno que pueda subirlos."
+          },
+          {
+            "termino": "4. La visibilidad",
+            "definicion": "Qué datos de consumo entrega el proveedor y con qué detalle. Importa porque sin ellos no se puede recortar lo que sobra sin apagar lo que funciona. Se pide consumo por proyecto o credencial, acceso a esos datos fuera del panel del proveedor y derecho a revisar cómo se calculó la factura."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Antes de la próxima negociación, pide al equipo que pruebe a cada proveedor con las mismas veinte tareas reales, de las fáciles y de las difíciles, y que anote cuántas unidades consumió cada una. Esa tabla compara ofertas mejor que cualquier precio unitario, porque convierte la unidad del proveedor en coste por tarea de la empresa."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cómo se negocia un contrato de IA que cobra por uso y no por licencia?",
+            "respuesta": "Se negocia quién absorbe la variación del consumo antes que el precio unitario. Eso se resuelve en cuatro términos: qué cuenta como unidad y cuántas consume una tarea, cuánto consumo se compromete y con qué forma, qué tope detiene el gasto y qué datos de consumo entrega el proveedor. Si esos cuatro están por escrito, la diferencia de precio entre ofertas pesa menos de lo que parece."
+          },
+          {
+            "pregunta": "¿Conviene firmar un compromiso de consumo mínimo con un proveedor de IA?",
+            "respuesta": "Conviene cuando el consumo es predecible, y es arriesgado cuando todavía no lo es. Si se firma, es mejor un compromiso escalonado que sube por tramos a medida que el uso se confirma, con traslado del saldo no usado al periodo siguiente. Sin esa cláusula, la empresa paga créditos que caducan en los meses flojos."
+          },
+          {
+            "pregunta": "¿Por qué la factura de IA sube aunque el proveedor no haya cambiado el precio?",
+            "respuesta": "Porque el coste depende de cuántas unidades consume cada tarea, y eso puede cambiar sin tocar el precio. Un modelo nuevo que razona en más pasos consume más tokens por tarea, y una nueva definición de qué cuenta como conversación o acción cambia el volumen facturable. Por eso la definición de la unidad y su equivalencia con la tarea deben quedar fijadas en el contrato."
+          },
+          {
+            "pregunta": "¿Cómo se compara el precio de dos proveedores de IA que cobran por uso?",
+            "respuesta": "Probando las mismas tareas reales en los dos y midiendo cuántas unidades consume cada una. El precio por crédito o por token no se puede comparar entre proveedores porque cada uno define la unidad a su manera. El coste por tarea, medido con casos fáciles y difíciles, sí se puede comparar."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos el contrato por uso antes de firmarlo",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-to-negotiate-a-usage-based-ai-contract",
+    "titulo": "How to Negotiate an AI Contract Priced by Usage",
+    "entradilla": "You don't win a usage-based AI contract by pushing down the unit price. You win it by settling who absorbs the swings in consumption: what counts as a unit, how much you commit to, where the ceiling sits and who sees the bill before it arrives.",
+    "descripcion": "A usage-based AI contract is negotiated on who absorbs the swings: what counts as a unit, how much you commit, the spending cap and visibility into usage.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "You don't win a usage-based AI contract by pushing down the unit price. You win it by settling who absorbs the swings in consumption: what counts as a unit, how much you commit to, where the ceiling sits and who sees the bill before it arrives."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "For twenty years, buying enterprise software was a familiar negotiation. You counted seats, asked for a volume discount, signed for three years and the budget was closed. Procurement and finance got good at it because the variable was stable: headcount doesn't move much from one quarter to the next."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "With AI, more and more vendors charge for what gets consumed: credits, tokens, conversations handled, documents processed, actions taken by an agent. The negotiating table keeps doing what it always did, which is fight over the unit price. But in a usage-based contract the bill depends mostly on how many units are consumed and how those units are defined, and the person who negotiated the price controls neither. So the useful question is a different one: if consumption comes in at twice the forecast, who pays the difference, and when do they find out?"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The question",
+        "texto": "What changes when an AI contract charges by usage instead of by seat?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The risk changes hands. Under a seat license, the vendor assumes some users will barely touch the product and others will live in it, and averages that into the price. Under a usage contract that risk moves to you, and it arrives through three channels the unit price doesn't capture. These are the signs a contract is being negotiated as if it were still a license:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The bid comparison has a row for price per unit and no row saying what a unit actually is at each vendor.",
+          "The annual budget was built by multiplying pilot consumption by the number of departments that will use it.",
+          "The contract includes a discounted minimum commitment, and nobody has asked what happens to unused credits.",
+          "The invoice arrives as a single monthly figure that doesn't show which process, team or agent generated it.",
+          "Nothing stops the spending: if a process runs away over a weekend, the first anyone hears of it is the invoice."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "First support",
+        "texto": "The billing unit is the vendor's definition, and it can move while the price stays put"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A credit or a token looks like an objective unit, but what a task costs depends on how many of them it consumes, and the vendor decides that. If they upgrade the model and the new one reasons in more steps, the same task burns more units at the same price. If they redefine what counts as a \"resolved conversation\", billable volume shifts without the customer doing anything differently. Picture a customer service team that signs up for an agent billed per conversation. Six months in, the vendor decides that a conversation picked up again the next day counts as two. Nobody raised the price, and the invoice still grows."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That is why the first thing to negotiate is the definition, in writing, along with a fixed ratio between unit and task for a set period. If the vendor can't commit to that, it should at least commit to advance notice and your right to walk away without penalty if the ratio changes."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Second support",
+        "texto": "Operations sets the volume, and it grows fastest where things work"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Under a license, a tool's success doesn't change the bill. Under a usage contract it does: the process that works best gets used most, and so costs most. That puts finance in an awkward spot, because success shows up as an overrun. Vendors know this and offer the usual fix, an annual consumption commitment at a discount. It works when usage is predictable. When it isn't, you pay for credits that expire in slow months and for expensive overage in busy ones."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "What matters here is the shape of the commitment, not its size. A tiered commitment that starts low and steps up as usage is confirmed protects you better than a large one from day one. And two clauses are worth more than any discount: unused balance rolls over to the next period, and overage is priced the same as committed usage rather than at a penalty rate."
+      },
+      {
+        "tipo": "cita",
+        "texto": "In a usage contract, the unit price is what you negotiate and the swing in consumption is what you pay for.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Third support",
+        "texto": "If you can't see spend by process, you can't cut it without switching off something that works"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "An aggregated invoice tells you how much was spent, not where. When spending spikes, the only lever left is cutting blind, and the cut usually lands on whatever is used most, which is often what delivers the most value. Imagine a committee that sees the quarter's AI spend come in at double the forecast. Without data by process, it can't tell whether the cause was the internal assistant someone pointed at a huge file share, or the collections agent recovering more debt than ever. Those call for opposite decisions, and the invoice can't tell them apart."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "So visibility is negotiated as part of the contract, not left as a dashboard feature. The vendor should provide consumption broken down by project or by credential, as often as you need it to make decisions, and allow caps that stop spending rather than just sending an alert. A warning that lands on Monday is no use for consumption that ran away on Saturday."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "The four terms that decide the bill on a usage-based contract"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "These four terms get negotiated before the unit price. If they are settled well, a price gap between vendors matters less than it looks on the bid sheet."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. The unit",
+            "definicion": "Exactly what counts as a billable unit and how many a typical task consumes. It matters because it is the variable the vendor can move without touching the price. Ask for the definition in writing, a fixed ratio for a set period, and a penalty-free exit if it changes."
+          },
+          {
+            "termino": "2. The commitment",
+            "definicion": "How much consumption you guarantee, and in what shape. It matters because it decides who pays for the slow months. Ask for a tiered commitment, rollover of unused balance, and the same price for overage."
+          },
+          {
+            "termino": "3. The ceiling",
+            "definicion": "What stops spending when it runs away. It matters because one misconfiguration can burn a month's budget over a weekend. Ask for per-project caps that halt consumption, not just alerts, and a named internal owner who can raise them."
+          },
+          {
+            "termino": "4. Visibility",
+            "definicion": "What usage data the vendor provides and at what level of detail. It matters because without it you can't trim waste without killing what works. Ask for consumption by project or credential, access to that data outside the vendor's dashboard, and the right to check how the invoice was calculated."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Before the next negotiation, have the team run the same twenty real tasks through each vendor, easy ones and hard ones, and record how many units each consumed. That table compares bids better than any unit price, because it turns the vendor's unit into your cost per task."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How do you negotiate an AI contract that charges by usage instead of by license?",
+            "respuesta": "You negotiate who absorbs the swings in consumption before you negotiate the unit price. That comes down to four terms: what counts as a unit and how many a task uses, how much consumption you commit to and in what shape, what cap stops spending, and what usage data the vendor provides. With those four in writing, the price gap between bids matters less than it seems."
+          },
+          {
+            "pregunta": "Should you sign a minimum consumption commitment with an AI vendor?",
+            "respuesta": "It makes sense once usage is predictable, and it is risky while it isn't. If you do sign one, a tiered commitment that steps up as usage is confirmed is safer, with unused balance rolling over to the next period. Without that clause, you end up paying for credits that expire in slow months."
+          },
+          {
+            "pregunta": "Why does an AI bill go up when the vendor hasn't raised the price?",
+            "respuesta": "Because cost depends on how many units each task consumes, and that can change without the price moving. A newer model that reasons in more steps uses more tokens per task, and a new definition of what counts as a conversation or an action changes billable volume. That is why the unit definition and its ratio to tasks should be fixed in the contract."
+          },
+          {
+            "pregunta": "How do you compare pricing between two usage-based AI vendors?",
+            "respuesta": "Run the same real tasks through both and measure how many units each one consumes. Price per credit or per token can't be compared across vendors, because each defines its unit differently. Cost per task, measured across easy and hard cases, can."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's review your usage-based contract before you sign",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
