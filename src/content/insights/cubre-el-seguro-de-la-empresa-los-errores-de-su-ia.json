@@ -1,0 +1,297 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-11-14",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "responsible-scale",
+  "formato": "perspective",
+  "es": {
+    "slug": "cubre-el-seguro-de-la-empresa-los-errores-de-su-ia",
+    "titulo": "¿Cubre el seguro de tu empresa los errores de IA?",
+    "entradilla": "Depende de qué daña el error y a quién, y casi nunca de que sea IA. Las pólizas cubren por tipo de daño, no por tecnología, así que un error de IA puede caer en responsabilidad civil, en ciber, en ninguna o en una exclusión nueva. La empresa solo lo sabe si cruza sus procesos con IA contra el texto de sus pólizas antes del siniestro.",
+    "descripcion": "Depende de qué daña el error y a quién. Las pólizas cubren por tipo de daño, no por tecnología, y un error de IA suele caer entre coberturas.",
+    "linkedin": {
+      "texto": "Muchas empresas dan por hecho que su seguro cubre los errores de su IA porque tienen responsabilidad civil y ciber.\n\nLas pólizas cubren por tipo de daño, no por tecnología. Un agente que concede reembolsos indebidos causa una pérdida propia, y esa pérdida suele no estar en ninguna póliza.\n\nCuatro preguntas por proceso para saber qué está asegurado de verdad.",
+      "hashtags": ["IA", "Riesgos", "Seguros"]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Depende de qué daña el error y a quién, y casi nunca de que sea IA. Las pólizas cubren por tipo de daño, no por tecnología, así que un error de IA puede caer en responsabilidad civil, en ciber, en ninguna o en una exclusión nueva. La empresa solo lo sabe si cruza sus procesos con IA contra el texto de sus pólizas antes del siniestro."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Durante años, la conversación sobre seguros en un comité de dirección fue corta. La empresa tenía responsabilidad civil general, una póliza de responsabilidad profesional si vendía servicios, un seguro de ciber desde que el ransomware se volvió frecuente y una póliza para consejeros y directivos. El corredor renovaba cada año, se negociaba la prima y el tema volvía a dormir doce meses."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La IA cambió quién comete los errores sin cambiar el texto de esas pólizas. Hoy un agente responde a clientes, un modelo propone qué reclamos pagar y un asistente redacta contratos. Cuando uno de ellos se equivoca, la pregunta que llega al comité es concreta: ¿lo paga el seguro? La respuesta depende de cosas que se pueden revisar hoy, con calma, y no el día del siniestro."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La pregunta",
+        "texto": "¿Cubre el seguro de la empresa los daños causados por un error de su IA?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Puede cubrirlos, pero no porque sean de IA. Una póliza responde a lo que su texto define: un daño a un tercero, una pérdida propia, un incidente de seguridad, un error en un servicio profesional. El error de un modelo es una causa, y lo que decide la cobertura es en qué categoría cae el daño que produce. Estas son las señales de que una empresa cree estar cubierta sin haberlo comprobado:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "La respuesta a «¿estamos cubiertos?» fue una llamada al corredor, sin decirle qué procesos usan IA ni qué decide cada uno.",
+          "Nadie ha leído las exclusiones de la última renovación buscando términos como «inteligencia artificial», «algoritmo» o «decisión automatizada».",
+          "El cuestionario de renovación preguntó por el uso de IA y lo respondió alguien que no conoce los agentes que ya están en producción.",
+          "Se da por hecho que, si falla la herramienta, responde el proveedor, y nadie ha mirado el límite de responsabilidad de su contrato."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Primer apoyo",
+        "texto": "La póliza cubre por tipo de daño, y el mismo error puede caer en tres coberturas distintas o en ninguna"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por cómo está escrita una póliza. La responsabilidad civil general cubre daños a terceros, normalmente físicos o materiales. La profesional cubre el perjuicio económico que un error en el servicio causa a un cliente. El seguro de ciber cubre incidentes de seguridad y, según su texto, algunas pérdidas derivadas. Ninguna se redactó pensando en un sistema que decide solo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en un agente de atención que interpreta mal una política comercial y ofrece a doscientos clientes un reembolso que no correspondía. Si la empresa paga esos reembolsos, la pérdida es propia y no de un tercero, y la responsabilidad civil no está pensada para eso. Si en cambio el agente dio a un cliente una indicación técnica equivocada y ese cliente sufrió un perjuicio, el reclamo es de un tercero y puede caer en la profesional, siempre que ese servicio esté asegurado. Y si alguien manipuló al agente con instrucciones escondidas en un correo, puede tratarse como un incidente de ciber. Mismo agente, tres pólizas y tres respuestas. Por eso la pregunta útil se hace proceso por proceso."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Segundo apoyo",
+        "texto": "El texto de la póliza cambia en cada renovación, y lo que la empresa declara también cuenta"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El mercado asegurador ya empezó a moverse en dos direcciones. Algunas aseguradoras añaden exclusiones específicas para daños relacionados con IA en pólizas generales, y otras ofrecen coberturas pensadas para errores de modelos. La consecuencia práctica es que una póliza que el año pasado no decía nada sobre IA puede volver de la renovación con un párrafo nuevo que pese más que todo lo demás. Aquí lo que importa es leer el texto de la renovación con la lista de procesos con IA al lado."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La otra mitad es lo que la empresa declara. La aseguradora calcula el seguro sobre el riesgo descrito, y los cuestionarios de renovación empiezan a preguntar por el uso de IA. Si lo responde alguien que solo conoce las licencias de un asistente de redacción, y no los agentes que aprueban pagos, la empresa declaró un riesgo menor que el real. En un siniestro, esa diferencia será de lo primero que se revise."
+      },
+      {
+        "tipo": "cita",
+        "texto": "La póliza responde por lo que se dañó y a quién, no por quién cometió el error. Un error de IA está asegurado o no según el daño que produce.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Tercer apoyo",
+        "texto": "El contrato con el proveedor decide cuánto del daño se recupera, y suele ser poco"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Muchas empresas cuentan con una segunda red: si el modelo falló, que responda quien lo vendió. Pero los contratos estándar de software, y los de IA no son una excepción, suelen limitar la responsabilidad del proveedor a una cantidad ligada a lo que el cliente pagó en un periodo, y excluyen las pérdidas indirectas. Imagina una empresa que paga una suscripción modesta por un modelo que clasifica reclamos y que, por un error de configuración, rechaza durante un mes reclamos válidos. El daño a los clientes puede multiplicar lo pagado al proveedor, y el contrato devuelve, como mucho, una parte pequeña."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Esto afecta también a la aseguradora, que tras pagar intenta recuperar lo que pueda del responsable: un contrato que limita al proveedor limita esa recuperación. Por eso la negociación con el proveedor y la conversación con el corredor tienen que hacerse sabiendo lo que dice la otra."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Cuatro preguntas por proceso dicen si un error de IA está asegurado"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Este mapa se hace para cada proceso donde la IA decide o actúa, cabe en una hoja y se revisa en cada renovación."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Qué daña y a quién",
+            "definicion": "Si el error causa una pérdida propia, un perjuicio a un cliente, un daño físico o un incidente de seguridad. Importa porque cada tipo de daño vive en una póliza distinta, y las pérdidas propias suelen no estar en ninguna."
+          },
+          {
+            "termino": "2. Qué dice el texto",
+            "definicion": "En qué póliza cae ese daño y si su versión vigente excluye la IA, los algoritmos o las decisiones automatizadas. Importa porque las exclusiones pueden cambiar en cada renovación. Se lee el texto, no el resumen del corredor."
+          },
+          {
+            "termino": "3. Qué se declaró",
+            "definicion": "Qué dijo la empresa sobre su uso de IA en el último cuestionario y si coincide con lo que hay en producción. Importa porque una declaración incompleta es el argumento más fácil para discutir un siniestro."
+          },
+          {
+            "termino": "4. Qué devuelve el proveedor",
+            "definicion": "El límite de responsabilidad del contrato y qué pérdidas excluye. Importa porque marca cuánto del daño vuelve a la empresa o a su aseguradora. Si el hueco es grande, se negocia o se cubre con una póliza específica, antes del siniestro."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Elige el proceso donde la IA mueve más dinero sin una persona en medio: devoluciones, pagos, precios o aprobaciones de crédito. Llévalo a una reunión con el corredor y con quien opera el agente, y pide por escrito la respuesta a una sola pregunta: si este agente se equivoca durante un mes, ¿qué póliza paga, hasta cuánto y con qué exclusiones?"
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cubre el seguro de la empresa los daños causados por un error de su IA?",
+            "respuesta": "Puede cubrirlos, según qué dañe el error y a quién. Las pólizas cubren por tipo de daño: la responsabilidad civil cubre daños a terceros, la profesional el perjuicio económico a clientes y la de ciber los incidentes de seguridad. Un error de IA que causa una pérdida propia, como reembolsos indebidos, suele no estar en ninguna, y algunas pólizas ya incluyen exclusiones específicas para IA."
+          },
+          {
+            "pregunta": "¿Qué póliza cubre los errores de un agente de IA que atiende clientes?",
+            "respuesta": "Depende del daño que cause. Si el agente da una indicación equivocada y el cliente sufre un perjuicio, el reclamo puede caer en la responsabilidad profesional o en la civil, si ese servicio está asegurado. Si el agente concede descuentos o reembolsos que no correspondían, la pérdida es de la empresa y normalmente no la cubre ninguna de las dos."
+          },
+          {
+            "pregunta": "¿Responde el proveedor de IA si su modelo causa un daño a la empresa?",
+            "respuesta": "En parte, y casi siempre por poco. Los contratos estándar suelen limitar la responsabilidad del proveedor a una cantidad ligada a lo pagado en un periodo y excluyen las pérdidas indirectas. Por eso conviene leer ese límite junto con las pólizas propias, y no por separado."
+          },
+          {
+            "pregunta": "¿Hay que informar a la aseguradora de que la empresa usa IA?",
+            "respuesta": "Cuando el cuestionario lo pregunta, hay que responder con precisión, y conviene dar detalle aunque no lo pregunte. La aseguradora calcula el seguro sobre el riesgo declarado. Una respuesta que omite agentes que aprueban pagos o atienden clientes es el punto más fácil para discutir un siniestro después."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos qué procesos con IA quedan fuera de tus pólizas",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "does-business-insurance-cover-ai-errors",
+    "titulo": "Does Your Business Insurance Cover AI Errors?",
+    "entradilla": "It depends on what the error damages and who it hurts, and almost never on the fact that AI made it. Policies cover types of loss, not technologies, so an AI error can land in general liability, in cyber, in nothing at all, or in a brand-new exclusion. The only way to know is to map your AI processes against the wording of your policies before the claim.",
+    "descripcion": "It depends on what the error damages and who it hurts. Policies cover types of loss, not technology, so AI errors often fall between policies.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "It depends on what the error damages and who it hurts, and almost never on the fact that AI made it. Policies cover types of loss, not technologies, so an AI error can land in general liability, in cyber, in nothing at all, or in a brand-new exclusion. The only way to know is to map your AI processes against the wording of your policies before the claim."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "For years, insurance was a short item on the executive committee agenda. The company carried general liability, professional liability if it sold services, a cyber policy once ransomware became routine, and D&O cover for the board. The broker renewed every year, the premium got negotiated, and the topic went back to sleep for twelve months."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "AI changed who makes the mistakes without changing a word of those policies. Today an agent answers customers, a model recommends which claims to pay, and an assistant drafts contracts. When one of them gets it wrong, the question that reaches the committee is a plain one: will insurance pay? The answer depends on things you can check now, calmly, rather than on the day of the loss."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The question",
+        "texto": "Does business insurance cover damage caused by your company's AI?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "It can, but not because the error came from AI. A policy responds to what its wording defines: injury to a third party, a first-party loss, a security incident, a mistake in professional services. A model's error is a cause, and what decides coverage is which category the resulting damage falls into. These are the signs a company believes it is covered without having checked:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The answer to \"are we covered?\" was a phone call to the broker, with no list of which processes use AI or what each one decides.",
+          "Nobody has read the exclusions in the last renewal looking for terms like \"artificial intelligence\", \"algorithm\" or \"automated decision\".",
+          "The renewal questionnaire asked about AI use, and whoever filled it in doesn't know which agents are already in production.",
+          "Everyone assumes that if the tool fails, the vendor pays, and nobody has looked at the liability cap in the vendor's contract."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "First support",
+        "texto": "Policies cover types of loss, and one error can land in three different policies or in none"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Start with how a policy is written. General liability covers harm to third parties, usually bodily injury or property damage. Professional liability covers the financial harm a mistake in your service causes a client. Cyber covers security incidents and, depending on the wording, some of the losses that follow. None was drafted with a system that acts on its own in mind."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture a service agent that misreads a commercial policy and offers two hundred customers a refund they weren't entitled to. If the company honors those refunds, the loss is its own, not a third party's, and general liability was never meant for that. If instead the agent gave a customer wrong technical guidance and the customer suffered a loss, that is a third-party claim and may fall under professional liability, provided the service is insured. And if someone manipulated the agent with instructions hidden in an email, it may be handled as a cyber incident. Same agent, three policies, three answers. That is why the useful question gets asked process by process."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Second support",
+        "texto": "Policy wording shifts at every renewal, and what you disclose counts too"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The insurance market has already started to move in two directions. Some carriers are adding AI-specific exclusions to general policies, and others are offering cover designed for model errors. The practical consequence is that a policy that said nothing about AI last year can come back from renewal with a new paragraph that outweighs everything else in it. What matters here is reading the renewal wording with your list of AI processes next to it."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The other half is what the company discloses. The insurer prices the policy on the risk you describe, and renewal questionnaires are starting to ask about AI use. If the person answering only knows about the licenses for a writing assistant, and not about the agents approving payments, the company has disclosed a smaller risk than the real one. When a claim comes in, that gap will be among the first things anyone looks at."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A policy responds to what was damaged and who was hurt, not to who made the mistake. An AI error is insured or not depending on the damage it causes.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Third support",
+        "texto": "The vendor contract decides how much of the loss you recover, and it is usually little"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Many companies count on a second safety net: if the model failed, the vendor that sold it should pay. But standard software contracts, and AI contracts are no exception, usually cap the vendor's liability at an amount tied to what the customer paid over a period, and exclude indirect losses. Imagine a company paying a modest subscription for a model that triages claims, and a configuration error that has it rejecting valid claims for a month. The harm to customers can far exceed what was paid to the vendor, and the contract returns, at best, a small fraction."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "This affects the insurer too, since after paying a claim it tries to recover what it can from whoever was responsible, and a contract that caps the vendor caps that recovery. So the vendor negotiation and the broker conversation need to happen with each side knowing what the other says."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "Four questions per process tell you whether an AI error is insured"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Build this map for each process where AI decides or acts. It fits on one page and gets reviewed at every renewal."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. What it damages, and whose",
+            "definicion": "Whether the error causes a first-party loss, financial harm to a client, physical damage or a security incident. It matters because each type of loss lives in a different policy, and first-party losses often live in none."
+          },
+          {
+            "termino": "2. What the wording says",
+            "definicion": "Which policy that loss falls under, and whether the current version excludes AI, algorithms or automated decisions. It matters because exclusions can change at every renewal. Read the wording, not the broker's summary."
+          },
+          {
+            "termino": "3. What you disclosed",
+            "definicion": "What the company said about its AI use in the last questionnaire, and whether it matches what is in production. It matters because an incomplete disclosure is the easiest ground for disputing a claim."
+          },
+          {
+            "termino": "4. What the vendor pays back",
+            "definicion": "The liability cap in the contract and which losses it excludes. It matters because it sets how much of the loss flows back to the company or its insurer. If the gap is large, negotiate it or cover it with a specific policy, before the claim."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Pick the process where AI moves the most money with no person in the loop: refunds, payments, pricing or credit approvals. Take it to a meeting with your broker and whoever runs the agent, and ask for a written answer to one question: if this agent gets it wrong for a month, which policy pays, up to how much, and with what exclusions?"
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Does business insurance cover damage caused by a company's AI errors?",
+            "respuesta": "It can, depending on what the error damages and who it hurts. Policies cover types of loss: general liability covers harm to third parties, professional liability covers financial harm to clients, and cyber covers security incidents. An AI error that causes a first-party loss, such as refunds paid in error, often falls under none of them, and some policies now carry AI-specific exclusions."
+          },
+          {
+            "pregunta": "Which policy covers mistakes made by a customer-facing AI agent?",
+            "respuesta": "It depends on the damage. If the agent gives wrong guidance and the customer suffers a loss, the claim may fall under professional or general liability, provided that service is insured. If the agent grants discounts or refunds it shouldn't have, the loss is the company's own and usually neither policy covers it."
+          },
+          {
+            "pregunta": "Is the AI vendor liable if its model causes a loss to my company?",
+            "respuesta": "Partly, and usually for little. Standard contracts tend to cap the vendor's liability at an amount tied to what was paid over a period and exclude indirect losses. That is why the cap should be read alongside your own policies, not separately."
+          },
+          {
+            "pregunta": "Do you have to tell your insurer that the company uses AI?",
+            "respuesta": "When the questionnaire asks, you need to answer accurately, and it is wise to give detail even when it doesn't. The insurer prices the policy on the disclosed risk. An answer that leaves out agents approving payments or serving customers is the easiest ground for disputing a claim later."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's map which AI processes fall outside your policies",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
