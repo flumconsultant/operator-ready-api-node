@@ -1,0 +1,277 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-11-15",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "value-adoption",
+  "formato": "field-note",
+  "es": {
+    "slug": "que-hacer-cuando-tu-equipo-entrega-trabajo-de-ia-sin-revisar",
+    "titulo": "¿Qué hacer con trabajo de IA entregado sin revisar?",
+    "entradilla": "Cuando alguien entrega trabajo hecho con IA sin revisarlo, la revisión no desaparece: la paga quien lo recibe. Se corrige con una regla de equipo, no con una charla. Quien entrega firma, lo que no puede defender se devuelve, y se mide lo que se decide en vez de lo que se produce.",
+    "descripcion": "Con una regla de firma: quien entrega trabajo hecho con IA responde por él, lo que no puede defender se devuelve sin corregir y se mide lo que se decide.",
+    "linkedin": {
+      "texto": "Producir un informe con IA cuesta minutos. Leerlo con criterio cuesta lo mismo que antes.\n\nCuando quien entrega no revisa, la revisión no desaparece. La paga quien recibe, casi siempre alguien más senior, y el tablero lo registra como productividad.\n\nQué es la regla de firma y por qué devuelve ese costo a quien produce.",
+      "hashtags": [
+        "IA",
+        "Liderazgo",
+        "Productividad"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Cuando alguien entrega trabajo hecho con IA sin revisarlo, la revisión no desaparece: la paga quien lo recibe. Se corrige con una regla de equipo, no con una charla. Quien entrega firma, lo que no puede defender se devuelve, y se mide lo que se decide en vez de lo que se produce."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por lo que cualquier jefe de área ya ha notado. Los documentos llegan antes, más largos y mejor presentados. Un análisis de proveedores que antes tomaba una semana aparece en dos días, con tablas, conclusiones y un resumen ejecutivo impecable. Pero al leerlo con calma, las conclusiones no se siguen de las tablas, una cifra no tiene origen y la recomendación podría servir para cualquier empresa. En inglés ya circula un nombre para esto, workslop: trabajo que parece terminado y no lo está."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La reacción habitual es tratarlo como un problema de actitud y pedir más cuidado. Eso rara vez funciona, porque la causa no está en la persona sino en cómo se reparte el costo de revisar. La IA abarató producir y dejó igual de caro verificar. Si nadie decide quién paga esa verificación, la paga el siguiente en la cadena, y en casi todos los equipos ese es el jefe o el perfil más senior."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La respuesta",
+        "texto": "¿Qué hacer cuando un empleado entrega trabajo de IA sin revisar?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Tres cosas, y en este orden. Primero, devolver el trabajo sin corregirlo, con una línea que diga qué parte no se puede defender. Segundo, dejar escrita una regla de firma para todo el equipo: quien entrega responde por cada afirmación, cada dato y cada recomendación, con independencia de qué herramienta usó. Tercero, cambiar lo que se mide, para que entregar rápido deje de valer más que entregar algo que no vuelve. Corregir el documento uno mismo, que es lo que hace casi todo el mundo, es justamente lo que mantiene el problema."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Antes de aplicar nada conviene confirmar que el problema existe y dónde. Estas son las señales que suelen aparecer primero:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Los entregables son más largos que hace un año, pero contienen menos decisiones explícitas.",
+          "El autor no sabe responder dos preguntas de seguimiento sobre su propio documento sin volver a abrirlo.",
+          "Aparecen datos, normas o referencias que nadie puede rastrear hasta una fuente.",
+          "Las horas que el responsable dedica a corregir crecen, aunque el volumen del equipo también crezca.",
+          "El formato es impecable y el contenido podría estar escrito para otra empresa."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El mecanismo",
+        "texto": "La IA abarató producir, pero no abarató revisar"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Esto no empezó con la IA. Primero fue el correo con copia a todos, luego las presentaciones de cuarenta láminas: cada herramienta que redujo el costo de producir multiplicó lo que alguien tenía que leer. La diferencia ahora es la escala y la apariencia. Un borrador hecho a mano que estaba flojo se notaba flojo. Uno hecho con IA llega con la forma de un trabajo terminado, y eso desactiva la alarma de quien lo recibe."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Durante años, el propio costo de escribir funcionaba como control de calidad. Nadie entregaba un informe en el que había invertido tres tardes sin haberlo leído, porque ya lo había pensado mientras lo escribía. Imagina ahora a un analista de compras que prepara la comparación de tres proveedores con un asistente. En veinte minutos tiene un documento completo. Leerlo línea por línea, comprobar los precios contra las cotizaciones y preguntarse si la recomendación encaja con la estrategia de compras le tomaría dos horas. Si el equipo mide entregas, esas dos horas son un costo que nadie le reconoce."
+      },
+      {
+        "tipo": "cita",
+        "texto": "En el trabajo hecho con IA, la revisión es la parte que la herramienta no hace y que sigue firmando una persona.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El error frecuente",
+        "texto": "Corregir en silencio es lo que mantiene el problema"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cuando el jefe recibe un documento flojo y lo arregla él mismo, toma una decisión razonable en el corto plazo: es más rápido corregir que explicar. Pero envía tres mensajes equivocados. Al autor, que su entrega era aceptable. Al resto del equipo, que la revisión es trabajo del jefe. Y a la dirección, que el área produce más que antes, porque el tablero cuenta documentos y no horas de corrección."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Con el tiempo, el perfil más senior del área termina dedicado a revisar lo que otros generan, y deja de hacer lo que solo él puede hacer. Ese es el costo real, y no aparece en ningún indicador de adopción. La productividad no subió: se trasladó de quien produce a quien revisa, que además suele ser más caro."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Una regla de firma en tres partes resuelve lo que una charla no resuelve"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Quien entrega, firma",
+            "definicion": "Firmar significa poder explicar de dónde sale cada dato, por qué se recomienda lo que se recomienda y qué decidió el autor por su cuenta. La prueba es sencilla: si no puede responder dos preguntas sobre su documento sin abrirlo, todavía no lo ha revisado. Usar IA no cambia la firma, igual que usar una hoja de cálculo no cambia quién responde por un presupuesto."
+          },
+          {
+            "termino": "2. Lo que no se puede defender, se devuelve",
+            "definicion": "Quien recibe no corrige: señala la parte que no se sostiene y devuelve el trabajo. Así el costo de revisar vuelve a quien produce, que es quien puede reducirlo. La primera semana es incómoda y más lenta. A la tercera, las entregas llegan revisadas porque devolverlas sale más caro que revisarlas."
+          },
+          {
+            "termino": "3. Se mide lo que se decide, no lo que se produce",
+            "definicion": "Si el tablero del equipo cuenta entregables, premia exactamente el comportamiento que se quiere corregir. Cambia el indicador por cuántas entregas se aceptan a la primera y cuánto tiempo dedica el responsable a corregir. Cuando ese tiempo baja, la regla está funcionando."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La regla tiene que ser proporcional al riesgo. Un borrador interno para discutir en una reunión puede circular con una revisión ligera, siempre que se presente como borrador. Un documento que llega a un cliente, a un comité o a un regulador necesita la firma completa. Lo que no funciona es una política que exija declarar si se usó IA y nada más: saber que se usó la herramienta no dice nada sobre si alguien leyó el resultado."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Escribe la regla de firma en tres líneas y preséntala en la próxima reunión de equipo, sin señalar a nadie. Aplícala a la siguiente entrega importante y anota durante un mes cuántas horas dedica el responsable a corregir. Ese número es el que va a decir si el problema era de actitud o de reglas."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Qué es el workslop o trabajo hecho con IA sin revisar?",
+            "respuesta": "Es trabajo generado con IA que tiene la forma de un entregable terminado pero no el contenido: conclusiones que no se siguen de los datos, cifras sin origen o recomendaciones genéricas. El problema no es que se haya usado IA, sino que nadie lo revisó antes de entregarlo. El costo de esa revisión pasa entonces a quien lo recibe."
+          },
+          {
+            "pregunta": "¿Qué debe hacer un jefe cuando un empleado le entrega trabajo de IA sin revisar?",
+            "respuesta": "Devolverlo sin corregirlo, indicando qué parte no se puede defender, y dejar escrita una regla de equipo según la cual quien entrega responde por todo lo que entrega. Corregirlo uno mismo es más rápido la primera vez, pero enseña al equipo que la revisión es trabajo del jefe. La regla tiene que valer para todos, no para una persona."
+          },
+          {
+            "pregunta": "¿Hay que prohibir la IA para evitar que se entregue trabajo sin revisar?",
+            "respuesta": "No hace falta, y suele empeorar las cosas, porque el uso continúa sin control. Lo que funciona es separar la herramienta de la responsabilidad: se puede usar IA para producir, pero quien entrega firma y tiene que poder explicar cada dato y cada recomendación."
+          },
+          {
+            "pregunta": "¿Cómo se mide si el equipo revisa el trabajo que hace con IA?",
+            "respuesta": "Con dos indicadores en lugar del volumen de entregas: qué proporción de entregas se acepta a la primera y cuántas horas dedica el responsable del área a corregir. Si el volumen sube y las horas de corrección también, la productividad no aumentó, solo se trasladó. Si las horas de corrección bajan, el equipo está revisando."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos dónde está pagando tu equipo la revisión del trabajo hecho con IA",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "what-to-do-when-your-team-hands-in-unreviewed-ai-work",
+    "titulo": "What to Do When Staff Hand In Unreviewed AI Work",
+    "entradilla": "When someone hands in AI-generated work without checking it, the review does not go away: whoever receives it pays for it. The fix is a team rule, not a pep talk. Whoever hands it in signs it, whatever they cannot defend goes back, and you measure decisions rather than volume.",
+    "descripcion": "Use a sign-off rule: whoever submits AI-made work answers for it, anything they cannot defend goes back unedited, and you measure decisions, not volume.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "When someone hands in AI-generated work without checking it, the review does not go away: whoever receives it pays for it. The fix is a team rule, not a pep talk. Whoever hands it in signs it, whatever they cannot defend goes back, and you measure decisions rather than volume."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Start with what most department heads have already noticed. Documents arrive sooner, longer and better formatted. A supplier analysis that used to take a week shows up in two days, with tables, conclusions and a polished executive summary. Read it carefully, though, and the conclusions do not follow from the tables, one figure has no source and the recommendation would fit any company. There is already a name for it: workslop, work that looks finished and is not."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The usual response is to treat it as an attitude problem and ask people to be more careful. That rarely works, because the cause is not the person but how the cost of checking gets allocated. AI made producing cheap and left verifying just as expensive as before. If nobody decides who pays for that verification, the next person in line does, and in almost every team that is the manager or the most senior person."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The answer",
+        "texto": "What should you do when an employee hands in unreviewed AI work?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Three things, in this order. First, send the work back without fixing it, with one line saying which part cannot be defended. Second, write down a sign-off rule for the whole team: whoever submits answers for every claim, every figure and every recommendation, regardless of the tool they used. Third, change what you measure, so that delivering fast stops being worth more than delivering something that does not bounce back. Fixing the document yourself, which is what nearly everyone does, is exactly what keeps the problem alive."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Before applying anything, it is worth confirming the problem exists and where. These are the signals that tend to show up first:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Deliverables are longer than a year ago but contain fewer explicit decisions.",
+          "The author cannot answer two follow-up questions about their own document without reopening it.",
+          "Figures, regulations or references appear that nobody can trace to a source.",
+          "The hours the manager spends correcting keep growing, even as team volume grows.",
+          "The formatting is flawless and the content could have been written for another company."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The mechanism",
+        "texto": "AI made producing cheap, but it did not make reviewing cheap"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "This did not start with AI. First came reply-all email, then forty-slide decks: every tool that lowered the cost of producing multiplied what someone else had to read. The difference now is scale and appearance. A weak handmade draft looked weak. A weak AI draft arrives looking like finished work, and that switches off the reader's alarm."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "For years, the cost of writing was itself the quality control. Nobody handed in a report they had spent three afternoons on without reading it, because they had thought it through while writing. Now picture a procurement analyst comparing three suppliers with an assistant. In twenty minutes they have a complete document. Reading it line by line, checking prices against the quotes and asking whether the recommendation fits the sourcing strategy would take two hours. If the team counts deliverables, those two hours are a cost nobody credits."
+      },
+      {
+        "tipo": "cita",
+        "texto": "In AI-assisted work, review is the part the tool does not do and a person still has to sign.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The common mistake",
+        "texto": "Quietly fixing it is what keeps the problem going"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "When a manager gets a weak document and fixes it themselves, they make a sensible short-term call: correcting is faster than explaining. But it sends three wrong signals. To the author, that the submission was acceptable. To the rest of the team, that review is the manager's job. And to leadership, that the function is producing more than before, because the dashboard counts documents, not hours of rework."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Over time, the most senior person in the function ends up reviewing what others generate and stops doing what only they can do. That is the real cost, and no adoption metric captures it. Productivity did not go up. It moved from the person producing to the person reviewing, who is usually more expensive."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "A three-part sign-off rule does what a pep talk cannot"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Whoever submits it, signs it",
+            "definicion": "Signing means being able to explain where each figure comes from, why the recommendation is what it is and what the author decided on their own. The test is simple: if they cannot answer two questions about their document without opening it, they have not reviewed it yet. Using AI does not change who signs, just as using a spreadsheet does not change who owns a budget."
+          },
+          {
+            "termino": "2. What cannot be defended goes back",
+            "definicion": "The recipient does not fix: they point to the part that does not hold up and return the work. That puts the cost of review back with the person producing, who is the one able to reduce it. The first week is uncomfortable and slower. By the third, work arrives checked because having it returned costs more than reviewing it."
+          },
+          {
+            "termino": "3. Measure what gets decided, not what gets produced",
+            "definicion": "If the team dashboard counts deliverables, it rewards exactly the behavior you want to change. Replace it with how many submissions are accepted first time and how much time the manager spends correcting. When that time falls, the rule is working."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The rule has to be proportionate to the risk. An internal draft for discussion in a meeting can circulate with a light check, as long as it is labeled a draft. A document going to a client, a committee or a regulator needs the full sign-off. What does not work is a policy that only requires people to disclose AI use: knowing the tool was used says nothing about whether anyone read the result."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Write the sign-off rule in three lines and present it at the next team meeting, without singling anyone out. Apply it to the next important deliverable and track for a month how many hours the manager spends correcting. That number will tell you whether the problem was attitude or rules."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "What is workslop, or unreviewed AI-generated work?",
+            "respuesta": "It is AI-generated work that has the shape of a finished deliverable but not the substance: conclusions that do not follow from the data, figures with no source or generic recommendations. The problem is not that AI was used, but that nobody reviewed it before handing it in. The cost of that review then falls on whoever receives it."
+          },
+          {
+            "pregunta": "What should a manager do when an employee submits AI work without reviewing it?",
+            "respuesta": "Send it back without fixing it, pointing to the part that cannot be defended, and write down a team rule that whoever submits answers for everything they submit. Fixing it yourself is faster the first time, but it teaches the team that review is the manager's job. The rule has to apply to everyone, not to one person."
+          },
+          {
+            "pregunta": "Should we ban AI to stop people handing in unreviewed work?",
+            "respuesta": "There is no need, and it usually makes things worse, because use carries on without oversight. What works is separating the tool from the accountability: people can use AI to produce, but whoever submits signs and must be able to explain every figure and recommendation."
+          },
+          {
+            "pregunta": "How do you measure whether a team reviews its AI-assisted work?",
+            "respuesta": "With two indicators instead of deliverable volume: the share of submissions accepted first time and the hours the function's manager spends correcting. If volume rises and correction hours rise too, productivity did not increase, it just moved. If correction hours fall, the team is reviewing."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's look at where your team is paying for the review of AI-made work",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
