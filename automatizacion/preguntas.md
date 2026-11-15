@@ -47,7 +47,10 @@ El observatorio las revisa cada domingo, una por una, y hace lo que corresponda:
 - ¿Hay que ordenar los datos de la empresa antes de empezar con IA, o se puede empezar ya?
 - ¿Cómo empieza con IA una pyme que no tiene equipo técnico?
 - ¿Cómo se forma a los directivos en IA sin convertirlos en técnicos?
-- [sin verificar] ¿Cuándo no conviene usar IA en una decisión o un proceso de la empresa?
+- ¿Cuándo no conviene usar IA en una decisión o un proceso de la empresa?
+- ¿Cómo cambiamos la selección de personal ahora que los candidatos usan IA en las entrevistas?
+- ¿Cómo cobramos a los clientes cuando la IA hace buena parte del trabajo que antes facturábamos por horas?
+- ¿Cómo debe usar la IA un directivo sin perder la confianza de su equipo?
 
 ## Agentic work
 
@@ -62,7 +65,8 @@ El observatorio las revisa cada domingo, una por una, y hace lo que corresponda:
 - ¿Necesitan los agentes de IA una identidad y credenciales propias, distintas a las de un empleado?
 - ¿Cuándo debe un agente de IA pasar el caso a una persona?
 - ¿Cómo se prueba un agente de IA antes de ponerlo en producción?
-- [sin verificar] ¿Cuándo basta una automatización tradicional (RPA) y cuándo hace falta un agente de IA?
+- ¿Cuándo basta una automatización tradicional (RPA) y cuándo hace falta un agente de IA?
+- [sin verificar] ¿Cómo se le da a un agente de IA el contexto y el conocimiento de la empresa que necesita para trabajar bien?
 
 ## Operating-model reinvention
 
@@ -77,8 +81,10 @@ El observatorio las revisa cada domingo, una por una, y hace lo que corresponda:
 - ¿Qué proceso automatizamos primero con IA, y cómo lo decidimos sin quemarnos en el primer intento?
 - ¿Nos conviene montar un centro de excelencia de IA o es una capa burocrática más?
 - ¿Cómo se redefinen los puestos y las descripciones de cargo cuando parte del trabajo lo hace un agente?
-- [sin verificar] ¿Cómo se prepara a los mandos medios para liderar equipos donde trabajan agentes de IA?
-- [sin verificar] ¿Qué pasa con la relación con los clientes cuando una empresa sustituye la atención humana por agentes de IA?
+- ¿Qué pasa con la relación con los clientes cuando una empresa sustituye la atención humana por agentes de IA?
+- ¿Cómo gestionamos la carga de revisión cuando la IA multiplica lo que produce el equipo?
+- Mi CEO quiere ir a por todas con la IA: ¿cómo lo convierto en un plan con sentido?
+- ¿Contratamos más personal administrativo o lo cubrimos con IA?
 
 ## Value and adoption
 
@@ -102,12 +108,11 @@ El observatorio las revisa cada domingo, una por una, y hace lo que corresponda:
 - ¿Cómo se decide apagar un proyecto de IA que no está funcionando?
 - ¿Cómo se priorizan las iniciativas de IA cuando cada área pide la suya?
 - ¿Por qué se dispara el coste de una solución de IA al pasar del piloto a producción?
-- [sin verificar] ¿Cuánto tarda un proyecto de IA en dar resultados reales en una empresa?
-- [sin verificar] ¿Cuántos pilotos de IA conviene lanzar a la vez?
-- [sin verificar] ¿Cómo se mide si los empleados usan bien la IA, y no solo si la usan?
-- [sin verificar] ¿Qué hacer cuando los empleados entregan trabajo hecho con IA sin revisarlo (workslop)?
-- [sin verificar] ¿Cómo se negocia un contrato de IA que cobra por uso y no por licencia?
-- [sin verificar] ¿Conviene ser de los primeros en adoptar agentes de IA o esperar a que la tecnología madure?
+- ¿Cuánto tarda un proyecto de IA en dar resultados reales en una empresa?
+- ¿Qué hacer cuando los empleados entregan trabajo hecho con IA sin revisarlo (workslop)?
+- ¿Cuánto presupuestamos en IA por empleado y cómo controlamos el gasto por consumo?
+- ¿Conviene obligar al equipo a usar IA, y qué hacemos con quien se niega?
+- ¿Está la IA intensificando el trabajo y quemando al equipo en lugar de aliviarlo?
 
 ## Responsible scale
 
@@ -128,4 +133,6 @@ El observatorio las revisa cada domingo, una por una, y hace lo que corresponda:
 - ¿Qué se hace con las alucinaciones de la IA cuando el proceso es crítico?
 - ¿Qué cláusulas importan al firmar un contrato con un proveedor de IA?
 - ¿Cómo se prepara una empresa para una crisis de reputación causada por su IA?
-- [sin verificar] ¿Cubre el seguro de la empresa los daños causados por un error de su IA?
+- ¿Cómo evitamos que el equipo pierda capacidades al delegar en la IA?
+- ¿Permitimos asistentes de IA que graban y resumen las reuniones?
+- ¿Qué hacemos cuando ponemos en producción trabajo hecho por IA que nadie del equipo entiende del todo?
