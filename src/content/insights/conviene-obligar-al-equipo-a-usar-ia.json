@@ -1,0 +1,277 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-11-16",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "value-adoption",
+  "formato": "perspective",
+  "es": {
+    "slug": "conviene-obligar-al-equipo-a-usar-ia",
+    "titulo": "¿Conviene obligar al equipo a usar IA?",
+    "entradilla": "Obligar a usar IA en general produce uso, no valor. Lo que sí se puede exigir es un estándar de trabajo en un proceso concreto donde la IA ya demostró que mejora el resultado, igual que se exige usar el ERP. Y quien se niega casi siempre trae información: antes de tratarlo como un problema de desempeño, hay que saber cuál de las tres negativas es la suya.",
+    "descripcion": "Sí, pero no el uso en general: se exige un estándar en procesos donde la IA ya mejora el resultado, y a quien se niega se le pregunta antes por qué.",
+    "linkedin": {
+      "texto": "Muchas empresas ya miden cuánto usa la IA cada empleado. Algunas lo llevan a la evaluación de desempeño.\n\nLo que se mide así es consumo. Una regla sobre consumo produce consumo, y la negativa de quien se resiste suele traer la información que el tablero no muestra.\n\nQué se puede exigir de verdad, y cómo leer las tres negativas posibles.",
+      "hashtags": [
+        "IA",
+        "Liderazgo",
+        "Personas"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Obligar a usar IA en general produce uso, no valor. Lo que sí se puede exigir es un estándar de trabajo en un proceso concreto donde la IA ya demostró que mejora el resultado, igual que se exige usar el ERP. Y quien se niega casi siempre trae información: antes de tratarlo como un problema de desempeño, hay que saber cuál de las tres negativas es la suya."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por la situación que hoy se repite en muchos comités. La empresa compró licencias, hizo formación y publicó una política de uso. Seis meses después, el panel muestra que una parte del equipo usa la herramienta todos los días y otra parte casi nunca. La dirección concluye que el problema es de voluntad, y la respuesta natural es convertir el uso en obligación: un objetivo de uso por persona, una línea en la evaluación de desempeño, un recordatorio del director general en la reunión trimestral."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La decisión parece razonable y suele salir mal por un motivo sencillo: lo que se obliga es el uso de una herramienta, y lo que la empresa quería era un resultado distinto en su operación. Son cosas que se pueden separar con facilidad, y la gente las separa en cuanto el uso empieza a contar para su bono."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La respuesta",
+        "texto": "¿Conviene obligar al equipo a usar IA, y qué hacer con quien se niega?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Conviene exigir, pero no el uso de la IA en abstracto. Lo que se puede exigir con criterio es la forma de trabajar en un proceso concreto, una vez que está probado que con IA ese proceso sale mejor: más rápido, con menos errores o con menos retrabajo. En ese punto la IA deja de ser una herramienta opcional y pasa a ser parte del estándar, igual que nadie pide permiso para no usar el sistema de facturación. Donde esa prueba todavía no existe, obligar solo genera actividad para el tablero."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Con quien se niega, el orden importa. Primero se averigua qué tipo de negativa es, porque hay tres muy distintas y solo una es un problema de desempeño. Estas son las señales de que la empresa está obligando a lo equivocado:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El indicador que se sigue es de consumo: sesiones, consultas o licencias activas por persona.",
+          "No hay un solo proceso en el que esté escrito cómo se trabaja ahora con IA y qué resultado se espera.",
+          "Los equipos con más uso no muestran mejores tiempos, costos o calidad que los equipos con menos uso.",
+          "Aparecen prácticas para inflar el uso, como abrir la herramienta para tareas que no la necesitan.",
+          "Quien se niega no ha tenido nunca una conversación sobre por qué, solo recordatorios."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El mecanismo",
+        "texto": "Una obligación de uso se cumple con uso, y el uso se fabrica fácil"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Esto no es nuevo. Cuando las empresas implantaron el CRM, muchas midieron cuántos registros cargaba cada vendedor, y los vendedores aprendieron a cargar registros. La calidad del pipeline no mejoró por eso; mejoró en las empresas que decidieron qué decisión comercial iba a salir del CRM y obligaron a tomarla ahí. Con la IA el patrón es el mismo, solo que más barato de simular: una consulta cuesta segundos y deja rastro en el panel."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en un área de cuentas por pagar con un objetivo de uso diario. El analista que concilia facturas con un procedimiento que ya funciona bien empieza a pedirle a la herramienta resúmenes de correos que no necesita, para cumplir. El panel sube, el cierre tarda lo mismo, y la dirección lee una adopción que no existe. Lo grave no es el tiempo perdido, sino que la empresa pierde la capacidad de distinguir dónde la IA sí está cambiando el trabajo."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Se puede exigir una forma de trabajar que ya demostró su resultado. Exigir una herramienta solo mide quién sabe aparentar que la usa.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Lo que sí se puede exigir",
+        "texto": "La obligación tiene sentido cuando va atada a un proceso y a un resultado"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La diferencia práctica está en dónde se escribe la regla. Una regla que dice «todo el equipo debe usar IA» se escribe sobre las personas. Una regla que dice «las respuestas a reclamos de primer nivel se redactan con el asistente y se revisan contra la guía antes de enviarse» se escribe sobre un proceso. La segunda tiene dueño, tiene un resultado que se puede comparar con el de antes, y se puede retirar si no mejora nada."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Por eso la evaluación de desempeño no debería medir el uso. Debería medir lo mismo que antes, los resultados del puesto, y añadir una sola cosa: si la persona trabaja según el estándar vigente en los procesos donde ya existe. Así nadie es premiado por consumir ni castigado por no hacerlo donde la IA todavía no aporta."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Quien se niega",
+        "texto": "Hay tres negativas distintas, y solo una es un problema de desempeño"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. «En mi tarea no sirve»",
+            "definicion": "A menudo es cierto. La persona conoce los casos raros de su proceso mejor que quien escribió el objetivo de uso. Esta negativa se trata como un diagnóstico: se le pide que muestre dónde falla la herramienta, y con eso se decide si ese proceso entra o no en el estándar. Es la negativa más valiosa para la empresa."
+          },
+          {
+            "termino": "2. «No me fío de lo que pasa con esto»",
+            "definicion": "Puede ser un riesgo real, como datos de clientes en una herramienta sin contrato adecuado, o un temor sobre el propio puesto. En el primer caso la empresa tiene una tarea pendiente antes de exigir nada. En el segundo, la respuesta no es insistir, sino decir con claridad qué hará la empresa con el tiempo que libera la IA."
+          },
+          {
+            "termino": "3. «Prefiero hacerlo como siempre»",
+            "definicion": "Esta sí es un asunto de desempeño, pero solo cuando el proceso ya tiene un estándar probado y las dos negativas anteriores están descartadas. Se trata igual que quien se negara a usar el sistema de facturación: con una conversación, un plazo y apoyo para aprender. Llegar aquí sin haber pasado por las dos primeras es tratar como resistencia lo que era información."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ordenar las negativas así cambia el tono de la conversación. Quien se niega deja de ser el rezagado del equipo y pasa a ser, en muchos casos, la persona que mejor sabe dónde la IA no paga todavía. Esa información no aparece en ningún panel de licencias, y la empresa la pierde en cuanto convierte la negativa en una falta."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Antes de fijar cualquier objetivo de uso, elige un proceso donde la IA ya haya mostrado un mejor resultado y escribe en media página cómo se trabaja ahora en él. Exige eso, y solo eso. Después, habla con las tres personas que menos usan la herramienta y clasifica su negativa. Lo que digan te dirá cuál será el segundo proceso."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Es buena idea obligar a los empleados a usar IA?",
+            "respuesta": "Obligar al uso de la IA en general suele producir uso aparente y no mejores resultados, porque la gente aprende a cumplir el indicador. Lo que sí funciona es exigir una forma de trabajar en procesos concretos donde ya está probado que la IA mejora el resultado. En esos procesos la IA pasa a ser parte del estándar, como cualquier otro sistema de la empresa."
+          },
+          {
+            "pregunta": "¿Qué hacer con un empleado que se niega a usar IA?",
+            "respuesta": "Primero, averiguar el motivo, porque hay tres negativas distintas: que la herramienta no sirva en su tarea, que haya un riesgo o un temor no resuelto, o que prefiera trabajar como siempre. Las dos primeras aportan información que la empresa necesita. Solo la tercera es un asunto de desempeño, y solo cuando el proceso tiene un estándar probado."
+          },
+          {
+            "pregunta": "¿Se debe incluir el uso de IA en la evaluación de desempeño?",
+            "respuesta": "No como consumo, es decir, sesiones o consultas por persona, porque eso premia el uso aparente. La evaluación debería seguir midiendo los resultados del puesto y, además, si la persona trabaja según el estándar vigente en los procesos donde la IA ya forma parte de cómo se trabaja."
+          },
+          {
+            "pregunta": "¿Cómo se sabe si la adopción de IA en un equipo es real?",
+            "respuesta": "Comparando resultados del proceso, no niveles de uso. Si los equipos que más usan la herramienta no muestran mejores tiempos, menos errores o menos retrabajo que los que menos la usan, la adopción es aparente. La señal de adopción real es un proceso que cambió su forma de trabajar y su resultado a la vez."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos qué procesos de tu empresa están listos para un estándar de trabajo con IA",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "should-you-make-your-team-use-ai",
+    "titulo": "Should You Make Your Team Use AI?",
+    "entradilla": "Mandating AI use in general produces usage, not value. What you can require is a standard way of working in a specific process where AI has already shown it improves the result, the same way you require people to use the ERP. And whoever refuses is usually telling you something: before treating it as a performance issue, find out which of three refusals it is.",
+    "descripcion": "Yes, but not usage in general: require a standard in processes where AI already improves results, and ask refusers why before you judge their performance.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Mandating AI use in general produces usage, not value. What you can require is a standard way of working in a specific process where AI has already shown it improves the result, the same way you require people to use the ERP. And whoever refuses is usually telling you something: before treating it as a performance issue, find out which of three refusals it is."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Start with a scene that plays out in a lot of leadership meetings right now. The company bought licenses, ran training and published an acceptable-use policy. Six months later, the dashboard shows part of the team using the tool every day and part of it barely at all. Leadership concludes it is a willpower problem, and the obvious response is to make usage compulsory: a per-person usage target, a line in the performance review, a reminder from the CEO at the quarterly all-hands."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "It sounds sensible and usually backfires for a simple reason. What gets mandated is the use of a tool, while what the company actually wanted was a different result in its operations. Those two come apart easily, and people pull them apart as soon as usage starts to count toward their bonus."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The answer",
+        "texto": "Should you force your team to use AI, and what if someone refuses?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "You should require something, but not AI use in the abstract. What you can reasonably require is a way of working in a specific process, once it is proven that the process runs better with AI: faster, with fewer errors or with less rework. At that point AI stops being an optional tool and becomes part of the standard, just as nobody asks permission not to use the billing system. Where that proof does not exist yet, a mandate only generates activity for the dashboard."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "With people who refuse, sequence matters. First work out what kind of refusal it is, because there are three very different ones and only one is a performance problem. These are the signs a company is mandating the wrong thing:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The metric being tracked is consumption: sessions, prompts or active licenses per person.",
+          "There is not a single process with a written description of how work is now done with AI and what result is expected.",
+          "The heaviest-using teams show no better cycle times, costs or quality than the lightest-using ones.",
+          "People start padding usage, opening the tool for tasks that do not need it.",
+          "Nobody who refuses has ever had a conversation about why, only reminders."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The mechanism",
+        "texto": "A usage mandate gets met with usage, and usage is easy to fake"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of this is new. When companies rolled out CRM, many tracked how many records each rep logged, and reps learned to log records. Pipeline quality did not improve because of it. It improved at the companies that decided which commercial decision would come out of the CRM and required it to be made there. AI follows the same pattern, only cheaper to game: a prompt takes seconds and leaves a trace on the dashboard."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture an accounts payable team with a daily usage target. The analyst who reconciles invoices with a procedure that already works well starts asking the assistant to summarize emails they do not need summarized, just to hit the number. The dashboard climbs, the close takes just as long, and leadership reads adoption that is not there. The real damage is not the wasted minutes. It is that the company loses the ability to see where AI is genuinely changing the work."
+      },
+      {
+        "tipo": "cita",
+        "texto": "You can require a way of working that has proven its result. Requiring a tool only measures who is good at looking busy with it.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "What you can require",
+        "texto": "A mandate makes sense when it is tied to a process and an outcome"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The practical difference is where the rule is written. A rule that says everyone must use AI is written about people. A rule that says first-tier complaint replies are drafted with the assistant and checked against the guide before sending is written about a process. The second one has an owner, has a result you can compare with what came before, and can be withdrawn if it does not improve anything."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That is why performance reviews should not score usage. They should score what they always did, the results of the role, and add one thing: whether the person works to the current standard in the processes where one exists. Nobody gets rewarded for consuming, and nobody gets penalized for holding back where AI does not yet add anything."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "People who refuse",
+        "texto": "There are three different refusals, and only one is a performance issue"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. \"It doesn't work for my job\"",
+            "definicion": "Often true. The person knows the edge cases of their process better than whoever set the usage target. Treat this refusal as a diagnosis: ask them to show where the tool falls short, and use that to decide whether the process belongs in the standard. It is the most valuable refusal the company will get."
+          },
+          {
+            "termino": "2. \"I don't trust what happens with this\"",
+            "definicion": "It may be a real risk, such as customer data going into a tool without the right contract, or a fear about their own job. In the first case the company has homework to do before requiring anything. In the second, the answer is not to push harder but to say plainly what the company will do with the time AI frees up."
+          },
+          {
+            "termino": "3. \"I'd rather do it the way I always have\"",
+            "definicion": "This one is a performance matter, but only once the process has a proven standard and the first two refusals have been ruled out. Handle it as you would someone who refused to use the billing system: a conversation, a deadline and support to learn. Getting here without passing through the first two means treating information as resistance."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Sorting refusals this way changes the tone of the conversation. The person who says no stops being the team laggard and becomes, in many cases, the one who knows best where AI does not pay off yet. That insight never shows up on a license dashboard, and the company loses it the moment it turns a refusal into a disciplinary matter."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Before setting any usage target, pick one process where AI has already shown a better result and write half a page on how the work is now done. Require that, and only that. Then talk to the three people who use the tool least and classify their refusal. What they tell you will point to the second process."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Is it a good idea to force employees to use AI?",
+            "respuesta": "Mandating AI use in general tends to produce apparent usage rather than better results, because people learn to hit the metric. What works is requiring a way of working in specific processes where AI has already been shown to improve the outcome. In those processes AI becomes part of the standard, like any other company system."
+          },
+          {
+            "pregunta": "What should a manager do with an employee who refuses to use AI?",
+            "respuesta": "First find out why, because there are three distinct refusals: the tool does not work for their task, there is an unresolved risk or fear, or they prefer to keep working the old way. The first two carry information the company needs. Only the third is a performance issue, and only when the process has a proven standard."
+          },
+          {
+            "pregunta": "Should AI usage be part of performance reviews?",
+            "respuesta": "Not as consumption, meaning sessions or prompts per person, because that rewards apparent usage. Reviews should keep measuring the results of the role and, in addition, whether the person works to the current standard in processes where AI is already part of how the work gets done."
+          },
+          {
+            "pregunta": "How can you tell whether a team has really adopted AI?",
+            "respuesta": "Compare process results, not usage levels. If the teams that use the tool most show no better cycle times, fewer errors or less rework than those that use it least, the adoption is only apparent. Real adoption is a process that changed both how the work is done and what it delivers."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's look at which of your processes are ready for an AI working standard",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
