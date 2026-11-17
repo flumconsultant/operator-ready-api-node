@@ -1,0 +1,277 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-11-17",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "operating-model",
+  "formato": "framework",
+  "es": {
+    "slug": "mi-ceo-quiere-ir-con-todo-en-ia-como-armo-el-plan",
+    "titulo": "Mi CEO quiere ir con todo en IA: ¿qué plan armo?",
+    "entradilla": "Un mandato de ir con todo en IA se convierte en plan cuando quien lo recibe le devuelve al CEO tres decisiones que solo el CEO puede tomar: qué número del negocio tiene que moverse, en qué dos o tres procesos se concentra el esfuerzo y qué se deja de hacer para pagarlo. Sin esas tres respuestas, la ambición se traduce en una lista de herramientas y pilotos que nadie puede priorizar.",
+    "descripcion": "Devuélvele al CEO tres decisiones antes de lanzar nada: qué número debe moverse, en qué dos o tres procesos y qué se deja de hacer para lograrlo.",
+    "linkedin": {
+      "texto": "Cuando un CEO pide ir con todo en IA, casi siempre recibe a cambio una lista: veinte iniciativas, cada área con la suya.\n\nLa lista parece ambición. En la práctica le devuelve a la organización tres decisiones que solo puede tomar la dirección general.\n\nCuáles son, y cómo se le plantean a un CEO que no quiere renunciar a nada.",
+      "hashtags": [
+        "IA",
+        "Estrategia",
+        "Liderazgo"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Un mandato de ir con todo en IA se convierte en plan cuando quien lo recibe le devuelve al CEO tres decisiones que solo el CEO puede tomar: qué número del negocio tiene que moverse, en qué dos o tres procesos se concentra el esfuerzo y qué se deja de hacer para pagarlo. Sin esas tres respuestas, la ambición se traduce en una lista de herramientas y pilotos que nadie puede priorizar."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por la escena. El director general vuelve de un foro o de una sesión de directorio convencido de que la empresa va tarde, y le pide a alguien del comité que la empresa vaya con todo en IA. Quien recibe el encargo suele ser el director de operaciones, el de transformación o el de tecnología, y casi siempre recibe tres cosas a la vez: urgencia, un presupuesto sin cifra y ninguna definición de qué sería haberlo logrado."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La reacción natural es responder con volumen: un inventario de casos de uso por área, un par de licencias corporativas, un comité y un roadmap de doce meses con veinte iniciativas. Se ve diligente y suele fallar por un motivo concreto, porque traslada a la organización una decisión que el mandato dejó sin tomar. Si todo es prioridad, cada área elige lo suyo, y a los seis meses hay mucha actividad y ningún cambio que el CEO reconozca en sus números."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La respuesta",
+        "texto": "Mi CEO quiere ir con todo en IA: ¿cómo lo convierto en un plan con sentido?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Devolviendo el mandato convertido en tres preguntas, por escrito y en una página, antes de lanzar nada. La primera fija qué resultado del negocio tiene que moverse y en qué plazo. La segunda elige dónde se concentra el esfuerzo: dos o tres procesos con dueño, en lugar de una iniciativa por área. La tercera dice qué se deja de hacer, qué riesgo se acepta y quién libera el tiempo. Las tres son decisiones de dirección general, y quien recibe el encargo no debería tomarlas solo, porque asumiría una responsabilidad que no le corresponde."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Estas son las señales de que el mandato se está ejecutando sin haberse traducido:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El avance del plan se mide por número de iniciativas, pilotos o licencias, y no por un indicador del negocio.",
+          "Cada área presentó su propia lista de casos de uso y el comité las sumó en vez de elegir.",
+          "Nadie puede decir qué proyecto en curso se frenó para hacerle espacio a la IA.",
+          "El presupuesto existe, pero no está atado a un resultado que se pueda revisar en un trimestre.",
+          "Cuando se pregunta quién responde por el resultado de cada iniciativa, la respuesta es «el comité»."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El mecanismo",
+        "texto": "Un mandato sin un número deja que cada área decida qué significa"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Esto ya pasó con la transformación digital. Muchas empresas recibieron un mandato parecido hace una década, lo tradujeron en aplicaciones, portales y tableros, y años después no podían explicar qué había cambiado en su margen o en su servicio. Hubo inversión y hubo entusiasmo. Lo que faltó fue que alguien dijera, al principio, qué número tenía que mover todo aquello."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Con la IA el riesgo es mayor porque probar es barato. Un equipo puede montar un piloto en pocas semanas, y cada área tiene uno que mostrar. Piensa en una empresa de distribución donde comercial quiere un asistente para redactar propuestas, finanzas quiere automatizar la conciliación, atención al cliente quiere un agente para reclamos y recursos humanos quiere filtrar currículos. Los cuatro pedidos son razonables. Pero si lo que el CEO quería era bajar el costo de servir a cada cliente, solo uno de ellos apunta ahí, y un plan que suma los cuatro reparte el esfuerzo entre tres que no mueven el número."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Ir con todo en IA se mide por la profundidad del cambio en pocos procesos, nunca por la cantidad de pilotos abiertos.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "El plan necesita tres decisiones que solo puede tomar el CEO"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Qué número tiene que moverse",
+            "definicion": "Un indicador del negocio que el CEO ya mira, como el costo de servir, el tiempo de cierre contable o el margen por pedido, con una meta y un plazo. Importa porque es el único criterio que permite decirle que no a una iniciativa sin que parezca falta de ambición. Si el CEO no puede elegir un número, el plan todavía no tiene dirección, y conviene decírselo así."
+          },
+          {
+            "termino": "2. Dónde se concentra el esfuerzo",
+            "definicion": "Dos o tres procesos completos que afectan ese número, cada uno con un dueño del negocio y no de tecnología. Se elige el proceso entero, de punta a punta, porque una tarea automatizada en medio de un proceso que no cambia rara vez se nota en los resultados. El resto de las ideas queda en un backlog visible, con el motivo de su espera escrito."
+          },
+          {
+            "termino": "3. Qué se paga para lograrlo",
+            "definicion": "Qué proyecto se frena, qué personas dedican parte de su semana y qué riesgos se aceptan y cuáles no, por ejemplo decisiones frente a clientes o uso de datos personales. Ir con todo tiene un costo en foco. Si nadie lo nombra, lo pagan las personas que suman la IA a una agenda que ya estaba llena."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ordenado así, el plan cabe en una página y tiene una propiedad que el roadmap de veinte iniciativas no tiene: se puede revisar. A los noventa días, el comité mira si el número se movió en los procesos elegidos, decide si profundiza, corrige o cambia de proceso, y solo entonces abre el siguiente frente."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La conversación",
+        "texto": "¿Qué hago si el CEO no quiere elegir?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Pasa a menudo, y se entiende: elegir es renunciar, y el mandato de ir con todo nace justamente del temor a quedarse atrás. Aquí lo que importa es no convertir la conversación en una discusión sobre si la ambición es correcta. La ambición se acepta. Lo que se le pide al CEO es que la vuelva ejecutable, y la forma más sencilla es llevarle opciones cerradas: tres números posibles, cada uno con lo que implicaría en procesos, personas y plazo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Si aun así no elige, quien recibe el encargo puede proponer el número y los procesos por escrito, con una fecha para objetar. Eso cambia su posición. En lugar de ejecutar un mandato abierto y responder después por un resultado que nadie definió, ejecuta un plan que la dirección vio y no corrigió."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Antes de pedir presupuesto o lanzar el primer piloto, escribe una página con tres respuestas propuestas: el número que se va a mover, los dos procesos donde se va a mover y lo que se deja de hacer para lograrlo. Llévala al CEO en las dos primeras semanas. Lo que corrija de esa página es el plan."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Qué hago si mi CEO me pide implementar IA en toda la empresa?",
+            "respuesta": "Antes de lanzar iniciativas, conviene devolverle el pedido convertido en tres decisiones por escrito: qué indicador del negocio tiene que mejorar y en qué plazo, en qué dos o tres procesos se concentra el esfuerzo y qué se deja de hacer para lograrlo. Esas decisiones le corresponden a la dirección general. Con ellas, el mandato se convierte en un plan que se puede priorizar y revisar."
+          },
+          {
+            "pregunta": "¿Cuántas iniciativas de IA conviene lanzar al principio?",
+            "respuesta": "Pocas, y elegidas por su efecto en un mismo indicador del negocio. Dos o tres procesos completos, cada uno con un dueño del negocio, suelen ser más útiles que una iniciativa por área, porque concentran el esfuerzo donde el resultado se puede ver. Las demás ideas se guardan en un backlog con el motivo de su espera escrito."
+          },
+          {
+            "pregunta": "¿Quién debe ser responsable del plan de IA de la empresa?",
+            "respuesta": "El CEO responde por las decisiones de fondo: el número a mover, los procesos elegidos y lo que se deja de hacer. Cada proceso necesita además un dueño del negocio que responda por su resultado, no solo un responsable de tecnología. Un comité puede coordinar, pero cuando el comité es la respuesta a quién responde, en realidad no responde nadie."
+          },
+          {
+            "pregunta": "¿Cómo se sabe si el plan de IA está funcionando?",
+            "respuesta": "Mirando el indicador del negocio que se eligió al principio en los procesos donde se trabajó, no el número de pilotos, licencias o usuarios activos. Una revisión a los noventa días permite decidir si se profundiza, se corrige o se cambia de proceso. Si no se eligió un indicador al inicio, no hay forma honesta de responder la pregunta."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Convirtamos el mandato de IA de tu empresa en un plan de una página",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "my-ceo-wants-to-go-all-in-on-ai",
+    "titulo": "My CEO Wants to Go All In on AI. Now What?",
+    "entradilla": "An all-in AI mandate becomes a plan when the person who receives it hands the CEO back three decisions only the CEO can make: which business number has to move, which two or three processes get the effort, and what the company stops doing to pay for it. Without those answers, ambition turns into a list of tools and pilots that nobody can rank.",
+    "descripcion": "Before launching anything, hand the CEO three decisions: which number must move, in which two or three processes, and what you stop doing to get there.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "An all-in AI mandate becomes a plan when the person who receives it hands the CEO back three decisions only the CEO can make: which business number has to move, which two or three processes get the effort, and what the company stops doing to pay for it. Without those answers, ambition turns into a list of tools and pilots that nobody can rank."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Start with the scene. The CEO comes back from a conference or a board meeting convinced the company is behind, and tells someone on the executive team that the company is going all in on AI. The person on the receiving end is usually the COO, the head of transformation or the CIO, and they typically get three things at once: urgency, a budget with no number attached, and no definition of what success would look like."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The instinctive response is volume: a use-case inventory from every function, a couple of enterprise licenses, a steering committee and a twelve-month roadmap with twenty initiatives. It looks diligent, and it tends to fail for a specific reason. It pushes down into the organization a decision the mandate left unmade. When everything is a priority, each function picks its own, and six months later there is plenty of activity and nothing the CEO recognizes in the numbers."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The answer",
+        "texto": "My CEO wants to go all in on AI: how do I turn that into a sensible plan?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hand the mandate back as three questions, in writing and on one page, before you launch anything. The first sets which business outcome has to move and by when. The second chooses where the effort goes: two or three processes with a named owner, rather than one initiative per function. The third states what stops, which risks are acceptable and who frees up the time. All three are CEO-level calls, and the person who received the brief should not make them alone, because they would be taking on accountability that is not theirs."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "These are the signs the mandate is being executed without ever being translated:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Progress is reported as the number of initiatives, pilots or licenses rather than a business metric.",
+          "Every function submitted its own use-case list and the committee added them up instead of choosing.",
+          "Nobody can name an ongoing project that was paused to make room for AI.",
+          "There is a budget, but it is not tied to a result that can be reviewed within a quarter.",
+          "Ask who owns the outcome of each initiative and the answer is \"the committee\"."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The mechanism",
+        "texto": "A mandate without a number lets every function decide what it means"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "We have been here before with digital transformation. Plenty of companies got a similar mandate a decade ago, translated it into apps, portals and dashboards, and years later could not say what had changed in their margins or their service levels. There was money and there was enthusiasm. What was missing was someone saying, at the start, which number all of it was supposed to move."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "With AI the risk is higher because experimenting is cheap. A team can stand up a pilot in a few weeks, and every function has one to show. Picture a distribution company where sales wants an assistant to draft proposals, finance wants to automate reconciliation, customer service wants an agent for complaints and HR wants to screen resumes. All four requests are reasonable. But if what the CEO really wanted was a lower cost to serve each customer, only one of them points there, and a plan that funds all four spreads the effort across three that will not move the number."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Going all in on AI is measured by how deeply a few processes change, never by how many pilots are running.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "The plan needs three decisions only the CEO can make"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Which number has to move",
+            "definicion": "A business metric the CEO already watches, such as cost to serve, days to close the books or margin per order, with a target and a date. It matters because it is the only criterion that lets you turn down an initiative without looking unambitious. If the CEO cannot pick a number, the plan has no direction yet, and it is worth saying so plainly."
+          },
+          {
+            "termino": "2. Where the effort goes",
+            "definicion": "Two or three complete processes that drive that number, each owned by someone on the business side rather than in IT. Pick the whole process, end to end, because a task automated in the middle of a process that otherwise stays the same rarely shows up in results. Every other idea goes into a visible backlog, with the reason it is waiting written down."
+          },
+          {
+            "termino": "3. What you pay to get there",
+            "definicion": "Which project gets paused, which people give up part of their week, and which risks are acceptable and which are not, such as decisions made in front of customers or the use of personal data. Going all in costs focus. If nobody names that cost, it gets paid by the people who are told to add AI to a calendar that was already full."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Framed this way, the plan fits on one page and has something the twenty-initiative roadmap lacks: it can be reviewed. At ninety days the executive team checks whether the number moved in the chosen processes, decides whether to go deeper, adjust or switch processes, and only then opens the next front."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The conversation",
+        "texto": "What if the CEO won't choose?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "It happens a lot, and it is understandable: choosing means giving something up, and the all-in mandate usually comes from a fear of falling behind. The point is not to turn the conversation into a debate about whether the ambition is right. Accept the ambition. What you are asking the CEO for is a way to make it executable, and the easiest route is a closed set of options: three possible numbers, each with what it would mean for processes, people and timing."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "If the CEO still will not choose, propose the number and the processes in writing, with a date for objections. That changes where you stand. Instead of executing an open-ended mandate and later answering for a result nobody defined, you are executing a plan leadership saw and did not change."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Before you ask for budget or launch the first pilot, write one page with three proposed answers: the number that will move, the two processes where it will move, and what stops so that it can. Take it to the CEO within the first two weeks. Whatever the CEO corrects on that page is the plan."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "What should I do when my CEO asks me to roll out AI across the whole company?",
+            "respuesta": "Before launching initiatives, hand the request back as three written decisions: which business metric has to improve and by when, which two or three processes get the effort, and what the company stops doing to make room. Those decisions belong to the CEO. Once they are made, the mandate becomes a plan that can be prioritized and reviewed."
+          },
+          {
+            "pregunta": "How many AI initiatives should a company start with?",
+            "respuesta": "Few, and chosen for their effect on a single business metric. Two or three complete processes, each with a business owner, are usually more useful than one initiative per function, because they concentrate effort where the result can be seen. Other ideas go into a backlog with the reason they are waiting written down."
+          },
+          {
+            "pregunta": "Who should own a company's AI plan?",
+            "respuesta": "The CEO owns the underlying decisions: the number to move, the processes chosen and what gets dropped. Each process also needs a business owner accountable for its result, not just a technology lead. A committee can coordinate, but when the committee is the answer to who is accountable, nobody really is."
+          },
+          {
+            "pregunta": "How do you know whether an AI plan is working?",
+            "respuesta": "Look at the business metric chosen at the start, in the processes where the work happened, rather than at the number of pilots, licenses or active users. A ninety-day review lets the team decide whether to go deeper, adjust or switch processes. If no metric was chosen at the start, there is no honest way to answer the question."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's turn your company's AI mandate into a one-page plan",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
