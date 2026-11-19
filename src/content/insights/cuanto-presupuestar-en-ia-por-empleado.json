@@ -1,0 +1,293 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-11-19",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "value-adoption",
+  "formato": "framework",
+  "es": {
+    "slug": "cuanto-presupuestar-en-ia-por-empleado",
+    "titulo": "¿Cuánto presupuestar en IA por empleado?",
+    "entradilla": "Una cifra por empleado sirve para las licencias, que se pagan por persona. Para el consumo, que se paga por tarea, estorba: se concentra en pocos procesos y crece justo donde la IA funciona. El consumo se presupuesta por proceso, con una banda en lugar de un tope, y se controla dándole a cada línea de gasto un dueño.",
+    "descripcion": "Por empleado solo las licencias. El consumo se presupuesta por proceso, con coste por tarea, volumen previsto y una banda, y cada gasto tiene un dueño.",
+    "linkedin": {
+      "texto": "Un presupuesto de IA por cabeza trata igual a quien abre el chat dos veces por semana y al proceso que ya resuelve miles de casos al mes.\n\nEl día que finanzas pide recortar, la media decide. Y la media siempre corta primero lo que más se usa, que suele ser lo que mejor funciona.\n\nTres piezas para presupuestar la IA por proceso y controlar el consumo sin apagarlo a ciegas.",
+      "hashtags": [
+        "IA",
+        "Finanzas",
+        "Estrategia"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Una cifra por empleado sirve para las licencias, que se pagan por persona. Para el consumo, que se paga por tarea, estorba: se concentra en pocos procesos y crece justo donde la IA funciona. El consumo se presupuesta por proceso, con una banda en lugar de un tope, y se controla dándole a cada línea de gasto un dueño."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por cómo se llegó aquí. Durante veinte años el software de oficina se presupuestó por asiento: tantas personas, tantas licencias, una cifra anual que finanzas podía proyectar sin sorpresas. La primera ola de IA generativa encajó en ese molde, porque los asistentes se venden por usuario y por mes. Por eso la pregunta que llega hoy a los comités tiene esa forma: cuánto hay que reservar por empleado."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El problema aparece con la segunda ola. Cuando un área conecta un modelo a un proceso, por ejemplo para clasificar reclamos, leer facturas o preparar respuestas, la factura deja de depender de cuántas personas hay y pasa a depender de cuántas tareas se ejecutan. Ese gasto se cobra por consumo, varía cada mes y no respeta el presupuesto anual. Una cifra por cabeza no lo describe, y cuando hay que recortar, tampoco ayuda a decidir qué cortar."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La respuesta corta, entonces, tiene dos capas. Lo que se paga por persona se presupuesta por perfil. Lo que se paga por tarea se presupuesta por proceso. Mezclar las dos en una sola cifra por empleado es lo que vuelve el gasto imprevisible."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La respuesta",
+        "texto": "¿Cuánto hay que presupuestar en IA por empleado?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Por empleado solo tiene sentido presupuestar la capa fija: las licencias de asistentes y herramientas que se pagan por usuario. Esa cifra sale de multiplicar el precio de cada licencia por los perfiles que la necesitan para su trabajo, no por toda la plantilla. Un analista financiero y una persona de recepción no necesitan la misma herramienta, y presupuestarles lo mismo es pagar asientos que no se van a usar. Para la capa variable, la de consumo, la unidad correcta es el proceso: cuánto cuesta cada tarea, cuántas tareas se prevén y qué margen se acepta."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay señales claras de que el presupuesto por cabeza ya no describe el gasto real:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "La factura de IA cambia de un mes a otro sin que haya cambiado el número de personas.",
+          "Nadie puede decir qué proceso explica la mayor parte del gasto de consumo.",
+          "El gasto en APIs y agentes se paga desde la tarjeta de un área o desde el presupuesto de TI, sin línea propia.",
+          "Las alertas de gasto llegan a finanzas, pero nadie en la operación puede explicarlas.",
+          "La única palanca disponible para controlar el gasto es recortar herramientas para todos por igual."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El mecanismo",
+        "texto": "El consumo se concentra en pocos procesos, y la media por cabeza lo esconde"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en una empresa de servicios con quinientas personas. La mayoría usa un asistente para redactar correos y resumir documentos, y su consumo es pequeño y estable. Pero el área de atención conectó un modelo a la bandeja de reclamos: cada reclamo se lee, se clasifica y recibe un borrador de respuesta. Ese único proceso puede consumir más que el resto de la empresa junta, porque trabaja con cada caso que entra, todos los días, sin que nadie abra una pantalla. Si finanzas divide la factura entre quinientas personas, obtiene una cifra que no describe a nadie."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La concentración tiene una segunda consecuencia. El consumo crece justo en los procesos donde la IA funciona, porque ahí es donde la operación decide ampliarla. Un presupuesto anual fijo trata ese crecimiento como un desvío y lo marca en rojo. El área que mejor resultado está sacando de la IA es la que aparece como problema en el informe mensual de gasto."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Aquí lo que importa es la unidad de medida. Si el gasto se mira por persona, el éxito parece un descontrol. Si se mira por tarea, el mismo gasto se lee como lo que es: un coste unitario multiplicado por un volumen que la operación decidió aumentar."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Las licencias se presupuestan por persona. El consumo se presupuesta por proceso, porque ahí se decide cuánto crece.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Tres piezas sostienen un presupuesto de IA que aguanta un año entero"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Separar lo fijo de lo variable",
+            "definicion": "Consiste en llevar las licencias por usuario y el consumo por tarea en dos líneas distintas del presupuesto, con dueños distintos. Importa porque cada capa se controla con una palanca diferente: las licencias se ajustan en cada renovación según el uso por tarea, y el consumo se ajusta cada mes según el volumen. Juntas en una cifra, ninguna de las dos palancas funciona."
+          },
+          {
+            "termino": "2. Presupuestar el consumo por proceso, con una banda",
+            "definicion": "Consiste en estimar para cada proceso el coste por tarea y el volumen previsto, y fijar una banda, no un tope: un rango dentro del cual el gasto se considera normal. Importa porque el coste total se vuelve explicable. Si la factura sube porque entraron más reclamos, el coste por tarea no cambió y no hay nada que corregir. Si sube porque cada tarea cuesta más, algo cambió en el diseño o en el proveedor, y eso sí hay que mirarlo."
+          },
+          {
+            "termino": "3. Dar un dueño y un umbral a cada línea de gasto",
+            "definicion": "Consiste en etiquetar cada consumo con el proceso que lo genera, asignarle un responsable en la operación y definir umbrales que avisen a esa persona antes que a finanzas. Importa porque quien puede explicar un pico es quien conoce el proceso. Los topes duros, los que cortan el servicio al llegar a una cifra, se reservan para pilotos y experimentos, donde detenerse no rompe nada que un cliente esté esperando."
+          }
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El error frecuente",
+        "texto": "Recortar por igual a todos apaga primero lo que más rinde"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Tarde o temprano llega el trimestre en que finanzas pide bajar el gasto en IA. En los foros de ingenieros ya circulan preguntas de equipos a los que la empresa recortó de golpe el gasto en herramientas de IA y que no saben cómo prepararse. Sin presupuesto por proceso, el recorte se aplica igual a todos, o se corta lo que más consume. Y lo que más consume suele ser el proceso que ya se apoya en la IA para funcionar, el que tiene clientes esperando al otro lado."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Con el gasto asignado a procesos y dueños, la conversación cambia. Se puede preguntar qué proceso tiene un coste por tarea que no se justifica con lo que resuelve, cuál está en piloto sin fecha de decisión y cuál consume dentro de su banda. Recortar se vuelve una decisión de cartera, con criterio, y deja de ser un ajuste lineal que castiga el uso."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Esto complementa, y no sustituye, lo que se negocia con el proveedor. Un buen contrato por uso define la unidad de cobro y pone techos. El presupuesto interno decide cuánto de ese techo se reserva para cada proceso y quién responde cuando se acerca. Sin lo segundo, el mejor contrato sigue produciendo facturas que nadie dentro de la empresa sabe explicar."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Toma la factura de consumo de IA de los últimos tres meses y repártela por proceso, aunque sea a mano. Para cada proceso anota tres datos: cuántas tareas ejecutó, cuánto costó cada una y quién en la operación responde por él. Lo que no se pueda asignar a ningún proceso es la primera línea a revisar."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cuánto debe presupuestar una empresa en IA por empleado?",
+            "respuesta": "Por empleado solo conviene presupuestar las licencias que se pagan por usuario, y solo para los perfiles que las necesitan en su trabajo, no para toda la plantilla. El gasto por consumo de APIs y agentes no depende del número de personas sino del número de tareas, así que se presupuesta por proceso. Una sola cifra por empleado que mezcle las dos capas vuelve el gasto imprevisible."
+          },
+          {
+            "pregunta": "¿Cómo se controla el gasto de IA que se cobra por consumo?",
+            "respuesta": "Etiquetando cada consumo con el proceso que lo genera, dándole a cada proceso un responsable en la operación y fijando umbrales que avisen a esa persona antes de que llegue la factura. Además, se sigue el coste por tarea y no solo el gasto total: si el total sube porque hay más volumen, el proceso está creciendo; si sube el coste por tarea, algo cambió y hay que revisarlo."
+          },
+          {
+            "pregunta": "¿Conviene poner un tope fijo al gasto en IA?",
+            "respuesta": "Un tope que corta el servicio conviene en pilotos y experimentos, donde detenerse no afecta a ningún cliente. En procesos en producción es mejor una banda de gasto esperado con umbrales de aviso, porque cortar el servicio al llegar a una cifra deja sin atender justo los casos que el proceso ya resuelve con IA. Lo que se revisa al salir de la banda es la causa del desvío."
+          },
+          {
+            "pregunta": "¿Por qué el gasto en IA es tan difícil de prever en el presupuesto anual?",
+            "respuesta": "Porque una parte del gasto se paga por consumo y el consumo crece con el volumen de los procesos donde la IA funciona, que la operación decide ampliar durante el año. Un presupuesto anual fijo trata ese crecimiento como un desvío. Presupuestar por proceso, con coste por tarea y volumen previsto, lo vuelve explicable aunque la cifra total cambie."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Veamos qué procesos explican tu gasto en IA",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-much-to-budget-for-ai-per-employee",
+    "titulo": "How Much Should You Budget for AI per Employee?",
+    "entradilla": "A per-employee figure works for licences, which are paid per seat. For usage, which is paid per task, it gets in the way: usage concentrates in a handful of processes and grows exactly where AI is working. Budget usage by process, with a range rather than a cap, and control it by giving every line of spend an owner.",
+    "descripcion": "Only licences belong in a per-head budget. Usage is budgeted by process: cost per task, expected volume and a range, with an owner for every line of spend.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "A per-employee figure works for licences, which are paid per seat. For usage, which is paid per task, it gets in the way: usage concentrates in a handful of processes and grows exactly where AI is working. Budget usage by process, with a range rather than a cap, and control it by giving every line of spend an owner."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Some history first. For twenty years, office software was budgeted by the seat: so many people, so many licences, one annual number finance could forecast without surprises. The first wave of generative AI fitted that mould, because assistants are sold per user per month. That is why the question reaching leadership teams today comes in that shape: how much should we set aside per employee?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The trouble starts with the second wave. Once a team wires a model into a process, say to triage complaints, read invoices or draft replies, the bill stops tracking headcount and starts tracking how many tasks run. That spend is metered, moves every month and ignores the annual budget. A per-head number does not describe it, and when cuts come, it does not help anyone decide what to cut."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "So the short answer has two layers. What you pay per person, you budget by role. What you pay per task, you budget by process. Blending the two into a single per-employee figure is what makes the spend unpredictable."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The answer",
+        "texto": "How much should a company budget for AI per employee?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Only the fixed layer belongs in a per-employee budget: the assistants and tools paid per user. That figure is the price of each licence times the roles that genuinely need it for their work, not the whole workforce. A financial analyst and a receptionist do not need the same tool, and budgeting the same for both means paying for seats nobody will use. For the variable layer, the metered one, the right unit is the process: what each task costs, how many tasks you expect, and how much variance you are willing to accept."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A few signs that a per-head budget has stopped describing what you actually spend:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The AI bill moves from month to month while headcount stays flat.",
+          "Nobody can say which process accounts for most of the usage spend.",
+          "API and agent costs land on a team's corporate card or inside the IT budget, with no line of their own.",
+          "Spend alerts reach finance, but nobody in operations can explain them.",
+          "The only lever for controlling spend is cutting tools for everyone at once."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The mechanism",
+        "texto": "Usage concentrates in a few processes, and a per-head average hides it"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture a services firm with five hundred people. Most of them use an assistant to draft emails and summarise documents, and their usage is small and steady. But the customer service team has connected a model to the complaints inbox: every complaint is read, categorised and given a draft reply. That one process can consume more than the rest of the company combined, because it touches every case that comes in, every day, without anyone opening a screen. Divide the bill by five hundred and you get a number that describes nobody."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Concentration has a second consequence. Usage grows precisely in the processes where AI works, because that is where operations chooses to extend it. A fixed annual budget treats that growth as an overrun and flags it red. The team getting the most out of AI ends up as the problem in the monthly spend report."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "What matters here is the unit of measure. Looked at per person, success reads as loss of control. Looked at per task, the same spend reads as what it is: a unit cost multiplied by a volume the business decided to increase."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Licences are budgeted per person. Usage is budgeted per process, because that is where its growth is decided.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "Three pieces hold up an AI budget that lasts the whole year"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Split fixed from variable",
+            "definicion": "Keep per-user licences and per-task usage on separate budget lines, with separate owners. It matters because each layer has its own lever: licences are adjusted at each renewal based on which tasks they support, and usage is adjusted monthly based on volume. Merge them into one number and neither lever works."
+          },
+          {
+            "termino": "2. Budget usage by process, within a range",
+            "definicion": "For each process, estimate cost per task and expected volume, then set a range rather than a cap: a band within which spend counts as normal. It matters because total cost becomes explainable. If the bill rises because more complaints came in, unit cost has not moved and there is nothing to fix. If it rises because each task costs more, something changed in the design or with the vendor, and that does need attention."
+          },
+          {
+            "termino": "3. Give every line of spend an owner and a threshold",
+            "definicion": "Tag each unit of usage with the process that generates it, assign an owner in operations and set thresholds that alert that person before they alert finance. It matters because the person who can explain a spike is the one who runs the process. Hard caps, the kind that shut the service off at a given figure, are kept for pilots and experiments, where stopping does not leave a customer waiting."
+          }
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The common mistake",
+        "texto": "Across-the-board cuts switch off the best-performing work first"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Sooner or later comes the quarter when finance asks for lower AI spend. Engineering forums already carry questions from teams whose company abruptly cut AI tool spend and who are unsure how to prepare. Without a process-level budget, the cut lands evenly on everyone, or on whatever consumes the most. And what consumes the most is usually the process that already depends on AI to run, the one with customers waiting on the other end."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Once spend is tied to processes and owners, the conversation changes. You can ask which process has a unit cost that its results do not justify, which one is a pilot with no decision date, and which one is running inside its range. Cutting becomes a portfolio decision made on judgement rather than a flat reduction that penalises use."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of this replaces what you negotiate with the vendor. A good usage-based contract defines the billing unit and sets ceilings. The internal budget decides how much of that ceiling each process gets and who answers for it as spend approaches the limit. Without the second part, even the best contract keeps producing invoices nobody inside the company can explain."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take the last three months of AI usage invoices and allocate them by process, by hand if you have to. For each process, record three things: how many tasks it ran, what each one cost, and who in operations owns it. Whatever cannot be assigned to any process is the first line to look at."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How much should a company budget for AI per employee?",
+            "respuesta": "Only per-user licences belong in a per-employee budget, and only for the roles that need them for their work, not the entire workforce. Usage-based spend on APIs and agents depends on the number of tasks, not the number of people, so it is budgeted by process. A single per-employee figure that blends both layers makes AI spend unpredictable."
+          },
+          {
+            "pregunta": "How do you control usage-based AI spend?",
+            "respuesta": "Tag every unit of usage with the process that generates it, give each process an owner in operations, and set thresholds that alert that owner before the invoice arrives. Track cost per task, not just total spend: if the total rises because volume grew, the process is scaling; if cost per task rises, something has changed and needs review."
+          },
+          {
+            "pregunta": "Should you put a hard cap on AI spend?",
+            "respuesta": "Hard caps that shut the service off make sense for pilots and experiments, where stopping affects no customer. For processes in production, an expected spend range with alert thresholds works better, because cutting service at a fixed figure leaves exactly the cases the process already handles with AI unattended. When spend leaves the range, the thing to review is the cause."
+          },
+          {
+            "pregunta": "Why is AI spend so hard to forecast in an annual budget?",
+            "respuesta": "Because part of it is metered, and metered usage grows with the volume of the processes where AI works, which operations decides to expand during the year. A fixed annual budget treats that growth as an overrun. Budgeting by process, with cost per task and expected volume, keeps spend explainable even when the total changes."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's find which processes drive your AI spend",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
