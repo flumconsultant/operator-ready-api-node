@@ -142,7 +142,7 @@
           },
           {
             "pregunta": "¿Quién responde si la IA del proveedor genera un resultado erróneo que causa un daño?",
-            "respuesta": "Frente al cliente final y frente al regulador, casi siempre responde la empresa que usó el resultado. Lo que el contrato define es si luego puede recuperar parte del coste frente al proveedor. Para eso hay que revisar si el tope de indemnización distingue una caída del servicio de un daño causado por contenido erróneo, y si hay alguna cobertura para reclamaciones de propiedad intelectual sobre lo generado."
+            "respuesta": "Frente al cliente final y frente al regulador, casi siempre responde la empresa que usó el resultado. Lo que el contrato define es si luego puede recuperar parte del coste frente al proveedor. Para eso hay que revisar si el tope de indemnización distingue una caída del servicio de un daño causado por contenido erróneo, y si hay alguna cobertura para reclamos de propiedad intelectual sobre lo generado."
           },
           {
             "pregunta": "¿Qué es un subencargado y por qué importa en un contrato de IA?",
