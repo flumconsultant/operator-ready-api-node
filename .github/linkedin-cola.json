@@ -1,0 +1,31 @@
+{
+  "_": "Artículos atrasados que no salieron en LinkedIn porque el permiso caducó (23-oct a 19-nov de 2026). El workflow los publica en este orden, dos por día laborable, y los va quitando de aquí.",
+  "cola": [
+    "mi-ceo-quiere-ir-con-todo-en-ia-como-armo-el-plan",
+    "conviene-obligar-al-equipo-a-usar-ia",
+    "que-hacer-cuando-tu-equipo-entrega-trabajo-de-ia-sin-revisar",
+    "cubre-el-seguro-de-la-empresa-los-errores-de-su-ia",
+    "como-se-negocia-un-contrato-de-ia-que-cobra-por-uso",
+    "que-pasa-con-la-relacion-con-los-clientes-cuando-atiende-un-agente-de-ia",
+    "cuando-basta-rpa-y-cuando-hace-falta-un-agente-de-ia",
+    "por-que-se-dispara-el-coste-de-la-ia-al-pasar-del-piloto-a-produccion",
+    "cuando-no-conviene-usar-ia-en-una-decision-o-un-proceso",
+    "como-se-redefine-un-puesto-cuando-un-agente-hace-parte-del-trabajo",
+    "como-se-forma-a-los-directivos-en-ia-sin-hacerlos-tecnicos",
+    "como-empieza-con-ia-una-pyme-sin-equipo-tecnico",
+    "como-se-prepara-una-empresa-para-una-crisis-de-reputacion-causada-por-su-ia",
+    "que-hacer-con-las-alucinaciones-de-la-ia-en-un-proceso-critico",
+    "como-se-priorizan-las-iniciativas-de-ia-cuando-cada-area-pide-la-suya",
+    "como-se-decide-apagar-un-proyecto-de-ia-que-no-funciona",
+    "como-se-prueba-un-agente-de-ia-antes-de-ponerlo-en-produccion",
+    "que-hacer-cuando-los-empleados-temen-que-la-ia-les-quite-el-trabajo",
+    "como-se-redacta-una-politica-de-uso-de-ia-que-se-cumpla",
+    "que-clausulas-importan-al-firmar-con-un-proveedor-de-ia",
+    "hay-que-ordenar-los-datos-antes-de-empezar-con-ia",
+    "cuando-debe-un-agente-de-ia-pasar-el-caso-a-una-persona",
+    "hay-que-avisar-al-cliente-de-que-lo-atiende-un-agente-de-ia",
+    "por-que-tu-equipo-sigue-a-la-ia-aunque-no-confie-en-ella",
+    "de-donde-saldran-los-senior-si-la-ia-hace-el-trabajo-junior",
+    "que-hacer-cuando-falla-un-agente-de-ia-en-produccion"
+  ]
+}

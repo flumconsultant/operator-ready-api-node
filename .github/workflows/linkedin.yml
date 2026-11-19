@@ -23,6 +23,15 @@ on:
         description: 'Ensayo: enseña el post exacto que saldría y no publica nada. Déjalo marcado la primera vez.'
         type: boolean
         default: true
+      cola:
+        description: 'Cola de atrasados: publica el primero de .github/linkedin-cola.json en vez del artículo del día.'
+        type: boolean
+        default: false
+  # Cola de atrasados: dos por día laborable, 9:12 y 17:12 en Lima. Cuando
+  # la cola está vacía, la vuelta no hace nada y termina en verde.
+  schedule:
+    - cron: '12 14 * * 1-5'
+    - cron: '12 22 * * 1-5'
 
 permissions:
   contents: write
@@ -37,6 +46,7 @@ jobs:
     # artículo que no llegó a la web sería mandar gente a una página vieja.
     if: >-
       github.event_name == 'workflow_dispatch'
+      || github.event_name == 'schedule'
       || (github.event.workflow_run.conclusion == 'success'
           && github.event.workflow_run.head_branch == 'main')
     runs-on: ubuntu-latest
@@ -55,6 +65,7 @@ jobs:
           LINKEDIN_ORG_ID: ${{ secrets.LINKEDIN_ORG_ID }}
           LINKEDIN_MEMBER_ID: ${{ secrets.LINKEDIN_MEMBER_ID }}
           ENSAYO: ${{ github.event.inputs.ensayo }}
+          LINKEDIN_MODO: ${{ (github.event_name == 'schedule' || github.event.inputs.cola == 'true') && 'cola' || '' }}
           LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
           LINKEDIN_CLIENT_SECRET: ${{ secrets.LINKEDIN_CLIENT_SECRET }}
         run: |
@@ -83,12 +94,12 @@ jobs:
       - name: Guardar lo anunciado
         run: |
           set -euo pipefail
-          if git diff --quiet -- .github/linkedin-publicado.json; then
+          if git diff --quiet -- .github/linkedin-publicado.json .github/linkedin-cola.json; then
             echo "El registro no cambió."
             exit 0
           fi
           git config user.name  'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add .github/linkedin-publicado.json
+          git add .github/linkedin-publicado.json .github/linkedin-cola.json
           git commit -m 'Anunciado en LinkedIn [skip ci]'
           git push origin HEAD:main
