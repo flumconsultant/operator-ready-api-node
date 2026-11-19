@@ -42,6 +42,12 @@ const API = 'https://api.linkedin.com/rest/posts';
 const INTROSPECCION = 'https://www.linkedin.com/oauth/v2/introspectToken';
 const SITIO = 'https://meetbecome.com';
 const REGISTRO = '.github/linkedin-publicado.json';
+/* Cola de atrasados: artículos que no salieron a su hora (el permiso caducó
+   del 23-oct al 19-nov de 2026) y que una persona decidió rescatar. Los
+   publica, uno por vuelta, el horario del workflow con LINKEDIN_MODO=cola.
+   El modo normal no los toca: si no, los daría por pasados uno a uno. */
+const COLA = '.github/linkedin-cola.json';
+const MODO_COLA = process.env.LINKEDIN_MODO === 'cola';
 const CARPETA = 'src/content/insights';
 
 /* LinkedIn saca una versión nueva cada mes y mantiene cada una un año como
@@ -398,19 +404,35 @@ const articulos = readdirSync(CARPETA)
      error que tuvo el centinela, y allí llegó a dar por bueno un feed atrasado. */
   .sort((a, b) => String(b.fecha).localeCompare(String(a.fecha)));
 
-const nuevo = articulos.find((a) => !publicados.anunciados.includes(a.es.slug));
+const cola = existsSync(COLA) ? JSON.parse(readFileSync(COLA, 'utf8')) : { cola: [] };
+const guardarCola = () => writeFileSync(COLA, `${JSON.stringify(cola, null, 2)}\n`);
+
+/* Lo que ya salió no vuelve a salir aunque siga en la cola. */
+cola.cola = cola.cola.filter((s) => !publicados.anunciados.includes(s));
+
+const nuevo = MODO_COLA
+  ? articulos.find((a) => a.es.slug === cola.cola[0])
+  : articulos.find((a) => !publicados.anunciados.includes(a.es.slug) && !cola.cola.includes(a.es.slug));
+
+if (MODO_COLA && cola.cola.length && !nuevo) {
+  console.error(`::error::«${cola.cola[0]}» está en la cola de LinkedIn pero no es un artículo publicado. Quítalo de ${COLA}.`);
+  process.exit(1);
+}
 
 if (!nuevo) {
-  console.log('Todos los artículos publicados ya se anunciaron en LinkedIn.');
+  console.log(MODO_COLA
+    ? 'La cola de atrasados de LinkedIn está vacía: no queda nada por rescatar.'
+    : 'Todos los artículos publicados ya se anunciaron en LinkedIn.');
   process.exit(0);
 }
+if (MODO_COLA) console.log(`Cola de atrasados: quedan ${cola.cola.length}, sale el primero.`);
 
 /* Solo lo reciente. Sin este corte, la primera vez que esto corriera anunciaría
    como novedad un artículo de hace semanas —y con el registro vacío, los
    anunciaría todos, uno por despliegue, durante días. */
 const DIAS_GRACIA = 3;
 const edad = Math.round((Date.now() - Date.parse(nuevo.fecha)) / 86400000);
-if (!Number.isFinite(edad) || edad > DIAS_GRACIA) {
+if (!MODO_COLA && (!Number.isFinite(edad) || edad > DIAS_GRACIA)) {
   console.log(`El artículo más antiguo sin anunciar («${nuevo.es.titulo}») es de hace ${edad} días. No se anuncia como novedad; se da por pasado.`);
   /* Un ensayo no toca el registro. Se escapó al añadirlo y lo cazó la propia
      prueba: el primer ensayo dejó marcado como «pasado» un artículo que nadie
@@ -560,6 +582,11 @@ console.log(`  ${urn}`);
 publicados.anunciados.push(nuevo.es.slug);
 writeFileSync(REGISTRO, `${JSON.stringify(publicados, null, 2)}\n`);
 console.log(`Registrado en ${REGISTRO} para que no se repita.`);
+if (MODO_COLA) {
+  cola.cola = cola.cola.filter((x) => x !== nuevo.es.slug);
+  guardarCola();
+  console.log(`Quedan ${cola.cola.length} en la cola de atrasados.`);
+}
 
 /* ---- El centinela: ¿existe el post de verdad? ----------------------------
  *
@@ -597,6 +624,7 @@ if (urn && urn.startsWith('urn:li:')) {
       console.log(`::warning::LinkedIn dijo que publicó, pero al pedir el post responde HTTP ${c.status}. Comprueba la página a mano.`);
       publicados.anunciados = publicados.anunciados.filter((x) => x !== nuevo.es.slug);
       writeFileSync(REGISTRO, `${JSON.stringify(publicados, null, 2)}\n`);
+      if (MODO_COLA) { cola.cola.unshift(nuevo.es.slug); guardarCola(); }
       console.log('El artículo vuelve a la cola: el registro no puede decir que se anunció algo que no está.');
     }
   } catch (e) {
