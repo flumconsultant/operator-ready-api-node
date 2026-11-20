@@ -1,0 +1,293 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-11-20",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "value-adoption",
+  "formato": "executive-brief",
+  "es": {
+    "slug": "cuanto-tarda-un-proyecto-de-ia-en-dar-resultados",
+    "titulo": "¿Cuánto tarda un proyecto de IA en dar resultados?",
+    "entradilla": "Un proyecto de IA da resultados cuando su efecto se puede comparar con cómo funcionaba el proceso antes. Eso depende menos del modelo que del ciclo del proceso donde aterriza y de cuánto hay que cambiar a su alrededor. Por eso la pregunta útil no pide una fecha, pide tres: cuándo habrá señal de uso, cuándo habrá resultado en el proceso y cuándo llegará al P&L.",
+    "descripcion": "Depende del ciclo del proceso y de cuánto cambia a su alrededor. Pide tres fechas con dueño: señal de uso, resultado en el proceso y efecto en el P&L.",
+    "linkedin": {
+      "texto": "Un proyecto de IA rara vez llega tarde por la tecnología. Llega tarde porque nadie dijo qué fecha se estaba esperando.\n\nUn proceso diario muestra resultados pronto. Un cierre mensual necesita varios cierres. Y exigir efecto en el P&L en la primera revisión apaga proyectos que iban bien.\n\nTres fechas que conviene pactar antes de aprobar el presupuesto.",
+      "hashtags": [
+        "IA",
+        "Estrategia",
+        "Operaciones"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Un proyecto de IA da resultados cuando su efecto se puede comparar con cómo funcionaba el proceso antes. Eso depende menos del modelo que del ciclo del proceso donde aterriza y de cuánto hay que cambiar a su alrededor. Por eso la pregunta útil no pide una fecha, pide tres: cuándo habrá señal de uso, cuándo habrá resultado en el proceso y cuándo llegará al P&L."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Es la pregunta que hace el consejo justo antes de aprobar el presupuesto, y casi siempre recibe una respuesta redonda en meses. Los plazos que circulan en foros y en páginas de proveedores rara vez dicen de dónde salen ni qué tipo de proyecto describen. Un asistente de redacción para toda la plantilla y un agente que resuelve reclamos no maduran al mismo ritmo, y ponerlos bajo el mismo plazo es comparar una suscripción con una reorganización."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Dar una sola fecha tiene otro problema: mezcla tres momentos distintos. Primero llega la señal, cuando la gente usa la herramienta y la calidad es aceptable. Después llega el resultado operativo, cuando el indicador del proceso se mueve frente a como estaba. Al final llega el resultado financiero, cuando una partida concreta cambia porque alguien lo decidió. Si el comité espera el tercero en la fecha del primero, el proyecto parece retrasado aunque vaya justo donde debía."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La respuesta corta, entonces, es que el plazo se estima por proceso y se compromete en tres fechas. Quien pide una sola está pidiendo, sin saberlo, que el proyecto se juzgue antes de tiempo."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La respuesta",
+        "texto": "¿Cuánto tarda un proyecto de IA en dar resultados reales?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Tarda lo que tarda el proceso en completar suficientes ciclos para compararlo con su línea base, más el tiempo que la organización necesite para cambiar lo que rodea al modelo. En un proceso que se repite cientos de veces al día, como clasificar reclamos, el resultado operativo se ve tras pocas semanas de uso real. En uno que ocurre una vez al mes, como el cierre contable, hacen falta varios cierres para distinguir una mejora de un mes tranquilo. Y cuando el proyecto obliga a cambiar roles, indicadores o estructura, el plazo lo marca ese cambio, no la tecnología."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay señales claras de que el plazo comprometido no se va a cumplir, y casi todas se ven el día de la aprobación:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Nadie anotó cómo funcionaba el proceso antes de empezar, así que no habrá con qué comparar.",
+          "El plazo salió del calendario del proyecto, sin mirar cada cuánto se repite el proceso.",
+          "El caso de negocio promete ahorro, pero no dice qué partida baja ni quién decide bajarla.",
+          "El resultado depende de que otra área cambie su forma de trabajar, y esa área no está en el comité.",
+          "La única fecha comprometida es la de puesta en marcha."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El mecanismo",
+        "texto": "El plazo lo marca el ciclo del proceso, no el calendario del proyecto"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en dos proyectos aprobados el mismo día, con la misma tecnología y el mismo equipo. El primero conecta un modelo a la bandeja de reclamos: cada caso que entra se clasifica y recibe un borrador de respuesta. El segundo usa un modelo para señalar qué clientes con contrato anual tienen más riesgo de no renovar, para que el área comercial actúe antes. El primero produce evidencia cada hora. El segundo solo sabrá si funcionó cuando esos contratos lleguen a su fecha de renovación."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Aquí lo que importa es la frecuencia con que el proceso genera pruebas. Cada ciclo es una observación, y hacen falta varias para separar el efecto del modelo del ruido normal de la operación. Un proceso lento no es un mal candidato para la IA, pero exige otra forma de seguirlo: indicadores intermedios mientras llega el resultado final. En el caso de las renovaciones, cuántos clientes se señalaron, a cuántos se llamó y qué se les ofreció. Eso hay que decirlo en la aprobación, no descubrirlo en la primera revisión."
+      },
+      {
+        "tipo": "cita",
+        "texto": "El plazo de un proyecto de IA lo pone el proceso donde aterriza: cada ciclo es una prueba, y hacen falta varias para hablar de resultado.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Cuanto más hay que cambiar alrededor del modelo, más lejos queda el resultado"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El ciclo del proceso explica la mitad del plazo. La otra mitad depende del tipo de iniciativa, porque cada tipo exige cambiar cosas distintas antes de que el resultado aparezca. Tres tipos cubren casi todo lo que llega a un comité:"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Asistencia individual",
+            "definicion": "Herramientas que cada persona usa en su propio trabajo para redactar, resumir o buscar. El uso aparece pronto, pero el resultado depende de qué se haga con el tiempo que liberan, y si nadie lo decide nunca llega al P&L. Su reloj lo marca una decisión de gestión sobre ese tiempo, no la herramienta."
+          },
+          {
+            "termino": "2. Un proceso rediseñado",
+            "definicion": "Un modelo o un agente que ejecuta parte de un proceso concreto, como leer facturas o atender reclamos. El resultado operativo llega tras suficientes ciclos comparados con la línea base. El financiero llega cuando alguien convierte la capacidad liberada en una decisión: menos horas extra, más volumen con el mismo equipo o un tiempo de respuesta que el cliente valora y paga."
+          },
+          {
+            "termino": "3. Un cambio de modelo operativo",
+            "definicion": "Iniciativas que redistribuyen trabajo entre personas y agentes y cambian roles, indicadores o estructura. Aquí el plazo lo marca la organización: los ciclos de presupuesto, de evaluación del desempeño y de planificación de headcount. Se mide en ciclos de gestión, y prometerlo para el próximo trimestre es la forma más segura de que se juzgue antes de tiempo."
+          }
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El error frecuente",
+        "texto": "Exigir el P&L en la fecha de la señal apaga proyectos que iban bien"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Imagina un comité que aprobó un agente para la bandeja de reclamos y en la revisión trimestral pregunta por el ahorro. El agente funciona: resuelve buena parte de los casos simples y el tiempo de respuesta bajó. Pero el equipo de atención sigue teniendo el mismo tamaño y las mismas horas extra, porque nadie decidió qué hacer con la capacidad que se liberó. La diapositiva muestra un coste nuevo y ningún ahorro. El proyecto se congela, y lo que faltaba no era tiempo sino una decisión que no le correspondía al equipo técnico."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Por eso conviene pactar tres fechas desde el principio, cada una con su indicador y su dueño. La fecha de señal dice cuándo la herramienta se usa con calidad aceptable, y responde quien lidera el proyecto. La fecha de resultado operativo dice cuándo el indicador del proceso se mueve frente a la línea base, y responde el dueño del proceso. La fecha de resultado financiero dice qué partida cambia y cuándo, y responde quien tiene autoridad para cambiarla."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Las tres fechas protegen también en el otro sentido. Si llega la fecha de señal y nadie usa la herramienta, esperar la financiera no tiene sentido: es el momento de corregir o apagar. Un comité con tres fechas sabe en cada revisión qué está mirando y qué todavía no corresponde mirar, y eso evita tanto la paciencia infinita como el recorte prematuro."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Antes de aprobar el próximo proyecto de IA, pide una hoja con tres fechas: señal, resultado operativo y resultado financiero. Al lado de cada una, el indicador que se va a mirar, cada cuánto se repite el proceso y quién responde. Si nadie puede escribir la tercera, el proyecto todavía no tiene caso de negocio, por bueno que sea el modelo."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cuánto tarda un proyecto de IA en dar resultados en una empresa?",
+            "respuesta": "Depende de cada cuánto se repite el proceso donde se aplica y de cuánto hay que cambiar a su alrededor. Un proceso que ocurre cientos de veces al día muestra resultado operativo tras pocas semanas de uso real; uno mensual necesita varios ciclos para distinguir una mejora del ruido. Si el proyecto exige cambiar roles o estructura, el plazo lo marcan los ciclos de gestión de la empresa, no la tecnología."
+          },
+          {
+            "pregunta": "¿Por qué la IA tarda más en notarse en el P&L que en la operación?",
+            "respuesta": "Porque una mejora operativa solo llega al P&L cuando alguien decide qué hacer con la capacidad que libera: reducir horas extra, absorber más volumen con el mismo equipo o cobrar por un servicio más rápido. Si esa decisión no tiene dueño, el proceso mejora y la cuenta de resultados no cambia. Por eso conviene fijar por separado la fecha del resultado operativo y la del financiero."
+          },
+          {
+            "pregunta": "¿Qué plazo hay que darle a un proyecto de IA antes de apagarlo?",
+            "respuesta": "El primer punto de decisión es la fecha de señal: el momento en que la herramienta debería usarse con calidad aceptable. Si a esa fecha no hay uso, esperar el resultado financiero no tiene sentido y hay que corregir o apagar. Si hay uso y el indicador del proceso todavía no se mueve, la pregunta es si el proceso ha completado suficientes ciclos para juzgarlo."
+          },
+          {
+            "pregunta": "¿Cómo se acorta el tiempo hasta ver resultados de la IA?",
+            "respuesta": "Registrando la línea base del proceso antes de empezar, eligiendo para el primer proyecto un proceso que se repita con frecuencia y decidiendo de antemano qué se hará con la capacidad liberada. Esas tres decisiones eliminan las esperas que no dependen del modelo, que suelen ser las más largas. Para procesos lentos, seguir indicadores intermedios permite ver la dirección antes de tener el resultado final."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Pongamos fecha a los resultados de tu proyecto de IA",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-long-until-an-ai-project-delivers-results",
+    "titulo": "How Long Until an AI Project Delivers Results?",
+    "entradilla": "An AI project delivers results when its effect can be compared with how the process ran before. That depends less on the model than on the cycle of the process it lands in and on how much has to change around it. So the useful question asks for three dates, not one: when you will see usage, when the process will improve, and when it will show up in the P&L.",
+    "descripcion": "It depends on the process cycle and how much changes around it. Ask for three dates: usage signal, process result and P&L impact, each with an owner.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "An AI project delivers results when its effect can be compared with how the process ran before. That depends less on the model than on the cycle of the process it lands in and on how much has to change around it. So the useful question asks for three dates, not one: when you will see usage, when the process will improve, and when it will show up in the P&L."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "It is the question the board asks just before signing off the budget, and it usually gets a neat answer in months. The timelines quoted in forums and on vendor sites rarely say where they come from or what kind of project they describe. A writing assistant rolled out to every employee and an agent that resolves customer complaints do not mature at the same pace, and holding them to one timeline is like comparing a subscription with a reorganisation."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A single date has a second problem: it blends three separate moments. First comes the signal, when people use the tool and the quality is acceptable. Then comes the operational result, when the process metric moves against where it started. Last comes the financial result, when a specific line in the accounts changes because someone decided it should. If the committee expects the third on the date of the first, the project looks late even when it is exactly on track."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "So the short answer is that timelines are estimated by process and committed as three dates. Anyone asking for just one is, without realising it, asking for the project to be judged too early."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The answer",
+        "texto": "How long does an AI project take to deliver real results?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "As long as the process takes to run enough cycles to be compared with its baseline, plus whatever time the organisation needs to change what surrounds the model. In a process that runs hundreds of times a day, such as triaging complaints, the operational result shows up after a few weeks of real use. In one that happens once a month, such as the financial close, it takes several closes to tell an improvement from a quiet month. And when the project requires new roles, metrics or structure, the timeline is set by that change, not by the technology."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "There are clear signs that a committed timeline will slip, and almost all of them are visible on the day of approval:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Nobody recorded how the process performed before the project started, so there will be nothing to compare against.",
+          "The timeline came from the project plan, without checking how often the process actually runs.",
+          "The business case promises savings but does not say which line goes down or who decides to bring it down.",
+          "The result depends on another team changing how it works, and that team is not on the steering committee.",
+          "The only committed date is the go-live."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The mechanism",
+        "texto": "The process cycle sets the timeline, not the project plan"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture two projects approved on the same day, with the same technology and the same team. The first connects a model to the complaints inbox: every incoming case is categorised and given a draft reply. The second uses a model to flag which annual-contract customers are most likely not to renew, so the sales team can act early. The first produces evidence every hour. The second will only know whether it worked when those contracts come up for renewal."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "What matters here is how often the process generates proof. Each cycle is one observation, and you need several to separate the model's effect from the normal noise of operations. A slow process is not a bad candidate for AI, but it needs a different way of tracking: leading indicators while the final result arrives. In the renewals case, that means how many customers were flagged, how many were called and what they were offered. That belongs in the approval, not in a surprise at the first review."
+      },
+      {
+        "tipo": "cita",
+        "texto": "An AI project's timeline is set by the process it lands in: every cycle is a test, and it takes several before you can talk about results.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "The more that has to change around the model, the further away the result"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The process cycle explains half of the timeline. The other half depends on the type of initiative, because each type requires different things to change before results appear. Three types cover almost everything that reaches a leadership team:"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Individual assistance",
+            "definicion": "Tools each person uses in their own work to draft, summarise or search. Usage appears quickly, but the result depends on what happens to the time they free up, and if nobody decides that, it never reaches the P&L. The clock here is set by a management decision about that time, not by the tool."
+          },
+          {
+            "termino": "2. A redesigned process",
+            "definicion": "A model or agent that runs part of a specific process, such as reading invoices or handling complaints. The operational result arrives after enough cycles compared with the baseline. The financial result arrives when someone turns the freed capacity into a decision: less overtime, more volume with the same team, or a response time customers value and pay for."
+          },
+          {
+            "termino": "3. A change to the operating model",
+            "definicion": "Initiatives that redistribute work between people and agents and change roles, metrics or structure. Here the organisation sets the pace: budget cycles, performance reviews and headcount planning. It is measured in management cycles, and promising it for next quarter is the surest way to have it judged too early."
+          }
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The common mistake",
+        "texto": "Demanding P&L impact on the signal date kills projects that were working"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Imagine a committee that approved an agent for the complaints inbox and, at the quarterly review, asks about savings. The agent works: it resolves a good share of the simple cases and response times are down. But the customer service team is the same size and working the same overtime, because nobody decided what to do with the capacity that was freed. The slide shows a new cost and no savings. The project is frozen, and what was missing was not time but a decision that was never the technical team's to make."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That is why it pays to agree three dates up front, each with its own metric and owner. The signal date says when the tool is in use at acceptable quality, and the project lead answers for it. The operational date says when the process metric moves against the baseline, and the process owner answers for it. The financial date says which line changes and when, and the person with authority to change it answers for it."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The three dates protect you in the other direction too. If the signal date arrives and nobody is using the tool, waiting for the financial one makes no sense: it is time to fix it or switch it off. A committee working with three dates knows at every review what it is looking at and what it is still too early to look at, which guards against both endless patience and premature cuts."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Before approving your next AI project, ask for one page with three dates: signal, operational result and financial result. Next to each, the metric you will track, how often the process runs and who is accountable. If nobody can fill in the third, the project does not yet have a business case, however good the model is."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How long does it take for an AI project to deliver results in a company?",
+            "respuesta": "It depends on how often the target process runs and how much has to change around it. A process that runs hundreds of times a day shows an operational result after a few weeks of real use; a monthly one needs several cycles to separate improvement from noise. If the project requires new roles or structure, the company's management cycles set the timeline, not the technology."
+          },
+          {
+            "pregunta": "Why does AI take longer to show up in the P&L than in operations?",
+            "respuesta": "Because an operational improvement only reaches the P&L once someone decides what to do with the capacity it frees: cut overtime, absorb more volume with the same team, or charge for a faster service. If that decision has no owner, the process improves and the income statement does not move. That is why the operational and financial dates should be set separately."
+          },
+          {
+            "pregunta": "How long should you give an AI project before shutting it down?",
+            "respuesta": "The first decision point is the signal date: when the tool should be in use at acceptable quality. If there is no usage by then, waiting for the financial result makes no sense, and the choice is to fix it or stop it. If there is usage but the process metric has not moved yet, the question is whether the process has run enough cycles to judge."
+          },
+          {
+            "pregunta": "How can you shorten the time it takes to see results from AI?",
+            "respuesta": "Record the process baseline before you start, pick a frequently repeated process for the first project, and decide in advance what will happen to the freed capacity. Those three decisions remove the waits that have nothing to do with the model, which tend to be the longest. For slow processes, tracking leading indicators shows the direction before the final result arrives."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's put dates on your AI project's results",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
