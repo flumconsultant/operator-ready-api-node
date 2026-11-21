@@ -1,0 +1,293 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-11-21",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "responsible-scale",
+  "formato": "perspective",
+  "es": {
+    "slug": "como-evitar-que-el-equipo-pierda-capacidades-con-la-ia",
+    "titulo": "¿Cómo evitar perder capacidades al delegar en IA?",
+    "entradilla": "Al delegar en la IA, lo primero que pierde un equipo no es la destreza para hacer la tarea, sino el criterio para notar cuándo el resultado está mal. Se evita como se cuida cualquier capacidad de la que depende la operación: eligiendo las pocas que son críticas y programando ocasiones para ejercerlas sin la herramienta.",
+    "descripcion": "Nombrando las dos o tres capacidades críticas de cada proceso y practicándolas sin IA. Lo primero que se pierde es el criterio para ver el error.",
+    "linkedin": {
+      "texto": "Un equipo que delega en la IA no pierde primero la destreza para hacer la tarea. Pierde el criterio para notar cuándo el resultado está mal.\n\nLos indicadores no lo registran: la herramienta acierta en lo frecuente y los errores bajan, hasta el caso raro que ya nadie detecta.\n\nTres decisiones para que una capacidad crítica siga existiendo fuera del organigrama.",
+      "hashtags": [
+        "IA",
+        "Talento",
+        "Operaciones"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Al delegar en la IA, lo primero que pierde un equipo no es la destreza para hacer la tarea, sino el criterio para notar cuándo el resultado está mal. Se evita como se cuida cualquier capacidad de la que depende la operación: eligiendo las pocas que son críticas y programando ocasiones para ejercerlas sin la herramienta."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por una escena que ya es normal. En el área de crédito de una empresa mediana, un asistente prepara el análisis de cada solicitud: resume los estados financieros, calcula los ratios y propone una calificación. El analista lo lee, ajusta un par de cosas y lo firma. Hace un año dedicaba una mañana a cada expediente. Hoy le dedica media hora, y el comité recibe más casos resueltos por semana que nunca."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Lo que el tablero no muestra es qué hacía el analista durante esa mañana. Al armar los números a mano notaba que el margen de un cliente no cuadraba con su sector, o que las cuentas por cobrar crecían más rápido que las ventas. Ese olfato no se enseñaba en ningún curso: se formaba haciendo el trabajo, expediente tras expediente. Cuando el trabajo lo hace la herramienta, el olfato deja de entrenarse, y nadie lo nota hasta el día en que el asistente se equivoca en un caso que importa y el analista lo firma igual."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La pregunta que se hacen cada vez más directores es cómo evitar eso sin renunciar a la productividad. La respuesta está en gestionar esa capacidad como se gestiona cualquier otra de la que depende la operación: decidir cuáles importan, comprobar que siguen vivas y darles práctica."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La respuesta",
+        "texto": "¿Cómo se evita que el equipo pierda capacidades al delegar en la IA?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Con tres decisiones de gestión, en este orden. Primero, nombrar las capacidades críticas: las dos o tres que el equipo necesita para detectar un error de la herramienta o para operar si la herramienta no está. Segundo, programar práctica sin IA para esas capacidades, con la misma regularidad con que se programa un simulacro. Tercero, diseñar la revisión para que obligue a razonar, en lugar de aprobar lo que ya llega hecho. Las dos reacciones habituales, prohibir la herramienta o dejar que cada persona lo resuelva por su cuenta, no protegen nada: la primera sacrifica la productividad y la segunda deja la capacidad librada a la disciplina individual."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Antes de actuar, conviene comprobar si la erosión ya empezó. Estas son las señales más comunes:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El equipo corrige cada vez menos lo que propone la herramienta, sin que los casos hayan cambiado.",
+          "Cuando la herramienta no está disponible una tarde, el trabajo se detiene en lugar de hacerse más lento.",
+          "Las personas con más experiencia justifican sus decisiones citando lo que dijo el asistente, no lo que vieron en los datos.",
+          "Los errores que llegan al cliente o a auditoría son de los que antes se detectaban en la primera lectura.",
+          "Nadie en el equipo sabría decir qué parte del proceso podría rehacer a mano mañana."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El mecanismo",
+        "texto": "Lo primero que se pierde es la capacidad de ver el error, y es la que más tarda en volver"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hacer una tarea y saber cuándo está mal hecha parecen la misma habilidad, pero se mantienen de forma distinta. La destreza para ejecutar se recupera rápido: un analista que lleva un año sin armar un flujo de caja vuelve a hacerlo con soltura en un par de días. El criterio para notar que algo no cuadra depende de haber visto muchos casos de cerca, y se apaga cuando la persona solo ve resultados terminados. Leer cien análisis bien redactados no entrena el ojo igual que construir veinte."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Por eso delegar en la IA es engañoso. La herramienta resuelve bien el caso típico, que es justo el que menos enseña. Las excepciones, que son las que forman el criterio, siguen llegando, pero llegan ya resueltas y con buena presentación. Piensa en un equipo de compras que usa un asistente para comparar ofertas. Durante meses las recomendaciones son razonables y el equipo las aprueba con una lectura rápida. Cuando una oferta trae una cláusula de ajuste de precios que el asistente resume mal, nadie la detecta, porque hace tiempo que nadie lee las ofertas completas."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Una capacidad que nadie ejerce sigue apareciendo en el organigrama mucho después de haber desaparecido de la operación.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Por qué nadie lo ve",
+        "texto": "Los indicadores miden lo que la IA hace bien y callan lo que el equipo deja de saber"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La aviación conoce este problema desde hace décadas. El piloto automático hizo los vuelos más seguros y, a la vez, redujo las horas en que los pilotos vuelan a mano. En 2013, la autoridad de aviación civil de Estados Unidos recomendó a las aerolíneas dar a sus tripulaciones más oportunidades de pilotar en manual, para que esa destreza siguiera disponible cuando el sistema falla (Fuente: FAA, Safety Alert for Operators 13002, 2013). La respuesta del sector fue programar la práctica, sin apagar el piloto automático."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "En una empresa ocurre lo mismo con menos visibilidad. Los indicadores de adopción cuentan cuántos casos procesa la herramienta y cuánto tiempo ahorra. Los de calidad cuentan errores, y durante meses los errores bajan, porque la herramienta acierta en lo frecuente. Ningún indicador registra cuántas personas del equipo sabrían detectar el error raro, y ese número solo se conoce el día en que hace falta. Para entonces la capacidad ya no se recupera con un curso, sino con meses de práctica que la operación no tiene previstos."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Conviene separar esto del problema de la cantera. Que los junior no aprendan porque la IA hace su trabajo de entrada es una cuestión de cómo se forma a quien llega. Lo que aquí se discute afecta a quien ya sabe: el analista con diez años de experiencia que, sin darse cuenta, deja de ejercer lo que sabía."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Una capacidad crítica se protege con nombre, práctica y una revisión que exija razonar"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Nombrar las capacidades críticas",
+            "definicion": "No todas importan. Para cada proceso donde la IA ya trabaja, pregunta qué tendría que saber hacer el equipo si la herramienta se equivoca o deja de estar disponible. Suele salir una lista de dos o tres: leer un estado financiero con ojo de riesgo, redactar una cláusula, diagnosticar una avería. Lo que no está en la lista se puede delegar sin culpa, y esa es la mitad del valor del ejercicio."
+          },
+          {
+            "termino": "2. Programar práctica sin la herramienta",
+            "definicion": "Una vez al mes, cada persona resuelve un caso real de principio a fin sin el asistente y compara su resultado con el de la herramienta. Las diferencias son el material más útil que tendrá el equipo ese mes, porque muestran dónde se equivoca la IA y dónde se ha oxidado la persona. Cuesta unas horas y se planifica como un simulacro, con fecha y responsable."
+          },
+          {
+            "termino": "3. Revisar con una hipótesis propia antes de ver la propuesta",
+            "definicion": "Una revisión que empieza leyendo lo que propone la IA tiende a confirmarlo. Si quien revisa anota primero qué esperaría encontrar, aunque sea en una línea, y después lo contrasta con la propuesta, la revisión vuelve a ser un ejercicio de criterio. Es un cambio pequeño en el procedimiento y es el que más capacidad mantiene en el día a día."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La intensidad tiene que ser proporcional a lo que está en juego. En un proceso donde un error se corrige en el siguiente ciclo, con la tercera pieza suele bastar. En uno donde el error llega al cliente, al regulador o al balance, las tres piezas forman parte del costo de operar con IA, y conviene presupuestarlas junto con las licencias."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Elige el proceso donde la IA lleva más tiempo trabajando y pregunta a su responsable qué capacidad necesitaría el equipo si la herramienta fallara mañana. Después pide a dos personas que resuelvan un caso real sin ella y compara los resultados. En una semana sabrás si esa capacidad sigue en la operación o solo en el organigrama."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Por qué el uso de IA puede hacer que un equipo pierda capacidades?",
+            "respuesta": "Porque las capacidades profesionales se mantienen al ejercerlas, y la IA asume justo el trabajo donde se ejercían. Lo primero que se debilita es el criterio para notar cuándo un resultado está mal, que depende de ver muchos casos de cerca; la destreza para hacer la tarea se recupera mucho más rápido. Esa pérdida no aparece en los indicadores hasta que la herramienta se equivoca y nadie lo detecta."
+          },
+          {
+            "pregunta": "¿Hay que limitar el uso de la IA para que el equipo no pierda habilidades?",
+            "respuesta": "No hace falta limitarla en el día a día. Lo que funciona es identificar las dos o tres capacidades críticas de cada proceso y programar práctica sin la herramienta para ellas, por ejemplo un caso real al mes resuelto a mano y comparado con la propuesta de la IA. Así se conserva la productividad y la capacidad sigue disponible cuando hace falta."
+          },
+          {
+            "pregunta": "¿Cómo se sabe si un equipo ya está perdiendo capacidades por la IA?",
+            "respuesta": "Hay señales prácticas: el equipo corrige cada vez menos lo que propone la herramienta, el trabajo se detiene cuando la herramienta no está disponible y los errores que llegan al cliente son de los que antes se detectaban en la primera lectura. La prueba más directa es pedir a dos personas que resuelvan un caso real sin IA y comparar su resultado con el de la herramienta."
+          },
+          {
+            "pregunta": "¿Qué capacidades conviene que el equipo mantenga aunque use IA?",
+            "respuesta": "Las que necesitaría si la herramienta se equivoca o deja de estar disponible. Por lo general son leer los datos con criterio de riesgo, reconocer un caso fuera de lo normal y poder rehacer a mano la parte central del proceso. Suelen ser dos o tres por proceso, y el resto del trabajo se puede delegar siempre que alguien siga sabiendo revisarlo."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos qué capacidades críticas siguen vivas en los procesos donde ya trabaja la IA",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-to-stop-your-team-losing-skills-to-ai",
+    "titulo": "How to Stop Your Team Losing Skills to AI",
+    "entradilla": "When a team hands work to AI, the first thing it loses is not the ability to do the task but the judgment to spot when the output is wrong. You prevent it the way you protect any capability the operation depends on: pick the few that are critical and schedule chances to use them without the tool.",
+    "descripcion": "Name the two or three critical skills in each process and schedule practice without AI. The first thing to go is the judgment that spots the error.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "When a team hands work to AI, the first thing it loses is not the ability to do the task but the judgment to spot when the output is wrong. You prevent it the way you protect any capability the operation depends on: pick the few that are critical and schedule chances to use them without the tool."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Start with a scene that is already routine. In the credit team of a mid-sized company, an assistant prepares the analysis for every application: it summarizes the financial statements, calculates the ratios and proposes a rating. The analyst reads it, adjusts a couple of things and signs off. A year ago each file took a morning. Now it takes half an hour, and the committee gets more cases per week than ever."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "What the dashboard does not show is what the analyst was doing during that morning. Building the numbers by hand, they noticed when a customer's margin did not fit its sector, or when receivables were growing faster than sales. Nobody taught that instinct in a course. It formed on the job, one file after another. Once the tool does the job, the instinct stops getting exercise, and nobody notices until the day the assistant gets an important case wrong and the analyst signs it anyway."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "More and more executives are asking how to avoid that without giving up the productivity gain. The answer is to manage that capability the way you manage any other the operation relies on: decide which ones matter, check they are still there, and give them practice."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The answer",
+        "texto": "How do you stop a team losing skills when it delegates to AI?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "With three management decisions, in this order. First, name the critical capabilities: the two or three the team needs to catch a mistake by the tool, or to keep running if the tool is down. Second, schedule practice without AI for those capabilities, as regularly as you would schedule a drill. Third, design the review so it forces people to reason instead of approving what arrives ready-made. The two usual reactions, banning the tool or leaving each person to handle it on their own, protect nothing: the first gives up the productivity and the second leaves the capability to individual discipline."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Before acting, check whether the erosion has already started. These are the most common signs:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The team corrects the tool's proposals less and less, even though the cases have not changed.",
+          "When the tool is unavailable for an afternoon, work stops rather than slowing down.",
+          "Your most experienced people justify decisions by quoting the assistant, not by pointing to the data.",
+          "The errors reaching customers or the auditors are the kind that used to be caught on first read.",
+          "Nobody on the team could say which part of the process they could redo by hand tomorrow."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The mechanism",
+        "texto": "The first thing to go is the ability to see the error, and it is the slowest to come back"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Doing a task and knowing when it has been done badly look like the same skill, but they are maintained differently. The ability to execute comes back quickly: an analyst who has not built a cash flow model in a year will be fluent again within a couple of days. The judgment that tells you something is off depends on having seen many cases up close, and it fades when people only ever see finished results. Reading a hundred well-written analyses does not train the eye the way building twenty does."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That is what makes delegating to AI deceptive. The tool handles the typical case well, and the typical case is the one that teaches least. The exceptions, which are what build judgment, still come through, but they arrive already resolved and nicely presented. Picture a procurement team using an assistant to compare bids. For months the recommendations are sensible and the team approves them after a quick read. When one bid carries a price adjustment clause the assistant summarizes wrongly, nobody catches it, because nobody has read a bid in full for a long time."
+      },
+      {
+        "tipo": "cita",
+        "texto": "A capability nobody exercises stays on the org chart long after it has left the operation.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Why nobody sees it",
+        "texto": "Your metrics track what AI does well and say nothing about what the team stops knowing"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Aviation has lived with this problem for decades. Autopilot made flying safer and, at the same time, cut the hours pilots spend flying by hand. In 2013 the US Federal Aviation Administration urged airlines to give their crews more opportunities to fly manually, so that the skill would still be there when the automation fails (Source: FAA, Safety Alert for Operators 13002, 2013). The industry's response was to schedule the practice, while keeping the autopilot on."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The same thing happens inside a company, only less visibly. Adoption metrics count how many cases the tool handles and how much time it saves. Quality metrics count errors, and for months errors fall, because the tool gets the common cases right. No metric records how many people on the team could still catch the rare error, and you only learn that number on the day you need it. By then a training course will not bring the capability back. Months of practice will, and the operation has not planned for them."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "This is worth separating from the talent pipeline problem. Juniors not learning because AI does their entry-level work is a question of how newcomers get trained. What this piece is about affects the people who already know: the analyst with ten years of experience who, without noticing, stops using what they know."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "A critical capability is protected by naming it, practicing it and reviewing in a way that demands reasoning"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Name the critical capabilities",
+            "definicion": "Not all of them matter. For every process where AI is already at work, ask what the team would need to be able to do if the tool got it wrong or went down. The list is usually two or three items long: reading a financial statement with a risk eye, drafting a clause, diagnosing a fault. Anything not on the list can be delegated without guilt, and that is half the value of the exercise."
+          },
+          {
+            "termino": "2. Schedule practice without the tool",
+            "definicion": "Once a month, each person works a real case from start to finish without the assistant and compares their result with the tool's. The differences are the most useful material the team will get that month, because they show where the AI goes wrong and where the person has gone rusty. It costs a few hours and is planned like a drill, with a date and an owner."
+          },
+          {
+            "termino": "3. Form your own view before reading the proposal",
+            "definicion": "A review that starts by reading what the AI proposes tends to confirm it. If the reviewer first writes down what they expect to find, even in a single line, and then checks it against the proposal, the review becomes an exercise in judgment again. It is a small change to the procedure, and it is the one that preserves the most capability day to day."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The effort should match what is at stake. In a process where an error gets fixed in the next cycle, the third piece is usually enough. Where an error reaches a customer, a regulator or the balance sheet, all three pieces are part of the cost of running with AI, and they belong in the budget next to the licenses."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Pick the process where AI has been working longest and ask its owner what capability the team would need if the tool failed tomorrow. Then ask two people to work a real case without it and compare the results. Within a week you will know whether that capability still lives in the operation or only on the org chart."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Why can using AI make a team lose skills?",
+            "respuesta": "Because professional skills are kept alive by using them, and AI takes over exactly the work where they were used. The first thing to weaken is the judgment that spots a wrong result, which depends on seeing many cases up close; the ability to do the task itself comes back much faster. The loss does not show up in metrics until the tool makes a mistake and nobody catches it."
+          },
+          {
+            "pregunta": "Should we restrict AI use so the team does not lose skills?",
+            "respuesta": "There is no need to restrict it day to day. What works is identifying the two or three critical capabilities in each process and scheduling practice without the tool for them, for example one real case a month worked by hand and compared with the AI's proposal. That keeps the productivity gain and leaves the capability available when it is needed."
+          },
+          {
+            "pregunta": "How can you tell if a team is already losing skills because of AI?",
+            "respuesta": "There are practical signs: the team corrects the tool's proposals less and less, work stops when the tool is unavailable, and the errors reaching customers are the kind that used to be caught on first read. The most direct test is to ask two people to work a real case without AI and compare their result with the tool's."
+          },
+          {
+            "pregunta": "Which skills should a team keep even when it uses AI?",
+            "respuesta": "The ones it would need if the tool got something wrong or went down. Usually that means reading data with a risk eye, recognizing an out-of-pattern case and being able to redo the core of the process by hand. There are typically two or three per process, and the rest of the work can be delegated as long as someone can still review it."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's review which critical capabilities are still alive in the processes where AI already works",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
