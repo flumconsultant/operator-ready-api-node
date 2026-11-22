@@ -1,0 +1,311 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-11-22",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "agentic-work",
+  "formato": "framework",
+  "es": {
+    "slug": "como-darle-a-un-agente-de-ia-el-conocimiento-de-la-empresa",
+    "titulo": "¿Cómo darle a un agente lo que sabe la empresa?",
+    "entradilla": "Escribiendo el criterio con el que el equipo decide, no subiendo los documentos que ya existen. Un agente trabaja bien con lo que sabe la empresa cuando ese conocimiento tiene un dueño en la operación, está escrito para decidir casos y se mantiene con los casos que el propio agente no supo resolver.",
+    "descripcion": "Escribiendo el criterio con el que decide el equipo, con un dueño en la operación y un ciclo que lo actualiza con los casos que el agente no resolvió.",
+    "linkedin": {
+      "texto": "Cuando un agente de IA responde mal, la primera reacción es revisar la tecnología. Casi nunca está ahí el problema.\n\nLo que la empresa sabe de verdad no está en sus manuales: está en las excepciones que el equipo resuelve sin escribirlas.\n\nTres piezas para darle a un agente ese conocimiento, y una decisión que no le corresponde a TI.",
+      "hashtags": [
+        "IA",
+        "AgentesDeIA",
+        "Operaciones"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Escribiendo el criterio con el que el equipo decide, no subiendo los documentos que ya existen. Un agente trabaja bien con lo que sabe la empresa cuando ese conocimiento tiene un dueño en la operación, está escrito para decidir casos y se mantiene con los casos que el propio agente no supo resolver."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por cómo suele arrancar este trabajo. Una empresa decide poner un agente en atención al cliente o en la mesa de ayuda interna. El equipo técnico conecta la carpeta compartida, el manual de políticas y las preguntas frecuentes de la web. En la demostración el agente responde bien. A las tres semanas, el equipo de atención dice que «se inventa cosas» o que «no entiende cómo trabajamos aquí», y la conversación se va a comparar modelos y proveedores."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Mi posición es que en la mayoría de esos casos el modelo no es el problema. El agente recibió los documentos de la empresa, pero no su criterio: las reglas no escritas con las que una persona con dos años en el puesto decide qué hacer con un caso que no encaja. Ese criterio no está en ninguna carpeta, y por eso ninguna conexión técnica lo encuentra. Darle a un agente el conocimiento de la empresa es, sobre todo, un trabajo de escritura y de gestión, y le corresponde a la operación."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La respuesta",
+        "texto": "¿Cómo se le da a un agente de IA el contexto y el conocimiento de la empresa?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Con tres piezas que se construyen en este orden. Primero, un documento de criterio escrito para decidir: qué casos resuelve el agente, con qué regla, y qué casos pasa a una persona. Segundo, un dueño en la operación que responde por ese documento como responde por un procedimiento. Tercero, un ciclo de mantenimiento que toma los casos que el agente no resolvió y los convierte en reglas nuevas cada semana. La conexión técnica con los sistemas de la empresa es necesaria, pero viene después y es la parte más sencilla."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Antes de construir nada, conviene revisar si el agente ya muestra síntomas de que le falta criterio, no datos:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Responde bien las preguntas generales y falla en las que el equipo considera fáciles porque «todo el mundo sabe que aquí se hace así».",
+          "Cita una política vigente y aplica la versión anterior, porque las dos conviven en la carpeta.",
+          "Cuando dos documentos se contradicen, elige uno sin decir que había otro.",
+          "Las correcciones del equipo se hacen en la conversación del día y no quedan en ningún lugar del que el agente aprenda.",
+          "Nadie sabría decir quién aprueba un cambio en lo que el agente sabe."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Pieza 1",
+        "texto": "Lo que el agente necesita no está en los documentos, está en las excepciones"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en una cola de devoluciones. El manual dice que se acepta una devolución dentro de los 30 días con comprobante. El equipo sabe además que a un cliente con tres compras en el año se le acepta sin comprobante, que los productos de una línea concreta se derivan siempre a calidad, y que en diciembre el plazo se extiende hasta mediados de enero. Nada de eso está escrito, y es justo lo que separa una respuesta correcta de una que genera un reclamo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Por eso el documento que hay que escribir no es un manual más. Es una lista de decisiones: ante este tipo de caso, esta regla, con este límite, y por encima de este límite, a una persona. La forma más rápida de obtenerla es sentarse con quien resuelve los casos difíciles y repasar los últimos veinte que escaló o corrigió. En dos o tres sesiones aparece la mayor parte del criterio que el agente necesita, y casi todo resulta ser excepción, no norma."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Un agente sabe lo que la empresa sabe cuando alguien escribió cómo decide el equipo, no cuando alguien conectó la carpeta donde guarda sus documentos.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Pieza 2",
+        "texto": "El contexto de un agente necesita un dueño en la operación, no en TI"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Aquí lo que importa es quién puede decir si una regla es correcta. El área de tecnología puede conectar sistemas, controlar permisos y medir cuánto tarda el agente en responder. No puede saber si un cliente con tres compras merece la excepción. Cuando el conocimiento del agente queda a cargo de TI, cada corrección pasa por un ticket, llega tarde y llega traducida, y el equipo de operación deja de corregir porque no ve el efecto."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El dueño natural es el responsable del proceso que el agente atiende: el jefe de atención, el responsable de cuentas por pagar, el coordinador de la mesa de ayuda. Su trabajo no es escribir todo el documento, sino aprobar los cambios y decidir cuándo dos reglas en conflicto se resuelven a favor de una. Es la misma función que ya cumple con los procedimientos del equipo, aplicada a un lector nuevo que no pregunta cuando tiene una duda."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Pieza 3",
+        "texto": "El conocimiento caduca, y se mantiene con los casos que el agente no supo resolver"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Las políticas cambian, aparecen productos nuevos y los clientes encuentran casos que nadie había previsto. Un agente con el criterio de enero responde en junio con seguridad y con reglas viejas. La fuente más barata para mantenerlo al día ya existe: los casos que el agente pasó a una persona y las respuestas que el equipo corrigió. Cada uno es una regla que faltaba o que estaba mal escrita."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El ciclo es sencillo de describir. Una vez por semana, el dueño revisa los casos escalados y corregidos, decide cuáles se convierten en regla nueva, cuáles revelan una regla mal escrita y cuáles son excepciones que deben seguir yendo a una persona. Después actualiza el documento y retira la versión anterior. Ese tiempo semanal es el costo real de mantener el conocimiento de un agente, y conviene presupuestarlo desde el primer día en lugar de descubrirlo cuando la calidad ya bajó."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Por dónde empezar",
+        "texto": "¿Se puede empezar sin un proyecto de TI? Sí, con un proceso y veinte casos"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Elige un proceso con un responsable claro",
+            "definicion": "Un proceso donde una sola persona pueda decir si una respuesta es correcta. Si para decidirlo hacen falta tres áreas, el primer trabajo es de gobierno, no de contexto."
+          },
+          {
+            "termino": "2. Escribe el criterio a partir de los últimos veinte casos difíciles",
+            "definicion": "No a partir del manual. Los casos escalados y corregidos muestran las reglas que de verdad se aplican, y suelen caber en pocas páginas."
+          },
+          {
+            "termino": "3. Deja una sola versión vigente",
+            "definicion": "Retira del alcance del agente los documentos viejos o duplicados. Un agente con dos versiones de una política no elige la buena, elige una."
+          },
+          {
+            "termino": "4. Agenda la revisión semanal antes de salir a producción",
+            "definicion": "Con fecha, con dueño y con la lista de casos escalados como insumo. Sin ese espacio, el documento se congela en el día del lanzamiento."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Nada de esto exige cambiar de modelo ni de proveedor. La mayoría de las plataformas de agentes acepta instrucciones y documentos de referencia que un equipo de operación puede editar. La conexión con sistemas en vivo, como el estado de un pedido o el saldo de una cuenta, sí requiere a TI, y llega mejor cuando el criterio ya está escrito y se sabe qué dato necesita cada regla."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Primer paso",
+        "texto": "Pide al responsable del proceso que reúna los últimos veinte casos que su equipo tuvo que corregir o resolver a mano. Léanlos juntos y anoten la regla que aplicó cada persona. Esa lista es el primer documento de contexto del agente, y probablemente es más útil que todo lo que ya tiene conectado."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Cómo se le da a un agente de IA el conocimiento de la empresa?",
+            "respuesta": "Escribiendo el criterio con el que el equipo decide los casos, no solo conectando los documentos existentes. Ese criterio se recoge repasando con quien opera el proceso los casos difíciles que escaló o corrigió. Después se le asigna un dueño en la operación y se actualiza cada semana con los casos que el agente no supo resolver."
+          },
+          {
+            "pregunta": "¿Basta con conectar la base documental de la empresa a un agente?",
+            "respuesta": "No. La base documental contiene las normas, pero no las excepciones ni las reglas no escritas con las que el equipo resuelve los casos que no encajan, que son los que generan errores. Además suele tener versiones viejas y documentos que se contradicen. Conectarla es necesario, pero sin un documento de criterio y una sola versión vigente el agente responde con seguridad y con reglas equivocadas."
+          },
+          {
+            "pregunta": "¿Quién debe ser responsable del conocimiento que usa un agente de IA?",
+            "respuesta": "El responsable del proceso que el agente atiende, no el área de tecnología. Es quien puede decir si una regla es correcta y decidir entre dos reglas en conflicto. TI se encarga de las conexiones, los permisos y el funcionamiento técnico. Cuando el contenido queda en manos de TI, las correcciones llegan tarde y el equipo deja de hacerlas."
+          },
+          {
+            "pregunta": "¿Cómo se mantiene actualizado el contexto de un agente?",
+            "respuesta": "Con una revisión semanal de los casos que el agente pasó a una persona y de las respuestas que el equipo corrigió. Cada caso se clasifica como regla nueva, regla mal escrita o excepción que debe seguir yendo a una persona, y el documento se actualiza retirando la versión anterior. Ese tiempo semanal es el costo de mantenimiento real y conviene presupuestarlo desde el inicio."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos qué criterio le falta a su agente y quién debería ser su dueño",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-to-give-an-ai-agent-your-company-knowledge",
+    "titulo": "How to Give an AI Agent Your Company Knowledge",
+    "entradilla": "By writing down the judgment your team uses to decide cases, not by uploading the documents you already have. An agent works well with what the company knows when that knowledge has an owner in the business, is written to settle cases, and is kept current with the cases the agent itself could not handle.",
+    "descripcion": "Write down the judgment your team decides with, give it an owner in the business, and update it weekly with the cases the agent could not resolve.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "By writing down the judgment your team uses to decide cases, not by uploading the documents you already have. An agent works well with what the company knows when that knowledge has an owner in the business, is written to settle cases, and is kept current with the cases the agent itself could not handle."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Start with how this work usually begins. A company decides to put an agent on customer service or the internal help desk. The technical team connects the shared drive, the policy manual and the website FAQ. In the demo the agent does well. Three weeks later the service team says it \"makes things up\" or \"doesn't get how we work here\", and the conversation turns to comparing models and vendors."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "My view is that in most of those cases the model is not the problem. The agent got the company's documents but not its judgment: the unwritten rules a person two years into the job uses to decide what to do with a case that doesn't fit. That judgment isn't in any folder, which is why no technical connection finds it. Giving an agent your company's knowledge is mostly a writing and management job, and it belongs to the business, not to IT."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The answer",
+        "texto": "How do you give an AI agent the context and knowledge it needs to work well?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "With three pieces, built in this order. First, a judgment document written to settle cases: which cases the agent handles, by what rule, and which it hands to a person. Second, an owner in the business who answers for that document the way they answer for any procedure. Third, a maintenance loop that takes the cases the agent couldn't resolve and turns them into new rules every week. Connecting the agent to company systems is necessary, but it comes after, and it is the easy part."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Before building anything, check whether the agent is already showing signs that it lacks judgment rather than data:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "It handles general questions well and fails on the ones the team considers easy because \"everyone knows that's how we do it here\".",
+          "It quotes the current policy and applies the old one, because both live in the same folder.",
+          "When two documents contradict each other, it picks one without mentioning the other.",
+          "The team's corrections happen in the day's conversation and end up nowhere the agent can learn from.",
+          "Nobody could say who signs off on a change to what the agent knows."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Piece 1",
+        "texto": "What the agent needs isn't in the documents, it's in the exceptions"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture a returns queue. The manual says returns are accepted within 30 days with a receipt. The team also knows that a customer with three purchases this year gets the return without a receipt, that one product line always goes to quality, and that in December the window runs to mid-January. None of that is written down, and it is exactly what separates a correct answer from one that ends in a complaint."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "So the document you need is not another manual. It is a list of decisions: for this kind of case, this rule, up to this limit, and above it, a person. The fastest way to get it is to sit with whoever handles the hard cases and go through the last twenty they escalated or corrected. Two or three sessions surface most of the judgment the agent needs, and almost all of it turns out to be exceptions rather than rules."
+      },
+      {
+        "tipo": "cita",
+        "texto": "An agent knows what the company knows when someone has written down how the team decides, not when someone has connected the folder where it keeps its documents.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Piece 2",
+        "texto": "An agent's context needs an owner in the business, not in IT"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "What matters here is who can say whether a rule is right. IT can connect systems, manage permissions and measure response times. It cannot know whether a customer with three purchases deserves the exception. When the agent's knowledge sits with IT, every correction becomes a ticket, arrives late and arrives paraphrased, and the frontline team stops correcting because it never sees the effect."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The natural owner is whoever runs the process the agent serves: the head of customer service, the accounts payable lead, the help desk coordinator. Their job isn't to write the whole document but to approve changes and decide which rule wins when two conflict. It is the role they already play for the team's procedures, applied to a new reader who never asks when it is unsure."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Piece 3",
+        "texto": "Knowledge goes stale, and you keep it fresh with the cases the agent couldn't handle"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Policies change, new products launch and customers find cases nobody planned for. An agent running on January's judgment answers in June with confidence and outdated rules. The cheapest source for keeping it current already exists: the cases the agent handed to a person and the answers the team corrected. Each one is a rule that was missing or badly written."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The loop is simple to describe. Once a week the owner reviews escalated and corrected cases and decides which become a new rule, which expose a badly written one, and which are exceptions that should keep going to a person. Then they update the document and retire the old version. That weekly time is the real cost of maintaining an agent's knowledge, and it belongs in the budget from day one rather than being discovered once quality has already slipped."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Where to start",
+        "texto": "Can you start without an IT project? Yes, with one process and twenty cases"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Pick a process with a clear owner",
+            "definicion": "One where a single person can say whether an answer is right. If deciding takes three departments, the first job is governance, not context."
+          },
+          {
+            "termino": "2. Write the judgment from the last twenty hard cases",
+            "definicion": "Not from the manual. Escalated and corrected cases show the rules people actually apply, and they usually fit on a few pages."
+          },
+          {
+            "termino": "3. Keep a single current version",
+            "definicion": "Take old and duplicate documents out of the agent's reach. An agent with two versions of a policy doesn't pick the right one, it picks one."
+          },
+          {
+            "termino": "4. Book the weekly review before going live",
+            "definicion": "With a date, an owner and the list of escalated cases as input. Without that slot, the document freezes on launch day."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of this requires changing model or vendor. Most agent platforms accept instructions and reference documents that a business team can edit. Live connections to systems, such as order status or an account balance, do need IT, and they go better once the judgment is written and you know which data each rule depends on."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "First step",
+        "texto": "Ask the process owner to pull together the last twenty cases their team had to correct or resolve by hand. Read them together and note the rule each person applied. That list is the agent's first context document, and it is probably more useful than everything already connected to it."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "How do you give an AI agent your company's knowledge?",
+            "respuesta": "By writing down the judgment your team uses to decide cases, not just connecting existing documents. That judgment comes from reviewing, with the people who run the process, the hard cases they escalated or corrected. It then needs an owner in the business and a weekly update based on the cases the agent could not resolve."
+          },
+          {
+            "pregunta": "Is connecting the company knowledge base to an agent enough?",
+            "respuesta": "No. A knowledge base holds the policies but not the exceptions or the unwritten rules the team uses for cases that don't fit, and those are where errors come from. It also tends to hold outdated versions and documents that contradict each other. Connecting it is necessary, but without a judgment document and a single current version the agent answers confidently with the wrong rules."
+          },
+          {
+            "pregunta": "Who should own the knowledge an AI agent uses?",
+            "respuesta": "The person who runs the process the agent serves, not the IT department. They are the one who can say whether a rule is right and settle conflicts between two rules. IT looks after connections, permissions and technical performance. When the content sits with IT, corrections arrive late and the team stops making them."
+          },
+          {
+            "pregunta": "How do you keep an AI agent's context up to date?",
+            "respuesta": "With a weekly review of the cases the agent handed to a person and the answers the team corrected. Each case is classed as a new rule, a badly written rule, or an exception that should keep going to a person, and the document is updated with the old version retired. That weekly time is the real maintenance cost and should be budgeted from the start."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's look at what judgment your agent is missing and who should own it",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
