@@ -66,7 +66,7 @@ El observatorio las revisa cada domingo, una por una, y hace lo que corresponda:
 - ¿Cuándo debe un agente de IA pasar el caso a una persona?
 - ¿Cómo se prueba un agente de IA antes de ponerlo en producción?
 - ¿Cuándo basta una automatización tradicional (RPA) y cuándo hace falta un agente de IA?
-- [sin verificar] ¿Cómo se le da a un agente de IA el contexto y el conocimiento de la empresa que necesita para trabajar bien?
+- ¿Cómo se le da a un agente de IA el contexto y el conocimiento de la empresa que necesita para trabajar bien?
 
 ## Operating-model reinvention
 
