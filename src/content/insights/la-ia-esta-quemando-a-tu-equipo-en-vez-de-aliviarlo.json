@@ -1,0 +1,311 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-11-23",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "value-adoption",
+  "formato": "perspective",
+  "es": {
+    "slug": "la-ia-esta-quemando-a-tu-equipo-en-vez-de-aliviarlo",
+    "titulo": "¿La IA está quemando a tu equipo?",
+    "entradilla": "Puede estar pasando, y los indicadores lo registran como productividad. La IA no agota al equipo por darle más tareas, sino porque quita los límites que antes ponía la propia lentitud del trabajo: el puesto se amplía, las pausas desaparecen y los frentes abiertos se multiplican. El alivio no llega solo. Hay que diseñar el límite que antes ponía la fricción.",
+    "descripcion": "Puede pasar: la IA amplía el puesto, elimina las pausas y multiplica los frentes abiertos. Se corrige midiendo la carga y decidiendo qué deja de hacerse.",
+    "linkedin": {
+      "texto": "La promesa era tiempo libre. Lo que muchos equipos reciben es un puesto más ancho, menos pausas y cinco frentes abiertos a la vez.\n\nEl tablero lo lee como productividad. La fatiga aparece meses después, en la rotación y en los errores.\n\nLa lentitud del trabajo ponía un límite que nadie había diseñado. Cuando la IA la quita, ese límite hay que decidirlo.",
+      "hashtags": [
+        "IA",
+        "Liderazgo",
+        "Personas"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Puede estar pasando, y los indicadores lo registran como productividad. La IA no agota al equipo por darle más tareas, sino porque quita los límites que antes ponía la propia lentitud del trabajo: el puesto se amplía, las pausas desaparecen y los frentes abiertos se multiplican. El alivio no llega solo. Hay que diseñar el límite que antes ponía la fricción."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por lo que se prometió. Cuando una empresa reparte asistentes de IA, el argumento casi siempre es el mismo: las tareas repetitivas se hacen solas y el equipo recupera horas para lo que importa. Es un argumento razonable, y en muchas tareas sueltas se cumple. Un informe que llevaba una tarde se hace en una hora."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Lo que ocurre con el día completo es otra cosa. En febrero de 2026, dos investigadoras de la escuela de negocios de Berkeley publicaron en Harvard Business Review un estudio de ocho meses sobre unos 200 empleados de una empresa tecnológica de Estados Unidos que ofrecía IA a todo su personal sin obligar a usarla (Fuente: Ranganathan y Ye, «AI Doesn't Reduce Work, It Intensifies It», Harvard Business Review, 2026). La gente trabajó más rápido, sí. También asumió más tareas, alargó su jornada y terminó con una sensación constante de estar haciendo malabares. Nadie se lo pidió: el trabajo se intensificó solo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Es un estudio de una sola empresa y conviene leerlo así. Pero el mecanismo que describe se reconoce en cualquier operación, y por eso la pregunta que se hacen cada vez más directores de personas tiene respuesta: sí, la IA puede quemar a un equipo, y lo hace por tres vías que se pueden gestionar."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La respuesta",
+        "texto": "¿Está la IA intensificando el trabajo y quemando al equipo?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "En muchos equipos, sí, y sin que nadie lo haya decidido. La IA abarata empezar una tarea, y lo barato se hace más. El resultado es un puesto que crece por los bordes, una jornada sin pausas naturales y varias tareas en paralelo que la persona tiene que vigilar a la vez. Ninguna de las tres cosas aparece en los indicadores como un problema: aparecen como más entregas. Por eso la fatiga se detecta tarde, cuando ya se ve en la rotación, en las bajas o en errores de alguien que antes no se equivocaba."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Estas son las señales de que ya está pasando:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El equipo entrega más que hace seis meses, pero nadie dejó de hacer nada para conseguirlo.",
+          "Aparecen tareas que antes no eran de ese puesto: el analista que ahora también diseña la presentación, el comercial que redacta su propio contrato.",
+          "Los mensajes y los documentos llegan fuera de horario con más frecuencia que antes.",
+          "En las reuniones, la gente tiene dos o tres cosas corriendo en paralelo en la pantalla.",
+          "Las personas más rápidas con la herramienta son también las que más se quejan de cansancio."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Primera vía",
+        "texto": "Lo que se vuelve barato de empezar se incorpora al puesto sin que nadie lo apruebe"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Antes, la dificultad de una tarea decidía de quién era. Si había que armar una base de datos, se pedía a alguien que supiera. Con un asistente, cualquiera puede intentarlo en una tarde, y lo intenta. Piensa en una coordinadora de marketing que, además de su campaña, empieza a analizar los datos de ventas, a escribir el guion del video y a revisar la traducción. Cada tarea por separado parece pequeña. Juntas, son un puesto y medio."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Aquí lo que importa es que nadie aprobó esa ampliación. No hubo una conversación sobre el alcance del puesto ni sobre qué dejaba de hacer. Ocurrió por acumulación, y la persona la vive como una exigencia, aunque nadie se la haya formulado."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Segunda vía",
+        "texto": "La fricción del trabajo era también su descanso, y la IA se la quitó"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Esperar a que un cálculo terminara, a que un colega respondiera o a tener una hora libre para redactar algo eran interrupciones molestas. También eran pausas. Cuando empezar una tarea cuesta escribir una frase, el trabajo se cuela en los huecos que antes quedaban vacíos: el trayecto, los cinco minutos antes de una reunión, la noche. Y como la herramienta puede trabajar en segundo plano, la persona mantiene varios hilos abiertos a la vez y vigila todos."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ese cambio de ritmo cansa más que el volumen. Una jornada con muchas tareas pero con cortes naturales se sostiene. Una jornada sin cortes, saltando entre cinco frentes que avanzan solos, produce una fatiga que la persona no sabe atribuir a nada concreto, porque cada tarea por separado fue fácil."
+      },
+      {
+        "tipo": "cita",
+        "texto": "La lentitud del trabajo ponía un límite que nadie había diseñado. Cuando la IA la quita, ese límite hay que decidirlo.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Tercera vía",
+        "texto": "Los indicadores premian la intensificación porque solo ven lo que sale"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Un tablero de adopción cuenta usuarios activos, tareas completadas y horas ahorradas. Todo lo que mide sube cuando el equipo se intensifica. El directivo ve las cifras, felicita a quien más produce y, sin querer, convierte en norma el ritmo de la persona que más se está desgastando. El resto del equipo lo entiende como la nueva expectativa."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Conviene separar esto de otros dos problemas que se parecen. Uno es decidir en qué se invierte el tiempo que libera la IA: aquí el tiempo no llega a liberarse, se consume antes. El otro es la cola de revisión que se forma cuando la IA multiplica lo producido: eso afecta a quienes revisan, y esto afecta a todo el que usa la herramienta."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Qué hace el directivo",
+        "texto": "La carga se corrige con tres decisiones de diseño del trabajo, no con un taller de bienestar"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Medir la carga, además de la producción",
+            "definicion": "Añade al tablero de adopción dos o tres indicadores de carga: trabajo enviado fuera de horario, número de frentes abiertos por persona y tareas nuevas que entraron al puesto en el trimestre. No hace falta un sistema nuevo; casi todo sale de los registros de correo y de proyectos. Lo que no se mide se lee como productividad."
+          },
+          {
+            "termino": "2. Cada tarea que entra obliga a decidir cuál sale",
+            "definicion": "Cuando alguien incorpora una tarea gracias a la IA, el responsable del equipo decide explícitamente qué deja de hacer esa persona o a quién se le reconoce el puesto ampliado. Es una conversación de diez minutos que hoy no ocurre, y es la que evita que el puesto crezca por acumulación."
+          },
+          {
+            "termino": "3. Devolverle ritmo al trabajo",
+            "definicion": "Acordar ventanas de foco sin mensajes, agrupar las actualizaciones no urgentes en uno o dos momentos del día y dejar que el trabajo avance por fases en lugar de en paralelo. Son las mismas medidas que proponen las autoras del estudio, y funcionan porque reponen a propósito las pausas que antes ponía la fricción."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguna de las tres reduce el uso de la IA. Lo que hacen es que la ganancia de productividad se quede en la empresa como capacidad sostenible, en lugar de cobrarse dentro de un año en rotación y en errores de cansancio."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Elige el equipo que más usa la IA y pide a cada persona que liste las tareas que hace hoy y no hacía hace un año. Después pregunta al responsable cuáles de esas tareas aprobó y cuáles dejó de pedir a cambio. Si la segunda lista está vacía, el equipo ya se está intensificando y la primera conversación es sobre alcance, no sobre herramientas."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Por qué la IA puede aumentar la carga de trabajo en lugar de reducirla?",
+            "respuesta": "Porque abarata empezar una tarea, y lo que es barato se hace más. Las personas asumen tareas que antes eran de otro puesto, trabajan en momentos que antes eran pausas y mantienen varias tareas abiertas a la vez. Un estudio de ocho meses publicado en Harvard Business Review en 2026 observó exactamente ese patrón en una empresa tecnológica que no obligaba a usar IA."
+          },
+          {
+            "pregunta": "¿Cómo se sabe si la IA está quemando a un equipo?",
+            "respuesta": "Las señales más claras son que el equipo entrega más sin haber dejado de hacer nada, que aparecen tareas nuevas en el puesto sin que nadie las aprobara y que crece el trabajo enviado fuera de horario. Otra señal es que las personas más rápidas con la herramienta son también las que más cansancio reportan. Los indicadores de adopción no lo muestran, porque solo miden lo que se produce."
+          },
+          {
+            "pregunta": "¿Hay que limitar el uso de la IA para evitar el agotamiento del equipo?",
+            "respuesta": "No hace falta limitar la herramienta, sino el trabajo que se acumula alrededor de ella. Funciona medir la carga además de la producción, decidir qué tarea sale cada vez que entra una nueva y reponer pausas con ventanas de foco y actualizaciones agrupadas. Así la productividad se mantiene y deja de cobrarse en cansancio."
+          },
+          {
+            "pregunta": "¿Quién debe ocuparse de la carga de trabajo que genera la IA?",
+            "respuesta": "El responsable directo de cada equipo, porque es quien decide el alcance de los puestos y quien reconoce o no el trabajo extra. Recursos humanos puede dar los indicadores y el criterio común, pero la decisión de qué deja de hacerse ocurre en el equipo. Si nadie la toma, la toma la persona sola, alargando su jornada."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos dónde la IA está ampliando la carga de tus equipos y cómo rediseñar ese trabajo",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "is-ai-burning-out-your-team",
+    "titulo": "Is AI Burning Out Your Team Instead of Helping?",
+    "entradilla": "It may well be, and your metrics are recording it as productivity. AI wears teams down not by handing them more tasks but by removing the limits that the slowness of work used to impose: jobs widen, breaks disappear and open threads multiply. Relief does not arrive on its own. Someone has to design the limit that friction used to provide.",
+    "descripcion": "It can: AI widens the job, removes the natural breaks and multiplies open threads. You fix it by measuring workload and deciding what comes off the plate.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "It may well be, and your metrics are recording it as productivity. AI wears teams down not by handing them more tasks but by removing the limits that the slowness of work used to impose: jobs widen, breaks disappear and open threads multiply. Relief does not arrive on its own. Someone has to design the limit that friction used to provide."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Start with what was promised. When a company rolls out AI assistants, the pitch is almost always the same: the repetitive work takes care of itself and people get hours back for what matters. It is a fair pitch, and for individual tasks it often holds. A report that took an afternoon now takes an hour."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The working day as a whole tells a different story. In February 2026, two researchers from Berkeley's business school published in Harvard Business Review an eight-month study of around 200 employees at a US technology company that offered AI to all staff without making it mandatory (Source: Ranganathan and Ye, \"AI Doesn't Reduce Work, It Intensifies It\", Harvard Business Review, 2026). People did work faster. They also took on more, stretched their hours and ended up with a constant sense of juggling. Nobody asked them to. The work intensified by itself."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "It is one company, and it should be read that way. But the mechanism it describes is recognizable in almost any operation, which is why the question more and more people leaders are asking has an answer: yes, AI can burn a team out, and it does so through three routes you can manage."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The answer",
+        "texto": "Is AI intensifying work and burning out your team?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "In many teams, yes, and without anyone deciding it should. AI makes starting a task cheap, and cheap things get done more. The result is a job that grows at the edges, a day with no natural breaks, and several tasks running in parallel that the person has to keep an eye on. None of this shows up in the metrics as a problem. It shows up as more output. That is why fatigue gets noticed late, when it is already visible in attrition, sick leave or mistakes from people who never used to make them."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "These are the signs it is already happening:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "The team delivers more than six months ago, but nobody stopped doing anything to make room for it.",
+          "Tasks that never belonged to the role start appearing: the analyst who now also designs the deck, the salesperson drafting their own contracts.",
+          "Messages and documents arrive outside working hours more often than before.",
+          "In meetings, people have two or three things running in parallel on screen.",
+          "The people fastest with the tool are also the ones complaining most about being tired."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Route one",
+        "texto": "Whatever becomes cheap to start gets added to the job without anyone signing off"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "It used to be that the difficulty of a task decided whose it was. If a database needed building, you asked someone who knew how. With an assistant, anyone can have a go in an afternoon, and they do. Picture a marketing coordinator who, on top of her campaign, starts analyzing the sales data, writing the video script and checking the translation. Each task on its own looks small. Together they add up to a job and a half."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "What matters is that nobody approved that expansion. There was no conversation about the scope of the role or about what would come off the plate. It happened by accumulation, and the person experiences it as a demand even though nobody ever made it."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Route two",
+        "texto": "The friction in work was also its rest, and AI took it away"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Waiting for a calculation to finish, for a colleague to reply or for a free hour to write something up were annoying interruptions. They were also breaks. When starting a task costs one typed sentence, work seeps into the gaps that used to stay empty: the commute, the five minutes before a meeting, the evening. And because the tool can work in the background, people keep several threads open at once and watch all of them."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That change of rhythm is more tiring than the volume. A day with plenty of tasks but natural pauses is sustainable. A day with no pauses, jumping between five threads that move on their own, produces a fatigue the person cannot pin on anything specific, because each task on its own was easy."
+      },
+      {
+        "tipo": "cita",
+        "texto": "The slowness of work set a limit nobody had designed. When AI removes it, that limit has to be decided.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Route three",
+        "texto": "Your metrics reward intensification because they only see what comes out"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "An adoption dashboard counts active users, completed tasks and hours saved. Everything it measures goes up when a team intensifies. The executive sees the numbers, praises whoever produces most and, without meaning to, turns the pace of the person wearing out fastest into the norm. The rest of the team reads it as the new expectation."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "This is worth separating from two problems that look similar. One is deciding what to do with the time AI frees up: here the time never gets freed, it is used up first. The other is the review queue that builds when AI multiplies output: that hits the reviewers, while this hits everyone using the tool."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "What leaders do",
+        "texto": "Workload is fixed with three work design decisions, not a wellbeing workshop"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Measure workload, not just output",
+            "definicion": "Add two or three workload indicators to the adoption dashboard: work sent outside hours, open threads per person, and new tasks that entered the role this quarter. You do not need a new system; most of it comes from email and project logs. Whatever is not measured gets read as productivity."
+          },
+          {
+            "termino": "2. Every task that comes in forces a decision on one that goes out",
+            "definicion": "When someone takes on a task because AI makes it possible, the team lead decides explicitly what that person stops doing, or formally recognizes the wider role. It is a ten-minute conversation that does not happen today, and it is the one that stops a job growing by accumulation."
+          },
+          {
+            "termino": "3. Put rhythm back into the work",
+            "definicion": "Agree focus windows with no messages, batch non-urgent updates into one or two points in the day, and let work move in phases rather than in parallel. These are the same measures the study's authors propose, and they work because they deliberately restore the breaks that friction used to supply."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "None of the three cuts AI use. What they do is make sure the productivity gain stays in the company as sustainable capacity, instead of being paid back a year later in attrition and fatigue errors."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Pick the team that uses AI most and ask each person to list the tasks they do today that they did not do a year ago. Then ask their manager which of those tasks they approved and what they stopped asking for in return. If the second list is empty, the team is already intensifying, and the first conversation is about scope, not tools."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Why can AI increase workload instead of reducing it?",
+            "respuesta": "Because it makes starting a task cheap, and cheap things get done more. People take on work that used to belong to other roles, work through moments that used to be breaks and keep several tasks open at once. An eight-month study published in Harvard Business Review in 2026 observed exactly that pattern at a technology company that did not require AI use."
+          },
+          {
+            "pregunta": "How can you tell if AI is burning out a team?",
+            "respuesta": "The clearest signs are a team delivering more without having stopped doing anything, new tasks appearing in roles without anyone approving them, and more work being sent outside hours. Another sign is that the people fastest with the tool also report the most fatigue. Adoption metrics will not show it, because they only measure output."
+          },
+          {
+            "pregunta": "Should we restrict AI use to prevent burnout?",
+            "respuesta": "There is no need to restrict the tool, only the work that piles up around it. What works is measuring workload as well as output, deciding which task goes every time a new one comes in, and restoring breaks through focus windows and batched updates. That keeps the productivity gain without paying for it in fatigue."
+          },
+          {
+            "pregunta": "Who should own the workload that AI creates?",
+            "respuesta": "Each team's direct manager, because they set the scope of roles and decide whether extra work is recognized. HR can provide the indicators and a common standard, but the decision about what stops being done happens inside the team. If nobody makes it, the individual makes it alone by working longer hours."
+          }
+        ]
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's look at where AI is widening your teams' workload and how to redesign that work",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
