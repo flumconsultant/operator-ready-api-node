@@ -1,0 +1,309 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-11-24",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "responsible-scale",
+  "formato": "framework",
+  "es": {
+    "slug": "que-hacer-con-trabajo-de-ia-en-produccion-que-nadie-entiende",
+    "titulo": "¿Qué hacer con trabajo de IA que nadie entiende?",
+    "entradilla": "Cuando algo hecho con IA entra en producción y nadie del equipo sabe explicar por qué funciona, el riesgo no está en el uso diario: está en el día en que hay que cambiarlo. Se resuelve en tres pasos. Inventariar lo que ya opera, clasificarlo por impacto y por frecuencia de cambio, y darle a cada pieza crítica un dueño que pase la prueba de explicación. Lo que no tenga dueño posible se reconstruye o se retira.",
+    "descripcion": "Inventariar lo que ya opera, clasificarlo por impacto y darle a cada pieza crítica un dueño capaz de explicarla. Si nadie puede, se reconstruye.",
+    "linkedin": {
+      "texto": "Un modelo de precios armado con IA puede funcionar meses sin un solo error. El problema llega el día en que cambia la política comercial.\n\nSi nadie del equipo sabe explicar qué hace, nadie puede cambiarlo sin riesgo. La responsabilidad sigue teniendo nombre y apellido, aunque la comprensión ya no lo tenga.\n\nQué es la prueba de explicación y cómo aplicarla a lo que ya está operando.",
+      "hashtags": [
+        "IA",
+        "Operaciones",
+        "Riesgo"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Cuando algo hecho con IA entra en producción y nadie del equipo sabe explicar por qué funciona, el riesgo no está en el uso diario: está en el día en que hay que cambiarlo. Se resuelve en tres pasos. Inventariar lo que ya opera, clasificarlo por impacto y por frecuencia de cambio, y darle a cada pieza crítica un dueño que pase la prueba de explicación. Lo que no tenga dueño posible se reconstruye o se retira."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por una escena que se repite en muchas áreas. Imagina a una analista de planeamiento comercial que arma con un asistente de IA el modelo que calcula los descuentos por volumen. Funciona, las cifras cuadran con las del mes anterior, el comité lo aprueba y empieza a usarse en cada cotización. Seis meses después cambia la política comercial y alguien tiene que ajustar el modelo. Nadie sabe cuál de las cuarenta fórmulas contiene la regla de descuento, y la propia analista tampoco, porque nunca la escribió: la pidió."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Esto no ocurre solo con código. Pasa con macros que concilian cuentas, con automatizaciones que conectan el CRM con la facturación, con plantillas de cláusulas que el área legal usa cada semana, con un informe mensual que se arma solo a partir de varias fuentes. Todas tienen algo en común: funcionan, están en producción y la persona que las puso ahí no podría explicar con detalle qué hacen."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Las cajas negras en la operación no son nuevas. Casi toda empresa tiene una macro que escribió alguien que se fue hace años, o un sistema heredado que nadie se atreve a tocar. La diferencia es la velocidad. Antes una caja negra tardaba años en formarse, a medida que se iba la gente que la entendía. Ahora se forma en una tarde, y la persona que la construyó sigue sentada en el mismo escritorio."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La respuesta",
+        "texto": "¿Qué hacemos cuando ponemos en producción trabajo de IA que nadie entiende?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El trabajo suele estar bien hecho, así que revisar su calidad no resuelve nada. Lo que falta es un dueño: hay una pieza que la operación necesita y que nadie puede mantener. Por eso la respuesta tiene tres pasos. Hacer un inventario de lo que ya opera y fue construido con IA. Clasificar cada pieza según lo que cuesta que falle y según cada cuánto cambia la regla de negocio que lleva dentro. Y asignar a cada pieza crítica un dueño que pueda explicar qué hace, con qué datos trabaja y qué habría que tocar si cambia una regla. Si nadie puede hacerlo, la pieza se reconstruye hasta que alguien pueda, o se retira."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Las señales de que el problema ya está en casa:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Cuando se pide un cambio pequeño en una herramienta interna, la respuesta es rehacerla desde cero con el asistente.",
+          "Quien construyó una pieza responde a las preguntas sobre ella pegándolas en el asistente, no explicándolas.",
+          "Nadie puede decir qué datos usa un informe recurrente ni qué pasa si una de sus fuentes cambia de formato.",
+          "Las piezas críticas no tienen ejemplos documentados de qué entra y qué debería salir."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El mecanismo",
+        "texto": "La comprensión era un subproducto de construir, y la IA la separó del resultado"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Durante décadas, quien armaba una hoja de cálculo compleja la entendía porque la había armado. Cada fórmula era una decisión tomada, y el tiempo que costaba escribirla era también el tiempo en que se pensaba. Nadie lo llamaba control, pero lo era: el costo de construir garantizaba que el constructor supiera qué había construido."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La IA rompió esa relación. Hoy se puede obtener el resultado sin pasar por las decisiones que lo producen. En equipos de software ya hay un nombre para lo que queda: deuda de comprensión. Es la distancia entre lo que el sistema hace y lo que alguien del equipo sabe que hace. Como cualquier deuda, no se nota mientras no hay que pagarla, y se paga con intereses."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El riesgo",
+        "texto": "El riesgo aparece el día en que cambia una regla del negocio"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Una pieza que nadie entiende puede funcionar bien durante meses. El problema llega con el cambio, y en una empresa todo cambia: una tasa de impuesto, un proveedor que modifica su formato de archivo, una política de crédito, una nueva línea de producto. Piensa en el área de cuentas por pagar que usa una automatización para clasificar facturas. Un proveedor grande cambia la estructura de su factura y la automatización empieza a asignar mal el centro de costo. Nadie lo detecta durante dos cierres. La automatización hizo exactamente lo que se le pidió con las facturas que conocía; lo que faltó fue alguien que tuviera en la cabeza sus supuestos y supiera que el cambio del proveedor los rompía."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Lo que nadie del equipo puede explicar, nadie lo puede cambiar sin riesgo. Y todo lo que está en producción, tarde o temprano, hay que cambiarlo.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La responsabilidad",
+        "texto": "Ante un cliente o un auditor, «lo hizo la IA» no responde a nada"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cuando un cliente reclama por un precio mal calculado, o un auditor pregunta por qué una partida se registró como se registró, la empresa tiene que dar una explicación. Esa explicación la da una persona con nombre y cargo. Si esa persona no entiende la pieza, la empresa puede mostrar el resultado pero no defenderlo, y frente a un tercero eso equivale a no tener respuesta."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Por eso el dueño de una pieza es quien puede explicarla, con independencia de quién la construyó o con qué herramienta. Si en toda el área no hay nadie, la empresa tiene en producción algo por lo que nadie puede responder."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Tres pasos devuelven un dueño a cada pieza que hoy funciona sin él"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Inventariar lo que ya opera",
+            "definicion": "Pide a cada área la lista de lo que construyó con IA y hoy se usa de forma recurrente: modelos en hojas de cálculo, macros, automatizaciones, plantillas, informes que se arman solos, código. No se trata de auditar a nadie. Importa por qué: casi ninguna empresa sabe hoy cuántas de estas piezas tiene, y no se puede gestionar el riesgo de lo que no se ha contado."
+          },
+          {
+            "termino": "2. Clasificar por impacto y por frecuencia de cambio",
+            "definicion": "Cada pieza se ubica en dos ejes: cuánto cuesta que falle y cada cuánto cambia la regla de negocio que lleva dentro. Un resumen interno de noticias está abajo en los dos. Un modelo de precios o una conciliación contable están arriba en los dos. El esfuerzo va a esas, porque son las que más probabilidad tienen de romperse y las que más cuesta que se rompan."
+          },
+          {
+            "termino": "3. Aplicar la prueba de explicación",
+            "definicion": "Para cada pieza crítica, alguien del equipo tiene que poder explicar, sin abrir el asistente, qué hace, con qué datos trabaja y qué habría que tocar si cambia una regla concreta. Quien la pasa es el dueño. Si nadie la pasa, se reconstruye la comprensión: se escriben ejemplos de qué entra y qué debe salir, se describe la regla en lenguaje de negocio y el dueño rehace por su cuenta la parte central. Si eso cuesta más que la pieza, se retira."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El marco sirve para lo que ya está en producción. Hacia adelante, la regla es más sencilla: nada nuevo entra en producción sin un dueño que haya pasado la prueba de explicación, con un nivel de exigencia proporcional al riesgo. Un tablero interno puede salir con una explicación breve. Algo que calcula un precio, aprueba un pago o redacta una cláusula para un cliente necesita un dueño que lo explique con detalle."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Pide a cada jefe de área la lista de lo que funciona en su área y fue construido con IA en el último año. Elige las tres piezas de mayor impacto y dedica media hora a cada una con quien la construyó, aplicando la prueba de explicación. Lo que salga de esas tres conversaciones te dirá el tamaño real del problema."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Qué es la deuda de comprensión en el trabajo hecho con IA?",
+            "respuesta": "Es la distancia entre lo que hace una pieza construida con IA y lo que alguien del equipo sabe que hace. Aparece porque la IA permite obtener un resultado sin pasar por las decisiones que lo producen, que antes era donde se generaba la comprensión. No se nota mientras la pieza funciona, pero se paga cuando hay que cambiarla, corregirla o explicarla ante un tercero."
+          },
+          {
+            "pregunta": "¿Quién es responsable de algo hecho con IA que nadie del equipo entiende?",
+            "respuesta": "La empresa sigue siendo responsable ante clientes, auditores y reguladores, aunque nadie del equipo sepa explicar la pieza. Internamente, la responsabilidad se debe asignar a una persona capaz de explicar qué hace, con qué datos trabaja y qué cambiar si cambia una regla. Si no existe esa persona, la pieza no debería seguir en producción sin reconstruir antes esa comprensión."
+          },
+          {
+            "pregunta": "¿Hay que prohibir poner en producción trabajo hecho con IA?",
+            "respuesta": "No, y prohibirlo suele llevar el uso a la sombra, donde es más difícil de controlar. Lo que funciona es exigir que todo lo que entra en producción tenga un dueño capaz de explicarlo, con una exigencia proporcional al riesgo. Un tablero interno necesita poco; algo que calcula precios o aprueba pagos necesita un dueño que lo explique con detalle."
+          },
+          {
+            "pregunta": "¿Cómo se comprueba si alguien entiende de verdad una pieza construida con IA?",
+            "respuesta": "Con la prueba de explicación: pedirle, sin abrir el asistente, que diga qué hace la pieza, con qué datos trabaja y qué habría que modificar si cambia una regla concreta del negocio. Si responde con seguridad a las tres preguntas, puede ser el dueño. Si necesita volver a preguntarle a la IA para responder, la comprensión todavía no está en el equipo."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La pregunta que queda para el comité de dirección es concreta. De todo lo que la empresa puso a funcionar con IA este año, ¿cuántas piezas tienen hoy a alguien capaz de cambiarlas mañana?"
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos qué piezas hechas con IA operan hoy en tu empresa sin un dueño que las explique",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "ai-built-work-in-production-nobody-understands",
+    "titulo": "AI-built work nobody on the team understands",
+    "entradilla": "When something built with AI goes into production and nobody on the team can explain why it works, the risk is not in daily use. It is in the day someone has to change it. The fix has three steps: inventory what is already running, rank it by impact and by how often its rules change, and give every critical piece an owner who passes the explanation test. Anything nobody can own gets rebuilt or retired.",
+    "descripcion": "Inventory what is running, rank it by impact and give every critical piece an owner who can explain it. What nobody can explain gets rebuilt or retired.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "When something built with AI goes into production and nobody on the team can explain why it works, the risk is not in daily use. It is in the day someone has to change it. The fix has three steps: inventory what is already running, rank it by impact and by how often its rules change, and give every critical piece an owner who passes the explanation test. Anything nobody can own gets rebuilt or retired."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Start with a scene that plays out in a lot of functions. A commercial planning analyst uses an AI assistant to build the model that calculates volume discounts. It works, the numbers reconcile with last month, the committee signs off and sales start quoting from it. Six months later the pricing policy changes and someone has to adjust the model. Nobody knows which of its forty formulas holds the discount rule, including the analyst, because she never wrote it. She asked for it."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "This is not just a software problem. It shows up in macros that reconcile accounts, in automations linking the CRM to billing, in clause templates the legal team uses every week, in a monthly report that assembles itself from half a dozen sources. They share one trait: they work, they are live, and the person who put them there could not walk you through what they do."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Black boxes in operations are nothing new. Most companies have a macro written by someone who left years ago, or a legacy system nobody dares touch. What has changed is the speed. A black box used to take years to form, as the people who understood it moved on. Now it forms in an afternoon, and the person who built it is still at the same desk."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The answer",
+        "texto": "What do you do when AI-built work nobody understands is already live?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The work is usually fine, so reviewing its quality fixes nothing. What is missing is an owner: the operation depends on something nobody can maintain. That is why the answer has three steps. Take an inventory of what is running and was built with AI. Rank each piece by what a failure would cost and by how often the business rule inside it changes. Then give every critical piece an owner who can explain what it does, what data it uses and what would need to change if a given rule changed. If nobody can, the piece gets rebuilt until someone can, or it gets retired."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The signs that the problem is already in the building:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "A small change request to an internal tool gets answered by rebuilding it from scratch with the assistant.",
+          "Whoever built a piece answers questions about it by pasting them into the assistant rather than explaining.",
+          "Nobody can say which data a recurring report draws on, or what happens if one of its sources changes format.",
+          "Critical pieces have no documented examples of what goes in and what should come out."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The mechanism",
+        "texto": "Understanding used to come free with building, and AI split the two apart"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "For decades, whoever built a complex spreadsheet understood it because they had built it. Every formula was a decision, and the time it took to write was also the time spent thinking. Nobody called it a control, but it was one: the cost of building made sure the builder knew what had been built."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "AI broke that link. You can now get the result without going through the decisions that produce it. Software teams already have a name for what is left behind: comprehension debt. It is the gap between what a system does and what anyone on the team knows it does. Like any debt, you do not feel it until it falls due, and it falls due with interest."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The risk",
+        "texto": "The risk surfaces the day a business rule changes"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A piece nobody understands can run cleanly for months. Trouble arrives with change, and in a business everything changes: a tax rate, a supplier's file format, a credit policy, a new product line. Take an accounts payable team that uses an automation to code invoices. A large supplier redesigns its invoice layout and the automation starts posting to the wrong cost centre. Nobody catches it for two closes. The automation did exactly what it was asked with the invoices it had seen; what was missing was someone who carried its assumptions in their head and knew the supplier's change had broken them."
+      },
+      {
+        "tipo": "cita",
+        "texto": "What nobody on the team can explain, nobody can change safely. And everything in production has to change sooner or later.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Accountability",
+        "texto": "In front of a client or an auditor, \"the AI did it\" answers nothing"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "When a client disputes a miscalculated price, or an auditor asks why an entry was booked the way it was, the company owes an explanation. That explanation comes from a person with a name and a title. If that person does not understand the piece, the company can show the result but cannot defend it, and to an outside party that is the same as having no answer."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "So ownership cannot be assigned by who built the piece or which tool they used. It goes to whoever can explain it. If there is nobody in the whole function who can, the company has something live that nobody can answer for, and that is the first thing a risk committee should want to know."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "Three steps give an owner back to every piece now running without one"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Inventory what is already running",
+            "definicion": "Ask each function for a list of what it built with AI and now uses on a recurring basis: spreadsheet models, macros, automations, templates, self-assembling reports, code. This is not an audit of anyone. It matters because almost no company today knows how many of these pieces it has, and you cannot manage the risk of something you have not counted."
+          },
+          {
+            "termino": "2. Rank by impact and by rate of change",
+            "definicion": "Place each piece on two axes: what a failure would cost, and how often the business rule inside it changes. An internal news digest is low on both. A pricing model or an account reconciliation is high on both. The effort goes there, because those are the pieces most likely to break and the most expensive when they do."
+          },
+          {
+            "termino": "3. Run the explanation test",
+            "definicion": "For each critical piece, someone on the team must be able to explain, without opening the assistant, what it does, what data it uses and what would need to change if a specific rule changed. Whoever passes becomes the owner. If nobody passes, you rebuild the understanding: write down examples of what goes in and what should come out, describe the rule in business terms, and have the owner rebuild the core logic themselves. If that costs more than the piece is worth, retire it."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The framework deals with what is already live. Going forward the rule is simpler: nothing new goes into production without an owner who has passed the explanation test, with the bar set by the risk. An internal dashboard can ship with a short explanation. Anything that sets a price, approves a payment or drafts a clause for a client needs an owner who can explain it in detail. People keep using AI to build fast; building fast just stops being enough to put something into operation."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Ask every head of function for a list of what runs in their area and was built with AI in the past year. Pick the three highest-impact pieces and spend half an hour on each with the person who built it, running the explanation test. Those three conversations will tell you how big the problem really is."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "What is comprehension debt in AI-built work?",
+            "respuesta": "It is the gap between what a piece built with AI actually does and what anyone on the team knows it does. It appears because AI lets people get a result without making the decisions that produce it, which is where understanding used to come from. It goes unnoticed while the piece works, and falls due when the piece has to be changed, fixed or explained to an outside party."
+          },
+          {
+            "pregunta": "Who is accountable for AI-built work that nobody on the team understands?",
+            "respuesta": "The company remains accountable to clients, auditors and regulators, even if nobody on the team can explain the piece. Internally, ownership should go to a person who can explain what it does, what data it uses and what to change if a rule changes. If no such person exists, the piece should not stay in production until that understanding has been rebuilt."
+          },
+          {
+            "pregunta": "Should we ban putting AI-built work into production?",
+            "respuesta": "No. Bans tend to push the use out of sight, where it is harder to control. What works is requiring that everything going live has an owner who can explain it, with the bar set by the risk. An internal dashboard needs little; something that sets prices or approves payments needs an owner who can explain it in detail."
+          },
+          {
+            "pregunta": "How do you check whether someone really understands a piece built with AI?",
+            "respuesta": "With the explanation test: ask them, without opening the assistant, what the piece does, what data it uses and what would need to change if a specific business rule changed. If they answer all three with confidence, they can own it. If they need to go back to the AI to answer, the understanding is not yet on the team."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That leaves the leadership team with one concrete question. Of everything your company put into operation with AI this year, how many pieces have someone today who could change them tomorrow?"
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's look at which AI-built pieces are running in your company without an owner who can explain them",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
