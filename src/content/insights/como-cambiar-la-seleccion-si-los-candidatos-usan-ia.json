@@ -1,0 +1,283 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-11-25",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "ai-native",
+  "formato": "field-note",
+  "es": {
+    "slug": "como-cambiar-la-seleccion-si-los-candidatos-usan-ia",
+    "titulo": "¿Cómo cambiar la selección si el candidato usa IA?",
+    "entradilla": "Cuando los candidatos usan IA en las pruebas y las entrevistas, la reacción habitual es intentar detectarlo. Es una carrera que se pierde y que castiga al candidato honesto. Lo que conviene cambiar es la prueba: declarar en qué etapas se permite la IA, mover la evaluación a preguntas de segundo nivel que no se pueden preparar, y pedir al candidato que revise trabajo hecho con IA delante del evaluador. Así se mide lo que el puesto exige ahora, que es criterio sobre lo que la IA produce.",
+    "descripcion": "Declara en qué etapas se permite la IA, evalúa con preguntas de segundo nivel y pide al candidato que corrija trabajo de IA a la vista. Eso mide criterio.",
+    "linkedin": {
+      "texto": "Si un candidato puede aprobar una prueba de selección con un asistente de IA, la prueba ya no medía lo que el puesto necesita.\n\nLa mayoría de áreas de selección responde intentando detectar la trampa. Es una carrera difícil de ganar, y quien sale perdiendo es el candidato que juega limpio.\n\nHay otra salida: cambiar qué se evalúa. Tres ajustes concretos para el proceso de selección.",
+      "hashtags": [
+        "IA",
+        "Talento",
+        "Selección"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Cuando los candidatos usan IA en las pruebas y las entrevistas, la reacción habitual es intentar detectarlo. Es una carrera que se pierde y que castiga al candidato honesto. Lo que conviene cambiar es la prueba: declarar en qué etapas se permite la IA, mover la evaluación a preguntas de segundo nivel que no se pueden preparar, y pedir al candidato que revise trabajo hecho con IA delante del evaluador. Así se mide lo que el puesto exige ahora, que es criterio sobre lo que la IA produce."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por una escena que hoy es común. Un área de finanzas busca un analista y envía, como siempre, un caso para resolver en casa: un estado de resultados con tres preguntas sobre márgenes. Llegan doce respuestas impecables, bien redactadas, con la misma estructura y casi los mismos argumentos. El equipo pasa a cuatro candidatos a la entrevista y, en la primera pregunta de seguimiento sobre su propio análisis, dos no saben explicar de dónde salió una cifra que ellos mismos entregaron."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Lo que pasó ahí se parece poco a un fraude. El caso para hacer en casa se diseñó cuando producir un análisis correcto costaba horas de trabajo y, por tanto, quien lo entregaba demostraba que sabía hacerlo. Ese supuesto dejó de ser cierto. La prueba sigue en el proceso, pero ya no separa a quien sabe de quien no."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La respuesta",
+        "texto": "¿Cómo cambiamos la selección de personal ahora que los candidatos usan IA en las entrevistas?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La mayor parte de lo que se publica sobre IA en selección trata de la empresa que usa IA para filtrar currículos. La pregunta de RR. HH. hoy es la inversa: qué hacer cuando la usa el candidato. Y la respuesta tiene menos que ver con controlar y más con rediseñar. En casi cualquier puesto de oficina, la persona que se contrate va a trabajar con un asistente de IA desde el primer día. Lo que distingue a un buen profesional ya no es producir un primer borrador, sino saber si ese borrador está bien, dónde falla y qué haría distinto. Eso es lo que el proceso de selección tiene que observar."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Las señales de que el proceso actual ya no está midiendo:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Las pruebas para hacer en casa llegan cada vez más parecidas entre sí, con la misma estructura y el mismo tono.",
+          "Las cartas de presentación y las respuestas escritas suben de calidad, pero la conversación en vivo no acompaña.",
+          "Los candidatos responden con soltura a las preguntas de manual y se traban en la primera repregunta.",
+          "El equipo evaluador discute si alguien usó IA en lugar de discutir si sirve para el puesto."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El mecanismo",
+        "texto": "Una prueba sirve mientras lo que mide cueste producir, y la IA abarató la respuesta correcta"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Toda prueba de selección funciona con la misma lógica: pide algo que solo puede entregar bien quien tiene la capacidad buscada. Un caso de análisis, una pregunta sobre cómo resolver un conflicto con un proveedor o un ejercicio de redacción funcionaban porque la respuesta correcta exigía saber. Hoy un asistente produce en segundos una respuesta razonable a casi cualquier pregunta que pueda formularse por escrito y con anticipación."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Por eso las preguntas de comportamiento clásicas, del tipo «cuéntame una vez que resolviste un conflicto», también pierden valor. El candidato puede llegar con respuestas preparadas y pulidas para las diez preguntas más probables. La entrevista termina premiando la preparación, y la preparación ahora es barata."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El error",
+        "texto": "Perseguir el uso de IA castiga al candidato honesto y deja pasar al hábil"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La reacción natural es prohibir y vigilar: entrevistas con cámara obligatoria, pedir que el candidato comparta pantalla, herramientas que prometen detectar texto generado. El problema es que la detección no es fiable y la prohibición solo la cumple quien ya iba a jugar limpio. El candidato que declara que usó un asistente para ordenar su análisis queda en desventaja frente al que lo usó y no lo dijo."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay además una contradicción difícil de sostener. Muchas de las mismas empresas que prohíben la IA en la selección piden a sus equipos que la usen en el trabajo diario. Un proceso que evalúa a alguien sin la herramienta con la que va a trabajar mide una versión del puesto que ya no existe."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Si una prueba de selección se puede aprobar con un asistente de IA, la prueba no estaba midiendo lo que el puesto necesita ahora.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El marco",
+        "texto": "Tres cambios devuelven al proceso la capacidad de distinguir"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Declarar la regla en cada etapa",
+            "definicion": "Escribe, para cada etapa del proceso, si la IA está permitida, permitida y declarada, o no permitida, y comunícalo al candidato antes de empezar. En una prueba para hacer en casa lo razonable suele ser permitirla y pedir que se declare cómo se usó. En la conversación en vivo, no. Importa porque elimina la ambigüedad que hoy castiga al honesto y convierte el uso de IA en información sobre cómo trabaja el candidato."
+          },
+          {
+            "termino": "2. Evaluar con preguntas de segundo nivel",
+            "definicion": "La primera respuesta se puede preparar; la tercera repregunta, no. Toma lo que el candidato entregó o dijo y pregunta por qué descartó la otra opción, qué cambiaría si un supuesto fuera distinto o qué cifra le parece menos confiable. Importa porque esas preguntas solo las responde con soltura quien hizo el razonamiento, y no dependen de detectar nada."
+          },
+          {
+            "termino": "3. Pedir que revise trabajo de IA a la vista",
+            "definicion": "Entrega al candidato un análisis, un correo o un informe producido con IA que contenga errores reales del dominio: una cifra mal sumada, un supuesto que no aplica al negocio, una recomendación que ignora una restricción legal. Pídele que lo revise y explique qué corregiría. Importa porque es exactamente lo que hará en el puesto, y muestra en media hora si tiene el criterio que el asistente no tiene."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El tercer cambio es el que más información da, y también el que exige más del área. Preparar un buen ejercicio de revisión obliga a que alguien del negocio defina qué errores importan en ese puesto. Un analista de crédito tiene que detectar un supuesto de riesgo mal planteado. Un asistente legal tiene que ver la cláusula que no aplica en su país. Ese trabajo de diseño lo hace una vez el área que contrata, no RR. HH. sola, y se reutiliza en cada proceso."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Toma el próximo proceso de selección abierto y cambia una sola etapa. Sustituye el caso para hacer en casa por un ejercicio de revisión en vivo: un trabajo hecho con IA con tres errores que el jefe del área haya sembrado a propósito. Compara lo que aprendes de cada candidato con lo que aprendías antes."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Hay que prohibir que los candidatos usen IA en un proceso de selección?",
+            "respuesta": "En general no conviene prohibirla en todas las etapas. La prohibición solo la cumple quien ya iba a jugar limpio y la detección no es fiable. Funciona mejor declarar, etapa por etapa, si la IA está permitida, permitida y declarada, o no permitida, y comunicarlo al candidato antes de empezar."
+          },
+          {
+            "pregunta": "¿Cómo saber si un candidato usó IA en la entrevista?",
+            "respuesta": "Las herramientas de detección no son fiables, así que es mejor cambiar la pregunta. Con preguntas de segundo nivel sobre su propio trabajo, por qué descartó una opción o qué cambiaría si un supuesto fuera distinto, se ve rápido si el razonamiento es suyo. Esas repreguntas no se pueden preparar con anticipación."
+          },
+          {
+            "pregunta": "¿Siguen sirviendo las pruebas para hacer en casa?",
+            "respuesta": "Sirven menos que antes como filtro, porque un asistente de IA produce en minutos una respuesta razonable. Pueden mantenerse si se permite el uso de IA, se pide declarar cómo se usó y se usan como punto de partida para la conversación en vivo. Lo que no conviene es decidir solo con ellas."
+          },
+          {
+            "pregunta": "¿Qué debería evaluar una entrevista ahora que el trabajo se hace con IA?",
+            "respuesta": "Debería evaluar el criterio sobre lo que produce la IA: si el candidato detecta errores, supuestos que no aplican y omisiones relevantes para el negocio. Un ejercicio práctico es entregarle un trabajo hecho con IA con errores reales del puesto y pedirle que lo revise. Eso muestra cómo trabajará desde el primer día."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "La decisión de fondo le toca a quien dirige el área que contrata, no solo a RR. HH. En tu próximo proceso de selección, ¿qué etapa estás seguro de que todavía distingue a quien sabe hacer el trabajo de quien sabe pedírselo a un asistente?"
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos qué mide hoy tu proceso de selección y qué debería medir con IA en el puesto",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "hiring-when-candidates-use-ai-in-interviews",
+    "titulo": "How to hire when candidates use AI in interviews",
+    "entradilla": "When candidates use AI in assessments and interviews, the instinct is to try to catch them. It is a race you lose, and it penalises the candidate who plays it straight. What needs to change is the assessment: state where AI is allowed at each stage, move the evaluation to follow-up questions nobody can rehearse, and ask candidates to review AI-produced work in front of the interviewer. That measures what the job now demands, which is judgement about what the AI produces.",
+    "descripcion": "Say where AI is allowed at each stage, probe with follow-up questions and have candidates fix AI-made work live. That tests the judgement the job needs.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "When candidates use AI in assessments and interviews, the instinct is to try to catch them. It is a race you lose, and it penalises the candidate who plays it straight. What needs to change is the assessment: state where AI is allowed at each stage, move the evaluation to follow-up questions nobody can rehearse, and ask candidates to review AI-produced work in front of the interviewer. That measures what the job now demands, which is judgement about what the AI produces."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture a scene that is now routine. A finance team is hiring an analyst and, as usual, sends out a take-home case: an income statement and three questions on margins. Twelve flawless answers come back, well written, with the same structure and almost the same arguments. The team shortlists four for interview, and on the first follow-up about their own analysis, two of them cannot say where a number they submitted came from."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That is not quite cheating. The take-home case was designed when producing a sound analysis took hours, so anyone who handed one in had shown they could do the work. That assumption no longer holds. The test is still in the process, but it no longer separates the people who know from the people who don't."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The answer",
+        "texto": "How should hiring change now that candidates use AI in interviews?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Most of what gets written about AI in hiring is about employers using it to screen CVs. The question HR is actually facing runs the other way: what to do when the candidate is the one using it. The answer has less to do with policing and more to do with redesign. In almost any office role, whoever you hire will work alongside an AI assistant from day one. What sets a strong professional apart is no longer producing a first draft. It is knowing whether that draft is right, where it falls down and what they would do differently. That is what the hiring process has to observe."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Signs that your current process has stopped measuring:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Take-home tests come back looking more and more alike, with the same structure and the same tone.",
+          "Cover letters and written answers keep getting better, but the live conversation does not keep up.",
+          "Candidates handle the standard questions with ease and stumble on the first follow-up.",
+          "The hiring panel spends its time debating whether someone used AI rather than whether they can do the job."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The mechanism",
+        "texto": "A test works only while the right answer is costly to produce, and AI made it cheap"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Every hiring assessment runs on the same logic: ask for something only a person with the target capability can deliver well. An analysis case, a question on handling a dispute with a supplier, a writing exercise all worked because the right answer required knowing. Today an assistant can produce a reasonable answer in seconds to almost any question that can be put in writing and in advance."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "That is why the classic behavioural questions, the \"tell me about a time you resolved a conflict\" kind, are losing value too. A candidate can arrive with polished answers to the ten most likely questions. The interview ends up rewarding preparation, and preparation is now cheap."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The mistake",
+        "texto": "Chasing AI use penalises the honest candidate and lets the skilful one through"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The natural reaction is to ban and monitor: cameras on, screen sharing, tools that claim to detect generated text. The trouble is that detection is unreliable and a ban only binds the people who were going to play fair anyway. The candidate who says they used an assistant to structure their analysis ends up behind the one who used it and kept quiet."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "There is also a contradiction that is hard to defend. Many of the same companies that ban AI in hiring are asking their teams to use it every day. A process that assesses someone without the tool they will work with is measuring a version of the job that no longer exists."
+      },
+      {
+        "tipo": "cita",
+        "texto": "If a hiring test can be passed with an AI assistant, it was not measuring what the job needs now.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The framework",
+        "texto": "Three changes give the process back its ability to tell people apart"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. State the rule for each stage",
+            "definicion": "For every stage of the process, write down whether AI is allowed, allowed if disclosed, or not allowed, and tell the candidate before they start. For a take-home task the sensible default is usually to allow it and ask how it was used. In the live conversation, not. It matters because it removes the ambiguity that currently penalises honesty, and turns AI use into information about how the candidate works."
+          },
+          {
+            "termino": "2. Assess with second-level questions",
+            "definicion": "The first answer can be rehearsed; the third follow-up cannot. Take what the candidate submitted or said and ask why they ruled out the other option, what would change if one assumption were different, or which number they trust least. It matters because only someone who did the reasoning can answer those comfortably, and none of it depends on detecting anything."
+          },
+          {
+            "termino": "3. Have them review AI-made work live",
+            "definicion": "Give the candidate an analysis, an email or a report produced with AI that contains real errors from the field: a sum that is off, an assumption that does not fit the business, a recommendation that ignores a legal constraint. Ask them to review it and explain what they would fix. It matters because this is exactly what they will do in the job, and in half an hour it shows whether they have the judgement the assistant lacks."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The third change yields the most information and asks the most of the hiring team. Building a good review exercise means someone from the business has to decide which errors matter in that role. A credit analyst needs to catch a badly framed risk assumption. A legal assistant needs to spot the clause that does not apply in their jurisdiction. The hiring function designs that once, not HR on its own, and reuses it in every round."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take your next open role and change a single stage. Replace the take-home case with a live review exercise: a piece of AI-produced work with three errors the hiring manager has planted on purpose. Compare what you learn about each candidate with what you used to learn."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Should candidates be banned from using AI during hiring?",
+            "respuesta": "Banning it at every stage rarely works. A ban only binds the people who were going to play fair, and detection is unreliable. It works better to state, stage by stage, whether AI is allowed, allowed if disclosed, or not allowed, and to tell candidates before they begin."
+          },
+          {
+            "pregunta": "How can you tell if a candidate used AI in an interview?",
+            "respuesta": "Detection tools are unreliable, so it is better to change the question. Second-level follow-ups about their own work, such as why they ruled out an option or what would change if an assumption were different, quickly show whether the reasoning is theirs. Those follow-ups cannot be rehearsed in advance."
+          },
+          {
+            "pregunta": "Are take-home assessments still useful?",
+            "respuesta": "They are weaker as a filter than they used to be, because an AI assistant can produce a reasonable answer in minutes. They can stay if AI use is allowed, candidates disclose how they used it, and the submission becomes the starting point for the live conversation. What you should not do is decide on the take-home alone."
+          },
+          {
+            "pregunta": "What should an interview assess now that work is done with AI?",
+            "respuesta": "It should assess judgement about what the AI produces: whether the candidate spots errors, assumptions that do not fit and omissions that matter to the business. A practical exercise is to hand them AI-produced work with real errors from the role and ask them to review it. That shows how they will work from day one."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The underlying decision belongs to whoever runs the hiring function, not to HR alone. In your next hiring round, which stage are you confident still separates the person who can do the work from the person who can ask an assistant to do it?"
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's look at what your hiring process measures today and what it should measure with AI in the role",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
