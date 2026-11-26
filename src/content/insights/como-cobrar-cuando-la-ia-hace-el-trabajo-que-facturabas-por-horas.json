@@ -1,0 +1,301 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-11-26",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "ai-native",
+  "formato": "perspective",
+  "es": {
+    "slug": "como-cobrar-cuando-la-ia-hace-el-trabajo-que-facturabas-por-horas",
+    "titulo": "¿Cómo cobrar por horas si la IA hace el trabajo?",
+    "entradilla": "Si una firma sigue cobrando por hora mientras la IA reduce las horas, le regala al cliente todo el ahorro y, de paso, se castiga por ser más eficiente. La salida no es esconder el uso de IA ni subir la tarifa: es separar el precio del esfuerzo pieza por pieza. Precio fijo para el trabajo repetible, tiempo o iguala para el trabajo de criterio, y un precio propio para el riesgo que la firma asume. Con los clientes actuales, el cambio se negocia en la renovación y mostrando qué gana cada parte.",
+    "descripcion": "Separando el precio del esfuerzo: precio fijo para el trabajo repetible, tiempo para el criterio y un precio propio para el riesgo que asume la firma.",
+    "linkedin": {
+      "texto": "Una firma que cobra por hora y adopta IA se castiga a sí misma: cuanto mejor trabaja, menos factura.\n\nEl problema no está en la tarifa. Está en que la hora dejó de medir lo que el cliente compra. Y subir el precio para compensar es la forma más rápida de perder al cliente que ya hizo la cuenta.\n\nCómo separar el precio del esfuerzo sin romper la relación con los clientes actuales.",
+      "hashtags": [
+        "IA",
+        "ServiciosProfesionales",
+        "Estrategia"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Si una firma sigue cobrando por hora mientras la IA reduce las horas, le regala al cliente todo el ahorro y, de paso, se castiga por ser más eficiente. La salida no es esconder el uso de IA ni subir la tarifa: es separar el precio del esfuerzo pieza por pieza. Precio fijo para el trabajo repetible, tiempo o iguala para el trabajo de criterio, y un precio propio para el riesgo que la firma asume. Con los clientes actuales, el cambio se negocia en la renovación y mostrando qué gana cada parte."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por una escena que hoy se repite en despachos, consultoras, agencias y firmas contables. Un equipo legal revisa contratos de proveedores para un cliente industrial. Cada revisión llevaba unas seis horas entre lectura, comparación con el modelo del cliente y notas de riesgo. Con un asistente bien configurado, la primera pasada sale en minutos y el abogado dedica una hora a revisar y decidir. El trabajo es igual de bueno o mejor. La factura, si se sigue cobrando por hora, es una sexta parte."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ante eso, la reacción natural dentro de la firma es una de dos. O se sigue facturando como antes sin explicar nada, o se frena el uso de IA para que las horas no bajen. Las dos salidas tienen fecha de caducidad. La primera, porque el cliente también usa IA y sabe cuánto tarda una primera revisión. La segunda, porque el competidor que sí la usa va a cotizar más bajo y entregar antes."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Conviene recordar cómo se llegó aquí. La hora se impuso en los servicios profesionales porque resolvía un problema real: el cliente no podía saber de antemano cuánto costaría un trabajo incierto, y la firma no quería asumir ese riesgo sola. La hora era una forma razonable de repartir la incertidumbre. Lo que la IA cambia es que buena parte del trabajo dejó de ser incierto, y para ese trabajo la hora ya no reparte nada: solo mide cuánto tarda una herramienta."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La respuesta",
+        "texto": "¿Cómo cobramos cuando la IA hace el trabajo que facturábamos por horas?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cobrando por lo que el cliente compra, que casi nunca son horas. El cliente compra tres cosas distintas, aunque hoy las pague en la misma factura: un entregable que se repite, el criterio de alguien con experiencia y la tranquilidad de que otro asume el riesgo de equivocarse. La IA abarata mucho la primera, poco la segunda y nada la tercera. Por eso un solo precio por hora deja de funcionar, y cada una necesita su propia forma de cobro."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Las señales de que el modelo actual ya está pidiendo cambio:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Los socios recortan horas a mano antes de enviar la factura porque «no se ven bien» para el trabajo entregado.",
+          "El equipo evita usar IA en cuentas grandes por miedo a que bajen los ingresos del mes.",
+          "Los clientes empiezan a pedir precio cerrado para trabajos que antes aceptaban por hora.",
+          "La rentabilidad por proyecto sube mientras la facturación total se estanca."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El trabajo repetible",
+        "texto": "El trabajo que la IA abarata se cobra por entregable, no por tiempo"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Revisar un contrato estándar, preparar una declaración mensual, armar un informe de cumplimiento con estructura fija, producir las piezas de una campaña a partir de un brief. Son entregables que se pueden describir de antemano con bastante precisión, y la firma sabe mejor que nadie cuánto le cuesta producirlos ahora. Ahí lo sensato es un precio fijo por unidad, fijado por el valor que tiene para el cliente y por lo que cobra el mercado, no por las horas que tarda."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Esto tiene una consecuencia que conviene asumir desde el principio. Con precio fijo, la eficiencia vuelve a ser de la firma: si mañana el proceso es más rápido, el margen mejora. Con precio por hora, cada mejora del proceso es un descuento automático. Hay además un límite ético que algunos colegios profesionales ya pusieron por escrito. La American Bar Association, en su Opinión Formal 512 de julio de 2024, dejó claro que un abogado que cobra por hora debe facturar el tiempo que realmente dedicó, no el que habría dedicado sin la herramienta. Mantener la hora e inflarla no es una opción."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El criterio",
+        "texto": "El criterio sigue valiendo por tiempo, porque es donde la IA ahorra menos"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay trabajo que no se deja describir de antemano: una negociación complicada, una reestructuración, una estrategia de defensa, un rediseño de procesos donde nadie sabe todavía qué va a aparecer. Ahí la incertidumbre sigue existiendo y la hora, o una iguala mensual con un tope de dedicación, sigue repartiéndola de forma razonable. La diferencia es que ahora la hora se cobra más cara, porque ya no lleva dentro las horas baratas de trabajo mecánico que la diluían."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Piensa en una firma contable que antes facturaba un cierre anual como cuarenta horas mezcladas: treinta de conciliación y armado, diez de análisis y recomendaciones. Si la conciliación pasa a un precio fijo por entregable, las diez horas de análisis quedan a la vista. Ya no se esconden en el promedio, y el cliente puede ver qué está pagando por el criterio del socio."
+      },
+      {
+        "tipo": "cita",
+        "texto": "La hora servía para repartir la incertidumbre. Donde la IA la eliminó, la hora ya no reparte nada: solo mide cuánto tarda una herramienta.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El riesgo",
+        "texto": "La responsabilidad que asume la firma tiene precio propio y la IA no la reduce"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cuando un despacho firma una opinión legal o una auditora firma un informe, el cliente paga también porque alguien responde si eso está mal. Esa responsabilidad no baja con la IA. Si acaso sube, porque la firma tiene que poder defender un trabajo que en parte produjo una herramienta. Por eso conviene que la responsabilidad aparezca en la propuesta como algo separado: una tarifa por la firma del entregable, un componente ligado a un resultado acordado, o un precio distinto según el nivel de revisión que el cliente pida."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Los clientes actuales",
+        "texto": "Con los clientes que ya tienes, el cambio se negocia en la renovación y a la vista"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Separar primero, cambiar después",
+            "definicion": "Antes de proponer nada, desglosa los trabajos recurrentes de cada cliente en las tres capas: entregable repetible, criterio y responsabilidad. Importa porque sin ese mapa la conversación con el cliente se reduce a precio, y una negociación de precio sin contenido siempre termina en descuento."
+          },
+          {
+            "termino": "2. Proponer en la renovación, no a mitad de contrato",
+            "definicion": "Cambiar la forma de cobro a mitad de un contrato parece una subida encubierta. En la renovación es una propuesta. Por qué importa: el cliente tiene un momento natural para comparar, y es mejor que compare tu propuesta nueva con tu propuesta vieja que con la de un competidor."
+          },
+          {
+            "termino": "3. Compartir parte del ahorro de forma explícita",
+            "definicion": "El cliente sabe que la IA abarata ciertas tareas. Si el precio fijo del trabajo repetible es algo menor que lo que pagaba por horas, y a cambio gana plazo y previsibilidad, la conversación es fácil. Si la firma intenta quedarse con todo el ahorro, el cliente lo nota en la primera comparación."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Elige a tus cinco clientes con más horas facturadas el último año y separa su trabajo en las tres capas. Mira cuántas de esas horas eran trabajo repetible que hoy hace, o podría hacer, una herramienta. Esa cifra es la parte de tus ingresos que hoy depende de no usar IA, y es la que conviene pasar primero a precio por entregable."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Hay que cobrar menos si la IA hace el trabajo más rápido?",
+            "respuesta": "Depende de cómo se cobre. Si se cobra por hora, sí: lo correcto es facturar el tiempo realmente dedicado, y la American Bar Association lo dejó por escrito en su Opinión Formal 512 de 2024. Si se cobra por entregable o por resultado, no necesariamente, porque el precio refleja el valor para el cliente y no el tiempo de producción. Por eso muchas firmas están moviendo el trabajo repetible a precio fijo."
+          },
+          {
+            "pregunta": "¿Qué modelo de cobro conviene a una firma de servicios profesionales que usa IA?",
+            "respuesta": "Un modelo mixto. Precio fijo por entregable para el trabajo repetible que la IA abarata, tiempo o iguala mensual para el trabajo de criterio que no se puede describir de antemano, y un componente propio por la responsabilidad que asume la firma al firmar. Un solo precio por hora mezcla tres cosas que la IA afecta de forma muy distinta."
+          },
+          {
+            "pregunta": "¿Cómo se le propone a un cliente actual pasar de horas a precio fijo?",
+            "respuesta": "En la renovación del contrato, no a mitad. Se presenta el trabajo separado en entregables repetibles, criterio y responsabilidad, con un precio fijo para lo repetible algo menor que lo que pagaba por horas, a cambio de plazos más cortos y previsibilidad. El cliente tiene que ver qué gana, no solo qué cambia."
+          },
+          {
+            "pregunta": "¿Hay que decirle al cliente que se usa IA en su trabajo?",
+            "respuesta": "Conviene hacerlo. El cliente probablemente ya usa IA y sabe cuánto tarda una tarea mecánica, así que ocultarlo solo retrasa la conversación de precio. Explicar qué parte hace una herramienta y qué parte revisa y firma una persona justifica que el criterio y la responsabilidad se cobren por separado y a mejor precio."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Las firmas que hagan este cambio pronto van a decidir ellas cómo se reparte el ahorro. Las que esperen lo van a decidir sus clientes, en la próxima licitación. La pregunta para el comité de socios es qué parte de la facturación de este año dependió de que el trabajo siguiera siendo lento."
+      },
+      {
+        "tipo": "cta",
+        "texto": "Revisemos qué parte de tu facturación por horas ya es trabajo repetible y cómo pasarla a otro modelo",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-to-charge-clients-when-ai-does-the-billable-hours",
+    "titulo": "How to charge when AI does the billable hours",
+    "entradilla": "A firm that keeps billing by the hour while AI cuts the hours hands the client every bit of the saving, and penalises itself for getting faster. The way out is neither hiding the AI nor raising the rate. It is pulling price apart from effort, piece by piece. Fixed prices for repeatable work, time or a retainer for judgement, and a separate price for the risk the firm takes on. With existing clients, the change belongs in the renewal, with both sides able to see what they gain.",
+    "descripcion": "Unbundle price from effort: fixed fees for repeatable work, time for judgement, and a separate price for the risk the firm takes on.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "A firm that keeps billing by the hour while AI cuts the hours hands the client every bit of the saving, and penalises itself for getting faster. The way out is neither hiding the AI nor raising the rate. It is pulling price apart from effort, piece by piece. Fixed prices for repeatable work, time or a retainer for judgement, and a separate price for the risk the firm takes on. With existing clients, the change belongs in the renewal, with both sides able to see what they gain."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Start with a situation now common in law firms, consultancies, agencies and accounting practices. A legal team reviews supplier contracts for a manufacturing client. Each review used to take about six hours of reading, comparing against the client's template and writing up risk notes. With a well-configured assistant, the first pass takes minutes and the lawyer spends an hour reviewing and deciding. The work is as good or better. The invoice, if the firm still bills by the hour, is a sixth of what it was."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The instinctive response tends to be one of two things. Keep billing as before and say nothing, or quietly hold back on AI so the hours don't fall. Both have a shelf life. The first, because the client uses AI too and knows how long a first-pass review takes. The second, because the competitor who does use it will quote lower and deliver sooner."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "It helps to remember why the hour won in the first place. It solved a real problem: the client couldn't know in advance what uncertain work would cost, and the firm didn't want to carry that risk alone. Billing by time was a sensible way to share the uncertainty. What AI changes is that a lot of the work is no longer uncertain, and for that work the hour shares nothing. It just measures how long a tool takes."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The answer",
+        "texto": "How do we charge when AI does the work we used to bill by the hour?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "By charging for what the client actually buys, which is rarely hours. Clients buy three different things, even if today they pay for them on one invoice: a deliverable that repeats, the judgement of someone experienced, and the comfort that someone else carries the risk of getting it wrong. AI makes the first much cheaper, the second a little cheaper and the third no cheaper at all. A single hourly rate can't price all three, so each needs its own basis."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Signs the current model is already under strain:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Partners trim hours by hand before invoices go out because they \"don't look right\" for the work delivered.",
+          "Teams avoid using AI on large accounts for fear of what it does to the month's revenue.",
+          "Clients start asking for fixed quotes on work they used to accept by the hour.",
+          "Margin per engagement rises while total billings flatten."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Repeatable work",
+        "texto": "Work that AI makes cheaper should be priced per deliverable, not per hour"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Reviewing a standard contract, preparing a monthly filing, assembling a compliance report with a fixed structure, producing campaign assets from a brief. These deliverables can be specified upfront with reasonable precision, and the firm knows better than anyone what they now cost to produce. The sensible move is a fixed unit price, set by what the deliverable is worth to the client and what the market charges, not by how long it takes."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "There is a consequence worth accepting from the outset. With a fixed price, efficiency belongs to the firm again: if the process gets faster tomorrow, margin improves. With hourly billing, every process improvement is an automatic discount. There is also an ethical floor that some professional bodies have already written down. In Formal Opinion 512, issued in July 2024, the American Bar Association made clear that a lawyer billing hourly must bill the time actually spent, not the time the work would have taken without the tool. Keeping the hour and padding it is not an option."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Judgement",
+        "texto": "Judgement is still worth billing by time, because that is where AI saves least"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Some work can't be specified in advance: a hard negotiation, a restructuring, a litigation strategy, a process redesign where nobody yet knows what will surface. The uncertainty is still there, and the hour, or a monthly retainer with a cap on time, still shares it fairly. The difference is that the hour can now carry a higher rate, because it no longer has cheap hours of mechanical work diluting it."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Picture an accounting firm that used to bill a year-end close as forty blended hours: thirty of reconciliation and assembly, ten of analysis and advice. Once reconciliation moves to a fixed deliverable price, the ten hours of analysis become visible. They are no longer buried in an average, and the client can see what they are paying for the partner's judgement."
+      },
+      {
+        "tipo": "cita",
+        "texto": "The hour was a way to share uncertainty. Where AI has removed the uncertainty, the hour shares nothing. It just measures how long a tool takes.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Risk",
+        "texto": "The liability a firm takes on has its own price, and AI doesn't reduce it"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "When a law firm signs an opinion or an auditor signs a report, part of what the client pays for is that someone answers if it's wrong. AI doesn't shrink that responsibility. If anything it grows, because the firm has to be able to stand behind work a tool partly produced. So it makes sense to show the liability as its own line in the proposal: a fee for signing the deliverable, a component tied to an agreed outcome, or different prices depending on the level of review the client wants."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Existing clients",
+        "texto": "With current clients, the change is negotiated at renewal and in the open"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Unbundle first, reprice second",
+            "definicion": "Before proposing anything, break each client's recurring work into the three layers: repeatable deliverable, judgement and liability. Why it matters: without that map the conversation collapses into price, and a price negotiation with nothing behind it always ends in a discount."
+          },
+          {
+            "termino": "2. Propose at renewal, not mid-contract",
+            "definicion": "Changing how you bill halfway through a contract looks like a disguised increase. At renewal it's a proposal. Why it matters: the client has a natural moment to compare, and you want them comparing your new offer with your old one, not with a competitor's."
+          },
+          {
+            "termino": "3. Share some of the saving, openly",
+            "definicion": "Clients know AI makes some tasks cheaper. If the fixed price for repeatable work comes in somewhat below what they paid by the hour, and they gain speed and predictability in return, the conversation is easy. If the firm tries to keep the whole saving, the client notices at the first comparison."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "Take your five clients with the most billed hours last year and split their work into the three layers. Count how many of those hours were repeatable work that a tool does today, or could. That number is the share of your revenue that currently depends on not using AI, and it's the part to move to deliverable pricing first."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Should we charge less if AI does the work faster?",
+            "respuesta": "It depends on how you charge. If you bill by the hour, yes: the right thing is to bill the time actually spent, and the American Bar Association put that in writing in Formal Opinion 512 in 2024. If you charge per deliverable or per outcome, not necessarily, because the price reflects value to the client rather than production time. That is why many firms are moving repeatable work to fixed fees."
+          },
+          {
+            "pregunta": "What pricing model suits a professional services firm that uses AI?",
+            "respuesta": "A blended one. Fixed fees per deliverable for repeatable work that AI makes cheaper, time or a monthly retainer for judgement that can't be scoped in advance, and a separate component for the liability the firm takes on when it signs. A single hourly rate bundles three things that AI affects very differently."
+          },
+          {
+            "pregunta": "How do you move an existing client from hourly billing to fixed fees?",
+            "respuesta": "At contract renewal, not mid-term. Present the work split into repeatable deliverables, judgement and liability, with a fixed price for the repeatable part somewhat below what the client paid by the hour, in exchange for faster turnaround and predictable costs. The client needs to see what they gain, not just what changes."
+          },
+          {
+            "pregunta": "Should we tell clients we use AI on their work?",
+            "respuesta": "It's usually the better choice. The client probably uses AI already and knows how long a mechanical task takes, so hiding it only delays the pricing conversation. Explaining which part a tool handles and which part a person reviews and signs is what justifies pricing judgement and liability separately, and at a better rate."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Firms that make this shift early get to decide how the saving is shared. Firms that wait will have it decided for them by their clients, at the next tender. The question for the partners' meeting is how much of this year's billing depended on the work staying slow."
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's look at how much of your hourly billing is already repeatable work, and how to move it to another model",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
