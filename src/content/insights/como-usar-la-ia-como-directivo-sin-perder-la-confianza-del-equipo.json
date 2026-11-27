@@ -1,0 +1,291 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-11-27",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "ai-native",
+  "formato": "perspective",
+  "es": {
+    "slug": "como-usar-la-ia-como-directivo-sin-perder-la-confianza-del-equipo",
+    "titulo": "¿Cómo usar IA sin perder la confianza del equipo?",
+    "entradilla": "Un equipo no deja de confiar en su jefe porque use IA. Deja de confiar cuando descubre que la usó en algo que le afectaba y no se lo dijo, o cuando sospecha que una decisión sobre su trabajo la tomó una herramienta. La regla que funciona separa tres zonas: lo que el directivo usa libremente para pensar y preparar, lo que declara cuando llega al equipo, y lo que no delega nunca, que es el juicio sobre personas.",
+    "descripcion": "Declarando la IA en todo lo que llega al equipo y sin delegarle nunca el juicio sobre personas: evaluaciones, feedback individual y decisiones de rol.",
+    "linkedin": {
+      "texto": "El equipo puede aceptar que su jefe redacte con IA. Lo que no acepta es enterarse después de que la usó para juzgarlo.\n\nLa confianza se gasta en la frontera entre preparar y decidir, y casi ninguna dirección la tiene marcada.\n\nUna regla de tres zonas para usar IA desde la dirección sin poner en juego al equipo.",
+      "hashtags": [
+        "IA",
+        "Liderazgo",
+        "Personas"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Un equipo no deja de confiar en su jefe porque use IA. Deja de confiar cuando descubre que la usó en algo que le afectaba y no se lo dijo, o cuando sospecha que una decisión sobre su trabajo la tomó una herramienta. La regla que funciona separa tres zonas: lo que el directivo usa libremente para pensar y preparar, lo que declara cuando llega al equipo, y lo que no delega nunca, que es el juicio sobre personas."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por un martes cualquiera. Una gerente de operaciones prepara la evaluación semestral de sus ocho personas. Tiene las notas del año, los indicadores y poco tiempo. Le pide a un asistente que redacte un primer borrador de cada evaluación a partir de esas notas, ajusta algunas frases y las envía. Tres semanas después, dos personas del equipo comparan sus textos y encuentran la misma estructura, los mismos adjetivos y una frase casi idéntica sobre sus oportunidades de crecimiento."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Ninguna de las dos evaluaciones era injusta, y el texto era correcto. Lo que se perdió fue la creencia de que alguien había mirado su trabajo con atención, que es justo lo que hace que una persona acepte una evaluación, una corrección o una mala noticia. A partir de ese día, cada mensaje de esa gerente se lee con una pregunta de fondo: ¿esto lo pensó ella?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay un antecedente público que conviene tener presente. En febrero de 2023, una oficina de la Universidad Vanderbilt envió a sus estudiantes un mensaje de apoyo tras el tiroteo en la Universidad Estatal de Michigan. Al pie, una línea indicaba que el texto era una paráfrasis generada con ChatGPT. La reacción fue inmediata y la oficina tuvo que disculparse. El mensaje no decía nada falso. El problema era que un momento que pedía presencia se había resuelto delegando."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La respuesta",
+        "texto": "¿Cómo debe usar la IA un directivo sin perder la confianza de su equipo?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Separando lo que la IA le ayuda a pensar de lo que el equipo recibe de él. La confianza de un equipo no depende de qué herramientas usa su jefe, igual que nadie desconfía de un jefe porque use una hoja de cálculo. Depende de dos cosas que la IA pone en juego: que el equipo sepa qué le llega escrito o decidido con ayuda de una herramienta, y que las decisiones sobre personas las siga tomando alguien que conoce el contexto. Con esas dos condiciones, el directivo puede usar IA todo lo que quiera."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Las señales de que el uso actual ya está desgastando la confianza:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "El equipo empieza a preguntar, medio en broma, si un mensaje lo escribió el jefe o el asistente.",
+          "Las respuestas a correos delicados llegan antes y más pulidas, pero las conversaciones en persona sobre esos mismos temas se acortan.",
+          "El directivo pide al equipo que declare su uso de IA y nunca explica el suyo.",
+          "Las evaluaciones o el feedback escrito de distintas personas se parecen entre sí más que las personas evaluadas."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Preparar y juzgar",
+        "texto": "El equipo acepta que la IA redacte, pero espera que el juicio sea de su jefe"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cuando un equipo lee un mensaje de su jefe, no evalúa la prosa. Evalúa si detrás hubo criterio. Un resumen de la reunión del lunes, un borrador de procedimiento o la primera versión del plan trimestral pueden salir de una herramienta sin que nadie se sienta menos considerado, porque ahí lo que importa es el contenido. Una evaluación de desempeño, la respuesta a una queja personal o la decisión de quién pasa a otro proyecto son distintas: lo que la persona necesita saber es que alguien que la conoce pensó en ella."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Por eso lo que conviene vigilar es la frontera entre preparar y juzgar. Piensa en un jefe de ventas que usa un asistente para resumir el desempeño de cada vendedor a partir de los datos del CRM. Mientras ese resumen le sirve para preparar las conversaciones individuales, es un buen uso. Cuando el resumen pasa a ser la evaluación, el equipo deja de discutir con su jefe y empieza a discutir con un texto que nadie defiende del todo."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Declarar",
+        "texto": "Un uso de IA que el equipo descubre después se lee como ocultación"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Hay una asimetría que pesa más de lo que parece. Un uso de IA explicado de antemano casi nunca genera rechazo. El mismo uso, descubierto después, se interpreta como algo escondido, aunque no hubiera intención de esconder nada. Y descubrirlo es cada vez más fácil: los textos generados tienen giros reconocibles, los equipos también usan estas herramientas y saben cómo suenan, y basta con que dos personas comparen lo que recibieron."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A eso se suma la coherencia. Muchas empresas están pidiendo a sus equipos que indiquen cuándo usan IA en informes o propuestas. Un directivo que exige esa transparencia y no la practica le está diciendo al equipo que la regla es para otros. Evitarlo cuesta muy poco: una línea al pie del documento, o una frase al empezar la reunión, que diga qué parte preparó una herramienta y qué parte revisó y decidió él."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Al equipo no le importa quién redactó el mensaje. Le importa saber quién decidió lo que dice.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La regla",
+        "texto": "Una regla de tres zonas basta para casi cualquier directivo"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Lo que sigue es un criterio de trabajo personal, pensado para que cada directivo lo aplique a su propia agenda. Cabe en una página y se le puede explicar al equipo en cinco minutos."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Zona libre: pensar y preparar",
+            "definicion": "Resumir documentos, preparar una reunión, explorar escenarios, poner a prueba un argumento propio, ordenar notas. Es todo lo que el directivo usa para pensar mejor y que no llega tal cual a nadie. Importa porque aquí está la mayor parte del valor y no hay nada que declarar: lo que recibe el equipo es el criterio del propio directivo."
+          },
+          {
+            "termino": "2. Zona declarada: lo que llega al equipo",
+            "definicion": "Comunicados internos, planes, procedimientos y respuestas por escrito a consultas del equipo. Se puede usar IA, y se dice. Por qué importa: una línea de transparencia no cuesta nada y elimina el riesgo de que el uso se descubra después y se lea como ocultación."
+          },
+          {
+            "termino": "3. Zona reservada: el juicio sobre personas",
+            "definicion": "Evaluaciones de desempeño, feedback individual, decisiones de promoción, salida o cambio de rol, y comunicaciones en momentos difíciles para alguien. La herramienta puede ayudar a ordenar datos, pero el texto y la decisión los escribe el directivo. Importa porque es donde el equipo comprueba si su jefe lo conoce, y esa confianza no se recupera con una disculpa."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Esta semana, repasa los últimos diez mensajes o documentos que enviaste a tu equipo y clasifícalos en las tres zonas. Si alguno de la zona reservada salió de una herramienta, ese es el primero que hay que corregir. Después, en la próxima reunión, cuéntale al equipo para qué usas la IA y qué no le vas a delegar nunca. Esa conversación hace más por la confianza que cualquier política escrita."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Debe un jefe decirle a su equipo que usa IA?",
+            "respuesta": "Sí, en todo lo que llega al equipo: comunicados, planes, procedimientos y respuestas por escrito. No hace falta declarar el uso que solo sirve para preparar o pensar, porque lo que recibe el equipo en ese caso es el criterio del propio directivo. Un uso explicado de antemano casi nunca genera rechazo; el mismo uso descubierto después se lee como ocultación."
+          },
+          {
+            "pregunta": "¿Se puede usar IA para escribir evaluaciones de desempeño?",
+            "respuesta": "Se puede usar para ordenar datos, revisar indicadores o detectar sesgos en las notas propias, pero no para redactar la evaluación. La evaluación es el momento en que una persona comprueba si su jefe conoce su trabajo, y un texto genérico lo desmiente. Cuando varias evaluaciones se parecen entre sí más que las personas evaluadas, el equipo lo nota y deja de creer en ellas."
+          },
+          {
+            "pregunta": "¿Qué decisiones no debería delegar nunca un directivo en la IA?",
+            "respuesta": "Las que juzgan a una persona: evaluaciones, feedback individual, promociones, salidas, cambios de rol y comunicaciones en momentos difíciles para alguien. En esas decisiones una herramienta puede aportar información, pero el criterio y el texto final tienen que ser del directivo. Son las situaciones en las que el equipo mide si su jefe lo conoce de verdad."
+          },
+          {
+            "pregunta": "¿Cómo le explica un directivo a su equipo el uso que hace de la IA?",
+            "respuesta": "En una conversación corta, no en un documento. Basta con contar para qué la usa, por ejemplo para preparar reuniones, resumir o hacer borradores, cómo señala lo que llega al equipo con ayuda de una herramienta y qué no va a delegar nunca. Hecha antes de que alguien pregunte, esa explicación convierte un posible motivo de sospecha en una muestra de coherencia."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Los equipos van a seguir usando IA y sus jefes también. La confianza se va a jugar en un punto muy concreto: si cada persona sabe qué le llegó pensado por alguien y qué le llegó resuelto por una herramienta. La pregunta para cualquier comité de dirección es si su gente podría responder eso hoy sobre los mensajes que recibió esta semana."
+      },
+      {
+        "tipo": "cta",
+        "texto": "Definamos cómo usa la IA tu equipo directivo sin poner en juego la confianza de sus equipos",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "how-leaders-can-use-ai-without-losing-team-trust",
+    "titulo": "How leaders can use AI without losing team trust",
+    "entradilla": "Teams don't stop trusting a manager because the manager uses AI. They stop when they find out it was used on something that affected them and nobody said so, or when they suspect a decision about their work was made by a tool. The rule that holds up splits the work into three zones: what a leader uses freely to think and prepare, what gets disclosed when it reaches the team, and what is never delegated, which is judgement about people.",
+    "descripcion": "Disclose AI in everything that reaches your team, and never hand it judgement about people: reviews, individual feedback and decisions about roles.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Teams don't stop trusting a manager because the manager uses AI. They stop when they find out it was used on something that affected them and nobody said so, or when they suspect a decision about their work was made by a tool. The rule that holds up splits the work into three zones: what a leader uses freely to think and prepare, what gets disclosed when it reaches the team, and what is never delegated, which is judgement about people."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Take an ordinary Tuesday. An operations manager is preparing mid-year reviews for her eight direct reports. She has a year of notes, the KPIs and very little time. She asks an assistant to draft each review from those notes, tweaks a few sentences and sends them out. Three weeks later, two people on the team compare their reviews and find the same structure, the same adjectives and an almost identical line about their growth opportunities."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Neither review was unfair, and the writing was fine. What went missing was the belief that someone had looked at their work carefully, which is exactly what makes a person accept a review, a correction or bad news. From that day on, every message from that manager gets read with a quiet question underneath: did she actually think about this?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "There is a public precedent worth keeping in mind. In February 2023, an office at Vanderbilt University sent students a message of support after the shooting at Michigan State University. A line at the bottom said the text was a paraphrase generated with ChatGPT. The backlash was immediate and the office had to apologise. Nothing in the message was false. The problem was that a moment that called for presence had been handled by delegating."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The answer",
+        "texto": "How should a leader use AI without losing the team's trust?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "By separating what AI helps them think through from what the team receives from them. Team trust doesn't hinge on which tools a manager uses, any more than people distrust a boss for using a spreadsheet. It hinges on two things AI puts in play: whether the team knows what reaches them written or decided with a tool's help, and whether decisions about people are still made by someone who knows the context. With those two conditions in place, a leader can use AI as much as they like."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Signs that current use is already wearing trust down:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "People start asking, half joking, whether a message came from the boss or the assistant.",
+          "Replies to sensitive emails arrive faster and more polished, while face-to-face conversations on the same topics get shorter.",
+          "The leader asks the team to disclose their AI use and never explains their own.",
+          "Written reviews or feedback for different people look more alike than the people being reviewed."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Preparing and judging",
+        "texto": "Teams accept AI doing the drafting, but expect the judgement to be their manager's"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "When a team reads a message from their manager, they aren't grading the prose. They are checking whether there was judgement behind it. A summary of Monday's meeting, a draft procedure or the first cut of the quarterly plan can come out of a tool without anyone feeling less valued, because what matters there is the content. A performance review, a reply to a personal complaint or the call on who moves to another project is different: the person needs to know that someone who knows them actually thought about them."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "So the line worth watching is the one between preparing and judging. Picture a sales manager who uses an assistant to summarise each rep's performance from CRM data. As long as that summary helps prepare the one-to-one conversations, it is good use. Once the summary becomes the review, the team stops arguing with their manager and starts arguing with a document nobody fully stands behind."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Disclosing",
+        "texto": "AI use that the team discovers later reads as concealment"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "There is an asymmetry here that carries more weight than it seems. AI use explained upfront rarely causes pushback. The same use, discovered afterwards, gets read as something hidden, even when nobody meant to hide anything. And it is getting easier to discover: generated text has recognisable habits, teams use the same tools and know how they sound, and all it takes is two people comparing what they received."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Then there is consistency. Many companies now ask employees to flag when they use AI in reports or proposals. A leader who demands that transparency without practising it is telling the team the rule is for other people. Avoiding that costs almost nothing: a line at the foot of the document, or a sentence at the start of the meeting, saying which part a tool prepared and which part they reviewed and decided."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Teams don't care who drafted the message. They care about knowing who decided what it says.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The rule",
+        "texto": "A three-zone rule covers almost any leader"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "What follows is a personal working rule, meant for each leader to apply to their own week. It fits on one page and can be explained to a team in five minutes."
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Open zone: thinking and preparing",
+            "definicion": "Summarising documents, preparing for a meeting, exploring scenarios, stress-testing an argument, organising notes. Everything a leader uses to think better that doesn't reach anyone as is. Why it matters: this is where most of the value sits, and there is nothing to disclose, because what the team receives is the leader's own judgement."
+          },
+          {
+            "termino": "2. Disclosed zone: what reaches the team",
+            "definicion": "Internal announcements, plans, procedures and written answers to the team's questions. AI is fine here, and you say so. Why it matters: one line of transparency costs nothing and removes the risk of the use being discovered later and read as concealment."
+          },
+          {
+            "termino": "3. Reserved zone: judgement about people",
+            "definicion": "Performance reviews, individual feedback, decisions on promotion, exit or role changes, and messages to someone going through a hard moment. A tool can help organise the data, but the leader writes the text and makes the call. Why it matters: this is where the team finds out whether their manager knows them, and that kind of trust doesn't come back with an apology."
+          }
+        ]
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "This week, go through the last ten messages or documents you sent your team and sort them into the three zones. If anything from the reserved zone came out of a tool, that is the first thing to fix. Then, at your next team meeting, tell people what you use AI for and what you will never hand to it. That conversation does more for trust than any written policy."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Should a manager tell their team they use AI?",
+            "respuesta": "Yes, for everything that reaches the team: announcements, plans, procedures and written replies. There is no need to disclose use that only helps the manager prepare or think, because what the team receives in that case is the manager's own judgement. AI use explained upfront rarely causes pushback; the same use discovered later reads as concealment."
+          },
+          {
+            "pregunta": "Is it okay to use AI to write performance reviews?",
+            "respuesta": "It is fine for organising data, checking metrics or spotting bias in your own notes, but not for writing the review itself. A review is the moment a person checks whether their manager knows their work, and generic text says the manager doesn't. When several reviews look more alike than the people being reviewed, the team notices and stops believing them."
+          },
+          {
+            "pregunta": "Which decisions should a leader never delegate to AI?",
+            "respuesta": "The ones that judge a person: performance reviews, individual feedback, promotions, exits, role changes and messages to someone going through a difficult time. A tool can supply information for those decisions, but the judgement and the final wording have to be the leader's. These are the situations where a team decides whether their manager really knows them."
+          },
+          {
+            "pregunta": "How should a leader explain their own AI use to the team?",
+            "respuesta": "In a short conversation rather than a document. It is enough to say what they use it for, such as preparing meetings, summarising or drafting, how they flag anything that reaches the team with a tool's help, and what they will never delegate. Done before anyone asks, that explanation turns a possible source of suspicion into a sign of consistency."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Teams will keep using AI, and so will their managers. Trust is going to be won or lost on one specific point: whether each person knows what reached them because someone thought about it and what reached them because a tool produced it. The question for any leadership team is whether their people could answer that today about the messages they received this week."
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's work out how your leadership team uses AI without putting their teams' trust at stake",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
