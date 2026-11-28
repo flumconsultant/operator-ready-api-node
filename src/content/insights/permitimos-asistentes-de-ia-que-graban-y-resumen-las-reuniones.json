@@ -1,0 +1,301 @@
+{
+  "estado": "publicado",
+  "fecha": "2026-11-28",
+  "autor": "Carlos Andrés Ramírez",
+  "pilar": "responsible-scale",
+  "formato": "executive-brief",
+  "es": {
+    "slug": "permitimos-asistentes-de-ia-que-graban-y-resumen-las-reuniones",
+    "titulo": "¿Permitimos que la IA grabe las reuniones?",
+    "entradilla": "Sí, pero no en todas las reuniones ni con cualquier herramienta. Un asistente que graba y resume crea un registro escrito de conversaciones que antes no dejaban rastro, y ese registro tiene dueño, plazo y riesgo. La decisión útil no es aprobar o prohibir la herramienta: es fijar qué reuniones se graban, cuáles solo con permiso expreso de todos y cuáles nunca, y qué pasa con la transcripción cuando termina la llamada.",
+    "descripcion": "Sí, con reglas: qué reuniones se graban, cuáles solo con permiso de todos y cuáles nunca, y cuánto tiempo se guarda la transcripción y quién la ve.",
+    "linkedin": {
+      "texto": "Un asistente que resume reuniones parece una decisión de productividad. En realidad es una decisión de archivo.\n\nCada llamada grabada deja un documento que antes no existía, con lo que se dijo y cómo se dijo, y casi nadie ha decidido cuánto tiempo se guarda ni quién lo lee.\n\nTres categorías de reunión y tres reglas para permitir estas herramientas sin perder el control.",
+      "hashtags": [
+        "IA",
+        "Gobierno",
+        "Datos"
+      ]
+    },
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Sí, pero no en todas las reuniones ni con cualquier herramienta. Un asistente que graba y resume crea un registro escrito de conversaciones que antes no dejaban rastro, y ese registro tiene dueño, plazo y riesgo. La decisión útil no es aprobar o prohibir la herramienta: es fijar qué reuniones se graban, cuáles solo con permiso expreso de todos y cuáles nunca, y qué pasa con la transcripción cuando termina la llamada."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Empecemos por cómo llega esto a la mayoría de las empresas. Nadie lo aprueba en un comité. Una persona de ventas instala un asistente gratuito, lo conecta a su calendario, y desde ese día el asistente entra solo a cada reunión a la que ella está invitada, incluidas las que organizan otros. A las pocas semanas aparece en una llamada con un cliente, en una revisión de presupuesto y en una conversación de un jefe con alguien de su equipo. Cada una deja una grabación, una transcripción y un resumen guardados en los servidores del proveedor."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "El valor es real. Quien no pudo asistir se pone al día en cinco minutos, los acuerdos quedan escritos y nadie tiene que tomar notas mientras intenta pensar. Por eso prohibirlo sin más no funciona: la gente lo seguirá usando con su cuenta personal, y la empresa perderá la poca visibilidad que tenía. Pero lo que se está comprando, además del resumen, es un archivo de todo lo que se dice en la empresa, y eso pide las mismas decisiones que cualquier otro archivo."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La respuesta",
+        "texto": "¿Conviene permitir asistentes de IA que graban y resumen las reuniones?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Conviene, con tres condiciones. Que la herramienta sea una sola, aprobada por la empresa y configurada por ella, no la que cada persona encontró. Que exista una regla clara sobre qué reuniones se graban, porque no todas aguantan un registro. Y que la transcripción tenga un plazo de vida y una lista de quién puede verla. Sin esas tres condiciones, la empresa está acumulando conversaciones que nadie decidió guardar."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Las señales de que el uso ya se adelantó a la decisión:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Aparecen en las llamadas participantes con nombres como «asistente de notas» que nadie invitó.",
+          "Clientes o proveedores preguntan, al empezar la reunión, quién está grabando.",
+          "Los resúmenes circulan por correo a personas que no estuvieron en la reunión.",
+          "Nadie en la empresa sabe decir cuánto tiempo guarda el proveedor las grabaciones ni si las usa para entrenar sus modelos."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El registro",
+        "texto": "La transcripción es un documento nuevo, y los documentos se pueden pedir"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Una conversación sin grabar deja como máximo unas notas que alguien escribió y revisó. Una conversación grabada deja la frase exacta, con nombre, fecha y hora, incluida la idea que se descartó a los dos minutos y el comentario dicho a medias. Ese texto queda disponible para una auditoría, para una disputa con un cliente o para un proceso judicial, igual que un correo. La diferencia es que en un correo la gente elige sus palabras, y en una reunión no."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "A eso se suma que la voz y lo que dice una persona identificada son datos personales. En Europa, el RGPD obliga a informar a cada participante de qué se graba, para qué y durante cuánto tiempo, y a tener una base legal para hacerlo. La mayoría de las leyes de protección de datos de América Latina, como la Ley 29733 en el Perú, siguen la misma lógica. Y algunos estados de Estados Unidos, como California, exigen el consentimiento de todos los participantes para grabar una conversación privada. En agosto de 2025 se presentó en California una demanda colectiva contra Otter.ai que alega, precisamente, que su asistente grababa a participantes que no habían dado ese consentimiento."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La conversación",
+        "texto": "Una reunión que se graba es otra reunión"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Cuando la gente sabe que todo queda escrito, habla distinto. En una reunión de proyecto eso apenas se nota y hasta ayuda: los compromisos se formulan con más cuidado. En las conversaciones que dependen de la franqueza, el efecto es el contrario. Piensa en un comité que discute si cerrar una línea de negocio, o en un jefe que tiene que decirle a alguien que su trabajo no está al nivel. Con un asistente presente, lo difícil se dice después, en el pasillo o por teléfono, y la reunión formal se queda con la versión prudente."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Por eso la regla no puede ser la misma para todas las reuniones. Lo que se gana con el resumen de una reunión operativa se pierde, multiplicado, cuando el asistente entra en una conversación sobre personas, salud, conflictos o decisiones que todavía no se han tomado."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "El permiso",
+        "texto": "El consentimiento lo tienen que dar quienes no instalaron la herramienta"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Quien activa el asistente ya decidió que quiere grabar. Los que necesitan decidir son los demás: el cliente, el candidato en una entrevista, el proveedor, el colega de otra área. Un aviso automático en el chat de la llamada no basta si nadie lo lee, y mucho menos cuando el asistente se une solo desde un calendario. Lo razonable es que el organizador pregunte al empezar y que cualquier participante pueda pedir que se detenga sin tener que dar explicaciones."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Cada reunión grabada deja un documento que la empresa no tenía y que alguien tendrá que custodiar.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "La regla",
+        "texto": "Tres categorías de reunión resuelven casi todos los casos"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Se graba: reuniones internas operativas",
+            "definicion": "Seguimiento de proyectos, revisiones de avance, formaciones y demostraciones internas. Aquí el resumen ahorra tiempo y casi no cambia la conversación. Importa porque es donde está la mayor parte del valor, y conviene que la herramienta aprobada sea la más cómoda de usar para que nadie busque otra."
+          },
+          {
+            "termino": "2. Se graba solo con permiso expreso de todos",
+            "definicion": "Llamadas con clientes, proveedores, candidatos o cualquier persona de fuera. El organizador pregunta al empezar y deja constancia de la respuesta. Importa porque son las personas que no conocen la política de la empresa y las que más derecho tienen a negarse."
+          },
+          {
+            "termino": "3. No se graba nunca",
+            "definicion": "Evaluaciones y conversaciones de desempeño, temas de salud, conflictos y denuncias internas, salidas de personas, sesiones de consejo y conversaciones con abogados. Importa porque en estas reuniones el registro crea más riesgo del que resuelve, y la franqueza que se pierde no se recupera."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Sobre esa base, tres reglas de operación. Solo se usa la herramienta aprobada, con el contrato revisado para saber dónde se guardan los datos y si el proveedor los usa para entrenar. Las transcripciones se borran solas pasado un plazo fijo, por ejemplo noventa días, salvo que alguien decida guardar una por un motivo concreto. Y el resumen lo revisa el organizador antes de enviarlo, porque un resumen automático que atribuye a alguien algo que no dijo es peor que no tener resumen."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Por dónde empezar",
+        "texto": "Esta semana, pide a TI la lista de asistentes de grabación conectados a cuentas de la empresa, aprobados o no. Esa lista dice cuántas reuniones se están grabando hoy sin regla. Con ella, elige una sola herramienta, configúrala para que no se una sola a las reuniones con externos y publica las tres categorías en una página. Es una decisión de semanas, no de meses."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "¿Es legal usar un asistente de IA que graba reuniones?",
+            "respuesta": "En general sí, siempre que se informe a los participantes y exista una base legal para tratar sus datos. En Europa lo regula el RGPD, y la mayoría de las leyes de protección de datos de América Latina siguen la misma lógica. Algunos estados de Estados Unidos, como California, exigen además el consentimiento de todos los participantes. Por eso la práctica más segura es preguntar al empezar la reunión y no grabar si alguien se opone."
+          },
+          {
+            "pregunta": "¿Qué reuniones no deberían grabarse con IA?",
+            "respuesta": "Las que dependen de la franqueza o tratan datos especialmente sensibles: evaluaciones de desempeño, temas de salud, conflictos y denuncias internas, salidas de personas, sesiones de consejo y conversaciones con abogados. En esas reuniones el registro escrito crea más riesgo del que resuelve. Además, la gente habla con más cautela cuando sabe que todo queda guardado, y lo importante termina diciéndose fuera de la reunión."
+          },
+          {
+            "pregunta": "¿Hay que pedir permiso a los clientes para grabar una reunión con IA?",
+            "respuesta": "Sí. Un cliente no conoce la política interna de la empresa y tiene derecho a saber que su voz y sus palabras quedan registradas. Lo razonable es que el organizador pregunte al empezar, deje constancia de la respuesta y detenga la grabación si el cliente no está de acuerdo. Un aviso automático en el chat de la llamada no sustituye a esa pregunta."
+          },
+          {
+            "pregunta": "¿Cuánto tiempo hay que guardar las transcripciones de las reuniones?",
+            "respuesta": "El menor tiempo que permita cumplir su propósito, que casi siempre es recordar acuerdos y tareas. Un plazo fijo de borrado automático, por ejemplo noventa días, evita que la empresa acumule años de conversaciones que nadie decidió conservar. Si una transcripción concreta tiene que guardarse por un motivo legal o contractual, se marca y se conserva aparte, con un responsable."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Estas herramientas se van a quedar, porque resuelven un problema que todos tienen. Lo que cada empresa decide ahora es si sus reuniones se graban por una regla que alguien pensó o por la configuración que cada persona eligió al instalar una aplicación. La pregunta para el comité de dirección es simple: ¿sabe hoy cuántas de sus propias reuniones quedaron grabadas este mes, y dónde están esas grabaciones?"
+      },
+      {
+        "tipo": "cta",
+        "texto": "Definamos qué reuniones se graban en tu empresa y con qué reglas",
+        "destino": "/es/contacto"
+      }
+    ]
+  },
+  "en": {
+    "slug": "should-we-allow-ai-assistants-that-record-meetings",
+    "titulo": "Should we allow AI assistants that record meetings?",
+    "entradilla": "Yes, but not in every meeting and not with whatever tool someone happened to install. An assistant that records and summarises creates a written record of conversations that used to leave no trace, and that record has an owner, a lifespan and a risk. The useful decision isn't whether to approve or ban the tool. It is which meetings get recorded, which only with everyone's explicit permission, which never, and what happens to the transcript once the call ends.",
+    "descripcion": "Yes, with rules: which meetings get recorded, which only with everyone's consent, which never, and how long transcripts are kept and who can see them.",
+    "bloques": [
+      {
+        "tipo": "entradilla",
+        "texto": "Yes, but not in every meeting and not with whatever tool someone happened to install. An assistant that records and summarises creates a written record of conversations that used to leave no trace, and that record has an owner, a lifespan and a risk. The useful decision isn't whether to approve or ban the tool. It is which meetings get recorded, which only with everyone's explicit permission, which never, and what happens to the transcript once the call ends."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Start with how this usually arrives. Nobody approves it in a committee. Someone in sales signs up for a free note-taker, connects it to their calendar, and from then on it joins every meeting they're invited to, including ones other people organise. Within a few weeks it has sat in on a client call, a budget review and a one-to-one between a manager and someone on their team. Each one leaves a recording, a transcript and a summary on the vendor's servers."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "The value is real. People who missed the meeting catch up in five minutes, decisions get written down, and nobody has to take notes while trying to think. That is why a flat ban doesn't work: people keep using it on personal accounts and the company loses what little visibility it had. But along with the summary, what's being bought is an archive of everything said inside the company, and that calls for the same decisions as any other archive."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The answer",
+        "texto": "Should companies allow AI assistants that record and summarise meetings?"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "They should, on three conditions. One tool, approved and configured by the company, rather than whatever each person found. A clear rule on which meetings get recorded, because not every meeting can take a transcript. And a fixed lifespan for transcripts, with a list of who can see them. Without those three, the company is piling up conversations nobody decided to keep."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Signs that usage has already run ahead of the decision:"
+      },
+      {
+        "tipo": "lista",
+        "items": [
+          "Calls include participants with names like \"note-taker\" that nobody invited.",
+          "Clients or suppliers ask, as the meeting starts, who is recording.",
+          "Summaries get forwarded to people who weren't in the meeting.",
+          "Nobody can say how long the vendor keeps recordings or whether it uses them to train its models."
+        ]
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The record",
+        "texto": "A transcript is a new document, and documents can be requested"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "An unrecorded conversation leaves, at most, some notes that someone wrote and checked. A recorded one leaves the exact sentence, with a name and a timestamp, including the idea dropped after two minutes and the half-finished remark. That text is available to an audit, a client dispute or litigation, just like an email. The difference is that people choose their words in an email. In a meeting, they don't."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "On top of that, the voice and words of an identifiable person are personal data. In Europe, the GDPR requires telling every participant what is recorded, why and for how long, and having a legal basis to do it. Most data protection laws in Latin America, such as Peru's Law 29733, follow the same logic. And some US states, California among them, require every party's consent to record a private conversation. In August 2025 a class action was filed in California against Otter.ai alleging exactly that: that its assistant recorded participants who had not given that consent."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The conversation",
+        "texto": "A recorded meeting is a different meeting"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "When people know everything is written down, they talk differently. In a project meeting that barely shows, and can even help: commitments get phrased more carefully. In conversations that depend on candour, it works the other way. Picture a committee debating whether to close a business line, or a manager who has to tell someone their work isn't where it needs to be. With an assistant in the room, the hard part gets said later, in the corridor or on the phone, and the formal meeting keeps the cautious version."
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "So the rule can't be the same for every meeting. What a summary gains in an operational meeting is lost several times over when the assistant joins a conversation about people, health, conflict or decisions that haven't been made yet."
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "Permission",
+        "texto": "Consent has to come from the people who didn't install the tool"
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "Whoever turned the assistant on has already decided to record. The people who need to decide are everyone else: the client, the job candidate, the supplier, the colleague from another team. An automatic notice in the call chat isn't enough if nobody reads it, and even less so when the assistant joins on its own from a calendar. The sensible practice is for the organiser to ask at the start, and for anyone to be able to have it stopped without giving a reason."
+      },
+      {
+        "tipo": "cita",
+        "texto": "Every recorded meeting leaves behind a document the company never had, and someone will have to look after it.",
+        "fuente": "BECOME"
+      },
+      {
+        "tipo": "subtitulo",
+        "antetitulo": "The rule",
+        "texto": "Three categories of meeting settle almost every case"
+      },
+      {
+        "tipo": "indice",
+        "items": [
+          {
+            "termino": "1. Recorded: internal operational meetings",
+            "definicion": "Project check-ins, progress reviews, training sessions and internal demos. Here the summary saves time and hardly changes the conversation. Why it matters: this is where most of the value sits, and the approved tool should be the easiest one to use so nobody goes looking for another."
+          },
+          {
+            "termino": "2. Recorded only with everyone's explicit permission",
+            "definicion": "Calls with clients, suppliers, candidates or anyone outside the company. The organiser asks at the start and notes the answer. Why it matters: these are the people who don't know the company's policy and have the clearest right to say no."
+          },
+          {
+            "termino": "3. Never recorded",
+            "definicion": "Performance reviews, health matters, conflicts and internal complaints, people leaving the company, board sessions and conversations with lawyers. Why it matters: in these meetings a record creates more risk than it removes, and the candour you lose doesn't come back."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "On top of that, three operating rules. Only the approved tool is used, with the contract checked for where data is stored and whether the vendor trains on it. Transcripts delete themselves after a fixed period, say ninety days, unless someone decides to keep a specific one for a specific reason. And the organiser reviews the summary before sending it, because an automatic summary that puts words in someone's mouth is worse than no summary at all."
+      },
+      {
+        "tipo": "destacado",
+        "antetitulo": "Where to start",
+        "texto": "This week, ask IT for a list of recording assistants connected to company accounts, approved or not. That list tells you how many meetings are being recorded today without a rule. Then pick one tool, set it so it never joins meetings with external people on its own, and publish the three categories on a single page. This takes weeks, not months."
+      },
+      {
+        "tipo": "faq",
+        "items": [
+          {
+            "pregunta": "Is it legal to use an AI assistant that records meetings?",
+            "respuesta": "Generally yes, as long as participants are told and there is a legal basis for processing their data. In Europe this falls under the GDPR, and most Latin American data protection laws follow the same logic. Some US states, such as California, also require the consent of every participant. The safest practice is to ask at the start of the meeting and not record if anyone objects."
+          },
+          {
+            "pregunta": "Which meetings shouldn't be recorded with AI?",
+            "respuesta": "The ones that depend on candour or involve especially sensitive data: performance reviews, health matters, conflicts and internal complaints, people leaving, board sessions and conversations with lawyers. In those meetings a written record creates more risk than it solves. People also speak more cautiously when they know everything is kept, so what matters ends up being said outside the meeting."
+          },
+          {
+            "pregunta": "Do we need clients' permission to record a meeting with AI?",
+            "respuesta": "Yes. A client doesn't know your internal policy and has a right to know their voice and words are being recorded. The organiser should ask at the start, note the answer and stop recording if the client doesn't agree. An automatic notice in the call chat is no substitute for asking."
+          },
+          {
+            "pregunta": "How long should meeting transcripts be kept?",
+            "respuesta": "As briefly as their purpose allows, which is almost always remembering decisions and tasks. A fixed automatic deletion period, such as ninety days, stops the company from accumulating years of conversations nobody chose to keep. If a particular transcript has to be kept for legal or contractual reasons, it gets flagged and stored separately, with a named owner."
+          }
+        ]
+      },
+      {
+        "tipo": "parrafo",
+        "texto": "These tools are here to stay, because they solve a problem everyone has. What each company is deciding now is whether its meetings get recorded under a rule someone thought through, or under whatever setting each person picked when they installed an app. The question for any leadership team is simple: do you know how many of your own meetings were recorded this month, and where those recordings are?"
+      },
+      {
+        "tipo": "cta",
+        "texto": "Let's decide which meetings your company records, and under what rules",
+        "destino": "/en/contact"
+      }
+    ]
+  }
+}
