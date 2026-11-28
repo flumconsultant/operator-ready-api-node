@@ -1,7 +1,6 @@
 {
   "_": "Artículos atrasados que no salieron en LinkedIn porque el permiso caducó (23-oct a 19-nov de 2026). El workflow los publica en este orden, dos por día laborable, y los va quitando de aquí.",
   "cola": [
-    "que-hacer-con-las-alucinaciones-de-la-ia-en-un-proceso-critico",
     "como-se-priorizan-las-iniciativas-de-ia-cuando-cada-area-pide-la-suya",
     "como-se-decide-apagar-un-proyecto-de-ia-que-no-funciona",
     "como-se-prueba-un-agente-de-ia-antes-de-ponerlo-en-produccion",
